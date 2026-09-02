@@ -1,1 +1,994 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>A1 – Deutschkurs mit Nele</title>
+
+<style>
+:root{
+    --bg:#07182c;
+    --bg2:#0c2744;
+    --card:#102d4d;
+    --text:#f5f8fc;
+    --muted:#9fb0c3;
+    --gold:#f4c95d;
+    --blue:#5bbcf4;
+    --green:#75d64a;
+    --locked:#24364b;
+    --line:rgba(255,255,255,.10);
+}
+
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    font-family:Arial,sans-serif;
+    color:var(--text);
+
+    background:
+        radial-gradient(
+            circle at top,
+            rgba(66,140,215,.18),
+            transparent 34%
+        ),
+        linear-gradient(
+            180deg,
+            var(--bg),
+            var(--bg2)
+        );
+}
+
+.page{
+    width:min(1050px,94%);
+    margin:auto;
+    padding:30px 0 70px;
+}
+
+/* GÓRA */
+
+.topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    margin-bottom:25px;
+}
+
+.back{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+
+    padding:11px 15px;
+
+    border-radius:14px;
+    border:1px solid var(--line);
+
+    background:rgba(255,255,255,.07);
+
+    color:white;
+    text-decoration:none;
+    font-weight:700;
+}
+
+.back:hover{
+    background:rgba(255,255,255,.12);
+}
+
+.nele-link{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+
+    padding:11px 15px;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #72d8ff,
+            #359bd8
+        );
+
+    color:#07182c;
+    text-decoration:none;
+    font-weight:800;
+}
+
+/* HERO */
+
+.hero{
+    padding:30px 24px;
+    margin-bottom:30px;
+
+    border-radius:26px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #123a62,
+            #0c2744
+        );
+
+    border:1px solid var(--line);
+
+    box-shadow:
+        0 16px 35px rgba(0,0,0,.25);
+}
+
+.hero-badge{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    width:76px;
+    height:76px;
+
+    margin-bottom:15px;
+
+    border-radius:22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #2f87c5,
+            #195a8d
+        );
+
+    font-size:2.2rem;
+    font-weight:900;
+}
+
+.hero h1{
+    margin:0 0 10px;
+
+    font-size:
+        clamp(2rem,6vw,3.5rem);
+}
+
+.hero p{
+    margin:0;
+    max-width:650px;
+
+    color:var(--muted);
+    font-size:1.08rem;
+    line-height:1.6;
+}
+
+/* SEKCJE */
+
+.section-title{
+    margin:34px 0 8px;
+    font-size:1.6rem;
+}
+
+.section-subtitle{
+    margin:0 0 20px;
+    color:var(--muted);
+}
+
+/* SIATKA LEKCJI */
+
+.lesson-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
+}
+
+.lesson-card{
+    display:flex;
+    align-items:center;
+    gap:16px;
+
+    min-height:100px;
+
+    padding:18px;
+
+    border-radius:20px;
+    border:1px solid var(--line);
+
+    background:
+        rgba(255,255,255,.065);
+
+    text-decoration:none;
+    color:white;
+
+    transition:
+        transform .18s,
+        background .18s,
+        border-color .18s;
+}
+
+.lesson-card:hover{
+    transform:translateY(-3px);
+    background:rgba(255,255,255,.105);
+    border-color:rgba(244,201,93,.45);
+}
+
+.lesson-number{
+    width:58px;
+    height:58px;
+
+    flex:none;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:16px;
+
+    background:var(--gold);
+
+    color:#172235;
+
+    font-size:1.2rem;
+    font-weight:900;
+}
+
+.lesson-content{
+    flex:1;
+}
+
+.lesson-content strong{
+    display:block;
+    margin-bottom:4px;
+    font-size:1.05rem;
+}
+
+.lesson-content span{
+    display:block;
+    color:var(--muted);
+    line-height:1.35;
+    font-size:.94rem;
+}
+
+.arrow{
+    flex:none;
+    color:var(--gold);
+    font-size:1.5rem;
+}
+
+/* DOSTĘPNE */
+
+.lesson-card.available{
+    background:
+        linear-gradient(
+            135deg,
+            rgba(45,119,176,.26),
+            rgba(255,255,255,.05)
+        );
+}
+
+/* PRZYSZŁE LEKCJE */
+
+.lesson-card.locked{
+    cursor:default;
+    opacity:.62;
+}
+
+.lesson-card.locked:hover{
+    transform:none;
+    background:rgba(255,255,255,.065);
+    border-color:var(--line);
+}
+
+.lesson-card.locked .lesson-number{
+    background:var(--locked);
+    color:#aebccd;
+}
+
+.lesson-card.locked .arrow{
+    color:#718196;
+}
+
+/* INFO */
+
+.info-box{
+    margin-top:30px;
+
+    padding:20px;
+
+    border-radius:20px;
+
+    background:
+        rgba(255,255,255,.06);
+
+    border:1px solid var(--line);
+
+    color:var(--muted);
+    line-height:1.6;
+}
+
+.info-box strong{
+    color:var(--text);
+}
+
+/* FOOTER */
+
+footer{
+    margin-top:45px;
+    padding-top:24px;
+
+    text-align:center;
+    color:var(--muted);
+
+    border-top:1px solid var(--line);
+}
+
+/* TELEFON */
+
+@media(max-width:700px){
+
+    .page{
+        width:92%;
+        padding-top:18px;
+    }
+
+    .topbar{
+        align-items:stretch;
+        flex-direction:column;
+    }
+
+    .back,
+    .nele-link{
+        justify-content:center;
+    }
+
+    .lesson-grid{
+        grid-template-columns:1fr;
+    }
+
+    .hero{
+        padding:24px 18px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="topbar">
+
+        <a href="../../index.html" class="back">
+            ← Startseite
+        </a>
+
+        <a href="../../nele.html" class="nele-link">
+            🎙️ Mit Nele sprechen
+        </a>
+
+    </div>
+
+
+    <section class="hero">
+
+        <div class="hero-badge">
+            A1
+        </div>
+
+        <h1>
+            Deutschkurs A1
+        </h1>
+
+        <p>
+            Lerne Deutsch Schritt für Schritt.
+            Der A1-Kurs besteht aus 30 Lektionen.
+            Beginne mit Lektion 1 und arbeite dich
+            nach und nach durch den ganzen Kurs.
+        </p>
+
+    </section>
+
+
+    <h2 class="section-title">
+        Lektionen 1–30
+    </h2>
+
+    <p class="section-subtitle">
+        Wähle eine Lektion.
+    </p>
+
+
+    <div class="lesson-grid">
+
+
+        <!-- 1 -->
+
+        <a
+            href="lektion-1.html"
+            class="lesson-card available"
+        >
+
+            <div class="lesson-number">
+                01
+            </div>
+
+            <div class="lesson-content">
+                <strong>
+                    Begrüßung und Vorstellung
+                </strong>
+
+                <span>
+                    Guten Tag · Ich heiße …
+                    · Das Alphabet
+                </span>
+            </div>
+
+            <div class="arrow">
+                →
+            </div>
+
+        </a>
+
+
+        <!-- 2 -->
+
+        <a
+            href="lektion-2.html"
+            class="lesson-card available"
+        >
+
+            <div class="lesson-number">
+                02
+            </div>
+
+            <div class="lesson-content">
+                <strong>
+                    Lektion 2
+                </strong>
+
+                <span>
+                    Nächste A1-Lektion
+                </span>
+            </div>
+
+            <div class="arrow">
+                →
+            </div>
+
+        </a>
+
+
+        <!-- 3 -->
+
+        <div class="lesson-card locked">
+
+            <div class="lesson-number">
+                03
+            </div>
+
+            <div class="lesson-content">
+                <strong>Lektion 3</strong>
+                <span>In Vorbereitung</span>
+            </div>
+
+            <div class="arrow">•</div>
+
+        </div>
+
+
+        <!-- 4 -->
+
+        <div class="lesson-card locked">
+
+            <div class="lesson-number">
+                04
+            </div>
+
+            <div class="lesson-content">
+                <strong>Lektion 4</strong>
+                <span>In Vorbereitung</span>
+            </div>
+
+            <div class="arrow">•</div>
+
+        </div>
+
+
+        <!-- 5 -->
+
+        <div class="lesson-card locked">
+
+            <div class="lesson-number">
+                05
+            </div>
+
+            <div class="lesson-content">
+                <strong>Lektion 5</strong>
+                <span>In Vorbereitung</span>
+            </div>
+
+            <div class="arrow">•</div>
+
+        </div>
+
+
+        <!-- 6 -->
+
+        <div class="lesson-card locked">
+
+            <div class="lesson-number">
+                06
+            </div>
+
+            <div class="lesson-content">
+                <strong>Lektion 6</strong>
+                <span>In Vorbereitung</span>
+            </div>
+
+            <div class="arrow">•</div>
+
+        </div>
+
+
+        <!-- 7 -->
+
+        <div class="lesson-card locked">
+
+            <div class="lesson-number">
+                07
+            </div>
+
+            <div class="lesson-content">
+                <strong>Lektion 7</strong>
+                <span>In Vorbereitung</span>
+            </div>
+
+            <div class="arrow">•</div>
+
+        </div>
+
+
+        <!-- 8 -->
+
+        <div class="lesson-card locked">
+
+            <div class="lesson-number">
+                08
+            </div>
+
+            <div class="lesson-content">
+                <strong>Lektion 8</strong>
+                <span>In Vorbereitung</span>
+            </div>
+
+            <div class="arrow">•</div>
+
+        </div>
+
+
+        <!-- 9 -->
+
+        <div class="lesson-card locked">
+
+            <div class="lesson-number">
+                09
+            </div>
+
+            <div class="lesson-content">
+                <strong>Lektion 9</strong>
+                <span>In Vorbereitung</span>
+            </div>
+
+            <div class="arrow">•</div>
+
+        </div>
+
+
+        <!-- 10 -->
+
+        <div class="lesson-card locked">
+
+            <div class="lesson-number">
+                10
+            </div>
+
+            <div class="lesson-content">
+                <strong>Lektion 10</strong>
+                <span>In Vorbereitung</span>
+            </div>
+
+            <div class="arrow">•</div>
+
+        </div>
+
+
+        <!-- 11 -->
+
+        <div class="lesson-card locked">
+
+            <div class="lesson-number">
+                11
+            </div>
+
+            <div class="lesson-content">
+                <strong>Lektion 11</strong>
+                <span>In Vorbereitung</span>
+            </div>
+
+            <div class="arrow">•</div>
+
+        </div>
+
+
+        <!-- 12 -->
+
+        <div class="lesson-card locked">
+
+            <div class="lesson-number">
+                12
+            </div>
+
+            <div class="lesson-content">
+                <strong>Lektion 12</strong>
+                <span>In Vorbereitung</span>
+            </div>
+
+            <div class="arrow">•</div>
+
+        </div>
+
+
+        <!-- 13 -->
+
+        <div class="lesson-card locked">
+
+            <div class="lesson-number">
+                13
+            </div>
+
+            <div class="lesson-content">
+                <strong>Lektion 13</strong>
+                <span>In Vorbereitung</span>
+            </div>
+
+            <div class="arrow">•</div>
+
+        </div>
+
+
+        <!-- 14 -->
+
+        <div class="lesson-card locked">
+
+            <div class="lesson-number">
+                14
+            </div>
+
+            <div class="lesson-content">
+                <strong>Lektion 14</strong>
+                <span>In Vorbereitung</span>
+            </div>
+
+            <div class="arrow">•</div>
+
+        </div>
+
+
+        <!-- 15 -->
+
+        <div class="lesson-card locked">
+
+            <div class="lesson-number">
+                15
+            </div>
+
+            <div class="lesson-content">
+                <strong>Lektion 15</strong>
+                <span>In Vorbereitung</span>
+            </div>
+
+            <div class="arrow">•</div>
+
+        </div>
+
+
+        <!-- 16 -->
+
+        <div class="lesson-card locked">
+
+            <div class="lesson-number">
+                16
+            </div>
+
+            <div class="lesson-content">
+                <strong>Lektion 16</strong>
+                <span>In Vorbereitung</span>
+            </div>
+
+            <div class="arrow">•</div>
+
+        </div>
+
+
+        <!-- 17 -->
+
+        <div class="lesson-card locked">
+
+            <div class="lesson-number">
+                17
+            </div>
+
+            <div class="lesson-content">
+                <strong>Lektion 17</strong>
+                <span>In Vorbereitung</span>
+            </div>
+
+            <div class="arrow">•</div>
+
+        </div>
+
+
+        <!-- 18 -->
+
+        <div class="lesson-card locked">
+
+            <div class="lesson-number">
+                18
+            </div>
+
+            <div class="lesson-content">
+                <strong>Lektion 18</strong>
+                <span>In Vorbereitung</span>
+            </div>
+
+            <div class="arrow">•</div>
+
+        </div>
+
+
+        <!-- 19 -->
+
+        <div class="lesson-card locked">
+
+            <div class="lesson-number">
+                19
+            </div>
+
+            <div class="lesson-content">
+                <strong>Lektion 19</strong>
+                <span>In Vorbereitung</span>
+            </div>
+
+            <div class="arrow">•</div>
+
+        </div>
+
+
+        <!-- 20 -->
+
+        <div class="lesson-card locked">
+
+            <div class="lesson-number">
+                20
+            </div>
+
+            <div class="lesson-content">
+                <strong>Lektion 20</strong>
+                <span>In Vorbereitung</span>
+            </div>
+
+            <div class="arrow">•</div>
+
+        </div>
+
+
+        <!-- 21 -->
+
+        <div class="lesson-card locked">
+
+            <div class="lesson-number">
+                21
+            </div>
+
+            <div class="lesson-content">
+                <strong>Lektion 21</strong>
+                <span>In Vorbereitung</span>
+            </div>
+
+            <div class="arrow">•</div>
+
+        </div>
+
+
+        <!-- 22 -->
+
+        <div class="lesson-card locked">
+
+            <div class="lesson-number">
+                22
+            </div>
+
+            <div class="lesson-content">
+                <strong>Lektion 22</strong>
+                <span>In Vorbereitung</span>
+            </div>
+
+            <div class="arrow">•</div>
+
+        </div>
+
+
+        <!-- 23 -->
+
+        <div class="lesson-card locked">
+
+            <div class="lesson-number">
+                23
+            </div>
+
+            <div class="lesson-content">
+                <strong>Lektion 23</strong>
+                <span>In Vorbereitung</span>
+            </div>
+
+            <div class="arrow">•</div>
+
+        </div>
+
+
+        <!-- 24 -->
+
+        <div class="lesson-card locked">
+
+            <div class="lesson-number">
+                24
+            </div>
+
+            <div class="lesson-content">
+                <strong>Lektion 24</strong>
+                <span>In Vorbereitung</span>
+            </div>
+
+            <div class="arrow">•</div>
+
+        </div>
+
+
+        <!-- 25 -->
+
+        <div class="lesson-card locked">
+
+            <div class="lesson-number">
+                25
+            </div>
+
+            <div class="lesson-content">
+                <strong>Lektion 25</strong>
+                <span>In Vorbereitung</span>
+            </div>
+
+            <div class="arrow">•</div>
+
+        </div>
+
+
+        <!-- 26 -->
+
+        <div class="lesson-card locked">
+
+            <div class="lesson-number">
+                26
+            </div>
+
+            <div class="lesson-content">
+                <strong>Lektion 26</strong>
+                <span>In Vorbereitung</span>
+            </div>
+
+            <div class="arrow">•</div>
+
+        </div>
+
+
+        <!-- 27 -->
+
+        <div class="lesson-card locked">
+
+            <div class="lesson-number">
+                27
+            </div>
+
+            <div class="lesson-content">
+                <strong>Lektion 27</strong>
+                <span>In Vorbereitung</span>
+            </div>
+
+            <div class="arrow">•</div>
+
+        </div>
+
+
+        <!-- 28 -->
+
+        <div class="lesson-card locked">
+
+            <div class="lesson-number">
+                28
+            </div>
+
+            <div class="lesson-content">
+                <strong>Lektion 28</strong>
+                <span>In Vorbereitung</span>
+            </div>
+
+            <div class="arrow">•</div>
+
+        </div>
+
+
+        <!-- 29 -->
+
+        <div class="lesson-card locked">
+
+            <div class="lesson-number">
+                29
+            </div>
+
+            <div class="lesson-content">
+                <strong>Lektion 29</strong>
+                <span>In Vorbereitung</span>
+            </div>
+
+            <div class="arrow">•</div>
+
+        </div>
+
+
+        <!-- 30 -->
+
+        <div class="lesson-card locked">
+
+            <div class="lesson-number">
+                30
+            </div>
+
+            <div class="lesson-content">
+                <strong>Lektion 30</strong>
+                <span>In Vorbereitung</span>
+            </div>
+
+            <div class="arrow">•</div>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="info-box">
+
+        <strong>Dein Fortschritt</strong><br>
+
+        Später werden wir hier automatisch anzeigen,
+        welche Lektionen du abgeschlossen hast,
+        deine Testergebnisse und welche Lektion
+        du als Nächstes machen solltest.
+
+    </div>
+
+
+    <footer>
+
+        Deutsch lernen mit Nele 🇩🇪 · A1
+
+    </footer>
+
+
+</div>
+
+</body>
+              </html>
