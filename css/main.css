@@ -1,1 +1,43 @@
+/* ========================================
+   DEUTSCHSPRECHEN
+   Główny styl strony
+======================================== */
 
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: #f5f7fa;
+    color: #1f2937;
+    line-height: 1.6;
+}
+
+main {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+/* Telefon */
+@media (max-width: 600px) {
+    main {
+        padding: 16px;
+    }
+}
+
+/* Tablet */
+@media (min-width: 601px) and (max-width: 1024px) {
+    main {
+        padding: 24px;
+    }
+}
