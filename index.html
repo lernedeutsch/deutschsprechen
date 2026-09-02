@@ -1,1 +1,771 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Deutsch lernen mit Nele</title>
+
+<style>
+:root{
+    --bg:#07182c;
+    --bg2:#0c2744;
+    --card:#102d4d;
+    --card2:#163858;
+    --text:#f5f8fc;
+    --muted:#b9c9da;
+    --gold:#f4c95d;
+    --blue:#62bdf5;
+    --green:#82df48;
+    --purple:#a98af5;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    font-family:Arial, sans-serif;
+    color:var(--text);
+
+    background:
+        radial-gradient(
+            circle at top,
+            rgba(50,130,200,.18),
+            transparent 35%
+        ),
+        linear-gradient(
+            180deg,
+            var(--bg),
+            var(--bg2)
+        );
+}
+
+.page{
+    width:min(1100px,94%);
+    margin:auto;
+    padding:40px 0 70px;
+}
+
+
+/* HERO */
+
+.hero{
+    text-align:center;
+    padding:45px 20px 35px;
+}
+
+.logo{
+    width:90px;
+    height:90px;
+    margin:0 auto 18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f4c95d,
+            #e79d32
+        );
+
+    color:#142238;
+    font-size:48px;
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.3);
+}
+
+.hero h1{
+    margin:0;
+
+    font-size:
+        clamp(2.3rem,7vw,4.5rem);
+
+    line-height:1.05;
+}
+
+.hero h1 span{
+    color:var(--gold);
+}
+
+.hero p{
+    max-width:650px;
+    margin:18px auto 0;
+
+    color:var(--muted);
+    font-size:1.15rem;
+    line-height:1.6;
+}
+
+
+/* NELE */
+
+.nele-card{
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    gap:22px;
+    align-items:center;
+
+    padding:25px;
+
+    margin-bottom:32px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #173e63,
+            #102c49
+        );
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    border-radius:26px;
+
+    box-shadow:
+        0 18px 35px rgba(0,0,0,.25);
+}
+
+.nele-avatar{
+    width:82px;
+    height:82px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:#f4c95d;
+
+    font-size:43px;
+}
+
+.nele-info h2{
+    margin:0 0 5px;
+    font-size:1.7rem;
+}
+
+.nele-info p{
+    margin:0;
+    color:var(--muted);
+}
+
+.nele-button{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:14px 20px;
+
+    min-height:52px;
+
+    border-radius:16px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #72d8ff,
+            #359bd8
+        );
+
+    color:#07182c;
+
+    text-decoration:none;
+    font-weight:800;
+
+    box-shadow:
+        0 10px 20px rgba(0,0,0,.2);
+}
+
+
+/* SEKCJE */
+
+.section-title{
+    margin:40px 0 18px;
+    font-size:1.6rem;
+}
+
+.section-subtitle{
+    margin:-8px 0 22px;
+    color:var(--muted);
+}
+
+
+/* POZIOMY */
+
+.level-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:16px;
+}
+
+.level{
+    min-height:150px;
+
+    padding:22px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+
+    border-radius:22px;
+
+    text-decoration:none;
+    color:white;
+
+    border:
+        1px solid rgba(255,255,255,.1);
+
+    box-shadow:
+        0 12px 25px rgba(0,0,0,.2);
+
+    transition:
+        transform .2s,
+        filter .2s;
+}
+
+.level:hover{
+    transform:translateY(-5px);
+    filter:brightness(1.08);
+}
+
+.level strong{
+    font-size:2.2rem;
+}
+
+.level span{
+    color:rgba(255,255,255,.8);
+}
+
+.a1{
+    background:
+        linear-gradient(
+            145deg,
+            #2674a8,
+            #16486d
+        );
+}
+
+.a2{
+    background:
+        linear-gradient(
+            145deg,
+            #418e36,
+            #245f2b
+        );
+}
+
+.b1{
+    background:
+        linear-gradient(
+            145deg,
+            #7454b7,
+            #463273
+        );
+}
+
+
+/* LEKCJA */
+
+.lesson-card{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:18px;
+
+    padding:22px;
+
+    background:
+        rgba(255,255,255,.07);
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    border-radius:22px;
+
+    text-decoration:none;
+    color:white;
+
+    transition:
+        transform .2s,
+        background .2s;
+}
+
+.lesson-card:hover{
+    transform:translateY(-3px);
+
+    background:
+        rgba(255,255,255,.11);
+}
+
+.lesson-number{
+    width:58px;
+    height:58px;
+
+    flex:none;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:16px;
+
+    background:var(--gold);
+
+    color:#172235;
+
+    font-weight:900;
+    font-size:1.3rem;
+}
+
+.lesson-info{
+    flex:1;
+}
+
+.lesson-info strong{
+    display:block;
+
+    margin-bottom:4px;
+
+    font-size:1.2rem;
+}
+
+.lesson-info span{
+    color:var(--muted);
+}
+
+.arrow{
+    color:var(--gold);
+    font-size:1.8rem;
+}
+
+
+/* NARZĘDZIA */
+
+.tools{
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:14px;
+}
+
+.tool{
+    display:flex;
+    align-items:center;
+
+    gap:14px;
+
+    padding:18px;
+
+    min-height:75px;
+
+    background:
+        rgba(255,255,255,.07);
+
+    border:
+        1px solid rgba(255,255,255,.11);
+
+    border-radius:18px;
+
+    color:white;
+    text-decoration:none;
+
+    transition:
+        transform .2s,
+        background .2s;
+}
+
+.tool:hover{
+    transform:translateY(-3px);
+
+    background:
+        rgba(255,255,255,.12);
+}
+
+.tool-icon{
+    font-size:30px;
+}
+
+.tool strong{
+    display:block;
+}
+
+.tool small{
+    display:block;
+    color:var(--muted);
+    margin-top:2px;
+}
+
+
+/* FOOTER */
+
+footer{
+    margin-top:55px;
+
+    padding-top:25px;
+
+    text-align:center;
+
+    color:var(--muted);
+
+    border-top:
+        1px solid rgba(255,255,255,.1);
+}
+
+
+/* TELEFON */
+
+@media(max-width:700px){
+
+    .page{
+        width:92%;
+        padding-top:20px;
+    }
+
+    .hero{
+        padding:
+            28px 10px 30px;
+    }
+
+    .level-grid{
+        grid-template-columns:1fr;
+    }
+
+    .tools{
+        grid-template-columns:1fr;
+    }
+
+    .nele-card{
+        grid-template-columns:
+            auto 1fr;
+    }
+
+    .nele-button{
+        grid-column:1 / -1;
+        width:100%;
+    }
+
+}
+
+
+/* TABLET */
+
+@media(
+    min-width:701px
+)
+and
+(
+    max-width:950px
+){
+
+    .level-grid{
+        grid-template-columns:
+            repeat(3,1fr);
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="page">
+
+
+<!-- HERO -->
+
+<header class="hero">
+
+    <div class="logo">
+        🇩🇪
+    </div>
+
+    <h1>
+        Deutsch lernen
+        <span>mit Nele</span>
+    </h1>
+
+    <p>
+        Lerne Deutsch Schritt für Schritt.
+        Lektionen, Aussprache, Dialoge,
+        Übungen und deine persönliche
+        Deutschlehrerin Nele.
+    </p>
+
+</header>
+
+
+
+<!-- NELE -->
+
+<section class="nele-card">
+
+    <div class="nele-avatar">
+        👩‍🏫
+    </div>
+
+    <div class="nele-info">
+
+        <h2>Nele</h2>
+
+        <p>
+            Deine persönliche Deutschlehrerin
+        </p>
+
+    </div>
+
+    <a
+        href="nele.html"
+        class="nele-button"
+    >
+        🎙️ Mit Nele sprechen
+    </a>
+
+</section>
+
+
+
+<!-- POZIOMY -->
+
+<h2 class="section-title">
+    Dein Deutschkurs
+</h2>
+
+<p class="section-subtitle">
+    Wähle dein Sprachniveau.
+</p>
+
+
+<div class="level-grid">
+
+    <a
+        href="#a1"
+        class="level a1"
+    >
+
+        <strong>A1</strong>
+
+        <span>
+            Anfänger
+        </span>
+
+    </a>
+
+
+    <a
+        href="#"
+        class="level a2"
+    >
+
+        <strong>A2</strong>
+
+        <span>
+            Grundkenntnisse
+        </span>
+
+    </a>
+
+
+    <a
+        href="#"
+        class="level b1"
+    >
+
+        <strong>B1</strong>
+
+        <span>
+            Mittelstufe
+        </span>
+
+    </a>
+
+</div>
+
+
+
+<!-- A1 -->
+
+<section id="a1">
+
+<h2 class="section-title">
+    A1 · Lektionen
+</h2>
+
+<p class="section-subtitle">
+    Beginne mit deiner ersten Lektion.
+</p>
+
+
+<a
+    href="lessons/a1/lektion-1.html"
+    class="lesson-card"
+>
+
+    <div class="lesson-number">
+        01
+    </div>
+
+    <div class="lesson-info">
+
+        <strong>
+            Begrüßung und Vorstellung
+        </strong>
+
+        <span>
+            Guten Tag · Ich heiße …
+            · Das Alphabet
+        </span>
+
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+</a>
+
+</section>
+
+
+
+<!-- NAUKA -->
+
+<h2 class="section-title">
+    Lernen & Trainieren
+</h2>
+
+
+<div class="tools">
+
+
+    <a
+        href="lessons/a1/lektion-1.html"
+        class="tool"
+    >
+
+        <div class="tool-icon">
+            📖
+        </div>
+
+        <div>
+
+            <strong>
+                Lektionen
+            </strong>
+
+            <small>
+                Deutsch Schritt für Schritt
+            </small>
+
+        </div>
+
+    </a>
+
+
+    <a
+        href="nele.html"
+        class="tool"
+    >
+
+        <div class="tool-icon">
+            🗣️
+        </div>
+
+        <div>
+
+            <strong>
+                Sprechen
+            </strong>
+
+            <small>
+                Deutsch mit Nele sprechen
+            </small>
+
+        </div>
+
+    </a>
+
+
+    <a
+        href="#"
+        class="tool"
+    >
+
+        <div class="tool-icon">
+            ✏️
+        </div>
+
+        <div>
+
+            <strong>
+                Übungen
+            </strong>
+
+            <small>
+                Grammatik und Wortschatz
+            </small>
+
+        </div>
+
+    </a>
+
+
+    <a
+        href="#"
+        class="tool"
+    >
+
+        <div class="tool-icon">
+            💬
+        </div>
+
+        <div>
+
+            <strong>
+                Dialoge
+            </strong>
+
+            <small>
+                Alltagssituationen trainieren
+            </small>
+
+        </div>
+
+    </a>
+
+
+</div>
+
+
+
+<footer>
+
+    Deutsch lernen mit Nele 🇩🇪
+
+</footer>
+
+
+</div>
+
+</body>
+</html>
