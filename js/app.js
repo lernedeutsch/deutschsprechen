@@ -1,1 +1,1 @@
-
+console.log("Deutschsprechen działa.");
