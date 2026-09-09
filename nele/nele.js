@@ -1,6 +1,6 @@
 /* =========================================
    NELE
-   Główny moduł inteligentnej nauczycielki
+   Główny moduł inteligentnej trenerki
 ========================================= */
 
 const Nele = {
@@ -26,9 +26,12 @@ const Nele = {
        START
     ========================================= */
 
-    init() {
+    async init() {
 
-        console.log("Nele ist bereit.");
+        console.log(
+            "Nele ist bereit."
+        );
+
 
         /*
           Pobieramy lub tworzymy
@@ -38,6 +41,7 @@ const Nele = {
         this.sessionId =
             this.getSessionId();
 
+
         console.log(
             "Nele session:",
             this.sessionId
@@ -45,16 +49,24 @@ const Nele = {
 
 
         this.messagesElement =
-            document.getElementById("messages");
+            document.getElementById(
+                "messages"
+            );
 
         this.inputElement =
-            document.getElementById("message-input");
+            document.getElementById(
+                "message-input"
+            );
 
         this.sendButton =
-            document.getElementById("send-btn");
+            document.getElementById(
+                "send-btn"
+            );
 
         this.micButton =
-            document.getElementById("mic-btn");
+            document.getElementById(
+                "mic-btn"
+            );
 
 
         /* =========================
@@ -81,7 +93,10 @@ const Nele = {
                 "keydown",
                 (event) => {
 
-                    if (event.key === "Enter") {
+                    if (
+                        event.key ===
+                        "Enter"
+                    ) {
 
                         event.preventDefault();
 
@@ -104,26 +119,37 @@ const Nele = {
                 ".quick-action"
             );
 
-        quickActions.forEach(button => {
 
-            button.addEventListener(
-                "click",
-                () => {
+        quickActions.forEach(
+            button => {
 
-                    const text =
-                        button.dataset.text;
+                button.addEventListener(
+                    "click",
+                    () => {
 
-                    if (!text) return;
+                        const text =
+                            button.dataset.text;
 
-                    this.inputElement.value =
-                        text;
+                        if (!text) {
+                            return;
+                        }
 
-                    this.inputElement.focus();
+                        if (
+                            !this.inputElement
+                        ) {
+                            return;
+                        }
 
-                }
-            );
+                        this.inputElement.value =
+                            text;
 
-        });
+                        this.inputElement.focus();
+
+                    }
+                );
+
+            }
+        );
 
 
         /* =========================
@@ -131,6 +157,13 @@ const Nele = {
         ========================= */
 
         this.setupMicrophone();
+
+
+        /* =========================
+           AUTOMATYCZNE POWITANIE
+        ========================= */
+
+        await this.loadWelcome();
 
     },
 
@@ -170,7 +203,8 @@ const Nele = {
 
         if (
             window.crypto
-            && crypto.randomUUID
+            &&
+            crypto.randomUUID
         ) {
 
             sessionId =
@@ -205,6 +239,93 @@ const Nele = {
 
 
     /* =========================================
+       AUTOMATYCZNE POWITANIE
+    ========================================= */
+
+    async loadWelcome() {
+
+        if (!this.sessionId) {
+            return;
+        }
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `${this.backendUrl}/welcome`,
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            session_id:
+                                this.sessionId
+                        })
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    `Welcome backend error: ${response.status}`
+                );
+
+            }
+
+
+            const data =
+                await response.json();
+
+
+            const reply =
+                data.reply;
+
+
+            if (!reply) {
+                return;
+            }
+
+
+            /*
+              Nele jako pierwsza
+              pokazuje wiadomość.
+            */
+
+            this.addMessage(
+                "Nele",
+                reply,
+                "nele"
+            );
+
+
+            /*
+              Nele wypowiada powitanie.
+            */
+
+            this.speak(
+                reply
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Nele Welcome Fehler:",
+                error
+            );
+
+        }
+
+    },
+
+
+    /* =========================================
        KONFIGURACJA MIKROFONU
     ========================================= */
 
@@ -226,7 +347,8 @@ const Nele = {
                 "Rozpoznawanie mowy nie jest obsługiwane przez tę przeglądarkę."
             );
 
-            this.micButton.disabled = true;
+            this.micButton.disabled =
+                true;
 
             this.micButton.title =
                 "Spracherkennung wird von diesem Browser nicht unterstützt.";
@@ -256,21 +378,23 @@ const Nele = {
            START NASŁUCHIWANIA
         ------------------------- */
 
-        this.recognition.onstart = () => {
+        this.recognition.onstart =
+            () => {
 
-            this.isListening = true;
+                this.isListening =
+                    true;
 
-            console.log(
-                "Nele hört zu..."
-            );
+                console.log(
+                    "Nele hört zu..."
+                );
 
-            this.micButton.textContent =
-                "🔴";
+                this.micButton.textContent =
+                    "🔴";
 
-            this.micButton.title =
-                "Ich höre zu...";
+                this.micButton.title =
+                    "Ich höre zu...";
 
-        };
+            };
 
 
         /* -------------------------
@@ -281,7 +405,8 @@ const Nele = {
             (event) => {
 
                 const transcript =
-                    event.results[0][0]
+                    event
+                        .results[0][0]
                         .transcript
                         .trim();
 
@@ -294,7 +419,8 @@ const Nele = {
 
                 if (
                     this.inputElement
-                    && transcript
+                    &&
+                    transcript
                 ) {
 
                     this.inputElement.value =
@@ -309,27 +435,32 @@ const Nele = {
            KONIEC NASŁUCHIWANIA
         ------------------------- */
 
-        this.recognition.onend = () => {
+        this.recognition.onend =
+            () => {
 
-            this.isListening = false;
+                this.isListening =
+                    false;
 
-            this.micButton.textContent =
-                "🎤";
+                this.micButton.textContent =
+                    "🎤";
 
-            this.micButton.title =
-                "Sprechen";
+                this.micButton.title =
+                    "Sprechen";
 
 
-            if (
-                this.inputElement
-                && this.inputElement.value.trim()
-            ) {
+                if (
+                    this.inputElement
+                    &&
+                    this.inputElement
+                        .value
+                        .trim()
+                ) {
 
-                this.sendMessage();
+                    this.sendMessage();
 
-            }
+                }
 
-        };
+            };
 
 
         /* -------------------------
@@ -345,7 +476,8 @@ const Nele = {
                 );
 
 
-                this.isListening = false;
+                this.isListening =
+                    false;
 
                 this.micButton.textContent =
                     "🎤";
@@ -417,10 +549,13 @@ const Nele = {
                 */
 
                 if (
-                    "speechSynthesis" in window
+                    "speechSynthesis"
+                    in window
                 ) {
 
-                    window.speechSynthesis.cancel();
+                    window
+                        .speechSynthesis
+                        .cancel();
 
                 }
 
@@ -429,7 +564,9 @@ const Nele = {
 
                     this.recognition.start();
 
-                } catch (error) {
+                }
+
+                catch (error) {
 
                     console.error(
                         "Nie można uruchomić mikrofonu:",
@@ -456,7 +593,9 @@ const Nele = {
 
 
         const text =
-            this.inputElement.value.trim();
+            this.inputElement
+                .value
+                .trim();
 
 
         if (!text) {
@@ -475,14 +614,16 @@ const Nele = {
 
         /* wyczyść pole */
 
-        this.inputElement.value = "";
+        this.inputElement.value =
+            "";
 
 
         /* zablokuj przycisk */
 
         if (this.sendButton) {
 
-            this.sendButton.disabled = true;
+            this.sendButton.disabled =
+                true;
 
             this.sendButton.textContent =
                 "...";
@@ -503,14 +644,10 @@ const Nele = {
                                 "application/json"
                         },
 
-                        /*
-                          TERAZ wysyłamy:
-                          - wiadomość
-                          - identyfikator użytkownika
-                        */
-
                         body: JSON.stringify({
-                            message: text,
+                            message:
+                                text,
+
                             session_id:
                                 this.sessionId
                         })
@@ -552,7 +689,9 @@ const Nele = {
             );
 
 
-        } catch (error) {
+        }
+
+        catch (error) {
 
             console.error(
                 "Nele Backend Fehler:",
@@ -566,7 +705,9 @@ const Nele = {
                 "nele"
             );
 
-        } finally {
+        }
+
+        finally {
 
             if (this.sendButton) {
 
@@ -597,7 +738,10 @@ const Nele = {
     speak(text) {
 
         if (
-            !("speechSynthesis" in window)
+            !(
+                "speechSynthesis"
+                in window
+            )
         ) {
 
             console.warn(
@@ -605,11 +749,12 @@ const Nele = {
             );
 
             return;
-
         }
 
 
-        window.speechSynthesis.cancel();
+        window
+            .speechSynthesis
+            .cancel();
 
 
         const utterance =
@@ -632,16 +777,21 @@ const Nele = {
 
 
         const voices =
-            window.speechSynthesis.getVoices();
+            window
+                .speechSynthesis
+                .getVoices();
 
 
         const germanVoices =
             voices.filter(
                 voice =>
-                    voice.lang &&
+                    voice.lang
+                    &&
                     voice.lang
                         .toLowerCase()
-                        .startsWith("de")
+                        .startsWith(
+                            "de"
+                        )
             );
 
 
@@ -650,12 +800,15 @@ const Nele = {
                 voice =>
                     voice.name
                         .toLowerCase()
-                        .includes("google")
+                        .includes(
+                            "google"
+                        )
             )
             ||
             germanVoices.find(
                 voice =>
-                    voice.lang === "de-DE"
+                    voice.lang ===
+                    "de-DE"
             )
             ||
             germanVoices[0];
@@ -669,9 +822,11 @@ const Nele = {
         }
 
 
-        window.speechSynthesis.speak(
-            utterance
-        );
+        window
+            .speechSynthesis
+            .speak(
+                utterance
+            );
 
     },
 
@@ -702,7 +857,10 @@ const Nele = {
         );
 
 
-        if (type === "user") {
+        if (
+            type ===
+            "user"
+        ) {
 
             message.classList.add(
                 "message-user"
@@ -753,7 +911,8 @@ const Nele = {
 
 
         this.messagesElement.scrollTop =
-            this.messagesElement.scrollHeight;
+            this.messagesElement
+                .scrollHeight;
 
     }
 
