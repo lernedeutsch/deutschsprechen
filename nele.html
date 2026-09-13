@@ -370,6 +370,23 @@ body{
     font-size:.9rem;
 }
 
+/* PRZYCISK WYMOWY */
+
+.pronunciation-action{
+    border-color:
+        rgba(98,189,245,.30);
+
+    background:
+        rgba(98,189,245,.10);
+
+    color:#e7f6ff;
+}
+
+.pronunciation-action:hover{
+    background:
+        rgba(98,189,245,.18);
+}
+
 /* TELEFON */
 
 @media(max-width:650px){
@@ -556,6 +573,21 @@ body{
                     data-text="Korrigiere meinen Satz."
                 >
                     Satz korrigieren
+                </button>
+
+
+                <!-- =================================
+                     OSOBNY TRYB WYMOWY
+                ================================== -->
+
+                <button
+                    type="button"
+                    class="quick-action pronunciation-action"
+                    id="pronunciation-btn"
+                    aria-label="Aussprache üben"
+                    title="Aussprache üben"
+                >
+                    🗣️ Aussprache üben
                 </button>
 
             </div>
