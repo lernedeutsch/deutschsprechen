@@ -1,14 +1,17 @@
 /* =========================================
    NELE – PRONUNCIATION RECORDER
 
-   Tymczasowe laboratorium audio.
+   Nagrywanie prawdziwego głosu użytkownika.
 
    Ten moduł:
 
-   1. nagrywa prawdziwy głos użytkownika,
+   1. nagrywa głos użytkownika,
    2. tworzy plik audio,
    3. wysyła go do backendu,
-   4. sprawdza, czy backend go otrzymał.
+   4. backend rozpoznaje mowę przez Whisper,
+   5. pokazuje rozpoznany tekst użytkownika,
+   6. pokazuje odpowiedź Nele,
+   7. Nele wypowiada odpowiedź.
 
    WAŻNE:
 
@@ -52,29 +55,23 @@ const NelePronunciationRecorder = {
                 "pronunciation-btn"
             );
 
-
         this.normalMicButton =
             document.getElementById(
                 "mic-btn"
             );
 
 
-        if (
-            !this.pronunciationButton
-        ) {
+        if (!this.pronunciationButton) {
 
             console.warn(
                 "Pronunciation button not found."
             );
 
             return;
-
         }
 
 
-        if (
-            !this.isSupported()
-        ) {
+        if (!this.isSupported()) {
 
             this.pronunciationButton.disabled =
                 true;
@@ -88,15 +85,12 @@ const NelePronunciationRecorder = {
                     + "diesem Browser nicht unterstützt."
                 );
 
-
             console.warn(
                 "MediaRecorder wird von diesem "
                 + "Browser nicht unterstützt."
             );
 
-
             return;
-
         }
 
 
@@ -132,9 +126,7 @@ const NelePronunciationRecorder = {
             );
 
 
-        if (
-            sessionId
-        ) {
+        if (sessionId) {
 
             return sessionId;
 
@@ -142,6 +134,148 @@ const NelePronunciationRecorder = {
 
 
         return "default";
+
+    },
+
+
+    /* =====================================
+       DOSTĘP DO GŁÓWNEJ NELE
+    ===================================== */
+
+    getNeleApp() {
+
+        try {
+
+            if (
+                typeof Nele !==
+                "undefined"
+                &&
+                Nele
+            ) {
+
+                return Nele;
+
+            }
+
+        } catch (error) {
+
+            console.warn(
+                "Nele app not available:",
+                error
+            );
+
+        }
+
+
+        return null;
+
+    },
+
+
+    /* =====================================
+       POKAZANIE ODPOWIEDZI BACKENDU
+       W NORMALNYM CZACIE
+    ===================================== */
+
+    showConversationResult(
+        data
+    ) {
+
+        if (!data) {
+            return;
+        }
+
+
+        const neleApp =
+            this.getNeleApp();
+
+
+        if (!neleApp) {
+
+            console.warn(
+                "Cannot display pronunciation "
+                + "result because Nele is unavailable."
+            );
+
+            return;
+
+        }
+
+
+        const transcript =
+            String(
+                data.transcript
+                ||
+                ""
+            ).trim();
+
+
+        const reply =
+            String(
+                data.reply
+                ||
+                ""
+            ).trim();
+
+
+        /*
+          Pokazujemy to, co Whisper
+          rozpoznał jako wypowiedź użytkownika.
+        */
+
+        if (
+            transcript
+            &&
+            typeof neleApp.addMessage
+            === "function"
+        ) {
+
+            neleApp.addMessage(
+                "Du",
+                transcript,
+                "user"
+            );
+
+        }
+
+
+        /*
+          Pokazujemy normalną
+          odpowiedź Nele.
+        */
+
+        if (
+            reply
+            &&
+            typeof neleApp.addMessage
+            === "function"
+        ) {
+
+            neleApp.addMessage(
+                "Nele",
+                reply,
+                "nele"
+            );
+
+        }
+
+
+        /*
+          Nele wypowiada odpowiedź.
+        */
+
+        if (
+            reply
+            &&
+            typeof neleApp.speak
+            === "function"
+        ) {
+
+            neleApp.speak(
+                reply
+            );
+
+        }
 
     },
 
@@ -169,9 +303,7 @@ const NelePronunciationRecorder = {
 
     getSupportedMimeType() {
 
-        if (
-            !window.MediaRecorder
-        ) {
+        if (!window.MediaRecorder) {
 
             return "";
 
@@ -246,33 +378,21 @@ const NelePronunciationRecorder = {
             ).toLowerCase();
 
 
-        if (
-            type.includes(
-                "mp4"
-            )
-        ) {
+        if (type.includes("mp4")) {
 
             return "m4a";
 
         }
 
 
-        if (
-            type.includes(
-                "ogg"
-            )
-        ) {
+        if (type.includes("ogg")) {
 
             return "ogg";
 
         }
 
 
-        if (
-            type.includes(
-                "wav"
-            )
-        ) {
+        if (type.includes("wav")) {
 
             return "wav";
 
@@ -290,18 +410,14 @@ const NelePronunciationRecorder = {
 
     async handleButtonClick() {
 
-        if (
-            this.isUploading
-        ) {
+        if (this.isUploading) {
 
             return;
 
         }
 
 
-        if (
-            this.isRecording
-        ) {
+        if (this.isRecording) {
 
             await this.stopFromButton();
 
@@ -322,9 +438,7 @@ const NelePronunciationRecorder = {
 
     isNormalMicrophoneListening() {
 
-        if (
-            !this.normalMicButton
-        ) {
+        if (!this.normalMicButton) {
 
             return false;
 
@@ -409,9 +523,7 @@ const NelePronunciationRecorder = {
             await this.start();
 
 
-        if (
-            !started
-        ) {
+        if (!started) {
 
             this.restoreNormalMicrophone();
 
@@ -484,8 +596,7 @@ const NelePronunciationRecorder = {
 
 
         /*
-          TERAZ WYSYŁAMY AUDIO
-          DO BACKENDU.
+          WYSYŁAMY AUDIO DO BACKENDU.
         */
 
         const uploaded =
@@ -494,12 +605,10 @@ const NelePronunciationRecorder = {
             );
 
 
-        if (
-            uploaded
-        ) {
+        if (uploaded) {
 
             this.showTemporaryButtonMessage(
-                "✅ Audio gesendet"
+                "✅ Verstanden"
             );
 
         } else {
@@ -535,9 +644,7 @@ const NelePronunciationRecorder = {
         }
 
 
-        if (
-            this.isUploading
-        ) {
+        if (this.isUploading) {
 
             return false;
 
@@ -583,13 +690,10 @@ const NelePronunciationRecorder = {
 
 
             /*
-              CELOWO NIE WYSYŁAMY MESSAGE.
+              Nie wysyłamy message.
 
-              Backend odpowie, że audio
-              dotarło, ale ASR nie jest
-              jeszcze aktywne.
-
-              To jest właśnie nasz test.
+              Whisper ma sam rozpoznać,
+              co użytkownik powiedział.
             */
 
 
@@ -623,9 +727,9 @@ const NelePronunciationRecorder = {
               NIE ustawiamy ręcznie
               Content-Type.
 
-              Przeglądarka sama ustawi:
+              Przeglądarka sama ustawia
               multipart/form-data
-              z właściwym boundary.
+              razem z boundary.
             */
 
             const response =
@@ -640,17 +744,6 @@ const NelePronunciationRecorder = {
                     }
                 );
 
-
-            /*
-              Nawet kod HTTP 400 jest tutaj
-              możliwy i prawidłowy.
-
-              Backend zwraca 400,
-              ponieważ nie ma jeszcze tekstu,
-              ale może jednocześnie potwierdzić:
-
-              audio_received: true
-            */
 
             let data;
 
@@ -679,15 +772,51 @@ const NelePronunciationRecorder = {
             );
 
 
+            /*
+              NOWE:
+
+              Pokazujemy transkrypcję
+              oraz odpowiedź Nele
+              w normalnym czacie.
+            */
+
+            this.showConversationResult(
+                data
+            );
+
+
+            /*
+              Sukces oznacza:
+
+              - serwer odpowiedział 2xx
+              - audio dotarło
+              - jeżeli była transkrypcja,
+                została przetworzona.
+            */
+
             if (
+                response.ok
+                &&
                 data
                 &&
                 data.audio_received === true
             ) {
 
                 console.log(
-                    "✅ Backend received real audio."
+                    "✅ Backend processed real audio."
                 );
+
+
+                if (
+                    data.transcript
+                ) {
+
+                    console.log(
+                        "Whisper transcript:",
+                        data.transcript
+                    );
+
+                }
 
 
                 return true;
@@ -696,7 +825,7 @@ const NelePronunciationRecorder = {
 
 
             console.warn(
-                "Backend did not confirm audio.",
+                "Backend could not process audio.",
                 data
             );
 
@@ -731,9 +860,7 @@ const NelePronunciationRecorder = {
 
     disableNormalMicrophone() {
 
-        if (
-            !this.normalMicButton
-        ) {
+        if (!this.normalMicButton) {
 
             return;
 
@@ -762,9 +889,7 @@ const NelePronunciationRecorder = {
 
     restoreNormalMicrophone() {
 
-        if (
-            !this.normalMicButton
-        ) {
+        if (!this.normalMicButton) {
 
             return;
 
@@ -797,9 +922,7 @@ const NelePronunciationRecorder = {
 
     setButtonIdle() {
 
-        if (
-            !this.pronunciationButton
-        ) {
+        if (!this.pronunciationButton) {
 
             return;
 
@@ -833,9 +956,7 @@ const NelePronunciationRecorder = {
 
     setButtonStarting() {
 
-        if (
-            !this.pronunciationButton
-        ) {
+        if (!this.pronunciationButton) {
 
             return;
 
@@ -857,9 +978,7 @@ const NelePronunciationRecorder = {
 
     setButtonRecording() {
 
-        if (
-            !this.pronunciationButton
-        ) {
+        if (!this.pronunciationButton) {
 
             return;
 
@@ -890,9 +1009,7 @@ const NelePronunciationRecorder = {
 
     setButtonStopping() {
 
-        if (
-            !this.pronunciationButton
-        ) {
+        if (!this.pronunciationButton) {
 
             return;
 
@@ -914,9 +1031,7 @@ const NelePronunciationRecorder = {
 
     setButtonUploading() {
 
-        if (
-            !this.pronunciationButton
-        ) {
+        if (!this.pronunciationButton) {
 
             return;
 
@@ -940,9 +1055,7 @@ const NelePronunciationRecorder = {
         message
     ) {
 
-        if (
-            !this.pronunciationButton
-        ) {
+        if (!this.pronunciationButton) {
 
             return;
 
@@ -978,9 +1091,7 @@ const NelePronunciationRecorder = {
 
     clearButtonResetTimer() {
 
-        if (
-            !this.buttonResetTimer
-        ) {
+        if (!this.buttonResetTimer) {
 
             return;
 
@@ -1022,9 +1133,7 @@ const NelePronunciationRecorder = {
 
     releaseStream() {
 
-        if (
-            !this.audioStream
-        ) {
+        if (!this.audioStream) {
 
             return;
 
@@ -1068,18 +1177,14 @@ const NelePronunciationRecorder = {
 
     async start() {
 
-        if (
-            this.isRecording
-        ) {
+        if (this.isRecording) {
 
             return false;
 
         }
 
 
-        if (
-            !this.isSupported()
-        ) {
+        if (!this.isSupported()) {
 
             return false;
 
@@ -1123,9 +1228,7 @@ const NelePronunciationRecorder = {
             let recorder;
 
 
-            if (
-                mimeType
-            ) {
+            if (mimeType) {
 
                 recorder =
                     new MediaRecorder(
@@ -1237,9 +1340,7 @@ const NelePronunciationRecorder = {
             this.mediaRecorder;
 
 
-        if (
-            !recorder
-        ) {
+        if (!recorder) {
 
             this.isRecording =
                 false;
@@ -1460,9 +1561,7 @@ const NelePronunciationRecorder = {
 
     getRecordingInfo() {
 
-        if (
-            !this.audioBlob
-        ) {
+        if (!this.audioBlob) {
 
             return null;
 
@@ -1525,4 +1624,4 @@ if (
 
     initNelePronunciationRecorder();
 
-           }
+    }
