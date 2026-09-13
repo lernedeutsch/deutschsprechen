@@ -1,2189 +1,1554 @@
+nele/nele.js
+Kod:
 /* =========================================
-   NELE
-   Główny moduł inteligentnej trenerki
+NELE
+Główny moduł inteligentnej trenerki
 ========================================= */
 
 const Nele = {
 
-    name: "Nele",
-    language: "de-DE",
+name: "Nele",  
+language: "de-DE",  
 
-    backendUrl:
-        "https://nele-backend.onrender.com",
+backendUrl:  
+    "https://nele-backend.onrender.com",  
 
-    messagesElement: null,
-    inputElement: null,
-    sendButton: null,
-    micButton: null,
-    resetButton: null,
+messagesElement: null,  
+inputElement: null,  
+sendButton: null,  
+micButton: null,  
+resetButton: null,  
 
-    recognition: null,
-    isListening: false,
-    isResetting: false,
+recognition: null,  
+isListening: false,  
+isResetting: false,  
 
-    sessionId: null,
+sessionId: null,  
 
 
-    /* =========================================
-       PRAWDZIWE NAGRANIE AUDIO
-    ========================================= */
+/* =========================================  
+   START  
+========================================= */  
 
-    mediaRecorder: null,
-    audioStream: null,
-    audioChunks: [],
-    lastAudioBlob: null,
-    lastAudioMimeType: null,
+async init() {  
 
+    console.log(  
+        "Nele ist bereit."  
+    );  
 
-    /* =========================================
-       START
-    ========================================= */
 
-    async init() {
+    /*  
+      Pobieramy lub tworzymy  
+      identyfikator użytkownika.  
+    */  
 
-        console.log(
-            "Nele ist bereit."
-        );
+    this.sessionId =  
+        this.getSessionId();  
 
 
-        /*
-          Pobieramy lub tworzymy
-          identyfikator użytkownika.
-        */
+    console.log(  
+        "Nele session:",  
+        this.sessionId  
+    );  
 
-        this.sessionId =
-            this.getSessionId();
 
+    this.messagesElement =  
+        document.getElementById(  
+            "messages"  
+        );  
 
-        console.log(
-            "Nele session:",
-            this.sessionId
-        );
+    this.inputElement =  
+        document.getElementById(  
+            "message-input"  
+        );  
 
+    this.sendButton =  
+        document.getElementById(  
+            "send-btn"  
+        );  
 
-        this.messagesElement =
-            document.getElementById(
-                "messages"
-            );
+    this.micButton =  
+        document.getElementById(  
+            "mic-btn"  
+        );  
 
-        this.inputElement =
-            document.getElementById(
-                "message-input"
-            );
+    this.resetButton =  
+        document.getElementById(  
+            "reset-btn"  
+        );  
 
-        this.sendButton =
-            document.getElementById(
-                "send-btn"
-            );
 
-        this.micButton =
-            document.getElementById(
-                "mic-btn"
-            );
+    /* =========================  
+       SENDEN  
+    ========================= */  
 
-        this.resetButton =
-            document.getElementById(
-                "reset-btn"
-            );
+    if (this.sendButton) {  
 
+        this.sendButton.addEventListener(  
+            "click",  
+            () => this.sendMessage()  
+        );  
 
-        /* =========================
-           SENDEN
-        ========================= */
+    }  
 
-        if (this.sendButton) {
 
-            this.sendButton.addEventListener(
-                "click",
-                () => this.sendMessage(
-                    "text"
-                )
-            );
+    /* =========================  
+       ENTER  
+    ========================= */  
 
-        }
+    if (this.inputElement) {  
 
+        this.inputElement.addEventListener(  
+            "keydown",  
+            (event) => {  
 
-        /* =========================
-           ENTER
-        ========================= */
+                if (  
+                    event.key ===  
+                    "Enter"  
+                ) {  
 
-        if (this.inputElement) {
+                    event.preventDefault();  
 
-            this.inputElement.addEventListener(
-                "keydown",
-                (event) => {
+                    this.sendMessage();  
 
-                    if (
-                        event.key ===
-                        "Enter"
-                    ) {
+                }  
 
-                        event.preventDefault();
+            }  
+        );  
 
-                        this.sendMessage(
-                            "text"
-                        );
+    }  
 
-                    }
 
-                }
-            );
+    /* =========================  
+       NEU ANFANGEN  
+    ========================= */  
 
-        }
+    if (this.resetButton) {  
 
+        this.resetButton.addEventListener(  
+            "click",  
+            () => this.showResetConfirmation()  
+        );  
 
-        /* =========================
-           NEU ANFANGEN
-        ========================= */
+    }  
 
-        if (this.resetButton) {
 
-            this.resetButton.addEventListener(
-                "click",
-                () => this.showResetConfirmation()
-            );
+    /* =========================  
+       SZYBKIE PRZYCISKI  
+    ========================= */  
 
-        }
+    const quickActions =  
+        document.querySelectorAll(  
+            ".quick-action"  
+        );  
 
 
-        /* =========================
-           SZYBKIE PRZYCISKI
-        ========================= */
+    quickActions.forEach(  
+        button => {  
 
-        const quickActions =
-            document.querySelectorAll(
-                ".quick-action"
-            );
+            button.addEventListener(  
+                "click",  
+                () => {  
 
+                    const text =  
+                        button.dataset.text;  
 
-        quickActions.forEach(
-            button => {
+                    if (!text) {  
+                        return;  
+                    }  
 
-                button.addEventListener(
-                    "click",
-                    () => {
+                    if (  
+                        !this.inputElement  
+                    ) {  
+                        return;  
+                    }  
 
-                        const text =
-                            button.dataset.text;
+                    this.inputElement.value =  
+                        text;  
 
-                        if (!text) {
-                            return;
-                        }
+                    this.inputElement.focus();  
 
-                        if (
-                            !this.inputElement
-                        ) {
-                            return;
-                        }
+                }  
+            );  
 
-                        this.inputElement.value =
-                            text;
+        }  
+    );  
 
-                        this.inputElement.focus();
 
-                    }
-                );
+    /* =========================  
+       MIKROFON  
+    ========================= */  
 
-            }
-        );
+    this.setupMicrophone();  
 
 
-        /* =========================
-           MIKROFON
-        ========================= */
+    /* =========================  
+       AUTOMATYCZNE POWITANIE  
+    ========================= */  
 
-        this.setupMicrophone();
+    await this.loadWelcome();  
 
+},  
 
-        /* =========================
-           AUTOMATYCZNE POWITANIE
-        ========================= */
 
-        await this.loadWelcome();
+/* =========================================  
+   IDENTYFIKATOR UŻYTKOWNIKA  
+========================================= */  
 
-    },
+getSessionId() {  
 
+    const storageKey =  
+        "nele_session_id";  
 
-    /* =========================================
-       IDENTYFIKATOR UŻYTKOWNIKA
-    ========================================= */
 
-    getSessionId() {
+    /*  
+      Sprawdzamy, czy użytkownik  
+      ma już swój identyfikator.  
+    */  
 
-        const storageKey =
-            "nele_session_id";
+    let sessionId =  
+        localStorage.getItem(  
+            storageKey  
+        );  
 
 
-        /*
-          Sprawdzamy, czy użytkownik
-          ma już swój identyfikator.
-        */
+    if (sessionId) {  
 
-        let sessionId =
-            localStorage.getItem(
-                storageKey
-            );
+        return sessionId;  
 
+    }  
 
-        if (sessionId) {
 
-            return sessionId;
+    /*  
+      Jeżeli nie ma identyfikatora,  
+      tworzymy nowy.  
+    */  
 
-        }
+    if (  
+        window.crypto  
+        &&  
+        crypto.randomUUID  
+    ) {  
 
+        sessionId =  
+            crypto.randomUUID();  
 
-        /*
-          Jeżeli nie ma identyfikatora,
-          tworzymy nowy.
-        */
+    } else {  
 
-        if (
-            window.crypto
-            &&
-            crypto.randomUUID
-        ) {
+        sessionId =  
+            "nele-"  
+            + Date.now()  
+            + "-"  
+            + Math.random()  
+                .toString(36)  
+                .substring(2, 12);  
 
-            sessionId =
-                crypto.randomUUID();
+    }  
 
-        } else {
 
-            sessionId =
-                "nele-"
-                + Date.now()
-                + "-"
-                + Math.random()
-                    .toString(36)
-                    .substring(2, 12);
+    /*  
+      Zapisujemy ID w przeglądarce.  
+    */  
 
-        }
+    localStorage.setItem(  
+        storageKey,  
+        sessionId  
+    );  
 
 
-        /*
-          Zapisujemy ID w przeglądarce.
-        */
+    return sessionId;  
 
-        localStorage.setItem(
-            storageKey,
-            sessionId
-        );
+},  
 
 
-        return sessionId;
+/* =========================================  
+   AUTOMATYCZNE POWITANIE  
+========================================= */  
 
-    },
+async loadWelcome() {  
 
+    if (!this.sessionId) {  
+        return;  
+    }  
 
-    /* =========================================
-       AUTOMATYCZNE POWITANIE
-    ========================================= */
 
-    async loadWelcome() {
+    try {  
 
-        if (!this.sessionId) {
-            return;
-        }
+        const response =  
+            await fetch(  
+                `${this.backendUrl}/welcome`,  
+                {  
+                    method: "POST",  
 
+                    headers: {  
+                        "Content-Type":  
+                            "application/json"  
+                    },  
 
-        try {
+                    body: JSON.stringify({  
+                        session_id:  
+                            this.sessionId  
+                    })  
+                }  
+            );  
 
-            const response =
-                await fetch(
-                    `${this.backendUrl}/welcome`,
-                    {
-                        method: "POST",
 
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        },
+        if (!response.ok) {  
 
-                        body: JSON.stringify({
-                            session_id:
-                                this.sessionId
-                        })
-                    }
-                );
+            throw new Error(  
+                `Welcome backend error: ${response.status}`  
+            );  
 
+        }  
 
-            if (!response.ok) {
 
-                throw new Error(
-                    `Welcome backend error: ${response.status}`
-                );
+        const data =  
+            await response.json();  
 
-            }
 
+        const reply =  
+            data.reply;  
 
-            const data =
-                await response.json();
 
+        if (!reply) {  
+            return;  
+        }  
 
-            const reply =
-                data.reply;
 
+        /*  
+          Nele jako pierwsza  
+          pokazuje wiadomość.  
+        */  
 
-            if (!reply) {
-                return;
-            }
+        this.addMessage(  
+            "Nele",  
+            reply,  
+            "nele"  
+        );  
 
 
-            /*
-              Nele jako pierwsza
-              pokazuje wiadomość.
-            */
+        /*  
+          Nele wypowiada powitanie.  
+        */  
 
-            this.addMessage(
-                "Nele",
-                reply,
-                "nele"
-            );
+        this.speak(  
+            reply  
+        );  
 
 
-            /*
-              Nele wypowiada powitanie.
-            */
+    } catch (error) {  
 
-            this.speak(
-                reply
-            );
+        console.error(  
+            "Nele Welcome Fehler:",  
+            error  
+        );  
 
+    }  
 
-        } catch (error) {
+},  
 
-            console.error(
-                "Nele Welcome Fehler:",
-                error
-            );
 
-        }
+/* =========================================  
+   OKNO POTWIERDZENIA RESETU  
+========================================= */  
 
-    },
+showResetConfirmation() {  
 
+    if (  
+        this.isResetting  
+    ) {  
+        return;  
+    }  
 
-    /* =========================================
-       OKNO POTWIERDZENIA RESETU
-    ========================================= */
 
-    showResetConfirmation() {
+    if (  
+        document.getElementById(  
+            "nele-reset-overlay"  
+        )  
+    ) {  
+        return;  
+    }  
 
-        if (
-            this.isResetting
-        ) {
-            return;
-        }
 
+    const overlay =  
+        document.createElement(  
+            "div"  
+        );  
 
-        if (
-            document.getElementById(
-                "nele-reset-overlay"
-            )
-        ) {
-            return;
-        }
 
+    overlay.id =  
+        "nele-reset-overlay";  
 
-        const overlay =
-            document.createElement(
-                "div"
-            );
 
+    Object.assign(  
+        overlay.style,  
+        {  
+            position: "fixed",  
+            inset: "0",  
+            zIndex: "99999",  
+            display: "flex",  
+            alignItems: "center",  
+            justifyContent: "center",  
+            padding: "20px",  
+            background:  
+                "rgba(0, 0, 0, 0.70)"  
+        }  
+    );  
 
-        overlay.id =
-            "nele-reset-overlay";
 
+    const dialog =  
+        document.createElement(  
+            "div"  
+        );  
 
-        Object.assign(
-            overlay.style,
-            {
-                position: "fixed",
-                inset: "0",
-                zIndex: "99999",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "20px",
-                background:
-                    "rgba(0, 0, 0, 0.70)"
-            }
-        );
 
+    Object.assign(  
+        dialog.style,  
+        {  
+            width: "100%",  
+            maxWidth: "430px",  
+            padding: "24px",  
+            borderRadius: "22px",  
+            border:  
+                "1px solid rgba(255,255,255,.15)",  
+            background:  
+                "#102d4d",  
+            color:  
+                "#f5f8fc",  
+            boxShadow:  
+                "0 20px 60px rgba(0,0,0,.45)",  
+            fontFamily:  
+                "Arial, sans-serif"  
+        }  
+    );  
 
-        const dialog =
-            document.createElement(
-                "div"
-            );
 
+    const title =  
+        document.createElement(  
+            "h2"  
+        );  
 
-        Object.assign(
-            dialog.style,
-            {
-                width: "100%",
-                maxWidth: "430px",
-                padding: "24px",
-                borderRadius: "22px",
-                border:
-                    "1px solid rgba(255,255,255,.15)",
-                background:
-                    "#102d4d",
-                color:
-                    "#f5f8fc",
-                boxShadow:
-                    "0 20px 60px rgba(0,0,0,.45)",
-                fontFamily:
-                    "Arial, sans-serif"
-            }
-        );
 
+    title.textContent =  
+        "Wirklich neu anfangen?";  
 
-        const title =
-            document.createElement(
-                "h2"
-            );
 
+    Object.assign(  
+        title.style,  
+        {  
+            margin:  
+                "0 0 12px",  
+            fontSize:  
+                "1.35rem"  
+        }  
+    );  
 
-        title.textContent =
-            "Wirklich neu anfangen?";
 
+    const text =  
+        document.createElement(  
+            "p"  
+        );  
 
-        Object.assign(
-            title.style,
-            {
-                margin:
-                    "0 0 12px",
-                fontSize:
-                    "1.35rem"
-            }
-        );
 
+    text.textContent =  
+        (  
+            "Alle deine gespeicherten "  
+            + "Lerndaten und Fortschritte "  
+            + "bei Nele werden gelöscht. "  
+            + "Das kann nicht rückgängig "  
+            + "gemacht werden."  
+        );  
 
-        const text =
-            document.createElement(
-                "p"
-            );
 
+    Object.assign(  
+        text.style,  
+        {  
+            margin:  
+                "0 0 22px",  
+            lineHeight:  
+                "1.55",  
+            color:  
+                "#c7d5e4"  
+        }  
+    );  
 
-        text.textContent =
-            (
-                "Alle deine gespeicherten "
-                + "Lerndaten und Fortschritte "
-                + "bei Nele werden gelöscht. "
-                + "Das kann nicht rückgängig "
-                + "gemacht werden."
-            );
 
+    const buttons =  
+        document.createElement(  
+            "div"  
+        );  
 
-        Object.assign(
-            text.style,
-            {
-                margin:
-                    "0 0 22px",
-                lineHeight:
-                    "1.55",
-                color:
-                    "#c7d5e4"
-            }
-        );
 
+    Object.assign(  
+        buttons.style,  
+        {  
+            display:  
+                "flex",  
+            justifyContent:  
+                "flex-end",  
+            gap:  
+                "10px",  
+            flexWrap:  
+                "wrap"  
+        }  
+    );  
 
-        const buttons =
-            document.createElement(
-                "div"
-            );
 
+    const cancelButton =  
+        document.createElement(  
+            "button"  
+        );  
 
-        Object.assign(
-            buttons.style,
-            {
-                display:
-                    "flex",
-                justifyContent:
-                    "flex-end",
-                gap:
-                    "10px",
-                flexWrap:
-                    "wrap"
-            }
-        );
 
+    cancelButton.type =  
+        "button";  
 
-        const cancelButton =
-            document.createElement(
-                "button"
-            );
+    cancelButton.textContent =  
+        "Abbrechen";  
 
 
-        cancelButton.type =
-            "button";
+    Object.assign(  
+        cancelButton.style,  
+        {  
+            padding:  
+                "11px 16px",  
+            borderRadius:  
+                "13px",  
+            border:  
+                "1px solid rgba(255,255,255,.18)",  
+            background:  
+                "rgba(255,255,255,.08)",  
+            color:  
+                "#ffffff",  
+            fontWeight:  
+                "700",  
+            cursor:  
+                "pointer"  
+        }  
+    );  
 
-        cancelButton.textContent =
-            "Abbrechen";
 
+    const deleteButton =  
+        document.createElement(  
+            "button"  
+        );  
 
-        Object.assign(
-            cancelButton.style,
-            {
-                padding:
-                    "11px 16px",
-                borderRadius:
-                    "13px",
-                border:
-                    "1px solid rgba(255,255,255,.18)",
-                background:
-                    "rgba(255,255,255,.08)",
-                color:
-                    "#ffffff",
-                fontWeight:
-                    "700",
-                cursor:
-                    "pointer"
-            }
-        );
 
+    deleteButton.type =  
+        "button";  
 
-        const deleteButton =
-            document.createElement(
-                "button"
-            );
+    deleteButton.textContent =  
+        "Alles löschen";  
 
 
-        deleteButton.type =
-            "button";
+    Object.assign(  
+        deleteButton.style,  
+        {  
+            padding:  
+                "11px 16px",  
+            borderRadius:  
+                "13px",  
+            border:  
+                "none",  
+            background:  
+                "#f4c95d",  
+            color:  
+                "#172235",  
+            fontWeight:  
+                "800",  
+            cursor:  
+                "pointer"  
+        }  
+    );  
 
-        deleteButton.textContent =
-            "Alles löschen";
 
+    cancelButton.addEventListener(  
+        "click",  
+        () => {  
 
-        Object.assign(
-            deleteButton.style,
-            {
-                padding:
-                    "11px 16px",
-                borderRadius:
-                    "13px",
-                border:
-                    "none",
-                background:
-                    "#f4c95d",
-                color:
-                    "#172235",
-                fontWeight:
-                    "800",
-                cursor:
-                    "pointer"
-            }
-        );
+            overlay.remove();  
 
+        }  
+    );  
 
-        cancelButton.addEventListener(
-            "click",
-            () => {
 
-                overlay.remove();
+    overlay.addEventListener(  
+        "click",  
+        (event) => {  
 
-            }
-        );
+            if (  
+                event.target ===  
+                overlay  
+            ) {  
 
+                overlay.remove();  
 
-        overlay.addEventListener(
-            "click",
-            (event) => {
+            }  
 
-                if (
-                    event.target ===
-                    overlay
-                ) {
+        }  
+    );  
 
-                    overlay.remove();
 
-                }
+    deleteButton.addEventListener(  
+        "click",  
+        async () => {  
 
-            }
-        );
+            cancelButton.disabled =  
+                true;  
 
+            deleteButton.disabled =  
+                true;  
 
-        deleteButton.addEventListener(
-            "click",
-            async () => {
+            deleteButton.textContent =  
+                "Wird gelöscht...";  
 
-                cancelButton.disabled =
-                    true;
 
-                deleteButton.disabled =
-                    true;
+            const success =  
+                await this.resetLearningData();  
 
-                deleteButton.textContent =
-                    "Wird gelöscht...";
 
+            if (success) {  
 
-                const success =
-                    await this.resetLearningData();
+                overlay.remove();  
 
+                return;  
 
-                if (success) {
+            }  
 
-                    overlay.remove();
 
-                    return;
+            cancelButton.disabled =  
+                false;  
 
-                }
+            deleteButton.disabled =  
+                false;  
 
+            deleteButton.textContent =  
+                "Alles löschen";  
 
-                cancelButton.disabled =
-                    false;
+        }  
+    );  
 
-                deleteButton.disabled =
-                    false;
 
-                deleteButton.textContent =
-                    "Alles löschen";
+    buttons.appendChild(  
+        cancelButton  
+    );  
 
-            }
-        );
+    buttons.appendChild(  
+        deleteButton  
+    );  
 
 
-        buttons.appendChild(
-            cancelButton
-        );
+    dialog.appendChild(  
+        title  
+    );  
 
-        buttons.appendChild(
-            deleteButton
-        );
+    dialog.appendChild(  
+        text  
+    );  
 
+    dialog.appendChild(  
+        buttons  
+    );  
 
-        dialog.appendChild(
-            title
-        );
 
-        dialog.appendChild(
-            text
-        );
+    overlay.appendChild(  
+        dialog  
+    );  
 
-        dialog.appendChild(
-            buttons
-        );
 
+    document.body.appendChild(  
+        overlay  
+    );  
 
-        overlay.appendChild(
-            dialog
-        );
 
+    cancelButton.focus();  
 
-        document.body.appendChild(
-            overlay
-        );
+},  
 
 
-        cancelButton.focus();
+/* =========================================  
+   CAŁKOWITY RESET NAUKI  
+========================================= */  
 
-    },
+async resetLearningData() {  
 
+    if (  
+        this.isResetting  
+    ) {  
+        return false;  
+    }  
 
-    /* =========================================
-       CAŁKOWITY RESET NAUKI
-    ========================================= */
 
-    async resetLearningData() {
+    if (  
+        !this.sessionId  
+    ) {  
+        return false;  
+    }  
 
-        if (
-            this.isResetting
-        ) {
-            return false;
-        }
 
+    this.isResetting =  
+        true;  
 
-        if (
-            !this.sessionId
-        ) {
-            return false;
-        }
 
+    /*  
+      Czyścimy pole przed zatrzymaniem  
+      mikrofonu, aby jego onend  
+      nie wysłał starej wiadomości.  
+    */  
 
-        this.isResetting =
-            true;
+    if (  
+        this.inputElement  
+    ) {  
 
+        this.inputElement.value =  
+            "";  
 
-        /*
-          Czyścimy pole przed zatrzymaniem
-          mikrofonu, aby jego onend
-          nie wysłał starej wiadomości.
-        */
+    }  
 
-        if (
-            this.inputElement
-        ) {
 
-            this.inputElement.value =
-                "";
+    /*  
+      Zatrzymujemy mikrofon.  
+    */  
 
-        }
+    if (  
+        this.isListening  
+        &&  
+        this.recognition  
+    ) {  
 
+        try {  
 
-        /*
-          Zatrzymujemy SpeechRecognition.
-        */
+            this.recognition.stop();  
 
-        if (
-            this.isListening
-            &&
-            this.recognition
-        ) {
+        } catch (error) {  
 
-            try {
+            console.error(  
+                "Mikrofon stop error:",  
+                error  
+            );  
 
-                this.recognition.stop();
+        }  
 
-            } catch (error) {
+    }  
 
-                console.error(
-                    "Mikrofon stop error:",
-                    error
-                );
 
-            }
+    /*  
+      Zatrzymujemy głos Nele.  
+    */  
 
-        }
+    if (  
+        "speechSynthesis"  
+        in window  
+    ) {  
 
+        window  
+            .speechSynthesis  
+            .cancel();  
 
-        /*
-          Zatrzymujemy prawdziwe
-          nagrywanie audio.
-        */
+    }  
 
-        await this.stopAudioRecording();
 
+    if (  
+        this.resetButton  
+    ) {  
 
-        /*
-          Usuwamy ostatnie nagranie.
-        */
+        this.resetButton.disabled =  
+            true;  
 
-        this.clearLastAudioRecording();
+    }  
 
 
-        /*
-          Zatrzymujemy głos Nele.
-        */
+    if (  
+        this.sendButton  
+    ) {  
 
-        if (
-            "speechSynthesis"
-            in window
-        ) {
+        this.sendButton.disabled =  
+            true;  
 
-            window
-                .speechSynthesis
-                .cancel();
+    }  
 
-        }
 
+    if (  
+        this.micButton  
+    ) {  
 
-        if (
-            this.resetButton
-        ) {
+        this.micButton.disabled =  
+            true;  
 
-            this.resetButton.disabled =
-                true;
+    }  
 
-        }
 
+    try {  
 
-        if (
-            this.sendButton
-        ) {
+        const response =  
+            await fetch(  
+                `${this.backendUrl}/reset`,  
+                {  
+                    method:  
+                        "POST",  
 
-            this.sendButton.disabled =
-                true;
+                    headers: {  
+                        "Content-Type":  
+                            "application/json"  
+                    },  
 
-        }
+                    body:  
+                        JSON.stringify({  
+                            session_id:  
+                                this.sessionId  
+                        })  
+                }  
+            );  
 
 
-        if (
-            this.micButton
-        ) {
+        const data =  
+            await response.json();  
 
-            this.micButton.disabled =
-                true;
 
-        }
+        if (  
+            !response.ok  
+            ||  
+            !data.ok  
+        ) {  
 
+            throw new Error(  
+                data.error  
+                ||  
+                `Reset backend error: ${response.status}`  
+            );  
 
-        try {
+        }  
 
-            const response =
-                await fetch(
-                    `${this.backendUrl}/reset`,
-                    {
-                        method:
-                            "POST",
 
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        },
+        const reply =  
+            data.reply;  
 
-                        body:
-                            JSON.stringify({
-                                session_id:
-                                    this.sessionId
-                            })
-                    }
-                );
 
+        if (  
+            !reply  
+        ) {  
 
-            const data =
-                await response.json();
+            throw new Error(  
+                "Reset reply missing."  
+            );  
 
+        }  
 
-            if (
-                !response.ok
-                ||
-                !data.ok
-            ) {
 
-                throw new Error(
-                    data.error
-                    ||
-                    `Reset backend error: ${response.status}`
-                );
+        /*  
+          Dopiero gdy backend potwierdzi  
+          poprawne usunięcie pamięci,  
+          czyścimy widoczny czat.  
+        */  
 
-            }
+        if (  
+            this.messagesElement  
+        ) {  
 
+            this.messagesElement.innerHTML =  
+                "";  
 
-            const reply =
-                data.reply;
+        }  
 
 
-            if (
-                !reply
-            ) {
+        /*  
+          Pokazujemy Nele jak podczas  
+          pierwszego spotkania.  
+        */  
 
-                throw new Error(
-                    "Reset reply missing."
-                );
+        this.addMessage(  
+            "Nele",  
+            reply,  
+            "nele"  
+        );  
 
-            }
 
+        this.speak(  
+            reply  
+        );  
 
-            /*
-              Dopiero gdy backend potwierdzi
-              poprawne usunięcie pamięci,
-              czyścimy widoczny czat.
-            */
 
-            if (
-                this.messagesElement
-            ) {
+        return true;  
 
-                this.messagesElement.innerHTML =
-                    "";
 
-            }
+    } catch (error) {  
 
+        console.error(  
+            "Nele Reset Fehler:",  
+            error  
+        );  
 
-            /*
-              Pokazujemy Nele jak podczas
-              pierwszego spotkania.
-            */
 
-            this.addMessage(
-                "Nele",
-                reply,
-                "nele"
-            );
+        this.addMessage(  
+            "Nele",  
+            (  
+                "Entschuldigung. "  
+                + "Deine Lerndaten konnten "  
+                + "nicht gelöscht werden. "  
+                + "Versuch es bitte noch einmal."  
+            ),  
+            "nele"  
+        );  
 
 
-            this.speak(
-                reply
-            );
+        return false;  
 
+    } finally {  
 
-            return true;
+        this.isResetting =  
+            false;  
 
 
-        } catch (error) {
+        if (  
+            this.resetButton  
+        ) {  
 
-            console.error(
-                "Nele Reset Fehler:",
-                error
-            );
+            this.resetButton.disabled =  
+                false;  
 
+        }  
 
-            this.addMessage(
-                "Nele",
-                (
-                    "Entschuldigung. "
-                    + "Deine Lerndaten konnten "
-                    + "nicht gelöscht werden. "
-                    + "Versuch es bitte noch einmal."
-                ),
-                "nele"
-            );
 
+        if (  
+            this.sendButton  
+        ) {  
 
-            return false;
+            this.sendButton.disabled =  
+                false;  
 
-        } finally {
+        }  
 
-            this.isResetting =
-                false;
 
+        if (  
+            this.micButton  
+            &&  
+            this.recognition  
+        ) {  
 
-            if (
-                this.resetButton
-            ) {
+            this.micButton.disabled =  
+                false;  
 
-                this.resetButton.disabled =
-                    false;
+        }  
 
-            }
 
+        if (  
+            this.inputElement  
+        ) {  
 
-            if (
-                this.sendButton
-            ) {
+            this.inputElement.focus();  
 
-                this.sendButton.disabled =
-                    false;
+        }  
 
-            }
+    }  
 
+},  
 
-            if (
-                this.micButton
-                &&
-                this.recognition
-            ) {
 
-                this.micButton.disabled =
-                    false;
+/* =========================================  
+   KONFIGURACJA MIKROFONU  
+========================================= */  
 
-            }
+setupMicrophone() {  
 
+    if (!this.micButton) {  
+        return;  
+    }  
 
-            if (
-                this.inputElement
-            ) {
 
-                this.inputElement.focus();
+    const SpeechRecognition =  
+        window.SpeechRecognition ||  
+        window.webkitSpeechRecognition;  
 
-            }
 
-        }
+    if (!SpeechRecognition) {  
 
-    },
+        console.warn(  
+            "Rozpoznawanie mowy nie jest obsługiwane przez tę przeglądarkę."  
+        );  
 
+        this.micButton.disabled =  
+            true;  
 
-    /* =========================================
-       OBSŁUGIWANY FORMAT AUDIO
-    ========================================= */
+        this.micButton.title =  
+            "Spracherkennung wird von diesem Browser nicht unterstützt.";  
 
-    getSupportedAudioMimeType() {
+        return;  
+    }  
 
-        if (
-            !(
-                "MediaRecorder"
-                in window
-            )
-        ) {
 
-            return "";
+    this.recognition =  
+        new SpeechRecognition();  
 
-        }
 
+    this.recognition.lang =  
+        this.language;  
 
-        const mimeTypes = [
+    this.recognition.continuous =  
+        false;  
 
-            "audio/webm;codecs=opus",
+    this.recognition.interimResults =  
+        false;  
 
-            "audio/webm",
+    this.recognition.maxAlternatives =  
+        1;  
 
-            "audio/mp4",
 
-            "audio/ogg;codecs=opus"
+    /* -------------------------  
+       START NASŁUCHIWANIA  
+    ------------------------- */  
 
-        ];
+    this.recognition.onstart =  
+        () => {  
 
+            this.isListening =  
+                true;  
 
-        for (
-            const mimeType
-            of mimeTypes
-        ) {
+            console.log(  
+                "Nele hört zu..."  
+            );  
 
-            try {
+            this.micButton.textContent =  
+                "🔴";  
 
-                if (
-                    MediaRecorder
-                        .isTypeSupported(
-                            mimeType
-                        )
-                ) {
+            this.micButton.title =  
+                "Ich höre zu...";  
 
-                    return mimeType;
+        };  
 
-                }
 
-            } catch (error) {
+    /* -------------------------  
+       ROZPOZNANY TEKST  
+    ------------------------- */  
 
-                console.warn(
-                    "MediaRecorder MIME check error:",
-                    error
-                );
+    this.recognition.onresult =  
+        (event) => {  
 
-            }
+            const transcript =  
+                event  
+                    .results[0][0]  
+                    .transcript  
+                    .trim();  
 
-        }
 
+            console.log(  
+                "Rozpoznano:",  
+                transcript  
+            );  
 
-        return "";
 
-    },
+            if (  
+                this.inputElement  
+                &&  
+                transcript  
+            ) {  
 
+                this.inputElement.value =  
+                    transcript;  
 
-    /* =========================================
-       USUNIĘCIE OSTATNIEGO AUDIO
-    ========================================= */
+            }  
 
-    clearLastAudioRecording() {
+        };  
 
-        this.lastAudioBlob =
-            null;
 
-        this.lastAudioMimeType =
-            null;
+    /* -------------------------  
+       KONIEC NASŁUCHIWANIA  
+    ------------------------- */  
 
-        this.audioChunks =
-            [];
+    this.recognition.onend =  
+        () => {  
 
-    },
+            this.isListening =  
+                false;  
 
+            this.micButton.textContent =  
+                "🎤";  
 
-    /* =========================================
-       ZWOLNIENIE MIKROFONU
-    ========================================= */
+            this.micButton.title =  
+                "Sprechen";  
 
-    releaseAudioStream() {
 
-        if (
-            this.audioStream
-        ) {
+            if (  
+                this.inputElement  
+                &&  
+                this.inputElement  
+                    .value  
+                    .trim()  
+            ) {  
 
-            const tracks =
-                this.audioStream
-                    .getTracks();
+                this.sendMessage();  
 
+            }  
 
-            tracks.forEach(
-                track => {
+        };  
 
-                    try {
 
-                        track.stop();
+    /* -------------------------  
+       BŁĘDY MIKROFONU  
+    ------------------------- */  
 
-                    } catch (error) {
+    this.recognition.onerror =  
+        (event) => {  
 
-                        console.warn(
-                            "Audio track stop error:",
-                            error
-                        );
+            console.error(  
+                "Mikrofon Fehler:",  
+                event.error  
+            );  
 
-                    }
 
-                }
-            );
+            this.isListening =  
+                false;  
 
-        }
+            this.micButton.textContent =  
+                "🎤";  
 
 
-        this.audioStream =
-            null;
+            if (  
+                event.error ===  
+                "not-allowed"  
+            ) {  
 
-    },
+                this.addMessage(  
+                    "Nele",  
+                    "Bitte erlaube den Zugriff auf das Mikrofon.",  
+                    "nele"  
+                );  
 
+            }  
 
-    /* =========================================
-       START PRAWDZIWEGO NAGRYWANIA
-    ========================================= */
+            else if (  
+                event.error ===  
+                "no-speech"  
+            ) {  
 
-    async startAudioRecording() {
+                console.log(  
+                    "Keine Sprache erkannt."  
+                );  
 
-        /*
-          Czyścimy poprzednie nagranie.
-        */
+            }  
 
-        this.clearLastAudioRecording();
+            else {  
 
+                this.addMessage(  
+                    "Nele",  
+                    "Ich konnte dich leider nicht verstehen. Versuch es bitte noch einmal.",  
+                    "nele"  
+                );  
 
-        /*
-          Jeśli przeglądarka nie obsługuje
-          MediaRecorder, Nele nadal działa
-          przez SpeechRecognition.
-        */
+            }  
 
-        if (
-            !(
-                "MediaRecorder"
-                in window
-            )
-        ) {
+        };  
 
-            console.warn(
-                "MediaRecorder nie jest obsługiwany."
-            );
 
-            return false;
+    /* -------------------------  
+       KLIKNIĘCIE MIKROFONU  
+    ------------------------- */  
 
-        }
+    this.micButton.addEventListener(  
+        "click",  
+        () => {  
 
+            if (!this.recognition) {  
+                return;  
+            }  
 
-        if (
-            !navigator.mediaDevices
-            ||
-            !navigator.mediaDevices
-                .getUserMedia
-        ) {
 
-            console.warn(
-                "getUserMedia nie jest obsługiwane."
-            );
+            if (this.isListening) {  
 
-            return false;
+                this.recognition.stop();  
 
-        }
+                return;  
 
+            }  
 
-        /*
-          Na wszelki wypadek zamykamy
-          poprzedni stream.
-        */
 
-        this.releaseAudioStream();
+            /*  
+              Zatrzymujemy głos Nele,  
+              żeby mikrofon nie słuchał  
+              odpowiedzi Nele.  
+            */  
 
+            if (  
+                "speechSynthesis"  
+                in window  
+            ) {  
 
-        try {
+                window  
+                    .speechSynthesis  
+                    .cancel();  
 
-            const stream =
-                await navigator
-                    .mediaDevices
-                    .getUserMedia({
-                        audio: true
-                    });
+            }  
 
 
-            this.audioStream =
-                stream;
+            try {  
 
+                this.recognition.start();  
 
-            const mimeType =
-                this.getSupportedAudioMimeType();
+            }  
 
+            catch (error) {  
 
-            let recorder;
+                console.error(  
+                    "Nie można uruchomić mikrofonu:",  
+                    error  
+                );  
 
+            }  
 
-            if (mimeType) {
+        }  
+    );  
 
-                recorder =
-                    new MediaRecorder(
-                        stream,
-                        {
-                            mimeType:
-                                mimeType
-                        }
-                    );
+},  
 
-            } else {
 
-                recorder =
-                    new MediaRecorder(
-                        stream
-                    );
+/* =========================================  
+   WYSYŁANIE WIADOMOŚCI  
+========================================= */  
 
-            }
+async sendMessage() {  
 
+    if (  
+        this.isResetting  
+    ) {  
+        return;  
+    }  
 
-            this.mediaRecorder =
-                recorder;
 
+    if (!this.inputElement) {  
+        return;  
+    }  
 
-            this.audioChunks =
-                [];
 
+    const text =  
+        this.inputElement  
+            .value  
+            .trim();  
 
-            /*
-              Każdy kawałek nagrania
-              dodajemy do tablicy.
-            */
 
-            recorder.ondataavailable =
-                (event) => {
+    if (!text) {  
+        return;  
+    }  
 
-                    if (
-                        event.data
-                        &&
-                        event.data.size > 0
-                    ) {
 
-                        this.audioChunks.push(
-                            event.data
-                        );
+    /* pokaż wiadomość użytkownika */  
 
-                    }
+    this.addMessage(  
+        "Du",  
+        text,  
+        "user"  
+    );  
 
-                };
 
+    /* wyczyść pole */  
 
-            recorder.onerror =
-                (event) => {
+    this.inputElement.value =  
+        "";  
 
-                    console.error(
-                        "MediaRecorder Fehler:",
-                        event.error
-                        ||
-                        event
-                    );
 
-                };
+    /* zablokuj przycisk */  
 
+    if (this.sendButton) {  
 
-            recorder.start();
+        this.sendButton.disabled =  
+            true;  
 
+        this.sendButton.textContent =  
+            "...";  
 
-            console.log(
-                "Nele audio recording started.",
-                recorder.mimeType
-            );
+    }  
 
 
-            return true;
+    try {  
 
+        const response =  
+            await fetch(  
+                `${this.backendUrl}/chat`,  
+                {  
+                    method: "POST",  
 
-        } catch (error) {
+                    headers: {  
+                        "Content-Type":  
+                            "application/json"  
+                    },  
 
-            console.error(
-                "Nie można rozpocząć nagrywania audio:",
-                error
-            );
+                    body: JSON.stringify({  
+                        message:  
+                            text,  
 
+                        session_id:  
+                            this.sessionId  
+                    })  
+                }  
+            );  
 
-            this.mediaRecorder =
-                null;
 
+        if (!response.ok) {  
 
-            this.releaseAudioStream();
+            throw new Error(  
+                `Backend error: ${response.status}`  
+            );  
 
+        }  
 
-            return false;
 
-        }
+        const data =  
+            await response.json();  
 
-    },
 
+        const reply =  
+            data.reply ||  
+            "Ich weiß gerade nicht, was ich antworten soll.";  
 
-    /* =========================================
-       KONIEC PRAWDZIWEGO NAGRYWANIA
-    ========================================= */
 
-    async stopAudioRecording() {
+        /* pokaż odpowiedź */  
 
-        const recorder =
-            this.mediaRecorder;
+        this.addMessage(  
+            "Nele",  
+            reply,  
+            "nele"  
+        );  
 
 
-        /*
-          Nie ma aktywnego recordera.
-        */
+        /* przeczytaj odpowiedź */  
 
-        if (!recorder) {
+        this.speak(  
+            reply  
+        );  
 
-            this.releaseAudioStream();
 
-            return this.lastAudioBlob;
+    }  
 
-        }
+    catch (error) {  
 
+        console.error(  
+            "Nele Backend Fehler:",  
+            error  
+        );  
 
-        /*
-          Recorder jest już zatrzymany.
-        */
 
-        if (
-            recorder.state ===
-            "inactive"
-        ) {
+        this.addMessage(  
+            "Nele",  
+            "Entschuldigung. Ich kann den Server gerade nicht erreichen.",  
+            "nele"  
+        );  
 
-            this.mediaRecorder =
-                null;
+    }  
 
-            this.releaseAudioStream();
+    finally {  
 
-            return this.lastAudioBlob;
+        if (this.sendButton) {  
 
-        }
+            this.sendButton.disabled =  
+                false;  
 
+            this.sendButton.textContent =  
+                "Senden";  
 
-        return new Promise(
-            resolve => {
+        }  
 
-                const finishRecording =
-                    () => {
 
-                        const mimeType =
-                            recorder.mimeType
-                            ||
-                            this.getSupportedAudioMimeType()
-                            ||
-                            "audio/webm";
+        if (this.inputElement) {  
 
+            this.inputElement.focus();  
 
-                        if (
-                            this.audioChunks.length
-                            > 0
-                        ) {
+        }  
 
-                            this.lastAudioBlob =
-                                new Blob(
-                                    this.audioChunks,
-                                    {
-                                        type:
-                                            mimeType
-                                    }
-                                );
+    }  
 
+},  
 
-                            this.lastAudioMimeType =
-                                mimeType;
 
+/* =========================================  
+   GŁOS NELE  
+========================================= */  
 
-                            console.log(
-                                "Nele audio recording ready:",
-                                {
-                                    size:
-                                        this.lastAudioBlob
-                                            .size,
+speak(text) {  
 
-                                    type:
-                                        this.lastAudioBlob
-                                            .type
-                                }
-                            );
+    if (  
+        !(  
+            "speechSynthesis"  
+            in window  
+        )  
+    ) {  
 
-                        } else {
+        console.warn(  
+            "SpeechSynthesis nie jest obsługiwany przez tę przeglądarkę."  
+        );  
 
-                            this.lastAudioBlob =
-                                null;
+        return;  
+    }  
 
-                            this.lastAudioMimeType =
-                                null;
 
+    window  
+        .speechSynthesis  
+        .cancel();  
 
-                            console.warn(
-                                "Nagranie audio jest puste."
-                            );
 
-                        }
+    const utterance =  
+        new SpeechSynthesisUtterance(  
+            text  
+        );  
 
 
-                        this.audioChunks =
-                            [];
+    utterance.lang =  
+        this.language;  
 
+    utterance.rate =  
+        0.95;  
 
-                        this.mediaRecorder =
-                            null;
+    utterance.pitch =  
+        1.0;  
 
+    utterance.volume =  
+        1.0;  
 
-                        this.releaseAudioStream();
 
+    const voices =  
+        window  
+            .speechSynthesis  
+            .getVoices();  
 
-                        resolve(
-                            this.lastAudioBlob
-                        );
 
-                    };
+    const germanVoices =  
+        voices.filter(  
+            voice =>  
+                voice.lang  
+                &&  
+                voice.lang  
+                    .toLowerCase()  
+                    .startsWith(  
+                        "de"  
+                    )  
+        );  
 
 
-                recorder.addEventListener(
-                    "stop",
-                    finishRecording,
-                    {
-                        once: true
-                    }
-                );
+    const preferredVoice =  
+        germanVoices.find(  
+            voice =>  
+                voice.name  
+                    .toLowerCase()  
+                    .includes(  
+                        "google"  
+                    )  
+        )  
+        ||  
+        germanVoices.find(  
+            voice =>  
+                voice.lang ===  
+                "de-DE"  
+        )  
+        ||  
+        germanVoices[0];  
 
 
-                try {
+    if (preferredVoice) {  
 
-                    /*
-                      requestData prosi recorder
-                      o ostatni fragment audio
-                      przed zatrzymaniem.
-                    */
+        utterance.voice =  
+            preferredVoice;  
 
-                    if (
-                        recorder.state ===
-                        "recording"
-                    ) {
+    }  
 
-                        try {
 
-                            recorder.requestData();
+    window  
+        .speechSynthesis  
+        .speak(  
+            utterance  
+        );  
 
-                        } catch (error) {
+},  
 
-                            console.warn(
-                                "MediaRecorder requestData error:",
-                                error
-                            );
 
-                        }
+/* =========================================  
+   DODAWANIE WIADOMOŚCI DO CZATU  
+========================================= */  
 
-                    }
+addMessage(  
+    speaker,  
+    text,  
+    type  
+) {  
 
+    if (!this.messagesElement) {  
+        return;  
+    }  
 
-                    recorder.stop();
 
+    const message =  
+        document.createElement(  
+            "div"  
+        );  
 
-                } catch (error) {
 
-                    console.error(
-                        "Nie można zatrzymać nagrywania audio:",
-                        error
-                    );
+    message.classList.add(  
+        "message"  
+    );  
 
 
-                    this.mediaRecorder =
-                        null;
+    if (  
+        type ===  
+        "user"  
+    ) {  
 
+        message.classList.add(  
+            "message-user"  
+        );  
 
-                    this.releaseAudioStream();
+    } else {  
 
+        message.classList.add(  
+            "message-nele"  
+        );  
 
-                    resolve(
-                        this.lastAudioBlob
-                    );
+    }  
 
-                }
 
-            }
-        );
+    const speakerElement =  
+        document.createElement(  
+            "span"  
+        );  
 
-    },
 
+    speakerElement.className =  
+        "speaker";  
 
-    /* =========================================
-       KONFIGURACJA MIKROFONU
-    ========================================= */
 
-    setupMicrophone() {
+    speakerElement.textContent =  
+        speaker;  
 
-        if (!this.micButton) {
-            return;
-        }
 
+    const textNode =  
+        document.createTextNode(  
+            text  
+        );  
 
-        const SpeechRecognition =
-            window.SpeechRecognition ||
-            window.webkitSpeechRecognition;
 
+    message.appendChild(  
+        speakerElement  
+    );  
 
-        if (!SpeechRecognition) {
 
-            console.warn(
-                "Rozpoznawanie mowy nie jest obsługiwane przez tę przeglądarkę."
-            );
+    message.appendChild(  
+        textNode  
+    );  
 
-            this.micButton.disabled =
-                true;
 
-            this.micButton.title =
-                "Spracherkennung wird von diesem Browser nicht unterstützt.";
+    this.messagesElement.appendChild(  
+        message  
+    );  
 
-            return;
-        }
 
+    this.messagesElement.scrollTop =  
+        this.messagesElement  
+            .scrollHeight;  
 
-        this.recognition =
-            new SpeechRecognition();
-
-
-        this.recognition.lang =
-            this.language;
-
-        this.recognition.continuous =
-            false;
-
-        this.recognition.interimResults =
-            false;
-
-        this.recognition.maxAlternatives =
-            1;
-
-
-        /* -------------------------
-           START NASŁUCHIWANIA
-        ------------------------- */
-
-        this.recognition.onstart =
-            () => {
-
-                this.isListening =
-                    true;
-
-                console.log(
-                    "Nele hört zu..."
-                );
-
-                this.micButton.textContent =
-                    "🔴";
-
-                this.micButton.title =
-                    "Ich höre zu...";
-
-            };
-
-
-        /* -------------------------
-           ROZPOZNANY TEKST
-        ------------------------- */
-
-        this.recognition.onresult =
-            (event) => {
-
-                const transcript =
-                    event
-                        .results[0][0]
-                        .transcript
-                        .trim();
-
-
-                console.log(
-                    "Rozpoznano:",
-                    transcript
-                );
-
-
-                if (
-                    this.inputElement
-                    &&
-                    transcript
-                ) {
-
-                    this.inputElement.value =
-                        transcript;
-
-                }
-
-            };
-
-
-        /* -------------------------
-           KONIEC NASŁUCHIWANIA
-        ------------------------- */
-
-        this.recognition.onend =
-            async () => {
-
-                this.isListening =
-                    false;
-
-                this.micButton.textContent =
-                    "🎤";
-
-                this.micButton.title =
-                    "Sprechen";
-
-
-                /*
-                  Najpierw kończymy prawdziwe
-                  nagranie audio.
-
-                  Dopiero kiedy Blob jest gotowy,
-                  wysyłamy wiadomość.
-                */
-
-                await this.stopAudioRecording();
-
-
-                if (
-                    this.isResetting
-                ) {
-
-                    return;
-
-                }
-
-
-                if (
-                    this.inputElement
-                    &&
-                    this.inputElement
-                        .value
-                        .trim()
-                ) {
-
-                    this.sendMessage(
-                        "voice"
-                    );
-
-                }
-
-            };
-
-
-        /* -------------------------
-           BŁĘDY MIKROFONU
-        ------------------------- */
-
-        this.recognition.onerror =
-            (event) => {
-
-                console.error(
-                    "Mikrofon Fehler:",
-                    event.error
-                );
-
-
-                this.isListening =
-                    false;
-
-                this.micButton.textContent =
-                    "🎤";
-
-
-                if (
-                    event.error ===
-                    "not-allowed"
-                ) {
-
-                    this.addMessage(
-                        "Nele",
-                        "Bitte erlaube den Zugriff auf das Mikrofon.",
-                        "nele"
-                    );
-
-                }
-
-                else if (
-                    event.error ===
-                    "no-speech"
-                ) {
-
-                    console.log(
-                        "Keine Sprache erkannt."
-                    );
-
-                }
-
-                else {
-
-                    this.addMessage(
-                        "Nele",
-                        "Ich konnte dich leider nicht verstehen. Versuch es bitte noch einmal.",
-                        "nele"
-                    );
-
-                }
-
-            };
-
-
-        /* -------------------------
-           KLIKNIĘCIE MIKROFONU
-        ------------------------- */
-
-        this.micButton.addEventListener(
-            "click",
-            async () => {
-
-                if (!this.recognition) {
-                    return;
-                }
-
-
-                /*
-                  Jeżeli już słuchamy,
-                  kończymy SpeechRecognition.
-
-                  onend zakończy również
-                  MediaRecorder.
-                */
-
-                if (
-                    this.isListening
-                ) {
-
-                    this.recognition.stop();
-
-                    return;
-
-                }
-
-
-                /*
-                  Zatrzymujemy głos Nele,
-                  żeby mikrofon nie słuchał
-                  odpowiedzi Nele.
-                */
-
-                if (
-                    "speechSynthesis"
-                    in window
-                ) {
-
-                    window
-                        .speechSynthesis
-                        .cancel();
-
-                }
-
-
-                /*
-                  Najpierw rozpoczynamy
-                  prawdziwe nagranie audio.
-                */
-
-                await this.startAudioRecording();
-
-
-                /*
-                  Potem uruchamiamy
-                  rozpoznawanie mowy.
-                */
-
-                try {
-
-                    this.recognition.start();
-
-                }
-
-                catch (error) {
-
-                    console.error(
-                        "Nie można uruchomić mikrofonu:",
-                        error
-                    );
-
-
-                    await this.stopAudioRecording();
-
-                }
-
-            }
-        );
-
-    },
-
-
-    /* =========================================
-       WYSYŁANIE WIADOMOŚCI
-    ========================================= */
-
-    async sendMessage(
-        inputMode = "text"
-    ) {
-
-        if (
-            this.isResetting
-        ) {
-            return;
-        }
-
-
-        if (!this.inputElement) {
-            return;
-        }
-
-
-        const text =
-            this.inputElement
-                .value
-                .trim();
-
-
-        if (!text) {
-            return;
-        }
-
-
-        /*
-          Jeżeli użytkownik napisał
-          wiadomość klawiaturą,
-          poprzednie nagranie audio
-          nie może zostać z nią pomylone.
-        */
-
-        if (
-            inputMode !==
-            "voice"
-        ) {
-
-            this.clearLastAudioRecording();
-
-        }
-
-
-        /*
-          Na razie audio NIE jest jeszcze
-          wysyłane do backendu.
-
-          Sprawdzamy tylko, że prawdziwe
-          nagranie zostało poprawnie utworzone.
-        */
-
-        if (
-            inputMode ===
-            "voice"
-        ) {
-
-            if (
-                this.lastAudioBlob
-                &&
-                this.lastAudioBlob.size > 0
-            ) {
-
-                console.log(
-                    "Voice message has audio:",
-                    {
-                        size:
-                            this.lastAudioBlob
-                                .size,
-
-                        type:
-                            this.lastAudioBlob
-                                .type
-                    }
-                );
-
-            } else {
-
-                console.warn(
-                    "Voice message without recorded audio."
-                );
-
-            }
-
-        }
-
-
-        /* pokaż wiadomość użytkownika */
-
-        this.addMessage(
-            "Du",
-            text,
-            "user"
-        );
-
-
-        /* wyczyść pole */
-
-        this.inputElement.value =
-            "";
-
-
-        /* zablokuj przycisk */
-
-        if (this.sendButton) {
-
-            this.sendButton.disabled =
-                true;
-
-            this.sendButton.textContent =
-                "...";
-
-        }
-
-
-        try {
-
-            const response =
-                await fetch(
-                    `${this.backendUrl}/chat`,
-                    {
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        },
-
-                        body: JSON.stringify({
-                            message:
-                                text,
-
-                            session_id:
-                                this.sessionId
-                        })
-                    }
-                );
-
-
-            if (!response.ok) {
-
-                throw new Error(
-                    `Backend error: ${response.status}`
-                );
-
-            }
-
-
-            const data =
-                await response.json();
-
-
-            const reply =
-                data.reply ||
-                "Ich weiß gerade nicht, was ich antworten soll.";
-
-
-            /* pokaż odpowiedź */
-
-            this.addMessage(
-                "Nele",
-                reply,
-                "nele"
-            );
-
-
-            /* przeczytaj odpowiedź */
-
-            this.speak(
-                reply
-            );
-
-
-        }
-
-        catch (error) {
-
-            console.error(
-                "Nele Backend Fehler:",
-                error
-            );
-
-
-            this.addMessage(
-                "Nele",
-                "Entschuldigung. Ich kann den Server gerade nicht erreichen.",
-                "nele"
-            );
-
-        }
-
-        finally {
-
-            if (this.sendButton) {
-
-                this.sendButton.disabled =
-                    false;
-
-                this.sendButton.textContent =
-                    "Senden";
-
-            }
-
-
-            if (this.inputElement) {
-
-                this.inputElement.focus();
-
-            }
-
-        }
-
-    },
-
-
-    /* =========================================
-       GŁOS NELE
-    ========================================= */
-
-    speak(text) {
-
-        if (
-            !(
-                "speechSynthesis"
-                in window
-            )
-        ) {
-
-            console.warn(
-                "SpeechSynthesis nie jest obsługiwany przez tę przeglądarkę."
-            );
-
-            return;
-        }
-
-
-        window
-            .speechSynthesis
-            .cancel();
-
-
-        const utterance =
-            new SpeechSynthesisUtterance(
-                text
-            );
-
-
-        utterance.lang =
-            this.language;
-
-        utterance.rate =
-            0.95;
-
-        utterance.pitch =
-            1.0;
-
-        utterance.volume =
-            1.0;
-
-
-        const voices =
-            window
-                .speechSynthesis
-                .getVoices();
-
-
-        const germanVoices =
-            voices.filter(
-                voice =>
-                    voice.lang
-                    &&
-                    voice.lang
-                        .toLowerCase()
-                        .startsWith(
-                            "de"
-                        )
-            );
-
-
-        const preferredVoice =
-            germanVoices.find(
-                voice =>
-                    voice.name
-                        .toLowerCase()
-                        .includes(
-                            "google"
-                        )
-            )
-            ||
-            germanVoices.find(
-                voice =>
-                    voice.lang ===
-                    "de-DE"
-            )
-            ||
-            germanVoices[0];
-
-
-        if (preferredVoice) {
-
-            utterance.voice =
-                preferredVoice;
-
-        }
-
-
-        window
-            .speechSynthesis
-            .speak(
-                utterance
-            );
-
-    },
-
-
-    /* =========================================
-       DODAWANIE WIADOMOŚCI DO CZATU
-    ========================================= */
-
-    addMessage(
-        speaker,
-        text,
-        type
-    ) {
-
-        if (!this.messagesElement) {
-            return;
-        }
-
-
-        const message =
-            document.createElement(
-                "div"
-            );
-
-
-        message.classList.add(
-            "message"
-        );
-
-
-        if (
-            type ===
-            "user"
-        ) {
-
-            message.classList.add(
-                "message-user"
-            );
-
-        } else {
-
-            message.classList.add(
-                "message-nele"
-            );
-
-        }
-
-
-        const speakerElement =
-            document.createElement(
-                "span"
-            );
-
-
-        speakerElement.className =
-            "speaker";
-
-
-        speakerElement.textContent =
-            speaker;
-
-
-        const textNode =
-            document.createTextNode(
-                text
-            );
-
-
-        message.appendChild(
-            speakerElement
-        );
-
-
-        message.appendChild(
-            textNode
-        );
-
-
-        this.messagesElement.appendChild(
-            message
-        );
-
-
-        this.messagesElement.scrollTop =
-            this.messagesElement
-                .scrollHeight;
-
-    }
+}
 
 };
 
-
 /* =========================================
-   START NELE
+START NELE
 ========================================= */
 
 document.addEventListener(
-    "DOMContentLoaded",
-    () => Nele.init()
+"DOMContentLoaded",
+() => Nele.init()
 );
