@@ -25,23 +25,6 @@ const Nele = {
 
 
     /* =========================================
-       AUDIO Z NORMALNEJ ROZMOWY
-    ========================================= */
-
-    voiceRecorder: null,
-    voiceStream: null,
-
-    voiceChunks: [],
-    voiceBlob: null,
-    voiceMimeType: null,
-
-    isVoiceRecording: false,
-
-    recognitionProducedText: false,
-    recognitionHadError: false,
-
-
-    /* =========================================
        START
     ========================================= */
 
@@ -51,6 +34,11 @@ const Nele = {
             "Nele ist bereit."
         );
 
+
+        /*
+          Pobieramy lub tworzymy
+          identyfikator użytkownika.
+        */
 
         this.sessionId =
             this.getSessionId();
@@ -149,7 +137,7 @@ const Nele = {
 
         const quickActions =
             document.querySelectorAll(
-                ".quick-action[data-text]"
+                ".quick-action"
             );
 
 
@@ -163,16 +151,15 @@ const Nele = {
                         const text =
                             button.dataset.text;
 
-                        if (
-                            !text
-                            ||
-                            !this.inputElement
-                        ) {
-
+                        if (!text) {
                             return;
-
                         }
 
+                        if (
+                            !this.inputElement
+                        ) {
+                            return;
+                        }
 
                         this.inputElement.value =
                             text;
@@ -212,6 +199,11 @@ const Nele = {
             "nele_session_id";
 
 
+        /*
+          Sprawdzamy, czy użytkownik
+          ma już swój identyfikator.
+        */
+
         let sessionId =
             localStorage.getItem(
                 storageKey
@@ -224,6 +216,11 @@ const Nele = {
 
         }
 
+
+        /*
+          Jeżeli nie ma identyfikatora,
+          tworzymy nowy.
+        */
 
         if (
             window.crypto
@@ -246,6 +243,10 @@ const Nele = {
 
         }
 
+
+        /*
+          Zapisujemy ID w przeglądarce.
+        */
 
         localStorage.setItem(
             storageKey,
@@ -312,12 +313,21 @@ const Nele = {
             }
 
 
+            /*
+              Nele jako pierwsza
+              pokazuje wiadomość.
+            */
+
             this.addMessage(
                 "Nele",
                 reply,
                 "nele"
             );
 
+
+            /*
+              Nele wypowiada powitanie.
+            */
 
             this.speak(
                 reply
@@ -678,6 +688,12 @@ const Nele = {
             true;
 
 
+        /*
+          Czyścimy pole przed zatrzymaniem
+          mikrofonu, aby jego onend
+          nie wysłał starej wiadomości.
+        */
+
         if (
             this.inputElement
         ) {
@@ -688,9 +704,9 @@ const Nele = {
         }
 
 
-        /* =============================
-           ZATRZYMANIE SPEECH RECOGNITION
-        ============================= */
+        /*
+          Zatrzymujemy mikrofon.
+        */
 
         if (
             this.isListening
@@ -714,16 +730,9 @@ const Nele = {
         }
 
 
-        /* =============================
-           ZATRZYMANIE AUDIO
-        ============================= */
-
-        this.cancelVoiceCapture();
-
-
-        /* =============================
-           ZATRZYMANIE GŁOSU NELE
-        ============================= */
+        /*
+          Zatrzymujemy głos Nele.
+        */
 
         if (
             "speechSynthesis"
@@ -824,6 +833,12 @@ const Nele = {
             }
 
 
+            /*
+              Dopiero gdy backend potwierdzi
+              poprawne usunięcie pamięci,
+              czyścimy widoczny czat.
+            */
+
             if (
                 this.messagesElement
             ) {
@@ -833,6 +848,11 @@ const Nele = {
 
             }
 
+
+            /*
+              Pokazujemy Nele jak podczas
+              pierwszego spotkania.
+            */
 
             this.addMessage(
                 "Nele",
@@ -923,570 +943,6 @@ const Nele = {
 
 
     /* =========================================
-       CZY MOŻEMY NAGRYWAĆ AUDIO
-    ========================================= */
-
-    canRecordVoiceAudio() {
-
-        return Boolean(
-            window.MediaRecorder
-            &&
-            navigator.mediaDevices
-            &&
-            navigator.mediaDevices.getUserMedia
-        );
-
-    },
-
-
-    /* =========================================
-       FORMAT AUDIO
-    ========================================= */
-
-    getVoiceMimeType() {
-
-        if (
-            !window.MediaRecorder
-        ) {
-
-            return "";
-
-        }
-
-
-        const types = [
-
-            "audio/webm;codecs=opus",
-
-            "audio/webm",
-
-            "audio/mp4",
-
-            "audio/ogg;codecs=opus"
-
-        ];
-
-
-        for (
-            const type
-            of types
-        ) {
-
-            try {
-
-                if (
-                    typeof MediaRecorder
-                        .isTypeSupported
-                    === "function"
-                    &&
-                    MediaRecorder
-                        .isTypeSupported(
-                            type
-                        )
-                ) {
-
-                    return type;
-
-                }
-
-            } catch (error) {
-
-                console.warn(
-                    "Audio MIME check error:",
-                    error
-                );
-
-            }
-
-        }
-
-
-        return "";
-
-    },
-
-
-    /* =========================================
-       ROZPOCZĘCIE NAGRYWANIA AUDIO
-
-       To jest prawdziwe audio użytkownika,
-       niezależne od tekstu zwracanego
-       przez SpeechRecognition.
-    ========================================= */
-
-    async startVoiceCapture() {
-
-        this.voiceChunks =
-            [];
-
-        this.voiceBlob =
-            null;
-
-        this.voiceMimeType =
-            null;
-
-
-        if (
-            !this.canRecordVoiceAudio()
-        ) {
-
-            console.warn(
-                "MediaRecorder nicht verfügbar. "
-                + "Nele arbeitet nur mit dem Text."
-            );
-
-            return false;
-
-        }
-
-
-        this.releaseVoiceStream();
-
-
-        try {
-
-            const stream =
-                await navigator
-                    .mediaDevices
-                    .getUserMedia({
-
-                        audio: {
-                            echoCancellation:
-                                true,
-
-                            noiseSuppression:
-                                true,
-
-                            autoGainControl:
-                                true
-                        }
-
-                    });
-
-
-            this.voiceStream =
-                stream;
-
-
-            const mimeType =
-                this.getVoiceMimeType();
-
-
-            let recorder;
-
-
-            if (
-                mimeType
-            ) {
-
-                recorder =
-                    new MediaRecorder(
-                        stream,
-                        {
-                            mimeType:
-                                mimeType
-                        }
-                    );
-
-            } else {
-
-                recorder =
-                    new MediaRecorder(
-                        stream
-                    );
-
-            }
-
-
-            this.voiceRecorder =
-                recorder;
-
-
-            this.voiceMimeType =
-                recorder.mimeType
-                ||
-                mimeType
-                ||
-                "";
-
-
-            recorder.ondataavailable =
-                (event) => {
-
-                    if (
-                        event.data
-                        &&
-                        event.data.size > 0
-                    ) {
-
-                        this.voiceChunks.push(
-                            event.data
-                        );
-
-                    }
-
-                };
-
-
-            recorder.onerror =
-                (event) => {
-
-                    console.error(
-                        "Voice MediaRecorder error:",
-                        event.error
-                        ||
-                        event
-                    );
-
-                };
-
-
-            recorder.start();
-
-
-            this.isVoiceRecording =
-                true;
-
-
-            console.log(
-                "Nele audio recording started:",
-                this.voiceMimeType
-            );
-
-
-            return true;
-
-
-        } catch (error) {
-
-            console.warn(
-                "Prawdziwe nagranie audio "
-                + "nie mogło zostać uruchomione. "
-                + "SpeechRecognition nadal działa.",
-                error
-            );
-
-
-            this.voiceRecorder =
-                null;
-
-            this.isVoiceRecording =
-                false;
-
-
-            this.releaseVoiceStream();
-
-
-            return false;
-
-        }
-
-    },
-
-
-    /* =========================================
-       ZATRZYMANIE NAGRYWANIA AUDIO
-    ========================================= */
-
-    async stopVoiceCapture() {
-
-        const recorder =
-            this.voiceRecorder;
-
-
-        if (
-            !recorder
-        ) {
-
-            this.isVoiceRecording =
-                false;
-
-            this.releaseVoiceStream();
-
-            return null;
-
-        }
-
-
-        if (
-            recorder.state ===
-            "inactive"
-        ) {
-
-            this.voiceRecorder =
-                null;
-
-            this.isVoiceRecording =
-                false;
-
-            this.releaseVoiceStream();
-
-            return this.voiceBlob;
-
-        }
-
-
-        return new Promise(
-            resolve => {
-
-                recorder.addEventListener(
-                    "stop",
-                    () => {
-
-                        const mimeType =
-                            recorder.mimeType
-                            ||
-                            this.voiceMimeType
-                            ||
-                            "audio/webm";
-
-
-                        if (
-                            this.voiceChunks.length
-                            > 0
-                        ) {
-
-                            this.voiceBlob =
-                                new Blob(
-                                    this.voiceChunks,
-                                    {
-                                        type:
-                                            mimeType
-                                    }
-                                );
-
-
-                            console.log(
-                                "Nele audio recording ready:",
-                                {
-                                    size:
-                                        this.voiceBlob.size,
-
-                                    type:
-                                        this.voiceBlob.type
-                                }
-                            );
-
-                        } else {
-
-                            this.voiceBlob =
-                                null;
-
-
-                            console.warn(
-                                "Audio recording contains "
-                                + "no data."
-                            );
-
-                        }
-
-
-                        this.voiceChunks =
-                            [];
-
-                        this.voiceRecorder =
-                            null;
-
-                        this.isVoiceRecording =
-                            false;
-
-
-                        this.releaseVoiceStream();
-
-
-                        resolve(
-                            this.voiceBlob
-                        );
-
-                    },
-                    {
-                        once: true
-                    }
-                );
-
-
-                try {
-
-                    recorder.stop();
-
-                } catch (error) {
-
-                    console.error(
-                        "Voice recorder stop error:",
-                        error
-                    );
-
-
-                    this.voiceRecorder =
-                        null;
-
-                    this.isVoiceRecording =
-                        false;
-
-
-                    this.releaseVoiceStream();
-
-
-                    resolve(
-                        null
-                    );
-
-                }
-
-            }
-        );
-
-    },
-
-
-    /* =========================================
-       ANULOWANIE NAGRYWANIA
-    ========================================= */
-
-    cancelVoiceCapture() {
-
-        if (
-            this.voiceRecorder
-            &&
-            this.voiceRecorder.state
-            !== "inactive"
-        ) {
-
-            try {
-
-                this.voiceRecorder.stop();
-
-            } catch (error) {
-
-                console.warn(
-                    "Voice recorder cancel error:",
-                    error
-                );
-
-            }
-
-        }
-
-
-        this.voiceRecorder =
-            null;
-
-        this.isVoiceRecording =
-            false;
-
-        this.voiceChunks =
-            [];
-
-        this.voiceBlob =
-            null;
-
-        this.voiceMimeType =
-            null;
-
-
-        this.releaseVoiceStream();
-
-    },
-
-
-    /* =========================================
-       ZWOLNIENIE MIKROFONU MEDIARECORDERA
-    ========================================= */
-
-    releaseVoiceStream() {
-
-        if (
-            !this.voiceStream
-        ) {
-
-            return;
-
-        }
-
-
-        try {
-
-            this.voiceStream
-                .getTracks()
-                .forEach(
-                    track => {
-
-                        track.stop();
-
-                    }
-                );
-
-        } catch (error) {
-
-            console.warn(
-                "Voice stream release error:",
-                error
-            );
-
-        }
-
-
-        this.voiceStream =
-            null;
-
-    },
-
-
-    /* =========================================
-       ROZSZERZENIE PLIKU AUDIO
-    ========================================= */
-
-    getVoiceFileExtension(
-        blob
-    ) {
-
-        const type =
-            String(
-                blob?.type
-                ||
-                ""
-            ).toLowerCase();
-
-
-        if (
-            type.includes(
-                "mp4"
-            )
-        ) {
-
-            return "m4a";
-
-        }
-
-
-        if (
-            type.includes(
-                "ogg"
-            )
-        ) {
-
-            return "ogg";
-
-        }
-
-
-        if (
-            type.includes(
-                "wav"
-            )
-        ) {
-
-            return "wav";
-
-        }
-
-
-        return "webm";
-
-    },
-
-
-    /* =========================================
        KONFIGURACJA MIKROFONU
     ========================================= */
 
@@ -1498,26 +954,21 @@ const Nele = {
 
 
         const SpeechRecognition =
-            window.SpeechRecognition
-            ||
+            window.SpeechRecognition ||
             window.webkitSpeechRecognition;
 
 
         if (!SpeechRecognition) {
 
             console.warn(
-                "Rozpoznawanie mowy nie jest "
-                + "obsługiwane przez tę przeglądarkę."
+                "Rozpoznawanie mowy nie jest obsługiwane przez tę przeglądarkę."
             );
 
             this.micButton.disabled =
                 true;
 
             this.micButton.title =
-                (
-                    "Spracherkennung wird von "
-                    + "diesem Browser nicht unterstützt."
-                );
+                "Spracherkennung wird von diesem Browser nicht unterstützt.";
 
             return;
         }
@@ -1550,17 +1001,9 @@ const Nele = {
                 this.isListening =
                     true;
 
-                this.recognitionProducedText =
-                    false;
-
-                this.recognitionHadError =
-                    false;
-
-
                 console.log(
                     "Nele hört zu..."
                 );
-
 
                 this.micButton.textContent =
                     "🔴";
@@ -1600,10 +1043,6 @@ const Nele = {
                     this.inputElement.value =
                         transcript;
 
-
-                    this.recognitionProducedText =
-                        true;
-
                 }
 
             };
@@ -1614,77 +1053,19 @@ const Nele = {
         ------------------------- */
 
         this.recognition.onend =
-            async () => {
+            () => {
 
                 this.isListening =
                     false;
 
+                this.micButton.textContent =
+                    "🎤";
+
+                this.micButton.title =
+                    "Sprechen";
+
 
                 if (
-                    this.micButton
-                ) {
-
-                    this.micButton.textContent =
-                        "🎤";
-
-                    this.micButton.title =
-                        "Sprechen";
-
-                }
-
-
-                /*
-                  Jeżeli trwa reset,
-                  nie wysyłamy wiadomości.
-                */
-
-                if (
-                    this.isResetting
-                ) {
-
-                    this.cancelVoiceCapture();
-
-                    return;
-
-                }
-
-
-                /*
-                  Kończymy prawdziwe
-                  nagranie tej samej wypowiedzi.
-                */
-
-                let audioBlob =
-                    null;
-
-
-                try {
-
-                    audioBlob =
-                        await this.stopVoiceCapture();
-
-                } catch (error) {
-
-                    console.warn(
-                        "Audio stop failed. "
-                        + "Text will still be sent.",
-                        error
-                    );
-
-                }
-
-
-                /*
-                  Automatycznie wysyłamy tylko
-                  wtedy, gdy SpeechRecognition
-                  rzeczywiście zwróciło tekst.
-                */
-
-                if (
-                    this.recognitionProducedText
-                    &&
-                    !this.recognitionHadError
-                    &&
                     this.inputElement
                     &&
                     this.inputElement
@@ -1692,9 +1073,7 @@ const Nele = {
                         .trim()
                 ) {
 
-                    await this.sendMessage(
-                        audioBlob
-                    );
+                    this.sendMessage();
 
                 }
 
@@ -1714,21 +1093,11 @@ const Nele = {
                 );
 
 
-                this.recognitionHadError =
-                    true;
-
                 this.isListening =
                     false;
 
-
-                if (
-                    this.micButton
-                ) {
-
-                    this.micButton.textContent =
-                        "🎤";
-
-                }
+                this.micButton.textContent =
+                    "🎤";
 
 
                 if (
@@ -1738,10 +1107,7 @@ const Nele = {
 
                     this.addMessage(
                         "Nele",
-                        (
-                            "Bitte erlaube den Zugriff "
-                            + "auf das Mikrofon."
-                        ),
+                        "Bitte erlaube den Zugriff auf das Mikrofon.",
                         "nele"
                     );
 
@@ -1758,18 +1124,11 @@ const Nele = {
 
                 }
 
-                else if (
-                    event.error !==
-                    "aborted"
-                ) {
+                else {
 
                     this.addMessage(
                         "Nele",
-                        (
-                            "Ich konnte dich leider "
-                            + "nicht verstehen. "
-                            + "Versuch es bitte noch einmal."
-                        ),
+                        "Ich konnte dich leider nicht verstehen. Versuch es bitte noch einmal.",
                         "nele"
                     );
 
@@ -1784,35 +1143,16 @@ const Nele = {
 
         this.micButton.addEventListener(
             "click",
-            async () => {
+            () => {
 
                 if (!this.recognition) {
                     return;
                 }
 
 
-                /*
-                  Drugie kliknięcie kończy
-                  aktualną wypowiedź.
-                */
+                if (this.isListening) {
 
-                if (
-                    this.isListening
-                ) {
-
-                    try {
-
-                        this.recognition.stop();
-
-                    } catch (error) {
-
-                        console.warn(
-                            "Recognition stop error:",
-                            error
-                        );
-
-                    }
-
+                    this.recognition.stop();
 
                     return;
 
@@ -1820,7 +1160,9 @@ const Nele = {
 
 
                 /*
-                  Nie nagrywamy głosu Nele.
+                  Zatrzymujemy głos Nele,
+                  żeby mikrofon nie słuchał
+                  odpowiedzi Nele.
                 */
 
                 if (
@@ -1835,45 +1177,6 @@ const Nele = {
                 }
 
 
-                /*
-                  Czyścimy poprzednie audio.
-                */
-
-                this.voiceBlob =
-                    null;
-
-                this.voiceChunks =
-                    [];
-
-
-                /*
-                  Najpierw próbujemy uruchomić
-                  prawdziwe nagrywanie audio.
-
-                  Jeżeli się nie uda,
-                  stary SpeechRecognition
-                  i tak będzie działał.
-                */
-
-                try {
-
-                    await this.startVoiceCapture();
-
-                } catch (error) {
-
-                    console.warn(
-                        "Audio capture unavailable:",
-                        error
-                    );
-
-                }
-
-
-                /*
-                  Następnie uruchamiamy
-                  zwykłe rozpoznawanie mowy.
-                */
-
                 try {
 
                     this.recognition.start();
@@ -1887,9 +1190,6 @@ const Nele = {
                         error
                     );
 
-
-                    this.cancelVoiceCapture();
-
                 }
 
             }
@@ -1902,9 +1202,7 @@ const Nele = {
        WYSYŁANIE WIADOMOŚCI
     ========================================= */
 
-    async sendMessage(
-        audioBlob = null
-    ) {
+    async sendMessage() {
 
         if (
             this.isResetting
@@ -1929,6 +1227,8 @@ const Nele = {
         }
 
 
+        /* pokaż wiadomość użytkownika */
+
         this.addMessage(
             "Du",
             text,
@@ -1936,13 +1236,15 @@ const Nele = {
         );
 
 
+        /* wyczyść pole */
+
         this.inputElement.value =
             "";
 
 
-        if (
-            this.sendButton
-        ) {
+        /* zablokuj przycisk */
+
+        if (this.sendButton) {
 
             this.sendButton.disabled =
                 true;
@@ -1955,133 +1257,29 @@ const Nele = {
 
         try {
 
-            let response;
-
-
-            /* =================================
-               GŁOS:
-               TEKST + AUDIO
-            ================================= */
-
-            if (
-                audioBlob
-                &&
-                audioBlob.size > 0
-            ) {
-
-                const formData =
-                    new FormData();
-
-
-                formData.append(
-                    "message",
-                    text
-                );
-
-
-                formData.append(
-                    "session_id",
-                    this.sessionId
-                );
-
-
-                const extension =
-                    this.getVoiceFileExtension(
-                        audioBlob
-                    );
-
-
-                formData.append(
-                    "audio",
-                    audioBlob,
-                    (
-                        "nele-voice-"
-                        + Date.now()
-                        + "."
-                        + extension
-                    )
-                );
-
-
-                console.log(
-                    "Sending text + audio:",
+            const response =
+                await fetch(
+                    `${this.backendUrl}/chat`,
                     {
-                        text:
-                            text,
+                        method: "POST",
 
-                        size:
-                            audioBlob.size,
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
 
-                        type:
-                            audioBlob.type
+                        body: JSON.stringify({
+                            message:
+                                text,
+
+                            session_id:
+                                this.sessionId
+                        })
                     }
                 );
 
 
-                /*
-                  WAŻNE:
-
-                  Nie ustawiamy tutaj ręcznie
-                  Content-Type.
-
-                  Przeglądarka sama doda:
-                  multipart/form-data
-                  wraz z poprawnym boundary.
-                */
-
-                response =
-                    await fetch(
-                        `${this.backendUrl}/chat`,
-                        {
-                            method:
-                                "POST",
-
-                            body:
-                                formData
-                        }
-                    );
-
-            }
-
-
-            /* =================================
-               TEKST:
-               STARY SPOSÓB
-            ================================= */
-
-            else {
-
-                response =
-                    await fetch(
-                        `${this.backendUrl}/chat`,
-                        {
-                            method:
-                                "POST",
-
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            },
-
-                            body:
-                                JSON.stringify({
-
-                                    message:
-                                        text,
-
-                                    session_id:
-                                        this.sessionId
-
-                                })
-                        }
-                    );
-
-            }
-
-
-            if (
-                !response.ok
-            ) {
+            if (!response.ok) {
 
                 throw new Error(
                     `Backend error: ${response.status}`
@@ -2094,31 +1292,12 @@ const Nele = {
                 await response.json();
 
 
-            /*
-              Backend może już powiedzieć,
-              czy dostał nagranie.
-            */
-
-            if (
-                audioBlob
-            ) {
-
-                console.log(
-                    "Backend audio_received:",
-                    data.audio_received
-                );
-
-            }
-
-
             const reply =
-                data.reply
-                ||
-                (
-                    "Ich weiß gerade nicht, "
-                    + "was ich antworten soll."
-                );
+                data.reply ||
+                "Ich weiß gerade nicht, was ich antworten soll.";
 
+
+            /* pokaż odpowiedź */
 
             this.addMessage(
                 "Nele",
@@ -2126,6 +1305,8 @@ const Nele = {
                 "nele"
             );
 
+
+            /* przeczytaj odpowiedź */
 
             this.speak(
                 reply
@@ -2144,11 +1325,7 @@ const Nele = {
 
             this.addMessage(
                 "Nele",
-                (
-                    "Entschuldigung. "
-                    + "Ich kann den Server "
-                    + "gerade nicht erreichen."
-                ),
+                "Entschuldigung. Ich kann den Server gerade nicht erreichen.",
                 "nele"
             );
 
@@ -2156,19 +1333,7 @@ const Nele = {
 
         finally {
 
-            /*
-              Audio tej wypowiedzi
-              nie jest już potrzebne
-              po wysłaniu.
-            */
-
-            this.voiceBlob =
-                null;
-
-
-            if (
-                this.sendButton
-            ) {
+            if (this.sendButton) {
 
                 this.sendButton.disabled =
                     false;
@@ -2179,9 +1344,7 @@ const Nele = {
             }
 
 
-            if (
-                this.inputElement
-            ) {
+            if (this.inputElement) {
 
                 this.inputElement.focus();
 
@@ -2206,8 +1369,7 @@ const Nele = {
         ) {
 
             console.warn(
-                "SpeechSynthesis nie jest "
-                + "obsługiwany przez tę przeglądarkę."
+                "SpeechSynthesis nie jest obsługiwany przez tę przeglądarkę."
             );
 
             return;
@@ -2276,9 +1438,7 @@ const Nele = {
             germanVoices[0];
 
 
-        if (
-            preferredVoice
-        ) {
+        if (preferredVoice) {
 
             utterance.voice =
                 preferredVoice;
@@ -2305,9 +1465,7 @@ const Nele = {
         type
     ) {
 
-        if (
-            !this.messagesElement
-        ) {
+        if (!this.messagesElement) {
             return;
         }
 
