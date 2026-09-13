@@ -25,6 +25,17 @@ const Nele = {
 
 
     /* =========================================
+       PRAWDZIWE NAGRANIE AUDIO
+    ========================================= */
+
+    mediaRecorder: null,
+    audioStream: null,
+    audioChunks: [],
+    lastAudioBlob: null,
+    lastAudioMimeType: null,
+
+
+    /* =========================================
        START
     ========================================= */
 
@@ -84,7 +95,9 @@ const Nele = {
 
             this.sendButton.addEventListener(
                 "click",
-                () => this.sendMessage()
+                () => this.sendMessage(
+                    "text"
+                )
             );
 
         }
@@ -107,7 +120,9 @@ const Nele = {
 
                         event.preventDefault();
 
-                        this.sendMessage();
+                        this.sendMessage(
+                            "text"
+                        );
 
                     }
 
@@ -705,7 +720,7 @@ const Nele = {
 
 
         /*
-          Zatrzymujemy mikrofon.
+          Zatrzymujemy SpeechRecognition.
         */
 
         if (
@@ -728,6 +743,21 @@ const Nele = {
             }
 
         }
+
+
+        /*
+          Zatrzymujemy prawdziwe
+          nagrywanie audio.
+        */
+
+        await this.stopAudioRecording();
+
+
+        /*
+          Usuwamy ostatnie nagranie.
+        */
+
+        this.clearLastAudioRecording();
 
 
         /*
@@ -943,6 +973,502 @@ const Nele = {
 
 
     /* =========================================
+       OBSŁUGIWANY FORMAT AUDIO
+    ========================================= */
+
+    getSupportedAudioMimeType() {
+
+        if (
+            !(
+                "MediaRecorder"
+                in window
+            )
+        ) {
+
+            return "";
+
+        }
+
+
+        const mimeTypes = [
+
+            "audio/webm;codecs=opus",
+
+            "audio/webm",
+
+            "audio/mp4",
+
+            "audio/ogg;codecs=opus"
+
+        ];
+
+
+        for (
+            const mimeType
+            of mimeTypes
+        ) {
+
+            try {
+
+                if (
+                    MediaRecorder
+                        .isTypeSupported(
+                            mimeType
+                        )
+                ) {
+
+                    return mimeType;
+
+                }
+
+            } catch (error) {
+
+                console.warn(
+                    "MediaRecorder MIME check error:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        return "";
+
+    },
+
+
+    /* =========================================
+       USUNIĘCIE OSTATNIEGO AUDIO
+    ========================================= */
+
+    clearLastAudioRecording() {
+
+        this.lastAudioBlob =
+            null;
+
+        this.lastAudioMimeType =
+            null;
+
+        this.audioChunks =
+            [];
+
+    },
+
+
+    /* =========================================
+       ZWOLNIENIE MIKROFONU
+    ========================================= */
+
+    releaseAudioStream() {
+
+        if (
+            this.audioStream
+        ) {
+
+            const tracks =
+                this.audioStream
+                    .getTracks();
+
+
+            tracks.forEach(
+                track => {
+
+                    try {
+
+                        track.stop();
+
+                    } catch (error) {
+
+                        console.warn(
+                            "Audio track stop error:",
+                            error
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        this.audioStream =
+            null;
+
+    },
+
+
+    /* =========================================
+       START PRAWDZIWEGO NAGRYWANIA
+    ========================================= */
+
+    async startAudioRecording() {
+
+        /*
+          Czyścimy poprzednie nagranie.
+        */
+
+        this.clearLastAudioRecording();
+
+
+        /*
+          Jeśli przeglądarka nie obsługuje
+          MediaRecorder, Nele nadal działa
+          przez SpeechRecognition.
+        */
+
+        if (
+            !(
+                "MediaRecorder"
+                in window
+            )
+        ) {
+
+            console.warn(
+                "MediaRecorder nie jest obsługiwany."
+            );
+
+            return false;
+
+        }
+
+
+        if (
+            !navigator.mediaDevices
+            ||
+            !navigator.mediaDevices
+                .getUserMedia
+        ) {
+
+            console.warn(
+                "getUserMedia nie jest obsługiwane."
+            );
+
+            return false;
+
+        }
+
+
+        /*
+          Na wszelki wypadek zamykamy
+          poprzedni stream.
+        */
+
+        this.releaseAudioStream();
+
+
+        try {
+
+            const stream =
+                await navigator
+                    .mediaDevices
+                    .getUserMedia({
+                        audio: true
+                    });
+
+
+            this.audioStream =
+                stream;
+
+
+            const mimeType =
+                this.getSupportedAudioMimeType();
+
+
+            let recorder;
+
+
+            if (mimeType) {
+
+                recorder =
+                    new MediaRecorder(
+                        stream,
+                        {
+                            mimeType:
+                                mimeType
+                        }
+                    );
+
+            } else {
+
+                recorder =
+                    new MediaRecorder(
+                        stream
+                    );
+
+            }
+
+
+            this.mediaRecorder =
+                recorder;
+
+
+            this.audioChunks =
+                [];
+
+
+            /*
+              Każdy kawałek nagrania
+              dodajemy do tablicy.
+            */
+
+            recorder.ondataavailable =
+                (event) => {
+
+                    if (
+                        event.data
+                        &&
+                        event.data.size > 0
+                    ) {
+
+                        this.audioChunks.push(
+                            event.data
+                        );
+
+                    }
+
+                };
+
+
+            recorder.onerror =
+                (event) => {
+
+                    console.error(
+                        "MediaRecorder Fehler:",
+                        event.error
+                        ||
+                        event
+                    );
+
+                };
+
+
+            recorder.start();
+
+
+            console.log(
+                "Nele audio recording started.",
+                recorder.mimeType
+            );
+
+
+            return true;
+
+
+        } catch (error) {
+
+            console.error(
+                "Nie można rozpocząć nagrywania audio:",
+                error
+            );
+
+
+            this.mediaRecorder =
+                null;
+
+
+            this.releaseAudioStream();
+
+
+            return false;
+
+        }
+
+    },
+
+
+    /* =========================================
+       KONIEC PRAWDZIWEGO NAGRYWANIA
+    ========================================= */
+
+    async stopAudioRecording() {
+
+        const recorder =
+            this.mediaRecorder;
+
+
+        /*
+          Nie ma aktywnego recordera.
+        */
+
+        if (!recorder) {
+
+            this.releaseAudioStream();
+
+            return this.lastAudioBlob;
+
+        }
+
+
+        /*
+          Recorder jest już zatrzymany.
+        */
+
+        if (
+            recorder.state ===
+            "inactive"
+        ) {
+
+            this.mediaRecorder =
+                null;
+
+            this.releaseAudioStream();
+
+            return this.lastAudioBlob;
+
+        }
+
+
+        return new Promise(
+            resolve => {
+
+                const finishRecording =
+                    () => {
+
+                        const mimeType =
+                            recorder.mimeType
+                            ||
+                            this.getSupportedAudioMimeType()
+                            ||
+                            "audio/webm";
+
+
+                        if (
+                            this.audioChunks.length
+                            > 0
+                        ) {
+
+                            this.lastAudioBlob =
+                                new Blob(
+                                    this.audioChunks,
+                                    {
+                                        type:
+                                            mimeType
+                                    }
+                                );
+
+
+                            this.lastAudioMimeType =
+                                mimeType;
+
+
+                            console.log(
+                                "Nele audio recording ready:",
+                                {
+                                    size:
+                                        this.lastAudioBlob
+                                            .size,
+
+                                    type:
+                                        this.lastAudioBlob
+                                            .type
+                                }
+                            );
+
+                        } else {
+
+                            this.lastAudioBlob =
+                                null;
+
+                            this.lastAudioMimeType =
+                                null;
+
+
+                            console.warn(
+                                "Nagranie audio jest puste."
+                            );
+
+                        }
+
+
+                        this.audioChunks =
+                            [];
+
+
+                        this.mediaRecorder =
+                            null;
+
+
+                        this.releaseAudioStream();
+
+
+                        resolve(
+                            this.lastAudioBlob
+                        );
+
+                    };
+
+
+                recorder.addEventListener(
+                    "stop",
+                    finishRecording,
+                    {
+                        once: true
+                    }
+                );
+
+
+                try {
+
+                    /*
+                      requestData prosi recorder
+                      o ostatni fragment audio
+                      przed zatrzymaniem.
+                    */
+
+                    if (
+                        recorder.state ===
+                        "recording"
+                    ) {
+
+                        try {
+
+                            recorder.requestData();
+
+                        } catch (error) {
+
+                            console.warn(
+                                "MediaRecorder requestData error:",
+                                error
+                            );
+
+                        }
+
+                    }
+
+
+                    recorder.stop();
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Nie można zatrzymać nagrywania audio:",
+                        error
+                    );
+
+
+                    this.mediaRecorder =
+                        null;
+
+
+                    this.releaseAudioStream();
+
+
+                    resolve(
+                        this.lastAudioBlob
+                    );
+
+                }
+
+            }
+        );
+
+    },
+
+
+    /* =========================================
        KONFIGURACJA MIKROFONU
     ========================================= */
 
@@ -1053,7 +1579,7 @@ const Nele = {
         ------------------------- */
 
         this.recognition.onend =
-            () => {
+            async () => {
 
                 this.isListening =
                     false;
@@ -1065,6 +1591,26 @@ const Nele = {
                     "Sprechen";
 
 
+                /*
+                  Najpierw kończymy prawdziwe
+                  nagranie audio.
+
+                  Dopiero kiedy Blob jest gotowy,
+                  wysyłamy wiadomość.
+                */
+
+                await this.stopAudioRecording();
+
+
+                if (
+                    this.isResetting
+                ) {
+
+                    return;
+
+                }
+
+
                 if (
                     this.inputElement
                     &&
@@ -1073,7 +1619,9 @@ const Nele = {
                         .trim()
                 ) {
 
-                    this.sendMessage();
+                    this.sendMessage(
+                        "voice"
+                    );
 
                 }
 
@@ -1143,14 +1691,24 @@ const Nele = {
 
         this.micButton.addEventListener(
             "click",
-            () => {
+            async () => {
 
                 if (!this.recognition) {
                     return;
                 }
 
 
-                if (this.isListening) {
+                /*
+                  Jeżeli już słuchamy,
+                  kończymy SpeechRecognition.
+
+                  onend zakończy również
+                  MediaRecorder.
+                */
+
+                if (
+                    this.isListening
+                ) {
 
                     this.recognition.stop();
 
@@ -1177,6 +1735,19 @@ const Nele = {
                 }
 
 
+                /*
+                  Najpierw rozpoczynamy
+                  prawdziwe nagranie audio.
+                */
+
+                await this.startAudioRecording();
+
+
+                /*
+                  Potem uruchamiamy
+                  rozpoznawanie mowy.
+                */
+
                 try {
 
                     this.recognition.start();
@@ -1190,6 +1761,9 @@ const Nele = {
                         error
                     );
 
+
+                    await this.stopAudioRecording();
+
                 }
 
             }
@@ -1202,7 +1776,9 @@ const Nele = {
        WYSYŁANIE WIADOMOŚCI
     ========================================= */
 
-    async sendMessage() {
+    async sendMessage(
+        inputMode = "text"
+    ) {
 
         if (
             this.isResetting
@@ -1224,6 +1800,66 @@ const Nele = {
 
         if (!text) {
             return;
+        }
+
+
+        /*
+          Jeżeli użytkownik napisał
+          wiadomość klawiaturą,
+          poprzednie nagranie audio
+          nie może zostać z nią pomylone.
+        */
+
+        if (
+            inputMode !==
+            "voice"
+        ) {
+
+            this.clearLastAudioRecording();
+
+        }
+
+
+        /*
+          Na razie audio NIE jest jeszcze
+          wysyłane do backendu.
+
+          Sprawdzamy tylko, że prawdziwe
+          nagranie zostało poprawnie utworzone.
+        */
+
+        if (
+            inputMode ===
+            "voice"
+        ) {
+
+            if (
+                this.lastAudioBlob
+                &&
+                this.lastAudioBlob.size > 0
+            ) {
+
+                console.log(
+                    "Voice message has audio:",
+                    {
+                        size:
+                            this.lastAudioBlob
+                                .size,
+
+                        type:
+                            this.lastAudioBlob
+                                .type
+                    }
+                );
+
+            } else {
+
+                console.warn(
+                    "Voice message without recorded audio."
+                );
+
+            }
+
         }
 
 
