@@ -1,5 +1,3 @@
-nele/nele.js
-Kod:
 /* =========================================
 NELE
 Główny moduł inteligentnej trenerki
