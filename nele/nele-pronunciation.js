@@ -1,25 +1,26 @@
 /* =========================================
    NELE – PRONUNCIATION RECORDER
 
-   Osobne nagrywanie głosu
-   do ćwiczeń wymowy.
+   Tymczasowe laboratorium audio.
+
+   Ten moduł:
+
+   1. nagrywa prawdziwy głos użytkownika,
+   2. tworzy plik audio,
+   3. wysyła go do backendu,
+   4. sprawdza, czy backend go otrzymał.
 
    WAŻNE:
 
-   Ten moduł NIE używa SpeechRecognition.
-
-   Normalny mikrofon Nele działa osobno:
-   🎤 -> SpeechRecognition
-
-   Ten moduł:
-   🗣️ -> MediaRecorder
-
-   Oba systemy nie powinny działać
-   jednocześnie.
+   Ten moduł NIE używa SpeechRecognition
+   i NIE zmienia zwykłego mikrofonu 🎤.
 ========================================= */
 
 
 const NelePronunciationRecorder = {
+
+    backendUrl:
+        "https://nele-backend.onrender.com",
 
     pronunciationButton: null,
     normalMicButton: null,
@@ -33,6 +34,7 @@ const NelePronunciationRecorder = {
     audioMimeType: null,
 
     isRecording: false,
+    isUploading: false,
 
     normalMicWasDisabled: false,
 
@@ -114,6 +116,32 @@ const NelePronunciationRecorder = {
         console.log(
             "Nele pronunciation recorder ready."
         );
+
+    },
+
+
+    /* =====================================
+       SESSION ID
+    ===================================== */
+
+    getSessionId() {
+
+        const sessionId =
+            localStorage.getItem(
+                "nele_session_id"
+            );
+
+
+        if (
+            sessionId
+        ) {
+
+            return sessionId;
+
+        }
+
+
+        return "default";
 
     },
 
@@ -203,10 +231,73 @@ const NelePronunciationRecorder = {
 
 
     /* =====================================
+       ROZSZERZENIE PLIKU
+    ===================================== */
+
+    getFileExtension(
+        blob
+    ) {
+
+        const type =
+            String(
+                blob?.type
+                ||
+                ""
+            ).toLowerCase();
+
+
+        if (
+            type.includes(
+                "mp4"
+            )
+        ) {
+
+            return "m4a";
+
+        }
+
+
+        if (
+            type.includes(
+                "ogg"
+            )
+        ) {
+
+            return "ogg";
+
+        }
+
+
+        if (
+            type.includes(
+                "wav"
+            )
+        ) {
+
+            return "wav";
+
+        }
+
+
+        return "webm";
+
+    },
+
+
+    /* =====================================
        KLIKNIĘCIE PRZYCISKU
     ===================================== */
 
     async handleButtonClick() {
+
+        if (
+            this.isUploading
+        ) {
+
+            return;
+
+        }
+
 
         if (
             this.isRecording
@@ -273,12 +364,6 @@ const NelePronunciationRecorder = {
 
     async startFromButton() {
 
-        /*
-          Jeżeli zwykły mikrofon Nele
-          właśnie słucha, nie uruchamiamy
-          drugiego mikrofonu.
-        */
-
         if (
             this.isNormalMicrophoneListening()
         ) {
@@ -294,8 +379,7 @@ const NelePronunciationRecorder = {
 
         /*
           Zatrzymujemy głos Nele,
-          żeby nagranie nie zawierało
-          jej własnej wypowiedzi.
+          żeby nie nagrywać jej odpowiedzi.
         */
 
         if (
@@ -311,16 +395,12 @@ const NelePronunciationRecorder = {
 
 
         /*
-          Tymczasowo blokujemy
+          Na czas nagrywania wyłączamy
           zwykły mikrofon.
         */
 
         this.disableNormalMicrophone();
 
-
-        /*
-          Pokazujemy stan uruchamiania.
-        */
 
         this.setButtonStarting();
 
@@ -335,9 +415,11 @@ const NelePronunciationRecorder = {
 
             this.restoreNormalMicrophone();
 
+
             this.showTemporaryButtonMessage(
                 "⚠️ Aufnahme nicht möglich"
             );
+
 
             return false;
 
@@ -369,14 +451,165 @@ const NelePronunciationRecorder = {
 
 
         if (
-            audioBlob
-            &&
-            audioBlob.size > 0
+            !audioBlob
+            ||
+            audioBlob.size <= 0
         ) {
 
+            console.warn(
+                "Pronunciation recording is empty."
+            );
+
+
+            this.showTemporaryButtonMessage(
+                "⚠️ Keine Aufnahme"
+            );
+
+
+            return null;
+
+        }
+
+
+        console.log(
+            "Pronunciation recording saved:",
+            {
+                size:
+                    audioBlob.size,
+
+                type:
+                    audioBlob.type
+            }
+        );
+
+
+        /*
+          TERAZ WYSYŁAMY AUDIO
+          DO BACKENDU.
+        */
+
+        const uploaded =
+            await this.uploadRecording(
+                audioBlob
+            );
+
+
+        if (
+            uploaded
+        ) {
+
+            this.showTemporaryButtonMessage(
+                "✅ Audio gesendet"
+            );
+
+        } else {
+
+            this.showTemporaryButtonMessage(
+                "⚠️ Senden fehlgeschlagen"
+            );
+
+        }
+
+
+        return audioBlob;
+
+    },
+
+
+    /* =====================================
+       WYSŁANIE AUDIO DO BACKENDU
+    ===================================== */
+
+    async uploadRecording(
+        audioBlob
+    ) {
+
+        if (
+            !audioBlob
+            ||
+            audioBlob.size <= 0
+        ) {
+
+            return false;
+
+        }
+
+
+        if (
+            this.isUploading
+        ) {
+
+            return false;
+
+        }
+
+
+        this.isUploading =
+            true;
+
+
+        this.setButtonUploading();
+
+
+        try {
+
+            const formData =
+                new FormData();
+
+
+            const extension =
+                this.getFileExtension(
+                    audioBlob
+                );
+
+
+            const filename =
+                (
+                    "nele-pronunciation-"
+                    + Date.now()
+                    + "."
+                    + extension
+                );
+
+
+            /*
+              SESSION ID
+            */
+
+            formData.append(
+                "session_id",
+                this.getSessionId()
+            );
+
+
+            /*
+              CELOWO NIE WYSYŁAMY MESSAGE.
+
+              Backend odpowie, że audio
+              dotarło, ale ASR nie jest
+              jeszcze aktywne.
+
+              To jest właśnie nasz test.
+            */
+
+
+            /*
+              AUDIO
+            */
+
+            formData.append(
+                "audio",
+                audioBlob,
+                filename
+            );
+
+
             console.log(
-                "Pronunciation recording saved:",
+                "Sending pronunciation audio:",
                 {
+                    filename:
+                        filename,
+
                     size:
                         audioBlob.size,
 
@@ -386,27 +619,108 @@ const NelePronunciationRecorder = {
             );
 
 
-            this.showTemporaryButtonMessage(
-                "✅ Aufnahme fertig"
+            /*
+              NIE ustawiamy ręcznie
+              Content-Type.
+
+              Przeglądarka sama ustawi:
+              multipart/form-data
+              z właściwym boundary.
+            */
+
+            const response =
+                await fetch(
+                    `${this.backendUrl}/chat`,
+                    {
+                        method:
+                            "POST",
+
+                        body:
+                            formData
+                    }
+                );
+
+
+            /*
+              Nawet kod HTTP 400 jest tutaj
+              możliwy i prawidłowy.
+
+              Backend zwraca 400,
+              ponieważ nie ma jeszcze tekstu,
+              ale może jednocześnie potwierdzić:
+
+              audio_received: true
+            */
+
+            let data;
+
+
+            try {
+
+                data =
+                    await response.json();
+
+            } catch (error) {
+
+                console.error(
+                    "Backend response is not JSON:",
+                    error
+                );
+
+
+                return false;
+
+            }
+
+
+            console.log(
+                "Pronunciation backend response:",
+                data
             );
 
 
-            return audioBlob;
+            if (
+                data
+                &&
+                data.audio_received === true
+            ) {
+
+                console.log(
+                    "✅ Backend received real audio."
+                );
+
+
+                return true;
+
+            }
+
+
+            console.warn(
+                "Backend did not confirm audio.",
+                data
+            );
+
+
+            return false;
+
+
+        } catch (error) {
+
+            console.error(
+                "Pronunciation upload error:",
+                error
+            );
+
+
+            return false;
+
+
+        } finally {
+
+            this.isUploading =
+                false;
 
         }
-
-
-        console.warn(
-            "Pronunciation recording is empty."
-        );
-
-
-        this.showTemporaryButtonMessage(
-            "⚠️ Keine Aufnahme"
-        );
-
-
-        return null;
 
     },
 
@@ -504,6 +818,7 @@ const NelePronunciationRecorder = {
         this.pronunciationButton.title =
             "Aussprache aufnehmen";
 
+
         this.pronunciationButton.setAttribute(
             "aria-label",
             "Aussprache üben"
@@ -560,6 +875,7 @@ const NelePronunciationRecorder = {
         this.pronunciationButton.title =
             "Aufnahme stoppen";
 
+
         this.pronunciationButton.setAttribute(
             "aria-label",
             "Aufnahme stoppen"
@@ -593,8 +909,31 @@ const NelePronunciationRecorder = {
 
 
     /* =====================================
+       PRZYCISK – WYSYŁANIE
+    ===================================== */
+
+    setButtonUploading() {
+
+        if (
+            !this.pronunciationButton
+        ) {
+
+            return;
+
+        }
+
+
+        this.pronunciationButton.disabled =
+            true;
+
+        this.pronunciationButton.textContent =
+            "⏳ Wird gesendet...";
+
+    },
+
+
+    /* =====================================
        TYMCZASOWY KOMUNIKAT
-       NA PRZYCISKU
     ===================================== */
 
     showTemporaryButtonMessage(
@@ -627,14 +966,14 @@ const NelePronunciationRecorder = {
                     this.setButtonIdle();
 
                 },
-                1600
+                1800
             );
 
     },
 
 
     /* =====================================
-       USUNIĘCIE TIMERA PRZYCISKU
+       TIMER PRZYCISKU
     ===================================== */
 
     clearButtonResetTimer() {
@@ -660,16 +999,19 @@ const NelePronunciationRecorder = {
 
 
     /* =====================================
-       CZYSZCZENIE OSTATNIEGO NAGRANIA
+       CZYSZCZENIE NAGRANIA
     ===================================== */
 
     clearRecording() {
 
-        this.audioChunks = [];
+        this.audioChunks =
+            [];
 
-        this.audioBlob = null;
+        this.audioBlob =
+            null;
 
-        this.audioMimeType = null;
+        this.audioMimeType =
+            null;
 
     },
 
@@ -739,27 +1081,12 @@ const NelePronunciationRecorder = {
             !this.isSupported()
         ) {
 
-            console.warn(
-                "Nagrywanie wymowy nie jest "
-                + "obsługiwane przez tę przeglądarkę."
-            );
-
             return false;
 
         }
 
 
-        /*
-          Usuwamy poprzednie nagranie.
-        */
-
         this.clearRecording();
-
-
-        /*
-          Zwalniamy ewentualny
-          poprzedni stream.
-        */
 
         this.releaseStream();
 
@@ -772,9 +1099,14 @@ const NelePronunciationRecorder = {
                     .getUserMedia({
 
                         audio: {
-                            echoCancellation: true,
-                            noiseSuppression: true,
-                            autoGainControl: true
+                            echoCancellation:
+                                true,
+
+                            noiseSuppression:
+                                true,
+
+                            autoGainControl:
+                                true
                         }
 
                     });
@@ -822,10 +1154,6 @@ const NelePronunciationRecorder = {
                 [];
 
 
-            /* =============================
-               FRAGMENTY AUDIO
-            ============================= */
-
             recorder.ondataavailable =
                 event => {
 
@@ -844,16 +1172,14 @@ const NelePronunciationRecorder = {
                 };
 
 
-            /* =============================
-               BŁĄD NAGRYWANIA
-            ============================= */
-
             recorder.onerror =
                 event => {
 
                     console.error(
                         "Pronunciation recorder error:",
-                        event.error || event
+                        event.error
+                        ||
+                        event
                     );
 
                 };
@@ -1001,12 +1327,6 @@ const NelePronunciationRecorder = {
                             this.audioMimeType =
                                 null;
 
-
-                            console.warn(
-                                "Pronunciation recording "
-                                + "is empty."
-                            );
-
                         }
 
 
@@ -1043,7 +1363,7 @@ const NelePronunciationRecorder = {
 
                     console.error(
                         "Nie można zatrzymać "
-                        + "nagrywania wymowy:",
+                        + "nagrywania:",
                         error
                     );
 
@@ -1059,7 +1379,7 @@ const NelePronunciationRecorder = {
 
 
                     resolve(
-                        this.audioBlob
+                        null
                     );
 
                 }
@@ -1103,6 +1423,9 @@ const NelePronunciationRecorder = {
             null;
 
         this.isRecording =
+            false;
+
+        this.isUploading =
             false;
 
 
@@ -1202,4 +1525,4 @@ if (
 
     initNelePronunciationRecorder();
 
-                }
+           }
