@@ -1,0 +1,2200 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <title>Mit Nele sprechen</title>
+
+  <style>
+    :root {
+      --bg: #061120;
+      --panel: #0a192d;
+      --line: rgba(100, 148, 212, 0.18);
+      --text: #edf4ff;
+      --muted: #9cadc6;
+      --blue: #1e8bff;
+      --blue2: #0f63e5;
+      --shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+
+      background:
+        radial-gradient(
+          circle at 18% 18%,
+          rgba(41, 122, 255, 0.2),
+          transparent 28%
+        ),
+        linear-gradient(
+          135deg,
+          #04101f,
+          #08192d 48%,
+          #061120
+        );
+
+      overflow: hidden;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .page {
+      width: min(1550px, 100%);
+      height: 100dvh;
+
+      margin: auto;
+
+      padding:
+        12px
+        clamp(14px, 2vw, 30px)
+        10px;
+
+      display: flex;
+      flex-direction: column;
+
+      gap: 12px;
+
+      overflow: hidden;
+    }
+
+    .topbar {
+      flex: none;
+
+      display: grid;
+
+      grid-template-columns:
+        1fr
+        auto
+        1fr;
+
+      align-items: center;
+
+      gap: 16px;
+    }
+
+    .back-link,
+    .settings-button,
+    .secondary-control {
+      min-height: 46px;
+
+      padding: 0 18px;
+
+      border:
+        1px
+        solid
+        var(--line);
+
+      border-radius: 14px;
+
+      color: var(--text);
+
+      background:
+        rgba(
+          12,
+          24,
+          43,
+          0.82
+        );
+
+      text-decoration: none;
+
+      cursor: pointer;
+    }
+
+    .back-link {
+      justify-self: start;
+
+      display: flex;
+      align-items: center;
+    }
+
+    .settings-button {
+      justify-self: end;
+    }
+
+    .page-title {
+      text-align: center;
+    }
+
+    .page-title h1 {
+      margin: 0;
+
+      font-size:
+        clamp(
+          27px,
+          3.2vw,
+          48px
+        );
+
+      line-height: 1.05;
+    }
+
+    .page-title p {
+      margin: 5px 0 0;
+
+      color: var(--muted);
+    }
+
+    .main-layout {
+      flex: 1;
+
+      min-height: 0;
+
+      display: grid;
+
+      grid-template-columns:
+        clamp(
+          210px,
+          20vw,
+          290px
+        )
+        minmax(
+          480px,
+          1fr
+        );
+
+      align-items: start;
+
+      gap: 16px;
+
+      overflow: hidden;
+    }
+
+    .avatar-panel,
+    .chat-panel,
+    .controls-panel {
+      border:
+        1px
+        solid
+        var(--line);
+
+      border-radius: 22px;
+
+      background:
+        linear-gradient(
+          180deg,
+          rgba(
+            10,
+            25,
+            45,
+            0.96
+          ),
+          rgba(
+            4,
+            14,
+            26,
+            0.98
+          )
+        );
+
+      box-shadow:
+        var(--shadow);
+
+      overflow: hidden;
+    }
+
+    .avatar-panel {
+      position: relative;
+
+      width: 100%;
+
+      aspect-ratio: 1 / 1;
+
+      align-self: start;
+
+      background:
+        radial-gradient(
+          circle at 50% 34%,
+          rgba(
+            48,
+            118,
+            226,
+            0.2
+          ),
+          transparent 45%
+        ),
+        linear-gradient(
+          180deg,
+          rgba(
+            8,
+            23,
+            40,
+            0.96
+          ),
+          rgba(
+            4,
+            14,
+            26,
+            0.98
+          )
+        );
+    }
+
+    .avatar-frame {
+      width: 100%;
+      height: 100%;
+
+      border: 0;
+
+      display: block;
+    }
+
+    .avatar-glow {
+      position: absolute;
+
+      inset: 0;
+
+      pointer-events: none;
+
+      background:
+        radial-gradient(
+          circle at 50% 48%,
+          transparent 34%,
+          rgba(
+            3,
+            12,
+            23,
+            0.32
+          ) 84%
+        );
+    }
+
+    .avatar-card {
+      position: absolute;
+
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+
+      padding:
+        9px
+        11px;
+
+      border:
+        1px
+        solid
+        var(--line);
+
+      border-radius: 13px;
+
+      background:
+        rgba(
+          9,
+          24,
+          42,
+          0.88
+        );
+
+      backdrop-filter:
+        blur(10px);
+    }
+
+    .avatar-card strong {
+      display: block;
+
+      margin-bottom: 3px;
+
+      font-size: 15px;
+    }
+
+    .avatar-card p {
+      margin: 0;
+
+      color: var(--muted);
+
+      font-size: 12px;
+    }
+
+    .online-dot {
+      display: inline-block;
+
+      width: 9px;
+      height: 9px;
+
+      margin-right: 7px;
+
+      border-radius: 50%;
+
+      background: #3ca0ff;
+
+      box-shadow:
+        0 0 12px #3ca0ff;
+    }
+
+    .chat-panel {
+      height: 100%;
+
+      min-height: 0;
+
+      display: flex;
+      flex-direction: column;
+    }
+
+    .messages {
+      flex: 1;
+
+      min-height: 0;
+
+      padding: 20px;
+
+      overflow-y: auto;
+
+      display: flex;
+      flex-direction: column;
+
+      gap: 16px;
+    }
+
+    .message {
+      position: relative;
+
+      max-width: 78%;
+
+      padding:
+        14px
+        18px
+        25px;
+
+      border-radius: 18px;
+
+      line-height: 1.5;
+
+      white-space: pre-wrap;
+    }
+
+    .message.nele {
+      align-self: flex-start;
+
+      background: #122039;
+
+      border-top-left-radius:
+        6px;
+    }
+
+    .message.user {
+      align-self: flex-end;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--blue),
+          var(--blue2)
+        );
+
+      border-top-right-radius:
+        6px;
+    }
+
+    .message-author {
+      display: block;
+
+      margin-bottom: 6px;
+
+      color: #69aefb;
+
+      font-weight: bold;
+
+      font-size: 14px;
+    }
+
+    .message.user
+    .message-author {
+      color: #ffffff;
+    }
+
+    .message-time {
+      position: absolute;
+
+      right: 12px;
+
+      bottom: 7px;
+
+      font-size: 11px;
+
+      opacity: 0.7;
+    }
+
+    .typing {
+      align-self: flex-start;
+
+      padding:
+        12px
+        16px;
+
+      border-radius: 14px;
+
+      color: var(--muted);
+
+      background: #11233a;
+    }
+
+    .typing[hidden] {
+      display: none;
+    }
+
+    .message-form {
+      flex: none;
+
+      padding:
+        14px
+        16px;
+
+      display: grid;
+
+      grid-template-columns:
+        1fr
+        auto;
+
+      gap: 12px;
+
+      border-top:
+        1px
+        solid
+        var(--line);
+    }
+
+    .message-input {
+      min-height: 52px;
+
+      padding:
+        0
+        16px;
+
+      border:
+        1px
+        solid
+        rgba(
+          118,
+          177,
+          255,
+          0.22
+        );
+
+      border-radius: 12px;
+
+      outline: none;
+
+      color: #ffffff;
+
+      background: #0e1e33;
+    }
+
+    .send-button {
+      min-width: 120px;
+
+      border: 0;
+
+      border-radius: 12px;
+
+      color: #ffffff;
+
+      font-weight: bold;
+
+      cursor: pointer;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--blue),
+          var(--blue2)
+        );
+    }
+
+    .send-button:disabled {
+      opacity: 0.6;
+
+      cursor: wait;
+    }
+
+    .controls-panel {
+      flex: none;
+
+      padding:
+        9px
+        18px;
+
+      display: grid;
+
+      grid-template-columns:
+        1fr
+        auto
+        1fr;
+
+      align-items: center;
+
+      gap: 16px;
+    }
+
+    .secondary-control {
+      justify-self: center;
+    }
+
+    .microphone-area {
+      text-align: center;
+    }
+
+    .microphone-button {
+      width: 72px;
+      height: 72px;
+
+      border:
+        6px
+        solid
+        rgba(
+          28,
+          113,
+          255,
+          0.24
+        );
+
+      border-radius: 50%;
+
+      color: #ffffff;
+
+      font-size: 32px;
+
+      cursor: pointer;
+
+      background:
+        linear-gradient(
+          135deg,
+          #209dff,
+          #1262ec
+        );
+
+      box-shadow:
+        0 0 0 8px
+          rgba(
+            27,
+            115,
+            255,
+            0.1
+          ),
+        0 0 35px
+          rgba(
+            21,
+            111,
+            255,
+            0.4
+          );
+    }
+
+    .microphone-button.listening {
+      background:
+        linear-gradient(
+          135deg,
+          #7cdd43,
+          #3f941b
+        );
+
+      animation:
+        pulse
+        1s
+        infinite;
+    }
+
+    .microphone-label {
+      margin:
+        5px
+        0
+        0;
+
+      color: #91b8eb;
+
+      font-size: 13px;
+    }
+
+    .tip-bar {
+      grid-column:
+        1 / -1;
+
+      padding:
+        10px
+        14px;
+
+      border-radius: 14px;
+
+      color: var(--muted);
+
+      background:
+        rgba(
+          12,
+          24,
+          43,
+          0.88
+        );
+
+      display: flex;
+
+      justify-content:
+        space-between;
+
+      gap: 16px;
+
+      font-size: 13px;
+    }
+
+    .status {
+      color: #8fc6ff;
+    }
+
+    .error {
+      color: #ffaaa2;
+    }
+
+    @keyframes pulse {
+      50% {
+        transform:
+          scale(1.06);
+      }
+    }
+
+    @media (max-width: 850px) {
+      body {
+        overflow-y: auto;
+      }
+
+      .page {
+        height: auto;
+
+        min-height: 100dvh;
+
+        overflow: visible;
+      }
+
+      .topbar {
+        grid-template-columns:
+          1fr;
+      }
+
+      .back-link,
+      .settings-button {
+        justify-self: stretch;
+      }
+
+      .main-layout {
+        display: grid;
+
+        grid-template-columns:
+          clamp(
+            150px,
+            38vw,
+            210px
+          )
+          minmax(
+            0,
+            1fr
+          );
+
+        align-items: start;
+
+        overflow: visible;
+      }
+
+      .avatar-panel {
+        width: 100%;
+
+        aspect-ratio: 1 / 1;
+      }
+
+      .chat-panel {
+        min-height: 500px;
+      }
+
+      .controls-panel {
+        grid-template-columns:
+          1fr;
+      }
+
+      .tip-bar {
+        grid-column: 1;
+
+        flex-direction:
+          column;
+      }
+
+      .message-form {
+        grid-template-columns:
+          1fr;
+      }
+
+      .send-button {
+        min-height: 48px;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .page-title h1 {
+        font-size: 28px;
+      }
+
+      .main-layout {
+        grid-template-columns:
+          1fr;
+      }
+
+      .avatar-panel {
+        width: 160px;
+        height: 160px;
+
+        justify-self:
+          start;
+      }
+
+      .chat-panel {
+        min-height: 500px;
+      }
+
+      .avatar-card p {
+        display: none;
+      }
+
+      .message {
+        max-width: 90%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page">
+
+    <header class="topbar">
+
+      <a
+        href="/mapa-niemiec.html"
+        class="back-link"
+      >
+        ← Zurück zur Karte
+      </a>
+
+      <div class="page-title">
+
+        <h1>
+          Mit Nele sprechen 💬
+        </h1>
+
+        <p>
+          Deutsch sprechen üben – ganz einfach mit Nele
+        </p>
+
+      </div>
+
+      <button
+        type="button"
+        class="settings-button"
+        id="settingsButton"
+      >
+        ⚙ Einstellungen
+      </button>
+
+    </header>
+
+
+    <main class="main-layout">
+
+      <section
+        class="avatar-panel"
+        aria-label="Nele"
+      >
+
+        <iframe
+          src="/avatar/avatar.html"
+          title="Nele – Deutschtrainerin"
+          class="avatar-frame"
+        ></iframe>
+
+        <div class="avatar-glow"></div>
+
+        <div class="avatar-card">
+
+          <strong>
+
+            <span class="online-dot"></span>
+
+            Nele
+
+          </strong>
+
+          <p>
+            Deine Deutschtrainerin
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <section
+        class="chat-panel"
+        aria-label="Gespräch mit Nele"
+      >
+
+        <div
+          class="messages"
+          id="chatMessages"
+        >
+
+          <article class="message nele">
+
+            <span class="message-author">
+              Nele
+            </span>
+
+            <span class="message-text">Guten Tag!
+Schön, dass du da bist.
+Worüber möchtest du heute sprechen?</span>
+
+            <span class="message-time"></span>
+
+          </article>
+
+
+          <div
+            class="typing"
+            id="typing"
+            hidden
+          >
+            ● ● ● &nbsp; Nele schreibt...
+          </div>
+
+        </div>
+
+
+        <form
+          class="message-form"
+          id="messageForm"
+        >
+
+          <input
+            type="text"
+            id="messageInput"
+            class="message-input"
+            placeholder="Schreibe deine Nachricht..."
+            autocomplete="off"
+          >
+
+          <button
+            type="submit"
+            class="send-button"
+            id="sendButton"
+          >
+            Senden ✈
+          </button>
+
+        </form>
+
+      </section>
+
+    </main>
+
+
+    <section class="controls-panel">
+
+      <button
+        type="button"
+        class="secondary-control"
+        id="keyboardButton"
+      >
+        ⌨ Tastatur verwenden
+      </button>
+
+
+      <div class="microphone-area">
+
+        <button
+          type="button"
+          id="microphoneButton"
+          class="microphone-button"
+          aria-label="Mit Nele sprechen"
+        >
+          🎤
+        </button>
+
+        <p
+          class="microphone-label"
+          id="microphoneLabel"
+        >
+          Zum Sprechen klicken
+        </p>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="secondary-control"
+        id="repeatButton"
+      >
+        🔊 Letzte Antwort wiederholen
+      </button>
+
+
+      <div class="tip-bar">
+
+        <div>
+
+          ℹ
+          <strong>
+            Tipp:
+          </strong>
+
+          Sprich langsam und deutlich.
+
+        </div>
+
+        <div
+          id="voiceInfo"
+          class="status"
+        >
+          Nele 3.0 wird geladen …
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+
+  <!--
+    Konfiguracja głównej strony.
+    Plik znajduje się w głównym repozytorium
+    lernedeutsch.github.io.
+  -->
+  <script src="/config/app-config.js"></script>
+
+
+  <script>
+    "use strict";
+
+
+    /* =========================================================
+       NELE 3.0
+       BACKEND RENDER
+       ========================================================= */
+
+
+    const API_BASE =
+      window.NELE_API_BASE ||
+      window.appConfig?.api?.baseUrl ||
+      "https://nele-backend-3.onrender.com";
+
+
+    const CHAT_URL =
+      API_BASE.replace(
+        /\/+$/,
+        ""
+      ) + "/chat";
+
+
+    const API_TIMEOUT =
+      window.appConfig?.api?.timeout ||
+      70000;
+
+
+
+    /* =========================================================
+       ELEMENTY STRONY
+       ========================================================= */
+
+
+    const chatMessages =
+      document.getElementById(
+        "chatMessages"
+      );
+
+
+    const messageForm =
+      document.getElementById(
+        "messageForm"
+      );
+
+
+    const messageInput =
+      document.getElementById(
+        "messageInput"
+      );
+
+
+    const sendButton =
+      document.getElementById(
+        "sendButton"
+      );
+
+
+    const typing =
+      document.getElementById(
+        "typing"
+      );
+
+
+    const microphoneButton =
+      document.getElementById(
+        "microphoneButton"
+      );
+
+
+    const microphoneLabel =
+      document.getElementById(
+        "microphoneLabel"
+      );
+
+
+    const voiceInfo =
+      document.getElementById(
+        "voiceInfo"
+      );
+
+
+
+    /* =========================================================
+       STUDENT MEMORY 3.0
+       ========================================================= */
+
+
+    function createUUID() {
+
+      if (
+        window.crypto &&
+        typeof window.crypto.randomUUID === "function"
+      ) {
+
+        return window.crypto.randomUUID();
+      }
+
+
+      return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
+        .replace(
+          /[xy]/g,
+          function(character) {
+
+            const random =
+              Math.random() * 16 | 0;
+
+
+            const value =
+              character === "x"
+                ? random
+                : (random & 0x3) | 0x8;
+
+
+            return value.toString(
+              16
+            );
+          }
+        );
+    }
+
+
+
+    function getStudentId() {
+
+      let studentId =
+        localStorage.getItem(
+          "nele_student_id"
+        );
+
+
+      if (
+        !studentId
+      ) {
+
+        studentId =
+          createUUID();
+
+
+        localStorage.setItem(
+          "nele_student_id",
+          studentId
+        );
+      }
+
+
+      return studentId;
+    }
+
+
+
+    const STUDENT_ID =
+      getStudentId();
+
+
+    let sessionId =
+      localStorage.getItem(
+        "nele_session_id"
+      ) || null;
+
+
+
+    /* =========================================================
+       GŁOS NIEMIECKI
+       ========================================================= */
+
+
+    let germanVoice =
+      null;
+
+
+    let lastNeleAnswer =
+      "Guten Tag! Schön, dass du da bist. Worüber möchtest du heute sprechen?";
+
+
+    let recognition =
+      null;
+
+
+    let isListening =
+      false;
+
+
+    let requestRunning =
+      false;
+
+
+
+    function loadGermanVoice() {
+
+      if (
+        !(
+          "speechSynthesis"
+          in
+          window
+        )
+      ) {
+
+        voiceInfo.textContent =
+          "Sprachausgabe wird nicht unterstützt.";
+
+
+        voiceInfo.className =
+          "error";
+
+
+        return;
+      }
+
+
+      const voices =
+        speechSynthesis
+          .getVoices();
+
+
+      const femaleHints = [
+        "female",
+        "frau",
+        "anna",
+        "petra",
+        "helena",
+        "vicki",
+        "marlene",
+        "google"
+      ];
+
+
+      germanVoice =
+
+        voices.find(
+          voice =>
+
+            voice.lang
+              ?.toLowerCase() ===
+              "de-de"
+
+            &&
+
+            femaleHints.some(
+              hint =>
+
+                voice.name
+                  .toLowerCase()
+                  .includes(
+                    hint
+                  )
+            )
+        )
+
+        ||
+
+        voices.find(
+          voice =>
+
+            voice.lang
+              ?.toLowerCase() ===
+              "de-de"
+        )
+
+        ||
+
+        voices.find(
+          voice =>
+
+            voice.lang
+              ?.toLowerCase()
+              .startsWith(
+                "de"
+              )
+        )
+
+        ||
+
+        null;
+
+
+      if (
+        germanVoice
+      ) {
+
+        voiceInfo.textContent =
+          "Nele 3.0 online · Stimme: " +
+          germanVoice.name;
+
+      } else {
+
+        voiceInfo.textContent =
+          "Nele 3.0 online · Deutsche Standardstimme";
+      }
+    }
+
+
+
+    loadGermanVoice();
+
+
+
+    if (
+      "speechSynthesis"
+      in
+      window
+    ) {
+
+      speechSynthesis
+        .addEventListener(
+          "voiceschanged",
+          loadGermanVoice
+        );
+    }
+
+
+
+    function speak(
+      text,
+      rate = 0.85
+    ) {
+
+      return new Promise(
+        resolve => {
+
+          if (
+            !text ||
+            !(
+              "speechSynthesis"
+              in
+              window
+            )
+          ) {
+
+            resolve();
+
+            return;
+          }
+
+
+          speechSynthesis
+            .cancel();
+
+
+          const utter =
+            new SpeechSynthesisUtterance(
+              text
+            );
+
+
+          utter.lang =
+            "de-DE";
+
+
+          utter.rate =
+            rate;
+
+
+          utter.pitch =
+            1.05;
+
+
+          utter.volume =
+            1;
+
+
+          if (
+            germanVoice
+          ) {
+
+            utter.voice =
+              germanVoice;
+          }
+
+
+          utter.onend =
+            resolve;
+
+
+          utter.onerror =
+            resolve;
+
+
+          speechSynthesis
+            .speak(
+              utter
+            );
+        }
+      );
+    }
+
+
+
+    /* =========================================================
+       CZAS WIADOMOŚCI
+       ========================================================= */
+
+
+    function timeNow() {
+
+      return new Intl.DateTimeFormat(
+        "de-DE",
+        {
+          hour: "2-digit",
+          minute: "2-digit"
+        }
+      ).format(
+        new Date()
+      );
+    }
+
+
+
+    const firstMessageTime =
+      document.querySelector(
+        ".message-time"
+      );
+
+
+    if (
+      firstMessageTime
+    ) {
+
+      firstMessageTime.textContent =
+        timeNow();
+    }
+
+
+
+    /* =========================================================
+       DODAWANIE WIADOMOŚCI
+       ========================================================= */
+
+
+    function addMessage(
+      author,
+      text
+    ) {
+
+      const article =
+        document.createElement(
+          "article"
+        );
+
+
+      article.className =
+        "message " +
+        (
+          author === "Nele"
+            ? "nele"
+            : "user"
+        );
+
+
+      const who =
+        document.createElement(
+          "span"
+        );
+
+
+      who.className =
+        "message-author";
+
+
+      who.textContent =
+        author;
+
+
+
+      const body =
+        document.createElement(
+          "span"
+        );
+
+
+      body.className =
+        "message-text";
+
+
+      body.textContent =
+        text;
+
+
+
+      const stamp =
+        document.createElement(
+          "span"
+        );
+
+
+      stamp.className =
+        "message-time";
+
+
+      stamp.textContent =
+        timeNow();
+
+
+
+      article.append(
+        who,
+        body,
+        stamp
+      );
+
+
+      chatMessages
+        .insertBefore(
+          article,
+          typing
+        );
+
+
+      chatMessages.scrollTop =
+        chatMessages.scrollHeight;
+    }
+
+
+
+    /* =========================================================
+       FETCH Z TIMEOUTEM
+       Render Free może się wybudzać kilkadziesiąt sekund.
+       ========================================================= */
+
+
+    async function fetchWithTimeout(
+      url,
+      options = {},
+      timeout = API_TIMEOUT
+    ) {
+
+      const controller =
+        new AbortController();
+
+
+      const timer =
+        setTimeout(
+          () => {
+
+            controller.abort();
+
+          },
+          timeout
+        );
+
+
+      try {
+
+        return await fetch(
+          url,
+          {
+            ...options,
+            signal:
+              controller.signal
+          }
+        );
+
+      } finally {
+
+        clearTimeout(
+          timer
+        );
+      }
+    }
+
+
+
+    /* =========================================================
+       ROZMOWA Z NELE 3.0
+       ========================================================= */
+
+
+    async function askNele(
+      text
+    ) {
+
+      if (
+        requestRunning
+      ) {
+
+        return;
+      }
+
+
+      const cleanText =
+        String(
+          text || ""
+        ).trim();
+
+
+      if (
+        !cleanText
+      ) {
+
+        return;
+      }
+
+
+      requestRunning =
+        true;
+
+
+      sendButton.disabled =
+        true;
+
+
+      addMessage(
+        "Du",
+        cleanText
+      );
+
+
+      typing.hidden =
+        false;
+
+
+      chatMessages.scrollTop =
+        chatMessages.scrollHeight;
+
+
+      voiceInfo.textContent =
+        "Nele denkt nach …";
+
+
+      try {
+
+        const payload = {
+
+          message:
+            cleanText,
+
+          text:
+            cleanText,
+
+          user_message:
+            cleanText,
+
+          student_id:
+            STUDENT_ID,
+
+          name:
+            "Lernende"
+        };
+
+
+        if (
+          sessionId
+        ) {
+
+          payload.session_id =
+            sessionId;
+        }
+
+
+        const response =
+          await fetchWithTimeout(
+            CHAT_URL,
+            {
+              method:
+                "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json"
+              },
+
+              body:
+                JSON.stringify(
+                  payload
+                )
+            }
+          );
+
+
+        if (
+          !response.ok
+        ) {
+
+          throw new Error(
+            "HTTP " +
+            response.status
+          );
+        }
+
+
+        const data =
+          await response.json();
+
+
+        if (
+          data.student_id
+        ) {
+
+          localStorage.setItem(
+            "nele_student_id",
+            data.student_id
+          );
+        }
+
+
+        if (
+          data.session_id
+        ) {
+
+          sessionId =
+            data.session_id;
+
+
+          localStorage.setItem(
+            "nele_session_id",
+            sessionId
+          );
+        }
+
+
+        const answer =
+
+          data.reply ||
+
+          data.response ||
+
+          data.answer ||
+
+          data.message ||
+
+          data.text;
+
+
+        if (
+          !answer ||
+          typeof answer !==
+          "string"
+        ) {
+
+          throw new Error(
+            "Keine Antwort im erwarteten Format"
+          );
+        }
+
+
+        lastNeleAnswer =
+          answer;
+
+
+        addMessage(
+          "Nele",
+          answer
+        );
+
+
+        voiceInfo.className =
+          "status";
+
+
+        voiceInfo.textContent =
+          "Nele 3.0 online";
+
+
+        await speak(
+          answer
+        );
+
+      } catch (
+        error
+      ) {
+
+        console.error(
+          "Nele API Fehler:",
+          error
+        );
+
+
+        let answer;
+
+
+        if (
+          error.name ===
+          "AbortError"
+        ) {
+
+          answer =
+            "Der Server braucht gerade etwas länger. Bitte versuche es noch einmal.";
+
+        } else {
+
+          answer =
+            "Entschuldigung, ich kann den Server gerade nicht erreichen. Bitte versuche es gleich noch einmal.";
+        }
+
+
+        lastNeleAnswer =
+          answer;
+
+
+        addMessage(
+          "Nele",
+          answer
+        );
+
+
+        voiceInfo.textContent =
+          "Verbindungsfehler";
+
+
+        voiceInfo.className =
+          "error";
+
+
+        await speak(
+          answer
+        );
+
+      } finally {
+
+        typing.hidden =
+          true;
+
+
+        requestRunning =
+          false;
+
+
+        sendButton.disabled =
+          false;
+
+
+        chatMessages.scrollTop =
+          chatMessages.scrollHeight;
+
+
+        setTimeout(
+          () => {
+
+            voiceInfo.className =
+              "status";
+
+
+            if (
+              germanVoice
+            ) {
+
+              voiceInfo.textContent =
+                "Nele 3.0 online · Stimme: " +
+                germanVoice.name;
+
+            } else {
+
+              voiceInfo.textContent =
+                "Nele 3.0 online";
+            }
+
+          },
+          2500
+        );
+      }
+    }
+
+
+
+    /* =========================================================
+       FORMULARZ
+       ========================================================= */
+
+
+    messageForm
+      .addEventListener(
+        "submit",
+        event => {
+
+          event.preventDefault();
+
+
+          const text =
+            messageInput.value
+              .trim();
+
+
+          if (
+            !text
+          ) {
+
+            return;
+          }
+
+
+          messageInput.value =
+            "";
+
+
+          askNele(
+            text
+          );
+        }
+      );
+
+
+
+    /* =========================================================
+       PRZYCISKI
+       ========================================================= */
+
+
+    document
+      .getElementById(
+        "keyboardButton"
+      )
+      .addEventListener(
+        "click",
+        () => {
+
+          messageInput.focus();
+        }
+      );
+
+
+
+    document
+      .getElementById(
+        "repeatButton"
+      )
+      .addEventListener(
+        "click",
+        () => {
+
+          speak(
+            lastNeleAnswer
+          );
+        }
+      );
+
+
+
+    document
+      .getElementById(
+        "settingsButton"
+      )
+      .addEventListener(
+        "click",
+        () => {
+
+          alert(
+            "Nele 3.0\n\n" +
+
+            "Backend:\n" +
+            API_BASE +
+
+            "\n\nStudent ID:\n" +
+            STUDENT_ID +
+
+            "\n\nStimme:\n" +
+            (
+              germanVoice?.name ||
+              "deutsche Standardstimme"
+            ) +
+
+            "\n\nGeschwindigkeit: 0.85" +
+
+            "\nTonhöhe: 1.05"
+          );
+        }
+      );
+
+
+
+    /* =========================================================
+       ROZPOZNAWANIE MOWY
+       ========================================================= */
+
+
+    const SpeechRecognition =
+      window.SpeechRecognition ||
+      window.webkitSpeechRecognition;
+
+
+
+    if (
+      SpeechRecognition
+    ) {
+
+      recognition =
+        new SpeechRecognition();
+
+
+      recognition.lang =
+        "de-DE";
+
+
+      recognition.interimResults =
+        true;
+
+
+      recognition.continuous =
+        false;
+
+
+      recognition.maxAlternatives =
+        1;
+
+
+
+      recognition.onstart =
+        () => {
+
+          isListening =
+            true;
+
+
+          microphoneButton
+            .classList
+            .add(
+              "listening"
+            );
+
+
+          microphoneLabel.textContent =
+            "Nele hört zu …";
+        };
+
+
+
+      recognition.onresult =
+        event => {
+
+          let text =
+            "";
+
+
+          for (
+            let i =
+              event.resultIndex;
+
+            i <
+              event.results.length;
+
+            i++
+          ) {
+
+            text +=
+              event.results[i][0]
+                .transcript;
+          }
+
+
+          messageInput.value =
+            text;
+
+
+          const lastResult =
+            event.results[
+              event.results.length - 1
+            ];
+
+
+          if (
+            lastResult.isFinal
+          ) {
+
+            recognition.stop();
+
+
+            const finalText =
+              text.trim();
+
+
+            messageInput.value =
+              "";
+
+
+            if (
+              finalText
+            ) {
+
+              askNele(
+                finalText
+              );
+            }
+          }
+        };
+
+
+
+      recognition.onerror =
+        event => {
+
+          if (
+            event.error ===
+            "not-allowed"
+          ) {
+
+            microphoneLabel.textContent =
+              "Mikrofonzugriff nicht erlaubt";
+
+          } else if (
+            event.error ===
+            "no-speech"
+          ) {
+
+            microphoneLabel.textContent =
+              "Ich habe nichts gehört.";
+
+          } else {
+
+            microphoneLabel.textContent =
+              "Ich habe dich nicht verstanden.";
+          }
+        };
+
+
+
+      recognition.onend =
+        () => {
+
+          isListening =
+            false;
+
+
+          microphoneButton
+            .classList
+            .remove(
+              "listening"
+            );
+
+
+          if (
+            !microphoneLabel.textContent
+              .includes(
+                "erlaubt"
+              )
+          ) {
+
+            microphoneLabel.textContent =
+              "Zum Sprechen klicken";
+          }
+        };
+
+
+
+      microphoneButton
+        .addEventListener(
+          "click",
+          () => {
+
+            if (
+              requestRunning
+            ) {
+
+              return;
+            }
+
+
+            if (
+              isListening
+            ) {
+
+              recognition.stop();
+
+              return;
+            }
+
+
+            if (
+              "speechSynthesis"
+              in
+              window
+            ) {
+
+              speechSynthesis.cancel();
+            }
+
+
+            try {
+
+              recognition.start();
+
+            } catch (
+              error
+            ) {
+
+              console.error(
+                error
+              );
+            }
+          }
+        );
+
+    } else {
+
+      microphoneButton.disabled =
+        true;
+
+
+      microphoneLabel.textContent =
+        "Spracherkennung nicht unterstützt";
+    }
+
+
+
+    /* =========================================================
+       INFORMACJA STARTOWA
+       ========================================================= */
+
+
+    console.log(
+      "Nele 3.0 API:",
+      API_BASE
+    );
+
+
+    console.log(
+      "Nele Student ID:",
+      STUDENT_ID
+    );
+
+  </script>
+
+</body>
+  </html>
