@@ -174,11 +174,9 @@
     }
 
     .page-title p {
-      margin:
-        5px 0 0;
+      margin: 5px 0 0;
 
-      color:
-        var(--muted);
+      color: var(--muted);
 
       font-size:
         clamp(13px, 1.5vw, 16px);
@@ -186,12 +184,11 @@
 
     .top-actions {
       display: flex;
-
       gap: 8px;
     }
 
     /* =========================================================
-       MAIN LAYOUT
+       MAIN
        ========================================================= */
 
     .layout {
@@ -232,9 +229,7 @@
 
     .avatar-panel {
       position: sticky;
-
       top: 14px;
-
       overflow: hidden;
     }
 
@@ -325,11 +320,9 @@
       position: absolute;
 
       right: 17%;
-
       bottom: 18%;
 
       width: 18px;
-
       height: 18px;
 
       border-radius: 50%;
@@ -366,11 +359,9 @@
     }
 
     .avatar-card p {
-      margin:
-        4px 0 0;
+      margin: 4px 0 0;
 
-      color:
-        var(--muted);
+      color: var(--muted);
 
       font-size: 13px;
 
@@ -381,7 +372,6 @@
       display: inline-block;
 
       width: 9px;
-
       height: 9px;
 
       margin-right: 7px;
@@ -626,7 +616,6 @@
 
     .send-button:disabled {
       opacity: 0.55;
-
       cursor: wait;
     }
 
@@ -662,7 +651,6 @@
 
     .microphone-button {
       width: 68px;
-
       height: 68px;
 
       border:
@@ -713,7 +701,6 @@
 
     .microphone-button:disabled {
       opacity: 0.45;
-
       cursor: not-allowed;
     }
 
@@ -923,10 +910,6 @@
 
   <div class="page">
 
-    <!-- =======================================================
-         TOP
-         ======================================================= -->
-
     <header class="topbar">
 
       <a
@@ -970,15 +953,7 @@
 
     </header>
 
-    <!-- =======================================================
-         MAIN
-         ======================================================= -->
-
     <main class="layout">
-
-      <!-- =====================================================
-           AVATAR
-           ===================================================== -->
 
       <aside
         class="avatar-panel"
@@ -1024,10 +999,6 @@
         </div>
 
       </aside>
-
-      <!-- =====================================================
-           CHAT
-           ===================================================== -->
 
       <section class="chat-column">
 
@@ -1078,10 +1049,6 @@
           </form>
 
         </div>
-
-        <!-- ===================================================
-             CONTROLS
-             =================================================== -->
 
         <section class="controls-panel">
 
@@ -1247,10 +1214,12 @@
 
     let waitingForName = false;
 
+    let waitingForWarmup = false;
+
     let lastNeleAnswer = "";
 
     /* =========================================================
-       ID / MEMORY
+       STUDENT MEMORY
        ========================================================= */
 
     function createUUID() {
@@ -1336,28 +1305,18 @@
     }
 
 
-    function getStoredSessionId() {
-
-      return (
-        localStorage.getItem(
-          "nele_session_id"
-        ) || ""
-      ).trim();
-
-    }
-
-
     function saveSessionId(id) {
 
       if (!id) {
         return;
       }
 
-      sessionId = id;
+      sessionId =
+        String(id);
 
       localStorage.setItem(
         "nele_session_id",
-        id
+        sessionId
       );
 
     }
@@ -1365,14 +1324,14 @@
 
     function clearSessionId() {
 
-      sessionId = null;
+      sessionId =
+        null;
 
       localStorage.removeItem(
         "nele_session_id"
       );
 
     }
-
 
     /* =========================================================
        NAME
@@ -1432,7 +1391,6 @@
 
     }
 
-
     /* =========================================================
        UI
        ========================================================= */
@@ -1442,8 +1400,11 @@
       return new Intl.DateTimeFormat(
         "de-DE",
         {
-          hour: "2-digit",
-          minute: "2-digit"
+          hour:
+            "2-digit",
+
+          minute:
+            "2-digit"
         }
       ).format(
         new Date()
@@ -1472,16 +1433,19 @@
     ) {
 
       const cleanText =
-        String(text || "").trim();
+        String(text || "")
+          .trim();
 
       if (!cleanText) {
         return;
       }
 
+
       const article =
         document.createElement(
           "article"
         );
+
 
       article.className =
         "message " +
@@ -1553,9 +1517,12 @@
           ".message"
         );
 
+
       messages.forEach(
-        message => message.remove()
+        message =>
+          message.remove()
       );
+
 
       typing.hidden =
         true;
@@ -1610,7 +1577,6 @@
 
     }
 
-
     /* =========================================================
        FETCH
        ========================================================= */
@@ -1624,11 +1590,14 @@
       const controller =
         new AbortController();
 
+
       const timer =
         setTimeout(
-          () => controller.abort(),
+          () =>
+            controller.abort(),
           timeout
         );
+
 
       try {
 
@@ -1636,6 +1605,7 @@
           url,
           {
             ...options,
+
             signal:
               controller.signal
           }
@@ -1717,7 +1687,6 @@
 
     }
 
-
     /* =========================================================
        VOICE
        ========================================================= */
@@ -1764,6 +1733,7 @@
             voice.lang
               ?.toLowerCase() ===
               "de-de" &&
+
             preferredNames.some(
               name =>
                 voice.name
@@ -1785,13 +1755,17 @@
           voice =>
             voice.lang
               ?.toLowerCase()
-              .startsWith("de")
+              .startsWith(
+                "de"
+              )
         ) ||
 
         null;
 
 
-      if (germanVoice) {
+      if (
+        germanVoice
+      ) {
 
         setStatus(
           "Nele 3.0 online · Stimme: " +
@@ -1895,10 +1869,12 @@
 
 
           utterance.onend =
-            () => resolve();
+            () =>
+              resolve();
 
           utterance.onerror =
-            () => resolve();
+            () =>
+              resolve();
 
 
           window.speechSynthesis
@@ -1911,22 +1887,24 @@
 
     }
 
-
     /* =========================================================
        FIRST START
        ========================================================= */
 
     async function showFirstIntroduction() {
 
+      clearSessionId();
+
+      clearChat();
+
       sessionReady =
+        false;
+
+      waitingForWarmup =
         false;
 
       waitingForName =
         true;
-
-      clearSessionId();
-
-      clearChat();
 
 
       lastNeleAnswer =
@@ -1952,9 +1930,89 @@
 
     }
 
+    /* =========================================================
+       OLD NELE WARM-UP + NELE 3.0
+       ========================================================= */
+
+    async function showGreetingAndWarmup({
+      returning = true
+    } = {}) {
+
+      const name =
+        getStoredName();
+
+
+      if (!name) {
+
+        await showFirstIntroduction();
+
+        return;
+
+      }
+
+
+      clearSessionId();
+
+      clearChat();
+
+
+      sessionReady =
+        false;
+
+      waitingForName =
+        false;
+
+      waitingForWarmup =
+        true;
+
+
+      const intro =
+        returning
+
+          ? (
+            "Hallo " +
+            name +
+            "! Schön, dich wiederzusehen."
+          )
+
+          : (
+            "Schön, dich kennenzulernen, " +
+            name +
+            "!"
+          );
+
+
+      const warmup =
+        "Wie geht es dir heute? " +
+        "Antworte bitte mit einem ganzen Satz auf Deutsch.";
+
+
+      lastNeleAnswer =
+        intro +
+        "\n\n" +
+        warmup;
+
+
+      addMessage(
+        "Nele",
+        lastNeleAnswer
+      );
+
+
+      setStatus(
+        "Nele 3.0 online",
+        "ok"
+      );
+
+
+      await speak(
+        lastNeleAnswer
+      );
+
+    }
 
     /* =========================================================
-       SESSION START
+       BACKEND SESSION
        ========================================================= */
 
     async function startBackendSession(
@@ -1964,7 +2022,7 @@
       try {
 
         setStatus(
-          "Nele bereitet deine Sitzung vor …",
+          "Nele plant dein Training …",
           "status"
         );
 
@@ -2003,12 +2061,16 @@
 
 
         return {
-          success: true,
+          success:
+            true,
+
           data
         };
 
 
-      } catch (error) {
+      } catch (
+        error
+      ) {
 
         console.warn(
           "Session start fallback:",
@@ -2020,163 +2082,15 @@
 
 
         return {
-          success: false,
+          success:
+            false,
+
           error
         };
 
       }
 
     }
-
-
-    async function startNewSession({
-      returning = true
-    } = {}) {
-
-      if (
-        requestRunning
-      ) {
-        return;
-      }
-
-
-      const name =
-        getStoredName();
-
-
-      if (!name) {
-
-        await showFirstIntroduction();
-
-        return;
-
-      }
-
-
-      setRequestRunning(
-        true
-      );
-
-      sessionReady =
-        false;
-
-      waitingForName =
-        false;
-
-      clearChat();
-
-      showTyping();
-
-
-      const result =
-        await startBackendSession(
-          name
-        );
-
-
-      hideTyping();
-
-
-      let warmup =
-        "Wie geht es dir heute? " +
-        "Antworte bitte mit einem ganzen Satz auf Deutsch.";
-
-
-      if (
-        result.success
-      ) {
-
-        const serverReply =
-          result.data.reply ||
-          result.data.response ||
-          result.data.message ||
-          result.data.text ||
-          "";
-
-
-        if (
-          typeof serverReply ===
-            "string" &&
-          serverReply.trim()
-        ) {
-
-          warmup =
-            serverReply.trim();
-
-        }
-
-      }
-
-
-      const intro =
-        returning
-
-          ? (
-            "Hallo " +
-            name +
-            "! Schön, dich wiederzusehen."
-          )
-
-          : (
-            "Schön, dich kennenzulernen, " +
-            name +
-            "!"
-          );
-
-
-      lastNeleAnswer =
-        intro +
-        "\n\n" +
-        warmup;
-
-
-      addMessage(
-        "Nele",
-        lastNeleAnswer
-      );
-
-
-      /*
-        WICHTIG:
-        Auch wenn /api/session/start nicht existiert
-        oder vorübergehend nicht funktioniert,
-        darf der normale /chat-Endpunkt weiter benutzt werden.
-      */
-
-      sessionReady =
-        true;
-
-
-      if (
-        result.success
-      ) {
-
-        setStatus(
-          "Nele 3.0 online",
-          "ok"
-        );
-
-      } else {
-
-        setStatus(
-          "Nele 3.0 online · Chat-Modus",
-          "ok"
-        );
-
-      }
-
-
-      setRequestRunning(
-        false
-      );
-
-
-      await speak(
-        lastNeleAnswer
-      );
-
-    }
-
 
     /* =========================================================
        NAME ONBOARDING
@@ -2236,16 +2150,144 @@
         false;
 
 
-      await startNewSession({
+      await showGreetingAndWarmup({
         returning:
           false
       });
 
     }
 
+    /* =========================================================
+       WARM-UP ANSWER
+       ========================================================= */
+
+    async function finishWarmup(
+      text
+    ) {
+
+      const cleanText =
+        String(text || "")
+          .trim();
+
+
+      if (
+        !cleanText ||
+        requestRunning
+      ) {
+        return;
+      }
+
+
+      addMessage(
+        "Du",
+        cleanText
+      );
+
+
+      waitingForWarmup =
+        false;
+
+
+      setRequestRunning(
+        true
+      );
+
+
+      showTyping();
+
+
+      const name =
+        getStoredName() ||
+        "Lernende";
+
+
+      const result =
+        await startBackendSession(
+          name
+        );
+
+
+      hideTyping();
+
+
+      let nextMessage =
+        "Danke für deine Antwort. " +
+        "Dann legen wir los. Was möchtest du heute üben?";
+
+
+      if (
+        result.success
+      ) {
+
+        const serverReply =
+          result.data.reply ||
+          result.data.response ||
+          result.data.answer ||
+          result.data.message ||
+          result.data.text ||
+          "";
+
+
+        if (
+          typeof serverReply ===
+            "string" &&
+          serverReply.trim()
+        ) {
+
+          nextMessage =
+            serverReply.trim();
+
+        }
+
+      }
+
+
+      lastNeleAnswer =
+        nextMessage;
+
+
+      addMessage(
+        "Nele",
+        lastNeleAnswer
+      );
+
+
+      sessionReady =
+        true;
+
+
+      if (
+        result.success
+      ) {
+
+        setStatus(
+          "Nele 3.0 online · Teacher Brain aktiv",
+          "ok"
+        );
+
+      } else {
+
+        setStatus(
+          "Nele 3.0 online · Chat-Modus",
+          "ok"
+        );
+
+      }
+
+
+      setRequestRunning(
+        false
+      );
+
+
+      await speak(
+        lastNeleAnswer
+      );
+
+    }
 
     /* =========================================================
-       CHAT
+       NORMAL CHAT
        ========================================================= */
 
     async function askNele(
@@ -2263,21 +2305,6 @@
       ) {
 
         return;
-
-      }
-
-
-      /*
-        Jeżeli nie ma jeszcze aktywnej sesji,
-        pozwalamy uruchomić chat.
-      */
-
-      if (
-        !sessionReady
-      ) {
-
-        sessionReady =
-          true;
 
       }
 
@@ -2318,11 +2345,6 @@
 
         };
 
-
-        /*
-          session_id wysyłamy tylko wtedy,
-          kiedy rzeczywiście istnieje.
-        */
 
         if (
           sessionId
@@ -2393,8 +2415,12 @@
         );
 
 
+        sessionReady =
+          true;
+
+
         setStatus(
-          "Nele 3.0 online",
+          "Nele 3.0 online · Teacher Brain aktiv",
           "ok"
         );
 
@@ -2409,7 +2435,9 @@
         );
 
 
-      } catch (error) {
+      } catch (
+        error
+      ) {
 
         console.error(
           "Nele chat error:",
@@ -2482,6 +2510,55 @@
 
     }
 
+    /* =========================================================
+       ROUTE USER MESSAGE
+       ========================================================= */
+
+    async function handleUserMessage(
+      text
+    ) {
+
+      const cleanText =
+        String(text || "")
+          .trim();
+
+
+      if (!cleanText) {
+        return;
+      }
+
+
+      if (
+        waitingForName
+      ) {
+
+        await finishNameOnboarding(
+          cleanText
+        );
+
+        return;
+
+      }
+
+
+      if (
+        waitingForWarmup
+      ) {
+
+        await finishWarmup(
+          cleanText
+        );
+
+        return;
+
+      }
+
+
+      await askNele(
+        cleanText
+      );
+
+    }
 
     /* =========================================================
        FORM
@@ -2508,21 +2585,9 @@
           "";
 
 
-        if (
-          waitingForName
-        ) {
-
-          finishNameOnboarding(
-            text
-          );
-
-        } else {
-
-          askNele(
-            text
-          );
-
-        }
+        handleUserMessage(
+          text
+        );
 
       }
     );
@@ -2536,7 +2601,6 @@
 
       }
     );
-
 
     /* =========================================================
        REPEAT
@@ -2558,7 +2622,6 @@
 
       }
     );
-
 
     /* =========================================================
        RESTART
@@ -2589,14 +2652,13 @@
         clearSessionId();
 
 
-        await startNewSession({
+        await showGreetingAndWarmup({
           returning:
             true
         });
 
       }
     );
-
 
     /* =========================================================
        SETTINGS
@@ -2618,7 +2680,7 @@
 
         const session =
           sessionId ||
-          "keine aktive Session-ID";
+          "noch keine aktive Session";
 
 
         alert(
@@ -2646,7 +2708,6 @@
 
       }
     );
-
 
     /* =========================================================
        SPEECH RECOGNITION
@@ -2708,7 +2769,6 @@
           let transcript =
             "";
 
-
           let finalTranscript =
             "";
 
@@ -2728,7 +2788,8 @@
 
 
             const text =
-              result[0].transcript;
+              result[0]
+                .transcript;
 
 
             transcript +=
@@ -2768,25 +2829,13 @@
               recognition.stop();
 
             } catch {
-              /* nichts */
+              /* nothing */
             }
 
 
-            if (
-              waitingForName
-            ) {
-
-              finishNameOnboarding(
-                finalText
-              );
-
-            } else {
-
-              askNele(
-                finalText
-              );
-
-            }
+            handleUserMessage(
+              finalText
+            );
 
           }
 
@@ -2860,6 +2909,7 @@
               .includes(
                 "nicht erlaubt"
               ) &&
+
             !microphoneLabel
               .textContent
               .includes(
@@ -2897,7 +2947,7 @@
                 recognition.stop();
 
               } catch {
-                /* nichts */
+                /* nothing */
               }
 
               return;
@@ -2945,19 +2995,13 @@
 
     }
 
-
     /* =========================================================
-       START APP
+       START NELE
        ========================================================= */
 
     async function initialiseNele() {
 
       initialiseVoice();
-
-
-      sessionId =
-        getStoredSessionId() ||
-        null;
 
 
       const name =
@@ -2973,7 +3017,7 @@
       }
 
 
-      await startNewSession({
+      await showGreetingAndWarmup({
         returning:
           true
       });
