@@ -284,7 +284,9 @@ const Nele = {
        AUTOMATYCZNE POWITANIE
     ========================================= */
 
-    async loadWelcome() {
+    async loadWelcome(
+        newConversation = false
+    ) {
 
         if (!this.sessionId) {
             return;
@@ -306,7 +308,12 @@ const Nele = {
 
                         body: JSON.stringify({
                             session_id:
-                                this.sessionId
+                                this.sessionId,
+
+                            new_conversation:
+                                Boolean(
+                                    newConversation
+                                )
                         })
                     }
                 );
@@ -420,7 +427,9 @@ const Nele = {
 
         try {
 
-            await this.loadWelcome();
+            await this.loadWelcome(
+                true
+            );
 
         } finally {
 
