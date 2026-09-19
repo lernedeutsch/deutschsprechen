@@ -94,3 +94,21 @@ check(
   legacyHtml.includes("https://lernedeutsch.github.io/deutschsprechen/nele.html"),
   "legacy nele.1.html points only to canonical Nele"
 );
+
+
+check(
+  js.includes('"nele_session_id"') &&
+  pronunciation.includes('"nele_session_id"') &&
+  !js.includes("nele_student_id") &&
+  !js.includes("nele3_student_id") &&
+  !pronunciation.includes("nele_student_id") &&
+  !pronunciation.includes("nele3_student_id"),
+  "active frontend uses exactly one learner identity key"
+);
+
+check(
+  !html.includes("nele-backend-3.onrender.com") &&
+  !js.includes("nele-backend-3.onrender.com") &&
+  !pronunciation.includes("nele-backend-3.onrender.com"),
+  "active frontend cannot connect to backend-3"
+);
