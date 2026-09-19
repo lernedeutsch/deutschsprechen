@@ -78,3 +78,19 @@ check(
 );
 
 console.log("\nAll Nele frontend safety tests passed.");
+
+
+const legacyHtml = read("nele.1.html");
+
+check(
+  !legacyHtml.includes("nele-backend-3.onrender.com") &&
+  !legacyHtml.includes("nele3_student_id") &&
+  !legacyHtml.includes("localStorage."),
+  "legacy nele.1.html cannot create a second learner identity"
+);
+
+check(
+  legacyHtml.includes("nele.html") &&
+  legacyHtml.includes("https://lernedeutsch.github.io/deutschsprechen/nele.html"),
+  "legacy nele.1.html points only to canonical Nele"
+);
