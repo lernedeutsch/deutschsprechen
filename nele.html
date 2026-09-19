@@ -99,7 +99,8 @@ body{
     background:var(--green);
 }
 
-.reset-btn{
+.reset-btn,
+.new-user-btn{
     min-height:42px;
     padding:9px 13px;
 
@@ -116,7 +117,8 @@ body{
     cursor:pointer;
 }
 
-.reset-btn:hover{
+.reset-btn:hover,
+.new-user-btn:hover{
     background:rgba(255,255,255,.12);
 }
 
@@ -406,7 +408,8 @@ body{
         gap:7px;
     }
 
-    .reset-btn{
+    .reset-btn,
+    .new-user-btn{
         min-height:38px;
         padding:7px 10px;
         font-size:.85rem;
@@ -474,6 +477,14 @@ body{
                 id="reset-btn"
             >
                 Neu anfangen
+            </button>
+
+            <button
+                type="button"
+                class="new-user-btn"
+                id="new-user-btn"
+            >
+                Als neuer Benutzer starten
             </button>
 
         </div>
