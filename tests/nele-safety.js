@@ -112,3 +112,38 @@ check(
   !pronunciation.includes("nele-backend-3.onrender.com"),
   "active frontend cannot connect to backend-3"
 );
+
+
+check(
+  pronunciation.includes("/api/activity/start") &&
+  pronunciation.includes('"pronunciation"') &&
+  pronunciation.includes("preparePronunciationTask") &&
+  pronunciation.includes("pronunciationTaskReady"),
+  "pronunciation starts a backend pronunciation task before recording"
+);
+
+check(
+  pronunciation.includes('formData.append(') &&
+  pronunciation.includes('"input_mode"') &&
+  pronunciation.includes('"voice"'),
+  "pronunciation audio is explicitly sent as voice input"
+);
+
+check(
+  !pronunciation.includes('return "default"'),
+  "pronunciation never falls back to shared default learner id"
+);
+
+check(
+  js.includes("window.NELE_BACKEND_URL") &&
+  pronunciation.includes("window.NELE_BACKEND_URL") &&
+  js.includes("https://nele-backend.onrender.com") &&
+  pronunciation.includes("https://nele-backend.onrender.com"),
+  "frontend supports test override but keeps production backend as default"
+);
+
+check(
+  js.includes('new CustomEvent("nele:new-conversation")') &&
+  pronunciation.includes('"nele:new-conversation"'),
+  "new conversation resets pronunciation task state"
+);
