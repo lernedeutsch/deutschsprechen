@@ -306,10 +306,7 @@ const Nele = {
 
                         body: JSON.stringify({
                             session_id:
-                                this.sessionId,
-
-                            input_mode:
-                                inputMode
+                                this.sessionId
                         })
                     }
                 );
@@ -878,7 +875,10 @@ const Nele = {
                                 text,
 
                             session_id:
-                                this.sessionId
+                                this.sessionId,
+
+                            input_mode:
+                                inputMode
                         })
                     }
                 );
