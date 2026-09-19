@@ -9,7 +9,11 @@ const Nele = {
     language: "de-DE",
 
     backendUrl:
-        "https://nele-backend.onrender.com",
+        (
+            window.NELE_BACKEND_URL
+            ||
+            "https://nele-backend.onrender.com"
+        ),
 
     messagesElement: null,
     inputElement: null,
