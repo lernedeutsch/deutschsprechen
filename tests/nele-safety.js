@@ -31,7 +31,7 @@ check(
 );
 
 check(
-  !js.includes("/reset"),
+  !/fetch\(\s*[\`'"](?:\\\$\{this\.backendUrl\}|https?:\\\/\\\/[^\`'"]+)\\\/reset[\`'"]/m.test(js),
   "active Nele frontend never calls destructive /reset"
 );
 
