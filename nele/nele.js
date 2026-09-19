@@ -425,6 +425,10 @@ const Nele = {
             this.messagesElement.innerHTML = "";
         }
 
+        window.dispatchEvent(
+            new CustomEvent("nele:new-conversation")
+        );
+
         try {
 
             await this.loadWelcome(
@@ -515,6 +519,10 @@ const Nele = {
         if (this.messagesElement) {
             this.messagesElement.innerHTML = "";
         }
+
+        window.dispatchEvent(
+            new CustomEvent("nele:new-conversation")
+        );
 
         try {
 
