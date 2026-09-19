@@ -38,6 +38,8 @@ const NelePronunciationRecorder = {
 
     isRecording: false,
     isUploading: false,
+    pronunciationTaskReady: false,
+    pronunciationTaskStarting: false,
 
     normalMicWasDisabled: false,
 
@@ -103,6 +105,13 @@ const NelePronunciationRecorder = {
             }
         );
 
+        window.addEventListener(
+            "nele:new-conversation",
+            () => {
+                this.resetPronunciationTask();
+            }
+        );
+
 
         this.setButtonIdle();
 
@@ -133,7 +142,7 @@ const NelePronunciationRecorder = {
         }
 
 
-        return "default";
+        return null;
 
     },
 
@@ -410,7 +419,11 @@ const NelePronunciationRecorder = {
 
     async handleButtonClick() {
 
-        if (this.isUploading) {
+        if (
+            this.isUploading
+            ||
+            this.pronunciationTaskStarting
+        ) {
 
             return;
 
@@ -426,7 +439,200 @@ const NelePronunciationRecorder = {
         }
 
 
+        if (!this.pronunciationTaskReady) {
+
+            await this.preparePronunciationTask();
+
+            return;
+
+        }
+
+
         await this.startFromButton();
+
+    },
+
+
+    /* =====================================
+       PRZYGOTOWANIE PRAWDZIWEGO ZADANIA
+       WYMOWY W BACKENDZIE
+    ===================================== */
+
+    async preparePronunciationTask() {
+
+        const sessionId =
+            this.getSessionId();
+
+        if (!sessionId) {
+
+            this.showTemporaryButtonMessage(
+                "⚠️ Sitzung neu laden"
+            );
+
+            return false;
+
+        }
+
+
+        this.pronunciationTaskStarting =
+            true;
+
+        this.setButtonStarting();
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `${this.backendUrl}/api/activity/start`,
+                    {
+                        method:
+                            "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify({
+                                session_id:
+                                    sessionId,
+
+                                type:
+                                    "pronunciation"
+                            })
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !response.ok
+                ||
+                !data
+                ||
+                !data.task
+                ||
+                data.task.type !==
+                    "pronunciation"
+            ) {
+
+                console.warn(
+                    "Pronunciation task start failed.",
+                    data
+                );
+
+                this.showTemporaryButtonMessage(
+                    "⚠️ Aufgabe nicht gestartet"
+                );
+
+                return false;
+
+            }
+
+
+            this.pronunciationTaskReady =
+                true;
+
+
+            const neleApp =
+                this.getNeleApp();
+
+            const reply =
+                String(
+                    data.reply
+                    ||
+                    ""
+                ).trim();
+
+            const speakText =
+                String(
+                    data.speak_text
+                    ||
+                    data.task.target
+                    ||
+                    ""
+                ).trim();
+
+
+            if (
+                reply
+                &&
+                neleApp
+                &&
+                typeof neleApp.addMessage
+                    === "function"
+            ) {
+
+                neleApp.addMessage(
+                    "Nele",
+                    reply,
+                    "nele"
+                );
+
+            }
+
+
+            if (
+                speakText
+                &&
+                neleApp
+                &&
+                typeof neleApp.speak
+                    === "function"
+            ) {
+
+                neleApp.speak(
+                    speakText
+                );
+
+            }
+
+
+            this.setButtonTaskReady();
+
+            return true;
+
+
+        } catch (error) {
+
+            console.error(
+                "Pronunciation task start error:",
+                error
+            );
+
+            this.showTemporaryButtonMessage(
+                "⚠️ Aufgabe nicht gestartet"
+            );
+
+            return false;
+
+
+        } finally {
+
+            this.pronunciationTaskStarting =
+                false;
+
+        }
+
+    },
+
+
+    resetPronunciationTask() {
+
+        this.pronunciationTaskReady =
+            false;
+
+        this.pronunciationTaskStarting =
+            false;
+
+        this.clearRecording();
+        this.restoreNormalMicrophone();
+        this.setButtonIdle();
 
     },
 
@@ -683,9 +889,21 @@ const NelePronunciationRecorder = {
               SESSION ID
             */
 
+            const sessionId =
+                this.getSessionId();
+
+            if (!sessionId) {
+                return false;
+            }
+
             formData.append(
                 "session_id",
-                this.getSessionId()
+                sessionId
+            );
+
+            formData.append(
+                "input_mode",
+                "voice"
             );
 
 
@@ -783,6 +1001,23 @@ const NelePronunciationRecorder = {
             this.showConversationResult(
                 data
             );
+
+
+            if (
+                data
+                &&
+                data.meta
+                &&
+                data.meta.activity ===
+                    "pronunciation"
+            ) {
+
+                this.pronunciationTaskReady =
+                    Boolean(
+                        data.meta.retry
+                    );
+
+            }
 
 
             /*
@@ -945,6 +1180,34 @@ const NelePronunciationRecorder = {
         this.pronunciationButton.setAttribute(
             "aria-label",
             "Aussprache üben"
+        );
+
+    },
+
+
+    setButtonTaskReady() {
+
+        if (!this.pronunciationButton) {
+
+            return;
+
+        }
+
+
+        this.clearButtonResetTimer();
+
+        this.pronunciationButton.disabled =
+            false;
+
+        this.pronunciationButton.textContent =
+            "🎙️ Jetzt aufnehmen";
+
+        this.pronunciationButton.title =
+            "Aussprache jetzt aufnehmen";
+
+        this.pronunciationButton.setAttribute(
+            "aria-label",
+            "Aussprache jetzt aufnehmen"
         );
 
     },
@@ -1536,7 +1799,7 @@ const NelePronunciationRecorder = {
 
         this.restoreNormalMicrophone();
 
-        this.setButtonIdle();
+        this.resetPronunciationTask();
 
 
         return true;
