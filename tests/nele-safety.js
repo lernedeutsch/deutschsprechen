@@ -37,8 +37,15 @@ check(
 
 check(
   js.includes("startNewConversation") &&
-  js.includes("await this.loadWelcome()"),
+  js.includes("await this.loadWelcome(") &&
+  js.includes("true"),
   "Neu anfangen starts a fresh visible conversation"
+);
+
+check(
+  js.includes("new_conversation:") &&
+  js.includes("Boolean("),
+  "Neu anfangen marks the welcome request as a new conversation"
 );
 
 check(
