@@ -23,7 +23,11 @@
 const NelePronunciationRecorder = {
 
     backendUrl:
-        "https://nele-backend.onrender.com",
+        (
+            window.NELE_BACKEND_URL
+            ||
+            "https://nele-backend.onrender.com"
+        ),
 
     pronunciationButton: null,
     normalMicButton: null,
