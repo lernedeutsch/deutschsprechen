@@ -19,5 +19,10 @@ jobs:
         with:
           node-version: 20
 
+      - name: Check JavaScript syntax
+        run: |
+          node --check nele/nele.js
+          node --check nele/nele-pronunciation.js
+
       - name: Run Nele safety tests
         run: node tests/nele-safety.js
