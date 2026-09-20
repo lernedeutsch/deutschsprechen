@@ -294,21 +294,92 @@ header.hero{
   color:#8c6700;
 }
 
-.gruessen{
+.learn-steps{
   display:flex;
   flex-wrap:wrap;
   gap:10px;
+  margin:0 0 18px;
+}
+
+.learn-step{
+  padding:8px 12px;
+  background:#f3f7fc;
+  border:1px solid var(--line);
+  border-radius:999px;
+  color:var(--text);
+  font-weight:800;
+}
+
+.greeting-cards{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
   margin:16px 0 18px;
 }
 
-.greeting{
-  margin:0;
-  padding:10px 14px;
-  background:#f7fbff;
+.greeting-card{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  padding:16px;
+  background:linear-gradient(180deg,#fff,#f7fbff);
   border:1px solid var(--line);
+  border-radius:18px;
+  box-shadow:0 8px 16px rgba(0,0,0,.05);
+}
+
+.greeting-card-main{
+  min-width:0;
+}
+
+.greeting-phrase{
+  display:block;
+  margin-bottom:4px;
+  color:var(--text);
+  font-size:1.18rem;
+  font-weight:800;
+}
+
+.greeting-when{
+  display:block;
+  color:var(--muted);
+  font-size:.94rem;
+}
+
+.greeting-audio{
+  flex:0 0 auto;
+  min-width:84px;
+  padding:9px 12px;
+  color:#0d5f91;
+  background:#eaf5ff;
+  border:1px solid #b9dcfb;
   border-radius:999px;
-  font-size:1.02rem;
-  font-weight:700;
+  cursor:pointer;
+  font-weight:800;
+}
+
+.greeting-audio:hover{
+  background:#dff0ff;
+  border-color:#81bfff;
+}
+
+.quick-note{
+  margin-top:14px;
+  padding:15px 16px;
+  background:#fff9e8;
+  border:1px solid #f1dda5;
+  border-left:5px solid var(--accent);
+  border-radius:16px;
+}
+
+.quick-note p{
+  margin:6px 0;
+}
+
+@media(max-width:720px){
+  .greeting-cards{grid-template-columns:1fr}
+  .greeting-card{align-items:flex-start}
 }
 
 .merke-grid{
@@ -818,13 +889,12 @@ button:focus-visible,
           </h1>
 
           <p>
-            Heute lernen wir, wie man sich begrüßt, sich vorstellt und das
-            deutsche Alphabet spricht.
+            Heute: Hallo sagen, deinen Namen sagen und das Alphabet hören.
           </p>
 
           <div class="topics" aria-label="Themen der Lektion">
-            <a href="#lektion1-teil1">1 · Begrüßung</a>
-            <a href="#lektion1-teil2">2 · Vorstellung</a>
+            <a href="#lektion1-teil1">1 · Hallo sagen</a>
+            <a href="#lektion1-teil2">2 · Mein Name</a>
             <a href="#lektion1-teil3">3 · Alphabet</a>
           </div>
 
@@ -872,105 +942,83 @@ button:focus-visible,
 
         <div class="part-head">
           <span class="part-num">Teil 1</span>
-          <h2 class="part-title">Wir begrüßen uns</h2>
+          <h2 class="part-title">Hallo sagen</h2>
         </div>
 
         <div class="card">
 
           <p class="lead">
-            Wir sagen verschiedene Grüße je nach Tageszeit.
+            Schau. Hör zu. Sprich nach.
           </p>
 
-          <div class="gruessen" aria-label="Begrüßungen">
-            <p class="greeting">Guten Morgen!</p>
-            <p class="greeting">Guten Tag!</p>
-            <p class="greeting">Guten Abend!</p>
-            <p class="greeting">Hallo!</p>
-            <p class="greeting">Tschüss!</p>
+          <div class="learn-steps" aria-label="Lernschritte">
+            <span class="learn-step">👀 1 · Schau</span>
+            <span class="learn-step">🔊 2 · Hör zu</span>
+            <span class="learn-step">🗣️ 3 · Sprich nach</span>
           </div>
 
-          <div class="grammar-box">
+          <div class="greeting-cards" aria-label="Begrüßungen">
 
-            <strong>Merke!</strong>
-
-            <div class="merke-grid">
-
-              <div class="merke-col">
-                <span class="merke-title">
-                  morgens / tagsüber / abends
-                </span>
-
-                morgens: <strong>Guten Morgen!</strong><br><br>
-                tagsüber: <strong>Guten Tag!</strong><br><br>
-                abends: <strong>Guten Abend!</strong>
+            <div class="greeting-card">
+              <div class="greeting-card-main">
+                <span class="greeting-phrase">👋 Guten Morgen!</span>
+                <span class="greeting-when">🌅 morgens</span>
               </div>
+              <button type="button" class="greeting-audio" data-speech="Guten Morgen!">
+                🔊 Hören
+              </button>
+            </div>
 
-              <div class="merke-col">
-
-                <span class="merke-title">
-                  informell / Abschied
-                </span>
-
-                informell: <strong>Hallo!</strong><br><br>
-                beim Abschied: <strong>Tschüss!</strong><br><br>
-                formal: <strong>Auf Wiedersehen!</strong>
+            <div class="greeting-card">
+              <div class="greeting-card-main">
+                <span class="greeting-phrase">👋 Guten Tag!</span>
+                <span class="greeting-when">☀️ tagsüber</span>
               </div>
+              <button type="button" class="greeting-audio" data-speech="Guten Tag!">
+                🔊 Hören
+              </button>
+            </div>
 
+            <div class="greeting-card">
+              <div class="greeting-card-main">
+                <span class="greeting-phrase">👋 Guten Abend!</span>
+                <span class="greeting-when">🌙 abends</span>
+              </div>
+              <button type="button" class="greeting-audio" data-speech="Guten Abend!">
+                🔊 Hören
+              </button>
+            </div>
+
+            <div class="greeting-card">
+              <div class="greeting-card-main">
+                <span class="greeting-phrase">👋 Hallo!</span>
+                <span class="greeting-when">🙂 informell · immer</span>
+              </div>
+              <button type="button" class="greeting-audio" data-speech="Hallo!">
+                🔊 Hören
+              </button>
+            </div>
+
+            <div class="greeting-card">
+              <div class="greeting-card-main">
+                <span class="greeting-phrase">👋 Tschüss!</span>
+                <span class="greeting-when">🚪 Abschied</span>
+              </div>
+              <button type="button" class="greeting-audio" data-speech="Tschüss!">
+                🔊 Hören
+              </button>
             </div>
 
           </div>
 
-          <table class="gruss-tabelle">
-
-            <thead>
-              <tr>
-                <th>Situation</th>
-                <th>Gruß</th>
-                <th>Wann wird er in Deutschland verwendet?</th>
-              </tr>
-            </thead>
-
-            <tbody>
-
-              <tr>
-                <td>morgens</td>
-                <td><b class="gruss">Guten Morgen!</b></td>
-                <td>
-                  ungefähr von 5:00 oder 6:00 Uhr bis 10:00 oder 11:00 Uhr
-                </td>
-              </tr>
-
-              <tr>
-                <td>tagsüber</td>
-                <td><b class="gruss">Guten Tag!</b></td>
-                <td>
-                  ungefähr von 10:00 oder 11:00 Uhr bis 17:00 oder 18:00 Uhr
-                </td>
-              </tr>
-
-              <tr>
-                <td>abends</td>
-                <td><b class="gruss">Guten Abend!</b></td>
-                <td>
-                  ungefähr ab 17:00 oder 18:00 Uhr bis spät am Abend
-                </td>
-              </tr>
-
-              <tr>
-                <td>informell</td>
-                <td><b class="gruss">Hallo!</b></td>
-                <td>zu jeder Tageszeit</td>
-              </tr>
-
-              <tr>
-                <td>beim Abschied</td>
-                <td><b class="gruss">Tschüss!</b></td>
-                <td>zu jeder Tageszeit</td>
-              </tr>
-
-            </tbody>
-
-          </table>
+          <div class="quick-note">
+            <strong>Kurz merken:</strong>
+            <p>🌅 morgens → <strong>Guten Morgen!</strong></p>
+            <p>☀️ tagsüber → <strong>Guten Tag!</strong></p>
+            <p>🌙 abends → <strong>Guten Abend!</strong></p>
+            <p>🙂 Freunde / Familie → <strong>Hallo!</strong></p>
+            <p>🚪 beim Gehen → <strong>Tschüss!</strong></p>
+          </div>
 
         </div>
 
