@@ -313,6 +313,84 @@ body{
     color:var(--text);
 }
 
+.progress-translation{
+    position:relative;
+    display:inline-flex;
+    margin-top:12px;
+}
+
+.translation-toggle{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    padding:5px 9px;
+    color:#24364b;
+    background:#fffdf6;
+    border:1px solid #d8c28c;
+    border-radius:999px;
+    cursor:pointer;
+    font-weight:800;
+    font-size:.78rem;
+}
+
+.translation-panel{
+    display:none;
+    position:absolute;
+    left:0;
+    top:38px;
+    z-index:20;
+    width:270px;
+    padding:9px;
+    background:#fffdf7;
+    border:1px solid #d9c28e;
+    border-radius:12px;
+    box-shadow:0 10px 24px rgba(0,0,0,.25);
+}
+
+.progress-translation.open .translation-panel,
+.progress-translation:hover .translation-panel,
+.progress-translation:focus-within .translation-panel{
+    display:block;
+}
+
+.translation-languages{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-bottom:8px;
+}
+
+.translation-language{
+    padding:5px 8px;
+    color:#26364b;
+    background:#f7f1e3;
+    border:1px solid #ddcfaa;
+    border-radius:999px;
+    cursor:pointer;
+    font-size:.75rem;
+    font-weight:800;
+}
+
+.translation-language.active{
+    background:#e4f3e8;
+    border-color:#78bf95;
+    color:#28502f;
+}
+
+.translation-text{
+    display:none;
+    margin:0;
+    padding:8px 9px;
+    color:#26364b;
+    background:#fff7d8;
+    border-radius:9px;
+    font-size:.82rem;
+    line-height:1.4;
+    font-weight:700;
+}
+
+.translation-text.show{display:block}
+
 /* FOOTER */
 
 footer{
@@ -384,22 +462,13 @@ footer{
         </h1>
 
         <p>
-            Lerne Deutsch Schritt für Schritt.
+            Deutsch Schritt für Schritt.
             Der A1-Kurs besteht aus 30 Lektionen.
             Beginne mit Lektion 1 und arbeite dich
             nach und nach durch den ganzen Kurs.
         </p>
 
     </section>
-
-
-    <h2 class="section-title">
-        Lektionen 1–30
-    </h2>
-
-    <p class="section-subtitle">
-        Wähle eine Lektion.
-    </p>
 
 
     <div class="lesson-grid">
@@ -447,11 +516,11 @@ footer{
 
             <div class="lesson-content">
                 <strong>
-                    Lektion 2
+                    Teil 2
                 </strong>
 
                 <span>
-                    Nächste A1-Lektion
+                    Nächster Kursabschnitt
                 </span>
             </div>
 
@@ -471,7 +540,7 @@ footer{
             </div>
 
             <div class="lesson-content">
-                <strong>Lektion 3</strong>
+                <strong>Teil 3</strong>
                 <span>In Vorbereitung</span>
             </div>
 
@@ -489,7 +558,7 @@ footer{
             </div>
 
             <div class="lesson-content">
-                <strong>Lektion 4</strong>
+                <strong>Teil 4</strong>
                 <span>In Vorbereitung</span>
             </div>
 
@@ -507,7 +576,7 @@ footer{
             </div>
 
             <div class="lesson-content">
-                <strong>Lektion 5</strong>
+                <strong>Teil 5</strong>
                 <span>In Vorbereitung</span>
             </div>
 
@@ -525,7 +594,7 @@ footer{
             </div>
 
             <div class="lesson-content">
-                <strong>Lektion 6</strong>
+                <strong>Teil 6</strong>
                 <span>In Vorbereitung</span>
             </div>
 
@@ -543,7 +612,7 @@ footer{
             </div>
 
             <div class="lesson-content">
-                <strong>Lektion 7</strong>
+                <strong>Teil 7</strong>
                 <span>In Vorbereitung</span>
             </div>
 
@@ -561,7 +630,7 @@ footer{
             </div>
 
             <div class="lesson-content">
-                <strong>Lektion 8</strong>
+                <strong>Teil 8</strong>
                 <span>In Vorbereitung</span>
             </div>
 
@@ -579,7 +648,7 @@ footer{
             </div>
 
             <div class="lesson-content">
-                <strong>Lektion 9</strong>
+                <strong>Teil 9</strong>
                 <span>In Vorbereitung</span>
             </div>
 
@@ -597,7 +666,7 @@ footer{
             </div>
 
             <div class="lesson-content">
-                <strong>Lektion 10</strong>
+                <strong>Teil 10</strong>
                 <span>In Vorbereitung</span>
             </div>
 
@@ -615,7 +684,7 @@ footer{
             </div>
 
             <div class="lesson-content">
-                <strong>Lektion 11</strong>
+                <strong>Teil 11</strong>
                 <span>In Vorbereitung</span>
             </div>
 
@@ -633,7 +702,7 @@ footer{
             </div>
 
             <div class="lesson-content">
-                <strong>Lektion 12</strong>
+                <strong>Teil 12</strong>
                 <span>In Vorbereitung</span>
             </div>
 
@@ -651,7 +720,7 @@ footer{
             </div>
 
             <div class="lesson-content">
-                <strong>Lektion 13</strong>
+                <strong>Teil 13</strong>
                 <span>In Vorbereitung</span>
             </div>
 
@@ -669,7 +738,7 @@ footer{
             </div>
 
             <div class="lesson-content">
-                <strong>Lektion 14</strong>
+                <strong>Teil 14</strong>
                 <span>In Vorbereitung</span>
             </div>
 
@@ -687,7 +756,7 @@ footer{
             </div>
 
             <div class="lesson-content">
-                <strong>Lektion 15</strong>
+                <strong>Teil 15</strong>
                 <span>In Vorbereitung</span>
             </div>
 
@@ -705,7 +774,7 @@ footer{
             </div>
 
             <div class="lesson-content">
-                <strong>Lektion 16</strong>
+                <strong>Teil 16</strong>
                 <span>In Vorbereitung</span>
             </div>
 
@@ -723,7 +792,7 @@ footer{
             </div>
 
             <div class="lesson-content">
-                <strong>Lektion 17</strong>
+                <strong>Teil 17</strong>
                 <span>In Vorbereitung</span>
             </div>
 
@@ -741,7 +810,7 @@ footer{
             </div>
 
             <div class="lesson-content">
-                <strong>Lektion 18</strong>
+                <strong>Teil 18</strong>
                 <span>In Vorbereitung</span>
             </div>
 
@@ -759,7 +828,7 @@ footer{
             </div>
 
             <div class="lesson-content">
-                <strong>Lektion 19</strong>
+                <strong>Teil 19</strong>
                 <span>In Vorbereitung</span>
             </div>
 
@@ -777,7 +846,7 @@ footer{
             </div>
 
             <div class="lesson-content">
-                <strong>Lektion 20</strong>
+                <strong>Teil 20</strong>
                 <span>In Vorbereitung</span>
             </div>
 
@@ -795,7 +864,7 @@ footer{
             </div>
 
             <div class="lesson-content">
-                <strong>Lektion 21</strong>
+                <strong>Teil 21</strong>
                 <span>In Vorbereitung</span>
             </div>
 
@@ -813,7 +882,7 @@ footer{
             </div>
 
             <div class="lesson-content">
-                <strong>Lektion 22</strong>
+                <strong>Teil 22</strong>
                 <span>In Vorbereitung</span>
             </div>
 
@@ -831,7 +900,7 @@ footer{
             </div>
 
             <div class="lesson-content">
-                <strong>Lektion 23</strong>
+                <strong>Teil 23</strong>
                 <span>In Vorbereitung</span>
             </div>
 
@@ -849,7 +918,7 @@ footer{
             </div>
 
             <div class="lesson-content">
-                <strong>Lektion 24</strong>
+                <strong>Teil 24</strong>
                 <span>In Vorbereitung</span>
             </div>
 
@@ -867,7 +936,7 @@ footer{
             </div>
 
             <div class="lesson-content">
-                <strong>Lektion 25</strong>
+                <strong>Teil 25</strong>
                 <span>In Vorbereitung</span>
             </div>
 
@@ -885,7 +954,7 @@ footer{
             </div>
 
             <div class="lesson-content">
-                <strong>Lektion 26</strong>
+                <strong>Teil 26</strong>
                 <span>In Vorbereitung</span>
             </div>
 
@@ -903,7 +972,7 @@ footer{
             </div>
 
             <div class="lesson-content">
-                <strong>Lektion 27</strong>
+                <strong>Teil 27</strong>
                 <span>In Vorbereitung</span>
             </div>
 
@@ -921,7 +990,7 @@ footer{
             </div>
 
             <div class="lesson-content">
-                <strong>Lektion 28</strong>
+                <strong>Teil 28</strong>
                 <span>In Vorbereitung</span>
             </div>
 
@@ -939,7 +1008,7 @@ footer{
             </div>
 
             <div class="lesson-content">
-                <strong>Lektion 29</strong>
+                <strong>Teil 29</strong>
                 <span>In Vorbereitung</span>
             </div>
 
@@ -957,7 +1026,7 @@ footer{
             </div>
 
             <div class="lesson-content">
-                <strong>Lektion 30</strong>
+                <strong>Teil 30</strong>
                 <span>In Vorbereitung</span>
             </div>
 
@@ -974,21 +1043,61 @@ footer{
         <strong>Dein Fortschritt</strong><br>
 
         Später werden wir hier automatisch anzeigen,
-        welche Lektionen du abgeschlossen hast,
-        deine Testergebnisse und welche Lektion
+        welche Kursabschnitte du abgeschlossen hast,
+        deine Testergebnisse und welchen Kursabschnitt
         du als Nächstes machen solltest.
+
+        <div class="progress-translation" id="progress-translation">
+            <button type="button" class="translation-toggle" id="translation-toggle">
+                🌐 Übersetzung
+            </button>
+            <div class="translation-panel">
+                <div class="translation-languages">
+                    <button type="button" class="translation-language" data-lang="en">English</button>
+                    <button type="button" class="translation-language" data-lang="pl">Polski</button>
+                    <button type="button" class="translation-language" data-lang="it">Italiano</button>
+                </div>
+                <p class="translation-text" id="translation-text" aria-live="polite"></p>
+            </div>
+        </div>
 
     </div>
 
 
-    <footer>
-
-        Deutsch lernen mit Nele 🇩🇪 · A1
-
-    </footer>
-
-
 </div>
+
+<script>
+const progressTranslation=document.getElementById("progress-translation");
+const translationToggle=document.getElementById("translation-toggle");
+const translationText=document.getElementById("translation-text");
+const translationButtons=[...document.querySelectorAll(".translation-language")];
+
+const progressTranslations={
+    en:"Later, we will automatically show you here which course sections you have completed, your test results, and which course section you should do next.",
+    pl:"Później będziemy tutaj automatycznie pokazywać, które części kursu masz już ukończone, wyniki testów oraz którą część kursu powinieneś zrobić jako następną.",
+    it:"Più avanti mostreremo qui automaticamente quali sezioni del corso hai completato, i risultati dei test e quale sezione del corso dovresti fare successivamente."
+};
+
+translationToggle.addEventListener("click",event=>{
+    event.stopPropagation();
+    progressTranslation.classList.toggle("open");
+});
+
+translationButtons.forEach(button=>button.addEventListener("click",event=>{
+    event.stopPropagation();
+    const lang=button.dataset.lang;
+    translationButtons.forEach(item=>item.classList.toggle("active",item===button));
+    translationText.textContent=progressTranslations[lang];
+    translationText.classList.add("show");
+    progressTranslation.classList.add("open");
+}));
+
+document.addEventListener("click",event=>{
+    if(!event.target.closest("#progress-translation")){
+        progressTranslation.classList.remove("open");
+    }
+});
+</script>
 
 </body>
               </html>
