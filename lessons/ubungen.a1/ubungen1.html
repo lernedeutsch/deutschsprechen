@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Übung-A1 — Lektion 12: Hobbys und Freizeit</title>
+<title>Übungen A1 — Lektion 1: Begrüßung und Vorstellung</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -109,7 +109,7 @@ h1.lesson-title{
   font-size:2.7rem;
   line-height:1.12;
   margin:0 0 14px;
-  color:#111820;
+  color:#fff;
 }
 
 .hero-text p{
@@ -140,7 +140,7 @@ h1.lesson-title{
   font-family:"Kalam",cursive;
   font-size:2rem;
   margin:0;
-  color:#111820;
+  color:#fff;
 }
 
 .card{
@@ -365,7 +365,7 @@ input:focus-visible{
 <body id="top">
 
 <div class="top-bar">
-  <a href="A1.html#lektion1" class="back-btn">← Powrót do lekcji</a>
+  <a href="../a1/lektion-1.html" class="back-btn">← Zurück zur Lektion</a>
 </div>
 
 <div class="wrap">
@@ -373,7 +373,7 @@ input:focus-visible{
   <header class="hero">
     <div class="hero-text">
       <p class="eyebrow">Deutschkurs A1 · Übung zu Lektion 1</p>
-      <h1 class="lesson-title">Übung — Guten Tag! — Begrüßung und Vorstellung</h1>
+      <h1 class="lesson-title">Übungen — Guten Tag! — Begrüßung und Vorstellung</h1>
     </div>
   </header>
 
@@ -381,11 +381,11 @@ input:focus-visible{
   <section class="part" id="übung1">
     <div class="part-head">
       <span class="part-num">Übung 1</span>
-      <h2 class="part-title">Welcher Gruß? Ergänzen Sie!</h2>
+      <h2 class="part-title">Welcher Gruß? Ergänze!</h2>
     </div>
 
     <div class="card">
-      <p class="lead">Schreiben Sie den richtigen Gruß in die Lücke.</p>
+      <p class="lead">Schreib den richtigen Gruß in die Lücke.</p>
 
       <ul class="exercise-list" id="ex1_1">
         <li>
@@ -431,16 +431,16 @@ input:focus-visible{
   <section class="part" id="übung1_2">
     <div class="part-head">
       <span class="part-num">Übung 2</span>
-      <h2 class="part-title">Wie heißen Sie? Ergänzen Sie!</h2>
+      <h2 class="part-title">Wie heißen Sie? Ergänze!</h2>
     </div>
 
     <div class="card">
-      <p class="lead">Schreiben Sie das richtige Wort in die Lücke.</p>
+      <p class="lead">Schreib das richtige Wort in die Lücke.</p>
 
       <ul class="exercise-list" id="ex1_2">
         <li>
           Hallo! Wie
-          <input type="text" data-answer="heist">
+          <input type="text" data-answer="heißt">
           du?
           <span class="feedback"></span>
         </li>
@@ -485,11 +485,11 @@ input:focus-visible{
   <section class="part" id="übung1_3">
     <div class="part-head">
       <span class="part-num">Übung 3</span>
-      <h2 class="part-title">Was ist richtig? Wählen Sie</h2>
+      <h2 class="part-title">Was ist richtig? Wähle!</h2>
     </div>
 
     <div class="card">
-      <p class="lead">Klicken Sie auf die richtige Antwort.</p>
+      <p class="lead">Klick auf die richtige Antwort.</p>
 
       <div class="quiz-q" data-correct="0">
         <p>1. _____! (morgens, 8:00 Uhr)</p>
@@ -608,33 +608,52 @@ input:focus-visible{
   <section class="part" id="übung1_4">
     <div class="part-head">
       <span class="part-num">Übung 4</span>
-      <h2 class="part-title">Stellen Sie sich vor!</h2>
+      <h2 class="part-title">Stell dich vor!</h2>
     </div>
 
     <div class="card">
-      <p class="lead">Schreiben Sie vollständige Sätze.</p>
+      <p class="lead">Schreib vollständige Sätze.</p>
 
-      <div class="sentence-grid">
+      <div class="sentence-grid" id="ex1_4">
         <div class="sentence-item">
-          1. Hallo! Ich heiße _____ . (twoje imię)
+          1. Hallo! Ich heiße
+          <input type="text" data-any="true" placeholder="dein Name">.
+          <span class="feedback"></span>
         </div>
 
         <div class="sentence-item">
-          2. Mein Name ist _____ . (twoje pełne imię)
+          2. Mein Name ist
+          <input type="text" data-any="true" placeholder="dein Vor- und Nachname">.
+          <span class="feedback"></span>
         </div>
 
         <div class="sentence-item">
-          3. Guten Tag! Wie _____ Sie? (heißen / heißt)
+          3. Guten Tag! Wie
+          <input type="text" data-answer="heißen">
+          Sie? (heißen / heißt)
+          <span class="feedback"></span>
         </div>
 
         <div class="sentence-item">
-          4. Ich _____ Thomas. (heiße / ist / bist)
+          4. Ich
+          <input type="text" data-answer="heiße">
+          Thomas. (heiße / ist / bist)
+          <span class="feedback"></span>
         </div>
 
         <div class="sentence-item">
-          5. _____! (beim Abschied) (Tschüss / Guten Tag / Guten Morgen)
+          5.
+          <input type="text" data-answer="tschüss,auf wiedersehen">
+          ! (beim Abschied)
+          <span class="feedback"></span>
         </div>
       </div>
+
+      <button class="check-btn" onclick="checkExerciseFlexible('ex1_4')">
+        Antworten prüfen ✓
+      </button>
+
+      <div class="exercise-result" id="ex1_4-result"></div>
     </div>
   </section>
 
@@ -647,7 +666,7 @@ input:focus-visible{
 
     <div class="card">
       <p class="lead">
-        Buchstabieren Sie Ihren Namen. Schreiben Sie die Buchstaben.
+        Ergänze die fehlenden Buchstaben.
       </p>
 
       <ul class="exercise-list" id="ex1_5">
@@ -691,7 +710,7 @@ input:focus-visible{
   </section>
 
   <div class="top-bar">
-    <a href="A1.html#lektion1" class="back-btn">← Powrót do lekcji</a>
+    <a href="../a1/lektion-1.html" class="back-btn">← Zurück zur Lektion</a>
   </div>
 
   <nav class="lesson-nav">
@@ -719,28 +738,67 @@ function normalize(str){
 
 function checkExercise(exId){
   const list=document.getElementById(exId);
-  const inputs=list.querySelectorAll('input[type="text"]');
+  const items=[...list.querySelectorAll("li")];
   let correct=0;
+  let total=0;
 
-  inputs.forEach(input=>{
-    const feedback=input.nextElementSibling;
-    const accepted=input.dataset.answer.split(",").map(normalize);
-    const value=normalize(input.value);
+  items.forEach(item=>{
+    const inputs=[...item.querySelectorAll('input[type="text"]')];
+    const feedback=item.querySelector(".feedback");
+    let itemCorrect=true;
 
-    if(accepted.includes(value)){
-      feedback.textContent="✓";
-      feedback.className="feedback ok";
-      correct++;
-    }else{
-      feedback.textContent="✗";
-      feedback.className="feedback no";
+    inputs.forEach(input=>{
+      const accepted=input.dataset.answer.split(",").map(normalize);
+      const value=normalize(input.value);
+      total++;
+      if(accepted.includes(value)){
+        correct++;
+      }else{
+        itemCorrect=false;
+      }
+    });
+
+    if(feedback){
+      feedback.textContent=itemCorrect?"✓":"✗";
+      feedback.className=itemCorrect?"feedback ok":"feedback no";
     }
   });
 
   const result=document.getElementById(exId+"-result");
-  result.textContent=`${correct} / ${inputs.length} richtig.`;
+  result.textContent=correct+" / "+total+" richtig.";
+  result.textContent+=correct<total
+    ? " Versuch es noch einmal."
+    : " Super! 🎉";
+}
+
+function checkExerciseFlexible(exId){
+  const box=document.getElementById(exId);
+  const inputs=[...box.querySelectorAll('input[type="text"]')];
+  let correct=0;
+
+  inputs.forEach(input=>{
+    const feedback=input.parentElement.querySelector(".feedback");
+    const value=input.value.trim();
+    let ok=false;
+
+    if(input.dataset.any==="true"){
+      ok=value.length>0;
+    }else{
+      const accepted=input.dataset.answer.split(",").map(normalize);
+      ok=accepted.includes(normalize(value));
+    }
+
+    if(ok)correct++;
+    if(feedback){
+      feedback.textContent=ok?"✓":"✗";
+      feedback.className=ok?"feedback ok":"feedback no";
+    }
+  });
+
+  const result=document.getElementById(exId+"-result");
+  result.textContent=correct+" / "+inputs.length+" richtig.";
   result.textContent+=correct<inputs.length
-    ? " Versuchen Sie es noch einmal."
+    ? " Versuch es noch einmal."
     : " Super! 🎉";
 }
 
@@ -777,7 +835,7 @@ function checkQuiz1(){
   const result=document.getElementById("quiz1-result");
 
   result.textContent=answered<questions.length
-    ? `Bitte beantworten Sie alle Fragen. (${answered}/${questions.length} beantwortet)`
+    ? `Bitte beantworte alle Fragen. (${answered}/${questions.length} beantwortet)`
     : `Ergebnis: ${correct} / ${questions.length} richtig.`;
 
   if(answered===questions.length&&correct===questions.length){
