@@ -233,7 +233,7 @@ const $=x=>document.getElementById(x),$$=x=>[...document.querySelectorAll(x)],S=
 let V,n=0,reading=false,active="informell";      
 const stampKey="lektion1-sprachpass",P={greetings:false,introduction:false,exercise:false,alphabet:false,farewell:false,lesson:false},visibleStampKeys=["greetings","introduction","exercise","lesson"];      
       
-function updateStamps(){$("[data-stamp]").forEach(x=>x.classList.toggle("stamped",!!P[x.dataset.stamp]));$("stamp-counter").textContent=`${visibleStampKeys.filter(k=>P[k]).length} / 4 Stempel gesammelt`}      
+function updateStamps(){$$("[data-stamp]").forEach(x=>x.classList.toggle("stamped",!!P[x.dataset.stamp]));$("stamp-counter").textContent=`${visibleStampKeys.filter(k=>P[k]).length} / 4 Stempel gesammelt`}      
 function loadStamps(){try{Object.assign(P,JSON.parse(localStorage.getItem(stampKey))||{})}catch{}P.lesson=!!(P.greetings&&P.introduction&&P.exercise&&P.alphabet&&P.farewell);updateStamps()}      
 function stamp(x){if(P[x])return;P[x]=true;if(P.greetings&&P.introduction&&P.exercise&&P.alphabet&&P.farewell)P.lesson=true;try{localStorage.setItem(stampKey,JSON.stringify(P))}catch{}updateStamps()}      
 function loadVoice(){let v=S?.getVoices()||[];V=v.find(x=>x.lang?.toLowerCase()==="de-de"&&x.name?.toLowerCase().includes("google"))||v.find(x=>x.lang?.toLowerCase()==="de-de")||v.find(x=>x.lang?.toLowerCase().startsWith("de"))||null}      
