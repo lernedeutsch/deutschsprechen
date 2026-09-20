@@ -64,10 +64,10 @@ body.intro-running{
 #intro-world{
     position:absolute;
     inset:0;
-    transform:scale(.88);
+    transform:scale(.86);
     transform-origin:center center;
     will-change:transform;
-    animation:earthApproach 5s ease-out forwards;
+    animation:earthApproach 6.8s cubic-bezier(.16,.72,.2,1) forwards;
 }
 
 #intro-earth{
@@ -86,18 +86,20 @@ body.intro-running{
     position:absolute;
     top:27.5%;
     left:44%;
-    width:clamp(72px,8vw,120px);
+    width:clamp(56px,6.5vw,92px);
     padding:0;
     border:0;
     background:transparent;
-    transform:translate(-50%,-50%);
+    transform:translate(-50%,-50%) scale(.62);
     cursor:pointer;
     z-index:5;
     filter:
         drop-shadow(0 0 7px rgba(255,205,0,.95))
         drop-shadow(0 0 18px rgba(255,205,0,.85))
         drop-shadow(0 0 34px rgba(255,95,20,.55));
-    animation:germanyPulse 2.4s ease-in-out infinite;
+    animation:
+        germanyApproach 6.8s cubic-bezier(.16,.72,.2,1) forwards,
+        germanyPulse 2.4s ease-in-out 6.8s infinite;
     transform-origin:center center;
 }
 
@@ -163,10 +165,19 @@ body.intro-finished #intro-screen{
 
 @keyframes earthApproach{
     0%{
-        transform:scale(.88);
+        transform:scale(.86);
     }
     100%{
         transform:scale(1.28);
+    }
+}
+
+@keyframes germanyApproach{
+    0%{
+        transform:translate(-50%,-50%) scale(.62);
+    }
+    100%{
+        transform:translate(-50%,-50%) scale(1);
     }
 }
 
@@ -221,7 +232,7 @@ body.intro-finished #intro-screen{
     #intro-germany{
         top:29%;
         left:45%;
-        width:clamp(58px,16vw,88px);
+        width:clamp(46px,12vw,74px);
     }
 
     #site-shell{
