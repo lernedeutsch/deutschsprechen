@@ -64,10 +64,10 @@ body.intro-running{
 #intro-world{
     position:absolute;
     inset:0;
-    transform:scale(.86);
+    transform:scale(.88);
     transform-origin:center center;
     will-change:transform;
-    animation:earthApproach 6.8s cubic-bezier(.16,.72,.2,1) forwards;
+    animation:earthApproach 12s cubic-bezier(.18,.62,.22,1) forwards;
 }
 
 #intro-earth{
@@ -84,13 +84,13 @@ body.intro-running{
 
 #intro-germany{
     position:absolute;
-    top:27.5%;
-    left:44%;
-    width:clamp(56px,6.5vw,92px);
+    top:32.5%;
+    left:45%;
+    width:clamp(54px,6vw,88px);
     padding:0;
     border:0;
     background:transparent;
-    transform:translate(-50%,-50%) scale(.62);
+    transform:translate(-50%,-50%) scale(.58);
     cursor:pointer;
     z-index:5;
     filter:
@@ -98,8 +98,8 @@ body.intro-running{
         drop-shadow(0 0 18px rgba(255,205,0,.85))
         drop-shadow(0 0 34px rgba(255,95,20,.55));
     animation:
-        germanyApproach 6.8s cubic-bezier(.16,.72,.2,1) forwards,
-        germanyPulse 2.4s ease-in-out 6.8s infinite;
+        germanyApproach 12s cubic-bezier(.18,.62,.22,1) forwards,
+        germanyPulse 2.8s ease-in-out 12s infinite;
     transform-origin:center center;
 }
 
@@ -123,7 +123,7 @@ body.intro-running{
     min-height:100vh;
     opacity:0;
     pointer-events:none;
-    clip-path:circle(0% at 44% 27.5%);
+    clip-path:circle(0% at 45% 32.5%);
     background:
         radial-gradient(
             circle at top,
@@ -142,15 +142,15 @@ body.intro-opening #intro-world{
 }
 
 body.intro-opening #intro-germany{
-    animation:germanyOpen 1.35s cubic-bezier(.2,.72,.18,1) forwards;
+    animation:germanyOpen 2s cubic-bezier(.16,.72,.2,1) forwards;
 }
 
 body.intro-opening #site-shell{
-    animation:siteReveal 1.55s cubic-bezier(.2,.72,.18,1) forwards;
+    animation:siteReveal 2.25s cubic-bezier(.16,.72,.2,1) forwards;
 }
 
 body.intro-opening #intro-screen{
-    animation:introFade 1.55s ease forwards;
+    animation:introFade 2.25s ease-in-out forwards;
 }
 
 body.intro-finished #site-shell{
@@ -165,7 +165,13 @@ body.intro-finished #intro-screen{
 
 @keyframes earthApproach{
     0%{
-        transform:scale(.86);
+        transform:scale(.88);
+    }
+    35%{
+        transform:scale(.98);
+    }
+    70%{
+        transform:scale(1.12);
     }
     100%{
         transform:scale(1.28);
@@ -174,7 +180,13 @@ body.intro-finished #intro-screen{
 
 @keyframes germanyApproach{
     0%{
-        transform:translate(-50%,-50%) scale(.62);
+        transform:translate(-50%,-50%) scale(.58);
+    }
+    35%{
+        transform:translate(-50%,-50%) scale(.68);
+    }
+    70%{
+        transform:translate(-50%,-50%) scale(.84);
     }
     100%{
         transform:translate(-50%,-50%) scale(1);
@@ -208,7 +220,7 @@ body.intro-finished #intro-screen{
 @keyframes siteReveal{
     0%{
         opacity:0;
-        clip-path:circle(0% at 44% 27.5%);
+        clip-path:circle(0% at 45% 32.5%);
     }
     10%{
         opacity:1;
@@ -230,13 +242,13 @@ body.intro-finished #intro-screen{
 
 @media(max-width:700px){
     #intro-germany{
-        top:29%;
+        top:33%;
         left:45%;
-        width:clamp(46px,12vw,74px);
+        width:clamp(44px,11vw,70px);
     }
 
     #site-shell{
-        clip-path:circle(0% at 45% 29%);
+        clip-path:circle(0% at 45% 33%);
     }
 }
 
@@ -939,7 +951,7 @@ and
 
         document.body.classList.add("intro-opening");
 
-        window.setTimeout(finishIntro,1550);
+        window.setTimeout(finishIntro,2250);
     });
 })();
 </script>
