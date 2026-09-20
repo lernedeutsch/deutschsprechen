@@ -57,7 +57,7 @@ button,input{font:inherit}button{cursor:pointer}
 .bubble{position:relative;padding:11px 16px;color:#171717;border-radius:15px;line-height:1.45;box-shadow:0 4px 10px #0000000b;transition:.18s}.bubble-a{width:72%;max-width:580px;margin-right:auto;background:var(--a);border:1px solid #e2dccd;border-bottom-left-radius:7px}.bubble-b{width:40%;min-width:220px;max-width:330px;margin-left:auto;background:linear-gradient(145deg,#f0d89f,var(--b));border:1px solid #d2a94f;border-bottom-right-radius:7px;box-shadow:0 6px 13px #996d1926}      
 .speaker{display:block;margin-bottom:3px;color:var(--red);font:600 .65rem "JetBrains Mono",monospace;letter-spacing:.12em;text-transform:uppercase}.person-icon{position:absolute;top:50%;display:grid;place-items:center;width:34px;height:34px;background:#fffaf0;border-radius:10px;font-size:1.25rem;opacity:0;pointer-events:none;transform:translateY(-50%) scale(.55);transition:.2s;box-shadow:0 4px 10px #0000001a}.bubble-a .person-icon{right:13px;border:1px solid #4f7a6352}.bubble-b .person-icon{left:13px;border:1px solid #bd443347}      
 .bubble-a.speaking{padding-right:60px;border-color:#7a9b83;transform:translateY(-1px);box-shadow:0 7px 16px #315f4c26}.bubble-b.speaking{padding-left:60px;border-color:#c59036;transform:translateY(-1px);box-shadow:0 8px 18px #996d193b}.bubble.speaking .person-icon{opacity:1;transform:translateY(-50%) scale(1)}      
-.exercise-card{padding:22px;background:linear-gradient(145deg,#fff8e9,#f5e6c7);border:1px solid #ffffff66;border-radius:22px;box-shadow:0 18px 45px #00000029}.exercise-read-button{min-height:42px;margin:0 0 20px;padding:8px 18px;background:linear-gradient(#5e8d72,#3f6c56);border:1px solid #315b47;box-shadow:0 7px 15px #315b4738}.exercise-read-button:hover{transform:translateY(-2px);filter:brightness(1.06)}.exercise-read-button.speaking{background:#315f4c}      
+.exercise-card{padding:22px;background:linear-gradient(145deg,#fff8e9,#f5e6c7);border:1px solid #ffffff66;border-radius:22px;box-shadow:0 18px 45px #00000029}.exercise-read-button{min-height:42px;margin:0 0 20px;padding:8px 18px;background:linear-gradient(#6f9f87,#527a67);border:1px solid #466c59;box-shadow:0 7px 15px #315b472b}.exercise-read-button:hover{transform:translateY(-2px);filter:brightness(1.06)}.exercise-read-button.speaking{background:#315f4c}      
 .exercise-title{margin:0 0 15px;font:700 1.7rem/1.2 "Fraunces",serif}.category-buttons{display:flex;gap:12px;margin:0 0 17px}.category-button{min-width:160px;min-height:48px;padding:9px 19px;border-radius:999px;font-size:1rem}.category-button:hover:not(:disabled){background:#dff1e7;border-color:#4f7a63;transform:translateY(-2px)}.category-button.correct-choice{color:#fff;background:var(--ok);border-color:var(--ok)}.category-button.wrong-choice{color:#fff;background:var(--err);border-color:var(--err)}.category-button:disabled{opacity:.55}
 @keyframes handBlink{
   0%,100%{opacity:.5;transform:scale(1);filter:drop-shadow(0 0 0 rgba(255,183,0,0))}
@@ -204,14 +204,14 @@ body{padding:20px 12px 35px}.course-start{margin-bottom:38px;padding:18px 15px;b
 <main class="page alphabet-page">      
 <div class="part-head"><span class="part-num">Teil 3</span><h1 class="part-title">Das deutsche Alphabet</h1><span class="section-done" id="alphabet-done">✅ geschafft</span></div>      
 <section class="alphabet-card">      
-<div class="action-help" aria-label="So funktioniert das Alphabet"><span class="action-help-step">👆 Buchstaben klicken</span><span class="action-help-arrow">→</span><span class="action-help-step">🔊 zuhören</span><span class="action-help-arrow">→</span><span class="action-help-step">🗣️ nachsprechen</span></div>
+<div class="action-help" aria-label="So funktioniert das Alphabet"><span class="action-help-step">👆 Buchstaben anklicken</span><span class="action-help-arrow">→</span><span class="action-help-step">🔊 zuhören</span><span class="action-help-arrow">→</span><span class="action-help-step">🗣️ nachsprechen</span></div>
 <p class="alphabet-lead">Klick auf einen Buchstaben. Hör zu.</p>      
 <div class="alphabet-grid" id="alphabet"></div>      
 <h2 class="alphabet-subtitle">Umlaute und ß</h2>      
 <div class="alphabet-grid umlaute-grid" id="umlaute"></div>      
 <div class="spelling-box">      
 <h2 class="spelling-title">✏️ Buchstabiere deinen Namen</h2>      
-<p class="spelling-text">Gib deinen Namen ein. Hör die Buchstaben auf Deutsch.</p>      
+<p class="spelling-text">Gib deinen Namen ein. Hör dir die Buchstaben auf Deutsch an.</p>      
 <div class="spelling-form"><input id="spelling-input" class="spelling-input" type="text" placeholder="z. B. Anna" autocomplete="name" autocapitalize="words" spellcheck="false"><button id="spelling-button" class="spelling-button">🔊 Buchstabieren</button></div>      
 <div id="spelling-output" class="spelling-output"></div><p id="spelling-message" class="spelling-message"></p>      
 </div>      
@@ -281,7 +281,7 @@ const NI=$("name-input"),T=$$(".tab-button"),D={informell:$("dialog-informell"),
 function updateName(){let name=NI.value.trim()||"…";$$(".dynamic-name").forEach(x=>x.textContent=name)}      
 function bubbleText(b){let c=b.cloneNode(true);c.querySelector(".speaker")?.remove();c.querySelector(".person-icon")?.remove();return c.textContent.replace(/\s+/g," ").trim()}      
 function activate(x){active=x;T.forEach(t=>{let a=t.dataset.dialog===x;t.classList.toggle("active",a);t.setAttribute("aria-selected",a)});Object.entries(D).forEach(([k,d])=>d.hidden=k!==x)}      
-async function readDialog(x){if(!S)return alert("Ihr Browser unterstützt die Sprachausgabe nicht.");reading=false;stop();activate(x);reading=true;let version=n;for(let b of $$(`#dialog-${x} .bubble`)){if(!reading||version!==n||active!==x)break;b.classList.add("speaking");await speak(bubbleText(b));b.classList.remove("speaking")}if(version===n){reading=false;stamp("introduction")}}      
+async function readDialog(x){if(!S)return alert("Dein Browser unterstützt die Sprachausgabe nicht.");reading=false;stop();activate(x);reading=true;let version=n;for(let b of $$(`#dialog-${x} .bubble`)){if(!reading||version!==n||active!==x)break;b.classList.add("speaking");await speak(bubbleText(b));b.classList.remove("speaking")}if(version===n){reading=false;stamp("introduction")}}      
 NI.oninput=updateName;updateName();T.forEach(t=>t.onclick=()=>readDialog(t.dataset.dialog));      
       
 const R=$$(".exercise-row"),C=$$(".category-button"),READ=$("exercise-read-button"),CHOICE=document.querySelector(".category-buttons"),EXERCISE=document.querySelector(".exercise-page");      
