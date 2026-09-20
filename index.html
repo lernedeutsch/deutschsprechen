@@ -129,9 +129,7 @@ body.intro-running{
     transform:scale(.30);
     transform-origin:center center;
     will-change:transform;
-    animation:
-        germanyApproach 5s cubic-bezier(.18,.72,.22,1) forwards,
-        germanyPulse 3s ease-in-out 5s infinite;
+    animation:germanyApproach 5s cubic-bezier(.22,.61,.24,1) forwards;
 }
 
 #intro-germany:hover{
@@ -208,23 +206,26 @@ body.intro-finished #intro-screen{
     0%{
         transform:scale(.30);
     }
-    30%{
-        transform:scale(.46);
+    20%{
+        transform:scale(.48);
     }
-    58%{
-        transform:scale(.72);
+    40%{
+        transform:scale(.86);
     }
-    76%{
-        transform:scale(.94);
+    60%{
+        transform:scale(1.55);
+    }
+    75%{
+        transform:scale(2.45);
     }
     88%{
-        transform:scale(1.10);
+        transform:scale(3.45);
     }
     96%{
-        transform:scale(1.22);
+        transform:scale(4.35);
     }
     100%{
-        transform:scale(1.28);
+        transform:scale(4.85);
     }
 }
 
