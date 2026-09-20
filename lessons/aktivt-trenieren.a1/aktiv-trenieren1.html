@@ -38,7 +38,8 @@ button,input{font:inherit}button{cursor:pointer}
 .translation-toggle{display:inline-flex;align-items:center;gap:5px;min-height:30px;padding:4px 9px;color:#4c4028;background:#fffdf6;border:1px solid #d8c28c;border-radius:999px;font-size:.78rem;font-weight:800;cursor:pointer;box-shadow:0 3px 8px #0000000d}
 .translation-toggle:hover,.translation-toggle:focus-visible{background:#fff3c8;border-color:#cf9f3f}
 .translation-panel{display:none;position:absolute;right:0;top:36px;width:230px;padding:9px;background:#fffdf7;border:1px solid #d9c28e;border-radius:12px;box-shadow:0 10px 24px #00000026}
-.translation-control:hover .translation-panel,.translation-control:focus-within .translation-panel,.translation-control.open .translation-panel{display:block}
+.translation-control:hover .translation-panel,.translation-control:focus-within .translation-panel,.translation-control.open .translation-panel,.translation-inline-control:hover .translation-panel,.translation-inline-control:focus-within .translation-panel,.translation-inline-control.open .translation-panel{display:block}
+.translation-inline-control{position:relative;display:inline-flex;margin-left:8px;vertical-align:middle;z-index:15}
 .translation-languages{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
 .translation-language{padding:5px 8px;color:#26364b;background:#f7f1e3;border:1px solid #ddcfaa;border-radius:999px;font-size:.75rem;font-weight:800;cursor:pointer}
 .translation-language:hover,.translation-language.active{background:#e4f3e8;border-color:#78bf95;color:#28502f}
@@ -122,7 +123,11 @@ body{padding:20px 12px 35px}.course-start{margin-bottom:38px;padding:18px 15px;b
 <div class="lesson-hero">      
 <div class="lesson-hero-text">      
 <h1 class="lesson-main-title">Guten Tag! — Begrüßung und Vorstellung</h1>      
-<p class="lesson-description">Heute schauen wir uns an: Wie begrüßen wir uns? Wie stellen wir uns vor? Und wie sprechen wir die Buchstaben des deutschen Alphabets aus? Diesmal übst du aktiv mit — sammle Stempel für deinen Sprachpass!</p>      
+<p class="lesson-description">Heute schauen wir uns an: Wie begrüßen wir uns? Wie stellen wir uns vor? Und wie sprechen wir die Buchstaben des deutschen Alphabets aus? Diesmal übst du aktiv mit — sammle Stempel für deinen Sprachpass!
+<span class="translation-inline-control" data-inline-translation="intro">
+<button type="button" class="translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung"><span class="globe">🌐</span><span>Übersetzung</span></button>
+<div class="translation-panel"><div class="translation-languages"><button type="button" class="translation-language" data-lang="en">English</button><button type="button" class="translation-language" data-lang="pl">Polski</button><button type="button" class="translation-language" data-lang="it">Italiano</button></div><p class="translation-text" aria-live="polite"></p></div>
+</span></p>      
 <div class="lesson-topics"><span class="lesson-topic">1 · Begrüßung</span><span class="lesson-topic">2 · Vorstellung</span><span class="lesson-topic">3 · Alphabet</span></div>      
 </div>      
 <div class="lesson-wheel">      
@@ -221,7 +226,11 @@ body{padding:20px 12px 35px}.course-start{margin-bottom:38px;padding:18px 15px;b
 <h2 class="alphabet-subtitle">Umlaute und ß</h2>      
 <div class="alphabet-grid umlaute-grid" id="umlaute"></div>      
 <div class="spelling-box">      
-<h2 class="spelling-title">✏️ Buchstabiere deinen Namen</h2>      
+<h2 class="spelling-title">✏️ Buchstabiere deinen Namen
+<span class="translation-inline-control" data-inline-translation="spelling">
+<button type="button" class="translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung"><span class="globe">🌐</span><span>Übersetzung</span></button>
+<div class="translation-panel"><div class="translation-languages"><button type="button" class="translation-language" data-lang="en">English</button><button type="button" class="translation-language" data-lang="pl">Polski</button><button type="button" class="translation-language" data-lang="it">Italiano</button></div><p class="translation-text" aria-live="polite"></p></div>
+</span></h2>      
 <p class="spelling-text">Gib deinen Namen ein. Hör dir die Buchstaben auf Deutsch an.</p>      
 <div class="spelling-form"><input id="spelling-input" class="spelling-input" type="text" placeholder="z. B. Anna" autocomplete="name" autocapitalize="words" spellcheck="false"><button id="spelling-button" class="spelling-button">🔊 Buchstabieren</button></div>      
 <div id="spelling-output" class="spelling-output"></div><p id="spelling-message" class="spelling-message"></p>      
@@ -336,9 +345,9 @@ const HELP_TRANSLATIONS={
     it:"Inserisci il tuo nome → clicca su “Informell” o “Formell” → ascolta"
   },
   register:{
-    en:"Read the sentence → click the answer → correct / try again",
-    pl:"Przeczytaj zdanie → kliknij odpowiedź → dobrze / spróbuj ponownie",
-    it:"Leggi la frase → clicca sulla risposta → corretto / riprova"
+    en:"Read the sentence → click the answer → 👆 Informell wählen 👆 or 👆 Formell wählen 👆",
+    pl:"Przeczytaj zdanie → kliknij odpowiedź → 👆 Informell wählen 👆 albo 👆 Formell wählen 👆",
+    it:"Leggi la frase → clicca sulla risposta → 👆 Informell wählen 👆 oppure 👆 Formell wählen 👆"
   },
   alphabet:{
     en:"Click a letter → listen → repeat",
@@ -351,6 +360,40 @@ const HELP_TRANSLATIONS={
     it:"Guarda la situazione → clicca sul saluto di commiato corretto → ✅ / ❌"
   }
 };
+
+const INLINE_TRANSLATIONS={
+  intro:{
+    en:"Today we’ll look at: How do we greet each other? How do we introduce ourselves? And how do we pronounce the letters of the German alphabet? This time you practise actively — collect stamps for your language pass!",
+    pl:"Dzisiaj zobaczymy: Jak się witamy? Jak się przedstawiamy? I jak wymawiamy litery niemieckiego alfabetu? Tym razem ćwiczysz aktywnie — zbieraj stemple do swojego paszportu językowego!",
+    it:"Oggi vediamo: Come ci salutiamo? Come ci presentiamo? E come si pronunciano le lettere dell’alfabeto tedesco? Questa volta ti eserciti attivamente — raccogli i timbri per il tuo passaporto linguistico!"
+  },
+  spelling:{
+    en:"Spell your name. Enter your name. Listen to the letters in German.",
+    pl:"Przeliteruj swoje imię. Wpisz swoje imię. Posłuchaj liter po niemiecku.",
+    it:"Fai lo spelling del tuo nome. Inserisci il tuo nome. Ascolta le lettere in tedesco."
+  }
+};
+
+function addInlineTranslations(){
+  $$(".translation-inline-control[data-inline-translation]").forEach(control=>{
+    const key=control.dataset.inlineTranslation,data=INLINE_TRANSLATIONS[key];
+    if(!data)return;
+    const toggle=control.querySelector(".translation-toggle");
+    const out=control.querySelector(".translation-text");
+    const langs=[...control.querySelectorAll(".translation-language")];
+    toggle.onclick=e=>{e.stopPropagation();control.classList.toggle("open")};
+    langs.forEach(btn=>btn.onclick=e=>{
+      e.stopPropagation();
+      const lang=btn.dataset.lang;
+      langs.forEach(x=>x.classList.toggle("active",x===btn));
+      out.textContent=data[lang];
+      out.classList.add("show");
+      control.classList.add("open");
+    });
+  });
+}
+
+addInlineTranslations();
 
 function addHelpTranslations(){
   const browserLang=(navigator.language||"").toLowerCase();
@@ -376,7 +419,10 @@ function addHelpTranslations(){
     if(pref)pref.classList.add("preferred");
   });
   document.addEventListener("click",e=>{
-    if(!e.target.closest(".translation-control"))$$(".translation-control.open").forEach(x=>x.classList.remove("open"));
+    if(!e.target.closest(".translation-control")&&!e.target.closest(".translation-inline-control")){
+      $$(".translation-control.open").forEach(x=>x.classList.remove("open"));
+      $$(".translation-inline-control.open").forEach(x=>x.classList.remove("open"));
+    }
   });
 }
 addHelpTranslations();      
