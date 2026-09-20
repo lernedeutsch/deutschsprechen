@@ -23,7 +23,7 @@ button,input{font:inherit}button{cursor:pointer}
 .wheel-center-title,.wheel-center-subtitle{fill:#f7efdd;text-anchor:middle;font-family:"JetBrains Mono",monospace}.wheel-center-title{font-size:17px;font-weight:700}.wheel-center-subtitle{font-size:12px}      
 .sprachpass{display:flex;align-items:center;gap:18px;margin-top:26px;padding:16px 20px;color:#f7efdd;background:linear-gradient(145deg,#16233a,#20324a);border:1px solid #ffffff17;border-radius:18px;box-shadow:0 10px 24px #0000003d}      
 .sprachpass-information{flex:none}.sprachpass-title{font:700 1.08rem "Fraunces",serif}.sprachpass-counter{margin:2px 0 0;color:#f7efddad;font:.78rem "JetBrains Mono",monospace}      
-.stamps{display:flex;justify-content:flex-end;gap:12px;flex:1}.stamp-slot{display:grid;place-items:center;width:72px;height:72px;padding:5px;color:#f7efdd66;text-align:center;border:2px dashed #f7efdd4d;border-radius:50%;font:.61rem/1.08 "JetBrains Mono",monospace;transition:.3s}.stamp-icon{display:block;margin-bottom:3px;font-size:1.25rem;opacity:.45}      
+.stamps{display:flex;justify-content:flex-end;gap:12px;flex:1}.stamp-slot{display:grid;place-items:center;width:72px;height:72px;padding:5px;color:#f7efdd8f;text-align:center;border:2px dashed #f7efdd4d;border-radius:50%;font:.61rem/1.08 "JetBrains Mono",monospace;transition:.3s}.stamp-icon{display:block;margin-bottom:3px;font-size:1.25rem;opacity:.55}      
 .stamp-slot.stamped{color:#f3c2b8;background:#bd443329;border-color:#e57763;border-style:solid;transform:rotate(-7deg) scale(1.05);animation:stamp .48s}.stamp-slot.stamped .stamp-icon{opacity:1}      
 @keyframes stamp{0%{opacity:0;transform:rotate(-7deg) scale(.3)}65%{opacity:1;transform:rotate(-10deg) scale(1.16)}100%{transform:rotate(-7deg) scale(1.05)}}      
 .greeting-page{max-width:980px;padding:34px}.intro-page{max-width:860px;padding:24px 28px 30px;border:1px solid #e3d6b8cc;border-radius:20px;box-shadow:0 18px 42px #00000047}.exercise-page,.alphabet-page,.farewell-page{max-width:900px;padding:22px}      
@@ -32,7 +32,10 @@ button,input{font:inherit}button{cursor:pointer}
 .card{background:#fffdf6;border:1px solid var(--line);box-shadow:0 12px 30px #00000012}.click-icon{font-size:1.05em;line-height:1}
 .action-help{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 16px;padding:11px 14px;color:#26364b;background:#fff7d8;border:2px solid #e4bd57;border-radius:14px;font-weight:800;box-shadow:0 5px 12px #0000000d}
 .action-help-step{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;background:#fff;border:1px solid #ead9a9;border-radius:999px}
-.action-help-arrow{color:#9d7622;font-weight:900}      
+.action-help-arrow{color:#9d7622;font-weight:900}
+.register-key{display:flex;flex-wrap:wrap;gap:9px;margin:0 0 14px}.register-key-item{display:inline-flex;align-items:center;gap:6px;padding:7px 11px;color:#344054;background:#fffdf6;border:1px solid #dbc68e;border-radius:999px;font-weight:800}.register-key-item strong{color:#161616}
+.section-done{display:none;align-items:center;padding:5px 10px;color:#28502f;background:#e4f3e8;border:1px solid #78bf95;border-radius:999px;font:700 .78rem "JetBrains Mono",monospace}.section-done.show{display:inline-flex}
+.farewell-context{display:grid;gap:2px}.farewell-hint{color:#5a5140;font-size:.93rem;font-weight:800}      
 .answer-button,.tab-button,.category-button,.farewell-button{display:inline-flex;align-items:center;justify-content:center;gap:7px;color:var(--text);border:2px solid var(--line);font-weight:800;transition:.15s}      
 .answer-button:hover:not(:disabled),.tab-button:hover:not(:disabled),.category-button:hover:not(:disabled),.farewell-button:hover:not(:disabled){transform:translateY(-2px);border-color:var(--gold);box-shadow:0 5px 12px #0000001a}      
 .restart-button,.exercise-read-button,.stamp-reset-button{display:inline-flex;align-items:center;justify-content:center;gap:7px;color:#fff;border:0;border-radius:999px;font-weight:800;transition:.16s}      
@@ -158,7 +161,7 @@ body{padding:20px 12px 35px}.course-start{margin-bottom:38px;padding:18px 15px;b
 <section class="card intro-card">      
 <p class="description">Trag deinen Namen ein — die Dialoge passen sich an!</p>      
 <div class="name-row"><label for="name-input">✏️ <span>Dein Name:</span></label><input id="name-input" type="text" placeholder="Dein Name" autocomplete="given-name"></div>      
-<div class="action-help" aria-label="So funktioniert der Dialog"><span class="action-help-step">✏️ Name eingeben</span><span class="action-help-arrow">→</span><span class="action-help-step">👆 Informell oder Formell anklicken</span><span class="action-help-arrow">→</span><span class="action-help-step">🔊 zuhören</span></div>
+<div class="action-help" aria-label="So funktioniert der Dialog"><span class="action-help-step">✏️ Name eingeben</span><span class="action-help-arrow">→</span><span class="action-help-step">👆 „Informell“ oder „Formell“ anklicken</span><span class="action-help-arrow">→</span><span class="action-help-step">🔊 zuhören</span></div>
 <div class="tab-buttons" role="tablist"><button class="tab-button active" id="tab-informell" data-dialog="informell" role="tab" aria-selected="true">Informell <span class="click-icon">🔊</span></button><button class="tab-button" id="tab-formell" data-dialog="formell" role="tab" aria-selected="false">Formell <span class="click-icon">🔊</span></button></div>      
 <div class="dialog-box" id="dialog-informell">      
 <div class="bubble bubble-a"><span class="speaker">A</span>Hallo!<span class="person-icon">👩🏻</span></div>      
@@ -182,6 +185,7 @@ body{padding:20px 12px 35px}.course-start{margin-bottom:38px;padding:18px 15px;b
 <button class="exercise-read-button" id="exercise-read-button">🔊 Sätze anhören</button>      
 <h1 class="exercise-title">Informell oder formell?</h1>      
 <div class="action-help" aria-label="So funktioniert die Übung"><span class="action-help-step">👀 Satz lesen</span><span class="action-help-arrow">→</span><span class="action-help-step">👆 Antwort anklicken</span><span class="action-help-arrow">→</span><span class="action-help-step">✅ richtig · ❌ noch einmal</span></div>
+<div class="register-key" aria-label="Informell und formell"><span class="register-key-item">🙂 <strong>du</strong> = informell</span><span class="register-key-item">👔 <strong>Sie</strong> = formell</span></div>
 <div class="category-buttons"><button class="category-button" data-category="informell"><span class="click-icon">👆</span> Informell wählen</button><button class="category-button" data-category="formell"><span class="click-icon">👆</span> Formell wählen</button></div>      
 <div class="exercise-list">      
 <div class="exercise-row active" data-answer="informell" data-text="Wie heißt du?"><span class="exercise-sentence">Wie heißt du?</span><p class="exercise-feedback"></p></div>      
@@ -198,12 +202,12 @@ body{padding:20px 12px 35px}.course-start{margin-bottom:38px;padding:18px 15px;b
 </main>      
       
 <main class="page alphabet-page">      
-<div class="part-head"><span class="part-num">Teil 3</span><h1 class="part-title">Das deutsche Alphabet</h1></div>      
+<div class="part-head"><span class="part-num">Teil 3</span><h1 class="part-title">Das deutsche Alphabet</h1><span class="section-done" id="alphabet-done">✅ geschafft</span></div>      
 <section class="alphabet-card">      
 <div class="action-help" aria-label="So funktioniert das Alphabet"><span class="action-help-step">👆 Buchstaben klicken</span><span class="action-help-arrow">→</span><span class="action-help-step">🔊 zuhören</span><span class="action-help-arrow">→</span><span class="action-help-step">🗣️ nachsprechen</span></div>
 <p class="alphabet-lead">Klick auf einen Buchstaben. Hör zu.</p>      
 <div class="alphabet-grid" id="alphabet"></div>      
-<h2 class="alphabet-subtitle">Die Umlaute</h2>      
+<h2 class="alphabet-subtitle">Umlaute und ß</h2>      
 <div class="alphabet-grid umlaute-grid" id="umlaute"></div>      
 <div class="spelling-box">      
 <h2 class="spelling-title">✏️ Buchstabiere deinen Namen</h2>      
@@ -215,12 +219,12 @@ body{padding:20px 12px 35px}.course-start{margin-bottom:38px;padding:18px 15px;b
 </main>      
       
 <main class="page farewell-page">      
-<div class="part-head"><span class="part-num">Merke</span><h1 class="part-title">Wir verabschieden uns</h1></div>      
+<div class="part-head"><span class="part-num">Merke</span><h1 class="part-title">Wir verabschieden uns</h1><span class="section-done" id="farewell-done">✅ geschafft</span></div>      
 <section class="farewell-card">      
 <p class="lead">Finde den richtigen Abschied!</p>      
 <div class="farewell-game">      
 <div class="action-help" aria-label="So funktioniert die Übung"><span class="action-help-step">👀 Situation ansehen</span><span class="action-help-arrow">→</span><span class="action-help-step">👆 Abschied anklicken</span><span class="action-help-arrow">→</span><span class="action-help-step">✅ / ❌</span></div>
-<div class="farewell-display"><div class="farewell-picture"><span class="farewell-symbol" id="farewell-symbol">👋</span></div><span class="farewell-type" id="farewell-type">informell</span></div>      
+<div class="farewell-display"><div class="farewell-picture"><span class="farewell-symbol" id="farewell-symbol">👋</span></div><div class="farewell-context"><span class="farewell-type" id="farewell-type">informell</span><span class="farewell-hint" id="farewell-hint">🙂 Freunde / Familie</span></div></div>      
 <p class="question">Welcher Abschied passt zu dieser Situation?</p>      
 <div class="farewell-buttons">      
 <button class="farewell-button" data-farewell="informell">Tschüss! <span class="click-icon">👆</span></button>      
@@ -252,7 +256,7 @@ const $=x=>document.getElementById(x),$$=x=>[...document.querySelectorAll(x)],S=
 let V,n=0,reading=false,active="informell";      
 const stampKey="lektion1-sprachpass",P={greetings:false,introduction:false,exercise:false,alphabet:false,farewell:false,lesson:false},visibleStampKeys=["greetings","introduction","exercise","lesson"];      
       
-function updateStamps(){$$("[data-stamp]").forEach(x=>x.classList.toggle("stamped",!!P[x.dataset.stamp]));$("stamp-counter").textContent=`${visibleStampKeys.filter(k=>P[k]).length} / 4 Stempel gesammelt`}      
+function updateStamps(){$$("[data-stamp]").forEach(x=>x.classList.toggle("stamped",!!P[x.dataset.stamp]));$("stamp-counter").textContent=`${visibleStampKeys.filter(k=>P[k]).length} / 4 Stempel gesammelt`;$("alphabet-done")?.classList.toggle("show",!!P.alphabet);$("farewell-done")?.classList.toggle("show",!!P.farewell)}      
 function loadStamps(){try{Object.assign(P,JSON.parse(localStorage.getItem(stampKey))||{})}catch{}P.lesson=!!(P.greetings&&P.introduction&&P.exercise&&P.alphabet&&P.farewell);updateStamps()}      
 function stamp(x){if(P[x])return;P[x]=true;if(P.greetings&&P.introduction&&P.exercise&&P.alphabet&&P.farewell)P.lesson=true;try{localStorage.setItem(stampKey,JSON.stringify(P))}catch{}updateStamps()}      
 function loadVoice(){let v=S?.getVoices()||[];V=v.find(x=>x.lang?.toLowerCase()==="de-de"&&x.name?.toLowerCase().includes("google"))||v.find(x=>x.lang?.toLowerCase()==="de-de")||v.find(x=>x.lang?.toLowerCase().startsWith("de"))||null}      
@@ -298,11 +302,11 @@ SI.disabled=SI.readOnly=false;SI.addEventListener("pointerdown",()=>SI.focus());
 async function spellName(){stop();SM.textContent="";let name=SI.value.trim();if(!name){SM.textContent="Bitte gib deinen Namen ein.";return SI.focus()}let letters=[...name.toLocaleUpperCase("de-DE")].filter(x=>N[x]);if(!letters.length){SM.textContent="Der Name enthält keine unterstützten Buchstaben.";return}SO.innerHTML=letters.map((x,i)=>`<span class="letter-chip" id="letter-${i}">${x}</span>`).join("");SB.disabled=true;let version=n;for(let i=0;i<letters.length&&version===n;i++){let chip=$(`letter-${i}`);chip.classList.add("letter-speaking");await speak(N[letters[i]],.82);chip.classList.remove("letter-speaking");if(version!==n)break;await W(120)}if(version===n)stamp("alphabet");SB.disabled=false}      
 SB.onclick=spellName;SI.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();spellName()}};      
       
-const FB=$$(".farewell-button"),FT=[["informell","👋","Tschüss!"],["formell","🙋","Auf Wiedersehen!"]];      
+const FB=$$(".farewell-button"),FT=[["informell","👋","Tschüss!","🙂 Freunde / Familie"],["formell","🙋","Auf Wiedersehen!","👔 fremde Person / höflich"]];      
 let fi=0,fs=0,fl=false;      
 function lockFarewell(x){FB.forEach(b=>{b.disabled=x;if(!x)b.classList.remove("richtig","falsch")})}      
 function farewellProgress(){$("farewell-counter").textContent=`Richtige Antworten: ${fs} / 2`;$("farewell-progress").style.width=`${fs/2*100}%`}      
-function showFarewell(){let[type,icon]=FT[fi];fl=false;lockFarewell(false);$("farewell-feedback").textContent="";$("farewell-feedback").style.color="";$("farewell-type").textContent=type;$("farewell-symbol").textContent=icon}      
+function showFarewell(){let[type,icon,,hint]=FT[fi];fl=false;lockFarewell(false);$("farewell-feedback").textContent="";$("farewell-feedback").style.color="";$("farewell-type").textContent=type;$("farewell-hint").textContent=hint;$("farewell-symbol").textContent=icon}      
 function nextFarewell(){if(++fi<FT.length)return showFarewell();fl=true;lockFarewell(true);$("farewell-feedback").style.color="#28502f";$("farewell-feedback").textContent="Alle Antworten sind richtig!";$("farewell-finish").classList.add("zeigen");stamp("farewell");stop();speak("Sehr gut! Du hast beide Abschiede richtig erkannt.",.9)}      
 FB.forEach(b=>b.onclick=()=>{if(fl)return;let[type,,text]=FT[fi];FB.forEach(x=>x.classList.remove("richtig","falsch"));if(b.dataset.farewell!==type){b.classList.add("falsch");$("farewell-feedback").style.color="var(--red)";$("farewell-feedback").textContent="Versuch es noch einmal!";stop();return speak("Nicht ganz. Versuch es noch einmal.",.9)}fl=true;fs++;b.classList.add("richtig");lockFarewell(true);$("farewell-feedback").style.color="#28502f";$("farewell-feedback").textContent=`Richtig! ${text}`;farewellProgress();stop();speak(text,.9);setTimeout(nextFarewell,1200)});      
 $("farewell-restart").onclick=()=>{fi=fs=0;fl=false;$("farewell-finish").classList.remove("zeigen");farewellProgress();showFarewell()};      
