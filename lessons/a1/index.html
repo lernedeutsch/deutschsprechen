@@ -360,7 +360,8 @@ body{
     margin-bottom:8px;
 }
 
-.translation-language{
+.translation-language,
+.hero-translation-language{
     padding:5px 8px;
     color:#26364b;
     background:#f7f1e3;
@@ -371,7 +372,8 @@ body{
     font-weight:800;
 }
 
-.translation-language.active{
+.translation-language.active,
+.hero-translation-language.active{
     background:#e4f3e8;
     border-color:#78bf95;
     color:#28502f;
@@ -467,6 +469,20 @@ footer{
             Beginne mit Teil 1 und arbeite dich
             nach und nach durch den ganzen Kurs.
         </p>
+
+        <div class="progress-translation" id="hero-translation">
+            <button type="button" class="translation-toggle" id="hero-translation-toggle">
+                🌐 Übersetzung
+            </button>
+            <div class="translation-panel">
+                <div class="translation-languages">
+                    <button type="button" class="hero-translation-language" data-lang="en">English</button>
+                    <button type="button" class="hero-translation-language" data-lang="pl">Polski</button>
+                    <button type="button" class="hero-translation-language" data-lang="it">Italiano</button>
+                </div>
+                <p class="translation-text" id="hero-translation-text" aria-live="polite"></p>
+            </div>
+        </div>
 
     </section>
 
@@ -1067,6 +1083,31 @@ footer{
 </div>
 
 <script>
+const heroTranslation=document.getElementById("hero-translation");
+const heroTranslationToggle=document.getElementById("hero-translation-toggle");
+const heroTranslationText=document.getElementById("hero-translation-text");
+const heroTranslationButtons=[...document.querySelectorAll(".hero-translation-language")];
+
+const heroTranslations={
+    en:"German step by step. The A1 course consists of 30 course sections. Start with Part 1 and work your way through the entire course step by step.",
+    pl:"Niemiecki krok po kroku. Kurs A1 składa się z 30 części kursu. Zacznij od części 1 i stopniowo przechodź przez cały kurs.",
+    it:"Tedesco passo dopo passo. Il corso A1 è composto da 30 sezioni. Inizia dalla Parte 1 e procedi gradualmente attraverso tutto il corso."
+};
+
+heroTranslationToggle.addEventListener("click",event=>{
+    event.stopPropagation();
+    heroTranslation.classList.toggle("open");
+});
+
+heroTranslationButtons.forEach(button=>button.addEventListener("click",event=>{
+    event.stopPropagation();
+    const lang=button.dataset.lang;
+    heroTranslationButtons.forEach(item=>item.classList.toggle("active",item===button));
+    heroTranslationText.textContent=heroTranslations[lang];
+    heroTranslationText.classList.add("show");
+    heroTranslation.classList.add("open");
+}));
+
 const progressTranslation=document.getElementById("progress-translation");
 const translationToggle=document.getElementById("translation-toggle");
 const translationText=document.getElementById("translation-text");
@@ -1095,6 +1136,9 @@ translationButtons.forEach(button=>button.addEventListener("click",event=>{
 document.addEventListener("click",event=>{
     if(!event.target.closest("#progress-translation")){
         progressTranslation.classList.remove("open");
+    }
+    if(!event.target.closest("#hero-translation")){
+        heroTranslation.classList.remove("open");
     }
 });
 </script>
