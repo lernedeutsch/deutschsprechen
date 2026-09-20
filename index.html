@@ -61,13 +61,34 @@ body.intro-running{
     background:#000;
 }
 
+#intro-screen::after{
+    content:"";
+    position:absolute;
+    inset:-20%;
+    z-index:20;
+    pointer-events:none;
+    opacity:0;
+    background:
+        radial-gradient(
+            circle at 44% 27.5%,
+            rgba(255,255,255,.96) 0%,
+            rgba(238,246,255,.84) 8%,
+            rgba(145,190,232,.38) 22%,
+            rgba(24,62,104,.18) 42%,
+            rgba(0,0,0,0) 66%
+        );
+    filter:blur(18px);
+    transform:scale(.34);
+    transform-origin:44% 27.5%;
+}
+
 #intro-world{
     position:absolute;
     inset:0;
     transform:scale(.88);
     transform-origin:center center;
     will-change:transform;
-    animation:earthApproach 8.6s cubic-bezier(.22,.61,.24,1) forwards;
+    animation:earthApproach 5s ease-out forwards;
 }
 
 #intro-earth{
@@ -84,9 +105,9 @@ body.intro-running{
 
 #intro-germany{
     position:absolute;
-    top:51%;
-    left:50.5%;
-    width:clamp(50px,5.6vw,84px);
+    top:27.5%;
+    left:44%;
+    width:clamp(54px,6vw,92px);
     padding:0;
     border:0;
     background:transparent;
@@ -94,9 +115,9 @@ body.intro-running{
     cursor:pointer;
     z-index:5;
     filter:
-        drop-shadow(0 0 6px rgba(255,205,0,.92))
-        drop-shadow(0 0 16px rgba(255,205,0,.82))
-        drop-shadow(0 0 30px rgba(255,95,20,.5));
+        drop-shadow(0 0 7px rgba(255,205,0,.95))
+        drop-shadow(0 0 19px rgba(255,205,0,.88))
+        drop-shadow(0 0 36px rgba(255,95,20,.55));
     transform-origin:center center;
 }
 
@@ -105,12 +126,12 @@ body.intro-running{
     height:auto;
     display:block;
     pointer-events:none;
-    transform:scale(.34);
+    transform:scale(.30);
     transform-origin:center center;
     will-change:transform;
     animation:
-        germanyApproach 8.6s cubic-bezier(.22,.61,.24,1) forwards,
-        germanyPulse 2.8s ease-in-out 8.6s infinite;
+        germanyApproach 5s ease-out forwards,
+        germanyPulse 2.8s ease-in-out 5s infinite;
 }
 
 #intro-germany:hover{
@@ -126,7 +147,7 @@ body.intro-running{
     min-height:100vh;
     opacity:0;
     pointer-events:none;
-    clip-path:circle(0% at 50.5% 51%);
+    clip-path:circle(0% at 44% 27.5%);
     background:
         radial-gradient(
             circle at top,
@@ -149,15 +170,19 @@ body.intro-opening #intro-germany img{
 }
 
 body.intro-opening #intro-germany{
-    animation:germanyOpen 2.35s cubic-bezier(.18,.74,.2,1) forwards;
+    animation:germanyOpen 2.4s cubic-bezier(.18,.74,.2,1) forwards;
 }
 
 body.intro-opening #site-shell{
-    animation:siteReveal 2.65s cubic-bezier(.18,.74,.2,1) forwards;
+    animation:siteReveal 2.6s cubic-bezier(.18,.74,.2,1) forwards;
 }
 
 body.intro-opening #intro-screen{
-    animation:introFade 2.65s ease-in-out forwards;
+    animation:introFade 2.6s ease-in-out forwards;
+}
+
+body.intro-opening #intro-screen::after{
+    animation:tunnelFog 2.6s cubic-bezier(.16,.7,.18,1) forwards;
 }
 
 body.intro-finished #site-shell{
@@ -174,15 +199,6 @@ body.intro-finished #intro-screen{
     0%{
         transform:scale(.88);
     }
-    28%{
-        transform:scale(.96);
-    }
-    58%{
-        transform:scale(1.07);
-    }
-    82%{
-        transform:scale(1.18);
-    }
     100%{
         transform:scale(1.28);
     }
@@ -190,16 +206,13 @@ body.intro-finished #intro-screen{
 
 @keyframes germanyApproach{
     0%{
-        transform:scale(.34);
+        transform:scale(.30);
     }
-    28%{
+    35%{
         transform:scale(.46);
     }
-    58%{
-        transform:scale(.64);
-    }
-    82%{
-        transform:scale(.82);
+    70%{
+        transform:scale(.72);
     }
     100%{
         transform:scale(1);
@@ -233,14 +246,48 @@ body.intro-finished #intro-screen{
 @keyframes siteReveal{
     0%{
         opacity:0;
-        clip-path:circle(0% at 50.5% 51%);
+        transform:scale(.96);
+        filter:blur(18px);
+        clip-path:circle(0% at 44% 27.5%);
     }
-    10%{
-        opacity:1;
+    18%{
+        opacity:.35;
+        transform:scale(.975);
+        filter:blur(13px);
+    }
+    55%{
+        opacity:.82;
+        transform:scale(.99);
+        filter:blur(5px);
     }
     100%{
         opacity:1;
+        transform:scale(1);
+        filter:blur(0);
         clip-path:circle(155% at 44% 27.5%);
+    }
+}
+
+@keyframes tunnelFog{
+    0%{
+        opacity:0;
+        transform:scale(.34);
+        filter:blur(22px);
+    }
+    30%{
+        opacity:.76;
+        transform:scale(.9);
+        filter:blur(18px);
+    }
+    58%{
+        opacity:.96;
+        transform:scale(1.8);
+        filter:blur(13px);
+    }
+    100%{
+        opacity:0;
+        transform:scale(4.2);
+        filter:blur(28px);
     }
 }
 
@@ -255,13 +302,13 @@ body.intro-finished #intro-screen{
 
 @media(max-width:700px){
     #intro-germany{
-        top:51%;
-        left:50.5%;
-        width:clamp(38px,9.5vw,64px);
+        top:27.5%;
+        left:44%;
+        width:clamp(40px,10vw,66px);
     }
 
     #site-shell{
-        clip-path:circle(0% at 50.5% 51%);
+        clip-path:circle(0% at 44% 27.5%);
     }
 }
 
@@ -721,7 +768,7 @@ and
 
 <div id="intro-screen">
     <div id="intro-world">
-        <img src="earth.png" id="intro-earth" alt="Ziemia">
+        <img src="https://lernedeutsch.github.io/images/earth.png" id="intro-earth" alt="Ziemia">
         <button id="intro-germany" type="button" aria-label="Deutschland öffnen" title="Deutschland öffnen">
             <img src="germany.png" alt="Deutschland">
         </button>
@@ -964,7 +1011,7 @@ and
 
         document.body.classList.add("intro-opening");
 
-        window.setTimeout(finishIntro,2650);
+        window.setTimeout(finishIntro,2600);
     });
 })();
 </script>
