@@ -280,7 +280,7 @@ function activate(x){active=x;T.forEach(t=>{let a=t.dataset.dialog===x;t.classLi
 async function readDialog(x){if(!S)return alert("Ihr Browser unterstützt die Sprachausgabe nicht.");reading=false;stop();activate(x);reading=true;let version=n;for(let b of $$(`#dialog-${x} .bubble`)){if(!reading||version!==n||active!==x)break;b.classList.add("speaking");await speak(bubbleText(b));b.classList.remove("speaking")}if(version===n){reading=false;stamp("introduction")}}      
 NI.oninput=updateName;updateName();T.forEach(t=>t.onclick=()=>readDialog(t.dataset.dialog));      
       
-const R=$(".exercise-row"),C=$(".category-button"),READ=$("exercise-read-button"),CHOICE=document.querySelector(".category-buttons"),EXERCISE=document.querySelector(".exercise-page");      
+const R=$$(".exercise-row"),C=$$(".category-button"),READ=$("exercise-read-button"),CHOICE=document.querySelector(".category-buttons"),EXERCISE=document.querySelector(".exercise-page");      
 let ei=0,es=0,el=false;      
 function current(scroll=true){R.forEach((r,i)=>r.classList.toggle("active",i===ei));if(scroll)R[ei]?.scrollIntoView({behavior:"smooth",block:"nearest"})}      
 function categories(x){el=!x;C.forEach(b=>{b.disabled=!x;b.classList.remove("correct-choice","wrong-choice")})}      
