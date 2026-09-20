@@ -43,6 +43,29 @@ body{
 
 button{font:inherit}
 
+.top-back{
+  max-width:1020px;
+  margin:18px auto 0;
+  padding:0 18px;
+}
+.back-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:7px 13px;
+  color:#1d3557;
+  background:#fff;
+  border:1px solid #dce3ed;
+  border-radius:999px;
+  text-decoration:none;
+  font:800 .86rem "Nunito Sans",sans-serif;
+  box-shadow:0 5px 14px rgba(0,0,0,.18);
+}
+.back-btn:hover{
+  border-color:var(--gold);
+  transform:translateY(-1px);
+}
+
 .shell{
   max-width:1020px;
   margin:0 auto;
@@ -286,6 +309,90 @@ button{font:inherit}
   background:#ece3fb;
   color:#5a3ca8;
 }
+
+.instruction-wrap{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  flex-wrap:wrap;
+  margin-top:5px;
+}
+.turn-instruction{
+  color:#33485f;
+  font-size:.84rem;
+  font-weight:800;
+}
+.translation-control{
+  position:relative;
+  display:inline-flex;
+}
+.translation-toggle{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding:3px 7px;
+  color:#4c4028;
+  background:#fffdf6;
+  border:1px solid #d8c28c;
+  border-radius:999px;
+  cursor:pointer;
+  font:800 .68rem "Nunito Sans",sans-serif;
+}
+.translation-toggle:hover,.translation-toggle:focus-visible{
+  background:#fff3c8;
+  border-color:#cf9f3f;
+}
+.translation-panel{
+  display:none;
+  position:absolute;
+  left:0;
+  top:31px;
+  z-index:30;
+  width:225px;
+  padding:9px;
+  background:#fffdf7;
+  border:1px solid #d9c28e;
+  border-radius:12px;
+  box-shadow:0 12px 25px rgba(0,0,0,.18);
+}
+.translation-control.open .translation-panel,
+.translation-control:hover .translation-panel,
+.translation-control:focus-within .translation-panel{
+  display:block;
+}
+.translation-languages{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  margin-bottom:7px;
+}
+.translation-language{
+  padding:4px 7px;
+  color:#26364b;
+  background:#f7f1e3;
+  border:1px solid #ddcfaa;
+  border-radius:999px;
+  cursor:pointer;
+  font-size:.7rem;
+  font-weight:800;
+}
+.translation-language.active{
+  background:#e4f3e8;
+  border-color:#78bf95;
+  color:#28502f;
+}
+.translation-text{
+  display:none;
+  margin:0;
+  padding:7px 8px;
+  color:#26364b;
+  background:#fff7d8;
+  border-radius:8px;
+  font-size:.76rem;
+  line-height:1.35;
+  font-weight:700;
+}
+.translation-text.show{display:block}
 
 /* ---------- MIKROFON ---------- */
 
@@ -707,6 +814,10 @@ button{font:inherit}
 
 <body>
 
+<div class="top-back">
+  <a href="../a1/lektion-1.html" class="back-btn">← A1-1</a>
+</div>
+
 <div class="shell">
 
   <header class="hero">
@@ -793,6 +904,26 @@ button{font:inherit}
 
               </span>
 
+              <span class="instruction-wrap">
+                <span class="turn-instruction" id="instruction-text">
+                  Antworte auf die Begrüßung.
+                </span>
+
+                <span class="translation-control" id="translation-control">
+                  <button type="button" class="translation-toggle" id="translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung">
+                    🌐 Übersetzung
+                  </button>
+                  <span class="translation-panel">
+                    <span class="translation-languages">
+                      <button type="button" class="translation-language" data-lang="en">English</button>
+                      <button type="button" class="translation-language" data-lang="pl">Polski</button>
+                      <button type="button" class="translation-language" data-lang="it">Italiano</button>
+                    </span>
+                    <span class="translation-text" id="translation-text" aria-live="polite"></span>
+                  </span>
+                </span>
+              </span>
+
             </div>
 
           </div>
@@ -829,10 +960,6 @@ button{font:inherit}
 
         <div class="utility-row">
 
-          <button type="button" class="utility-btn" id="example-btn">
-            💡 Beispiel
-          </button>
-
           <button type="button" class="utility-btn repeat-btn" id="repeat-btn">
             🔁 Wiederholen
           </button>
@@ -846,7 +973,7 @@ button{font:inherit}
           </button>
 
           <button type="button" class="utility-btn" id="skip-btn">
-            Weiter →
+            Überspringen →
           </button>
 
         </div>
@@ -1306,7 +1433,11 @@ const els={
   micBtn:document.getElementById("mic-btn"),
   micStatus:document.getElementById("mic-status"),
   liveTranscript:document.getElementById("live-transcript"),
-  exampleBtn:document.getElementById("example-btn"),
+  instructionText:document.getElementById("instruction-text"),
+  translationControl:document.getElementById("translation-control"),
+  translationToggle:document.getElementById("translation-toggle"),
+  translationText:document.getElementById("translation-text"),
+  translationButtons:[...document.querySelectorAll(".translation-language")],
   repeatBtn:document.getElementById("repeat-btn"),
   answerBtn:document.getElementById("answer-btn"),
   exampleText:document.getElementById("example-text"),
@@ -1486,6 +1617,11 @@ function loadTurn(){
   els.liveTranscript.textContent="";
   els.exampleText.classList.remove("show");
   els.exampleText.textContent="";
+  els.instructionText.textContent=turn.instruction;
+  els.translationText.textContent="";
+  els.translationText.classList.remove("show");
+  els.translationButtons.forEach(button=>button.classList.remove("active"));
+  els.translationControl.classList.remove("open");
 
   renderProgress();
 
@@ -1785,11 +1921,64 @@ els.micBtn.addEventListener("click",()=>{
   }
 });
 
-els.exampleBtn.addEventListener("click",()=>{
-  els.exampleText.classList.add("show");
+const instructionTranslations={
+  "Antworte auf die Begrüßung.":{
+    en:"Respond to the greeting.",
+    pl:"Odpowiedz na powitanie.",
+    it:"Rispondi al saluto."
+  },
+  "Sag deinen Namen — informell.":{
+    en:"Say your name — informal.",
+    pl:"Powiedz swoje imię — nieformalnie.",
+    it:"Di’ il tuo nome — informale."
+  },
+  "Verabschiede dich informell.":{
+    en:"Say goodbye — informal.",
+    pl:"Pożegnaj się — nieformalnie.",
+    it:"Saluta — informale."
+  },
+  "Antworte formell.":{
+    en:"Respond formally.",
+    pl:"Odpowiedz formalnie.",
+    it:"Rispondi in modo formale."
+  },
+  "Sag deinen Namen — formell.":{
+    en:"Say your name — formal.",
+    pl:"Powiedz swoje imię — formalnie.",
+    it:"Di’ il tuo nome — formale."
+  },
+  "Verabschiede dich formell.":{
+    en:"Say goodbye — formal.",
+    pl:"Pożegnaj się — formalnie.",
+    it:"Saluta — formale."
+  },
+  "Verabschiede dich.":{
+    en:"Say goodbye.",
+    pl:"Pożegnaj się.",
+    it:"Saluta."
+  }
+};
 
-  els.exampleText.textContent=
-    `Beispiel: „${current().example}“`;
+els.translationToggle.addEventListener("click",event=>{
+  event.stopPropagation();
+  els.translationControl.classList.toggle("open");
+});
+
+els.translationButtons.forEach(button=>button.addEventListener("click",event=>{
+  event.stopPropagation();
+  const lang=button.dataset.lang;
+  const translations=instructionTranslations[current().instruction];
+  if(!translations)return;
+  els.translationButtons.forEach(item=>item.classList.toggle("active",item===button));
+  els.translationText.textContent=translations[lang];
+  els.translationText.classList.add("show");
+  els.translationControl.classList.add("open");
+}));
+
+document.addEventListener("click",event=>{
+  if(!event.target.closest(".translation-control")){
+    els.translationControl.classList.remove("open");
+  }
 });
 
 els.answerBtn.addEventListener("click",()=>{
