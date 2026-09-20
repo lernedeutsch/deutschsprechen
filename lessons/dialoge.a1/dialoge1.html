@@ -1,0 +1,1950 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Dialogübung A1 — Begrüßung &amp; Vorstellung</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Nunito+Sans:opsz,wght@6..12,400,600,700,800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#152238;
+  --bg2:#1d3350;
+  --ink:#101820;
+  --muted:#4c5d72;
+  --line:#dde7f2;
+  --gold:#f4c95d;
+  --gold-deep:#b98200;
+  --sky:#6ac6ff;
+  --sky-deep:#3da8f0;
+  --leaf:#84df42;
+  --leaf-deep:#5fbd28;
+  --rose:#e2685f;
+  --rose-deep:#b8332b;
+  --shadow:0 16px 38px rgba(8,16,30,.16);
+  --shadow-soft:0 10px 22px rgba(8,16,30,.10);
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  min-height:100vh;
+  color:var(--ink);
+  font:400 1rem/1.6 "Nunito Sans",sans-serif;
+  background:
+    radial-gradient(circle at 12% -10%,rgba(255,255,255,.10),transparent 38%),
+    radial-gradient(circle at 100% 110%,rgba(255,255,255,.07),transparent 40%),
+    linear-gradient(180deg,var(--bg),var(--bg2));
+}
+
+button{font:inherit}
+
+.shell{
+  max-width:1020px;
+  margin:0 auto;
+  padding:36px 18px 70px;
+}
+
+/* ---------- HERO ---------- */
+
+.hero{
+  text-align:center;
+  padding:34px 20px 26px;
+  margin-bottom:22px;
+}
+
+.hero-badge{
+  display:inline-block;
+  margin-bottom:16px;
+  padding:7px 16px;
+  color:#1a2a40;
+  background:var(--gold);
+  border-radius:999px;
+  font:800 .78rem "JetBrains Mono",monospace;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+
+.hero h1{
+  margin:0 0 10px;
+  color:#fff;
+  font:700 clamp(2rem,5vw,2.7rem)/1.15 "Kalam",cursive;
+}
+
+.hero p{
+  margin:0 auto;
+  max-width:48ch;
+  color:#c7d7ea;
+  font-size:1.05rem;
+}
+
+.hero-stats{
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-top:20px;
+}
+
+.stat{
+  min-width:96px;
+  padding:12px 16px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:16px;
+  backdrop-filter:blur(6px);
+}
+
+.stat-value{
+  display:block;
+  color:#fff;
+  font:800 1.3rem "JetBrains Mono",monospace;
+}
+
+.stat-label{
+  display:block;
+  margin-top:2px;
+  color:#a9bcd4;
+  font-size:.74rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+
+/* ---------- GATE ---------- */
+
+.gate{
+  max-width:620px;
+  margin:0 auto;
+  padding:30px 26px;
+  background:#fff;
+  border-radius:28px;
+  box-shadow:var(--shadow);
+  text-align:center;
+}
+
+.gate-emoji{
+  font-size:2.6rem;
+  margin-bottom:8px;
+}
+
+.gate h2{
+  margin:0 0 10px;
+  font:700 1.5rem "Kalam",cursive;
+}
+
+.gate p{
+  margin:0 auto 20px;
+  max-width:46ch;
+  color:var(--muted);
+}
+
+.gate-btn{
+  padding:15px 26px;
+  border:none;
+  border-radius:16px;
+  cursor:pointer;
+  color:#fff;
+  background:linear-gradient(180deg,var(--sky),var(--sky-deep));
+  font:800 1.05rem "Nunito Sans",sans-serif;
+  box-shadow:0 12px 22px rgba(61,168,240,.32);
+  transition:transform .18s,filter .18s;
+}
+
+.gate-btn:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.05);
+}
+
+.gate-warning{
+  margin-top:16px;
+  padding:12px 14px;
+  background:#fdf3e4;
+  border:1px solid #f0d9ab;
+  border-radius:12px;
+  color:#7a5b06;
+  font-size:.92rem;
+  display:none;
+}
+
+.gate-warning.show{display:block}
+
+/* ---------- LAYOUT ---------- */
+
+.layout{
+  display:none;
+  grid-template-columns:1fr 280px;
+  gap:20px;
+  align-items:start;
+}
+
+.layout.show{display:grid}
+
+@media(max-width:860px){
+  .layout{grid-template-columns:1fr}
+}
+
+/* ---------- CARD ---------- */
+
+.card{
+  padding:26px;
+  background:#fff;
+  border-radius:28px;
+  box-shadow:var(--shadow);
+}
+
+.progress-track{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-bottom:18px;
+}
+
+.dot{
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  background:#e7eef7;
+  border:2px solid var(--line);
+  transition:all .2s;
+}
+
+.dot.gap{margin-right:8px}
+.dot.done{background:var(--leaf);border-color:var(--leaf-deep)}
+.dot.active{
+  background:var(--gold);
+  border-color:var(--gold-deep);
+  transform:scale(1.3);
+}
+
+.partner-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:18px;
+}
+
+.partner-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+}
+
+.partner-avatar{
+  display:grid;
+  place-items:center;
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  font-size:1.6rem;
+  background:linear-gradient(180deg,#eef4fb,#dce8f6);
+  border:1px solid var(--line);
+  flex-shrink:0;
+}
+
+.partner-meta{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  min-width:0;
+}
+
+.partner-title{
+  font:800 .95rem "Nunito Sans",sans-serif;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.partner-sub{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:var(--muted);
+  font-size:.82rem;
+}
+
+.partner-tag{
+  padding:2px 10px;
+  border-radius:999px;
+  font:700 .7rem "JetBrains Mono",monospace;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.partner-tag.informell{
+  background:#e9f7dc;
+  color:#3d6b1d;
+}
+
+.partner-tag.formell{
+  background:#ece3fb;
+  color:#5a3ca8;
+}
+
+/* ---------- MIKROFON ---------- */
+
+.mic-column{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+  flex-shrink:0;
+  margin-top:-24px;
+}
+
+.mic-btn-wrap{
+  position:relative;
+  width:122px;
+  height:122px;
+  display:grid;
+  place-items:center;
+  flex-shrink:0;
+}
+
+.mic-ring{
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  border:2px solid rgba(226,104,95,.4);
+  opacity:0;
+}
+
+.mic-btn-wrap.listening .mic-ring{
+  animation:ringPulse 1.5s ease-out infinite;
+}
+
+.mic-ring:nth-child(2){animation-delay:.4s}
+.mic-ring:nth-child(3){animation-delay:.8s}
+
+@keyframes ringPulse{
+  0%{
+    transform:scale(.8);
+    opacity:.65;
+  }
+  100%{
+    transform:scale(1.6);
+    opacity:0;
+  }
+}
+
+.mic-btn{
+  position:relative;
+  z-index:1;
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  border:none;
+  cursor:pointer;
+  color:#fff;
+  font-size:2.3rem;
+  background:linear-gradient(180deg,var(--sky),var(--sky-deep));
+  box-shadow:0 12px 22px rgba(61,168,240,.36);
+  transition:transform .18s,filter .18s,background .2s;
+}
+
+.mic-btn:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.05);
+}
+
+.mic-btn.listening{
+  background:linear-gradient(180deg,var(--rose),var(--rose-deep));
+  box-shadow:
+    0 0 0 6px rgba(226,104,95,.18),
+    0 12px 22px rgba(226,104,95,.34);
+}
+
+.mic-btn:disabled{
+  opacity:.55;
+  cursor:not-allowed;
+  transform:none;
+}
+
+.mic-status-row{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  padding:4px 10px 2px;
+}
+
+.mic-status{
+  max-width:120px;
+  min-height:1.1rem;
+  color:var(--muted);
+  font:700 .68rem "JetBrains Mono",monospace;
+  letter-spacing:.02em;
+  line-height:1.25;
+  text-align:center;
+}
+
+.mic-status.live{color:var(--rose-deep)}
+
+.live-transcript{
+  min-height:1.4rem;
+  padding:6px 14px;
+  color:var(--ink);
+  background:#f7fbff;
+  border:1px solid var(--line);
+  border-radius:12px;
+  font:600 1rem "Kalam",cursive;
+  text-align:center;
+  max-width:90%;
+}
+
+.live-transcript:empty{display:none}
+
+.example-text{
+  display:none;
+  margin-top:10px;
+  text-align:center;
+  color:var(--muted);
+  font-size:.92rem;
+}
+
+.example-text.show{
+  display:block;
+  animation:pop .2s ease-out;
+}
+
+/* ---------- DODATKOWE PRZYCISKI ---------- */
+
+.utility-row{
+  display:flex;
+  justify-content:center;
+  align-items:stretch;
+  gap:6px;
+  flex-wrap:nowrap;
+  margin-top:18px;
+}
+
+.utility-btn{
+  flex:1 1 0;
+  min-width:0;
+  background:none;
+  border:1px dashed var(--line);
+  border-radius:999px;
+  padding:11px 4px;
+  cursor:pointer;
+  color:var(--muted);
+  font:700 .68rem "JetBrains Mono",monospace;
+  letter-spacing:-.02em;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  transition:border-color .16s,color .16s,transform .16s,background .16s;
+}
+
+.utility-btn:hover{
+  border-color:#81bfff;
+  color:var(--ink);
+  background:#f7fbff;
+  transform:translateY(-1px);
+}
+
+.answer-btn{
+  border-color:#f0c04b;
+  color:#765500;
+  background:#fff9e8;
+}
+
+.answer-btn:hover{
+  border-color:var(--gold-deep);
+  color:#4f3900;
+  background:#fff4cf;
+}
+
+.repeat-btn{
+  border-color:#9ecbf5;
+  color:#1f5c8a;
+  background:#eef7ff;
+}
+
+.repeat-btn:hover{
+  border-color:var(--sky-deep);
+  color:#123f61;
+  background:#e2f1ff;
+}
+
+.stop-btn{
+  border-color:#eab3ac;
+  color:#a33d34;
+  background:#fdecea;
+}
+
+.stop-btn:hover{
+  border-color:var(--rose-deep);
+  color:#7a241d;
+  background:#fbdcd9;
+}
+
+/* ---------- VERLAUF ---------- */
+
+.history-panel{
+  background:#0f1c2e;
+  border-radius:24px;
+  padding:14px 14px 16px;
+  box-shadow:var(--shadow);
+  position:sticky;
+  top:20px;
+}
+
+.history-screen-bar{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin-bottom:12px;
+  padding:0 2px;
+}
+
+.history-dot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+}
+
+.history-dot:nth-child(1){background:#e2685f}
+.history-dot:nth-child(2){background:#f4c95d}
+.history-dot:nth-child(3){background:#84df42}
+
+.history-title{
+  margin-left:6px;
+  color:#c7d7ea;
+  font:800 .78rem "JetBrains Mono",monospace;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+
+.history-list{
+  max-height:440px;
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  padding-right:4px;
+}
+
+.history-list::-webkit-scrollbar{width:5px}
+
+.history-list::-webkit-scrollbar-thumb{
+  background:rgba(255,255,255,.2);
+  border-radius:6px;
+}
+
+.history-entry{
+  display:flex;
+  gap:8px;
+  padding:8px 10px;
+  background:rgba(255,255,255,.06);
+  border-radius:10px;
+  color:#dce8f6;
+  font-size:.85rem;
+  line-height:1.4;
+}
+
+.history-entry .num{
+  flex-shrink:0;
+  color:#8fa4bd;
+  font:700 .76rem "JetBrains Mono",monospace;
+}
+
+.history-entry.user{
+  background:rgba(132,223,66,.12);
+}
+
+.history-entry.user .num{color:#84df42}
+
+.history-divider{
+  margin:8px 0 2px;
+  text-align:center;
+  color:#8fa4bd;
+  font:700 .66rem "JetBrains Mono",monospace;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+}
+
+.history-empty{
+  color:#6f84a0;
+  font-size:.85rem;
+  text-align:center;
+  padding:18px 6px;
+}
+
+/* ---------- FINAL ---------- */
+
+.final{
+  display:none;
+  text-align:center;
+  padding:20px 10px 6px;
+}
+
+.final.show{
+  display:block;
+  animation:pop .3s ease-out;
+}
+
+.final-emoji{
+  font-size:3rem;
+  margin-bottom:6px;
+}
+
+.final-title{
+  margin:0 0 8px;
+  font:700 2rem "Kalam",cursive;
+}
+
+.final-sub{
+  margin:0 0 20px;
+  color:var(--muted);
+}
+
+.final-stars{
+  font-size:2rem;
+  letter-spacing:4px;
+  margin-bottom:22px;
+}
+
+.restart-btn{
+  padding:13px 24px;
+  border:none;
+  border-radius:14px;
+  cursor:pointer;
+  color:#fff;
+  background:linear-gradient(180deg,var(--gold),var(--gold-deep));
+  font:800 1rem "Nunito Sans",sans-serif;
+  box-shadow:0 10px 20px rgba(185,130,0,.28);
+  transition:transform .18s,filter .18s;
+}
+
+.restart-btn:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.05);
+}
+
+@keyframes pop{
+  from{
+    opacity:0;
+    transform:translateY(-6px) scale(.98);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+.footnote{
+  margin-top:22px;
+  text-align:center;
+  color:#8fa4bd;
+  font-size:.86rem;
+}
+
+@media(max-width:620px){
+  .utility-row{
+    gap:4px;
+  }
+
+  .utility-btn{
+    padding:9px 3px;
+    font-size:.62rem;
+    letter-spacing:-.03em;
+  }
+}
+
+@media(max-width:520px){
+  .card{padding:18px}
+
+  .stat{
+    min-width:80px;
+    padding:10px 12px;
+  }
+
+  .mic-column{
+    margin-top:-20px;
+  }
+
+  .mic-btn-wrap{
+    width:108px;
+    height:108px;
+  }
+
+  .mic-btn{
+    width:88px;
+    height:88px;
+    font-size:2rem;
+  }
+}
+
+@media(max-width:390px){
+  .utility-row{
+    gap:3px;
+  }
+
+  .utility-btn{
+    font-size:.54rem;
+    padding:8px 2px;
+    letter-spacing:-.04em;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,
+  *::before,
+  *::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="shell">
+
+  <header class="hero">
+
+    <span class="hero-badge">A1 · Dialogübung</span>
+
+    <h1>Führ das Gespräch! 🎙️</h1>
+
+    <p>
+      Vier kurze Dialoge — informell und formell. Du hörst den Satz,
+      das Mikrofon startet von selbst, und du antwortest laut.
+    </p>
+
+    <div class="hero-stats">
+
+      <div class="stat">
+        <span class="stat-value" id="stat-score">0/12</span>
+        <span class="stat-label">Punkte</span>
+      </div>
+
+      <div class="stat">
+        <span class="stat-value" id="stat-streak">0🔥</span>
+        <span class="stat-label">Serie</span>
+      </div>
+
+      <div class="stat">
+        <span class="stat-value" id="stat-progress">1/12</span>
+        <span class="stat-label">Zug</span>
+      </div>
+
+    </div>
+
+  </header>
+
+  <div class="gate" id="gate">
+
+    <div class="gate-emoji">🎙️</div>
+
+    <h2>Bereit für den Dialog?</h2>
+
+    <p>
+      Aktiviere dein Mikrofon. Danach läuft alles automatisch:
+      du hörst, das Mikrofon geht an, du antwortest.
+    </p>
+
+    <button type="button" class="gate-btn" id="gate-btn">
+      🎤 Mikrofon aktivieren &amp; starten
+    </button>
+
+    <p class="gate-warning" id="gate-warning">
+      Dein Browser unterstützt keine Spracherkennung. Bitte benutze
+      Google Chrome oder Microsoft Edge auf dem Desktop oder Android.
+    </p>
+
+  </div>
+
+  <div class="layout" id="layout">
+
+    <main class="card">
+
+      <div class="progress-track" id="progress-track"></div>
+
+      <div id="stage">
+
+        <div class="partner-row">
+
+          <div class="partner-left">
+
+            <div class="partner-avatar" id="partner-avatar">👩</div>
+
+            <div class="partner-meta">
+
+              <span class="partner-title" id="partner-title">
+                Dialog 1 · Auf der Straße
+              </span>
+
+              <span class="partner-sub">
+
+                <span id="partner-name">Lena</span>
+
+                <span class="partner-tag informell" id="partner-tag">
+                  informell
+                </span>
+
+              </span>
+
+            </div>
+
+          </div>
+
+          <div class="mic-column">
+
+            <div class="mic-btn-wrap" id="mic-btn-wrap">
+
+              <span class="mic-ring"></span>
+              <span class="mic-ring"></span>
+              <span class="mic-ring"></span>
+
+              <button type="button" class="mic-btn" id="mic-btn">
+                🎤
+              </button>
+
+            </div>
+
+            <p class="mic-status" id="mic-status">
+              Hör zu …
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="mic-status-row">
+
+          <p class="live-transcript" id="live-transcript"></p>
+
+        </div>
+
+        <div class="example-text" id="example-text"></div>
+
+        <div class="utility-row">
+
+          <button type="button" class="utility-btn" id="example-btn">
+            💡 Beispiel
+          </button>
+
+          <button type="button" class="utility-btn repeat-btn" id="repeat-btn">
+            🔁 Wiederholen
+          </button>
+
+          <button type="button" class="utility-btn answer-btn" id="answer-btn">
+            ✓ Antwort anzeigen
+          </button>
+
+          <button type="button" class="utility-btn stop-btn" id="stop-btn">
+            ⏹ Stop
+          </button>
+
+          <button type="button" class="utility-btn" id="skip-btn">
+            Weiter →
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="final" id="final">
+
+        <div class="final-emoji" id="final-emoji">🏆</div>
+
+        <div class="final-title" id="final-title">
+          Geschafft!
+        </div>
+
+        <p class="final-sub" id="final-sub"></p>
+
+        <div class="final-stars" id="final-stars"></div>
+
+        <button type="button" class="restart-btn" id="restart-btn">
+          🔄 Noch einmal
+        </button>
+
+      </div>
+
+    </main>
+
+    <aside class="history-panel">
+
+      <div class="history-screen-bar">
+
+        <span class="history-dot"></span>
+        <span class="history-dot"></span>
+        <span class="history-dot"></span>
+
+        <span class="history-title">
+          Verlauf
+        </span>
+
+      </div>
+
+      <div class="history-list" id="history-list">
+
+        <p class="history-empty" id="history-empty">
+          Hier erscheint dein Gespräch …
+        </p>
+
+      </div>
+
+    </aside>
+
+  </div>
+
+  <p class="footnote">
+    Am besten mit Kopfhörern. Spracherkennung &amp; -ausgabe laufen über
+    die Web-Speech-API deines Browsers (am zuverlässigsten in Chrome/Edge).
+  </p>
+
+</div>
+
+<script>
+/* ---------------- Hilfsfunktionen ---------------- */
+
+function isBareName(answer){
+  const words=answer.trim().split(/\s+/).filter(Boolean);
+
+  if(words.length===0||words.length>2)return false;
+
+  const stopwords=[
+    "hallo",
+    "tschüss",
+    "tschuess",
+    "guten",
+    "morgen",
+    "tag",
+    "abend",
+    "auf",
+    "wiedersehen",
+    "wie",
+    "heißt",
+    "heißen",
+    "du",
+    "sie",
+    "ich",
+    "bin",
+    "name",
+    "ist",
+    "mein"
+  ];
+
+  return words.every(word=>
+    word.length>1&&!stopwords.includes(word)
+  );
+}
+
+function levenshtein(a,b){
+  const al=a.length,bl=b.length;
+
+  if(al===0)return bl;
+  if(bl===0)return al;
+
+  const dp=new Array(bl+1);
+
+  for(let j=0;j<=bl;j++)dp[j]=j;
+
+  for(let i=1;i<=al;i++){
+    let prev=dp[0];
+    dp[0]=i;
+
+    for(let j=1;j<=bl;j++){
+      const temp=dp[j];
+
+      dp[j]=a[i-1]===b[j-1]
+        ?prev
+        :1+Math.min(prev,dp[j],dp[j-1]);
+
+      prev=temp;
+    }
+  }
+
+  return dp[bl];
+}
+
+/* Toleranter Abgleich: erlaubt kleine Aussprache-/Erkennungsabweichungen
+   (Akzent, leichte Verhaspler der Spracherkennung usw.) */
+function fuzzyContains(text,target,tolerance=.3){
+  if(!text)return false;
+
+  const textWords=text.split(" ").filter(Boolean);
+  const targetWords=target.split(" ").filter(Boolean);
+  const windowSize=targetWords.length;
+
+  if(textWords.length<windowSize){
+    const dist=levenshtein(text,target);
+    return dist/Math.max(text.length,target.length,1)<=tolerance;
+  }
+
+  for(let i=0;i<=textWords.length-windowSize;i++){
+    const windowText=textWords.slice(i,i+windowSize).join(" ");
+    const dist=levenshtein(windowText,target);
+    const maxLen=Math.max(windowText.length,target.length,1);
+
+    if(dist/maxLen<=tolerance)return true;
+  }
+
+  return false;
+}
+
+function nameCheck(answer){
+  if(isBareName(answer))return true;
+
+  const patterns=["ich heiße","ich heisse","ich bin","mein name ist"];
+
+  return patterns.some(pattern=>fuzzyContains(answer,pattern,.3));
+}
+
+/* ---------------- Inhalt: vier Mini-Dialoge ---------------- */
+
+const dialogues=[
+  {
+    title:"Dialog 1 · Auf der Straße",
+    role:"informell",
+    speaker:"Lena",
+    avatar:"👩",
+    turns:[
+      {
+        prompt:"Hallo!",
+        instruction:"Antworte auf die Begrüßung.",
+        example:"Hallo!",
+        check:answer=>
+          fuzzyContains(answer,"hallo",.3)||
+          fuzzyContains(answer,"guten morgen",.25)||
+          fuzzyContains(answer,"guten tag",.25)||
+          fuzzyContains(answer,"guten abend",.25)
+      },
+      {
+        prompt:"Wie heißt du?",
+        instruction:"Sag deinen Namen — informell.",
+        example:"Ich heiße Max.",
+        check:nameCheck
+      },
+      {
+        prompt:"Tschüss!",
+        instruction:"Verabschiede dich informell.",
+        example:"Tschüss!",
+        check:answer=>
+          fuzzyContains(answer,"tschüss",.3)||
+          fuzzyContains(answer,"tschuess",.3)
+      }
+    ]
+  },
+  {
+    title:"Dialog 2 · Im Büro",
+    role:"formell",
+    speaker:"Herr Schmidt",
+    avatar:"👨‍💼",
+    turns:[
+      {
+        prompt:"Guten Tag.",
+        instruction:"Antworte formell.",
+        example:"Guten Tag.",
+        check:answer=>fuzzyContains(answer,"guten tag",.25)
+      },
+      {
+        prompt:"Wie heißen Sie?",
+        instruction:"Sag deinen Namen — formell.",
+        example:"Mein Name ist Julia Schmidt.",
+        check:nameCheck
+      },
+      {
+        prompt:"Auf Wiedersehen!",
+        instruction:"Verabschiede dich formell.",
+        example:"Auf Wiedersehen!",
+        check:answer=>fuzzyContains(answer,"auf wiedersehen",.25)
+      }
+    ]
+  },
+  {
+    title:"Dialog 3 · Am frühen Morgen",
+    role:"informell",
+    speaker:"Tom",
+    avatar:"🧑",
+    turns:[
+      {
+        prompt:"Guten Morgen!",
+        instruction:"Antworte auf die Begrüßung.",
+        example:"Guten Morgen!",
+        check:answer=>
+          fuzzyContains(answer,"guten morgen",.25)||
+          fuzzyContains(answer,"hallo",.3)
+      },
+      {
+        prompt:"Wie heißt du?",
+        instruction:"Sag deinen Namen — informell.",
+        example:"Ich heiße Anna.",
+        check:nameCheck
+      },
+      {
+        prompt:"Tschüss!",
+        instruction:"Verabschiede dich.",
+        example:"Tschüss!",
+        check:answer=>
+          fuzzyContains(answer,"tschüss",.3)||
+          fuzzyContains(answer,"tschuess",.3)
+      }
+    ]
+  },
+  {
+    title:"Dialog 4 · Am Abend",
+    role:"formell",
+    speaker:"Frau Klein",
+    avatar:"👩‍💼",
+    turns:[
+      {
+        prompt:"Guten Abend!",
+        instruction:"Antworte formell.",
+        example:"Guten Abend!",
+        check:answer=>fuzzyContains(answer,"guten abend",.25)
+      },
+      {
+        prompt:"Wie heißen Sie?",
+        instruction:"Sag deinen Namen — formell.",
+        example:"Ich heiße Thomas Weber.",
+        check:nameCheck
+      },
+      {
+        prompt:"Auf Wiedersehen!",
+        instruction:"Verabschiede dich formell.",
+        example:"Auf Wiedersehen!",
+        check:answer=>fuzzyContains(answer,"auf wiedersehen",.25)
+      }
+    ]
+  }
+];
+
+/* ---------------- Dialoge in Züge umwandeln ---------------- */
+
+const flatTurns=[];
+
+dialogues.forEach((dialogue,dialogueIndex)=>{
+  dialogue.turns.forEach((turn,turnIndex)=>{
+    flatTurns.push({
+      ...turn,
+      dialogueIndex,
+      turnIndex,
+      isFirstOfDialogue:turnIndex===0,
+      dialogueTitle:dialogue.title,
+      role:dialogue.role,
+      speaker:dialogue.speaker,
+      avatar:dialogue.avatar
+    });
+  });
+});
+
+/* ---------------- Sprachausgabe ---------------- */
+
+let germanVoice=null;
+let speaking=false;
+let speechToken=0;
+
+function loadGermanVoice(){
+  if(!("speechSynthesis" in window))return;
+
+  const voices=speechSynthesis.getVoices();
+
+  germanVoice=
+    voices.find(voice=>
+      voice.lang?.toLowerCase()==="de-de"&&
+      voice.name.toLowerCase().includes("google")
+    )||
+    voices.find(voice=>
+      voice.lang?.toLowerCase()==="de-de"
+    )||
+    voices.find(voice=>
+      voice.lang?.toLowerCase().startsWith("de")
+    )||
+    null;
+}
+
+loadGermanVoice();
+
+if("speechSynthesis" in window){
+  speechSynthesis.addEventListener(
+    "voiceschanged",
+    loadGermanVoice
+  );
+}
+
+function speakGerman(text,options={}){
+  return new Promise(resolve=>{
+    if(!text||!("speechSynthesis" in window)){
+      resolve();
+      return;
+    }
+
+    const token=++speechToken;
+
+    /* Alte, evtl. hängende Sprachausgabe zuerst vollständig leeren —
+       verhindert, dass der Anfang des neuen Satzes verschluckt wird. */
+    speechSynthesis.cancel();
+
+    const utterance=new SpeechSynthesisUtterance(text);
+    let finished=false;
+    let keepAliveTimer=null;
+
+    Object.assign(utterance,{
+      lang:"de-DE",
+      rate:options.rate??.96,
+      pitch:1,
+      volume:1
+    });
+
+    if(germanVoice){
+      utterance.voice=germanVoice;
+    }
+
+    const stopKeepAlive=()=>{
+      if(keepAliveTimer){
+        window.clearInterval(keepAliveTimer);
+        keepAliveTimer=null;
+      }
+    };
+
+    const finish=()=>{
+      if(finished||token!==speechToken)return;
+
+      finished=true;
+      speaking=false;
+      stopKeepAlive();
+
+      window.setTimeout(resolve,250);
+    };
+
+    speaking=true;
+
+    utterance.onstart=()=>{
+      stopKeepAlive();
+
+      /* Bekannter Chrome-Bug: die Sprachausgabe kann mittendrin
+         abbrechen oder Silben verschlucken. Ein periodisches
+         pause()/resume() hält die Synthese zuverlässig am Laufen. */
+      keepAliveTimer=window.setInterval(()=>{
+        if(token!==speechToken){
+          stopKeepAlive();
+          return;
+        }
+
+        if(speechSynthesis.speaking&&!speechSynthesis.paused){
+          speechSynthesis.pause();
+          speechSynthesis.resume();
+        }
+      },240);
+    };
+
+    utterance.onend=finish;
+
+    utterance.onerror=event=>{
+      console.warn("Sprachausgabe:",event.error);
+      stopKeepAlive();
+
+      if(
+        event.error==="canceled"||
+        event.error==="interrupted"
+      ){
+        window.setTimeout(finish,400);
+      }else{
+        finish();
+      }
+    };
+
+    window.setTimeout(()=>{
+      if(token!==speechToken)return;
+
+      speechSynthesis.speak(utterance);
+    },90);
+  });
+}
+
+/* ---------------- Spracherkennung ---------------- */
+
+const SpeechRecognitionImpl=
+  window.SpeechRecognition||
+  window.webkitSpeechRecognition||
+  null;
+
+let recognizer=null;
+
+if(SpeechRecognitionImpl){
+  recognizer=new SpeechRecognitionImpl();
+  recognizer.lang="de-DE";
+  recognizer.continuous=false;
+  recognizer.interimResults=true;
+  recognizer.maxAlternatives=3;
+}
+
+function normalize(text){
+  return text
+    .toLowerCase()
+    .replace(/[.,!?;:„“"]/g,"")
+    .replace(/\s+/g," ")
+    .trim();
+}
+
+/* ---------------- Elemente ---------------- */
+
+const els={
+  gate:document.getElementById("gate"),
+  gateBtn:document.getElementById("gate-btn"),
+  gateWarning:document.getElementById("gate-warning"),
+  layout:document.getElementById("layout"),
+  progressTrack:document.getElementById("progress-track"),
+  stage:document.getElementById("stage"),
+  partnerAvatar:document.getElementById("partner-avatar"),
+  partnerTitle:document.getElementById("partner-title"),
+  partnerName:document.getElementById("partner-name"),
+  partnerTag:document.getElementById("partner-tag"),
+  micBtnWrap:document.getElementById("mic-btn-wrap"),
+  micBtn:document.getElementById("mic-btn"),
+  micStatus:document.getElementById("mic-status"),
+  liveTranscript:document.getElementById("live-transcript"),
+  exampleBtn:document.getElementById("example-btn"),
+  repeatBtn:document.getElementById("repeat-btn"),
+  answerBtn:document.getElementById("answer-btn"),
+  exampleText:document.getElementById("example-text"),
+  skipBtn:document.getElementById("skip-btn"),
+  stopBtn:document.getElementById("stop-btn"),
+  final:document.getElementById("final"),
+  finalEmoji:document.getElementById("final-emoji"),
+  finalTitle:document.getElementById("final-title"),
+  finalSub:document.getElementById("final-sub"),
+  finalStars:document.getElementById("final-stars"),
+  restartBtn:document.getElementById("restart-btn"),
+  statScore:document.getElementById("stat-score"),
+  statStreak:document.getElementById("stat-streak"),
+  statProgress:document.getElementById("stat-progress"),
+  historyList:document.getElementById("history-list")
+};
+
+/* ---------------- Zustand ---------------- */
+
+let index=0;
+let score=0;
+let streak=0;
+let bestStreak=0;
+let attempts=0;
+let answered=false;
+let listening=false;
+let restartTimer=null;
+let historyCounter=0;
+let promptStarting=false;
+let retrying=false;
+
+function renderStars(count,total){
+  const filled=Math.round((total?count/total:0)*5);
+
+  return "⭐".repeat(filled)+"☆".repeat(5-filled);
+}
+
+function renderProgress(){
+  els.progressTrack.innerHTML=flatTurns
+    .map((turn,turnIndex)=>{
+      let className="dot";
+
+      if(turn.isFirstOfDialogue&&turnIndex>0){
+        className+=" gap";
+      }
+
+      if(turnIndex<index){
+        className+=" done";
+      }else if(turnIndex===index){
+        className+=" active";
+      }
+
+      return `<span class="${className}"></span>`;
+    })
+    .join("");
+
+  els.statProgress.textContent=
+    `${index+1}/${flatTurns.length}`;
+}
+
+function updateStats(){
+  els.statScore.textContent=
+    `${score}/${flatTurns.length}`;
+
+  els.statStreak.textContent=
+    `${streak}🔥`;
+}
+
+function current(){
+  return flatTurns[index];
+}
+
+/* ---------------- Verlauf ---------------- */
+
+function clearHistory(){
+  historyCounter=0;
+
+  els.historyList.innerHTML=
+    `<p class="history-empty" id="history-empty">
+      Hier erscheint dein Gespräch …
+    </p>`;
+}
+
+function addHistoryEntry(role,speakerLabel,text){
+  const empty=document.getElementById("history-empty");
+
+  if(empty){
+    empty.remove();
+  }
+
+  historyCounter++;
+
+  const entry=document.createElement("div");
+
+  entry.className=`history-entry ${role}`;
+
+  entry.innerHTML=
+    `<span class="num">${historyCounter}.</span>
+     <span>${speakerLabel}: ${text}</span>`;
+
+  els.historyList.appendChild(entry);
+  els.historyList.scrollTop=
+    els.historyList.scrollHeight;
+}
+
+function addHistoryDivider(title){
+  const empty=document.getElementById("history-empty");
+
+  if(empty){
+    empty.remove();
+  }
+
+  const divider=document.createElement("div");
+
+  divider.className="history-divider";
+  divider.textContent=`— ${title} —`;
+
+  els.historyList.appendChild(divider);
+  els.historyList.scrollTop=
+    els.historyList.scrollHeight;
+}
+
+/* ---------------- Mikrofon zatrzymać ---------------- */
+
+function waitForMicrophoneToStop(){
+  return new Promise(resolve=>{
+    clearTimeout(restartTimer);
+
+    if(!recognizer||!listening){
+      stopListeningUI();
+
+      window.setTimeout(resolve,180);
+      return;
+    }
+
+    let resolved=false;
+
+    const finish=()=>{
+      if(resolved)return;
+
+      resolved=true;
+      stopListeningUI();
+
+      window.setTimeout(resolve,250);
+    };
+
+    try{
+      recognizer.stop();
+    }catch(error){
+      finish();
+      return;
+    }
+
+    window.setTimeout(finish,400);
+  });
+}
+
+/* ---------------- Zug laden ---------------- */
+
+function loadTurn(){
+  answered=false;
+  attempts=0;
+  retrying=false;
+
+  const turn=current();
+
+  if(turn.isFirstOfDialogue){
+    addHistoryDivider(turn.dialogueTitle);
+
+    els.partnerAvatar.textContent=turn.avatar;
+    els.partnerTitle.textContent=turn.dialogueTitle;
+    els.partnerName.textContent=turn.speaker;
+    els.partnerTag.textContent=turn.role;
+    els.partnerTag.className=`partner-tag ${turn.role}`;
+  }
+
+  els.liveTranscript.textContent="";
+  els.exampleText.classList.remove("show");
+  els.exampleText.textContent="";
+
+  renderProgress();
+
+  addHistoryEntry(
+    "partner",
+    turn.speaker,
+    turn.prompt
+  );
+
+  playPromptThenListen();
+}
+
+async function playPromptThenListen(){
+  if(promptStarting)return;
+
+  promptStarting=true;
+  retrying=false;
+
+  clearTimeout(restartTimer);
+
+  els.micBtn.disabled=true;
+  els.micStatus.textContent="🔊 Hör zu …";
+  els.micStatus.classList.remove("live");
+  els.liveTranscript.textContent="";
+
+  await waitForMicrophoneToStop();
+  await speakGerman(current().prompt);
+
+  promptStarting=false;
+  els.micBtn.disabled=false;
+
+  window.setTimeout(()=>{
+    if(
+      !answered&&
+      !speaking&&
+      !listening&&
+      !promptStarting
+    ){
+      startListening();
+    }
+  },200);
+}
+
+/* ---------------- Po błędnej odpowiedzi ---------------- */
+
+async function repeatPromptAfterWrongAnswer(){
+  if(retrying||answered||promptStarting)return;
+
+  retrying=true;
+
+  clearTimeout(restartTimer);
+
+  els.micBtn.disabled=true;
+  els.micStatus.textContent="Noch einmal. Hör gut zu …";
+  els.micStatus.classList.remove("live");
+
+  await waitForMicrophoneToStop();
+
+  els.liveTranscript.textContent="";
+
+  await speakGerman(current().prompt);
+
+  retrying=false;
+  els.micBtn.disabled=false;
+
+  window.setTimeout(()=>{
+    if(
+      !answered&&
+      !speaking&&
+      !listening&&
+      !promptStarting&&
+      !retrying
+    ){
+      startListening();
+    }
+  },220);
+}
+
+/* ---------------- Antwort prüfen ---------------- */
+
+function markCorrect(spokenText){
+  answered=true;
+  retrying=false;
+  streak++;
+  score++;
+
+  bestStreak=Math.max(bestStreak,streak);
+
+  updateStats();
+
+  addHistoryEntry(
+    "user",
+    "Du",
+    spokenText
+  );
+
+  clearTimeout(restartTimer);
+
+  els.micStatus.textContent="✓ Richtig!";
+  els.micStatus.classList.remove("live");
+
+  window.setTimeout(advance,900);
+}
+
+function markWrong(spokenText){
+  streak=0;
+  attempts++;
+
+  updateStats();
+
+  addHistoryEntry(
+    "user",
+    "Du",
+    `${spokenText} ✗`
+  );
+
+  els.micStatus.textContent=
+    "Das war noch nicht richtig.";
+
+  els.micStatus.classList.remove("live");
+
+  if(attempts>=3){
+    els.exampleText.classList.add("show");
+    els.exampleText.textContent=
+      `Tipp: „${current().example}“`;
+  }
+
+  clearTimeout(restartTimer);
+
+  restartTimer=window.setTimeout(()=>{
+    repeatPromptAfterWrongAnswer();
+  },700);
+}
+
+function evaluate(rawText){
+  const normalized=normalize(rawText);
+  const turn=current();
+
+  if(turn.check(normalized)){
+    markCorrect(rawText);
+  }else{
+    markWrong(rawText);
+  }
+}
+
+function advance(){
+  clearTimeout(restartTimer);
+
+  retrying=false;
+
+  if(recognizer&&listening){
+    try{
+      recognizer.stop();
+    }catch(error){}
+  }
+
+  stopListeningUI();
+
+  window.setTimeout(()=>{
+    index++;
+
+    if(index>=flatTurns.length){
+      showFinal();
+    }else{
+      loadTurn();
+    }
+  },350);
+}
+
+/* ---------------- Mikrofon ---------------- */
+
+function startListening(){
+  if(
+    !recognizer||
+    answered||
+    listening||
+    speaking||
+    promptStarting||
+    retrying
+  ){
+    return;
+  }
+
+  listening=true;
+
+  els.micBtnWrap.classList.add("listening");
+  els.micBtn.classList.add("listening");
+  els.micBtn.textContent="⏹️";
+  els.micStatus.textContent=
+    "🎙️ Ich höre zu … sprich jetzt!";
+  els.micStatus.classList.add("live");
+  els.liveTranscript.textContent="";
+
+  try{
+    recognizer.start();
+  }catch(error){
+    stopListeningUI();
+  }
+}
+
+function stopListeningUI(){
+  listening=false;
+
+  els.micBtnWrap.classList.remove("listening");
+  els.micBtn.classList.remove("listening");
+  els.micBtn.textContent="🎤";
+  els.micStatus.classList.remove("live");
+
+  if(
+    !answered&&
+    !speaking&&
+    !promptStarting&&
+    !retrying
+  ){
+    els.micStatus.textContent=
+      "Tippe, um erneut zu sprechen";
+  }
+}
+
+if(recognizer){
+
+  recognizer.onresult=event=>{
+    let finalText="";
+    let interimText="";
+
+    for(
+      let resultIndex=event.resultIndex;
+      resultIndex<event.results.length;
+      resultIndex++
+    ){
+      const transcript=
+        event.results[resultIndex][0].transcript;
+
+      if(event.results[resultIndex].isFinal){
+        finalText+=transcript;
+      }else{
+        interimText+=transcript;
+      }
+    }
+
+    els.liveTranscript.textContent=
+      finalText||interimText;
+
+    if(finalText){
+      evaluate(finalText);
+    }
+  };
+
+  recognizer.onerror=event=>{
+    stopListeningUI();
+
+    if(
+      event.error==="not-allowed"||
+      event.error==="service-not-allowed"
+    ){
+      els.micStatus.textContent=
+        "Mikrofonzugriff blockiert — bitte in den Browser-Einstellungen erlauben.";
+
+      return;
+    }
+
+    if(
+      !answered&&
+      !speaking&&
+      !promptStarting&&
+      !retrying
+    ){
+      clearTimeout(restartTimer);
+
+      restartTimer=
+        window.setTimeout(startListening,1200);
+    }
+  };
+
+  recognizer.onend=()=>{
+    stopListeningUI();
+  };
+}
+
+/* ---------------- Przyciski ---------------- */
+
+els.micBtn.addEventListener("click",()=>{
+  if(
+    speaking||
+    promptStarting||
+    retrying
+  ){
+    return;
+  }
+
+  if(listening){
+    try{
+      recognizer.stop();
+    }catch(error){}
+  }else{
+    startListening();
+  }
+});
+
+els.exampleBtn.addEventListener("click",()=>{
+  els.exampleText.classList.add("show");
+
+  els.exampleText.textContent=
+    `Beispiel: „${current().example}“`;
+});
+
+els.answerBtn.addEventListener("click",()=>{
+  els.exampleText.classList.add("show");
+
+  els.exampleText.textContent=
+    `Richtige Antwort: „${current().example}“`;
+});
+
+els.repeatBtn.addEventListener("click",()=>{
+  if(answered||promptStarting)return;
+
+  clearTimeout(restartTimer);
+  retrying=false;
+
+  playPromptThenListen();
+});
+
+els.stopBtn.addEventListener("click",()=>{
+  clearTimeout(restartTimer);
+
+  retrying=false;
+  promptStarting=false;
+
+  speechToken++;
+
+  if("speechSynthesis" in window){
+    speechSynthesis.cancel();
+  }
+
+  speaking=false;
+
+  if(recognizer&&listening){
+    try{
+      recognizer.stop();
+    }catch(error){}
+  }
+
+  stopListeningUI();
+
+  els.micStatus.textContent=
+    "⏸ Gestoppt — tippe auf 🎤, um weiterzumachen.";
+});
+
+els.skipBtn.addEventListener("click",()=>{
+  if(answered)return;
+
+  clearTimeout(restartTimer);
+
+  retrying=false;
+  streak=0;
+
+  updateStats();
+
+  addHistoryEntry(
+    "user",
+    "Du",
+    "(übersprungen)"
+  );
+
+  advance();
+});
+
+els.restartBtn.addEventListener("click",init);
+
+/* ---------------- Start und Ende ---------------- */
+
+function showFinal(){
+  renderProgress();
+
+  els.stage.style.display="none";
+  els.final.classList.add("show");
+
+  const total=flatTurns.length;
+  const percent=Math.round((score/total)*100);
+
+  let emoji;
+  let title;
+  let subtitle;
+
+  if(percent===100){
+    emoji="🏆";
+    title="Alle Dialoge perfekt!";
+    subtitle=
+      "Informell und formell — du beherrschst beide Register!";
+  }else if(percent>=70){
+    emoji="🎉";
+    title="Sehr gut!";
+    subtitle="Fast alle Antworten saßen.";
+  }else if(percent>=40){
+    emoji="💪";
+    title="Guter Anfang!";
+    subtitle=
+      "Übung macht den Meister — sprich die Dialoge noch einmal.";
+  }else{
+    emoji="📖";
+    title="Weiter üben!";
+    subtitle=
+      "Hör die Sätze noch einmal an und probiere es erneut.";
+  }
+
+  els.finalEmoji.textContent=emoji;
+  els.finalTitle.textContent=title;
+
+  els.finalSub.textContent=
+    `${subtitle} (${score}/${total} Punkte, beste Serie: ${bestStreak}🔥)`;
+
+  els.finalStars.textContent=
+    renderStars(score,total);
+}
+
+function init(){
+  index=0;
+  score=0;
+  streak=0;
+  bestStreak=0;
+  attempts=0;
+  answered=false;
+  promptStarting=false;
+  retrying=false;
+
+  clearTimeout(restartTimer);
+
+  if(recognizer&&listening){
+    try{
+      recognizer.stop();
+    }catch(error){}
+  }
+
+  stopListeningUI();
+  clearHistory();
+
+  els.stage.style.display="";
+  els.final.classList.remove("show");
+
+  updateStats();
+  loadTurn();
+}
+
+els.gateBtn.addEventListener("click",()=>{
+  if(!recognizer){
+    els.gateWarning.classList.add("show");
+    return;
+  }
+
+  els.gate.style.display="none";
+  els.layout.classList.add("show");
+
+  init();
+});
+
+if(!recognizer){
+  els.gateWarning.classList.add("show");
+}
+</script>
+
+</body>
+</html>
