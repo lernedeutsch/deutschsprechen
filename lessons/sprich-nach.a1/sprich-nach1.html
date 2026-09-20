@@ -149,11 +149,87 @@ button,input{font:inherit}
 }
 
 .panel{
+  position:relative;
   background:linear-gradient(180deg,#fff8eb 0%,#fff 16%,#fff 100%);
   border-radius:22px;
   box-shadow:var(--shadow);
   padding:clamp(16px,3vw,30px);
 }
+
+.translation-control{
+  position:absolute;
+  top:12px;
+  right:12px;
+  z-index:20;
+}
+.translation-toggle{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  min-height:32px;
+  padding:5px 10px;
+  color:#4c4028;
+  background:#fffdf6;
+  border:1px solid #d8c28c;
+  border-radius:999px;
+  font:800 .78rem "Nunito Sans",sans-serif;
+  cursor:pointer;
+  box-shadow:0 3px 8px rgba(0,0,0,.06);
+}
+.translation-toggle:hover,.translation-toggle:focus-visible{
+  background:#fff3c8;
+  border-color:#cf9f3f;
+}
+.translation-panel{
+  display:none;
+  position:absolute;
+  right:0;
+  top:38px;
+  width:250px;
+  padding:10px;
+  background:#fffdf7;
+  border:1px solid #d9c28e;
+  border-radius:12px;
+  box-shadow:0 12px 26px rgba(0,0,0,.18);
+}
+.translation-control:hover .translation-panel,
+.translation-control:focus-within .translation-panel,
+.translation-control.open .translation-panel{
+  display:block;
+}
+.translation-languages{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-bottom:8px;
+}
+.translation-language{
+  padding:5px 8px;
+  color:#26364b;
+  background:#f7f1e3;
+  border:1px solid #ddcfaa;
+  border-radius:999px;
+  font-size:.75rem;
+  font-weight:800;
+  cursor:pointer;
+}
+.translation-language:hover,.translation-language.active{
+  background:#e4f3e8;
+  border-color:#78bf95;
+  color:#28502f;
+}
+.translation-text{
+  display:none;
+  margin:0;
+  padding:9px 10px;
+  color:#26364b;
+  background:#fff7d8;
+  border-radius:9px;
+  font-size:.82rem;
+  line-height:1.4;
+  font-weight:700;
+}
+.translation-text.show{display:block}
 
 /* Progress */
 .progress-row{
@@ -512,7 +588,10 @@ button,input{font:inherit}
 }
 
 @media(max-width:560px){
-  .panel{border-radius:20px}
+  .panel{border-radius:20px;padding-top:54px}
+  .translation-toggle{width:34px;padding:5px 7px;font-size:0}
+  .translation-toggle .globe{font-size:1rem}
+  .translation-panel{width:min(250px,80vw)}
   .orb-wrap{width:120px;height:120px}
   .orb{width:86px;height:86px;font-size:28px}
   .btn-row{flex-direction:column}
@@ -548,6 +627,20 @@ button,input{font:inherit}
   </div>
 
   <div class="panel">
+
+    <div class="translation-control" id="translation-control">
+      <button type="button" class="translation-toggle" id="translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung">
+        <span class="globe">🌐</span><span>Übersetzung</span>
+      </button>
+      <div class="translation-panel">
+        <div class="translation-languages">
+          <button type="button" class="translation-language" data-lang="en">English</button>
+          <button type="button" class="translation-language" data-lang="pl">Polski</button>
+          <button type="button" class="translation-language" data-lang="it">Italiano</button>
+        </div>
+        <p class="translation-text" id="translation-text" aria-live="polite"></p>
+      </div>
+    </div>
 
     <!-- Start screen -->
     <div class="start-wrap" id="start-wrap">
@@ -1010,6 +1103,35 @@ function submitTyped(){
 sendBtn.addEventListener("click",submitTyped);
 textInput.addEventListener("keydown",(e)=>{
   if(e.key==="Enter")submitTyped();
+});
+
+const SPRICH_TRANSLATIONS={
+  en:"You hear a German sentence from Lesson 1, repeat it, and immediately see whether your sentence was recognized. Use “Repeat sentence”, “Next sentence”, “Stop” and “Continue” to control the exercise.",
+  pl:"Usłyszysz niemieckie zdanie z Lekcji 1, powtórzysz je i od razu zobaczysz, czy Twoje zdanie zostało rozpoznane. Użyj „Powtórz zdanie”, „Następne zdanie”, „Stop” i „Dalej”, aby sterować ćwiczeniem.",
+  it:"Ascolti una frase tedesca della Lezione 1, la ripeti e vedi subito se la tua frase è stata riconosciuta. Usa “Ripeti frase”, “Frase successiva”, “Stop” e “Continua” per controllare l’esercizio."
+};
+
+const translationControl=document.getElementById("translation-control");
+const translationToggle=document.getElementById("translation-toggle");
+const translationText=document.getElementById("translation-text");
+const translationButtons=[...document.querySelectorAll(".translation-language")];
+
+translationToggle.addEventListener("click",e=>{
+  e.stopPropagation();
+  translationControl.classList.toggle("open");
+});
+
+translationButtons.forEach(btn=>btn.addEventListener("click",e=>{
+  e.stopPropagation();
+  const lang=btn.dataset.lang;
+  translationButtons.forEach(x=>x.classList.toggle("active",x===btn));
+  translationText.textContent=SPRICH_TRANSLATIONS[lang];
+  translationText.classList.add("show");
+  translationControl.classList.add("open");
+}));
+
+document.addEventListener("click",e=>{
+  if(!e.target.closest(".translation-control"))translationControl.classList.remove("open");
 });
 
 updateProgress();
