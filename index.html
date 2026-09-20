@@ -126,10 +126,11 @@ body.intro-running{
     height:auto;
     display:block;
     pointer-events:none;
-    transform:scale(.30);
+    transform:scale(.30) translateZ(0);
     transform-origin:center center;
     will-change:transform;
-    animation:germanyApproach 5s cubic-bezier(.22,.61,.24,1) forwards;
+    backface-visibility:hidden;
+    animation:germanyApproach 5s ease-out forwards;
 }
 
 #intro-germany:hover{
@@ -204,28 +205,10 @@ body.intro-finished #intro-screen{
 
 @keyframes germanyApproach{
     0%{
-        transform:scale(.30);
-    }
-    20%{
-        transform:scale(.48);
-    }
-    40%{
-        transform:scale(.86);
-    }
-    60%{
-        transform:scale(1.55);
-    }
-    75%{
-        transform:scale(2.45);
-    }
-    88%{
-        transform:scale(3.45);
-    }
-    96%{
-        transform:scale(4.35);
+        transform:scale(.30) translateZ(0);
     }
     100%{
-        transform:scale(4.85);
+        transform:scale(4.85) translateZ(0);
     }
 }
 
