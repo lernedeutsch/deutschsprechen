@@ -393,6 +393,11 @@ button{font:inherit}
   font-weight:700;
 }
 .translation-text.show{display:block}
+.gate-translation-row{
+  display:flex;
+  justify-content:center;
+  margin:-6px 0 16px;
+}
 
 /* ---------- MIKROFON ---------- */
 
@@ -862,6 +867,22 @@ button{font:inherit}
       Aktiviere dein Mikrofon. Danach läuft alles automatisch:
       du hörst, das Mikrofon geht an, du antwortest.
     </p>
+
+    <div class="gate-translation-row">
+      <span class="translation-control" id="gate-translation-control">
+        <button type="button" class="translation-toggle" id="gate-translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung">
+          🌐 Übersetzung
+        </button>
+        <span class="translation-panel">
+          <span class="translation-languages">
+            <button type="button" class="translation-language gate-translation-language" data-lang="en">English</button>
+            <button type="button" class="translation-language gate-translation-language" data-lang="pl">Polski</button>
+            <button type="button" class="translation-language gate-translation-language" data-lang="it">Italiano</button>
+          </span>
+          <span class="translation-text" id="gate-translation-text" aria-live="polite"></span>
+        </span>
+      </span>
+    </div>
 
     <button type="button" class="gate-btn" id="gate-btn">
       🎤 Mikrofon aktivieren &amp; starten
@@ -1921,6 +1942,30 @@ els.micBtn.addEventListener("click",()=>{
   }
 });
 
+const gateTranslationControl=document.getElementById("gate-translation-control");
+const gateTranslationToggle=document.getElementById("gate-translation-toggle");
+const gateTranslationText=document.getElementById("gate-translation-text");
+const gateTranslationButtons=[...document.querySelectorAll(".gate-translation-language")];
+const gateTranslations={
+  en:"Activate your microphone. Then everything runs automatically: you listen, the microphone turns on, and you answer.",
+  pl:"Włącz mikrofon. Potem wszystko działa automatycznie: słuchasz, mikrofon włącza się i odpowiadasz.",
+  it:"Attiva il microfono. Poi tutto funziona automaticamente: ascolti, il microfono si attiva e rispondi."
+};
+
+gateTranslationToggle.addEventListener("click",event=>{
+  event.stopPropagation();
+  gateTranslationControl.classList.toggle("open");
+});
+
+gateTranslationButtons.forEach(button=>button.addEventListener("click",event=>{
+  event.stopPropagation();
+  const lang=button.dataset.lang;
+  gateTranslationButtons.forEach(item=>item.classList.toggle("active",item===button));
+  gateTranslationText.textContent=gateTranslations[lang];
+  gateTranslationText.classList.add("show");
+  gateTranslationControl.classList.add("open");
+}));
+
 const instructionTranslations={
   "Antworte auf die Begrüßung.":{
     en:"Respond to the greeting.",
@@ -1978,6 +2023,7 @@ els.translationButtons.forEach(button=>button.addEventListener("click",event=>{
 document.addEventListener("click",event=>{
   if(!event.target.closest(".translation-control")){
     els.translationControl.classList.remove("open");
+    gateTranslationControl.classList.remove("open");
   }
 });
 
