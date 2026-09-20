@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Dyktando A1 — Begrüßung &amp; Vorstellung</title>
+<title>Diktat A1 — Begrüßung &amp; Vorstellung</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,6 +45,29 @@ body{
 
 button,textarea{font:inherit}
 
+.top-back{
+  max-width:760px;
+  margin:18px auto 0;
+  padding:0 18px;
+}
+.back-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:7px 13px;
+  color:#1d3557;
+  background:#fff;
+  border:1px solid #dce3ed;
+  border-radius:999px;
+  text-decoration:none;
+  font:800 .86rem "Nunito Sans",sans-serif;
+  box-shadow:0 5px 14px rgba(0,0,0,.18);
+}
+.back-btn:hover{
+  border-color:var(--gold);
+  transform:translateY(-1px);
+}
+
 .shell{
   max-width:760px;
   margin:0 auto;
@@ -83,6 +106,79 @@ button,textarea{font:inherit}
   color:#c7d7ea;
   font-size:1.05rem;
 }
+
+.hero-translation{
+  display:flex;
+  justify-content:center;
+  margin-top:10px;
+  position:relative;
+}
+.translation-toggle{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:4px 9px;
+  color:#4c4028;
+  background:#fffdf6;
+  border:1px solid #d8c28c;
+  border-radius:999px;
+  cursor:pointer;
+  font:800 .75rem "Nunito Sans",sans-serif;
+}
+.translation-toggle:hover,.translation-toggle:focus-visible{
+  background:#fff3c8;
+  border-color:#cf9f3f;
+}
+.translation-panel{
+  display:none;
+  position:absolute;
+  top:36px;
+  z-index:30;
+  width:250px;
+  padding:9px;
+  background:#fffdf7;
+  border:1px solid #d9c28e;
+  border-radius:12px;
+  box-shadow:0 12px 25px rgba(0,0,0,.18);
+}
+.hero-translation.open .translation-panel,
+.hero-translation:hover .translation-panel,
+.hero-translation:focus-within .translation-panel{
+  display:block;
+}
+.translation-languages{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  margin-bottom:7px;
+}
+.translation-language{
+  padding:4px 7px;
+  color:#26364b;
+  background:#f7f1e3;
+  border:1px solid #ddcfaa;
+  border-radius:999px;
+  cursor:pointer;
+  font-size:.7rem;
+  font-weight:800;
+}
+.translation-language.active{
+  background:#e4f3e8;
+  border-color:#78bf95;
+  color:#28502f;
+}
+.translation-text{
+  display:none;
+  margin:0;
+  padding:7px 8px;
+  color:#26364b;
+  background:#fff7d8;
+  border-radius:8px;
+  font-size:.76rem;
+  line-height:1.35;
+  font-weight:700;
+}
+.translation-text.show{display:block}
 
 .waveform{
   display:flex;
@@ -390,17 +486,35 @@ button,textarea{font:inherit}
 </head>
 <body>
 
+<div class="top-back">
+  <a href="../a1/lektion-1.html" class="back-btn">← A1-1</a>
+</div>
+
 <div class="shell">
 
   <header class="hero">
 
-    <span class="hero-badge">A1 · Dyktando</span>
+    <span class="hero-badge">A1 · Diktat</span>
 
     <h1>Hör zu. Schreib. Weiter geht's.</h1>
     <p>
       Zehn Sätze aus „Begrüßung &amp; Vorstellung“. Schreib, was du hörst —
       bei einem richtigen Satz geht es automatisch weiter.
     </p>
+
+    <div class="hero-translation" id="hero-translation">
+      <button type="button" class="translation-toggle" id="translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung">
+        🌐 Übersetzung
+      </button>
+      <div class="translation-panel">
+        <div class="translation-languages">
+          <button type="button" class="translation-language" data-lang="en">English</button>
+          <button type="button" class="translation-language" data-lang="pl">Polski</button>
+          <button type="button" class="translation-language" data-lang="it">Italiano</button>
+        </div>
+        <p class="translation-text" id="translation-text" aria-live="polite"></p>
+      </div>
+    </div>
 
     <div class="waveform" id="waveform">
       <span></span><span></span><span></span><span></span>
@@ -879,6 +993,34 @@ els.input.addEventListener("keydown",event=>{
     clearTimeout(debounceTimer);
     runCheck();
   }
+});
+
+const heroTranslation=document.getElementById("hero-translation");
+const translationToggle=document.getElementById("translation-toggle");
+const translationText=document.getElementById("translation-text");
+const translationButtons=[...document.querySelectorAll(".translation-language")];
+const startTranslations={
+  en:"Ten sentences from “Greetings & Introduction”. Write what you hear — when the sentence is correct, the exercise continues automatically.",
+  pl:"Dziesięć zdań z „Powitania i przedstawiania się”. Napisz to, co słyszysz — gdy zdanie jest poprawne, ćwiczenie przechodzi dalej automatycznie.",
+  it:"Dieci frasi da “Saluti e presentazione”. Scrivi ciò che senti — quando la frase è corretta, l’esercizio continua automaticamente."
+};
+
+translationToggle.addEventListener("click",event=>{
+  event.stopPropagation();
+  heroTranslation.classList.toggle("open");
+});
+
+translationButtons.forEach(button=>button.addEventListener("click",event=>{
+  event.stopPropagation();
+  const lang=button.dataset.lang;
+  translationButtons.forEach(item=>item.classList.toggle("active",item===button));
+  translationText.textContent=startTranslations[lang];
+  translationText.classList.add("show");
+  heroTranslation.classList.add("open");
+}));
+
+document.addEventListener("click",event=>{
+  if(!event.target.closest("#hero-translation"))heroTranslation.classList.remove("open");
 });
 
 init();
