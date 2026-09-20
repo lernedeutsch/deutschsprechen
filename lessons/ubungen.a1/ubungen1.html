@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Übung-A1 — Lektion 12: Hobbys und Freizeit</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Nunito+Sans:opsz,wght@6..12,400,600,700,800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#20324a;
+  --bg-soft:#27405c;
+  --paper:#fbf6ec;
+  --ink:#23332e;
+  --chalk:#1d2b39;
+  --gold:#f4c95d;
+  --green:#8bd17c;
+  --blue:#72b8ff;
+  --pink:#f08bb4;
+  --orange:#f29f67;
+  --line:rgba(35,51,46,.18);
+  --text:#111820;
+  --text-light:#2a3b50;
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body{
+  margin:0;
+  background:var(--bg);
+  background-image:
+    radial-gradient(circle at 12% 10%,rgba(255,255,255,.05),transparent 35%),
+    radial-gradient(circle at 88% 90%,rgba(255,255,255,.05),transparent 40%);
+  color:var(--text);
+  font-family:"Nunito Sans",sans-serif;
+  line-height:1.6;
+  padding:0 0 60px;
+}
+
+.top-bar{
+  max-width:880px;
+  margin:20px auto 0;
+  padding:0 20px;
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+.back-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  background:#fff;
+  color:#1d3557;
+  border:2px solid #dce3ed;
+  border-radius:999px;
+  padding:20px 40px;
+  font-weight:800;
+  font-size:1.4rem;
+  cursor:pointer;
+  text-decoration:none;
+  transition:transform .15s ease,filter .15s ease,background .15s ease,border-color .15s ease;
+  box-shadow:0 6px 18px rgba(0,0,0,.25);
+}
+
+.back-btn:hover{
+  transform:translateY(-3px);
+  filter:brightness(1.05);
+  background:#f9fbff;
+  border-color:#f4c95d;
+  box-shadow:0 8px 22px rgba(0,0,0,.3);
+}
+
+.wrap{
+  max-width:980px;
+  margin:0 auto;
+  padding:32px 20px 0;
+}
+
+header.hero{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:28px;
+  padding:24px 0 36px;
+  border-bottom:2px dashed rgba(35,51,46,.18);
+  margin-bottom:36px;
+}
+
+.hero-text{flex:1 1 340px;}
+
+.eyebrow{
+  font-family:"JetBrains Mono",monospace;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  font-size:.78rem;
+  color:#f4c95d;
+  margin:0 0 10px;
+}
+
+h1.lesson-title{
+  font-family:"Kalam",cursive;
+  font-weight:700;
+  font-size:2.7rem;
+  line-height:1.12;
+  margin:0 0 14px;
+  color:#111820;
+}
+
+.hero-text p{
+  margin:0;
+  color:#2a3b50;
+  max-width:52ch;
+}
+
+.part{margin:34px 0 42px;}
+
+.part-head{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:baseline;
+  gap:12px;
+  margin-bottom:14px;
+}
+
+.part-num{
+  font-family:"JetBrains Mono",monospace;
+  font-size:.82rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:#f4c95d;
+}
+
+.part-title{
+  font-family:"Kalam",cursive;
+  font-size:2rem;
+  margin:0;
+  color:#111820;
+}
+
+.card{
+  background:#f7f9fc;
+  border:1px solid #dce3ed;
+  border-radius:22px;
+  padding:22px 22px 20px;
+  box-shadow:0 12px 30px rgba(0,0,0,.06);
+  margin-top:14px;
+}
+
+.lead{
+  font-size:1.04rem;
+  color:#111820;
+}
+
+.exercise-list{
+  padding-left:18px;
+  margin-top:16px;
+}
+
+.exercise-list li{
+  margin:14px 0;
+  font-size:1.05rem;
+  color:#111820;
+}
+
+input[type="text"]{
+  background:#f9fbff;
+  color:#1d2b39;
+  border:1px solid #dce3ed;
+  border-radius:12px;
+  padding:9px 12px;
+  font:inherit;
+  font-size:1rem;
+  min-width:150px;
+  vertical-align:middle;
+}
+
+.feedback{
+  display:inline-block;
+  min-width:22px;
+  font-weight:800;
+  margin-left:8px;
+  font-size:1.2rem;
+}
+
+.ok{color:#2e7d32;}
+.no{color:#c62828;}
+
+.check-btn{
+  margin-top:16px;
+  background:linear-gradient(135deg,#f4c95d,#ffd976);
+  color:#1d2b39;
+  border:0;
+  border-radius:999px;
+  padding:14px 28px;
+  font-weight:800;
+  font-size:1.1rem;
+  cursor:pointer;
+}
+
+.check-btn:hover{filter:brightness(1.03);}
+
+.exercise-result{
+  margin-top:14px;
+  font-weight:700;
+  color:#111820;
+  font-size:1.1rem;
+}
+
+.quiz-q{
+  background:#fff;
+  border:1px solid #dce3ed;
+  border-radius:16px;
+  padding:16px;
+  margin:16px 0;
+}
+
+.quiz-q p{
+  margin:0 0 12px;
+  font-size:1.1rem;
+  color:#111820;
+  font-weight:600;
+}
+
+.quiz-options{
+  display:grid;
+  gap:10px;
+}
+
+.quiz-options label{
+  display:block;
+  background:#f9fbff;
+  border-radius:12px;
+  padding:12px 14px;
+  border:1px solid #dce3ed;
+  color:#111820;
+  cursor:pointer;
+  transition:background .15s ease,border-color .15s ease;
+}
+
+.quiz-options label:hover{
+  background:#f0f4f8;
+  border-color:#72b8ff;
+}
+
+.quiz-options label.correct{
+  border-color:#2e7d32;
+  background:#e8f9e8;
+}
+
+.quiz-options label.incorrect{
+  border-color:#c62828;
+  background:#f9e8e8;
+}
+
+.quiz-options input[type="radio"]{margin-right:8px;}
+
+.matching-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+  margin-top:16px;
+}
+
+.matching-item{
+  background:#fff;
+  border:1px solid #dce3ed;
+  border-radius:12px;
+  padding:14px;
+  cursor:pointer;
+  transition:background .15s ease,border-color .15s ease;
+  color:#111820;
+  font-size:1.05rem;
+}
+
+.matching-item:hover{
+  background:#f0f4f8;
+  border-color:#72b8ff;
+}
+
+.matching-item.selected{
+  background:#e8f3ff;
+  border-color:#72b8ff;
+}
+
+.matching-item.matched{
+  background:#e8f9e8;
+  border-color:#2e7d32;
+}
+
+.sentence-grid{
+  display:grid;
+  gap:12px;
+  margin-top:16px;
+}
+
+.sentence-item{
+  background:#fff;
+  border:1px solid #dce3ed;
+  border-radius:12px;
+  padding:14px;
+  color:#111820;
+  font-size:1.05rem;
+}
+
+.sentence-item .answer{
+  display:inline-block;
+  background:#f0f4f8;
+  border:1px solid #72b8ff;
+  border-radius:8px;
+  padding:4px 10px;
+  margin-left:8px;
+  font-weight:600;
+}
+
+.lesson-nav{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+  border-top:2px dashed rgba(35,51,46,.18);
+  padding-top:24px;
+  margin-top:30px;
+  font-family:"JetBrains Mono",monospace;
+  font-size:.9rem;
+}
+
+.lesson-nav a{
+  color:#111820;
+  text-decoration:none;
+  border:1px solid #dce3ed;
+  border-radius:999px;
+  padding:10px 20px;
+  transition:background .15s ease,border-color .15s ease;
+  background:#fff;
+  font-weight:600;
+}
+
+.lesson-nav a:hover{
+  background:#f0f4f8;
+  border-color:#f4c95d;
+  color:#0a1220;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible{
+  outline:3px solid #f4c95d;
+  outline-offset:2px;
+}
+
+@media (max-width:720px){
+  h1.lesson-title{font-size:2.2rem;}
+  .part-title{font-size:1.7rem;}
+  .matching-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+
+<body id="top">
+
+<div class="top-bar">
+  <a href="A1.html#lektion1" class="back-btn">← Powrót do lekcji</a>
+</div>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="hero-text">
+      <p class="eyebrow">Deutschkurs A1 · Übung zu Lektion 1</p>
+      <h1 class="lesson-title">Übung — Guten Tag! — Begrüßung und Vorstellung</h1>
+    </div>
+  </header>
+
+  <!-- ÜBUNG 1 — Lektion 1 -->
+  <section class="part" id="übung1">
+    <div class="part-head">
+      <span class="part-num">Übung 1</span>
+      <h2 class="part-title">Welcher Gruß? Ergänzen Sie!</h2>
+    </div>
+
+    <div class="card">
+      <p class="lead">Schreiben Sie den richtigen Gruß in die Lücke.</p>
+
+      <ul class="exercise-list" id="ex1_1">
+        <li>
+          <input type="text" data-answer="guten morgen">!
+          (morgens, 7:00 Uhr)
+          <span class="feedback"></span>
+        </li>
+
+        <li>
+          <input type="text" data-answer="guten tag">!
+          (tagsüber, 14:00 Uhr)
+          <span class="feedback"></span>
+        </li>
+
+        <li>
+          <input type="text" data-answer="guten abend">!
+          (abends, 19:00 Uhr)
+          <span class="feedback"></span>
+        </li>
+
+        <li>
+          <input type="text" data-answer="hallo">!
+          (informell, zu jeder Zeit)
+          <span class="feedback"></span>
+        </li>
+
+        <li>
+          <input type="text" data-answer="tschüss">!
+          (beim Abschied)
+          <span class="feedback"></span>
+        </li>
+      </ul>
+
+      <button class="check-btn" onclick="checkExercise('ex1_1')">
+        Antworten prüfen ✓
+      </button>
+
+      <div class="exercise-result" id="ex1_1-result"></div>
+    </div>
+  </section>
+
+  <!-- ÜBUNG 2 — Lektion 1 -->
+  <section class="part" id="übung1_2">
+    <div class="part-head">
+      <span class="part-num">Übung 2</span>
+      <h2 class="part-title">Wie heißen Sie? Ergänzen Sie!</h2>
+    </div>
+
+    <div class="card">
+      <p class="lead">Schreiben Sie das richtige Wort in die Lücke.</p>
+
+      <ul class="exercise-list" id="ex1_2">
+        <li>
+          Hallo! Wie
+          <input type="text" data-answer="heist">
+          du?
+          <span class="feedback"></span>
+        </li>
+
+        <li>
+          Ich
+          <input type="text" data-answer="heiße">
+          Lena.
+          <span class="feedback"></span>
+        </li>
+
+        <li>
+          Guten Tag! Wie heißen
+          <input type="text" data-answer="sie">?
+          <span class="feedback"></span>
+        </li>
+
+        <li>
+          Ich
+          <input type="text" data-answer="heiße">
+          Thomas.
+          <span class="feedback"></span>
+        </li>
+
+        <li>
+          Mein
+          <input type="text" data-answer="name">
+          ist Anna Müller.
+          <span class="feedback"></span>
+        </li>
+      </ul>
+
+      <button class="check-btn" onclick="checkExercise('ex1_2')">
+        Antworten prüfen ✓
+      </button>
+
+      <div class="exercise-result" id="ex1_2-result"></div>
+    </div>
+  </section>
+
+  <!-- ÜBUNG 3 — Lektion 1 -->
+  <section class="part" id="übung1_3">
+    <div class="part-head">
+      <span class="part-num">Übung 3</span>
+      <h2 class="part-title">Was ist richtig? Wählen Sie</h2>
+    </div>
+
+    <div class="card">
+      <p class="lead">Klicken Sie auf die richtige Antwort.</p>
+
+      <div class="quiz-q" data-correct="0">
+        <p>1. _____! (morgens, 8:00 Uhr)</p>
+
+        <div class="quiz-options">
+          <label>
+            <input type="radio" name="q1_1" value="0">
+            Guten Morgen!
+          </label>
+
+          <label>
+            <input type="radio" name="q1_1" value="1">
+            Guten Abend!
+          </label>
+
+          <label>
+            <input type="radio" name="q1_1" value="2">
+            Tschüss!
+          </label>
+        </div>
+      </div>
+
+      <div class="quiz-q" data-correct="1">
+        <p>2. _____! (tagsüber, 15:00 Uhr)</p>
+
+        <div class="quiz-options">
+          <label>
+            <input type="radio" name="q1_2" value="0">
+            Guten Morgen!
+          </label>
+
+          <label>
+            <input type="radio" name="q1_2" value="1">
+            Guten Tag!
+          </label>
+
+          <label>
+            <input type="radio" name="q1_2" value="2">
+            Hallo!
+          </label>
+        </div>
+      </div>
+
+      <div class="quiz-q" data-correct="2">
+        <p>3. _____! (beim Abschied)</p>
+
+        <div class="quiz-options">
+          <label>
+            <input type="radio" name="q1_3" value="0">
+            Guten Tag!
+          </label>
+
+          <label>
+            <input type="radio" name="q1_3" value="1">
+            Guten Morgen!
+          </label>
+
+          <label>
+            <input type="radio" name="q1_3" value="2">
+            Tschüss!
+          </label>
+        </div>
+      </div>
+
+      <div class="quiz-q" data-correct="0">
+        <p>4. Hallo! Wie _____ du?</p>
+
+        <div class="quiz-options">
+          <label>
+            <input type="radio" name="q1_4" value="0">
+            heißt
+          </label>
+
+          <label>
+            <input type="radio" name="q1_4" value="1">
+            heißen
+          </label>
+
+          <label>
+            <input type="radio" name="q1_4" value="2">
+            ist
+          </label>
+        </div>
+      </div>
+
+      <div class="quiz-q" data-correct="1">
+        <p>5. Ich _____ Anna.</p>
+
+        <div class="quiz-options">
+          <label>
+            <input type="radio" name="q1_5" value="0">
+            ist
+          </label>
+
+          <label>
+            <input type="radio" name="q1_5" value="1">
+            heiße
+          </label>
+
+          <label>
+            <input type="radio" name="q1_5" value="2">
+            bist
+          </label>
+        </div>
+      </div>
+
+      <button class="check-btn" onclick="checkQuiz1()">
+        Quiz auswerten
+      </button>
+
+      <div class="exercise-result" id="quiz1-result"></div>
+    </div>
+  </section>
+
+  <!-- ÜBUNG 4 — Lektion 1 -->
+  <section class="part" id="übung1_4">
+    <div class="part-head">
+      <span class="part-num">Übung 4</span>
+      <h2 class="part-title">Stellen Sie sich vor!</h2>
+    </div>
+
+    <div class="card">
+      <p class="lead">Schreiben Sie vollständige Sätze.</p>
+
+      <div class="sentence-grid">
+        <div class="sentence-item">
+          1. Hallo! Ich heiße _____ . (twoje imię)
+        </div>
+
+        <div class="sentence-item">
+          2. Mein Name ist _____ . (twoje pełne imię)
+        </div>
+
+        <div class="sentence-item">
+          3. Guten Tag! Wie _____ Sie? (heißen / heißt)
+        </div>
+
+        <div class="sentence-item">
+          4. Ich _____ Thomas. (heiße / ist / bist)
+        </div>
+
+        <div class="sentence-item">
+          5. _____! (beim Abschied) (Tschüss / Guten Tag / Guten Morgen)
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ÜBUNG 5 — Lektion 1 -->
+  <section class="part" id="übung1_5">
+    <div class="part-head">
+      <span class="part-num">Übung 5</span>
+      <h2 class="part-title">Alphabet — Buchstabieren</h2>
+    </div>
+
+    <div class="card">
+      <p class="lead">
+        Buchstabieren Sie Ihren Namen. Schreiben Sie die Buchstaben.
+      </p>
+
+      <ul class="exercise-list" id="ex1_5">
+        <li>
+          Anna → A –
+          <input type="text" data-answer="n" style="width:50px;"> –
+          <input type="text" data-answer="n" style="width:50px;"> – A
+          <span class="feedback"></span>
+        </li>
+
+        <li>
+          Thomas → T – H – O –
+          <input type="text" data-answer="m" style="width:50px;"> –
+          <input type="text" data-answer="a" style="width:50px;"> – S
+          <span class="feedback"></span>
+        </li>
+
+        <li>
+          Julia →
+          <input type="text" data-answer="j" style="width:50px;"> –
+          U – L –
+          <input type="text" data-answer="i" style="width:50px;"> – A
+          <span class="feedback"></span>
+        </li>
+
+        <li>
+          Maria →
+          <input type="text" data-answer="m" style="width:50px;"> –
+          A – R –
+          <input type="text" data-answer="i" style="width:50px;"> – A
+          <span class="feedback"></span>
+        </li>
+      </ul>
+
+      <button class="check-btn" onclick="checkExercise('ex1_5')">
+        Antworten prüfen ✓
+      </button>
+
+      <div class="exercise-result" id="ex1_5-result"></div>
+    </div>
+  </section>
+
+  <div class="top-bar">
+    <a href="A1.html#lektion1" class="back-btn">← Powrót do lekcji</a>
+  </div>
+
+  <nav class="lesson-nav">
+    <a href="#top">Nach oben ↑</a>
+    <a href="#übung1">Übung 1</a>
+    <a href="#übung1_2">Übung 2</a>
+    <a href="#übung1_3">Übung 3</a>
+    <a href="#übung1_4">Übung 4</a>
+    <a href="#übung1_5">Übung 5</a>
+  </nav>
+
+</div>
+
+<script>
+function normalize(str){
+  return str
+    .trim()
+    .toLowerCase()
+    .replace(/ß/g,"ss")
+    .replace(/[.!?]/g,"")
+    .replace(/ä/g,"a")
+    .replace(/ö/g,"o")
+    .replace(/ü/g,"u");
+}
+
+function checkExercise(exId){
+  const list=document.getElementById(exId);
+  const inputs=list.querySelectorAll('input[type="text"]');
+  let correct=0;
+
+  inputs.forEach(input=>{
+    const feedback=input.nextElementSibling;
+    const accepted=input.dataset.answer.split(",").map(normalize);
+    const value=normalize(input.value);
+
+    if(accepted.includes(value)){
+      feedback.textContent="✓";
+      feedback.className="feedback ok";
+      correct++;
+    }else{
+      feedback.textContent="✗";
+      feedback.className="feedback no";
+    }
+  });
+
+  const result=document.getElementById(exId+"-result");
+  result.textContent=`${correct} / ${inputs.length} richtig.`;
+  result.textContent+=correct<inputs.length
+    ? " Versuchen Sie es noch einmal."
+    : " Super! 🎉";
+}
+
+function checkQuiz1(){
+  const questions=document.querySelectorAll("#übung1_3 .quiz-q");
+  let correct=0;
+  let answered=0;
+
+  questions.forEach(q=>{
+    const correctIndex=q.dataset.correct;
+    const labels=q.querySelectorAll(".quiz-options label");
+    const selected=q.querySelector('input[type="radio"]:checked');
+
+    labels.forEach(label=>{
+      label.classList.remove("correct","incorrect");
+    });
+
+    if(selected){
+      answered++;
+      const chosenLabel=selected.closest("label");
+
+      if(selected.value===correctIndex){
+        chosenLabel.classList.add("correct");
+        correct++;
+      }else{
+        chosenLabel.classList.add("incorrect");
+        labels[Number(correctIndex)].classList.add("correct");
+      }
+    }else{
+      labels[Number(correctIndex)].classList.add("correct");
+    }
+  });
+
+  const result=document.getElementById("quiz1-result");
+
+  result.textContent=answered<questions.length
+    ? `Bitte beantworten Sie alle Fragen. (${answered}/${questions.length} beantwortet)`
+    : `Ergebnis: ${correct} / ${questions.length} richtig.`;
+
+  if(answered===questions.length&&correct===questions.length){
+    result.textContent+=" Ausgezeichnet! 🎉";
+  }
+}
+
+let selected=null;
+let matches=0;
+</script>
+
+</body>
+</html>
