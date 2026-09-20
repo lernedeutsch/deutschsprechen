@@ -64,9 +64,10 @@ body.intro-running{
 #intro-world{
     position:absolute;
     inset:0;
-    transform-origin:48.5% 31%;
+    transform:scale(.88);
+    transform-origin:center center;
     will-change:transform;
-    animation:earthApproach 18s cubic-bezier(.16,.7,.22,1) forwards;
+    animation:earthApproach 5s ease-out forwards;
 }
 
 #intro-earth{
@@ -162,10 +163,10 @@ body.intro-finished #intro-screen{
 
 @keyframes earthApproach{
     0%{
-        transform:scale(.94);
+        transform:scale(.88);
     }
     100%{
-        transform:scale(1.55);
+        transform:scale(1.28);
     }
 }
 
@@ -221,10 +222,6 @@ body.intro-finished #intro-screen{
         top:29%;
         left:45%;
         width:clamp(58px,16vw,88px);
-    }
-
-    #intro-world{
-        transform-origin:49% 32%;
     }
 
     #site-shell{
