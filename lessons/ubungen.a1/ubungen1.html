@@ -59,9 +59,9 @@ body{
   color:#1d3557;
   border:2px solid #dce3ed;
   border-radius:999px;
-  padding:20px 40px;
+  padding:8px 15px;
   font-weight:800;
-  font-size:1.4rem;
+  font-size:.9rem;
   cursor:pointer;
   text-decoration:none;
   transition:transform .15s ease,filter .15s ease,background .15s ease,border-color .15s ease;
@@ -211,6 +211,33 @@ input[type="text"]{
   color:#111820;
   font-size:1.1rem;
 }
+
+.course-progress{
+  display:inline-flex;
+  align-items:center;
+  margin-top:14px;
+  padding:7px 12px;
+  color:#fff;
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:999px;
+  font:700 .82rem "JetBrains Mono",monospace;
+}
+
+.exercise-done{
+  display:none;
+  width:max-content;
+  margin-top:10px;
+  padding:5px 9px;
+  color:#245b2c;
+  background:#e8f9e8;
+  border:1px solid #8bd17c;
+  border-radius:999px;
+  font-size:.82rem;
+  font-weight:800;
+}
+
+.exercise-done.show{display:block;}
 
 .quiz-q{
   background:#fff;
@@ -365,7 +392,7 @@ input:focus-visible{
 <body id="top">
 
 <div class="top-bar">
-  <a href="../a1/lektion-1.html" class="back-btn">← Zurück zur Lektion</a>
+  <a href="../a1/lektion-1.html" class="back-btn">← A1-1</a>
 </div>
 
 <div class="wrap">
@@ -374,6 +401,7 @@ input:focus-visible{
     <div class="hero-text">
       <p class="eyebrow">Deutschkurs A1 · Übung zu Lektion 1</p>
       <h1 class="lesson-title">Übungen — Guten Tag! — Begrüßung und Vorstellung</h1>
+      <div class="course-progress" id="exercise-progress-count">0 / 5 Übungen geschafft</div>
     </div>
   </header>
 
@@ -385,7 +413,7 @@ input:focus-visible{
     </div>
 
     <div class="card">
-      <p class="lead">Schreib den richtigen Gruß in die Lücke.</p>
+      <p class="lead">✏️ Schreib den richtigen Gruß in die Lücke.</p>
 
       <ul class="exercise-list" id="ex1_1">
         <li>
@@ -424,6 +452,7 @@ input:focus-visible{
       </button>
 
       <div class="exercise-result" id="ex1_1-result"></div>
+      <div class="exercise-done" id="done-ex1_1">✅ Übung geschafft</div>
     </div>
   </section>
 
@@ -435,7 +464,7 @@ input:focus-visible{
     </div>
 
     <div class="card">
-      <p class="lead">Schreib das richtige Wort in die Lücke.</p>
+      <p class="lead">✏️ Schreib das richtige Wort in die Lücke.</p>
 
       <ul class="exercise-list" id="ex1_2">
         <li>
@@ -478,6 +507,7 @@ input:focus-visible{
       </button>
 
       <div class="exercise-result" id="ex1_2-result"></div>
+      <div class="exercise-done" id="done-ex1_2">✅ Übung geschafft</div>
     </div>
   </section>
 
@@ -489,7 +519,7 @@ input:focus-visible{
     </div>
 
     <div class="card">
-      <p class="lead">Klick auf die richtige Antwort.</p>
+      <p class="lead">👆 Klick auf die richtige Antwort.</p>
 
       <div class="quiz-q" data-correct="0">
         <p>1. _____! (morgens, 8:00 Uhr)</p>
@@ -601,6 +631,7 @@ input:focus-visible{
       </button>
 
       <div class="exercise-result" id="quiz1-result"></div>
+      <div class="exercise-done" id="done-quiz1">✅ Übung geschafft</div>
     </div>
   </section>
 
@@ -612,7 +643,7 @@ input:focus-visible{
     </div>
 
     <div class="card">
-      <p class="lead">Schreib vollständige Sätze.</p>
+      <p class="lead">✏️ Ergänze die Sätze.</p>
 
       <div class="sentence-grid" id="ex1_4">
         <div class="sentence-item">
@@ -654,6 +685,7 @@ input:focus-visible{
       </button>
 
       <div class="exercise-result" id="ex1_4-result"></div>
+      <div class="exercise-done" id="done-ex1_4">✅ Übung geschafft</div>
     </div>
   </section>
 
@@ -666,7 +698,7 @@ input:focus-visible{
 
     <div class="card">
       <p class="lead">
-        Ergänze die fehlenden Buchstaben.
+        ✏️ Ergänze die fehlenden Buchstaben.
       </p>
 
       <ul class="exercise-list" id="ex1_5">
@@ -706,11 +738,12 @@ input:focus-visible{
       </button>
 
       <div class="exercise-result" id="ex1_5-result"></div>
+      <div class="exercise-done" id="done-ex1_5">✅ Übung geschafft</div>
     </div>
   </section>
 
   <div class="top-bar">
-    <a href="../a1/lektion-1.html" class="back-btn">← Zurück zur Lektion</a>
+    <a href="../a1/lektion-1.html" class="back-btn">← A1-1</a>
   </div>
 
   <nav class="lesson-nav">
@@ -734,6 +767,17 @@ function normalize(str){
     .replace(/ä/g,"a")
     .replace(/ö/g,"o")
     .replace(/ü/g,"u");
+}
+
+const completedExercises=new Set();
+
+function markExerciseDone(key){
+  if(completedExercises.has(key))return;
+  completedExercises.add(key);
+  const badge=document.getElementById("done-"+key);
+  if(badge)badge.classList.add("show");
+  const progress=document.getElementById("exercise-progress-count");
+  if(progress)progress.textContent=completedExercises.size+" / 5 Übungen geschafft";
 }
 
 function checkExercise(exId){
@@ -769,6 +813,7 @@ function checkExercise(exId){
   result.textContent+=correct<total
     ? " Versuch es noch einmal."
     : " Super! 🎉";
+  if(correct===total&&total>0)markExerciseDone(exId);
 }
 
 function checkExerciseFlexible(exId){
@@ -800,6 +845,7 @@ function checkExerciseFlexible(exId){
   result.textContent+=correct<inputs.length
     ? " Versuch es noch einmal."
     : " Super! 🎉";
+  if(correct===inputs.length&&inputs.length>0)markExerciseDone(exId);
 }
 
 function checkQuiz1(){
@@ -840,6 +886,7 @@ function checkQuiz1(){
 
   if(answered===questions.length&&correct===questions.length){
     result.textContent+=" Ausgezeichnet! 🎉";
+    markExerciseDone("quiz1");
   }
 }
 
