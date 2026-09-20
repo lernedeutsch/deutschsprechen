@@ -130,8 +130,8 @@ body.intro-running{
     transform-origin:center center;
     will-change:transform;
     animation:
-        germanyApproach 5s ease-out forwards,
-        germanyPulse 2.8s ease-in-out 5s infinite;
+        germanyApproach 5s cubic-bezier(.18,.72,.22,1) forwards,
+        germanyPulse 3s ease-in-out 5s infinite;
 }
 
 #intro-germany:hover{
@@ -208,11 +208,20 @@ body.intro-finished #intro-screen{
     0%{
         transform:scale(.30);
     }
-    35%{
-        transform:scale(.50);
+    30%{
+        transform:scale(.46);
     }
-    70%{
-        transform:scale(.86);
+    58%{
+        transform:scale(.72);
+    }
+    76%{
+        transform:scale(.94);
+    }
+    88%{
+        transform:scale(1.10);
+    }
+    96%{
+        transform:scale(1.22);
     }
     100%{
         transform:scale(1.28);
@@ -224,7 +233,7 @@ body.intro-finished #intro-screen{
         transform:scale(1.28);
     }
     50%{
-        transform:scale(1.36);
+        transform:scale(1.35);
     }
 }
 
