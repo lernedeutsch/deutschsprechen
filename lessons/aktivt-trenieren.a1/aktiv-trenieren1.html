@@ -33,6 +33,17 @@ button,input{font:inherit}button{cursor:pointer}
 .action-help{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 12px;padding:8px 10px;color:#26364b;background:#fff7d8;border:2px solid #e4bd57;border-radius:12px;font-weight:700;font-size:.92rem;box-shadow:0 4px 10px #0000000d}
 .action-help-step{display:inline-flex;align-items:center;gap:4px;padding:4px 8px;background:#fff;border:1px solid #ead9a9;border-radius:999px}
 .action-help-arrow{color:#9d7622;font-weight:800;font-size:.95rem}
+.action-help{position:relative;padding-right:132px}
+.translation-control{position:absolute;top:7px;right:8px;z-index:12}
+.translation-toggle{display:inline-flex;align-items:center;gap:5px;min-height:30px;padding:4px 9px;color:#4c4028;background:#fffdf6;border:1px solid #d8c28c;border-radius:999px;font-size:.78rem;font-weight:800;cursor:pointer;box-shadow:0 3px 8px #0000000d}
+.translation-toggle:hover,.translation-toggle:focus-visible{background:#fff3c8;border-color:#cf9f3f}
+.translation-panel{display:none;position:absolute;right:0;top:36px;width:230px;padding:9px;background:#fffdf7;border:1px solid #d9c28e;border-radius:12px;box-shadow:0 10px 24px #00000026}
+.translation-control:hover .translation-panel,.translation-control:focus-within .translation-panel,.translation-control.open .translation-panel{display:block}
+.translation-languages{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.translation-language{padding:5px 8px;color:#26364b;background:#f7f1e3;border:1px solid #ddcfaa;border-radius:999px;font-size:.75rem;font-weight:800;cursor:pointer}
+.translation-language:hover,.translation-language.active{background:#e4f3e8;border-color:#78bf95;color:#28502f}
+.translation-text{display:none;margin:0;padding:8px 9px;color:#26364b;background:#fff7d8;border-radius:9px;font-size:.8rem;line-height:1.35;font-weight:700}
+.translation-text.show{display:block}
 .register-key{display:flex;flex-wrap:wrap;gap:9px;margin:0 0 14px}.register-key-item{display:inline-flex;align-items:center;gap:6px;padding:7px 11px;color:#344054;background:#fffdf6;border:1px solid #dbc68e;border-radius:999px;font-weight:800}.register-key-item strong{color:#161616}
 .section-done{display:none;align-items:center;padding:5px 10px;color:#28502f;background:#e4f3e8;border:1px solid #78bf95;border-radius:999px;font:700 .78rem "JetBrains Mono",monospace}.section-done.show{display:inline-flex}
 .farewell-context{display:grid;gap:2px}.farewell-hint{color:#5a5140;font-size:.93rem;font-weight:800}      
@@ -88,7 +99,7 @@ button:not(:disabled) .click-icon{
 .bottom-arrows{display:flex;justify-content:center;align-items:center;gap:12px;margin:auto}.bottom-arrow{display:grid;place-items:center;width:52px;height:52px;color:var(--text);background:#fff;border:1px solid var(--line);border-radius:50%;text-decoration:none;font-size:1.55rem;line-height:1;font-weight:800;box-shadow:0 7px 16px #0003;transition:.18s}.bottom-arrow:hover{transform:translateY(-3px);background:#f6edda;border-color:var(--gold)}      
 button:focus-visible,summary:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:3px}      
 @media(max-width:760px){      
-body{padding:20px 12px 35px}.course-start{margin-bottom:38px;padding:18px 15px;border-radius:18px}.lesson-introduction{padding:22px 15px;border-radius:18px}.lesson-hero{align-items:flex-start;flex-direction:column}.lesson-main-title{font-size:2.12rem}.lesson-wheel{width:100%;max-width:270px;margin:auto}.sprachpass{align-items:flex-start;flex-direction:column}.stamps{justify-content:space-between;width:100%}.stamp-slot{width:61px;height:61px;font-size:.54rem}.action-help{gap:5px;padding:7px 9px;font-size:.86rem}.action-help-step{padding:4px 7px}      
+body{padding:20px 12px 35px}.course-start{margin-bottom:38px;padding:18px 15px;border-radius:18px}.lesson-introduction{padding:22px 15px;border-radius:18px}.lesson-hero{align-items:flex-start;flex-direction:column}.lesson-main-title{font-size:2.12rem}.lesson-wheel{width:100%;max-width:270px;margin:auto}.sprachpass{align-items:flex-start;flex-direction:column}.stamps{justify-content:space-between;width:100%}.stamp-slot{width:61px;height:61px;font-size:.54rem}.action-help{gap:5px;padding:7px 9px;padding-right:44px;font-size:.86rem}.action-help-step{padding:4px 7px}.translation-toggle{width:32px;padding:4px 6px;font-size:0}.translation-toggle .globe{font-size:1rem}.translation-panel{width:min(230px,76vw)}      
 .greeting-page{padding:20px 14px;border-radius:18px}.greeting-page .part-title{font-size:2rem}.greeting-card{padding:18px 14px}.greeting-game,.farewell-game{padding:20px 14px}.clock-display,.farewell-display{gap:14px;margin-bottom:22px}.day-picture,.farewell-picture{flex-basis:76px;width:76px;height:62px}.day-symbol,.farewell-symbol{font-size:2.2rem}.clock-time{font-size:1.45rem}.answer-buttons,.farewell-buttons{flex-direction:column}.answer-button,.farewell-button{width:100%}      
 .intro-page{padding:20px 13px 24px;border-radius:15px}.intro-page .part-head{gap:9px}.intro-page .part-title{font-size:1.78rem}.intro-card{padding:18px 13px}.name-row{align-items:stretch;flex-direction:column;gap:7px}.tab-buttons{gap:35px}.tab-button{min-width:115px;padding:9px 12px}.dialog-box{min-height:0;padding:16px 11px;gap:13px}.bubble-a{width:82%}.bubble-b{width:58%;min-width:0}      
 .exercise-page,.alphabet-page,.farewell-page{padding:17px 12px;border-radius:18px}.exercise-read-button{width:100%}.exercise-title{font-size:1.45rem}.category-buttons{display:grid;grid-template-columns:1fr 1fr}.category-button{min-width:0}.exercise-row{padding:10px 12px}.exercise-row.active{padding:43px 12px 10px}.exercise-row.active::before{top:10px;left:12px;transform:none}.exercise-sentence{font-size:1rem}.exercise-result{align-items:stretch;flex-direction:column}.exercise-reset{width:100%}      
@@ -140,7 +151,7 @@ body{padding:20px 12px 35px}.course-start{margin-bottom:38px;padding:18px 15px;b
 <p class="lead">Wir sagen verschiedene Grüße je nach Tageszeit. Finde den richtigen Gruß!</p>      
 <details class="grammar-toggle"><summary>Merke! — Grüße nach Tageszeit</summary><div class="grammar-box">morgens: <strong>Guten Morgen!</strong><br><br>tagsüber: <strong>Guten Tag!</strong><br><br>abends: <strong>Guten Abend!</strong><br><br>informell: <strong>Hallo!</strong><br><br>beim Abschied: <strong>Tschüss!</strong></div></details>      
 <div class="greeting-game">      
-<div class="action-help" aria-label="So funktioniert die Übung"><span class="action-help-step">👀 Uhr ansehen</span><span class="action-help-arrow">→</span><span class="action-help-step">👆 richtigen Gruß anklicken</span><span class="action-help-arrow">→</span><span class="action-help-step">✅ / ❌</span></div>
+<div class="action-help" data-help-key="greeting" aria-label="So funktioniert die Übung"><span class="action-help-step">👀 Uhr ansehen</span><span class="action-help-arrow">→</span><span class="action-help-step">👆 richtigen Gruß anklicken</span><span class="action-help-arrow">→</span><span class="action-help-step">✅ / ❌</span></div>
 <div class="clock-display"><div class="day-picture morgen" id="day-picture" role="img" aria-label="Sonnenaufgang am Morgen"><span class="day-symbol" id="day-symbol">🌅</span></div><span class="clock-time" id="clock-time">08:00 Uhr</span></div>      
 <p class="question">Welcher Gruß passt zu dieser Uhrzeit?</p>      
 <div class="answer-buttons">      
@@ -161,7 +172,7 @@ body{padding:20px 12px 35px}.course-start{margin-bottom:38px;padding:18px 15px;b
 <section class="card intro-card">      
 <p class="description">Trag deinen Namen ein — die Dialoge passen sich an!</p>      
 <div class="name-row"><label for="name-input">✏️ <span>Dein Name:</span></label><input id="name-input" type="text" placeholder="Dein Name" autocomplete="given-name"></div>      
-<div class="action-help" aria-label="So funktioniert der Dialog"><span class="action-help-step">✏️ Name eingeben</span><span class="action-help-arrow">→</span><span class="action-help-step">👆 „Informell“ oder „Formell“ anklicken</span><span class="action-help-arrow">→</span><span class="action-help-step">🔊 zuhören</span></div>
+<div class="action-help" data-help-key="dialog" aria-label="So funktioniert der Dialog"><span class="action-help-step">✏️ Name eingeben</span><span class="action-help-arrow">→</span><span class="action-help-step">👆 „Informell“ oder „Formell“ anklicken</span><span class="action-help-arrow">→</span><span class="action-help-step">🔊 zuhören</span></div>
 <div class="tab-buttons" role="tablist"><button class="tab-button active" id="tab-informell" data-dialog="informell" role="tab" aria-selected="true">Informell <span class="click-icon">🔊</span></button><button class="tab-button" id="tab-formell" data-dialog="formell" role="tab" aria-selected="false">Formell <span class="click-icon">🔊</span></button></div>      
 <div class="dialog-box" id="dialog-informell">      
 <div class="bubble bubble-a"><span class="speaker">A</span>Hallo!<span class="person-icon">👩🏻</span></div>      
@@ -184,7 +195,7 @@ body{padding:20px 12px 35px}.course-start{margin-bottom:38px;padding:18px 15px;b
 <section class="exercise-card">      
 <button class="exercise-read-button" id="exercise-read-button">🔊 Sätze anhören</button>      
 <h1 class="exercise-title">Informell oder formell?</h1>      
-<div class="action-help" aria-label="So funktioniert die Übung"><span class="action-help-step">👀 Satz lesen</span><span class="action-help-arrow">→</span><span class="action-help-step">👆 Antwort anklicken</span><span class="action-help-arrow">→</span><span class="action-help-step">✅ richtig · ❌ noch einmal</span></div>
+<div class="action-help" data-help-key="register" aria-label="So funktioniert die Übung"><span class="action-help-step">👀 Satz lesen</span><span class="action-help-arrow">→</span><span class="action-help-step">👆 Antwort anklicken</span><span class="action-help-arrow">→</span><span class="action-help-step">✅ richtig · ❌ noch einmal</span></div>
 <div class="register-key" aria-label="Informell und formell"><span class="register-key-item">🙂 <strong>du</strong> = informell</span><span class="register-key-item">👔 <strong>Sie</strong> = formell</span></div>
 <div class="category-buttons"><button class="category-button" data-category="informell"><span class="click-icon">👆</span> Informell wählen</button><button class="category-button" data-category="formell"><span class="click-icon">👆</span> Formell wählen</button></div>      
 <div class="exercise-list">      
@@ -204,7 +215,7 @@ body{padding:20px 12px 35px}.course-start{margin-bottom:38px;padding:18px 15px;b
 <main class="page alphabet-page">      
 <div class="part-head"><span class="part-num">Teil 3</span><h1 class="part-title">Das deutsche Alphabet</h1><span class="section-done" id="alphabet-done">✅ geschafft</span></div>      
 <section class="alphabet-card">      
-<div class="action-help" aria-label="So funktioniert das Alphabet"><span class="action-help-step">👆 Buchstaben anklicken</span><span class="action-help-arrow">→</span><span class="action-help-step">🔊 zuhören</span><span class="action-help-arrow">→</span><span class="action-help-step">🗣️ nachsprechen</span></div>
+<div class="action-help" data-help-key="alphabet" aria-label="So funktioniert das Alphabet"><span class="action-help-step">👆 Buchstaben anklicken</span><span class="action-help-arrow">→</span><span class="action-help-step">🔊 zuhören</span><span class="action-help-arrow">→</span><span class="action-help-step">🗣️ nachsprechen</span></div>
 <p class="alphabet-lead">Klick auf einen Buchstaben. Hör zu.</p>      
 <div class="alphabet-grid" id="alphabet"></div>      
 <h2 class="alphabet-subtitle">Umlaute und ß</h2>      
@@ -223,7 +234,7 @@ body{padding:20px 12px 35px}.course-start{margin-bottom:38px;padding:18px 15px;b
 <section class="farewell-card">      
 <p class="lead">Finde den richtigen Abschied!</p>      
 <div class="farewell-game">      
-<div class="action-help" aria-label="So funktioniert die Übung"><span class="action-help-step">👀 Situation ansehen</span><span class="action-help-arrow">→</span><span class="action-help-step">👆 Abschied anklicken</span><span class="action-help-arrow">→</span><span class="action-help-step">✅ / ❌</span></div>
+<div class="action-help" data-help-key="farewell" aria-label="So funktioniert die Übung"><span class="action-help-step">👀 Situation ansehen</span><span class="action-help-arrow">→</span><span class="action-help-step">👆 Abschied anklicken</span><span class="action-help-arrow">→</span><span class="action-help-step">✅ / ❌</span></div>
 <div class="farewell-display"><div class="farewell-picture"><span class="farewell-symbol" id="farewell-symbol">👋</span></div><div class="farewell-context"><span class="farewell-type" id="farewell-type">informell</span><span class="farewell-hint" id="farewell-hint">🙂 Freunde / Familie</span></div></div>      
 <p class="question">Welcher Abschied passt zu dieser Situation?</p>      
 <div class="farewell-buttons">      
@@ -311,7 +322,64 @@ function nextFarewell(){if(++fi<FT.length)return showFarewell();fl=true;lockFare
 FB.forEach(b=>b.onclick=()=>{if(fl)return;let[type,,text]=FT[fi];FB.forEach(x=>x.classList.remove("richtig","falsch"));if(b.dataset.farewell!==type){b.classList.add("falsch");$("farewell-feedback").style.color="var(--red)";$("farewell-feedback").textContent="Versuch es noch einmal!";stop();return speak("Nicht ganz. Versuch es noch einmal.",.9)}fl=true;fs++;b.classList.add("richtig");lockFarewell(true);$("farewell-feedback").style.color="#28502f";$("farewell-feedback").textContent=`Richtig! ${text}`;farewellProgress();stop();speak(text,.9);setTimeout(nextFarewell,1200)});      
 $("farewell-restart").onclick=()=>{fi=fs=0;fl=false;$("farewell-finish").classList.remove("zeigen");farewellProgress();showFarewell()};      
       
-$("stamp-reset-button").onclick=()=>{stop();Object.keys(P).forEach(x=>P[x]=false);try{localStorage.removeItem(stampKey)}catch{}updateStamps();$("stamp-reset-message").textContent="Die Stempel wurden zurückgesetzt. Du kannst sie jetzt neu sammeln.";setTimeout(()=>$("stamp-reset-message").textContent="",4000)};      
+$("stamp-reset-button").onclick=()=>{stop();Object.keys(P).forEach(x=>P[x]=false);try{localStorage.removeItem(stampKey)}catch{}updateStamps();$("stamp-reset-message").textContent="Die Stempel wurden zurückgesetzt. Du kannst sie jetzt neu sammeln.";setTimeout(()=>$("stamp-reset-message").textContent="",4000)};
+
+const HELP_TRANSLATIONS={
+  greeting:{
+    en:"Look at the time → click the correct greeting → ✅ / ❌",
+    pl:"Spójrz na godzinę → kliknij właściwe powitanie → ✅ / ❌",
+    it:"Guarda l’ora → clicca sul saluto corretto → ✅ / ❌"
+  },
+  dialog:{
+    en:"Enter your name → click “Informell” or “Formell” → listen",
+    pl:"Wpisz swoje imię → kliknij „Informell” lub „Formell” → posłuchaj",
+    it:"Inserisci il tuo nome → clicca su “Informell” o “Formell” → ascolta"
+  },
+  register:{
+    en:"Read the sentence → click the answer → correct / try again",
+    pl:"Przeczytaj zdanie → kliknij odpowiedź → dobrze / spróbuj ponownie",
+    it:"Leggi la frase → clicca sulla risposta → corretto / riprova"
+  },
+  alphabet:{
+    en:"Click a letter → listen → repeat",
+    pl:"Kliknij literę → posłuchaj → powtórz",
+    it:"Clicca su una lettera → ascolta → ripeti"
+  },
+  farewell:{
+    en:"Look at the situation → click the correct farewell → ✅ / ❌",
+    pl:"Spójrz na sytuację → kliknij właściwe pożegnanie → ✅ / ❌",
+    it:"Guarda la situazione → clicca sul saluto di commiato corretto → ✅ / ❌"
+  }
+};
+
+function addHelpTranslations(){
+  const browserLang=(navigator.language||"").toLowerCase();
+  const preferred=browserLang.startsWith("pl")?"pl":browserLang.startsWith("it")?"it":"en";
+  $$(".action-help[data-help-key]").forEach(box=>{
+    const key=box.dataset.helpKey,data=HELP_TRANSLATIONS[key];
+    if(!data)return;
+    const control=document.createElement("div");
+    control.className="translation-control";
+    control.innerHTML=`<button type="button" class="translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung"><span class="globe">🌐</span><span>Übersetzung</span></button><div class="translation-panel"><div class="translation-languages"><button type="button" class="translation-language" data-lang="en">English</button><button type="button" class="translation-language" data-lang="pl">Polski</button><button type="button" class="translation-language" data-lang="it">Italiano</button></div><p class="translation-text" aria-live="polite"></p></div>`;
+    box.appendChild(control);
+    const toggle=control.querySelector(".translation-toggle"),out=control.querySelector(".translation-text"),langs=[...control.querySelectorAll(".translation-language")];
+    toggle.onclick=e=>{e.stopPropagation();control.classList.toggle("open")};
+    langs.forEach(btn=>btn.onclick=e=>{
+      e.stopPropagation();
+      const lang=btn.dataset.lang;
+      langs.forEach(x=>x.classList.toggle("active",x===btn));
+      out.textContent=data[lang];
+      out.classList.add("show");
+      control.classList.add("open");
+    });
+    const pref=langs.find(x=>x.dataset.lang===preferred);
+    if(pref)pref.classList.add("preferred");
+  });
+  document.addEventListener("click",e=>{
+    if(!e.target.closest(".translation-control"))$$(".translation-control.open").forEach(x=>x.classList.remove("open"));
+  });
+}
+addHelpTranslations();      
       
 addEventListener("beforeunload",()=>{reading=false;stop()});      
 greetingProgress();showGreeting();current(false);farewellProgress();showFarewell();      
