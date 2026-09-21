@@ -448,8 +448,8 @@ button{font:inherit}
 
 .mic-btn-wrap{
   position:relative;
-  width:122px;
-  height:122px;
+  width:102px;
+  height:102px;
   display:grid;
   place-items:center;
   flex-shrink:0;
@@ -484,13 +484,13 @@ button{font:inherit}
 .mic-btn{
   position:relative;
   z-index:1;
-  width:100px;
-  height:100px;
+  width:82px;
+  height:82px;
   border-radius:50%;
   border:none;
   cursor:pointer;
   color:#fff;
-  font-size:2.3rem;
+  font-size:1.9rem;
   background:linear-gradient(180deg,var(--sky),var(--sky-deep));
   box-shadow:0 12px 22px rgba(61,168,240,.36);
   transition:transform .18s,filter .18s,background .2s;
@@ -572,7 +572,7 @@ button{font:inherit}
 .dialog-controls{
   display:flex;
   align-items:center;
-  gap:18px;
+  gap:14px;
 }
 
 .dialog-controls .mic-column{
@@ -583,8 +583,13 @@ button{font:inherit}
   flex:1;
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:8px;
+  gap:6px;
   margin-top:0;
+}
+
+.dialog-controls .utility-btn{
+  padding:8px 4px;
+  font-size:.64rem;
 }
 
 .text-answer-row{
