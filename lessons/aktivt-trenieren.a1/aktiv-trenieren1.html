@@ -168,7 +168,7 @@ body{padding:20px 12px 35px}.course-start{margin-bottom:38px;padding:18px 15px;b
 <p class="lead">Wir sagen verschiedene Grüße je nach Tageszeit. Finde den richtigen Gruß!</p>      
 <details class="grammar-toggle"><summary>Merke! — Grüße nach Tageszeit</summary><div class="grammar-box">morgens: <strong>Guten Morgen!</strong><br><br>tagsüber: <strong>Guten Tag!</strong><br><br>abends: <strong>Guten Abend!</strong><br><br>informell: <strong>Hallo!</strong><br><br>beim Abschied: <strong>Tschüss!</strong></div></details>      
 <div class="greeting-game">      
-<div class="action-help" data-help-key="greeting" aria-label="So funktioniert die Übung"><span class="action-help-step">👀 Uhr ansehen</span><span class="action-help-arrow">→</span><span class="action-help-step">👆 richtigen Gruß anklicken</span><span class="action-help-arrow">→</span><span class="action-help-step">✅ / ❌</span></div>
+<div class="action-help" data-help-key="greeting" aria-label="So funktioniert die Übung"><span class="action-help-step">👀 Uhr ansehen</span><span class="action-help-arrow">→</span><span class="action-help-step">👆 richtigen Gruß anklicken</span></div>
 <div class="clock-display"><div class="day-picture morgen" id="day-picture" role="img" aria-label="Sonnenaufgang am Morgen"><span class="day-symbol" id="day-symbol">🌅</span></div><span class="clock-time" id="clock-time">08:00 Uhr</span></div>      
 <p class="question">Welcher Gruß passt zu dieser Uhrzeit?</p>      
 <div class="answer-buttons">      
@@ -255,7 +255,7 @@ body{padding:20px 12px 35px}.course-start{margin-bottom:38px;padding:18px 15px;b
 <section class="farewell-card">      
 <p class="lead">Finde den richtigen Abschied!</p>      
 <div class="farewell-game">      
-<div class="action-help" data-help-key="farewell" aria-label="So funktioniert die Übung"><span class="action-help-step">👀 Situation ansehen</span><span class="action-help-arrow">→</span><span class="action-help-step">👆 Abschied anklicken</span><span class="action-help-arrow">→</span><span class="action-help-step">✅ / ❌</span></div>
+<div class="action-help" data-help-key="farewell" aria-label="So funktioniert die Übung"><span class="action-help-step">👀 Situation ansehen</span><span class="action-help-arrow">→</span><span class="action-help-step">👆 Abschied anklicken</span></div>
 <div class="farewell-display"><div class="farewell-picture"><span class="farewell-symbol" id="farewell-symbol">👋</span></div><div class="farewell-context"><span class="farewell-type" id="farewell-type">informell</span><span class="farewell-hint" id="farewell-hint">🙂 Freunde / Familie</span></div></div>      
 <p class="question">Welcher Abschied passt zu dieser Situation?</p>      
 <div class="farewell-buttons">      
@@ -347,9 +347,9 @@ $("stamp-reset-button").onclick=()=>{stop();Object.keys(P).forEach(x=>P[x]=false
 
 const HELP_TRANSLATIONS={
   greeting:{
-    en:"Look at the time → click the correct greeting → ✅ / ❌",
-    pl:"Spójrz na godzinę → kliknij właściwe powitanie → ✅ / ❌",
-    it:"Guarda l’ora → clicca sul saluto corretto → ✅ / ❌"
+    en:"Look at the time → click the correct greeting",
+    pl:"Spójrz na godzinę → kliknij właściwe powitanie",
+    it:"Guarda l’ora → clicca sul saluto corretto"
   },
   dialog:{
     en:"Enter your name → click “Informell” or “Formell” → listen",
@@ -367,9 +367,9 @@ const HELP_TRANSLATIONS={
     it:"Clicca su una lettera → ascolta → ripeti"
   },
   farewell:{
-    en:"Look at the situation → click the correct farewell → ✅ / ❌",
-    pl:"Spójrz na sytuację → kliknij właściwe pożegnanie → ✅ / ❌",
-    it:"Guarda la situazione → clicca sul saluto di commiato corretto → ✅ / ❌"
+    en:"Look at the situation → click the correct farewell",
+    pl:"Spójrz na sytuację → kliknij właściwe pożegnanie",
+    it:"Guarda la situazione → clicca sul saluto di commiato corretto"
   }
 };
 
