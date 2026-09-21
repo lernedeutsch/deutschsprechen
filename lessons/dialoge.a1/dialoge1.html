@@ -671,17 +671,16 @@ button{font:inherit}
   line-height:1.4;
 }
 
-.history-entry .num{
-  flex-shrink:0;
-  color:#8fa4bd;
-  font:700 .76rem "JetBrains Mono",monospace;
+.history-entry .speaker{
+  font-weight:800;
+  color:#8fd3ff;
 }
 
 .history-entry.user{
   background:rgba(132,223,66,.12);
 }
 
-.history-entry.user .num{color:#84df42}
+.history-entry.user .speaker{color:#9bea6b}
 
 .history-divider{
   margin:8px 0 2px;
@@ -1863,8 +1862,7 @@ function addHistoryEntry(role,speakerLabel,text){
   entry.className=`history-entry ${role}`;
 
   entry.innerHTML=
-    `<span class="num">${historyCounter}.</span>
-     <span>${speakerLabel}: ${text}</span>`;
+    `<span><span class="speaker">${speakerLabel}:</span> ${text}</span>`;
 
   els.historyList.appendChild(entry);
   els.historyList.scrollTop=
