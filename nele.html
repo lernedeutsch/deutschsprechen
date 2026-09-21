@@ -122,6 +122,50 @@ body{
     background:rgba(255,255,255,.12);
 }
 
+.button-translation{
+    position:relative;
+    display:inline-flex;
+}
+
+.button-translation summary{
+    display:grid;
+    place-items:center;
+    width:28px;
+    height:28px;
+    padding:0;
+    list-style:none;
+    cursor:pointer;
+    border:1px solid rgba(255,255,255,.16);
+    border-radius:50%;
+    background:rgba(255,255,255,.08);
+    font-size:1rem;
+    filter:saturate(2) brightness(1.2);
+}
+
+.button-translation summary::-webkit-details-marker{
+    display:none;
+}
+
+.button-translation-panel{
+    position:absolute;
+    top:36px;
+    right:0;
+    z-index:40;
+    min-width:220px;
+    padding:10px 12px;
+    color:#172033;
+    background:#fffaf0;
+    border:1px solid #e2cf9e;
+    border-radius:12px;
+    box-shadow:0 12px 26px rgba(0,0,0,.24);
+    font-size:.82rem;
+    line-height:1.45;
+}
+
+.button-translation-panel p{
+    margin:4px 0;
+}
+
 /* NELE */
 
 .nele-header{
@@ -591,6 +635,15 @@ body{
                 Neu anfangen
             </button>
 
+            <details class="button-translation">
+                <summary aria-label="Übersetzung" title="Übersetzung">🌐</summary>
+                <div class="button-translation-panel">
+                    <p><strong>English:</strong> Start again</p>
+                    <p><strong>Polski:</strong> Zacznij od nowa</p>
+                    <p><strong>Italiano:</strong> Ricomincia</p>
+                </div>
+            </details>
+
             <button
                 type="button"
                 class="new-user-btn"
@@ -598,6 +651,15 @@ body{
             >
                 Als neuer Benutzer starten
             </button>
+
+            <details class="button-translation">
+                <summary aria-label="Übersetzung" title="Übersetzung">🌐</summary>
+                <div class="button-translation-panel">
+                    <p><strong>English:</strong> Start as a new user</p>
+                    <p><strong>Polski:</strong> Zacznij jako nowy użytkownik</p>
+                    <p><strong>Italiano:</strong> Inizia come nuovo utente</p>
+                </div>
+            </details>
 
         </div>
 
