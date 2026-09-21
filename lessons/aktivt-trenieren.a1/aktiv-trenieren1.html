@@ -112,6 +112,17 @@ body{padding:20px 12px 35px}.course-start{margin-bottom:38px;padding:18px 15px;b
 .spelling-form{flex-direction:column}.spelling-button{width:100%}.farewell-type{font-size:1.05rem}.end-buttons{flex-wrap:wrap}.end-button{flex:1 1 100%;max-width:100%;font-size:1rem}}      
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}      
 </style>      
+
+<style>
+.translation-globe{
+  display:inline-block;
+  font-size:1.18em;
+  line-height:1;
+  vertical-align:-.08em;
+  filter:saturate(1.65) brightness(1.14) contrast(1.08);
+  text-shadow:0 0 6px rgba(74,184,255,.34);
+}
+</style>
 </head>      
 <body id="seitenanfang">      
 
@@ -127,7 +138,7 @@ body{padding:20px 12px 35px}.course-start{margin-bottom:38px;padding:18px 15px;b
 <h1 class="lesson-main-title">Guten Tag! — Begrüßung und Vorstellung</h1>      
 <p class="lesson-description">Heute schauen wir uns an: Wie begrüßen wir uns? Wie stellen wir uns vor? Und wie sprechen wir die Buchstaben des deutschen Alphabets aus? Diesmal übst du aktiv mit — sammle Stempel für deinen Sprachpass!
 <span class="translation-inline-control" data-inline-translation="intro">
-<button type="button" class="translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung"><span class="globe">🌐</span><span>Übersetzung</span></button>
+<button type="button" class="translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung"><span class="globe translation-globe">🌐</span><span>Übersetzung</span></button>
 <span class="translation-panel"><span class="translation-languages"><button type="button" class="translation-language" data-lang="en">English</button><button type="button" class="translation-language" data-lang="pl">Polski</button><button type="button" class="translation-language" data-lang="it">Italiano</button></span><span class="translation-text" aria-live="polite"></span></span>
 </span></p>      
 <div class="lesson-topics"><span class="lesson-topic">1 · Begrüßung</span><span class="lesson-topic">2 · Vorstellung</span><span class="lesson-topic">3 · Alphabet</span></div>      
@@ -230,7 +241,7 @@ body{padding:20px 12px 35px}.course-start{margin-bottom:38px;padding:18px 15px;b
 <div class="spelling-box">      
 <h2 class="spelling-title">✏️ Buchstabiere deinen Namen
 <span class="translation-inline-control" data-inline-translation="spelling">
-<button type="button" class="translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung"><span class="globe">🌐</span><span>Übersetzung</span></button>
+<button type="button" class="translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung"><span class="globe translation-globe">🌐</span><span>Übersetzung</span></button>
 <div class="translation-panel"><div class="translation-languages"><button type="button" class="translation-language" data-lang="en">English</button><button type="button" class="translation-language" data-lang="pl">Polski</button><button type="button" class="translation-language" data-lang="it">Italiano</button></div><p class="translation-text" aria-live="polite"></p></div>
 </span></h2>      
 <p class="spelling-text">Gib deinen Namen ein. Hör dir die Buchstaben auf Deutsch an.</p>      
@@ -405,7 +416,7 @@ function addHelpTranslations(){
     if(!data)return;
     const control=document.createElement("div");
     control.className="translation-control";
-    control.innerHTML=`<button type="button" class="translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung"><span class="globe">🌐</span><span>Übersetzung</span></button><div class="translation-panel"><div class="translation-languages"><button type="button" class="translation-language" data-lang="en">English</button><button type="button" class="translation-language" data-lang="pl">Polski</button><button type="button" class="translation-language" data-lang="it">Italiano</button></div><p class="translation-text" aria-live="polite"></p></div>`;
+    control.innerHTML=`<button type="button" class="translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung"><span class="globe translation-globe">🌐</span><span>Übersetzung</span></button><div class="translation-panel"><div class="translation-languages"><button type="button" class="translation-language" data-lang="en">English</button><button type="button" class="translation-language" data-lang="pl">Polski</button><button type="button" class="translation-language" data-lang="it">Italiano</button></div><p class="translation-text" aria-live="polite"></p></div>`;
     box.appendChild(control);
     const toggle=control.querySelector(".translation-toggle"),out=control.querySelector(".translation-text"),langs=[...control.querySelectorAll(".translation-language")];
     toggle.onclick=e=>{e.stopPropagation();control.classList.toggle("open")};
