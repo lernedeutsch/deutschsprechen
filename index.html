@@ -8,8 +8,8 @@
 
 <style>
 :root{
-    --bg:#07182c;
-    --bg2:#0c2744;
+    --bg:#0a2037;
+    --bg2:#123553;
     --card:#102d4d;
     --card2:#163858;
     --text:#f5f8fc;
@@ -360,7 +360,7 @@ body.intro-finished #intro-screen{
     margin:0;
 
     font-size:
-        clamp(1.9rem,5.5vw,3.5rem);
+        clamp(1.75rem,5vw,3.2rem);
 
     line-height:1.05;
     color:var(--text);
@@ -383,6 +383,9 @@ body.intro-finished #intro-screen{
 /* START — POZIOMY + NELE */
 
 .start-grid{
+    width:calc(100% + 56px);
+    margin-left:-28px;
+
     display:grid;
     grid-template-columns:
         repeat(2,minmax(0,1fr));
@@ -394,7 +397,7 @@ body.intro-finished #intro-screen{
 
 .start-panel{
     min-width:0;
-    aspect-ratio:1 / 1;
+    height:485px;
 
     border:
         1px solid rgba(255,255,255,.12);
@@ -491,8 +494,8 @@ body.intro-finished #intro-screen{
     background:
         linear-gradient(
             145deg,
-            #418e36,
-            #245f2b
+            #36782f,
+            #1e4f25
         );
 }
 
@@ -500,8 +503,8 @@ body.intro-finished #intro-screen{
     background:
         linear-gradient(
             145deg,
-            #7454b7,
-            #463273
+            #6447a3,
+            #3b2963
         );
 }
 
@@ -509,8 +512,8 @@ body.intro-finished #intro-screen{
     background:
         linear-gradient(
             145deg,
-            #b2682a,
-            #7b3f1d
+            #9e5722,
+            #693417
         );
 }
 
@@ -518,8 +521,8 @@ body.intro-finished #intro-screen{
 /* NELE */
 
 .nele-card{
-    --nele-accent:#e4b349;
-    --nele-accent-dark:#c98d28;
+    --nele-accent:#d39a32;
+    --nele-accent-dark:#b7771e;
 
     position:relative;
 
@@ -565,7 +568,7 @@ body.intro-finished #intro-screen{
     font-size:40px;
 
     box-shadow:
-        0 0 0 5px rgba(228,179,73,.18);
+        0 0 0 5px rgba(211,154,50,.18);
 }
 
 .nele-kicker{
@@ -667,7 +670,7 @@ body.intro-finished #intro-screen{
     background:
         linear-gradient(
             180deg,
-            #ecc45f,
+            #dda947,
             var(--nele-accent)
         );
 
@@ -678,7 +681,7 @@ body.intro-finished #intro-screen{
     font-size:1.02rem;
 
     box-shadow:
-        0 7px 0 #aa731d;
+        0 7px 0 #955f16;
 
     transition:
         transform .18s ease,
@@ -689,7 +692,7 @@ body.intro-finished #intro-screen{
     transform:translateY(-2px);
 
     box-shadow:
-        0 9px 0 #aa731d;
+        0 9px 0 #955f16;
 }
 
 .nele-mic{
@@ -892,6 +895,9 @@ footer{
     }
 
     .start-grid{
+        width:100%;
+        margin-left:0;
+
         grid-template-columns:1fr;
     }
 
