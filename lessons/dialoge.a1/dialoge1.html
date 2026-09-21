@@ -44,9 +44,13 @@ body{
 button{font:inherit}
 
 .top-back{
-  max-width:1020px;
-  margin:18px auto 0;
-  padding:0 18px;
+  position:absolute;
+  top:18px;
+  left:18px;
+  z-index:20;
+  max-width:none;
+  margin:0;
+  padding:0;
 }
 .back-btn{
   display:inline-flex;
@@ -69,7 +73,7 @@ button{font:inherit}
 .shell{
   max-width:1020px;
   margin:0 auto;
-  padding:36px 18px 70px;
+  padding:18px 18px 70px;
 }
 
 /* ---------- HERO ---------- */
@@ -366,7 +370,8 @@ button{font:inherit}
   gap:5px;
   margin-bottom:7px;
 }
-.translation-language{
+.translation-language,
+.hero-translation-language{
   padding:4px 7px;
   color:#26364b;
   background:#f7f1e3;
@@ -376,7 +381,8 @@ button{font:inherit}
   font-size:.7rem;
   font-weight:800;
 }
-.translation-language.active{
+.translation-language.active,
+.hero-translation-language.active{
   background:#e4f3e8;
   border-color:#78bf95;
   color:#28502f;
@@ -397,6 +403,11 @@ button{font:inherit}
   display:flex;
   justify-content:center;
   margin:-6px 0 16px;
+}
+.hero-translation-row{
+  display:flex;
+  justify-content:center;
+  margin:10px 0 0;
 }
 
 /* ---------- MIKROFON ---------- */
@@ -864,14 +875,28 @@ button{font:inherit}
 
   <header class="hero">
 
-    <span class="hero-badge">A1 · Dialogübung</span>
-
     <h1>Führ das Gespräch! 🎙️</h1>
 
     <p>
       Vier kurze Dialoge — informell und formell. Du hörst den Satz,
       das Mikrofon startet von selbst, und du antwortest laut.
     </p>
+
+    <div class="hero-translation-row">
+      <span class="translation-control" id="hero-translation-control">
+        <button type="button" class="translation-toggle" id="hero-translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung">
+          <span class="translation-globe">🌐</span> Übersetzung
+        </button>
+        <span class="translation-panel">
+          <span class="translation-languages">
+            <button type="button" class="hero-translation-language" data-lang="en">English</button>
+            <button type="button" class="hero-translation-language" data-lang="pl">Polski</button>
+            <button type="button" class="hero-translation-language" data-lang="it">Italiano</button>
+          </span>
+          <span class="translation-text" id="hero-translation-text" aria-live="polite"></span>
+        </span>
+      </span>
+    </div>
 
     <div class="hero-stats">
 
@@ -1985,6 +2010,30 @@ els.micBtn.addEventListener("click",()=>{
   }
 });
 
+const heroTranslationControl=document.getElementById("hero-translation-control");
+const heroTranslationToggle=document.getElementById("hero-translation-toggle");
+const heroTranslationText=document.getElementById("hero-translation-text");
+const heroTranslationButtons=[...document.querySelectorAll(".hero-translation-language")];
+const heroTranslations={
+  en:"Four short dialogues — informal and formal. You hear the sentence, the microphone starts automatically, and you answer out loud.",
+  pl:"Cztery krótkie dialogi — nieformalne i formalne. Słyszysz zdanie, mikrofon uruchamia się automatycznie, a ty odpowiadasz na głos.",
+  it:"Quattro brevi dialoghi — informali e formali. Ascolti la frase, il microfono si avvia automaticamente e rispondi ad alta voce."
+};
+
+heroTranslationToggle.addEventListener("click",event=>{
+  event.stopPropagation();
+  heroTranslationControl.classList.toggle("open");
+});
+
+heroTranslationButtons.forEach(button=>button.addEventListener("click",event=>{
+  event.stopPropagation();
+  const lang=button.dataset.lang;
+  heroTranslationButtons.forEach(item=>item.classList.toggle("active",item===button));
+  heroTranslationText.textContent=heroTranslations[lang];
+  heroTranslationText.classList.add("show");
+  heroTranslationControl.classList.add("open");
+}));
+
 const gateTranslationControl=document.getElementById("gate-translation-control");
 const gateTranslationToggle=document.getElementById("gate-translation-toggle");
 const gateTranslationText=document.getElementById("gate-translation-text");
@@ -2067,6 +2116,7 @@ document.addEventListener("click",event=>{
   if(!event.target.closest(".translation-control")){
     els.translationControl.classList.remove("open");
     gateTranslationControl.classList.remove("open");
+    heroTranslationControl.classList.remove("open");
   }
 });
 
