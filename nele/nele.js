@@ -1160,11 +1160,64 @@ const Nele = {
             };
 
 
-        window
-            .speechSynthesis
-            .speak(
-                utterance
-            );
+        window.setTimeout(
+            () => {
+
+                const warmup =
+                    new SpeechSynthesisUtterance(
+                        "\u00A0"
+                    );
+
+                warmup.lang =
+                    this.language;
+
+                warmup.rate =
+                    1.0;
+
+                warmup.pitch =
+                    1.0;
+
+                warmup.volume =
+                    0;
+
+                if (preferredVoice) {
+                    warmup.voice =
+                        preferredVoice;
+                }
+
+                const startUtterance =
+                    () => {
+
+                        window.setTimeout(
+                            () => {
+
+                                window
+                                    .speechSynthesis
+                                    .speak(
+                                        utterance
+                                    );
+
+                            },
+                            120
+                        );
+
+                    };
+
+                warmup.onend =
+                    startUtterance;
+
+                warmup.onerror =
+                    startUtterance;
+
+                window
+                    .speechSynthesis
+                    .speak(
+                        warmup
+                    );
+
+            },
+            420
+        );
 
     },
 
