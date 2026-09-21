@@ -827,29 +827,8 @@ const noMicNote=document.getElementById("no-mic-note");
 const historyList=document.getElementById("history-list");
 const historyEmpty=document.getElementById("history-empty");
 
-/* ---------- Deutsche Frauenstimme auswählen ---------- */
-let germanVoice=null;
+/* ---------- Sprachausgabe wie bei Nele ---------- */
 
-function loadGermanVoice(){
-  if(!("speechSynthesis" in window))return;
-  const voices=speechSynthesis.getVoices();
-  const germanVoices=voices.filter(
-    v=>v.lang&&v.lang.toLowerCase().startsWith("de")
-  );
-
-  germanVoice=
-    germanVoices.find(v=>v.name.toLowerCase().includes("google"))||
-    germanVoices.find(v=>v.lang==="de-DE")||
-    germanVoices[0]||
-    null;
-}
-
-loadGermanVoice();
-if("speechSynthesis" in window){
-  speechSynthesis.addEventListener("voiceschanged",loadGermanVoice);
-}
-
-/* ---------- Satz sprechen + synchron anzeigen ---------- */
 function renderSentenceShell(text){
   const words=text.split(" ");
   sentenceText.innerHTML=words.map(w=>`<span class="word">${w}</span>`).join(" ");
@@ -857,118 +836,62 @@ function renderSentenceShell(text){
 
 function revealWordsTimed(text,rate){
   const words=sentenceText.querySelectorAll(".word");
-  const wordsPerMs=(150*rate)/60000; // grobe Schätzung: ~150 Wörter/Min bei rate=1
+  const wordsPerMs=(150*rate)/60000;
   const stepMs=Math.max(90,1/wordsPerMs);
+
   words.forEach((w,i)=>{
     setTimeout(()=>w.classList.add("show"),i*stepMs);
   });
 }
 
-function splitSpeechChunks(text){
-  const clean=String(text||"").replace(/\s+/g," ").trim();
-  if(!clean)return [];
-
-  const parts=clean.split(/(?<=[,;:!?\.])\s+/);
-  const chunks=[];
-  let current="";
-
-  for(const part of parts){
-    const candidate=current?current+" "+part:part;
-
-    if(candidate.length<=72){
-      current=candidate;
-      continue;
-    }
-
-    if(current){
-      chunks.push(current);
-      current="";
-    }
-
-    if(part.length<=72){
-      current=part;
-      continue;
-    }
-
-    const words=part.split(/\s+/);
-
-    for(const word of words){
-      const wordCandidate=current?current+" "+word:word;
-
-      if(wordCandidate.length<=72){
-        current=wordCandidate;
-      }else{
-        if(current)chunks.push(current);
-        current=word;
-      }
-    }
-  }
-
-  if(current)chunks.push(current);
-  return chunks;
-}
-
-function speak(text,rate){
+function speak(text){
   return new Promise(resolve=>{
     if(!("speechSynthesis" in window)){
       renderSentenceShell(text);
-      revealWordsTimed(text,rate);
+      revealWordsTimed(text,0.95);
       resolve();
       return;
     }
 
-    speechSynthesis.cancel();
+    window.speechSynthesis.cancel();
 
-    const chunks=splitSpeechChunks(text);
-    if(!chunks.length){
-      resolve();
-      return;
+    const utterance=new SpeechSynthesisUtterance(text);
+
+    utterance.lang="de-DE";
+    utterance.rate=0.95;
+    utterance.pitch=1.0;
+    utterance.volume=1.0;
+
+    const voices=window.speechSynthesis.getVoices();
+
+    const germanVoices=voices.filter(
+      voice=>
+        voice.lang &&
+        voice.lang.toLowerCase().startsWith("de")
+    );
+
+    const preferredVoice=
+      germanVoices.find(
+        voice=>voice.name.toLowerCase().includes("google")
+      )||
+      germanVoices.find(
+        voice=>voice.lang==="de-DE"
+      )||
+      germanVoices[0];
+
+    if(preferredVoice){
+      utterance.voice=preferredVoice;
     }
 
-    renderSentenceShell(text);
-    revealWordsTimed(text,rate);
-
-    let index=0;
-
-    const speakNext=()=>{
-      if(index>=chunks.length){
-        resolve();
-        return;
-      }
-
-      const chunk=chunks[index];
-      const utter=new SpeechSynthesisUtterance(chunk);
-
-      utter.lang="de-DE";
-      utter.rate=rate;
-      utter.pitch=1.0;
-      utter.volume=1;
-
-      if(germanVoice)utter.voice=germanVoice;
-
-      const keepAlive=setInterval(()=>{
-        if(speechSynthesis.paused)speechSynthesis.resume();
-      },1800);
-
-      utter.onend=()=>{
-        clearInterval(keepAlive);
-        index+=1;
-
-        const pause=/[.!?]$/.test(chunk)?180:110;
-        setTimeout(speakNext,pause);
-      };
-
-      utter.onerror=()=>{
-        clearInterval(keepAlive);
-        index+=1;
-        setTimeout(speakNext,120);
-      };
-
-      speechSynthesis.resume();
-      speechSynthesis.speak(utter);
+    utterance.onstart=()=>{
+      renderSentenceShell(text);
+      revealWordsTimed(text,0.95);
     };
 
-    speakNext();
+    utterance.onend=resolve;
+    utterance.onerror=resolve;
+
+    window.speechSynthesis.speak(utterance);
   });
 }
 
@@ -1112,7 +1035,7 @@ async function playCurrentAndListen(){
   youSaid.textContent="";
   youSaid.className="you-said";
 
-  await speak(sentences[currentIndex],currentRate);
+  await speak(sentences[currentIndex]);
 
   recognizing=true;
   if(recognition){
@@ -1149,7 +1072,7 @@ function handleAnswer(said){
     youSaid.className="you-said bad";
     setStage("incorrect","🙈");
     statusLine.textContent="Nicht ganz. Bitte noch einmal.";
-    speak("Nicht ganz, bitte noch einmal.",1).then(()=>{
+    speak("Nicht ganz, bitte noch einmal.").then(()=>{
       setTimeout(()=>{ playCurrentAndListen(); },400);
     });
   }
