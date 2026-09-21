@@ -360,7 +360,7 @@ body.intro-finished #intro-screen{
     margin:0;
 
     font-size:
-        clamp(1.45rem,4.2vw,2.7rem);
+        clamp(1.35rem,3.9vw,2.5rem);
 
     line-height:1.05;
     color:var(--text);
@@ -470,11 +470,48 @@ body.intro-finished #intro-screen{
     transition:
         transform .2s,
         filter .2s;
+
+    animation:
+        levelPulse 1.7s ease-out infinite;
+}
+
+.level:nth-child(2){
+    animation-delay:.12s;
+}
+
+.level:nth-child(3){
+    animation-delay:.24s;
+}
+
+.level:nth-child(4){
+    animation-delay:.36s;
 }
 
 .level:hover{
-    transform:translateY(-4px);
     filter:brightness(1.08);
+}
+
+@keyframes levelPulse{
+    0%{
+        transform:scale(1);
+        box-shadow:
+            0 10px 22px rgba(0,0,0,.19),
+            0 0 0 0 rgba(255,255,255,.30);
+    }
+
+    55%{
+        transform:scale(1.025);
+        box-shadow:
+            0 12px 24px rgba(0,0,0,.22),
+            0 0 0 8px rgba(255,255,255,.07);
+    }
+
+    100%{
+        transform:scale(1);
+        box-shadow:
+            0 10px 22px rgba(0,0,0,.19),
+            0 0 0 13px rgba(255,255,255,0);
+    }
 }
 
 .level strong{
