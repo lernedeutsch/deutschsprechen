@@ -915,6 +915,20 @@ button{font:inherit}
   flex:1;
   padding:7px 6px;
 }
+.sidebar-mic{
+  display:flex;
+  justify-content:center;
+  margin-top:22px;
+}
+.sidebar-mic .mic-column{
+  margin-top:0;
+}
+.dialog-controls{
+  align-items:stretch;
+}
+.dialog-controls .utility-row{
+  width:100%;
+}
 .card{
   grid-column:2;
   grid-row:1;
@@ -1448,26 +1462,6 @@ body{
 
         <div class="dialog-controls">
 
-          <div class="mic-column">
-
-            <div class="mic-btn-wrap" id="mic-btn-wrap">
-
-              <span class="mic-ring"></span>
-              <span class="mic-ring"></span>
-              <span class="mic-ring"></span>
-
-              <button type="button" class="mic-btn" id="mic-btn">
-                🎤
-              </button>
-
-            </div>
-
-            <p class="mic-status" id="mic-status">
-              Hör zu …
-            </p>
-
-          </div>
-
           <div class="utility-row">
 
             <button type="button" class="utility-btn repeat-btn" id="repeat-btn">
@@ -1633,6 +1627,24 @@ body{
           <span class="stat-label">Zug</span>
         </div>
 
+      </div>
+
+      <div class="sidebar-mic">
+        <div class="mic-column">
+
+          <div class="mic-btn-wrap" id="mic-btn-wrap">
+            <span class="mic-ring"></span>
+            <span class="mic-ring"></span>
+            <span class="mic-ring"></span>
+
+            <button type="button" class="mic-btn" id="mic-btn">
+              🎤
+            </button>
+          </div>
+
+          <p class="mic-status" id="mic-status">Hör zu …</p>
+
+        </div>
       </div>
 
     </aside>
