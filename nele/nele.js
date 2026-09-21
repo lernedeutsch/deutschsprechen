@@ -1086,8 +1086,36 @@ const Nele = {
         }
 
 
+        utterance.onstart =
+            () => {
+
+                const avatar =
+                    document.getElementById(
+                        "nele-avatar"
+                    );
+
+                if (avatar) {
+                    avatar.classList.add(
+                        "speaking"
+                    );
+                }
+
+            };
+
+
         utterance.onend =
             () => {
+
+                const avatar =
+                    document.getElementById(
+                        "nele-avatar"
+                    );
+
+                if (avatar) {
+                    avatar.classList.remove(
+                        "speaking"
+                    );
+                }
 
                 if (this.micButton) {
 
@@ -1105,6 +1133,17 @@ const Nele = {
 
         utterance.onerror =
             () => {
+
+                const avatar =
+                    document.getElementById(
+                        "nele-avatar"
+                    );
+
+                if (avatar) {
+                    avatar.classList.remove(
+                        "speaking"
+                    );
+                }
 
                 if (
                     this.micButton
