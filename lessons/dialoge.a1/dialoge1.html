@@ -729,6 +729,54 @@ button{font:inherit}
 .current-dialog-panel .partner-title{white-space:normal;overflow:visible;text-overflow:clip}
 .current-dialog-panel .partner-sub{flex-wrap:wrap}
 .current-dialog-panel .translation-panel{left:0}
+.dialog-menu-title{
+  margin:0 0 10px;
+  color:#61758e;
+  font:800 .68rem "JetBrains Mono",monospace;
+  letter-spacing:.16em;
+}
+.dialog-menu-list{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  margin-bottom:14px;
+}
+.dialog-menu-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:9px 10px;
+  border:1px solid transparent;
+  border-radius:10px;
+  color:#24364c;
+  font-size:.86rem;
+  font-weight:700;
+}
+.dialog-menu-item.active{
+  background:#eef8f2;
+  border-color:#78bf95;
+}
+.dialog-menu-number{
+  color:#4f9f7b;
+  font:700 .68rem "JetBrains Mono",monospace;
+}
+.dialog-menu-info{
+  margin:0 0 14px;
+  padding:10px;
+  border:1px solid #dce7e1;
+  border-radius:10px;
+  background:#f6faf8;
+}
+.dialog-menu-info p{
+  margin:0;
+  color:#4b5f70;
+  font-size:.76rem;
+  line-height:1.45;
+}
+.dialog-menu-info .hero-translation-row{
+  justify-content:flex-start;
+  margin-top:8px;
+}
 .current-dialog-panel .hero-stats{
   width:100%;
   margin-top:14px;
@@ -1156,28 +1204,6 @@ body{
 
     <h1>Führ das Gespräch! 🎙️</h1>
 
-    <div class="hero-description-row">
-      <p>
-        Vier kurze Dialoge — informell und formell. Du hörst den Satz,
-        das Mikrofon startet von selbst, und du antwortest laut.
-      </p>
-
-      <div class="hero-translation-row">
-      <span class="translation-control" id="hero-translation-control">
-        <button type="button" class="translation-toggle" id="hero-translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung">
-          <span class="translation-globe">🌐</span>A/文
-        </button>
-        <span class="translation-panel">
-          <span class="translation-languages">
-            <button type="button" class="hero-translation-language" data-lang="en">English</button>
-            <button type="button" class="hero-translation-language" data-lang="pl">Polski</button>
-            <button type="button" class="hero-translation-language" data-lang="it">Italiano</button>
-          </span>
-          <span class="translation-text" id="hero-translation-text" aria-live="polite"></span>
-        </span>
-        </span>
-      </div>
-    </div>
 
 
 
@@ -1327,6 +1353,50 @@ body{
 
     <aside class="history-panel current-dialog-panel">
 
+      <div class="dialog-menu-title">DIALOGE</div>
+
+      <div class="dialog-menu-list">
+        <div class="dialog-menu-item active">
+          <span class="dialog-menu-number">01</span>
+          <span>Auf der Straße</span>
+        </div>
+        <div class="dialog-menu-item">
+          <span class="dialog-menu-number">02</span>
+          <span>Im Büro</span>
+        </div>
+        <div class="dialog-menu-item">
+          <span class="dialog-menu-number">03</span>
+          <span>Am frühen Morgen</span>
+        </div>
+        <div class="dialog-menu-item">
+          <span class="dialog-menu-number">04</span>
+          <span>Am Abend</span>
+        </div>
+      </div>
+
+      <div class="dialog-menu-info">
+        <p>
+          Vier kurze Dialoge — informell und formell. Du hörst den Satz,
+          das Mikrofon startet von selbst, und du antwortest laut.
+        </p>
+
+        <div class="hero-translation-row">
+          <span class="translation-control" id="hero-translation-control">
+            <button type="button" class="translation-toggle" id="hero-translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung">
+              <span class="translation-globe">🌐</span>A/文
+            </button>
+            <span class="translation-panel">
+              <span class="translation-languages">
+                <button type="button" class="hero-translation-language" data-lang="en">English</button>
+                <button type="button" class="hero-translation-language" data-lang="pl">Polski</button>
+                <button type="button" class="hero-translation-language" data-lang="it">Italiano</button>
+              </span>
+              <span class="translation-text" id="hero-translation-text" aria-live="polite"></span>
+            </span>
+          </span>
+        </div>
+      </div>
+
       <div class="partner-left">
 
         <div class="partner-avatar" id="partner-avatar">👩</div>
@@ -1371,25 +1441,24 @@ body{
 
       </div>
 
+      <div class="hero-stats">
 
-    <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-value" id="stat-score">0/12</span>
+          <span class="stat-label">Punkte</span>
+        </div>
 
-      <div class="stat">
-        <span class="stat-value" id="stat-score">0/12</span>
-        <span class="stat-label">Punkte</span>
+        <div class="stat">
+          <span class="stat-value" id="stat-streak">0🔥</span>
+          <span class="stat-label">Serie</span>
+        </div>
+
+        <div class="stat">
+          <span class="stat-value" id="stat-progress">1/12</span>
+          <span class="stat-label">Zug</span>
+        </div>
+
       </div>
-
-      <div class="stat">
-        <span class="stat-value" id="stat-streak">0🔥</span>
-        <span class="stat-label">Serie</span>
-      </div>
-
-      <div class="stat">
-        <span class="stat-value" id="stat-progress">1/12</span>
-        <span class="stat-label">Zug</span>
-      </div>
-
-    </div>
 
     </aside>
 
