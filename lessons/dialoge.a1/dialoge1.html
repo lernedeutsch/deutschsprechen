@@ -563,6 +563,30 @@ button{font:inherit}
 
 /* ---------- DODATKOWE PRZYCISKI ---------- */
 
+.dialog-control-divider{
+  width:100%;
+  border-top:1px solid var(--line);
+  margin:8px 0 14px;
+}
+
+.dialog-controls{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+
+.dialog-controls .mic-column{
+  margin-top:0;
+}
+
+.dialog-controls .utility-row{
+  flex:1;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+  margin-top:0;
+}
+
 .utility-row{
   display:flex;
   justify-content:center;
@@ -1303,7 +1327,9 @@ body{
 
       <div id="stage">
 
-        <div class="partner-row">
+        <div class="dialog-control-divider"></div>
+
+        <div class="dialog-controls">
 
           <div class="mic-column">
 
@@ -1325,6 +1351,26 @@ body{
 
           </div>
 
+          <div class="utility-row">
+
+            <button type="button" class="utility-btn repeat-btn" id="repeat-btn">
+              🔁 Wiederholen
+            </button>
+
+            <button type="button" class="utility-btn answer-btn" id="answer-btn">
+              ✓ Antwort anzeigen
+            </button>
+
+            <button type="button" class="utility-btn stop-btn" id="stop-btn">
+              ⏹ Stop
+            </button>
+
+            <button type="button" class="utility-btn" id="skip-btn">
+              Überspringen →
+            </button>
+
+          </div>
+
         </div>
 
         <div class="mic-status-row">
@@ -1334,26 +1380,6 @@ body{
         </div>
 
         <div class="example-text" id="example-text"></div>
-
-        <div class="utility-row">
-
-          <button type="button" class="utility-btn repeat-btn" id="repeat-btn">
-            🔁 Wiederholen
-          </button>
-
-          <button type="button" class="utility-btn answer-btn" id="answer-btn">
-            ✓ Antwort anzeigen
-          </button>
-
-          <button type="button" class="utility-btn stop-btn" id="stop-btn">
-            ⏹ Stop
-          </button>
-
-          <button type="button" class="utility-btn" id="skip-btn">
-            Überspringen →
-          </button>
-
-        </div>
 
       </div>
 
