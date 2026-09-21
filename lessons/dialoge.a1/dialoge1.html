@@ -774,15 +774,20 @@ button{font:inherit}
 
 .history-entry.user .speaker{color:#9bea6b}
 
-.history-entry.dialog-0{background:rgba(92,151,211,.30)}
-.history-entry.dialog-1{background:rgba(104,174,155,.30)}
-.history-entry.dialog-2{background:rgba(151,126,202,.30)}
-.history-entry.dialog-3{background:rgba(202,145,96,.30)}
+.history-entry.dialog-0{background:rgba(82,145,205,.30)}
+.history-entry.dialog-1{background:rgba(72,151,176,.30)}
+.history-entry.dialog-2{background:rgba(65,160,157,.30)}
+.history-entry.dialog-3{background:rgba(76,166,132,.30)}
 
-.history-entry.user.dialog-0{background:rgba(100,185,126,.20)}
-.history-entry.user.dialog-1{background:rgba(91,170,151,.22)}
-.history-entry.user.dialog-2{background:rgba(137,117,190,.22)}
-.history-entry.user.dialog-3{background:rgba(190,134,88,.22)}
+.history-entry.user.dialog-0{background:rgba(82,145,205,.18)}
+.history-entry.user.dialog-1{background:rgba(72,151,176,.18)}
+.history-entry.user.dialog-2{background:rgba(65,160,157,.18)}
+.history-entry.user.dialog-3{background:rgba(76,166,132,.18)}
+
+.history-entry:last-child{
+  font-size:1.08rem;
+  padding:13px 16px;
+}
 
 .history-divider{
   margin:8px 0 2px;
@@ -878,8 +883,31 @@ button{font:inherit}
 }
 .dialog-menu-info .hero-translation-row{
   justify-content:flex-start;
-  margin-top:8px;
+  margin-top:0;
 }
+.dialog-menu-info.compact-info{
+  padding:6px 8px;
+  margin-bottom:12px;
+  background:transparent;
+  border-color:#314b41;
+}
+.current-dialog-panel .partner-left{
+  padding-top:12px;
+  border-top:1px solid #314b41;
+}
+.current-dialog-panel .partner-title{
+  font-size:1rem;
+  font-weight:900;
+}
+.current-dialog-panel .turn-instruction{
+  font-size:.78rem;
+  opacity:.82;
+}
+.current-dialog-panel .hero-stats{
+  padding-top:12px;
+  border-top:1px solid #314b41;
+}
+
 .current-dialog-panel .hero-stats{
   width:100%;
   margin-top:14px;
@@ -900,8 +928,38 @@ button{font:inherit}
 .card #stage{
   margin-top:auto;
 }
-.main-history-panel{background:#0f1c2e;border-radius:18px;padding:14px;margin:0 0 18px}
-.main-history-panel .history-list{max-height:440px}
+.main-history-panel{
+  background:#0f1c2e;
+  border-radius:18px;
+  padding:14px;
+  margin:0 0 18px;
+  border-bottom:1px solid rgba(143,164,189,.28);
+}
+.main-history-panel .history-list{
+  max-height:440px;
+  min-height:150px;
+}
+.card #stage{
+  border-top:1px solid rgba(143,164,189,.30);
+  padding-top:14px;
+}
+.dialog-control-divider{
+  display:none;
+}
+.dialog-controls .utility-btn{
+  opacity:.78;
+}
+.dialog-controls .utility-btn:hover{
+  opacity:1;
+}
+.text-answer-row{
+  padding-top:10px;
+  border-top:1px solid rgba(143,164,189,.18);
+  opacity:.82;
+}
+.text-answer-row:focus-within{
+  opacity:1;
+}
 @media(max-width:860px){.current-dialog-panel,.card{grid-column:1;grid-row:auto}.current-dialog-panel{position:static;width:100%}}
 
 /* ---------- FINAL ---------- */
@@ -1501,12 +1559,7 @@ body{
         </div>
       </div>
 
-      <div class="dialog-menu-info">
-        <p>
-          Vier kurze Dialoge — informell und formell. Du hörst den Satz,
-          das Mikrofon startet von selbst, und du antwortest laut.
-        </p>
-
+      <div class="dialog-menu-info compact-info">
         <div class="hero-translation-row">
           <span class="translation-control" id="hero-translation-control">
             <button type="button" class="translation-toggle" id="hero-translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung">
