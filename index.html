@@ -451,7 +451,8 @@ body.intro-finished #intro-screen{
 .level{
     min-height:0;
 
-    padding:20px;
+    margin:4px;
+    padding:18px;
 
     display:flex;
     flex-direction:column;
@@ -463,10 +464,13 @@ body.intro-finished #intro-screen{
     color:white;
 
     border:
-        1px solid rgba(255,255,255,.12);
+        1px solid rgba(255,255,255,.14);
 
     box-shadow:
-        0 10px 22px rgba(0,0,0,.19);
+        0 12px 0 rgba(0,0,0,.16),
+        0 20px 30px rgba(0,0,0,.22),
+        inset 0 2px 0 rgba(255,255,255,.13),
+        inset 0 -10px 18px rgba(0,0,0,.08);
 
     transition:
         transform .2s,
@@ -497,15 +501,21 @@ body.intro-finished #intro-screen{
     100%{
         transform:scale(1);
         box-shadow:
-            0 10px 22px rgba(0,0,0,.19),
-            0 0 0 0 rgba(255,255,255,0);
+            0 12px 0 rgba(0,0,0,.16),
+            0 20px 30px rgba(0,0,0,.22),
+            0 0 0 0 rgba(255,255,255,0),
+            inset 0 2px 0 rgba(255,255,255,.13),
+            inset 0 -10px 18px rgba(0,0,0,.08);
     }
 
     50%{
-        transform:scale(1.008);
+        transform:scale(1.007);
         box-shadow:
-            0 10px 22px rgba(0,0,0,.20),
-            0 0 0 4px rgba(255,255,255,.035);
+            0 13px 0 rgba(0,0,0,.17),
+            0 21px 31px rgba(0,0,0,.23),
+            0 0 0 3px rgba(255,255,255,.028),
+            inset 0 2px 0 rgba(255,255,255,.15),
+            inset 0 -10px 18px rgba(0,0,0,.08);
     }
 }
 
@@ -745,7 +755,7 @@ body.intro-finished #intro-screen{
 
     border-radius:50%;
 
-    background:#0b1f39;
+    background:#062f24;
     color:white;
 
     border:
