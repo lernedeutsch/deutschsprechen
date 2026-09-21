@@ -611,6 +611,10 @@ const Nele = {
                     "Nele hört zu..."
                 );
 
+                this.micButton.classList.remove(
+                    "mic-ready"
+                );
+
                 this.micButton.textContent =
                     "🔴";
 
@@ -769,6 +773,10 @@ const Nele = {
                 if (!this.recognition) {
                     return;
                 }
+
+                this.micButton.classList.remove(
+                    "mic-ready"
+                );
 
 
                 if (this.isListening) {
@@ -1002,6 +1010,12 @@ const Nele = {
         }
 
 
+        if (this.micButton) {
+            this.micButton.classList.remove(
+                "mic-ready"
+            );
+        }
+
         window
             .speechSynthesis
             .cancel();
@@ -1070,6 +1084,41 @@ const Nele = {
                 preferredVoice;
 
         }
+
+
+        utterance.onend =
+            () => {
+
+                if (this.micButton) {
+
+                    this.micButton.classList.add(
+                        "mic-ready"
+                    );
+
+                    this.micButton.title =
+                        "Jetzt sprechen – Mikrofon anklicken";
+
+                }
+
+            };
+
+
+        utterance.onerror =
+            () => {
+
+                if (
+                    this.micButton
+                    &&
+                    !this.isListening
+                ) {
+
+                    this.micButton.classList.add(
+                        "mic-ready"
+                    );
+
+                }
+
+            };
 
 
         window
