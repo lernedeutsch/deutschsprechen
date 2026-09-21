@@ -729,6 +729,16 @@ button{font:inherit}
 .current-dialog-panel .partner-title{white-space:normal;overflow:visible;text-overflow:clip}
 .current-dialog-panel .partner-sub{flex-wrap:wrap}
 .current-dialog-panel .translation-panel{left:0}
+.current-dialog-panel .hero-stats{
+  width:100%;
+  margin-top:14px;
+  gap:6px;
+}
+.current-dialog-panel .hero-stats .stat{
+  min-width:0;
+  flex:1;
+  padding:7px 6px;
+}
 .card{grid-column:2;grid-row:1}
 .main-history-panel{background:#0f1c2e;border-radius:18px;padding:14px;margin:0 0 18px}
 .main-history-panel .history-list{max-height:440px}
@@ -1169,24 +1179,7 @@ body{
       </div>
     </div>
 
-    <div class="hero-stats">
 
-      <div class="stat">
-        <span class="stat-value" id="stat-score">0/12</span>
-        <span class="stat-label">Punkte</span>
-      </div>
-
-      <div class="stat">
-        <span class="stat-value" id="stat-streak">0🔥</span>
-        <span class="stat-label">Serie</span>
-      </div>
-
-      <div class="stat">
-        <span class="stat-value" id="stat-progress">1/12</span>
-        <span class="stat-label">Zug</span>
-      </div>
-
-    </div>
 
   </header>
 
@@ -1378,6 +1371,25 @@ body{
 
       </div>
 
+
+    <div class="hero-stats">
+
+      <div class="stat">
+        <span class="stat-value" id="stat-score">0/12</span>
+        <span class="stat-label">Punkte</span>
+      </div>
+
+      <div class="stat">
+        <span class="stat-value" id="stat-streak">0🔥</span>
+        <span class="stat-label">Serie</span>
+      </div>
+
+      <div class="stat">
+        <span class="stat-value" id="stat-progress">1/12</span>
+        <span class="stat-label">Zug</span>
+      </div>
+
+    </div>
 
     </aside>
 
