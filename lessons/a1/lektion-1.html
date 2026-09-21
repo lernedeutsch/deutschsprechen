@@ -616,6 +616,40 @@ header.hero{
   font:600 .96rem/1.5 "Nunito Sans",sans-serif;
 }
 
+.step-number{
+  color:#000;
+  font-weight:900;
+}
+
+.learning-translation{
+  margin-top:10px;
+}
+
+.learning-translation summary{
+  width:max-content;
+  cursor:pointer;
+  color:#dcecff;
+  font:700 .88rem/1.35 "Nunito Sans",sans-serif;
+}
+
+.learning-translation p{
+  margin:8px 0 0;
+  color:#dcecff;
+  font:600 .88rem/1.45 "Nunito Sans",sans-serif;
+}
+
+.next-step-box .learning-translation{
+  margin:10px auto 0;
+  width:max-content;
+  max-width:100%;
+  text-align:left;
+}
+
+.next-step-box .learning-translation summary,
+.next-step-box .learning-translation p{
+  color:#dcecff;
+}
+
 .next-step-box{
   margin:22px 0 0;
   text-align:center;
@@ -877,30 +911,37 @@ button:focus-visible,
   </a>
 
   <div class="learning-guide">
-    <strong>① Zuerst: Lies die ganze Lektion.</strong>
+    <strong><span class="step-number">①</span> Zuerst: Lies die ganze Lektion.</strong>
     <span>Danach übst du Schritt für Schritt mit den Aufgaben in dieser Reihenfolge.</span>
+
+    <details class="learning-translation">
+      <summary>🌐 Übersetzung</summary>
+      <p><strong>English:</strong> First, read the whole lesson. Then practise step by step with the tasks in this order.</p>
+      <p><strong>Polski:</strong> Najpierw przeczytaj całą lekcję. Następnie ćwicz krok po kroku, wykonując zadania w tej kolejności.</p>
+      <p><strong>Italiano:</strong> Per prima cosa, leggi tutta la lezione. Poi esercitati passo dopo passo con gli esercizi in quest’ordine.</p>
+    </details>
   </div>
 
   <div class="side-buttons">
 
     <a href="../aktivt-trenieren.a1/aktiv-trenieren1.html" class="training-btn aktiv-trainieren-btn">
-      ② 🏋️ Aktiv trainieren
+      <span class="step-number">②</span> 🏋️ Aktiv trainieren
     </a>
 
     <a href="../sprich-nach.a1/sprich-nach1.html" class="training-btn sprich-nach-btn">
-      ③ 🎤 Sprich nach
+      <span class="step-number">③</span> 🎤 Sprich nach
     </a>
 
     <a href="../ubungen.a1/ubungen1.html" class="training-btn übung-training-btn">
-      ④ ✏️ Übungen
+      <span class="step-number">④</span> ✏️ Übungen
     </a>
 
     <a href="../dialoge.a1/dialoge1.html" class="training-btn dialoge-btn">
-      ⑤ 💬 Dialoge
+      <span class="step-number">⑤</span> 💬 Dialoge
     </a>
 
     <a href="../dikatat.a1/diktat1.html" class="training-btn diktat-btn">
-      ⑥ ✍️ Ich schreibe ein Diktat
+      <span class="step-number">⑥</span> ✍️ Ich schreibe ein Diktat
     </a>
 
   </div>
@@ -1274,8 +1315,15 @@ button:focus-visible,
 
       <div class="next-step-box">
         <a href="../aktivt-trenieren.a1/aktiv-trenieren1.html">
-          Fertig gelesen? Weiter mit ② Aktiv trainieren
+          Fertig gelesen? Weiter mit <span class="step-number">②</span> Aktiv trainieren
         </a>
+
+        <details class="learning-translation">
+          <summary>🌐 Übersetzung</summary>
+          <p><strong>English:</strong> Finished reading? Continue with ② Aktiv trainieren.</p>
+          <p><strong>Polski:</strong> Czytanie skończone? Przejdź dalej do ② Aktiv trainieren.</p>
+          <p><strong>Italiano:</strong> Hai finito di leggere? Continua con ② Aktiv trainieren.</p>
+        </details>
       </div>
 
       <nav
