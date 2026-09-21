@@ -11,8 +11,8 @@
 
 <style>
 :root{
-  --bg:#1d3b56;
-  --bg2:#2a4c6b;
+  --bg:#244863;
+  --bg2:#315b78;
   --surface:#f8fbff;
   --card:#ffffff;
   --text:#101820;
@@ -158,16 +158,17 @@ button,input{font:inherit}
 
 .panel{
   position:relative;
-  background:linear-gradient(180deg,#f4efe6 0%,#f7f5f0 18%,#f1f3f4 100%);
+  background:linear-gradient(180deg,#f4efe6 0%,#f7f5f0 18%,#eef1f2 100%);
   border-radius:22px;
-  border:1px solid rgba(255,255,255,.68);
+  border:1px solid rgba(255,255,255,.70);
   box-shadow:
-    15px 15px 0 rgba(17,49,78,.38),
-    0 30px 54px rgba(8,20,36,.32),
-    0 18px 34px rgba(106,198,255,.24),
-    0 34px 44px rgba(94,187,240,.18),
-    inset 0 2px 0 rgba(255,255,255,.88),
-    inset 0 -14px 26px rgba(36,63,91,.08);
+    18px 18px 0 rgba(14,43,70,.42),
+    0 34px 62px rgba(7,18,32,.36),
+    0 20px 38px rgba(106,198,255,.28),
+    0 42px 56px rgba(93,191,244,.28),
+    0 52px 74px rgba(80,176,232,.18),
+    inset 0 2px 0 rgba(255,255,255,.92),
+    inset 0 -16px 30px rgba(35,61,88,.10);
   padding:clamp(16px,3vw,30px);
 }
 
@@ -314,6 +315,46 @@ button,input{font:inherit}
 
 .orb-icon{transition:transform .25s ease}
 
+#mic-btn{
+  border:0;
+  padding:0;
+  color:inherit;
+  cursor:default;
+}
+
+#mic-btn.mic-ready{
+  cursor:pointer;
+  background:linear-gradient(155deg,#17654d,#0b4938);
+  border:3px solid rgba(255,255,255,.94);
+  box-shadow:
+    0 14px 30px rgba(11,73,56,.34),
+    0 0 0 0 rgba(93,218,159,.46),
+    inset 0 2px 0 rgba(255,255,255,.18);
+  animation:micReadyPulse 1.25s ease-in-out infinite;
+}
+
+#mic-btn:disabled{
+  cursor:default;
+}
+
+@keyframes micReadyPulse{
+  0%,100%{
+    transform:scale(1);
+    box-shadow:
+      0 14px 30px rgba(11,73,56,.34),
+      0 0 0 0 rgba(93,218,159,.42),
+      inset 0 2px 0 rgba(255,255,255,.18);
+  }
+  50%{
+    transform:scale(1.07);
+    box-shadow:
+      0 18px 36px rgba(11,73,56,.42),
+      0 0 0 11px rgba(93,218,159,.10),
+      0 0 28px rgba(93,218,159,.42),
+      inset 0 2px 0 rgba(255,255,255,.20);
+  }
+}
+
 /* states */
 .stage[data-state="idle"] .orb{background:linear-gradient(155deg,#2c4a6b,#16283b)}
 
@@ -459,24 +500,25 @@ button,input{font:inherit}
   display:flex;
   flex-wrap:wrap;
   align-items:center;
-  gap:8px;
-  padding:2px 9px;
-  min-height:30px;
+  gap:7px;
+  padding:0 8px;
+  min-height:25px;
   background:#fff;
   border:1px solid var(--line);
-  border-radius:9px;
+  border-radius:8px;
 }
 
 .speed-row label{
   font-weight:700;
   color:var(--text);
   white-space:nowrap;
-  font-size:.8rem;
+  font-size:.76rem;
 }
 
 .speed-row input[type="range"]{
   flex:1;
   min-width:80px;
+  height:14px;
   accent-color:#3da8f0;
 }
 
@@ -725,7 +767,9 @@ button,input{font:inherit}
       <div class="stage" id="stage" data-state="idle">
         <div class="orb-wrap">
           <div class="orb-ring"></div>
-          <div class="orb"><span class="orb-icon" id="orb-icon">🔊</span></div>
+          <button type="button" class="orb" id="mic-btn" aria-label="Mikrofon" title="Mikrofon" disabled>
+            <span class="orb-icon" id="orb-icon">🔊</span>
+          </button>
         </div>
       </div>
 
@@ -827,6 +871,7 @@ const doneWrap=document.getElementById("done-wrap");
 const exerciseWrap=document.getElementById("exercise-wrap");
 const startWrap=document.getElementById("start-wrap");
 const orbIcon=document.getElementById("orb-icon");
+const micButton=document.getElementById("mic-btn");
 const noMicNote=document.getElementById("no-mic-note");
 const historyList=document.getElementById("history-list");
 const historyEmpty=document.getElementById("history-empty");
@@ -917,6 +962,21 @@ function stopRecognitionCompletely(){
   }
 }
 
+function setMicReady(ready){
+  if(!micButton)return;
+
+  micButton.disabled=!ready;
+  micButton.classList.toggle("mic-ready",ready);
+
+  if(ready){
+    micButton.title="Jetzt sprechen – Mikrofon anklicken";
+    micButton.setAttribute("aria-label","Jetzt sprechen – Mikrofon anklicken");
+  }else{
+    micButton.title="Mikrofon";
+    micButton.setAttribute("aria-label","Mikrofon");
+  }
+}
+
 /* ---------- Textvergleich (tolerant) ---------- */
 function normalize(str){
   return str
@@ -971,7 +1031,10 @@ let gotFinal=false;
 
 function startListening(){
   if(!recognition)return;
+
+  setMicReady(false);
   gotFinal=false;
+
   try{recognition.start();}catch(e){/* already running */}
 
   setStage("listening","🎤");
@@ -1053,6 +1116,7 @@ async function playCurrentAndListen(){
 
   const token=++playbackToken;
 
+  setMicReady(false);
   stopRecognitionCompletely();
 
   if("speechSynthesis" in window){
@@ -1074,17 +1138,17 @@ async function playCurrentAndListen(){
   if(token!==playbackToken)return;
 
   /*
-   * Krótka przerwa po TTS jest celowa:
-   * mikrofon nie przejmuje urządzenia audio w ostatniej sylabie zdania.
+   * Najpierw całe zdanie kończy się w TTS.
+   * Mikrofon pozostaje wyłączony aż do ręcznego kliknięcia ucznia.
    */
-  await wait(520);
+  await wait(360);
 
   if(token!==playbackToken)return;
 
-  recognizing=true;
-
   if(recognition){
-    startListening();
+    setStage("idle","🎤");
+    statusLine.textContent="Jetzt du — Mikrofon anklicken und den Satz nachsprechen.";
+    setMicReady(true);
   }else{
     setStage("listening","⌨️");
     statusLine.textContent="Tippe den Satz unten ein und drücke Senden.";
@@ -1092,6 +1156,7 @@ async function playCurrentAndListen(){
 }
 
 function handleAnswer(said){
+  setMicReady(false);
   recognizing=false;
   if(recognition){try{recognition.stop();}catch(e){}}
 
@@ -1142,6 +1207,7 @@ function handleAnswer(said){
 }
 
 function finishCourse(){
+  setMicReady(false);
   updateProgress();
   setStage("done","🏆");
   statusLine.textContent="";
@@ -1152,6 +1218,22 @@ function finishCourse(){
 }
 
 /* ---------- Buttons ---------- */
+
+if(micButton){
+  micButton.addEventListener("click",()=>{
+    if(
+      micButton.disabled ||
+      !recognition ||
+      ("speechSynthesis" in window && window.speechSynthesis.speaking)
+    ){
+      return;
+    }
+
+    recognizing=true;
+    startListening();
+  });
+}
+
 document.getElementById("start-btn").addEventListener("click",()=>{
   startWrap.style.display="none";
   exerciseWrap.style.display="block";
@@ -1167,6 +1249,7 @@ document.getElementById("repeat-btn").addEventListener("click",()=>{
 
 document.getElementById("next-btn").addEventListener("click",()=>{
   playbackToken++;
+  setMicReady(false);
   stopRecognitionCompletely();
   if("speechSynthesis" in window)speechSynthesis.cancel();
   if(currentIndex<sentences.length){
@@ -1183,6 +1266,7 @@ document.getElementById("weiter-btn").addEventListener("click",()=>{
 
 document.getElementById("stop-btn").addEventListener("click",()=>{
   playbackToken++;
+  setMicReady(false);
   stopRecognitionCompletely();
   if("speechSynthesis" in window)speechSynthesis.cancel();
   setStage("idle","⏸");
@@ -1191,6 +1275,7 @@ document.getElementById("stop-btn").addEventListener("click",()=>{
 
 function restartAll(){
   playbackToken++;
+  setMicReady(false);
   stopRecognitionCompletely();
   if("speechSynthesis" in window)speechSynthesis.cancel();
   currentIndex=0;
