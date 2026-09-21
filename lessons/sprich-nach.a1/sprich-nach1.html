@@ -720,8 +720,8 @@ button,input{font:inherit}
 
         <div class="speed-row">
           <label for="speed">🐢 Geschwindigkeit</label>
-          <input type="range" id="speed" min="0.6" max="1.3" step="0.05" value="0.85">
-          <span class="speed-val" id="speed-val">0.85</span>
+          <input type="range" id="speed" min="0.6" max="1.3" step="0.05" value="0.95">
+          <span class="speed-val" id="speed-val">0.95</span>
           <button class="pill-btn" id="restart-btn">🔄 Neustart</button>
         </div>
 
@@ -795,7 +795,7 @@ const sentences=[
 ];
 
 let currentIndex=0;
-let currentRate=0.85;
+let currentRate=0.95;
 let awaitingRetry=false;
 let recognizing=false;
 let recognition=null;
@@ -821,12 +821,14 @@ let germanVoice=null;
 function loadGermanVoice(){
   if(!("speechSynthesis" in window))return;
   const voices=speechSynthesis.getVoices();
-  const femaleHints=["female","frau","anna","petra","helena","vicki","marlene","google"];
+  const germanVoices=voices.filter(
+    v=>v.lang&&v.lang.toLowerCase().startsWith("de")
+  );
 
   germanVoice=
-    voices.find(v=>v.lang?.toLowerCase()==="de-de"&&femaleHints.some(h=>v.name.toLowerCase().includes(h)))||
-    voices.find(v=>v.lang?.toLowerCase()==="de-de")||
-    voices.find(v=>v.lang?.toLowerCase().startsWith("de"))||
+    germanVoices.find(v=>v.name.toLowerCase().includes("google"))||
+    germanVoices.find(v=>v.lang==="de-DE")||
+    germanVoices[0]||
     null;
 }
 
@@ -927,7 +929,7 @@ function speak(text,rate){
 
       utter.lang="de-DE";
       utter.rate=rate;
-      utter.pitch=1.05;
+      utter.pitch=1.0;
       utter.volume=1;
 
       if(germanVoice)utter.voice=germanVoice;
