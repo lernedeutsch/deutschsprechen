@@ -180,7 +180,7 @@ body{
 
 .avatar-waveform span{
     width:6px;
-    height:8px;
+    height:var(--min-h,8px);
     border-radius:4px;
     background:linear-gradient(180deg,#6ac6ff,#f4c95d);
     transform-origin:bottom;
@@ -204,17 +204,17 @@ body{
     animation:dance .9s ease-in-out infinite;
 }
 
-.avatar-waveform span:nth-child(1){animation-delay:0s}
-.avatar-waveform span:nth-child(2){animation-delay:.1s}
-.avatar-waveform span:nth-child(3){animation-delay:.2s}
-.avatar-waveform span:nth-child(4){animation-delay:.3s}
-.avatar-waveform span:nth-child(5){animation-delay:.15s}
-.avatar-waveform span:nth-child(6){animation-delay:.25s}
-.avatar-waveform span:nth-child(7){animation-delay:.05s}
+.avatar-waveform span:nth-child(1){--min-h:7px;--max-h:24px;animation-delay:0s}
+.avatar-waveform span:nth-child(2){--min-h:13px;--max-h:34px;animation-delay:.1s}
+.avatar-waveform span:nth-child(3){--min-h:9px;--max-h:28px;animation-delay:.2s}
+.avatar-waveform span:nth-child(4){--min-h:17px;--max-h:38px;animation-delay:.3s}
+.avatar-waveform span:nth-child(5){--min-h:11px;--max-h:31px;animation-delay:.15s}
+.avatar-waveform span:nth-child(6){--min-h:6px;--max-h:22px;animation-delay:.25s}
+.avatar-waveform span:nth-child(7){--min-h:14px;--max-h:35px;animation-delay:.05s}
 
 @keyframes dance{
-    0%,100%{height:8px}
-    50%{height:34px}
+    0%,100%{height:var(--min-h)}
+    50%{height:var(--max-h)}
 }
 
 .nele-title h1{
