@@ -380,201 +380,70 @@ body.intro-finished #intro-screen{
 }
 
 
-/* NELE */
+/* START — POZIOMY + NELE */
 
-.nele-card{
-    position:relative;
-    overflow:hidden;
-
+.start-grid{
     display:grid;
-    grid-template-columns:118px 1fr;
-    gap:30px;
-    align-items:center;
+    grid-template-columns:
+        repeat(2,minmax(0,1fr));
+    gap:24px;
+    align-items:stretch;
 
-    padding:30px 34px;
+    margin-bottom:34px;
+}
 
-    margin-bottom:32px;
-
-    background:
-        radial-gradient(
-            circle at 12% 25%,
-            rgba(98,189,245,.16),
-            transparent 34%
-        ),
-        linear-gradient(
-            135deg,
-            #173e63,
-            #0d253f
-        );
+.start-panel{
+    min-width:0;
+    aspect-ratio:1 / 1;
 
     border:
-        1px solid rgba(255,255,255,.13);
+        1px solid rgba(255,255,255,.12);
 
-    border-radius:28px;
+    border-radius:30px;
 
     box-shadow:
-        0 20px 42px rgba(0,0,0,.28);
+        0 18px 38px rgba(0,0,0,.26);
 }
 
-.nele-card::after{
-    content:"";
-    position:absolute;
-    right:-70px;
-    bottom:-95px;
-
-    width:230px;
-    height:230px;
-
-    border-radius:50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(244,201,93,.10),
-            transparent 68%
-        );
-
-    pointer-events:none;
-}
-
-.nele-avatar{
-    position:relative;
-    z-index:1;
-
-    width:108px;
-    height:108px;
-
+.levels-panel{
     display:flex;
-    align-items:center;
-    justify-content:center;
+    flex-direction:column;
 
-    border-radius:50%;
+    padding:26px;
 
     background:
         linear-gradient(
             145deg,
-            #f9d978,
-            #e8b83e
+            #102a47,
+            #0b2038
         );
-
-    border:
-        4px solid rgba(255,255,255,.16);
-
-    font-size:54px;
-
-    box-shadow:
-        0 14px 30px rgba(0,0,0,.26),
-        0 0 0 7px rgba(244,201,93,.07);
 }
 
-.nele-info{
-    position:relative;
-    z-index:1;
-}
+.levels-panel .section-subtitle{
+    margin:0 0 18px;
 
-.nele-kicker{
-    margin:0 0 7px;
+    color:#d5e1ee;
 
-    color:#8fd8ff;
-
-    font-size:.76rem;
-    font-weight:800;
-    letter-spacing:.16em;
-    text-transform:uppercase;
-}
-
-.nele-info h2{
-    margin:0 0 7px;
-
-    font-size:2rem;
-    line-height:1;
-}
-
-.nele-lead{
-    margin:0 0 5px;
-
-    color:var(--text);
-
-    font-size:1.08rem;
+    font-size:1rem;
     font-weight:700;
 }
 
-.nele-copy{
-    max-width:620px;
-    margin:0;
-
-    color:var(--muted);
-    line-height:1.55;
-}
-
-.nele-button{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-
-    margin-top:17px;
-    padding:13px 20px;
-
-    min-height:50px;
-
-    border-radius:15px;
-
-    background:
-        linear-gradient(
-            180deg,
-            #7bdcff,
-            #43a8e2
-        );
-
-    color:#07182c;
-
-    text-decoration:none;
-    font-weight:800;
-
-    box-shadow:
-        0 10px 22px rgba(0,0,0,.22);
-
-    transition:
-        transform .18s ease,
-        box-shadow .18s ease;
-}
-
-.nele-button:hover{
-    transform:translateY(-2px);
-
-    box-shadow:
-        0 14px 26px rgba(0,0,0,.26);
-}
-
-
-/* SEKCJE */
-
-.section-title{
-    margin:40px 0 18px;
-    font-size:1.6rem;
-}
-
-.section-subtitle{
-    margin:-8px 0 22px;
-    color:var(--muted);
-}
-
-
-/* POZIOMY */
-
 .level-grid{
-    display:grid;
+    flex:1;
 
+    display:grid;
     grid-template-columns:
-        repeat(2,1fr);
+        repeat(2,minmax(0,1fr));
+    grid-template-rows:
+        repeat(2,minmax(0,1fr));
 
     gap:16px;
 }
 
 .level{
-    min-height:150px;
+    min-height:0;
 
-    padding:22px;
+    padding:20px;
 
     display:flex;
     flex-direction:column;
@@ -586,10 +455,10 @@ body.intro-finished #intro-screen{
     color:white;
 
     border:
-        1px solid rgba(255,255,255,.1);
+        1px solid rgba(255,255,255,.12);
 
     box-shadow:
-        0 12px 25px rgba(0,0,0,.2);
+        0 10px 22px rgba(0,0,0,.19);
 
     transition:
         transform .2s,
@@ -597,16 +466,16 @@ body.intro-finished #intro-screen{
 }
 
 .level:hover{
-    transform:translateY(-5px);
+    transform:translateY(-4px);
     filter:brightness(1.08);
 }
 
 .level strong{
-    font-size:2.2rem;
+    font-size:2.15rem;
 }
 
 .level span{
-    color:rgba(255,255,255,.8);
+    color:rgba(255,255,255,.84);
 }
 
 .a1{
@@ -643,6 +512,217 @@ body.intro-finished #intro-screen{
             #b2682a,
             #7b3f1d
         );
+}
+
+
+/* NELE */
+
+.nele-card{
+    --nele-accent:#e4b349;
+    --nele-accent-dark:#c98d28;
+
+    position:relative;
+
+    display:flex;
+    flex-direction:column;
+
+    padding:28px;
+
+    background:#0b1d33;
+
+    box-shadow:
+        14px 14px 0 var(--nele-accent-dark),
+        0 18px 38px rgba(0,0,0,.28);
+}
+
+.nele-top{
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    gap:16px;
+    align-items:center;
+
+    padding-bottom:18px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.11);
+}
+
+.nele-avatar{
+    width:78px;
+    height:78px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:var(--nele-accent);
+
+    border:
+        6px solid rgba(255,255,255,.10);
+
+    font-size:40px;
+
+    box-shadow:
+        0 0 0 5px rgba(228,179,73,.18);
+}
+
+.nele-kicker{
+    margin:0 0 3px;
+
+    color:#b7d6f2;
+
+    font-size:.92rem;
+    font-weight:700;
+}
+
+.nele-info h2{
+    margin:0;
+
+    font-size:2rem;
+    line-height:1;
+}
+
+.nele-status{
+    width:18px;
+    height:18px;
+
+    border-radius:50%;
+
+    background:#42dda0;
+
+    border:
+        5px solid #153b3d;
+}
+
+.nele-chat{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+
+    margin:20px 0 18px;
+}
+
+.nele-bubble{
+    width:max-content;
+    max-width:82%;
+
+    padding:11px 15px;
+
+    border-radius:18px;
+
+    font-size:.98rem;
+    line-height:1.35;
+}
+
+.nele-bubble.left{
+    align-self:flex-start;
+
+    background:#1f4269;
+    color:white;
+
+    border-bottom-left-radius:7px;
+}
+
+.nele-bubble.right{
+    align-self:flex-end;
+
+    background:var(--nele-accent);
+    color:#101820;
+
+    border-bottom-right-radius:7px;
+}
+
+.nele-lead{
+    margin:0 0 6px;
+
+    color:white;
+
+    font-size:1.45rem;
+    font-weight:800;
+}
+
+.nele-copy{
+    margin:0;
+
+    color:#b8cce1;
+
+    line-height:1.55;
+}
+
+.nele-button{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    width:100%;
+    min-height:58px;
+
+    margin-top:auto;
+    padding:9px 16px 9px 9px;
+
+    border-radius:30px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ecc45f,
+            var(--nele-accent)
+        );
+
+    color:#0d1b2a;
+
+    text-decoration:none;
+    font-weight:800;
+    font-size:1.02rem;
+
+    box-shadow:
+        0 7px 0 #aa731d;
+
+    transition:
+        transform .18s ease,
+        box-shadow .18s ease;
+}
+
+.nele-button:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 9px 0 #aa731d;
+}
+
+.nele-mic{
+    width:43px;
+    height:43px;
+
+    flex:none;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:#10233d;
+    color:white;
+
+    border:
+        3px solid rgba(255,255,255,.88);
+
+    font-size:1.15rem;
+}
+
+/* SEKCJE */
+
+.section-title{
+    margin:40px 0 18px;
+    font-size:1.6rem;
+}
+
+.section-subtitle{
+    margin:-8px 0 22px;
+    color:var(--muted);
 }
 
 
@@ -811,39 +891,36 @@ footer{
             28px 10px 30px;
     }
 
-    .level-grid{
-        grid-template-columns:
-            repeat(2,1fr);
+    .start-grid{
+        grid-template-columns:1fr;
+    }
+
+    .start-panel{
+        aspect-ratio:auto;
+    }
+
+    .levels-panel{
+        min-height:470px;
+    }
+
+    .nele-card{
+        min-height:540px;
+        padding:24px 22px;
+    }
+
+    .nele-avatar{
+        width:70px;
+        height:70px;
+
+        font-size:36px;
+    }
+
+    .nele-lead{
+        font-size:1.3rem;
     }
 
     .tools{
         grid-template-columns:1fr;
-    }
-
-    .nele-card{
-        grid-template-columns:1fr;
-        gap:18px;
-        padding:24px 22px;
-
-        text-align:center;
-    }
-
-    .nele-avatar{
-        width:92px;
-        height:92px;
-
-        margin:0 auto;
-
-        font-size:47px;
-    }
-
-    .nele-copy{
-        margin-left:auto;
-        margin-right:auto;
-    }
-
-    .nele-button{
-        width:100%;
     }
 
 }
@@ -859,9 +936,13 @@ and
     max-width:950px
 ){
 
-    .level-grid{
-        grid-template-columns:
-            repeat(2,1fr);
+    .start-grid{
+        gap:18px;
+    }
+
+    .levels-panel,
+    .nele-card{
+        padding:22px;
     }
 
 }
@@ -906,21 +987,98 @@ and
 
 
 
-<!-- NELE -->
+<!-- POZIOMY + NELE -->
 
-<section class="nele-card">
+<section class="start-grid">
 
-    <div class="nele-avatar" aria-hidden="true">
-        👩‍🏫
-    </div>
+    <div class="start-panel levels-panel">
 
-    <div class="nele-info">
-
-        <p class="nele-kicker">
-            Deine Deutschtrainerin
+        <p class="section-subtitle">
+            Wähle dein Sprachniveau.
         </p>
 
-        <h2>Nele</h2>
+        <div class="level-grid">
+
+            <a
+                href="lessons/a1/index.html"
+                class="level a1"
+            >
+                <strong>A1</strong>
+                <span>Anfänger</span>
+            </a>
+
+            <a
+                href="#"
+                class="level a2"
+            >
+                <strong>A2</strong>
+                <span>Grundkenntnisse</span>
+            </a>
+
+            <a
+                href="#"
+                class="level b1"
+            >
+                <strong>B1</strong>
+                <span>Mittelstufe</span>
+            </a>
+
+            <a
+                href="#"
+                class="level b2"
+            >
+                <strong>B2</strong>
+                <span>Fortgeschritten</span>
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <section class="start-panel nele-card">
+
+        <div class="nele-top">
+
+            <div class="nele-avatar" aria-hidden="true">
+                👩🏻‍💻
+            </div>
+
+            <div class="nele-info">
+
+                <p class="nele-kicker">
+                    Deine Deutschtrainerin
+                </p>
+
+                <h2>Nele</h2>
+
+            </div>
+
+            <span
+                class="nele-status"
+                aria-label="Nele ist bereit"
+                title="Nele ist bereit"
+            ></span>
+
+        </div>
+
+
+        <div class="nele-chat" aria-hidden="true">
+
+            <div class="nele-bubble left">
+                Hallo! Wie heißt du?
+            </div>
+
+            <div class="nele-bubble right">
+                Ich heiße Anna.
+            </div>
+
+            <div class="nele-bubble left">
+                Freut mich, Anna! Wie geht's?
+            </div>
+
+        </div>
+
 
         <p class="nele-lead">
             Sprich Deutsch mit Nele.
@@ -934,81 +1092,13 @@ and
             href="nele.html"
             class="nele-button"
         >
-            🎙️ Mit Nele sprechen
+            <span class="nele-mic" aria-hidden="true">🎙️</span>
+            <span>Mit Nele sprechen</span>
         </a>
 
-    </div>
+    </section>
 
 </section>
-
-
-
-<!-- POZIOMY -->
-
-<p class="section-subtitle">
-    Wähle dein Sprachniveau.
-</p>
-
-
-<div class="level-grid">
-
-    <a
-        href="lessons/a1/index.html"
-        class="level a1"
-    >
-
-        <strong>A1</strong>
-
-        <span>
-            Anfänger
-        </span>
-
-    </a>
-
-
-    <a
-        href="#"
-        class="level a2"
-    >
-
-        <strong>A2</strong>
-
-        <span>
-            Grundkenntnisse
-        </span>
-
-    </a>
-
-
-    <a
-        href="#"
-        class="level b1"
-    >
-
-        <strong>B1</strong>
-
-        <span>
-            Mittelstufe
-        </span>
-
-    </a>
-
-
-    <a
-        href="#"
-        class="level b2"
-    >
-
-        <strong>B2</strong>
-
-        <span>
-            Fortgeschritten
-        </span>
-
-    </a>
-
-</div>
-
 
 
 <!-- NAUKA -->
