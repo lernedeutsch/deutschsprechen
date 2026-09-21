@@ -560,6 +560,33 @@ button,input{font:inherit}
 .done-text{color:var(--muted);margin:0 0 16px}
 
 /* Footer nav */
+.next-training{
+  display:flex;
+  justify-content:center;
+  margin-top:18px;
+}
+
+.next-training a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:52px;
+  padding:11px 20px;
+  border-radius:999px;
+  background:linear-gradient(180deg,#a88af5,#7958d8);
+  color:#fff;
+  text-decoration:none;
+  font-weight:800;
+  box-shadow:0 9px 18px rgba(0,0,0,.16);
+  transition:transform .16s,filter .16s,box-shadow .16s;
+}
+
+.next-training a:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.05);
+  box-shadow:0 12px 22px rgba(0,0,0,.20);
+}
+
 .footer-nav{
   display:flex;
   justify-content:center;
@@ -728,6 +755,12 @@ button,input{font:inherit}
 
   </div>
 
+  </div>
+
+  <div class="next-training">
+    <a href="../ubungen.a1/ubungen1.html">
+      Fertig gelesen? Weiter mit Übungen
+    </a>
   </div>
 
   <nav class="footer-nav">
