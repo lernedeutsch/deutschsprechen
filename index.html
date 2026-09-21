@@ -383,8 +383,8 @@ body.intro-finished #intro-screen{
 /* START — POZIOMY + NELE */
 
 .start-grid{
-    width:calc(100% + 88px);
-    margin-left:-44px;
+    width:calc(100% + 120px);
+    margin-left:-60px;
 
     display:grid;
     grid-template-columns:
@@ -397,7 +397,7 @@ body.intro-finished #intro-screen{
 
 .start-panel{
     min-width:0;
-    height:455px;
+    height:442px;
 
     border:
         1px solid rgba(255,255,255,.12);
@@ -472,19 +472,19 @@ body.intro-finished #intro-screen{
         filter .2s;
 
     animation:
-        levelPulse 1.7s ease-out infinite;
+        levelPulse 2.4s ease-in-out infinite;
 }
 
 .level:nth-child(2){
-    animation-delay:.12s;
+    animation-delay:.16s;
 }
 
 .level:nth-child(3){
-    animation-delay:.24s;
+    animation-delay:.32s;
 }
 
 .level:nth-child(4){
-    animation-delay:.36s;
+    animation-delay:.48s;
 }
 
 .level:hover{
@@ -492,25 +492,19 @@ body.intro-finished #intro-screen{
 }
 
 @keyframes levelPulse{
-    0%{
-        transform:scale(1);
-        box-shadow:
-            0 10px 22px rgba(0,0,0,.19),
-            0 0 0 0 rgba(255,255,255,.30);
-    }
-
-    55%{
-        transform:scale(1.025);
-        box-shadow:
-            0 12px 24px rgba(0,0,0,.22),
-            0 0 0 8px rgba(255,255,255,.07);
-    }
-
+    0%,
     100%{
         transform:scale(1);
         box-shadow:
             0 10px 22px rgba(0,0,0,.19),
-            0 0 0 13px rgba(255,255,255,0);
+            0 0 0 0 rgba(255,255,255,0);
+    }
+
+    50%{
+        transform:scale(1.008);
+        box-shadow:
+            0 10px 22px rgba(0,0,0,.20),
+            0 0 0 4px rgba(255,255,255,.035);
     }
 }
 
@@ -877,6 +871,9 @@ body.intro-finished #intro-screen{
 /* NARZĘDZIA */
 
 .tools{
+    width:calc(100% + 120px);
+    margin-left:-60px;
+
     display:grid;
 
     grid-template-columns:
@@ -995,6 +992,9 @@ footer{
     }
 
     .tools{
+        width:100%;
+        margin-left:0;
+
         grid-template-columns:1fr;
     }
 
@@ -1230,7 +1230,7 @@ and
 
 
     <a
-        href="#"
+        href="lessons/ubungen.a1/ubungen1.html"
         class="tool"
     >
 
