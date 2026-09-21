@@ -483,6 +483,17 @@ button,textarea{font:inherit}
   }
 }
 </style>
+
+<style>
+.translation-globe{
+  display:inline-block;
+  font-size:1.18em;
+  line-height:1;
+  vertical-align:-.08em;
+  filter:saturate(1.65) brightness(1.14) contrast(1.08);
+  text-shadow:0 0 6px rgba(74,184,255,.34);
+}
+</style>
 </head>
 <body>
 
@@ -502,7 +513,7 @@ button,textarea{font:inherit}
 
     <div class="hero-translation" id="hero-translation">
       <button type="button" class="translation-toggle" id="translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung">
-        🌐 Übersetzung
+        <span class="translation-globe">🌐</span> Übersetzung
       </button>
       <div class="translation-panel">
         <div class="translation-languages">
