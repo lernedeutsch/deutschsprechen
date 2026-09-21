@@ -404,10 +404,35 @@ button{font:inherit}
   justify-content:center;
   margin:-6px 0 16px;
 }
+.hero-description-row{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+}
+.hero-description-row .hero-translation-row{
+  flex-shrink:0;
+}
 .hero-translation-row{
   display:flex;
   justify-content:center;
-  margin:10px 0 0;
+  margin:0;
+}
+
+.hero-stats{
+  gap:9px;
+  margin-top:14px;
+}
+.hero-stats .stat{
+  min-width:78px;
+  padding:8px 11px;
+  border-radius:13px;
+}
+.hero-stats .stat-value{
+  font-size:1.05rem;
+}
+.hero-stats .stat-label{
+  font-size:.66rem;
 }
 
 /* ---------- MIKROFON ---------- */
@@ -1121,12 +1146,13 @@ body{
 
     <h1>Führ das Gespräch! 🎙️</h1>
 
-    <p>
-      Vier kurze Dialoge — informell und formell. Du hörst den Satz,
-      das Mikrofon startet von selbst, und du antwortest laut.
-    </p>
+    <div class="hero-description-row">
+      <p>
+        Vier kurze Dialoge — informell und formell. Du hörst den Satz,
+        das Mikrofon startet von selbst, und du antwortest laut.
+      </p>
 
-    <div class="hero-translation-row">
+      <div class="hero-translation-row">
       <span class="translation-control" id="hero-translation-control">
         <button type="button" class="translation-toggle" id="hero-translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung">
           <span class="translation-globe">🌐</span>A/文
@@ -1139,7 +1165,8 @@ body{
           </span>
           <span class="translation-text" id="hero-translation-text" aria-live="polite"></span>
         </span>
-      </span>
+        </span>
+      </div>
     </div>
 
     <div class="hero-stats">
