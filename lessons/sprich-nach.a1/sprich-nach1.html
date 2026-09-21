@@ -814,6 +814,7 @@ let currentRate=0.95;
 let awaitingRetry=false;
 let recognizing=false;
 let recognition=null;
+let playbackToken=0;
 
 const stage=document.getElementById("stage");
 const statusLine=document.getElementById("status-line");
@@ -891,11 +892,29 @@ function speak(text){
       revealWordsTimed(text,0.95);
     };
 
-    utterance.onend=resolve;
-    utterance.onerror=resolve;
+    utterance.onend=()=>resolve();
+    utterance.onerror=()=>resolve();
 
     window.speechSynthesis.speak(utterance);
   });
+}
+
+function wait(ms){
+  return new Promise(resolve=>setTimeout(resolve,ms));
+}
+
+function stopRecognitionCompletely(){
+  recognizing=false;
+  gotFinal=true;
+  clearTimeout(recognitionTimeout);
+
+  if(recognition){
+    try{
+      recognition.abort();
+    }catch(error){
+      try{recognition.stop();}catch(stopError){}
+    }
+  }
 }
 
 /* ---------- Textvergleich (tolerant) ---------- */
@@ -1031,7 +1050,19 @@ async function playCurrentAndListen(){
     finishCourse();
     return;
   }
-  recognizing=false;
+
+  const token=++playbackToken;
+
+  stopRecognitionCompletely();
+
+  if("speechSynthesis" in window){
+    window.speechSynthesis.cancel();
+  }
+
+  await wait(140);
+
+  if(token!==playbackToken)return;
+
   updateProgress();
   setStage("speaking","🔊");
   statusLine.textContent="Hör gut zu …";
@@ -1040,7 +1071,18 @@ async function playCurrentAndListen(){
 
   await speak(sentences[currentIndex]);
 
+  if(token!==playbackToken)return;
+
+  /*
+   * Krótka przerwa po TTS jest celowa:
+   * mikrofon nie przejmuje urządzenia audio w ostatniej sylabie zdania.
+   */
+  await wait(520);
+
+  if(token!==playbackToken)return;
+
   recognizing=true;
+
   if(recognition){
     startListening();
   }else{
@@ -1058,7 +1100,13 @@ function handleAnswer(said){
   if(!said||!said.trim()){
     statusLine.textContent="Ich habe nichts gehört. Hier ist der Satz noch einmal:";
     setStage("incorrect","🙉");
-    setTimeout(()=>{ playCurrentAndListen(); },1200);
+
+    const token=playbackToken;
+
+    setTimeout(()=>{
+      if(token===playbackToken)playCurrentAndListen();
+    },1200);
+
     return;
   }
 
@@ -1069,14 +1117,26 @@ function handleAnswer(said){
     statusLine.textContent="Sehr gut! ✨";
     addToHistory(currentIndex,target);
     currentIndex++;
-    setTimeout(()=>{ playCurrentAndListen(); },1100);
+
+    const token=playbackToken;
+
+    setTimeout(()=>{
+      if(token===playbackToken)playCurrentAndListen();
+    },1100);
   }else{
     youSaid.textContent="Du: "+said;
     youSaid.className="you-said bad";
     setStage("incorrect","🙈");
     statusLine.textContent="Nicht ganz. Bitte noch einmal.";
+
+    const token=++playbackToken;
+
+    stopRecognitionCompletely();
+
     speak("Nicht ganz, bitte noch einmal.").then(()=>{
-      setTimeout(()=>{ playCurrentAndListen(); },400);
+      setTimeout(()=>{
+        if(token===playbackToken)playCurrentAndListen();
+      },520);
     });
   }
 }
@@ -1106,10 +1166,9 @@ document.getElementById("repeat-btn").addEventListener("click",()=>{
 });
 
 document.getElementById("next-btn").addEventListener("click",()=>{
-  recognizing=false;
-  if(recognition){try{recognition.stop();}catch(e){}}
+  playbackToken++;
+  stopRecognitionCompletely();
   if("speechSynthesis" in window)speechSynthesis.cancel();
-  clearTimeout(recognitionTimeout);
   if(currentIndex<sentences.length){
     currentIndex++;
   }
@@ -1123,16 +1182,16 @@ document.getElementById("weiter-btn").addEventListener("click",()=>{
 });
 
 document.getElementById("stop-btn").addEventListener("click",()=>{
-  recognizing=false;
-  if(recognition){try{recognition.stop();}catch(e){}}
+  playbackToken++;
+  stopRecognitionCompletely();
   if("speechSynthesis" in window)speechSynthesis.cancel();
   setStage("idle","⏸");
   statusLine.textContent="";
 });
 
 function restartAll(){
-  recognizing=false;
-  if(recognition){try{recognition.stop();}catch(e){}}
+  playbackToken++;
+  stopRecognitionCompletely();
   if("speechSynthesis" in window)speechSynthesis.cancel();
   currentIndex=0;
   doneWrap.classList.remove("active");
@@ -1159,8 +1218,7 @@ function submitTyped(){
   if(currentIndex>=sentences.length)return;
   const val=textInput.value;
   textInput.value="";
-  if(recognition){try{recognition.stop();}catch(e){}}
-  clearTimeout(recognitionTimeout);
+  stopRecognitionCompletely();
   handleAnswer(val);
 }
 
