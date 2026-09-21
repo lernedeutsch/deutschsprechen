@@ -1675,7 +1675,46 @@ function speakGerman(text,options={}){
     utterance.onend=finish;
     utterance.onerror=finish;
 
-    speechSynthesis.speak(utterance);
+    window.setTimeout(()=>{
+      if(token!==speechToken){
+        finish();
+        return;
+      }
+
+      const warmup=new SpeechSynthesisUtterance("\u00A0");
+      warmup.lang="de-DE";
+      warmup.volume=0;
+      warmup.rate=1;
+
+      if(germanVoice){
+        warmup.voice=germanVoice;
+      }
+
+      warmup.onend=()=>{
+        if(token!==speechToken){
+          finish();
+          return;
+        }
+
+        window.setTimeout(()=>{
+          if(token===speechToken){
+            speechSynthesis.speak(utterance);
+          }else{
+            finish();
+          }
+        },120);
+      };
+
+      warmup.onerror=()=>{
+        if(token===speechToken){
+          window.setTimeout(()=>speechSynthesis.speak(utterance),120);
+        }else{
+          finish();
+        }
+      };
+
+      speechSynthesis.speak(warmup);
+    },420);
   });
 }
 
