@@ -700,8 +700,10 @@ body.intro-finished #intro-screen{
 }
 
 .nele-mic{
-    width:43px;
-    height:43px;
+    position:relative;
+
+    width:45px;
+    height:45px;
 
     flex:none;
 
@@ -711,13 +713,39 @@ body.intro-finished #intro-screen{
 
     border-radius:50%;
 
-    background:#10233d;
+    background:#0b1f39;
     color:white;
 
     border:
-        3px solid rgba(255,255,255,.88);
+        3px solid #ffffff;
 
-    font-size:1.15rem;
+    font-size:1.35rem;
+
+    box-shadow:
+        0 0 0 0 rgba(255,255,255,.48);
+
+    animation:
+        neleMicPulse 1.7s ease-out infinite;
+}
+
+@keyframes neleMicPulse{
+    0%{
+        transform:scale(1);
+        box-shadow:
+            0 0 0 0 rgba(255,255,255,.48);
+    }
+
+    55%{
+        transform:scale(1.06);
+        box-shadow:
+            0 0 0 9px rgba(255,255,255,.10);
+    }
+
+    100%{
+        transform:scale(1);
+        box-shadow:
+            0 0 0 14px rgba(255,255,255,0);
+    }
 }
 
 /* SEKCJE */
@@ -1102,7 +1130,7 @@ and
             href="nele.html"
             class="nele-button"
         >
-            <span class="nele-mic" aria-hidden="true">🎙️</span>
+            <span class="nele-mic" aria-hidden="true">🎤</span>
             <span>Mit Nele sprechen</span>
         </a>
 
