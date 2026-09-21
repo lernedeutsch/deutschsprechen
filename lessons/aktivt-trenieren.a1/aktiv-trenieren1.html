@@ -386,15 +386,15 @@ body{padding:20px 12px 35px}.course-start{margin-bottom:38px;padding:18px 15px;b
 <script>      
 "use strict";      
 const $=x=>document.getElementById(x),$$=x=>[...document.querySelectorAll(x)],S=speechSynthesis,W=x=>new Promise(r=>setTimeout(r,x));      
-let V,n=0,reading=false,active="informell";      
+let V,VM,n=0,reading=false,active="informell";      
 const stampKey="lektion1-sprachpass",P={greetings:false,introduction:false,exercise:false,alphabet:false,farewell:false,lesson:false},visibleStampKeys=["greetings","introduction","exercise","lesson"];      
       
 function updateStamps(){$$("[data-stamp]").forEach(x=>x.classList.toggle("stamped",!!P[x.dataset.stamp]));$("stamp-counter").textContent=`${visibleStampKeys.filter(k=>P[k]).length} / 4 Stempel gesammelt`;$("alphabet-done")?.classList.toggle("show",!!P.alphabet);$("farewell-done")?.classList.toggle("show",!!P.farewell)}      
 function loadStamps(){try{Object.assign(P,JSON.parse(localStorage.getItem(stampKey))||{})}catch{}P.lesson=!!(P.greetings&&P.introduction&&P.exercise&&P.alphabet&&P.farewell);updateStamps()}      
 function stamp(x){if(P[x])return;P[x]=true;if(P.greetings&&P.introduction&&P.exercise&&P.alphabet&&P.farewell)P.lesson=true;try{localStorage.setItem(stampKey,JSON.stringify(P))}catch{}updateStamps()}      
-function loadVoice(){let v=S?.getVoices()||[];V=v.find(x=>x.lang?.toLowerCase()==="de-de"&&x.name?.toLowerCase().includes("google"))||v.find(x=>x.lang?.toLowerCase()==="de-de")||v.find(x=>x.lang?.toLowerCase().startsWith("de"))||null}      
+function loadVoice(){let v=S?.getVoices()||[],g=v.filter(x=>x.lang?.toLowerCase().startsWith("de"));V=v.find(x=>x.lang?.toLowerCase()==="de-de"&&x.name?.toLowerCase().includes("google"))||v.find(x=>x.lang?.toLowerCase()==="de-de")||g[0]||null;const maleHints=["conrad","stefan","hans","markus","klaus","male","mann","standard-b","standard-d","wavenet-b","wavenet-d"];VM=g.find(x=>maleHints.some(h=>x.name?.toLowerCase().includes(h)))||g.find(x=>x!==V)||V||null}      
 function stop(){n++;S?.cancel();$$(".speaking,.alphabet-active,.letter-speaking").forEach(x=>x.classList.remove("speaking","alphabet-active","letter-speaking"))}      
-function speak(text,rate=.92){return new Promise(done=>{if(!S||!text)return done();let u=new SpeechSynthesisUtterance(text);Object.assign(u,{lang:"de-DE",rate,pitch:1,volume:1});if(V)u.voice=V;u.onend=done;u.onerror=e=>{if(!["canceled","interrupted"].includes(e.error))console.error(e.error);done()};S.speak(u)})}      
+function speak(text,rate=.92,voice=V,pitch=1){return new Promise(done=>{if(!S||!text)return done();let u=new SpeechSynthesisUtterance(text);Object.assign(u,{lang:"de-DE",rate,pitch,volume:1});if(voice)u.voice=voice;u.onend=done;u.onerror=e=>{if(!["canceled","interrupted"].includes(e.error))console.error(e.error);done()};S.speak(u)})}      
       
 loadStamps();loadVoice();S?.addEventListener("voiceschanged",loadVoice);      
       
@@ -414,7 +414,7 @@ const NI=$("name-input"),T=$$(".tab-button"),D={informell:$("dialog-informell"),
 function updateName(){let name=NI.value.trim()||"…";$$(".dynamic-name").forEach(x=>x.textContent=name)}      
 function bubbleText(b){let c=b.cloneNode(true);c.querySelector(".speaker")?.remove();c.querySelector(".person-icon")?.remove();return c.textContent.replace(/\s+/g," ").trim()}      
 function activate(x){active=x;T.forEach(t=>{let a=t.dataset.dialog===x;t.classList.toggle("active",a);t.setAttribute("aria-selected",a)});Object.entries(D).forEach(([k,d])=>d.hidden=k!==x)}      
-async function readDialog(x){if(!S)return alert("Dein Browser unterstützt die Sprachausgabe nicht.");reading=false;stop();activate(x);reading=true;let version=n;for(let b of $$(`#dialog-${x} .bubble`)){if(!reading||version!==n||active!==x)break;b.classList.add("speaking");await speak(bubbleText(b));b.classList.remove("speaking")}if(version===n){reading=false;stamp("introduction")}}      
+async function readDialog(x){if(!S)return alert("Dein Browser unterstützt die Sprachausgabe nicht.");reading=false;stop();activate(x);reading=true;let version=n;for(let b of $(`#dialog-${x} .bubble`)){if(!reading||version!==n||active!==x)break;b.classList.add("speaking");const personB=b.classList.contains("bubble-b");await speak(bubbleText(b),.92,personB?VM:V,personB?.9:1);b.classList.remove("speaking")}if(version===n){reading=false;stamp("introduction")}}      
 NI.oninput=updateName;updateName();T.forEach(t=>t.onclick=()=>readDialog(t.dataset.dialog));      
       
 const R=$$(".exercise-row"),C=$$(".category-button"),READ=$("exercise-read-button"),CHOICE=document.querySelector(".category-buttons"),EXERCISE=document.querySelector(".exercise-page");      
