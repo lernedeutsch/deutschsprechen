@@ -589,6 +589,92 @@ button,textarea{font:inherit}
   color:#28502f;
 }
 
+.continue-learning{
+  max-width:720px;
+  margin:20px auto 0;
+  padding:16px 18px;
+  text-align:center;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:18px;
+}
+
+.continue-learning-title{
+  margin:0 0 12px;
+  color:#fff;
+  font:800 1rem "Nunito Sans",sans-serif;
+}
+
+.continue-learning-actions{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+}
+
+.continue-learning-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:44px;
+  padding:9px 15px;
+  color:#fff;
+  text-decoration:none;
+  border-radius:999px;
+  font-weight:800;
+  box-shadow:0 7px 16px rgba(0,0,0,.18);
+  transition:transform .16s,filter .16s;
+}
+
+.continue-learning-link:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.06);
+}
+
+.continue-learning-link.nele{
+  background:linear-gradient(180deg,#3da8f0,#237fc2);
+}
+
+.continue-learning-link.next{
+  background:linear-gradient(180deg,#6fcf32,#3f9820);
+}
+
+.continue-translation{
+  position:relative;
+  display:flex;
+  justify-content:center;
+  margin-top:12px;
+}
+
+.continue-translation .translation-panel{
+  left:50%;
+  transform:translateX(-50%);
+  top:34px;
+}
+
+.continue-translation.open .translation-panel,
+.continue-translation:hover .translation-panel,
+.continue-translation:focus-within .translation-panel{
+  display:block;
+}
+
+.continue-translation-language{
+  padding:4px 7px;
+  color:#26364b;
+  background:#f7f1e3;
+  border:1px solid #ddcfaa;
+  border-radius:999px;
+  cursor:pointer;
+  font-size:.7rem;
+  font-weight:800;
+}
+
+.continue-translation-language.active{
+  background:#e4f3e8;
+  border-color:#78bf95;
+  color:#28502f;
+}
+
 .a1-overview-arrow{
   display:grid;
   place-items:center;
@@ -806,6 +892,41 @@ button,textarea{font:inherit}
             <button type="button" class="lesson-complete-translation-language" data-lang="it">Italiano</button>
           </div>
           <p class="translation-text" id="lesson-complete-translation-text" aria-live="polite"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="continue-learning">
+      <p class="continue-learning-title">Wie möchtest du weiterlernen?</p>
+
+      <div class="continue-learning-actions">
+        <a href="../../nele.html" class="continue-learning-link nele">
+          💬 Kurz mit Nele sprechen
+        </a>
+
+        <a href="../a1/lektion-2.html" class="continue-learning-link next">
+          📘 Weiter mit Teil A1.2
+        </a>
+      </div>
+
+      <div class="continue-translation" id="continue-translation">
+        <button
+          type="button"
+          class="translation-toggle"
+          id="continue-translation-toggle"
+          aria-label="Übersetzung anzeigen"
+          title="Übersetzung"
+        >
+          <span class="translation-globe">🌐</span> Übersetzung
+        </button>
+
+        <div class="translation-panel">
+          <div class="translation-languages">
+            <button type="button" class="continue-translation-language" data-lang="en">English</button>
+            <button type="button" class="continue-translation-language" data-lang="pl">Polski</button>
+            <button type="button" class="continue-translation-language" data-lang="it">Italiano</button>
+          </div>
+          <p class="translation-text" id="continue-translation-text" aria-live="polite"></p>
         </div>
       </div>
     </div>
@@ -1292,6 +1413,37 @@ lessonCompleteBtn.addEventListener("click",()=>{
 document.addEventListener("click",event=>{
   if(!event.target.closest("#lesson-complete-translation")){
     lessonCompleteTranslation.classList.remove("open");
+  }
+});
+
+const continueTranslation=document.getElementById("continue-translation");
+const continueTranslationToggle=document.getElementById("continue-translation-toggle");
+const continueTranslationText=document.getElementById("continue-translation-text");
+const continueTranslationButtons=[...document.querySelectorAll(".continue-translation-language")];
+
+const continueTranslations={
+  en:"How would you like to continue learning? Have a short conversation with Nele or continue with part A1.2.",
+  pl:"Jak chcesz kontynuować naukę? Porozmawiaj krótko z Nele albo przejdź do części A1.2.",
+  it:"Come vuoi continuare a imparare? Parla brevemente con Nele oppure continua con la parte A1.2."
+};
+
+continueTranslationToggle.addEventListener("click",event=>{
+  event.stopPropagation();
+  continueTranslation.classList.toggle("open");
+});
+
+continueTranslationButtons.forEach(button=>button.addEventListener("click",event=>{
+  event.stopPropagation();
+  const lang=button.dataset.lang;
+  continueTranslationButtons.forEach(item=>item.classList.toggle("active",item===button));
+  continueTranslationText.textContent=continueTranslations[lang];
+  continueTranslationText.classList.add("show");
+  continueTranslation.classList.add("open");
+}));
+
+document.addEventListener("click",event=>{
+  if(!event.target.closest("#continue-translation")){
+    continueTranslation.classList.remove("open");
   }
 });
 
