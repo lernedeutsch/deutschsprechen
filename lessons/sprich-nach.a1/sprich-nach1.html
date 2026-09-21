@@ -850,6 +850,50 @@ function revealWordsTimed(text,rate){
   });
 }
 
+function splitSpeechChunks(text){
+  const clean=String(text||"").replace(/\s+/g," ").trim();
+  if(!clean)return [];
+
+  const parts=clean.split(/(?<=[,;:!?\.])\s+/);
+  const chunks=[];
+  let current="";
+
+  for(const part of parts){
+    const candidate=current?current+" "+part:part;
+
+    if(candidate.length<=72){
+      current=candidate;
+      continue;
+    }
+
+    if(current){
+      chunks.push(current);
+      current="";
+    }
+
+    if(part.length<=72){
+      current=part;
+      continue;
+    }
+
+    const words=part.split(/\s+/);
+
+    for(const word of words){
+      const wordCandidate=current?current+" "+word:word;
+
+      if(wordCandidate.length<=72){
+        current=wordCandidate;
+      }else{
+        if(current)chunks.push(current);
+        current=word;
+      }
+    }
+  }
+
+  if(current)chunks.push(current);
+  return chunks;
+}
+
 function speak(text,rate){
   return new Promise(resolve=>{
     if(!("speechSynthesis" in window)){
@@ -858,21 +902,59 @@ function speak(text,rate){
       resolve();
       return;
     }
-    speechSynthesis.cancel();
-    const utter=new SpeechSynthesisUtterance(text);
-    utter.lang="de-DE";
-    utter.rate=rate;
-    utter.pitch=1.05;
-    utter.volume=1;
-    if(germanVoice)utter.voice=germanVoice;
 
-    utter.onstart=()=>{
-      renderSentenceShell(text);
-      revealWordsTimed(text,rate);
+    speechSynthesis.cancel();
+
+    const chunks=splitSpeechChunks(text);
+    if(!chunks.length){
+      resolve();
+      return;
+    }
+
+    renderSentenceShell(text);
+    revealWordsTimed(text,rate);
+
+    let index=0;
+
+    const speakNext=()=>{
+      if(index>=chunks.length){
+        resolve();
+        return;
+      }
+
+      const chunk=chunks[index];
+      const utter=new SpeechSynthesisUtterance(chunk);
+
+      utter.lang="de-DE";
+      utter.rate=rate;
+      utter.pitch=1.05;
+      utter.volume=1;
+
+      if(germanVoice)utter.voice=germanVoice;
+
+      const keepAlive=setInterval(()=>{
+        if(speechSynthesis.paused)speechSynthesis.resume();
+      },1800);
+
+      utter.onend=()=>{
+        clearInterval(keepAlive);
+        index+=1;
+
+        const pause=/[.!?]$/.test(chunk)?180:110;
+        setTimeout(speakNext,pause);
+      };
+
+      utter.onerror=()=>{
+        clearInterval(keepAlive);
+        index+=1;
+        setTimeout(speakNext,120);
+      };
+
+      speechSynthesis.resume();
+      speechSynthesis.speak(utter);
     };
-    utter.onend=resolve;
-    utter.onerror=resolve;
-    speechSynthesis.speak(utter);
+
+    speakNext();
   });
 }
 
