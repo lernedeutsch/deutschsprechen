@@ -203,7 +203,7 @@ button{font:inherit}
 
 .layout{
   display:none;
-  grid-template-columns:1fr 280px;
+  grid-template-columns:280px 1fr;
   gap:20px;
   align-items:start;
 }
@@ -698,6 +698,17 @@ button{font:inherit}
   text-align:center;
   padding:18px 6px;
 }
+
+/* ---------- PRZENIESIONE PANELE ---------- */
+.current-dialog-panel{grid-column:1;grid-row:1;background:#fff;color:var(--ink)}
+.current-dialog-panel .partner-left{align-items:flex-start}
+.current-dialog-panel .partner-title{white-space:normal;overflow:visible;text-overflow:clip}
+.current-dialog-panel .partner-sub{flex-wrap:wrap}
+.current-dialog-panel .translation-panel{left:0}
+.card{grid-column:2;grid-row:1}
+.main-history-panel{background:#0f1c2e;border-radius:18px;padding:14px;margin:0 0 18px}
+.main-history-panel .history-list{max-height:440px}
+@media(max-width:860px){.current-dialog-panel,.card{grid-column:1;grid-row:auto}.current-dialog-panel{position:static;width:100%}}
 
 /* ---------- FINAL ---------- */
 
@@ -1197,53 +1208,31 @@ body{
 
       <div class="progress-track" id="progress-track"></div>
 
+      <div class="main-history-panel">
+        <div class="history-screen-bar">
+
+          <span class="history-dot"></span>
+          <span class="history-dot"></span>
+          <span class="history-dot"></span>
+
+          <span class="history-title">
+            Verlauf
+          </span>
+
+        </div>
+
+        <div class="history-list" id="history-list">
+
+          <p class="history-empty" id="history-empty">
+            Hier erscheint dein Gespräch …
+          </p>
+
+        </div>
+      </div>
+
       <div id="stage">
 
         <div class="partner-row">
-
-          <div class="partner-left">
-
-            <div class="partner-avatar" id="partner-avatar">👩</div>
-
-            <div class="partner-meta">
-
-              <span class="partner-title" id="partner-title">
-                Dialog 1 · Auf der Straße
-              </span>
-
-              <span class="partner-sub">
-
-                <span id="partner-name">Lena</span>
-
-                <span class="partner-tag informell" id="partner-tag">
-                  informell
-                </span>
-
-              </span>
-
-              <span class="instruction-wrap">
-                <span class="turn-instruction" id="instruction-text">
-                  Antworte auf die Begrüßung.
-                </span>
-
-                <span class="translation-control" id="translation-control">
-                  <button type="button" class="translation-toggle" id="translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung">
-                    <span class="translation-globe">🌐</span>A/文
-                  </button>
-                  <span class="translation-panel">
-                    <span class="translation-languages">
-                      <button type="button" class="translation-language" data-lang="en">English</button>
-                      <button type="button" class="translation-language" data-lang="pl">Polski</button>
-                      <button type="button" class="translation-language" data-lang="it">Italiano</button>
-                    </span>
-                    <span class="translation-text" id="translation-text" aria-live="polite"></span>
-                  </span>
-                </span>
-              </span>
-
-            </div>
-
-          </div>
 
           <div class="mic-column">
 
@@ -1317,27 +1306,52 @@ body{
 
     </main>
 
-    <aside class="history-panel">
+    <aside class="history-panel current-dialog-panel">
 
-      <div class="history-screen-bar">
+      <div class="partner-left">
 
-        <span class="history-dot"></span>
-        <span class="history-dot"></span>
-        <span class="history-dot"></span>
+        <div class="partner-avatar" id="partner-avatar">👩</div>
 
-        <span class="history-title">
-          Verlauf
-        </span>
+        <div class="partner-meta">
+
+          <span class="partner-title" id="partner-title">
+            Dialog 1 · Auf der Straße
+          </span>
+
+          <span class="partner-sub">
+
+            <span id="partner-name">Lena</span>
+
+            <span class="partner-tag informell" id="partner-tag">
+              informell
+            </span>
+
+          </span>
+
+          <span class="instruction-wrap">
+            <span class="turn-instruction" id="instruction-text">
+              Antworte auf die Begrüßung.
+            </span>
+
+            <span class="translation-control" id="translation-control">
+              <button type="button" class="translation-toggle" id="translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung">
+                <span class="translation-globe">🌐</span>A/文
+              </button>
+              <span class="translation-panel">
+                <span class="translation-languages">
+                  <button type="button" class="translation-language" data-lang="en">English</button>
+                  <button type="button" class="translation-language" data-lang="pl">Polski</button>
+                  <button type="button" class="translation-language" data-lang="it">Italiano</button>
+                </span>
+                <span class="translation-text" id="translation-text" aria-live="polite"></span>
+              </span>
+            </span>
+          </span>
+
+        </div>
 
       </div>
 
-      <div class="history-list" id="history-list">
-
-        <p class="history-empty" id="history-empty">
-          Hier erscheint dein Gespräch …
-        </p>
-
-      </div>
 
     </aside>
 
