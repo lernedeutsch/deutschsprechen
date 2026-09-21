@@ -50,6 +50,16 @@ body{
   gap:16px;
 }
 
+.top-bar-start{
+  position:absolute;
+  top:18px;
+  left:18px;
+  z-index:20;
+  max-width:none;
+  margin:0;
+  padding:0;
+}
+
 .back-btn{
   display:inline-flex;
   align-items:center;
@@ -391,8 +401,8 @@ input:focus-visible{
 
 <body id="top">
 
-<div class="top-bar">
-  <a href="../a1/lektion-1.html" class="back-btn">← A1-1</a>
+<div class="top-bar top-bar-start">
+  <a href="../a1/lektion-1.html" class="back-btn" aria-label="Zurück zu Lektion 1" title="Zurück zu Lektion 1">←</a>
 </div>
 
 <div class="wrap">
@@ -743,16 +753,11 @@ input:focus-visible{
   </section>
 
   <div class="top-bar">
-    <a href="../a1/lektion-1.html" class="back-btn">← A1-1</a>
+    <a href="../a1/lektion-1.html" class="back-btn" aria-label="Zurück zu Lektion 1" title="Zurück zu Lektion 1">←</a>
   </div>
 
   <nav class="lesson-nav">
-    <a href="#top">Nach oben ↑</a>
-    <a href="#übung1">Übung 1</a>
-    <a href="#übung1_2">Übung 2</a>
-    <a href="#übung1_3">Übung 3</a>
-    <a href="#übung1_4">Übung 4</a>
-    <a href="#übung1_5">Übung 5</a>
+    <a href="#top" aria-label="Nach oben" title="Nach oben">↑</a>
   </nav>
 
 </div>
