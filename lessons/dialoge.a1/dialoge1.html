@@ -863,6 +863,240 @@ button{font:inherit}
   filter:hue-rotate(115deg) saturate(2.8) brightness(1.28) contrast(1.18) drop-shadow(0 0 4px rgba(255,74,190,.72));
 }
 </style>
+
+<style id="probe-3-dialog-theme">
+:root{
+  --probe-bg:#15211C;
+  --probe-bg-soft:#1B2A24;
+  --probe-panel:#21312A;
+  --probe-panel-line:rgba(238,232,210,.10);
+  --probe-paper:#ECE6D2;
+  --probe-paper-ink:#22251B;
+  --probe-accent:#D98A3D;
+  --probe-accent-dim:rgba(217,138,61,.18);
+  --probe-sage:#74AE93;
+  --probe-sage-dim:rgba(116,174,147,.16);
+  --probe-text:#F2EFE2;
+  --probe-text-dim:#AEBDB3;
+  --probe-danger:#C96A5A;
+}
+
+body{
+  background:
+    radial-gradient(circle at 18% 0%,var(--probe-bg-soft),var(--probe-bg) 60%);
+  color:var(--probe-text);
+}
+
+.hero h1{color:var(--probe-text)}
+.hero p{color:var(--probe-text-dim)}
+
+.hero-stats{gap:10px}
+.stat{
+  background:var(--probe-panel);
+  border:1px solid var(--probe-panel-line);
+  border-radius:14px;
+  backdrop-filter:none;
+  box-shadow:0 12px 24px rgba(0,0,0,.16);
+}
+.stat-value{color:var(--probe-text)}
+.stat-label{color:var(--probe-text-dim)}
+
+.back-btn{
+  color:var(--probe-text);
+  background:var(--probe-panel);
+  border-color:var(--probe-panel-line);
+  box-shadow:0 7px 16px rgba(0,0,0,.22);
+}
+.back-btn:hover{
+  color:var(--probe-accent);
+  border-color:var(--probe-accent);
+}
+
+.gate{
+  color:var(--probe-text);
+  background:var(--probe-panel);
+  border:1px solid var(--probe-panel-line);
+  border-radius:14px;
+  box-shadow:0 20px 42px rgba(0,0,0,.24);
+}
+.gate p{color:var(--probe-text-dim)}
+.gate-btn{
+  color:#1b1208;
+  background:var(--probe-accent);
+  border-radius:10px;
+  box-shadow:0 10px 22px rgba(217,138,61,.22);
+}
+.gate-warning{
+  color:#f0c892;
+  background:rgba(217,138,61,.10);
+  border-color:rgba(217,138,61,.45);
+}
+
+.layout{
+  grid-template-columns:260px minmax(0,1fr);
+  gap:1.4rem;
+  max-width:1180px;
+  margin:0 auto;
+  align-items:start;
+}
+
+.card{
+  grid-column:2;
+  grid-row:1;
+  color:var(--probe-text);
+  background:var(--probe-panel);
+  border:1px solid var(--probe-panel-line);
+  border-radius:14px;
+  box-shadow:0 20px 42px rgba(0,0,0,.24);
+}
+
+.history-panel{
+  grid-column:1;
+  grid-row:1;
+  position:sticky;
+  top:20px;
+  color:var(--probe-text);
+  background:var(--probe-panel);
+  border:1px solid var(--probe-panel-line);
+  border-radius:14px;
+  box-shadow:0 20px 42px rgba(0,0,0,.22);
+}
+
+.history-screen-bar{
+  border-bottom-color:var(--probe-panel-line);
+}
+
+.history-title,
+.history-entry,
+.history-divider{color:var(--probe-text)}
+.history-empty{color:var(--probe-text-dim)}
+
+.partner-avatar{
+  background:var(--probe-paper);
+  color:var(--probe-paper-ink);
+  border-color:rgba(34,37,27,.14);
+}
+
+.partner-title{color:var(--probe-text)}
+.partner-sub,
+.turn-instruction,
+.mic-status{color:var(--probe-text-dim)}
+
+.partner-tag.informell{
+  color:var(--probe-sage);
+  background:var(--probe-sage-dim);
+}
+.partner-tag.formell{
+  color:#f0c892;
+  background:var(--probe-accent-dim);
+}
+
+.progress-track .dot{
+  background:rgba(255,255,255,.08);
+  border-color:var(--probe-panel-line);
+}
+.progress-track .dot.done{
+  background:var(--probe-sage);
+  border-color:var(--probe-sage);
+}
+.progress-track .dot.active{
+  background:var(--probe-accent);
+  border-color:var(--probe-accent);
+}
+
+.live-transcript{
+  color:var(--probe-paper-ink);
+  background:var(--probe-paper);
+  border-color:rgba(34,37,27,.14);
+}
+
+.example-text{color:var(--probe-text-dim)}
+
+.translation-toggle{
+  color:var(--probe-text);
+  background:rgba(255,255,255,.03);
+  border-color:var(--probe-panel-line);
+}
+.translation-toggle:hover,
+.translation-toggle:focus-visible{
+  color:var(--probe-accent);
+  background:var(--probe-accent-dim);
+  border-color:var(--probe-accent);
+}
+
+.utility-btn{
+  color:var(--probe-text-dim);
+  background:rgba(255,255,255,.02);
+  border-color:var(--probe-panel-line);
+}
+.utility-btn:hover{
+  color:var(--probe-text);
+  background:rgba(255,255,255,.04);
+  border-color:var(--probe-accent);
+}
+
+.repeat-btn{
+  color:var(--probe-sage);
+  background:var(--probe-sage-dim);
+  border-color:rgba(116,174,147,.40);
+}
+.answer-btn{
+  color:#f0c892;
+  background:var(--probe-accent-dim);
+  border-color:rgba(217,138,61,.45);
+}
+.stop-btn{
+  color:#e6a195;
+  background:rgba(201,106,90,.12);
+  border-color:rgba(201,106,90,.42);
+}
+
+.final-title,
+.final-sub,
+.final-stars{color:var(--probe-text)}
+.restart-btn{
+  color:#1b1208;
+  background:var(--probe-accent);
+}
+
+/* Mikrofon: rozmiar pozostaje dokładnie taki jak wcześniej */
+.mic-btn-wrap.ready .mic-ring{
+  border-color:rgba(116,174,147,.60);
+  animation:ringPulse 1.35s ease-out infinite;
+}
+.mic-btn-wrap.ready .mic-ring:nth-child(2){animation-delay:.34s}
+.mic-btn-wrap.ready .mic-ring:nth-child(3){animation-delay:.68s}
+
+.mic-btn.ready{
+  background:linear-gradient(180deg,#82bea2,#5b9679);
+  box-shadow:
+    0 0 0 6px rgba(116,174,147,.12),
+    0 14px 28px rgba(48,102,78,.34);
+  animation:micReadyPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes micReadyPulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.07)}
+}
+
+.mic-btn.listening{
+  background:linear-gradient(180deg,var(--probe-danger),#9f4f44);
+}
+
+.mic-status.live{color:#e6a195}
+
+@media(max-width:860px){
+  .layout{grid-template-columns:1fr}
+  .card{grid-column:1;grid-row:1}
+  .history-panel{
+    grid-column:1;
+    grid-row:2;
+    position:static;
+  }
+}
+</style>
+
 </head>
 
 <body>
@@ -926,8 +1160,8 @@ button{font:inherit}
     <h2>Bereit für den Dialog?</h2>
 
     <p>
-      Aktiviere dein Mikrofon. Danach läuft alles automatisch:
-      du hörst, das Mikrofon geht an, du antwortest.
+      Aktiviere dein Mikrofon. Du hörst zuerst den ganzen Satz.
+      Danach klickst du auf 🎤 und antwortest laut.
     </p>
 
     <div class="gate-translation-row">
@@ -1367,17 +1601,20 @@ function loadGermanVoice(){
 
   const voices=speechSynthesis.getVoices();
 
+  const germanVoices=voices.filter(
+    voice=>
+      voice.lang&&
+      voice.lang.toLowerCase().startsWith("de")
+  );
+
   germanVoice=
-    voices.find(voice=>
-      voice.lang?.toLowerCase()==="de-de"&&
-      voice.name.toLowerCase().includes("google")
+    germanVoices.find(
+      voice=>voice.name.toLowerCase().includes("google")
     )||
-    voices.find(voice=>
-      voice.lang?.toLowerCase()==="de-de"
+    germanVoices.find(
+      voice=>voice.lang==="de-DE"
     )||
-    voices.find(voice=>
-      voice.lang?.toLowerCase().startsWith("de")
-    )||
+    germanVoices[0]||
     null;
 }
 
@@ -1399,84 +1636,32 @@ function speakGerman(text,options={}){
 
     const token=++speechToken;
 
-    /* Alte, evtl. hängende Sprachausgabe zuerst vollständig leeren —
-       verhindert, dass der Anfang des neuen Satzes verschluckt wird. */
     speechSynthesis.cancel();
 
     const utterance=new SpeechSynthesisUtterance(text);
-    let finished=false;
-    let keepAliveTimer=null;
 
-    Object.assign(utterance,{
-      lang:"de-DE",
-      rate:options.rate??.95,
-      pitch:1,
-      volume:1
-    });
+    utterance.lang="de-DE";
+    utterance.rate=options.rate??.95;
+    utterance.pitch=1.0;
+    utterance.volume=1.0;
 
     if(germanVoice){
       utterance.voice=germanVoice;
     }
 
-    const stopKeepAlive=()=>{
-      if(keepAliveTimer){
-        window.clearInterval(keepAliveTimer);
-        keepAliveTimer=null;
-      }
-    };
-
     const finish=()=>{
-      if(finished||token!==speechToken)return;
-
-      finished=true;
-      speaking=false;
-      stopKeepAlive();
-
-      window.setTimeout(resolve,250);
+      if(token===speechToken){
+        speaking=false;
+      }
+      resolve();
     };
 
     speaking=true;
 
-    utterance.onstart=()=>{
-      stopKeepAlive();
-
-      /* Bekannter Chrome-Bug: die Sprachausgabe kann mittendrin
-         abbrechen oder Silben verschlucken. Ein periodisches
-         pause()/resume() hält die Synthese zuverlässig am Laufen. */
-      keepAliveTimer=window.setInterval(()=>{
-        if(token!==speechToken){
-          stopKeepAlive();
-          return;
-        }
-
-        if(speechSynthesis.speaking&&!speechSynthesis.paused){
-          speechSynthesis.pause();
-          speechSynthesis.resume();
-        }
-      },240);
-    };
-
     utterance.onend=finish;
+    utterance.onerror=finish;
 
-    utterance.onerror=event=>{
-      console.warn("Sprachausgabe:",event.error);
-      stopKeepAlive();
-
-      if(
-        event.error==="canceled"||
-        event.error==="interrupted"
-      ){
-        window.setTimeout(finish,400);
-      }else{
-        finish();
-      }
-    };
-
-    window.setTimeout(()=>{
-      if(token!==speechToken)return;
-
-      speechSynthesis.speak(utterance);
-    },90);
+    speechSynthesis.speak(utterance);
   });
 }
 
@@ -1557,6 +1742,7 @@ let restartTimer=null;
 let historyCounter=0;
 let promptStarting=false;
 let retrying=false;
+let micReady=false;
 
 function renderStars(count,total){
   const filled=Math.round((total?count/total:0)*5);
@@ -1684,6 +1870,23 @@ function waitForMicrophoneToStop(){
   });
 }
 
+function setMicReady(ready,message="Jetzt du — Mikrofon anklicken und laut antworten."){
+  micReady=ready;
+
+  els.micBtnWrap.classList.toggle("ready",ready);
+  els.micBtn.classList.toggle("ready",ready);
+
+  if(!listening){
+    els.micBtn.disabled=!ready;
+  }
+
+  if(ready){
+    els.micBtn.textContent="🎤";
+    els.micStatus.textContent=message;
+    els.micStatus.classList.remove("live");
+  }
+}
+
 /* ---------------- Zug laden ---------------- */
 
 function loadTurn(){
@@ -1730,8 +1933,8 @@ async function playPromptThenListen(){
   retrying=false;
 
   clearTimeout(restartTimer);
+  setMicReady(false);
 
-  els.micBtn.disabled=true;
   els.micStatus.textContent="🔊 Hör zu …";
   els.micStatus.classList.remove("live");
   els.liveTranscript.textContent="";
@@ -1740,30 +1943,26 @@ async function playPromptThenListen(){
   await speakGerman(current().prompt);
 
   promptStarting=false;
-  els.micBtn.disabled=false;
 
-  window.setTimeout(()=>{
-    if(
-      !answered&&
-      !speaking&&
-      !listening&&
-      !promptStarting
-    ){
-      startListening();
-    }
-  },200);
+  if(
+    !answered&&
+    !speaking&&
+    !listening
+  ){
+    setMicReady(true);
+  }
 }
 
 /* ---------------- Po błędnej odpowiedzi ---------------- */
 
 async function repeatPromptAfterWrongAnswer(){
-  if(retrying||answered||promptStarting)return;
+  if(answered||promptStarting)return;
 
   retrying=true;
 
   clearTimeout(restartTimer);
+  setMicReady(false);
 
-  els.micBtn.disabled=true;
   els.micStatus.textContent="Noch einmal. Hör gut zu …";
   els.micStatus.classList.remove("live");
 
@@ -1774,19 +1973,18 @@ async function repeatPromptAfterWrongAnswer(){
   await speakGerman(current().prompt);
 
   retrying=false;
-  els.micBtn.disabled=false;
 
-  window.setTimeout(()=>{
-    if(
-      !answered&&
-      !speaking&&
-      !listening&&
-      !promptStarting&&
-      !retrying
-    ){
-      startListening();
-    }
-  },220);
+  if(
+    !answered&&
+    !speaking&&
+    !listening&&
+    !promptStarting
+  ){
+    setMicReady(
+      true,
+      "Jetzt noch einmal — Mikrofon anklicken und antworten."
+    );
+  }
 }
 
 /* ---------------- Antwort prüfen ---------------- */
@@ -1818,6 +2016,10 @@ function markCorrect(spokenText){
 function markWrong(spokenText){
   streak=0;
   attempts++;
+  micReady=false;
+  els.micBtnWrap.classList.remove("ready");
+  els.micBtn.classList.remove("ready");
+  els.micBtn.disabled=true;
 
   updateStats();
 
@@ -1885,6 +2087,7 @@ function advance(){
 function startListening(){
   if(
     !recognizer||
+    !micReady||
     answered||
     listening||
     speaking||
@@ -1894,7 +2097,12 @@ function startListening(){
     return;
   }
 
+  micReady=false;
+  els.micBtnWrap.classList.remove("ready");
+  els.micBtn.classList.remove("ready");
+
   listening=true;
+  els.micBtn.disabled=false;
 
   els.micBtnWrap.classList.add("listening");
   els.micBtn.classList.add("listening");
@@ -1925,8 +2133,15 @@ function stopListeningUI(){
     !promptStarting&&
     !retrying
   ){
-    els.micStatus.textContent=
-      "Tippe, um erneut zu sprechen";
+    setMicReady(
+      true,
+      "Mikrofon anklicken, wenn du bereit bist."
+    );
+  }else{
+    micReady=false;
+    els.micBtnWrap.classList.remove("ready");
+    els.micBtn.classList.remove("ready");
+    els.micBtn.disabled=true;
   }
 }
 
@@ -1980,8 +2195,10 @@ if(recognizer){
     ){
       clearTimeout(restartTimer);
 
-      restartTimer=
-        window.setTimeout(startListening,1200);
+      setMicReady(
+        true,
+        "Noch einmal auf 🎤 klicken und sprechen."
+      );
     }
   };
 
@@ -2005,7 +2222,10 @@ els.micBtn.addEventListener("click",()=>{
     try{
       recognizer.stop();
     }catch(error){}
-  }else{
+    return;
+  }
+
+  if(micReady){
     startListening();
   }
 });
@@ -2158,8 +2378,10 @@ els.stopBtn.addEventListener("click",()=>{
 
   stopListeningUI();
 
-  els.micStatus.textContent=
-    "⏸ Gestoppt — tippe auf 🎤, um weiterzumachen.";
+  setMicReady(
+    true,
+    "⏸ Gestoppt — Mikrofon anklicken, um zu sprechen."
+  );
 });
 
 els.skipBtn.addEventListener("click",()=>{
@@ -2238,6 +2460,7 @@ function init(){
   answered=false;
   promptStarting=false;
   retrying=false;
+  micReady=false;
 
   clearTimeout(restartTimer);
 
