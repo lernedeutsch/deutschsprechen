@@ -566,7 +566,7 @@ body.intro-finished #intro-screen{
     display:grid;
 
     grid-template-columns:
-        repeat(3,1fr);
+        repeat(2,1fr);
 
     gap:16px;
 }
@@ -633,6 +633,15 @@ body.intro-finished #intro-screen{
             145deg,
             #7454b7,
             #463273
+        );
+}
+
+.b2{
+    background:
+        linear-gradient(
+            145deg,
+            #b2682a,
+            #7b3f1d
         );
 }
 
@@ -803,7 +812,8 @@ footer{
     }
 
     .level-grid{
-        grid-template-columns:1fr;
+        grid-template-columns:
+            repeat(2,1fr);
     }
 
     .tools{
@@ -851,7 +861,7 @@ and
 
     .level-grid{
         grid-template-columns:
-            repeat(3,1fr);
+            repeat(2,1fr);
     }
 
 }
@@ -979,6 +989,20 @@ and
 
         <span>
             Mittelstufe
+        </span>
+
+    </a>
+
+
+    <a
+        href="#"
+        class="level b2"
+    >
+
+        <strong>B2</strong>
+
+        <span>
+            Fortgeschritten
         </span>
 
     </a>
