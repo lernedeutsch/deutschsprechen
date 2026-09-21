@@ -993,7 +993,7 @@ function isMatch(said,target){
   if(a===b)return true;
   const dist=levenshtein(a,b);
   const similarity=1-dist/Math.max(a.length,b.length);
-  return similarity>=0.72;
+  return similarity>=0.68;
 }
 
 /* ---------- Spracherkennung ---------- */
