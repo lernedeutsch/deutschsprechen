@@ -1382,19 +1382,19 @@ body{
       <div class="dialog-menu-title">DIALOGE</div>
 
       <div class="dialog-menu-list">
-        <div class="dialog-menu-item active">
+        <div class="dialog-menu-item active" data-dialog-index="0">
           <span class="dialog-menu-number">01</span>
           <span>Auf der Straße</span>
         </div>
-        <div class="dialog-menu-item">
+        <div class="dialog-menu-item" data-dialog-index="1">
           <span class="dialog-menu-number">02</span>
           <span>Im Büro</span>
         </div>
-        <div class="dialog-menu-item">
+        <div class="dialog-menu-item" data-dialog-index="2">
           <span class="dialog-menu-number">03</span>
           <span>Am frühen Morgen</span>
         </div>
-        <div class="dialog-menu-item">
+        <div class="dialog-menu-item" data-dialog-index="3">
           <span class="dialog-menu-number">04</span>
           <span>Am Abend</span>
         </div>
@@ -1971,6 +1971,17 @@ function current(){
   return flatTurns[index];
 }
 
+function highlightCurrentDialogue(dialogueIndex){
+  document
+    .querySelectorAll(".dialog-menu-item")
+    .forEach((item,itemIndex)=>{
+      item.classList.toggle(
+        "active",
+        itemIndex===dialogueIndex
+      );
+    });
+}
+
 /* ---------------- Verlauf ---------------- */
 
 function clearHistory(){
@@ -2080,6 +2091,8 @@ function loadTurn(){
   retrying=false;
 
   const turn=current();
+
+  highlightCurrentDialogue(turn.dialogueIndex);
 
   if(turn.isFirstOfDialogue){
     addHistoryDivider(turn.dialogueTitle);
