@@ -491,12 +491,27 @@ button,textarea{font:inherit}
   font:800 1rem "Nunito Sans",sans-serif;
   box-shadow:0 10px 22px rgba(185,130,0,.30);
   transition:transform .18s,filter .18s,box-shadow .18s;
+  animation:lessonCompletePulse 1.15s ease-in-out infinite;
+}
+
+@keyframes lessonCompletePulse{
+  0%,100%{
+    transform:scale(1);
+    box-shadow:
+      0 10px 22px rgba(185,130,0,.30),
+      0 0 0 0 rgba(255,210,69,.45);
+  }
+  50%{
+    transform:scale(1.085);
+    box-shadow:
+      0 16px 32px rgba(185,130,0,.45),
+      0 0 0 10px rgba(255,210,69,.12),
+      0 0 28px rgba(255,210,69,.55);
+  }
 }
 
 .lesson-complete-btn:hover{
-  transform:translateY(-2px);
-  filter:brightness(1.05);
-  box-shadow:0 13px 26px rgba(185,130,0,.34);
+  filter:brightness(1.08);
 }
 
 .lesson-complete-paper{
@@ -536,6 +551,42 @@ button,textarea{font:inherit}
 .lesson-complete-end{
   text-align:center;
   font-weight:800;
+}
+
+.lesson-complete-translation{
+  position:relative;
+  display:flex;
+  justify-content:center;
+  margin:16px 0 2px;
+}
+
+.lesson-complete-translation .translation-panel{
+  left:50%;
+  transform:translateX(-50%);
+  top:34px;
+}
+
+.lesson-complete-translation.open .translation-panel,
+.lesson-complete-translation:hover .translation-panel,
+.lesson-complete-translation:focus-within .translation-panel{
+  display:block;
+}
+
+.lesson-complete-translation-language{
+  padding:4px 7px;
+  color:#26364b;
+  background:#f7f1e3;
+  border:1px solid #ddcfaa;
+  border-radius:999px;
+  cursor:pointer;
+  font-size:.7rem;
+  font-weight:800;
+}
+
+.lesson-complete-translation-language.active{
+  background:#e4f3e8;
+  border-color:#78bf95;
+  color:#28502f;
 }
 
 .a1-overview-arrow{
@@ -736,6 +787,27 @@ button,textarea{font:inherit}
       </div>
 
       <p class="lesson-complete-end">Sehr gut gemacht! 🌟</p>
+
+      <div class="lesson-complete-translation" id="lesson-complete-translation">
+        <button
+          type="button"
+          class="translation-toggle"
+          id="lesson-complete-translation-toggle"
+          aria-label="Übersetzung anzeigen"
+          title="Übersetzung"
+        >
+          <span class="translation-globe">🌐</span> Übersetzung
+        </button>
+
+        <div class="translation-panel">
+          <div class="translation-languages">
+            <button type="button" class="lesson-complete-translation-language" data-lang="en">English</button>
+            <button type="button" class="lesson-complete-translation-language" data-lang="pl">Polski</button>
+            <button type="button" class="lesson-complete-translation-language" data-lang="it">Italiano</button>
+          </div>
+          <p class="translation-text" id="lesson-complete-translation-text" aria-live="polite"></p>
+        </div>
+      </div>
     </div>
 
     <a
@@ -802,8 +874,8 @@ function speakGerman(text,options={}){
     Object.assign(utterance,{
       lang:"de-DE",
       rate:options.rate??.88,
-      pitch:1,
-      volume:1
+      pitch:options.pitch??1,
+      volume:options.volume??1
     });
 
     if(germanVoice)utterance.voice=germanVoice;
@@ -1169,6 +1241,36 @@ document.addEventListener("click",event=>{
 
 const lessonCompleteBtn=document.getElementById("lesson-complete-btn");
 const lessonCompletePaper=document.getElementById("lesson-complete-paper");
+const lessonCompleteTranslation=document.getElementById("lesson-complete-translation");
+const lessonCompleteTranslationToggle=document.getElementById("lesson-complete-translation-toggle");
+const lessonCompleteTranslationText=document.getElementById("lesson-complete-translation-text");
+const lessonCompleteTranslationButtons=[...document.querySelectorAll(".lesson-complete-translation-language")];
+
+const lessonCompleteTranslations={
+  en:"Finished! You have completed lesson A1.1. You read the lesson and trained everything: Aktiv trainieren, Sprich nach, Übungen, Dialoge and Diktat. Now you can greet and say goodbye, introduce yourself, ask someone’s name and spell your name. Very well done!",
+  pl:"Gotowe! Ukończyłeś lekcję A1.1. Przeczytałeś lekcję i przećwiczyłeś wszystko: Aktiv trainieren, Sprich nach, Übungen, Dialoge i Diktat. Teraz potrafisz się przywitać i pożegnać, przedstawić się, zapytać o imię oraz przeliterować swoje imię. Bardzo dobra robota!",
+  it:"Fatto! Hai completato la lezione A1.1. Hai letto la lezione e ti sei esercitato in tutto: Aktiv trainieren, Sprich nach, Übungen, Dialoge e Diktat. Ora sai salutare e congedarti, presentarti, chiedere il nome e fare lo spelling del tuo nome. Molto bene!"
+};
+
+const lessonCompleteSpeech=
+  "Geschafft! Du hast Lektion A eins Punkt eins abgeschlossen. " +
+  "Du hast die Lektion gelesen und alles trainiert: Aktiv trainieren, Sprich nach, Übungen, Dialoge und Diktat. " +
+  "Das kannst du jetzt: begrüßen und verabschieden, dich vorstellen, nach dem Namen fragen und deinen Namen buchstabieren. " +
+  "Sehr gut gemacht!";
+
+lessonCompleteTranslationToggle.addEventListener("click",event=>{
+  event.stopPropagation();
+  lessonCompleteTranslation.classList.toggle("open");
+});
+
+lessonCompleteTranslationButtons.forEach(button=>button.addEventListener("click",event=>{
+  event.stopPropagation();
+  const lang=button.dataset.lang;
+  lessonCompleteTranslationButtons.forEach(item=>item.classList.toggle("active",item===button));
+  lessonCompleteTranslationText.textContent=lessonCompleteTranslations[lang];
+  lessonCompleteTranslationText.classList.add("show");
+  lessonCompleteTranslation.classList.add("open");
+}));
 
 lessonCompleteBtn.addEventListener("click",()=>{
   const isOpen=lessonCompletePaper.classList.toggle("show");
@@ -1180,6 +1282,16 @@ lessonCompleteBtn.addEventListener("click",()=>{
     burstConfetti();
     setTimeout(burstConfetti,260);
     setTimeout(burstConfetti,520);
+    speakGerman(lessonCompleteSpeech,{rate:.94,pitch:1.14,volume:1});
+  }else{
+    if("speechSynthesis" in window)speechSynthesis.cancel();
+    lessonCompleteTranslation.classList.remove("open");
+  }
+});
+
+document.addEventListener("click",event=>{
+  if(!event.target.closest("#lesson-complete-translation")){
+    lessonCompleteTranslation.classList.remove("open");
   }
 });
 
