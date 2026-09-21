@@ -587,6 +587,39 @@ button{font:inherit}
   margin-top:0;
 }
 
+.text-answer-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:12px;
+}
+
+.text-answer-input{
+  flex:1;
+  min-width:0;
+  padding:12px 14px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  color:var(--ink);
+  background:#f7fbff;
+  font:700 .86rem "Nunito Sans",sans-serif;
+  outline:none;
+}
+
+.text-answer-input:focus{
+  border-color:var(--sky);
+}
+
+.text-answer-send{
+  padding:12px 18px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  cursor:pointer;
+  color:var(--ink);
+  background:#fff;
+  font:800 .86rem "Nunito Sans",sans-serif;
+}
+
 .utility-row{
   display:flex;
   justify-content:center;
@@ -1371,6 +1404,19 @@ body{
 
           </div>
 
+        </div>
+
+        <div class="text-answer-row">
+          <input
+            type="text"
+            class="text-answer-input"
+            id="text-answer-input"
+            placeholder="…oder schreibe deine Antwort auf Deutsch"
+            autocomplete="off"
+          >
+          <button type="button" class="text-answer-send" id="text-answer-send">
+            Senden
+          </button>
         </div>
 
         <div class="mic-status-row">
@@ -2451,6 +2497,35 @@ els.micBtn.addEventListener("click",()=>{
 
   if(micReady){
     startListening();
+  }
+});
+
+const textAnswerInput=document.getElementById("text-answer-input");
+const textAnswerSend=document.getElementById("text-answer-send");
+
+function submitTextAnswer(){
+  const answer=textAnswerInput.value.trim();
+
+  if(
+    !answer||
+    answered||
+    speaking||
+    promptStarting||
+    retrying
+  ){
+    return;
+  }
+
+  textAnswerInput.value="";
+  evaluate(answer);
+}
+
+textAnswerSend.addEventListener("click",submitTextAnswer);
+
+textAnswerInput.addEventListener("keydown",event=>{
+  if(event.key==="Enter"){
+    event.preventDefault();
+    submitTextAnswer();
   }
 });
 
