@@ -815,6 +815,17 @@ button{font:inherit}
   }
 }
 </style>
+
+<style>
+.translation-globe{
+  display:inline-block;
+  font-size:1.18em;
+  line-height:1;
+  vertical-align:-.08em;
+  filter:saturate(1.65) brightness(1.14) contrast(1.08);
+  text-shadow:0 0 6px rgba(74,184,255,.34);
+}
+</style>
 </head>
 
 <body>
@@ -871,7 +882,7 @@ button{font:inherit}
     <div class="gate-translation-row">
       <span class="translation-control" id="gate-translation-control">
         <button type="button" class="translation-toggle" id="gate-translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung">
-          🌐 Übersetzung
+          <span class="translation-globe">🌐</span> Übersetzung
         </button>
         <span class="translation-panel">
           <span class="translation-languages">
@@ -932,7 +943,7 @@ button{font:inherit}
 
                 <span class="translation-control" id="translation-control">
                   <button type="button" class="translation-toggle" id="translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung">
-                    🌐 Übersetzung
+                    <span class="translation-globe">🌐</span> Übersetzung
                   </button>
                   <span class="translation-panel">
                     <span class="translation-languages">
