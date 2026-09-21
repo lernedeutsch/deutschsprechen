@@ -724,7 +724,33 @@ button{font:inherit}
 }
 
 /* ---------- PRZENIESIONE PANELE ---------- */
-.current-dialog-panel{grid-column:1;grid-row:1;background:#fff;color:var(--ink)}
+.current-dialog-panel{grid-column:1;grid-row:1;background:#1b3028;color:#f5f1e8}
+.current-dialog-panel .dialog-menu-title,
+.current-dialog-panel .dialog-menu-item,
+.current-dialog-panel .partner-title,
+.current-dialog-panel .partner-sub,
+.current-dialog-panel .turn-instruction,
+.current-dialog-panel .stat-value{color:#f5f1e8}
+.current-dialog-panel .dialog-menu-number,
+.current-dialog-panel .dialog-menu-info p,
+.current-dialog-panel .stat-label{color:#b8d8cc}
+.current-dialog-panel .dialog-menu-item.active{
+  background:#29463b;
+  border-color:#29463b;
+}
+.current-dialog-panel .dialog-menu-info{
+  background:#223a31;
+  border-color:#3b564b;
+}
+.current-dialog-panel .stat{
+  background:#223a31;
+  border-color:#3b564b;
+}
+.current-dialog-panel .translation-toggle{
+  color:#f5f1e8;
+  background:#29463b;
+  border-color:#5b8d79;
+}
 .current-dialog-panel .partner-left{align-items:flex-start}
 .current-dialog-panel .partner-title{white-space:normal;overflow:visible;text-overflow:clip}
 .current-dialog-panel .partner-sub{flex-wrap:wrap}
