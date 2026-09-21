@@ -158,6 +158,59 @@ body{padding:20px 12px 35px}.course-start{margin-bottom:38px;padding:18px 15px;b
   filter:hue-rotate(115deg) saturate(2.8) brightness(1.28) contrast(1.18) drop-shadow(0 0 4px rgba(255,74,190,.72));
 }
 </style>
+
+<style id="greeting-two-cards">
+.greeting-page .greeting-card{
+  display:grid;
+  gap:18px;
+  padding:0;
+  background:transparent;
+  border:0;
+  box-shadow:none;
+}
+
+.greeting-info-card,
+.greeting-page .greeting-game{
+  padding:26px;
+  background:#fffdf6;
+  border:1px solid var(--line);
+  border-radius:20px;
+  box-shadow:0 12px 30px #00000012;
+}
+
+.greeting-info-card .lead{
+  margin:0 0 22px;
+}
+
+.greeting-info-card .grammar-toggle{
+  margin:0 0 20px;
+}
+
+.greeting-info-card .action-help{
+  margin:0;
+  padding-left:0;
+  background:transparent;
+  border:0;
+  box-shadow:none;
+}
+
+.greeting-page .greeting-game{
+  padding:26px;
+}
+
+@media(max-width:560px){
+  .greeting-page .greeting-card{
+    padding:0;
+  }
+
+  .greeting-info-card,
+  .greeting-page .greeting-game{
+    padding:18px 14px;
+    border-radius:18px;
+  }
+}
+</style>
+
 </head>      
 <body id="seitenanfang">      
 
@@ -201,10 +254,12 @@ body{padding:20px 12px 35px}.course-start{margin-bottom:38px;padding:18px 15px;b
 <section aria-labelledby="greeting-title">      
 <div class="part-head"><span class="part-num">Teil 1</span><h1 class="part-title" id="greeting-title">Wir begrüßen uns</h1></div>      
 <div class="card greeting-card">      
+<div class="greeting-info-card">
 <p class="lead">Wir sagen verschiedene Grüße je nach Tageszeit. Finde den richtigen Gruß!</p>      
 <details class="grammar-toggle"><summary>Merke! — Grüße nach Tageszeit</summary><div class="grammar-box">morgens: <strong>Guten Morgen!</strong><br><br>tagsüber: <strong>Guten Tag!</strong><br><br>abends: <strong>Guten Abend!</strong><br><br>informell: <strong>Hallo!</strong><br><br>beim Abschied: <strong>Tschüss!</strong></div></details>      
-<div class="greeting-game">      
 <div class="action-help" data-help-key="greeting" aria-label="So funktioniert die Übung"><span class="action-help-step">👀 Uhr ansehen</span><span class="action-help-arrow">→</span><span class="action-help-step">👆 richtigen Gruß anklicken</span></div>
+</div>
+<div class="greeting-game">      
 <div class="clock-display"><div class="day-picture morgen" id="day-picture" role="img" aria-label="Sonnenaufgang am Morgen"><span class="day-symbol" id="day-symbol">🌅</span></div><span class="clock-time" id="clock-time">08:00 Uhr</span></div>      
 <p class="question">Welcher Gruß passt zu dieser Uhrzeit?</p>      
 <div class="answer-buttons">      
