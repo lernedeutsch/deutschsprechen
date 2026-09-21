@@ -235,6 +235,26 @@ body{
     font-weight:900;
 }
 
+.lesson-card.next-step .lesson-number{
+    animation:nextLessonPulse 1.15s ease-in-out infinite;
+}
+
+@keyframes nextLessonPulse{
+    0%,100%{
+        transform:scale(1);
+        box-shadow:
+            0 0 0 0 rgba(244,201,93,.42),
+            0 8px 18px rgba(244,201,93,.20);
+    }
+    50%{
+        transform:scale(1.11);
+        box-shadow:
+            0 0 0 9px rgba(244,201,93,.12),
+            0 0 28px rgba(244,201,93,.62),
+            0 13px 26px rgba(244,201,93,.36);
+    }
+}
+
 .lesson-content{
     flex:1;
 }
@@ -1093,6 +1113,18 @@ footer{
 </div>
 
 <script>
+const completedA1Part=Math.max(0,Number(localStorage.getItem("a1CompletedPart")||0));
+const availableLessonCards=[...document.querySelectorAll(".lesson-card.available")];
+
+availableLessonCards.forEach(card=>card.classList.remove("next-step"));
+
+const nextLessonCard=availableLessonCards.find(card=>{
+    const number=Number(card.querySelector(".lesson-number")?.textContent.trim());
+    return Number.isFinite(number)&&number>completedA1Part;
+});
+
+if(nextLessonCard)nextLessonCard.classList.add("next-step");
+
 const heroTranslation=document.getElementById("hero-translation");
 const heroTranslationToggle=document.getElementById("hero-translation-toggle");
 const heroTranslationText=document.getElementById("hero-translation-text");
