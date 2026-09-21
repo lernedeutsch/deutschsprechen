@@ -1400,6 +1400,9 @@ lessonCompleteBtn.addEventListener("click",()=>{
   lessonCompletePaper.setAttribute("aria-hidden",String(!isOpen));
 
   if(isOpen){
+    const completedA1Part=Math.max(1,Number(localStorage.getItem("a1CompletedPart")||0));
+    localStorage.setItem("a1CompletedPart",String(completedA1Part));
+
     burstConfetti();
     setTimeout(burstConfetti,260);
     setTimeout(burstConfetti,520);
