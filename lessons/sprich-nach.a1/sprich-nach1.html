@@ -1047,8 +1047,34 @@ async function speak(text){
         return;
       }
 
-      window.speechSynthesis.speak(utterance);
-    },80);
+      /*
+       * Niesłyszalny warm-up zapobiega ucinaniu początku
+       * pierwszego słowa przez Chrome/Windows SpeechSynthesis.
+       */
+      const warmup=new SpeechSynthesisUtterance("\u00A0");
+      warmup.lang="de-DE";
+      warmup.volume=0;
+      warmup.rate=1;
+      if(voice)warmup.voice=voice;
+      warmup.onend=()=>{
+        if(
+          runId!==speechRunId||
+          activeUtterance!==utterance
+        ){
+          finish();
+          return;
+        }
+        window.setTimeout(()=>window.speechSynthesis.speak(utterance),120);
+      };
+      warmup.onerror=()=>{
+        if(runId===speechRunId&&activeUtterance===utterance){
+          window.setTimeout(()=>window.speechSynthesis.speak(utterance),120);
+        }else{
+          finish();
+        }
+      };
+      window.speechSynthesis.speak(warmup);
+    },180);
   });
 }
 
