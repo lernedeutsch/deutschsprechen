@@ -757,6 +757,33 @@ button{font:inherit}
   font-size:.86rem;
 }
 
+.next-training{
+  display:flex;
+  justify-content:center;
+  margin-top:18px;
+}
+
+.next-training a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:52px;
+  padding:11px 20px;
+  border-radius:999px;
+  background:linear-gradient(180deg,#35b8af,#177f78);
+  color:#fff;
+  text-decoration:none;
+  font-weight:800;
+  box-shadow:0 9px 18px rgba(0,0,0,.16);
+  transition:transform .16s,filter .16s,box-shadow .16s;
+}
+
+.next-training a:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.05);
+  box-shadow:0 12px 22px rgba(0,0,0,.20);
+}
+
 @media(max-width:620px){
   .utility-row{
     gap:4px;
@@ -1062,6 +1089,12 @@ button{font:inherit}
     Am besten mit Kopfhörern. Spracherkennung &amp; -ausgabe laufen über
     die Web-Speech-API deines Browsers (am zuverlässigsten in Chrome/Edge).
   </p>
+
+  <div class="next-training">
+    <a href="../dikatat.a1/diktat1.html">
+      Fertig gelesen? Weiter mit Ich schreibe ein Diktat
+    </a>
+  </div>
 
 </div>
 
