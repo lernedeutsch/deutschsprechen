@@ -859,6 +859,9 @@ let awaitingRetry=false;
 let recognizing=false;
 let recognition=null;
 let playbackToken=0;
+let speechRunId=0;
+let activeUtterance=null;
+let germanVoice=null;
 
 const stage=document.getElementById("stage");
 const statusLine=document.getElementById("status-line");
@@ -893,54 +896,162 @@ function revealWordsTimed(text,rate){
   });
 }
 
-function speak(text){
-  return new Promise(resolve=>{
-    if(!("speechSynthesis" in window)){
-      renderSentenceShell(text);
-      revealWordsTimed(text,0.95);
-      resolve();
-      return;
-    }
+function loadGermanVoice(){
+  if(!("speechSynthesis" in window))return null;
 
+  const voices=window.speechSynthesis.getVoices();
+
+  const germanVoices=voices.filter(
+    voice=>
+      voice.lang&&
+      voice.lang.toLowerCase().startsWith("de")
+  );
+
+  germanVoice=
+    germanVoices.find(
+      voice=>voice.name.toLowerCase().includes("google")
+    )||
+    germanVoices.find(
+      voice=>voice.lang==="de-DE"
+    )||
+    germanVoices[0]||
+    null;
+
+  return germanVoice;
+}
+
+loadGermanVoice();
+
+if("speechSynthesis" in window){
+  window.speechSynthesis.addEventListener(
+    "voiceschanged",
+    loadGermanVoice
+  );
+}
+
+async function waitForGermanVoice(){
+  if(germanVoice)return germanVoice;
+
+  loadGermanVoice();
+
+  if(germanVoice)return germanVoice;
+
+  await wait(180);
+  loadGermanVoice();
+
+  if(germanVoice)return germanVoice;
+
+  await wait(260);
+  loadGermanVoice();
+
+  return germanVoice;
+}
+
+async function stopSpeechSafely(){
+  if(!("speechSynthesis" in window))return;
+
+  speechRunId++;
+  activeUtterance=null;
+
+  if(
+    window.speechSynthesis.speaking||
+    window.speechSynthesis.pending||
+    window.speechSynthesis.paused
+  ){
     window.speechSynthesis.cancel();
 
+    /*
+     * Chrome potrzebuje chwili, żeby naprawdę opróżnić starą kolejkę.
+     * Nowe speak() nie może wejść w ten sam moment co cancel().
+     */
+    await wait(240);
+  }
+}
+
+async function speak(text){
+  if(!("speechSynthesis" in window)){
+    renderSentenceShell(text);
+    revealWordsTimed(text,currentRate);
+    return;
+  }
+
+  const runId=++speechRunId;
+  const voice=await waitForGermanVoice();
+
+  if(runId!==speechRunId)return;
+
+  return new Promise(resolve=>{
     const utterance=new SpeechSynthesisUtterance(text);
 
+    activeUtterance=utterance;
+
     utterance.lang="de-DE";
-    utterance.rate=0.95;
+    utterance.rate=Number.isFinite(currentRate)?currentRate:0.95;
     utterance.pitch=1.0;
     utterance.volume=1.0;
 
-    const voices=window.speechSynthesis.getVoices();
-
-    const germanVoices=voices.filter(
-      voice=>
-        voice.lang &&
-        voice.lang.toLowerCase().startsWith("de")
-    );
-
-    const preferredVoice=
-      germanVoices.find(
-        voice=>voice.name.toLowerCase().includes("google")
-      )||
-      germanVoices.find(
-        voice=>voice.lang==="de-DE"
-      )||
-      germanVoices[0];
-
-    if(preferredVoice){
-      utterance.voice=preferredVoice;
+    if(voice){
+      utterance.voice=voice;
     }
 
-    utterance.onstart=()=>{
-      renderSentenceShell(text);
-      revealWordsTimed(text,0.95);
+    let finished=false;
+
+    const finish=()=>{
+      if(finished)return;
+      finished=true;
+
+      if(runId===speechRunId){
+        activeUtterance=null;
+      }
+
+      resolve();
     };
 
-    utterance.onend=()=>resolve();
-    utterance.onerror=()=>resolve();
+    utterance.onstart=()=>{
+      if(runId!==speechRunId)return;
 
-    window.speechSynthesis.speak(utterance);
+      renderSentenceShell(text);
+      revealWordsTimed(
+        text,
+        Number.isFinite(currentRate)?currentRate:0.95
+      );
+    };
+
+    utterance.onend=finish;
+
+    utterance.onerror=event=>{
+      /*
+       * canceled/interrupted pojawiają się przy świadomym Stop,
+       * Wiederholen, Neustart albo Nächster Satz.
+       */
+      if(
+        event.error!=="canceled"&&
+        event.error!=="interrupted"
+      ){
+        console.warn(
+          "Sprachausgabe Sprich nach:",
+          event.error
+        );
+      }
+
+      finish();
+    };
+
+    /*
+     * Trzymamy utterance w activeUtterance aż do onend/onerror.
+     * To zapobiega zniknięciu obiektu podczas odtwarzania.
+     */
+    window.setTimeout(()=>{
+      if(
+        runId!==speechRunId||
+        activeUtterance!==utterance
+      ){
+        finish();
+        return;
+      }
+
+      window.speechSynthesis.speak(utterance);
+    },80);
   });
 }
 
@@ -1119,11 +1230,8 @@ async function playCurrentAndListen(){
   setMicReady(false);
   stopRecognitionCompletely();
 
-  if("speechSynthesis" in window){
-    window.speechSynthesis.cancel();
-  }
-
-  await wait(140);
+  await stopSpeechSafely();
+  await wait(120);
 
   if(token!==playbackToken)return;
 
@@ -1251,7 +1359,7 @@ document.getElementById("next-btn").addEventListener("click",()=>{
   playbackToken++;
   setMicReady(false);
   stopRecognitionCompletely();
-  if("speechSynthesis" in window)speechSynthesis.cancel();
+  stopSpeechSafely();
   if(currentIndex<sentences.length){
     currentIndex++;
   }
@@ -1268,7 +1376,7 @@ document.getElementById("stop-btn").addEventListener("click",()=>{
   playbackToken++;
   setMicReady(false);
   stopRecognitionCompletely();
-  if("speechSynthesis" in window)speechSynthesis.cancel();
+  stopSpeechSafely();
   setStage("idle","⏸");
   statusLine.textContent="";
 });
@@ -1277,7 +1385,7 @@ function restartAll(){
   playbackToken++;
   setMicReady(false);
   stopRecognitionCompletely();
-  if("speechSynthesis" in window)speechSynthesis.cancel();
+  stopSpeechSafely();
   currentIndex=0;
   doneWrap.classList.remove("active");
   controls.classList.add("active");
