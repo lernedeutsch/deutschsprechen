@@ -265,13 +265,13 @@ test("Lektion 1: complete learner journey across all five modules", async ({ pag
   const inputs = page.locator("#ex1_1 input[data-answer]");
   const count = await inputs.count();
   for (let i = 0; i < count; i++) await inputs.nth(i).fill("falsch");
-  await page.locator('button[onclick="checkExercise(\\'ex1_1\\')"]').click();
+  await page.locator("button[onclick=\"checkExercise('ex1_1')\"]").click();
   await expect(page.locator("#exercise-progress-count")).toContainText("0 / 5");
   for (let i = 0; i < count; i++) {
     const input = inputs.nth(i);
     await input.fill(await input.getAttribute("data-answer"));
   }
-  await page.locator('button[onclick="checkExercise(\\'ex1_1\\')"]').click();
+  await page.locator("button[onclick=\"checkExercise('ex1_1')\"]").click();
   await expect(page.locator("#exercise-progress-count")).toContainText("1 / 5");
 
   await page.goto("/lessons/dialoge.a1/dialoge1.html", { waitUntil: "domcontentloaded" });
