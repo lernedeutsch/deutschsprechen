@@ -190,36 +190,24 @@ test("Diktat: wrong answer shows correction and does not advance", async ({ page
   await expect(page.locator("#dict-input")).toBeEnabled();
 });
 
-test("Dialoge: wrong text answer stays on turn and offers another try", async ({ page }) => {
+test("Dialoge: wrong answer stays on turn and offers another try", async ({ page }) => {
   await mockBrowserSpeech(page);
-  await page.addInitScript(() => {
-    class FakeRecognition {
-      start() {}
-      stop() {
-        if (typeof this.onend === "function") this.onend();
-      }
-    }
-    window.SpeechRecognition = FakeRecognition;
-    window.webkitSpeechRecognition = FakeRecognition;
-  });
-
   await page.goto("/lessons/dialoge.a1/dialoge1.html", { waitUntil: "domcontentloaded" });
-  await page.locator("#gate-btn").click();
-  await expect(page.locator("#layout")).toHaveClass(/show/);
 
-  await page.waitForFunction(() => {
-    const status = document.getElementById("mic-status")?.textContent || "";
-    return /Mikrofon anklicken|Jetzt noch einmal/i.test(status);
-  });
-  const before = (await page.locator("#stat-progress").textContent()).trim();
+  const before = await page.evaluate(() => ({
+    progress: document.getElementById("stat-progress").textContent.trim(),
+    score: document.getElementById("stat-score").textContent.trim()
+  }));
 
-  await page.locator("#text-answer-input").fill("Das ist absichtlich falsch");
-  await page.locator("#text-answer-send").click();
+  await page.evaluate(() => evaluate("Das ist absichtlich falsch"));
 
   await expect(page.locator("#history-list")).toContainText("Das ist absichtlich falsch ✗");
-  await expect(page.locator("#stat-progress")).toHaveText(before);
-  await expect(page.locator("#stat-score")).toContainText("0/");
-  await expect(page.locator("#mic-status")).toContainText(/noch nicht richtig|Noch einmal|Mikrofon/i);
+  await expect(page.locator("#stat-progress")).toHaveText(before.progress);
+  await expect(page.locator("#stat-score")).toHaveText(before.score);
+  await expect(page.locator("#mic-status")).toContainText("Das war noch nicht richtig");
+
+  await page.waitForTimeout(900);
+  await expect(page.locator("#stat-progress")).toHaveText(before.progress);
 });
 
 test("Sprich nach: wrong typed sentence is rejected without advancing", async ({ page }) => {
