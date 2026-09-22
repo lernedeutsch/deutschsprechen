@@ -136,3 +136,100 @@ test("Aktiv trainieren: greeting answer and reset work", async ({ page }) => {
   await page.evaluate(() => document.getElementById("restart-button").click());
   await expect(page.locator("#greeting-counter")).toContainText("0 / 3");
 });
+
+
+test("Aktiv trainieren: wrong greeting can be corrected", async ({ page }) => {
+  await mockBrowserSpeech(page);
+  await page.goto("/lessons/aktivt-trenieren.a1/aktiv-trenieren1.html", { waitUntil: "domcontentloaded" });
+
+  await page.locator('.answer-button[data-gruss="abend"]').click();
+  await expect(page.locator("#greeting-feedback")).toContainText("Versuch es noch einmal");
+  await expect(page.locator("#greeting-counter")).toContainText("0 / 3");
+
+  await page.locator('.answer-button[data-gruss="morgen"]').click();
+  await expect(page.locator("#greeting-feedback")).toContainText("Richtig");
+  await expect(page.locator("#greeting-counter")).toContainText("1 / 3");
+});
+
+test("Übungen: wrong answers stay retryable and can be corrected", async ({ page }) => {
+  await page.goto("/lessons/ubungen.a1/ubungen1.html", { waitUntil: "domcontentloaded" });
+
+  const exercise = page.locator("#ex1_1");
+  const inputs = exercise.locator("input[data-answer]");
+  const count = await inputs.count();
+
+  for (let i = 0; i < count; i++) {
+    await inputs.nth(i).fill("falsch");
+  }
+  await page.locator('button[onclick="checkExercise(\'ex1_1\')"]').click();
+
+  await expect(page.locator("#ex1_1-result")).toContainText("Versuch es noch einmal");
+  await expect(page.locator("#done-ex1_1")).not.toBeVisible();
+  await expect(page.locator("#exercise-progress-count")).toContainText("0 / 5");
+
+  for (let i = 0; i < count; i++) {
+    const input = inputs.nth(i);
+    await input.fill(await input.getAttribute("data-answer"));
+  }
+  await page.locator('button[onclick="checkExercise(\'ex1_1\')"]').click();
+
+  await expect(page.locator("#done-ex1_1")).toBeVisible();
+  await expect(page.locator("#exercise-progress-count")).toContainText("1 / 5");
+});
+
+test("Diktat: wrong answer shows correction and does not advance", async ({ page }) => {
+  await mockBrowserSpeech(page);
+  await page.goto("/lessons/dikatat.a1/diktat1.html", { waitUntil: "domcontentloaded" });
+
+  await expect(page.locator("#stat-progress")).toContainText("1/10");
+  await page.locator("#dict-input").fill("Das ist absichtlich falsch");
+  await page.locator("#dict-input").press("Enter");
+
+  await expect(page.locator("#feedback")).toContainText("Noch nicht ganz");
+  await expect(page.locator("#stat-progress")).toContainText("1/10");
+  await expect(page.locator("#dict-input")).toBeEnabled();
+});
+
+test("Dialoge: wrong text answer stays on turn and offers another try", async ({ page }) => {
+  await mockBrowserSpeech(page);
+  await page.addInitScript(() => {
+    class FakeRecognition {
+      start() {}
+      stop() {
+        if (typeof this.onend === "function") this.onend();
+      }
+    }
+    window.SpeechRecognition = FakeRecognition;
+    window.webkitSpeechRecognition = FakeRecognition;
+  });
+
+  await page.goto("/lessons/dialoge.a1/dialoge1.html", { waitUntil: "domcontentloaded" });
+  await page.locator("#gate-btn").click();
+  await expect(page.locator("#layout")).toHaveClass(/show/);
+
+  await page.waitForTimeout(300);
+  const before = (await page.locator("#stat-progress").textContent()).trim();
+
+  await page.locator("#text-answer-input").fill("Das ist absichtlich falsch");
+  await page.locator("#text-answer-send").click();
+
+  await expect(page.locator("#history-list")).toContainText("Das ist absichtlich falsch ✗");
+  await expect(page.locator("#stat-progress")).toHaveText(before);
+  await expect(page.locator("#stat-score")).toContainText("0/");
+  await expect(page.locator("#mic-status")).toContainText(/noch nicht richtig|Noch einmal|Mikrofon/i);
+});
+
+test("Sprich nach: wrong typed sentence is rejected without advancing", async ({ page }) => {
+  await mockBrowserSpeech(page);
+  await page.goto("/lessons/sprich-nach.a1/sprich-nach1.html", { waitUntil: "domcontentloaded" });
+
+  await page.locator("#start-btn").click();
+  const before = (await page.locator("#progress-count").textContent()).trim();
+
+  await page.locator("#text-input").fill("Das ist absichtlich falsch");
+  await page.locator("#send-btn").click();
+
+  await expect(page.locator("#you-said")).toHaveClass(/bad/);
+  await expect(page.locator("#status-line")).toContainText("Nicht ganz");
+  await expect(page.locator("#progress-count")).toHaveText(before);
+});
