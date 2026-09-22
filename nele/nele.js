@@ -1056,9 +1056,20 @@ const Nele = {
             .cancel();
 
 
+        // Emoji i symbole dekoracyjne mogą być widoczne w czacie,
+        // ale Nele nie powinna wypowiadać ich nazw na głos.
+        const spokenText = String(text || "")
+            .replace(/[\p{Extended_Pictographic}\p{Emoji_Presentation}\uFE0F\u200D]/gu, "")
+            .replace(/\s{2,}/g, " ")
+            .trim();
+
+        if (!spokenText) {
+            return;
+        }
+
         const utterance =
             new SpeechSynthesisUtterance(
-                text
+                spokenText
             );
 
 
