@@ -12,7 +12,7 @@ const Nele = {
         (
             window.NELE_BACKEND_URL
             ||
-            "https://nele-backend.onrender.com"
+            "https://nele-backend-3.onrender.com"
         ),
 
     messagesElement: null,
