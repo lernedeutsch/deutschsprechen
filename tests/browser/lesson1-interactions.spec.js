@@ -224,3 +224,70 @@ test("Sprich nach: wrong typed sentence is rejected without advancing", async ({
   await expect(page.locator("#status-line")).toContainText("Nicht ganz");
   await expect(page.locator("#progress-count")).toHaveText(before);
 });
+
+
+test("Lektion 1: complete learner journey across all five modules", async ({ page }) => {
+  await mockBrowserSpeech(page);
+
+  await page.goto("/lessons/a1/lektion-1.html", { waitUntil: "domcontentloaded" });
+  const moduleLinks = [
+    "../aktivt-trenieren.a1/aktiv-trenieren1.html",
+    "../sprich-nach.a1/sprich-nach1.html",
+    "../ubungen.a1/ubungen1.html",
+    "../dialoge.a1/dialoge1.html",
+    "../dikatat.a1/diktat1.html"
+  ];
+  for (const href of moduleLinks) {
+    await expect(page.locator(`a[href="${href}"]`).first()).toBeVisible();
+  }
+
+  await page.goto("/lessons/aktivt-trenieren.a1/aktiv-trenieren1.html", { waitUntil: "domcontentloaded" });
+  await page.locator('.answer-button[data-gruss="abend"]').click();
+  await expect(page.locator("#greeting-counter")).toContainText("0 / 3");
+  await page.locator('.answer-button[data-gruss="morgen"]').click();
+  await expect(page.locator("#greeting-counter")).toContainText("1 / 3");
+  await page.evaluate(() => document.getElementById("restart-button").click());
+  await expect(page.locator("#greeting-counter")).toContainText("0 / 3");
+
+  await page.goto("/lessons/sprich-nach.a1/sprich-nach1.html", { waitUntil: "domcontentloaded" });
+  await page.locator("#start-btn").click();
+  const sprichBefore = (await page.locator("#progress-count").textContent()).trim();
+  await page.locator("#text-input").fill("Das ist absichtlich falsch");
+  await page.locator("#send-btn").click();
+  await expect(page.locator("#status-line")).toContainText("Nicht ganz");
+  await expect(page.locator("#progress-count")).toHaveText(sprichBefore);
+  await page.locator("#next-btn").click();
+  await expect(page.locator("#progress-count")).not.toHaveText(sprichBefore);
+  await page.locator("#restart-btn").click();
+  await expect(page.locator("#progress-count")).toContainText("1");
+
+  await page.goto("/lessons/ubungen.a1/ubungen1.html", { waitUntil: "domcontentloaded" });
+  const inputs = page.locator("#ex1_1 input[data-answer]");
+  const count = await inputs.count();
+  for (let i = 0; i < count; i++) await inputs.nth(i).fill("falsch");
+  await page.locator('button[onclick="checkExercise(\\'ex1_1\\')"]').click();
+  await expect(page.locator("#exercise-progress-count")).toContainText("0 / 5");
+  for (let i = 0; i < count; i++) {
+    const input = inputs.nth(i);
+    await input.fill(await input.getAttribute("data-answer"));
+  }
+  await page.locator('button[onclick="checkExercise(\\'ex1_1\\')"]').click();
+  await expect(page.locator("#exercise-progress-count")).toContainText("1 / 5");
+
+  await page.goto("/lessons/dialoge.a1/dialoge1.html", { waitUntil: "domcontentloaded" });
+  const dialogBefore = await page.locator("#stat-progress").textContent();
+  await page.evaluate(() => evaluate("Das ist absichtlich falsch"));
+  await expect(page.locator("#history-list")).toContainText("Das ist absichtlich falsch ✗");
+  await expect(page.locator("#stat-progress")).toHaveText(dialogBefore.trim());
+
+  await page.goto("/lessons/dikatat.a1/diktat1.html", { waitUntil: "domcontentloaded" });
+  await expect(page.locator("#stat-progress")).toContainText("1/10");
+  await page.locator("#dict-input").fill("Das ist absichtlich falsch");
+  await page.locator("#dict-input").press("Enter");
+  await expect(page.locator("#feedback")).toContainText("Noch nicht ganz");
+  await expect(page.locator("#stat-progress")).toContainText("1/10");
+  for (let i = 0; i < 10; i++) await page.locator("#skip-btn").click();
+  await expect(page.locator("#final")).toHaveClass(/show/);
+  await page.locator("#restart-btn").click();
+  await expect(page.locator("#stat-progress")).toContainText("1/10");
+});
