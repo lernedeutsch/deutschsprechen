@@ -28,6 +28,9 @@ const Nele = {
     voiceTranscriptReady: false,
 
     sessionId: null,
+    conversationMode: "course",
+    courseModeButton: null,
+    freeModeButton: null,
 
 
     /* =========================================
@@ -85,6 +88,18 @@ const Nele = {
             document.getElementById(
                 "new-user-btn"
             );
+
+        this.courseModeButton = document.getElementById("course-mode-btn");
+        this.freeModeButton = document.getElementById("free-mode-btn");
+        this.conversationMode = localStorage.getItem("nele_conversation_mode") || "course";
+        this.updateModeButtons();
+
+        if (this.courseModeButton) {
+            this.courseModeButton.addEventListener("click", () => this.setConversationMode("course"));
+        }
+        if (this.freeModeButton) {
+            this.freeModeButton.addEventListener("click", () => this.setConversationMode("free"));
+        }
 
 
         /* =========================
@@ -214,6 +229,22 @@ const Nele = {
     },
 
 
+    async setConversationMode(mode) {
+        if (!["course", "free"].includes(mode) || mode === this.conversationMode) return;
+        this.conversationMode = mode;
+        localStorage.setItem("nele_conversation_mode", mode);
+        this.updateModeButtons();
+        if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+        if (this.messagesElement) this.messagesElement.innerHTML = "";
+        await this.loadWelcome(true);
+    },
+
+    updateModeButtons() {
+        if (this.courseModeButton) this.courseModeButton.classList.toggle("active", this.conversationMode === "course");
+        if (this.freeModeButton) this.freeModeButton.classList.toggle("active", this.conversationMode === "free");
+    },
+
+
     /* =========================================
        IDENTYFIKATOR UŻYTKOWNIKA
     ========================================= */
@@ -317,7 +348,9 @@ const Nele = {
                             new_conversation:
                                 Boolean(
                                     newConversation
-                                )
+                                ),
+                            conversation_mode:
+                                this.conversationMode
                         })
                     }
                 );
@@ -907,7 +940,9 @@ const Nele = {
                                 this.sessionId,
 
                             input_mode:
-                                inputMode
+                                inputMode,
+                            conversation_mode:
+                                this.conversationMode
                         })
                     }
                 );
