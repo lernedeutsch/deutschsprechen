@@ -56,9 +56,10 @@ for (const file of htmlFiles) {
   const content = fs.readFileSync(file, "utf8");
   const name = rel(file);
 
+  const lower = content.toLowerCase();
   if (!KNOWN_PLACEHOLDERS.has(name) &&
-      (!/<html[\\s>]/i.test(content) || !/<\/html>/i.test(content) ||
-       !/<body[\\s>]/i.test(content) || !/<\/body>/i.test(content))) {
+      (!lower.includes("<html") || !lower.includes("</html>") ||
+       !lower.includes("<body") || !lower.includes("</body>"))) {
     malformed.push(name);
   }
 
