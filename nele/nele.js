@@ -28,6 +28,7 @@ const Nele = {
     voiceTranscriptReady: false,
 
     sessionId: null,
+    conversationSessionId: null,
 
 
     /* =========================================
@@ -311,7 +312,7 @@ const Nele = {
                         },
 
                         body: JSON.stringify({
-                            session_id:
+                            student_id:
                                 this.sessionId,
 
                             new_conversation:
@@ -334,6 +335,10 @@ const Nele = {
 
             const data =
                 await response.json();
+
+
+            this.conversationSessionId =
+                data.session_id || null;
 
 
             const reply =
@@ -389,6 +394,8 @@ const Nele = {
         }
 
         this.isResetting = true;
+
+        this.conversationSessionId = null;
 
         /*
           WAŻNE:
@@ -519,6 +526,8 @@ const Nele = {
 
         this.sessionId =
             this.getSessionId();
+
+        this.conversationSessionId = null;
 
         if (this.messagesElement) {
             this.messagesElement.innerHTML = "";
@@ -903,8 +912,11 @@ const Nele = {
                             message:
                                 text,
 
-                            session_id:
+                            student_id:
                                 this.sessionId,
+
+                            session_id:
+                                this.conversationSessionId,
 
                             input_mode:
                                 inputMode
@@ -924,6 +936,11 @@ const Nele = {
 
             const data =
                 await response.json();
+
+
+            this.conversationSessionId =
+                data.session_id ||
+                this.conversationSessionId;
 
 
             const reply =
