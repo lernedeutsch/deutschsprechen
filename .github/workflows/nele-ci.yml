@@ -17,7 +17,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Check JavaScript syntax
         run: |
@@ -28,3 +28,11 @@ jobs:
 
       - name: Run Nele safety tests
         run: node tests/nele-safety.js
+
+      - name: Install browser test dependencies
+        run: |
+          npm install
+          npx playwright install --with-deps chromium
+
+      - name: Run browser tests
+        run: npm run test:browser
