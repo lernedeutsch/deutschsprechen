@@ -207,7 +207,10 @@ test("Dialoge: wrong text answer stays on turn and offers another try", async ({
   await page.locator("#gate-btn").click();
   await expect(page.locator("#layout")).toHaveClass(/show/);
 
-  await page.waitForTimeout(300);
+  await page.waitForFunction(() => {
+    const status = document.getElementById("mic-status")?.textContent || "";
+    return /Mikrofon anklicken|Jetzt noch einmal/i.test(status);
+  });
   const before = (await page.locator("#stat-progress").textContent()).trim();
 
   await page.locator("#text-answer-input").fill("Das ist absichtlich falsch");
