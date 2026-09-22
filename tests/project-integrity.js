@@ -57,8 +57,8 @@ for (const file of htmlFiles) {
   const name = rel(file);
 
   if (!KNOWN_PLACEHOLDERS.has(name) &&
-      (!/<html[\\s>]/i.test(content) || !/<\\/html>/i.test(content) ||
-       !/<body[\\s>]/i.test(content) || !/<\\/body>/i.test(content))) {
+      (!/<html[\\s>]/i.test(content) || !/<\/html>/i.test(content) ||
+       !/<body[\\s>]/i.test(content) || !/<\/body>/i.test(content))) {
     malformed.push(name);
   }
 
