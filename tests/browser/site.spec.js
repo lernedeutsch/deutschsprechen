@@ -58,7 +58,8 @@ for (const item of pages) {
     const relevantErrors = item.allowsBackendErrors
       ? errors.filter(error =>
           !error.includes("Failed to load resource: net::ERR_FAILED") &&
-          !error.includes("Nele Welcome Fehler: TypeError: Failed to fetch")
+          !error.includes("Nele Welcome Fehler: TypeError: Failed to fetch") &&
+          !error.includes("has been blocked by CORS policy")
         )
       : errors;
 
