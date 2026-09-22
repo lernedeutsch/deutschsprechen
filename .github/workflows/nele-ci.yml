@@ -1,4 +1,4 @@
-name: Nele Frontend CI
+name: Deutschsprechen CI
 
 on:
   push:
@@ -21,8 +21,10 @@ jobs:
 
       - name: Check JavaScript syntax
         run: |
-          node --check nele/nele.js
-          node --check nele/nele-pronunciation.js
+          find . -type f -name "*.js" -not -path "./node_modules/*" -not -path "./.git/*" -print0 | xargs -0 -n1 node --check
+
+      - name: Check whole project integrity
+        run: node tests/project-integrity.js
 
       - name: Run Nele safety tests
         run: node tests/nele-safety.js
