@@ -76,6 +76,8 @@ tr.say:hover{background:#fff3c8}
 button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 @media(max-width:760px){body{padding:20px 10px 35px}.box,.page{padding:18px 14px}.hero{flex-direction:column}.globe{flex-basis:auto;width:170px}h1.main{font-size:2rem}.pass{flex-direction:column;align-items:flex-start}.stamps{justify-content:flex-start}.qa,.gender{grid-template-columns:1fr}.nums{grid-template-columns:repeat(4,1fr)}.head h2{font-size:1.8rem}.st{width:60px;height:60px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.scene-card{display:flex;align-items:center;gap:18px;margin:0 0 18px;padding:16px 18px;background:linear-gradient(145deg,#f7fbff,#fff8e8);border:1px solid var(--line);border-radius:18px}.scene-icon{flex:0 0 108px;min-height:86px;display:grid;place-items:center;text-align:center;font-size:2.45rem;background:#fff;border:1px solid var(--line);border-radius:16px}.scene-icon small{display:block;font:800 .7rem "JetBrains Mono",monospace;color:#5a5140}.scene-text b{font-size:1.15rem}.nationality-lab{margin:22px 0;padding:20px;background:linear-gradient(160deg,#fff8ea,#f3e2bd);border:1px solid var(--line);border-radius:18px}.nationality-lab .name-row{display:flex;align-items:center;gap:12px;margin:12px 0 18px}.nationality-lab input{flex:1;min-width:0;padding:10px 14px;border:2px solid var(--line);border-radius:11px;font:inherit}.dialog-tabs{display:flex;justify-content:center;gap:70px;margin:14px 0}.dialog-tab{padding:10px 22px;border:2px solid #7fa493;border-radius:999px;background:#edf7f1;font-weight:800}.dialog-tab.active{color:#fff;background:#4f7a63}.mini-dialog{display:grid;gap:10px;padding:18px;background:#ffffff90;border:2px solid var(--line);border-radius:16px}.db{max-width:72%;padding:10px 14px;border-radius:15px;background:#eee9dc}.db.me{margin-left:auto;background:#e8c989}.ending{color:#bd4433;font-weight:900}.grammar-practice{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(230px,.7fr);gap:18px;margin-top:22px}.drop-table td{vertical-align:middle}.drop-slot{display:inline-grid;place-items:center;min-width:48px;height:34px;margin:0 4px;padding:2px 8px;border:2px dashed #cf9f3f;border-radius:10px;background:#fff9e8;color:#bd4433;font-weight:900}.drop-slot.good{border-style:solid;border-color:#16864b;background:#e4f3e8;color:#16864b}.bubble-bank{position:relative;min-height:330px;overflow:hidden;padding:18px;background:linear-gradient(145deg,#eaf5ff,#fff8e8);border:2px solid #d7c79e;border-radius:20px}.bubble-bank h3{margin:0 0 8px;text-align:center}.ending-bubble{position:absolute;display:grid;place-items:center;width:58px;height:58px;border:2px solid #7fa493;border-radius:50%;background:#edf7f1;color:#17342a;font-weight:900;cursor:grab;box-shadow:0 8px 18px #0002;animation:floatBubble 3s ease-in-out infinite}.ending-bubble:nth-of-type(2){left:12%;top:72px}.ending-bubble:nth-of-type(3){right:12%;top:92px;animation-delay:.4s}.ending-bubble:nth-of-type(4){left:38%;top:155px;animation-delay:.8s}.ending-bubble:nth-of-type(5){right:18%;top:210px;animation-delay:1.2s}.ending-bubble:nth-of-type(6){left:12%;top:235px;animation-delay:1.6s}.ending-bubble:nth-of-type(7){right:42%;top:270px;animation-delay:2s}@keyframes floatBubble{50%{transform:translateY(-10px) rotate(3deg)}}.drag-feedback{min-height:28px;margin-top:10px;font-weight:800}@media(max-width:760px){.scene-card{align-items:flex-start}.scene-icon{flex-basis:82px;min-height:72px;font-size:2rem}.dialog-tabs{gap:12px}.grammar-practice{grid-template-columns:1fr}.bubble-bank{min-height:300px}.nationality-lab .name-row{align-items:stretch;flex-direction:column}}
 </style>
 </head>
 <body id="oben">
@@ -104,65 +106,46 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offse
 </header>
 
 <main class="page" id="t1">
-  <div class="head"><span class="num">Teil 1</span><h2>Woher kommen Sie?</h2><span class="done" id="d-herkunft">✅ geschafft</span></div>
-  <div class="card">
-    <p>Wenn wir nach der Herkunft fragen, benutzen wir diese Fragen. Klick auf einen Satz und hör zu!</p>
-    <div class="qa">
-      <div><span class="tag">👔 formell</span><br><b class="say" data-s="Woher kommen Sie?">🔊 Woher kommen Sie?</b><br><small>mit Erwachsenen und Fremden</small></div>
-      <div><span class="tag">🙂 informell</span><br><b class="say" data-s="Woher kommst du?">🔊 Woher kommst du?</b><br><small>mit Freunden und Kindern</small></div>
-    </div>
-    <div class="note"><p>Die Antwort ist immer: <b>Ich komme aus + Land.</b></p></div>
-    <p>
-      <span class="say" data-s="Ich komme aus Polen.">🔊 Ich komme aus Polen.</span><br>
-      <span class="say" data-s="Ich komme aus Deutschland.">🔊 Ich komme aus Deutschland.</span><br>
-      <span class="say" data-s="Ich komme aus der Schweiz.">🔊 Ich komme aus der Schweiz.</span></p>
-    <p class="warn">Achtung: „die Schweiz“ → „aus der Schweiz“!</p>
-    <p><span class="say" data-s="Ich komme aus den USA.">🔊 Ich komme aus den USA.</span></p>
-    <p class="warn">Achtung: „die USA“ → „aus den USA“!</p>
-    <div class="help"><span>👀 Frage lesen</span><em>→</em><span>👆 Antwort anklicken</span></div>
-    <div class="quiz" data-quiz="q1"></div>
-  </div>
-</main>
+<div class="head"><span class="num">Teil 1</span><h2>Woher kommen Sie?</h2><span class="done" id="d-herkunft">✅ geschafft</span></div>
+<div class="card"><p>Schau dir die Situation an und wähle die passende Frage.</p>
+<div class="quiz" data-quiz="q1"></div></div></main>
 
 <main class="page" id="t2">
-  <div class="head"><span class="num">Teil 2</span><h2>Länder und Nationalitäten</h2><span class="done" id="d-nation">✅ geschafft</span></div>
-  <div class="card">
-    <p>Die Nationalität beschreibt, woher eine Person kommt.</p>
-    <p>
-      <span class="say" data-s="Ich bin Pole. Ich komme aus Polen.">🔊 Ich bin <b>Pole</b> / <b>Polin</b>. — Ich komme aus Polen.</span><br>
-      <span class="say" data-s="Er ist Deutscher. Er kommt aus Deutschland.">🔊 Er ist <b>Deutscher</b>. — Er kommt aus Deutschland.</span><br>
-      <span class="say" data-s="Sie ist Österreicherin. Sie kommt aus Österreich.">🔊 Sie ist <b>Österreicherin</b>. — Sie kommt aus Österreich.</span></p>
-    <div class="note"><p><b>Wichtige Regel:</b> Die weibliche Form endet oft auf <b>-in</b>.</p>
-      <div class="gender">
-        <div>👨 Mann: <span class="say" data-s="Deutscher, Pole, Österreicher, Franzose">Deutscher, Pole, Österreicher, Franzose …</span></div>
-        <div>👩 Frau: <span class="say" data-s="Deutsche, Polin, Österreicherin, Französin">Deutsche, Polin, Österreicherin, Französin …</span></div>
-      </div>
-    </div>
-    <div class="help"><span>👀 Satz lesen</span><em>→</em><span>👆 richtige Form anklicken</span></div>
-    <div class="quiz" data-quiz="q2"></div>
-  </div>
-</main>
+<div class="head"><span class="num">Teil 2</span><h2>Länder und Nationalitäten</h2><span class="done" id="d-nation">✅ geschafft</span></div>
+<div class="card">
+<p>Die Nationalität beschreibt, woher eine Person kommt.</p>
+<p><span class="say" data-s="Ich bin Polin. Ich komme aus Polen.">🔊 Ich bin <b>Polin</b>. — Ich komme aus Polen.</span><br><span class="say" data-s="Er ist Deutscher. Er kommt aus Deutschland.">🔊 Er ist <b>Deutscher</b>. — Er kommt aus Deutschland.</span><br><span class="say" data-s="Sie ist Österreicherin. Sie kommt aus Österreich.">🔊 Sie ist <b>Österreicherin</b>. — Sie kommt aus Österreich.</span></p>
+<div class="nationality-lab"><div class="help"><span>✏️ Nationalität eingeben</span><em>→</em><span>👆 „Informell“ oder „Formell“ anklicken</span><em>→</em><span>🔊 zuhören</span></div>
+<p>Trag deine Nationalität ein — die Dialoge passen sich an!</p>
+<div class="name-row"><label for="nationality"><b>✏️ Deine Nationalität:</b></label><input id="nationality" value="Polin" placeholder="z. B. Polin"></div>
+<div class="dialog-tabs"><button class="dialog-tab active" data-mode="informell">Informell 🔊</button><button class="dialog-tab" data-mode="formell">Formell 🔊</button></div>
+<div class="mini-dialog" id="nationality-dialog"></div></div>
+<div class="help"><span>👀 Satz lesen</span><em>→</em><span>👆 richtige Form anklicken</span></div><div class="quiz" data-quiz="q2"></div>
+</div></main>
 
 <main class="page" id="t3">
-  <div class="head"><span class="num">Teil 3</span><h2>Das Verb „kommen“</h2><span class="done" id="d-kommen">✅ geschafft</span></div>
-  <div class="card">
-    <p>„kommen“ ist ein regelmäßiges Verb. Der Stamm ist <b>komm-</b>. Klick auf eine Zeile — du hörst den Beispielsatz.</p>
-    <div style="overflow-x:auto"><table>
-      <thead><tr><th>Pronomen</th><th>kommen</th><th>Beispielsatz</th></tr></thead>
-      <tbody>
-        <tr class="say" data-s="Ich komme aus Spanien."><td>ich</td><td><b>komme</b></td><td>🔊 Ich komme aus Spanien.</td></tr>
-        <tr class="say" data-s="Du kommst aus Frankreich."><td>du</td><td><b>kommst</b></td><td>🔊 Du kommst aus Frankreich.</td></tr>
-        <tr class="say" data-s="Anna kommt aus Österreich."><td>er / sie / es</td><td><b>kommt</b></td><td>🔊 Anna kommt aus Österreich.</td></tr>
-        <tr class="say" data-s="Wir kommen aus der Schweiz."><td>wir</td><td><b>kommen</b></td><td>🔊 Wir kommen aus der Schweiz.</td></tr>
-        <tr class="say" data-s="Ihr kommt aus Italien."><td>ihr</td><td><b>kommt</b></td><td>🔊 Ihr kommt aus Italien.</td></tr>
-        <tr class="say" data-s="Sie kommen aus Deutschland."><td>sie / Sie</td><td><b>kommen</b></td><td>🔊 Sie kommen aus Deutschland.</td></tr>
-      </tbody></table></div>
-    <div class="note"><p><b>Merksatz:</b> Die Endungen sind immer: <b>-e · -st · -t · -en · -t · -en</b></p>
-      <p>Das gilt auch für: wohnen, lernen, spielen, fragen, machen und viele mehr!</p></div>
-    <div class="help"><span>👀 Lücke lesen</span><em>→</em><span>👆 richtige Form anklicken</span></div>
-    <div class="quiz" data-quiz="q3"></div>
-  </div>
-</main>
+<div class="head"><span class="num">Teil 3</span><h2>Das Verb „kommen“</h2><span class="done" id="d-kommen">✅ geschafft</span></div>
+<div class="card"><p>„kommen“ ist ein regelmäßiges Verb. Der Stamm ist <b>komm-</b>. Klick auf eine Zeile — du hörst den Beispielsatz.</p>
+<div style="overflow-x:auto"><table><thead><tr><th>Pronomen</th><th>kommen</th><th>Beispielsatz</th></tr></thead><tbody>
+<tr class="say" data-s="Ich komme aus Spanien."><td>ich</td><td><b>komm<span class="ending">e</span></b></td><td>🔊 Ich komme aus Spanien.</td></tr>
+<tr class="say" data-s="Du kommst aus Frankreich."><td>du</td><td><b>komm<span class="ending">st</span></b></td><td>🔊 Du kommst aus Frankreich.</td></tr>
+<tr class="say" data-s="Anna kommt aus Österreich."><td>er / sie / es</td><td><b>komm<span class="ending">t</span></b></td><td>🔊 Anna kommt aus Österreich.</td></tr>
+<tr class="say" data-s="Wir kommen aus der Schweiz."><td>wir</td><td><b>komm<span class="ending">en</span></b></td><td>🔊 Wir kommen aus der Schweiz.</td></tr>
+<tr class="say" data-s="Ihr kommt aus Italien."><td>ihr</td><td><b>komm<span class="ending">t</span></b></td><td>🔊 Ihr kommt aus Italien.</td></tr>
+<tr class="say" data-s="Sie kommen aus Deutschland."><td>sie / Sie</td><td><b>komm<span class="ending">en</span></b></td><td>🔊 Sie kommen aus Deutschland.</td></tr>
+</tbody></table></div>
+<div class="note"><p><b>Merksatz:</b> <b>komm-<span class="ending">e</span> · komm-<span class="ending">st</span> · komm-<span class="ending">t</span> · komm-<span class="ending">en</span> · komm-<span class="ending">t</span> · komm-<span class="ending">en</span></b></p></div>
+<div class="help"><span>👆 Endung nehmen</span><em>→</em><span>🫧 in die richtige Lücke ziehen</span></div>
+<div class="grammar-practice"><div style="overflow-x:auto"><table class="drop-table"><thead><tr><th>Pronomen</th><th>Beispielsatz</th></tr></thead><tbody>
+<tr><td>ich</td><td>🔊 Ich komm<span class="drop-slot" data-answer="e"></span> aus Spanien.</td></tr>
+<tr><td>du</td><td>🔊 Du komm<span class="drop-slot" data-answer="st"></span> aus Frankreich.</td></tr>
+<tr><td>er / sie / es</td><td>🔊 Anna komm<span class="drop-slot" data-answer="t"></span> aus Österreich.</td></tr>
+<tr><td>wir</td><td>🔊 Wir komm<span class="drop-slot" data-answer="en"></span> aus der Schweiz.</td></tr>
+<tr><td>ihr</td><td>🔊 Ihr komm<span class="drop-slot" data-answer="t"></span> aus Italien.</td></tr>
+<tr><td>sie / Sie</td><td>🔊 Sie komm<span class="drop-slot" data-answer="en"></span> aus Deutschland.</td></tr>
+</tbody></table><p class="drag-feedback" id="drag-feedback"></p></div>
+<div class="bubble-bank" id="bubble-bank"><h3>Endungen</h3><button class="ending-bubble" draggable="true" data-ending="e">e</button><button class="ending-bubble" draggable="true" data-ending="st">st</button><button class="ending-bubble" draggable="true" data-ending="t">t</button><button class="ending-bubble" draggable="true" data-ending="en">en</button><button class="ending-bubble" draggable="true" data-ending="t">t</button><button class="ending-bubble" draggable="true" data-ending="en">en</button></div></div>
+</div></main>
 
 <main class="page" id="t4">
   <div class="head"><span class="num">Teil 4</span><h2>Zahlen 1–20</h2><span class="done" id="d-zahlen">✅ geschafft</span></div>
@@ -234,12 +217,8 @@ $$(".num-b").forEach(b=>b.onclick=async()=>{$$(".num-b.act").forEach(x=>x.classL
 /* ---------- Quiz-Engine ---------- */
 const Q={
  q1:{stamp:"herkunft",title:"Teste dich: Herkunft",items:[
-  {q:"Wie fragst du einen Freund?",say:"",o:["Woher kommen Sie?","Woher kommst du?"],a:1,ok:"Woher kommst du?"},
-  {q:"Wie fragst du einen Fremden höflich?",o:["Woher kommst du?","Woher kommen Sie?"],a:1,ok:"Woher kommen Sie?"},
-  {q:"Ich komme aus ___ Schweiz.",o:["der","den","–"],a:0,ok:"Ich komme aus der Schweiz."},
-  {q:"Ich komme aus ___ USA.",o:["der","den","–"],a:1,ok:"Ich komme aus den USA."},
-  {q:"Ich komme aus ___ Polen.",o:["der","den","– (kein Artikel)"],a:2,ok:"Ich komme aus Polen."},
-  {q:"Ich komme aus ___ Deutschland.",o:["der","den","– (kein Artikel)"],a:2,ok:"Ich komme aus Deutschland."}]},
+  {q:"Wie fragst du einen Freund?",scene:"friends",o:["Woher kommen Sie?","Woher kommst du?"],a:1,ok:"Woher kommst du?"},
+  {q:"Wie fragst du einen Fremden höflich?",scene:"office",o:["Woher kommst du?","Woher kommen Sie?"],a:1,ok:"Woher kommen Sie?"}]},
  q2:{stamp:"nation",title:"Teste dich: Nationalitäten",items:[
   {q:"Er kommt aus Polen. Er ist ___.",o:["Pole","Polin"],a:0,ok:"Er ist Pole."},
   {q:"Sie kommt aus Polen. Sie ist ___.",o:["Pole","Polin"],a:1,ok:"Sie ist Polin."},
@@ -266,7 +245,7 @@ function initQuiz(el){
   const c=Q[el.dataset.quiz],n=c.items.length;let i=0,s=0,lock=false;
   function draw(){
     const it=c.items[i];
-    el.innerHTML=`<h3>${c.title}</h3>${it.say?`<button class="listen">🔊 Hören</button>`:""}<p class="q">${it.q}</p><div class="opts">${it.o.map((t,k)=>`<button class="opt" data-k="${k}">${t} <span>👆</span></button>`).join("")}</div><p class="fb"></p><p class="cnt">Richtige Antworten: ${s} / ${n}</p><div class="track"><div class="fill" style="width:${s/n*100}%"></div></div><div class="fin"></div>`;
+    el.innerHTML=`<h3>${c.title}</h3>${it.scene?`<div class="scene-card"><div class="scene-icon">${it.scene==="friends"?"👭<small>INFORMELL</small>":"🤝👔<small>FORMELL · BÜRO</small>"}</div><div class="scene-text"><b>${it.scene==="friends"?"Freunde begrüßen sich":"Direktor und Mitarbeiter begrüßen sich"}</b><br><small>${it.scene==="friends"?"informell":"formell"}</small></div></div>`:""}${it.say?`<button class="listen">🔊 Hören</button>`:""}<p class="q">${it.q}</p><div class="opts">${it.o.map((t,k)=>`<button class="opt" data-k="${k}">${t} <span>👆</span></button>`).join("")}</div><p class="fb"></p><p class="cnt">Richtige Antworten: ${s} / ${n}</p><div class="track"><div class="fill" style="width:${s/n*100}%"></div></div><div class="fin"></div>`;
     const lb=el.querySelector(".listen");if(lb){lb.onclick=()=>speak(it.say,.8);speak(it.say,.8)}
     const fb=el.querySelector(".fb");
     el.querySelectorAll(".opt").forEach(b=>b.onclick=async()=>{
@@ -286,6 +265,19 @@ function initQuiz(el){
   draw();
 }
 $$("[data-quiz]").forEach(initQuiz);
+
+
+/* ---------- Nationalität-Dialog ---------- */
+let natMode="informell";
+function drawNatDialog(doSpeak=false){const n=($("nationality").value||"Polin").trim();const formal=natMode==="formell";const lines=formal?["Guten Tag!","Guten Tag!","Woher kommen Sie?","Ich bin "+n+". Und Sie?","Ich komme aus Deutschland."]:["Hallo!","Hallo!","Woher kommst du?","Ich bin "+n+". Und du?","Ich komme aus Deutschland."];$("nationality-dialog").innerHTML=lines.map((x,i)=>'<div class="db '+(i%2?"me":"")+'"><b>'+(i%2?"B":"A")+'</b> '+x+(i%2?" 🧑🏻":" 👩🏻")+'</div>').join("");if(doSpeak)(async()=>{for(const x of lines){await speak(x,.86)}})()}
+$(".dialog-tab").forEach(b=>b.onclick=()=>{natMode=b.dataset.mode;$(".dialog-tab").forEach(x=>x.classList.toggle("active",x===b));drawNatDialog(true)});
+$("nationality").addEventListener("input",()=>drawNatDialog(false));drawNatDialog(false);
+
+/* ---------- Endungen ziehen ---------- */
+let dragged=null,solvedEndings=0;
+function placeEnding(slot,val,bubble){if(slot.classList.contains("good"))return;if(val!==slot.dataset.answer){$("drag-feedback").style.color="var(--red)";$("drag-feedback").textContent="Noch nicht richtig. Versuch es noch einmal!";speak("Versuch es noch einmal.");return}slot.textContent=val;slot.classList.add("good");if(bubble)bubble.remove();solvedEndings++;$("drag-feedback").style.color="var(--ok)";$("drag-feedback").textContent="Richtig!";if(solvedEndings===6){$("drag-feedback").textContent="Sehr gut! Alle Endungen sind richtig.";stamp("kommen");speak("Sehr gut! Alle Endungen sind richtig.")}}
+$(".ending-bubble").forEach(b=>{b.addEventListener("dragstart",e=>{dragged=b;e.dataTransfer.setData("text/plain",b.dataset.ending)});b.addEventListener("click",()=>{dragged=b;$(".ending-bubble").forEach(x=>x.style.outline="");b.style.outline="4px solid var(--gold)"})});
+$(".drop-slot").forEach(s=>{s.addEventListener("dragover",e=>e.preventDefault());s.addEventListener("drop",e=>{e.preventDefault();const v=e.dataTransfer.getData("text/plain");placeEnding(s,v,dragged);dragged=null});s.addEventListener("click",()=>{if(dragged){placeEnding(s,dragged.dataset.ending,dragged);dragged=null}})});
 
 /* ---------- Ich kann ---------- */
 $("ik-b").onclick=()=>{const o=$("ik-p").classList.toggle("show");$("ik-b").setAttribute("aria-expanded",o);$("ik-b").textContent=o?"Ich kann ▲":"Ich kann ▼"};
