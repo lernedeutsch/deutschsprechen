@@ -1,60 +1,300 @@
-<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A1 · 2 — Aktiv trainieren</title>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lektion 2 – Woher kommen Sie?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Fraunces:wght@500;700&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#16233a;--line:#e3d6b8;--gold:#cf9f3f;--green:#4f7a63;--red:#bd4433;--text:#1c2430;--paper:#fff8ea}
-*{box-sizing:border-box}body{margin:0;min-height:100vh;padding:45px 20px 60px;color:var(--text);font:16px/1.6 Arial,sans-serif;background:radial-gradient(circle at 10% 8%,#cf9f3f12,transparent 35%),radial-gradient(circle at 90% 92%,#4f7a631a,transparent 40%),var(--ink)}
-.progress-top{position:fixed;top:0;left:0;width:100%;height:7px;background:#ffffff29;z-index:10}.progress-top span{display:block;height:100%;width:0;background:linear-gradient(90deg,#f4c95d,#ffb54a);transition:.3s}
-.wrap{max-width:980px;margin:auto}.back{display:inline-block;margin-bottom:18px;padding:9px 14px;color:#16233a;background:#fff;border-radius:999px;text-decoration:none;font-weight:800}.hero,.section{margin-bottom:30px;padding:30px;background:linear-gradient(160deg,#fff8ea,#f3e2bd);border:1px solid var(--line);border-radius:24px;box-shadow:0 20px 45px #0004}.eyebrow{color:var(--red);font-size:.8rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.hero h1{margin:5px 0 10px;font-size:clamp(2.1rem,6vw,3.2rem)}.hero p{margin:6px 0}.topics{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}.topics span{padding:7px 11px;background:#fff;border:1px solid var(--line);border-radius:999px;font-weight:700}
-.pass{display:flex;align-items:center;gap:12px;margin-top:22px;padding:14px 16px;color:#fff;background:#16233a;border-radius:16px}.pass strong{margin-right:auto}.stamp{width:44px;height:44px;display:grid;place-items:center;border:2px dashed #ffffff55;border-radius:50%;opacity:.45}.stamp.on{opacity:1;border-style:solid;background:#bd443329}
-.section h2{margin:4px 0 16px;font-size:1.8rem}.help{padding:10px 13px;margin-bottom:16px;background:#fff7d8;border:2px solid #e4bd57;border-radius:12px;font-weight:800}.card{padding:20px;background:#fffdf6;border:1px solid var(--line);border-radius:18px}.question{font-size:1.08rem;font-weight:800;margin:0 0 13px}.choices{display:flex;flex-wrap:wrap;gap:10px}.choice{padding:10px 16px;border:2px solid #7fa493;border-radius:999px;background:#edf7f1;color:#17342a;font-weight:800;cursor:pointer}.choice:hover:not(:disabled){transform:translateY(-2px);background:#dff1e7}.choice.ok{background:#e4f3e8;border-color:#16864b}.choice.bad{background:#fff0f0;border-color:#c53d3d;color:#a92d2d}.feedback{min-height:28px;margin-top:12px;font-weight:800}.counter{font-size:.9rem;color:#5a5140}.bar{height:12px;margin-top:10px;background:#e8dfca;border-radius:999px;overflow:hidden}.bar span{display:block;height:100%;width:0;background:#69a979;transition:.35s}
-.audio{margin-top:10px;padding:8px 13px;border:0;border-radius:999px;background:#527a67;color:#fff;font-weight:800;cursor:pointer}.restart{display:block;margin:25px auto 0;padding:11px 20px;border:0;border-radius:999px;background:#4f7a63;color:#fff;font-weight:800;cursor:pointer}.finish{display:none;margin-top:18px;padding:15px;text-align:center;background:#e4f3e8;border:2px solid #78bf95;border-radius:15px;font-weight:800}.finish.show{display:block}
-.number-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.number-grid .choice{border-radius:13px;padding:10px 6px}
-@media(max-width:700px){body{padding:25px 12px 45px}.hero,.section{padding:20px}.number-grid{grid-template-columns:repeat(2,1fr)}.pass{flex-wrap:wrap}.pass strong{width:100%}}
-</style></head><body><div class="progress-top"><span id="topbar"></span></div><main class="wrap">
-<a class="back" href="../a1/lektion-2.html">← A1 · 2</a>
-<section class="hero"><div class="eyebrow">A1 · 2 · Aktiv trainieren</div><h1>Woher kommen Sie?</h1><p>Trainiere aktiv: Herkunft, Länder und Nationalitäten, das Verb <b>kommen</b> und die Zahlen 1–20.</p><div class="topics"><span>🌍 Herkunft</span><span>🗺️ Länder</span><span>👤 Nationalitäten</span><span>🧩 kommen</span><span>🔢 Zahlen 1–20</span></div><div class="pass"><strong>Sprachpass</strong><span class="stamp" id="s1">🌍</span><span class="stamp" id="s2">👤</span><span class="stamp" id="s3">🧩</span><span class="stamp" id="s4">🔢</span></div></section>
+:root{--ink:#16233a;--line:#e3d6b8;--red:#bd4433;--gold:#cf9f3f;--green:#4f7a63;--text:#1c2430;--ok:#16864b;--box:#fbf6e8}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;padding:45px 20px 60px;color:var(--text);font:400 1rem/1.6 "Nunito Sans",sans-serif;background:radial-gradient(circle at 10% 8%,#cf9f3f12,transparent 35%),radial-gradient(circle at 90% 92%,#4f7a631a,transparent 40%),var(--ink)}
+button{font:inherit;cursor:pointer}
+.pbar{position:fixed;z-index:1000;top:0;left:0;width:100%;height:7px;background:#ffffff29}.pbar div{width:0;height:100%;background:linear-gradient(90deg,#f4c95d,#ffb54a)}
+.box,.page{width:100%;max-width:940px;margin:0 auto 38px;background:linear-gradient(160deg,#fff8ea,#f3e2bd);border-radius:24px;box-shadow:0 24px 55px #0004}
+.box{padding:34px}.page{padding:30px}
+.hero{display:flex;align-items:center;gap:28px;padding-bottom:26px;border-bottom:2px dashed #1c24302e}.hero>div:first-child{flex:1}
+h1.main{margin:0 0 12px;font:700 2.6rem/1.12 Fraunces,serif;color:#161616}.hero p{margin:0;color:#334155}
+.topics{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.topics a{padding:8px 14px;background:#fff;border:1px solid var(--line);border-radius:999px;font-size:.92rem;color:var(--text);text-decoration:none}.topics a:hover{background:#fff3c8}
+.globe{flex:0 0 220px;text-align:center;font-size:5.5rem;padding:26px 10px;background:var(--ink);color:#f7efdd;border-radius:50%;aspect-ratio:1;display:grid;place-items:center;animation:spin 14s linear infinite}
+.globe span{animation:spin 14s linear infinite reverse;display:block}
+@keyframes spin{to{transform:rotate(360deg)}}
+.pass{display:flex;align-items:center;gap:18px;margin-top:24px;padding:16px 20px;color:#f7efdd;background:linear-gradient(145deg,#16233a,#20324a);border-radius:18px}
+.pass b{font:700 1.08rem Fraunces,serif}.pass small{display:block;font:.78rem "JetBrains Mono",monospace;color:#f7efddad}
+.stamps{display:flex;justify-content:flex-end;gap:10px;flex:1;flex-wrap:wrap}
+.st{display:grid;place-items:center;width:70px;height:70px;padding:5px;color:#f7efdd8f;text-align:center;border:2px dashed #f7efdd4d;border-radius:50%;font:.58rem/1.1 "JetBrains Mono",monospace;transition:.3s}
+.st i{display:block;font-style:normal;font-size:1.2rem;opacity:.55}
+.st.on{color:#f3c2b8;background:#bd443329;border:2px solid #e57763;transform:rotate(-7deg) scale(1.05);animation:stamp .5s}.st.on i{opacity:1}
+@keyframes stamp{0%{opacity:0;transform:rotate(-7deg) scale(.3)}65%{transform:rotate(-10deg) scale(1.18)}}
+.head{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px;margin-bottom:16px}
+.num{color:var(--red);font:600 .82rem "JetBrains Mono",monospace;letter-spacing:.14em;text-transform:uppercase}
+.head h2{margin:0;font:700 2.3rem/1.15 Kalam,cursive;color:#161616}
+.done{display:none;padding:5px 10px;color:#28502f;background:#e4f3e8;border:1px solid #78bf95;border-radius:999px;font:700 .78rem "JetBrains Mono",monospace}.done.show{display:inline-block}
+.card{padding:22px;margin-bottom:18px;background:#fffdf6;border:1px solid var(--line);border-radius:20px;box-shadow:0 12px 30px #00000012}
+.note{margin:14px 0;padding:12px 16px;background:#fff9e8;border-left:5px solid var(--gold);border-radius:12px}.note p{margin:4px 0}
+.warn{color:#b97800;font-weight:700;margin:2px 0 10px}
+.qa{display:grid;grid-template-columns:1fr 1fr;gap:12px}.qa div{padding:14px;border-radius:14px;background:#f7faff;border:1px solid #d9e4f0}
+.tag{font-weight:800;font-size:.85rem}
+.help{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 12px;padding:8px 10px;background:#fff7d8;border:2px solid #e4bd57;border-radius:12px;font-weight:700;font-size:.92rem}
+.help span{padding:4px 8px;background:#fff;border:1px solid #ead9a9;border-radius:999px}.help em{font-style:normal;color:#9d7622}
+.say{cursor:pointer;border-bottom:2px dotted var(--gold)}.say:hover{background:#fff3c8}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:11px;border-bottom:1px solid var(--line)}th{color:var(--red);font-size:.85rem}
+tr.say:hover{background:#fff3c8}
+.gender{display:grid;grid-template-columns:1fr 1fr;gap:10px}.gender div{padding:12px;background:var(--box);border:1px solid var(--line);border-radius:12px}
+.nums{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}
+.num-b{padding:12px 4px;background:var(--box);border:2px solid var(--line);border-radius:14px;font-weight:800;font-size:1rem;color:var(--text);transition:.15s}
+.num-b b{display:block;font:700 1.5rem "JetBrains Mono",monospace;color:var(--red)}
+.num-b:hover{transform:translateY(-2px);border-color:var(--gold)}.num-b.act{background:var(--red);color:#fff}.num-b.act b{color:#fff}
+.quiz{padding:22px;background:var(--box);border:1px solid var(--line);border-radius:18px;margin-top:16px}
+.quiz h3{margin:0 0 12px;font:700 1.2rem Fraunces,serif}
+.q{font-size:1.15rem;font-weight:700;margin:0 0 12px}
+.opts{display:flex;flex-wrap:wrap;gap:10px}
+.opt{padding:11px 20px;color:#17342a;background:#edf7f1;border:2px solid #7fa493;border-radius:999px;font-weight:800;transition:.15s}
+.opt:hover:not(:disabled){background:#dff1e7;transform:translateY(-2px)}
+.opt.ok{color:#28502f;background:#e4f3e8;border-color:var(--green)}.opt.no{color:var(--red);background:#f9e4e1;border-color:var(--red);animation:shake .28s}
+.opt:disabled{cursor:default}
+.listen{margin:0 0 12px;padding:9px 18px;color:#fff;background:linear-gradient(#6f9f87,#527a67);border:0;border-radius:999px;font-weight:800}
+.fb{min-height:28px;margin:12px 0 0;font-weight:800}
+.cnt{margin:8px 0;color:#5a5140;font:.85rem "JetBrains Mono",monospace}
+.track{height:12px;overflow:hidden;background:#e8dfca;border:1px solid var(--line);border-radius:999px}.fill{width:0;height:100%;background:linear-gradient(90deg,#5f9e6e,#79bd84);transition:.5s}
+.fin{display:none;margin-top:16px;padding:16px;color:#28502f;text-align:center;background:#e4f3e8;border:2px solid var(--green);border-radius:14px;font-weight:800}.fin.on{display:block}
+.fin button,.reset{margin-top:10px;padding:9px 18px;color:#fff;background:var(--green);border:0;border-radius:999px;font-weight:800}
+.reset{background:#20324a}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.ik{text-align:center}.ik>button{min-height:50px;padding:10px 24px;color:#fff;background:linear-gradient(180deg,#f0bd3a,#b98200);border:2px solid #ffe59a;border-radius:18px;font-weight:800;font-size:1.05rem}
+.paper{display:none;margin-top:18px;padding:22px;text-align:left;background:#fffdf6;border:1px solid var(--line);border-radius:16px}.paper.show{display:block}
+.paper p{margin:8px 0;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:12px}
+.paper p.got{background:#e4f3e8;border-color:#78bf95}
+.end{max-width:940px;margin:0 auto;text-align:center}
+.btns{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.eb{padding:14px 24px;color:#fff;text-decoration:none;font-weight:800;border-radius:19px;border:2px solid #fff8;box-shadow:0 8px 18px #0000003d}
+.eb.s{background:linear-gradient(#68c7ff,#43aef4)}.eb.n{background:linear-gradient(#84df42,#5fbd28)}
+.arr{display:inline-grid;place-items:center;width:52px;height:52px;margin:0 6px;color:var(--text);background:#fff;border:1px solid var(--line);border-radius:50%;text-decoration:none;font-size:1.5rem;font-weight:800;box-shadow:0 7px 16px #0003}
+.arr.top-left{position:absolute;top:14px;left:14px}
+button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+@media(max-width:760px){body{padding:20px 10px 35px}.box,.page{padding:18px 14px}.hero{flex-direction:column}.globe{flex-basis:auto;width:170px}h1.main{font-size:2rem}.pass{flex-direction:column;align-items:flex-start}.stamps{justify-content:flex-start}.qa,.gender{grid-template-columns:1fr}.nums{grid-template-columns:repeat(4,1fr)}.head h2{font-size:1.8rem}.st{width:60px;height:60px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body id="oben">
+<a href="../a1/lektion-2.html#seitenanfang" class="arr top-left" aria-label="Zurück zur Lektion" title="Zurück zur Lektion">←</a>
+<div class="pbar" aria-hidden="true"><div id="pbar"></div></div>
 
-<section class="section"><div class="eyebrow">Teil 1</div><h2>Woher kommst du?</h2><div class="help">👀 Lies die Frage → 👆 klicke auf die richtige Antwort.</div><div class="card"><p class="question" id="q1"></p><div class="choices" id="c1"></div><p class="feedback" id="f1"></p><div class="counter" id="n1"></div><div class="bar"><span id="b1"></span></div><button class="audio" id="a1">🔊 Satz hören</button></div></section>
+<header class="box">
+  <div class="hero">
+    <div>
+      <h1 class="main">Woher kommen Sie?</h1>
+      <p>Heute lernen wir Länder, Nationalitäten, das Verb <b>kommen</b> und die Zahlen von 1 bis 20. Übe aktiv mit — sammle Stempel für deinen Sprachpass! (Lektion 2 von 30)</p>
+      <nav class="topics"><a href="#t1">1 · Herkunft</a><a href="#t2">2 · Nationalitäten</a><a href="#t3">3 · kommen</a><a href="#t4">4 · Zahlen 1–20</a></nav>
+    </div>
+    <div class="globe" aria-hidden="true"><span>🌍</span></div>
+  </div>
+  <div class="pass">
+    <div><b>🛂 Dein Sprachpass</b><small id="cnt-stamps">0 / 5 Stempel gesammelt</small></div>
+    <div class="stamps">
+      <div class="st" data-st="herkunft"><span><i>🌍</i>Herkunft</span></div>
+      <div class="st" data-st="nation"><span><i>🧑‍🤝‍🧑</i>Nationalität</span></div>
+      <div class="st" data-st="kommen"><span><i>✏️</i>kommen</span></div>
+      <div class="st" data-st="zahlen"><span><i>🔢</i>Zahlen</span></div>
+      <div class="st" data-st="lesson"><span><i>🏆</i>Lektion 2</span></div>
+    </div>
+  </div>
+</header>
 
-<section class="section"><div class="eyebrow">Teil 2</div><h2>Länder und Nationalitäten</h2><div class="help">👀 Lies den Satz → 👆 wähle die richtige Nationalität.</div><div class="card"><p class="question" id="q2"></p><div class="choices" id="c2"></div><p class="feedback" id="f2"></p><div class="counter" id="n2"></div><div class="bar"><span id="b2"></span></div><button class="audio" id="a2">🔊 Satz hören</button></div></section>
+<main class="page" id="t1">
+  <div class="head"><span class="num">Teil 1</span><h2>Woher kommen Sie?</h2><span class="done" id="d-herkunft">✅ geschafft</span></div>
+  <div class="card">
+    <p>Wenn wir nach der Herkunft fragen, benutzen wir diese Fragen. Klick auf einen Satz und hör zu!</p>
+    <div class="qa">
+      <div><span class="tag">👔 formell</span><br><b class="say" data-s="Woher kommen Sie?">🔊 Woher kommen Sie?</b><br><small>mit Erwachsenen und Fremden</small></div>
+      <div><span class="tag">🙂 informell</span><br><b class="say" data-s="Woher kommst du?">🔊 Woher kommst du?</b><br><small>mit Freunden und Kindern</small></div>
+    </div>
+    <div class="note"><p>Die Antwort ist immer: <b>Ich komme aus + Land.</b></p></div>
+    <p>
+      <span class="say" data-s="Ich komme aus Polen.">🔊 Ich komme aus Polen.</span><br>
+      <span class="say" data-s="Ich komme aus Deutschland.">🔊 Ich komme aus Deutschland.</span><br>
+      <span class="say" data-s="Ich komme aus der Schweiz.">🔊 Ich komme aus der Schweiz.</span></p>
+    <p class="warn">Achtung: „die Schweiz“ → „aus der Schweiz“!</p>
+    <p><span class="say" data-s="Ich komme aus den USA.">🔊 Ich komme aus den USA.</span></p>
+    <p class="warn">Achtung: „die USA“ → „aus den USA“!</p>
+    <div class="help"><span>👀 Frage lesen</span><em>→</em><span>👆 Antwort anklicken</span></div>
+    <div class="quiz" data-quiz="q1"></div>
+  </div>
+</main>
 
-<section class="section"><div class="eyebrow">Teil 3</div><h2>Das Verb „kommen“</h2><div class="help">🧩 Welche Form von „kommen“ ist richtig?</div><div class="card"><p class="question" id="q3"></p><div class="choices" id="c3"></div><p class="feedback" id="f3"></p><div class="counter" id="n3"></div><div class="bar"><span id="b3"></span></div><button class="audio" id="a3">🔊 Satz hören</button></div></section>
+<main class="page" id="t2">
+  <div class="head"><span class="num">Teil 2</span><h2>Länder und Nationalitäten</h2><span class="done" id="d-nation">✅ geschafft</span></div>
+  <div class="card">
+    <p>Die Nationalität beschreibt, woher eine Person kommt.</p>
+    <p>
+      <span class="say" data-s="Ich bin Pole. Ich komme aus Polen.">🔊 Ich bin <b>Pole</b> / <b>Polin</b>. — Ich komme aus Polen.</span><br>
+      <span class="say" data-s="Er ist Deutscher. Er kommt aus Deutschland.">🔊 Er ist <b>Deutscher</b>. — Er kommt aus Deutschland.</span><br>
+      <span class="say" data-s="Sie ist Österreicherin. Sie kommt aus Österreich.">🔊 Sie ist <b>Österreicherin</b>. — Sie kommt aus Österreich.</span></p>
+    <div class="note"><p><b>Wichtige Regel:</b> Die weibliche Form endet oft auf <b>-in</b>.</p>
+      <div class="gender">
+        <div>👨 Mann: <span class="say" data-s="Deutscher, Pole, Österreicher, Franzose">Deutscher, Pole, Österreicher, Franzose …</span></div>
+        <div>👩 Frau: <span class="say" data-s="Deutsche, Polin, Österreicherin, Französin">Deutsche, Polin, Österreicherin, Französin …</span></div>
+      </div>
+    </div>
+    <div class="help"><span>👀 Satz lesen</span><em>→</em><span>👆 richtige Form anklicken</span></div>
+    <div class="quiz" data-quiz="q2"></div>
+  </div>
+</main>
 
-<section class="section"><div class="eyebrow">Teil 4</div><h2>Zahlen 1–20</h2><div class="help">🔊 Hör die Zahl → 👆 klicke auf die richtige Zahl.</div><div class="card"><p class="question">Welche Zahl hörst du?</p><button class="audio" id="playnum">🔊 Zahl hören</button><div class="number-grid" id="c4" style="margin-top:15px"></div><p class="feedback" id="f4"></p><div class="counter" id="n4"></div><div class="bar"><span id="b4"></span></div></div></section>
+<main class="page" id="t3">
+  <div class="head"><span class="num">Teil 3</span><h2>Das Verb „kommen“</h2><span class="done" id="d-kommen">✅ geschafft</span></div>
+  <div class="card">
+    <p>„kommen“ ist ein regelmäßiges Verb. Der Stamm ist <b>komm-</b>. Klick auf eine Zeile — du hörst den Beispielsatz.</p>
+    <div style="overflow-x:auto"><table>
+      <thead><tr><th>Pronomen</th><th>kommen</th><th>Beispielsatz</th></tr></thead>
+      <tbody>
+        <tr class="say" data-s="Ich komme aus Spanien."><td>ich</td><td><b>komme</b></td><td>🔊 Ich komme aus Spanien.</td></tr>
+        <tr class="say" data-s="Du kommst aus Frankreich."><td>du</td><td><b>kommst</b></td><td>🔊 Du kommst aus Frankreich.</td></tr>
+        <tr class="say" data-s="Anna kommt aus Österreich."><td>er / sie / es</td><td><b>kommt</b></td><td>🔊 Anna kommt aus Österreich.</td></tr>
+        <tr class="say" data-s="Wir kommen aus der Schweiz."><td>wir</td><td><b>kommen</b></td><td>🔊 Wir kommen aus der Schweiz.</td></tr>
+        <tr class="say" data-s="Ihr kommt aus Italien."><td>ihr</td><td><b>kommt</b></td><td>🔊 Ihr kommt aus Italien.</td></tr>
+        <tr class="say" data-s="Sie kommen aus Deutschland."><td>sie / Sie</td><td><b>kommen</b></td><td>🔊 Sie kommen aus Deutschland.</td></tr>
+      </tbody></table></div>
+    <div class="note"><p><b>Merksatz:</b> Die Endungen sind immer: <b>-e · -st · -t · -en · -t · -en</b></p>
+      <p>Das gilt auch für: wohnen, lernen, spielen, fragen, machen und viele mehr!</p></div>
+    <div class="help"><span>👀 Lücke lesen</span><em>→</em><span>👆 richtige Form anklicken</span></div>
+    <div class="quiz" data-quiz="q3"></div>
+  </div>
+</main>
 
-<div class="finish" id="finish">🎉 Sehr gut! Du hast A1 · 2 aktiv trainiert.</div><button class="restart" id="restart">🔄 Neu anfangen</button>
-</main><script>
-const sets=[
-{q:"q1",c:"c1",f:"f1",n:"n1",b:"b1",s:"s1",items:[
-["Woher kommst du?",["Ich komme aus Polen.","Ich wohne in Polen.","Ich bin Polen."],0],
-["Woher kommen Sie?",["Ich komme Deutschland.","Ich komme aus Deutschland.","Ich bin aus Deutschland kommen."],1],
-["Welche Antwort ist richtig?",["Ich komme aus der Schweiz.","Ich komme aus die Schweiz.","Ich komme von Schweiz."],0],
-["Welche Antwort ist richtig?",["Ich komme aus die USA.","Ich komme aus den USA.","Ich komme von den USA."],1]]},
-{q:"q2",c:"c2",f:"f2",n:"n2",b:"b2",s:"s2",items:[
-["Ich komme aus Polen. Ich bin …",["Deutsche","Polin","Österreicherin"],1],
-["Er kommt aus Deutschland. Er ist …",["Deutscher","Pole","Franzose"],0],
-["Sie kommt aus Österreich. Sie ist …",["Österreicherin","Deutsche","Polin"],0],
-["Eine Frau aus Frankreich ist …",["Franzose","Französin","Deutsche"],1]]},
-{q:"q3",c:"c3",f:"f3",n:"n3",b:"b3",s:"s3",items:[
-["Ich ___ aus Spanien.",["komme","kommst","kommt"],0],
-["Du ___ aus Frankreich.",["komme","kommst","kommen"],1],
-["Anna ___ aus Österreich.",["kommst","kommt","kommen"],1],
-["Wir ___ aus der Schweiz.",["kommt","kommen","komme"],1],
-["Ihr ___ aus Italien.",["kommt","kommen","kommst"],0],
-["Sie ___ aus Deutschland.",["kommt","kommen","komme"],1]]}
-];
-let state=sets.map(()=>0),done=sets.map(()=>false),numIndex=0,numDone=false;
-function speak(t){if(!("speechSynthesis"in window))return;speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang="de-DE";u.rate=.82;speechSynthesis.speak(u)}
-function render(k){const x=sets[k],i=state[k],item=x.items[i];document.getElementById(x.q).textContent=item[0];const box=document.getElementById(x.c);box.innerHTML="";item[1].forEach((v,j)=>{let b=document.createElement("button");b.className="choice";b.textContent=v;b.onclick=()=>answer(k,j,b);box.appendChild(b)});document.getElementById(x.f).textContent="";progress(k)}
-function answer(k,j,b){const x=sets[k],i=state[k],item=x.items[i];[...document.getElementById(x.c).children].forEach(z=>z.classList.remove("bad"));if(j!==item[2]){b.classList.add("bad");document.getElementById(x.f).textContent="Noch nicht richtig. Versuch es noch einmal!";speak("Versuch es noch einmal.");return}b.classList.add("ok");[...document.getElementById(x.c).children].forEach(z=>z.disabled=true);document.getElementById(x.f).textContent="Richtig!";speak(item[1][item[2]]);setTimeout(()=>{state[k]++;if(state[k]>=x.items.length){state[k]=x.items.length;done[k]=true;document.getElementById(x.s).classList.add("on");document.getElementById(x.f).textContent="Sehr gut! Dieser Teil ist fertig.";progress(k);checkFinish()}else render(k)},900)}
-function progress(k){const x=sets[k],v=Math.min(state[k],x.items.length);document.getElementById(x.n).textContent="Richtige Antworten: "+v+" / "+x.items.length;document.getElementById(x.b).style.width=(v/x.items.length*100)+"%";topProgress()}
-sets.forEach((x,k)=>{render(k);document.getElementById("a"+(k+1)).onclick=()=>{const item=x.items[Math.min(state[k],x.items.length-1)];speak(item[0].replace("___",""))}});
-const nums=[["eins",1],["vier",4],["sieben",7],["zehn",10],["zwölf",12],["dreizehn",13],["sechzehn",16],["siebzehn",17],["zwanzig",20]];
-function renderNum(){const target=nums[numIndex][1],opts=[target];while(opts.length<4){let n=1+Math.floor(Math.random()*20);if(!opts.includes(n))opts.push(n)}opts.sort(()=>Math.random()-.5);let box=document.getElementById("c4");box.innerHTML="";opts.forEach(n=>{let b=document.createElement("button");b.className="choice";b.textContent=n;b.onclick=()=>answerNum(n,b);box.appendChild(b)});document.getElementById("f4").textContent="";numProgress()}
-function answerNum(n,b){if(n!==nums[numIndex][1]){b.classList.add("bad");document.getElementById("f4").textContent="Noch nicht richtig. Hör noch einmal.";speak(nums[numIndex][0]);return}b.classList.add("ok");[...document.getElementById("c4").children].forEach(z=>z.disabled=true);document.getElementById("f4").textContent="Richtig!";setTimeout(()=>{numIndex++;if(numIndex>=nums.length){numIndex=nums.length;numDone=true;document.getElementById("s4").classList.add("on");document.getElementById("f4").textContent="Sehr gut! Die Zahlen sind fertig.";numProgress();checkFinish()}else renderNum()},800)}
-function numProgress(){document.getElementById("n4").textContent="Richtige Antworten: "+numIndex+" / "+nums.length;document.getElementById("b4").style.width=(numIndex/nums.length*100)+"%";topProgress()}
-document.getElementById("playnum").onclick=()=>speak(nums[Math.min(numIndex,nums.length-1)][0]);
-function topProgress(){const total=sets.reduce((a,x)=>a+x.items.length,0)+nums.length,got=state.reduce((a,v)=>a+v,0)+numIndex;document.getElementById("topbar").style.width=(got/total*100)+"%"}
-function checkFinish(){if(done.every(Boolean)&&numDone)document.getElementById("finish").classList.add("show")}
-document.getElementById("restart").onclick=()=>{state=sets.map(()=>0);done=sets.map(()=>false);numIndex=0;numDone=false;document.querySelectorAll(".stamp").forEach(x=>x.classList.remove("on"));document.getElementById("finish").classList.remove("show");sets.forEach((x,k)=>render(k));renderNum();scrollTo({top:0,behavior:"smooth"})};
-renderNum();
-</script></body></html>
+<main class="page" id="t4">
+  <div class="head"><span class="num">Teil 4</span><h2>Zahlen 1–20</h2><span class="done" id="d-zahlen">✅ geschafft</span></div>
+  <div class="card">
+    <div class="help"><span>👆 Zahl anklicken</span><em>→</em><span>🔊 zuhören</span><em>→</em><span>🗣️ nachsprechen</span></div>
+    <p>Lies die Zahlen laut. Lerne die Formen von 1 bis 20.</p>
+    <div class="nums" id="nums"></div>
+    <div class="help" style="margin-top:20px"><span>🔊 Zahl hören</span><em>→</em><span>👆 richtige Zahl anklicken</span></div>
+    <div class="quiz" data-quiz="q4"></div>
+  </div>
+</main>
+
+<main class="page">
+  <section class="ik">
+    <button type="button" id="ik-b" aria-expanded="false" aria-controls="ik-p">Ich kann ▼</button>
+    <div class="paper" id="ik-p">
+      <h2 style="margin-top:0">Was kann ich jetzt?</h2>
+      <p data-k="herkunft">✅ <b>Ich kann nach der Herkunft fragen und antworten.</b><br>Woher kommen Sie? · Woher kommst du? · Ich komme aus + Land.</p>
+      <p data-k="nation">✅ <b>Ich kann Länder und Nationalitäten sagen.</b><br>Deutschland, Polen, die Schweiz … · Deutscher, Polin, Österreicherin …</p>
+      <p data-k="kommen">✅ <b>Ich kann das Verb „kommen“ benutzen.</b><br>komme · kommst · kommt · kommen · kommt · kommen</p>
+      <p data-k="zahlen">✅ <b>Ich kann Zahlen 1–20 sagen.</b><br>eins, zwei, drei, … zwanzig</p>
+      <p style="text-align:center;background:none;border:0"><button class="reset" id="reset">↻ Stempel neu sammeln</button><br><span id="reset-msg" style="color:var(--green);font-weight:800"></span></p>
+    </div>
+  </section>
+</main>
+
+<nav class="end">
+  <div class="btns">
+    <a href="../sprich-nach.a1/sprich-nach2.html" class="eb s">Fertig gelesen? Weiter mit Sprich nach</a>
+    <a href="../a1/lektion-3.html" class="eb n">Nächste Lektion →</a>
+  </div>
+  <a href="../a1/lektion-2.html" class="arr" aria-label="Zurück zur Lektion" title="Zurück zur Lektion">←</a>
+  <a href="#oben" class="arr" aria-label="Nach oben" title="Nach oben">↑</a>
+</nav>
+
+<script>
+"use strict";
+const $=x=>document.getElementById(x),$$=x=>[...document.querySelectorAll(x)],S=window.speechSynthesis;
+const KEY="lektion2-sprachpass",P={herkunft:0,nation:0,kommen:0,zahlen:0,lesson:0},VIS=["herkunft","nation","kommen","zahlen","lesson"];
+let V=null,tok=0;
+
+/* ---------- Stempel ---------- */
+function upd(){
+  $$("[data-st]").forEach(x=>x.classList.toggle("on",!!P[x.dataset.st]));
+  $("cnt-stamps").textContent=VIS.filter(k=>P[k]).length+" / 5 Stempel gesammelt";
+  VIS.slice(0,4).forEach(k=>{$("d-"+k)?.classList.toggle("show",!!P[k]);document.querySelector(`[data-k="${k}"]`)?.classList.toggle("got",!!P[k])});
+}
+function stamp(k){
+  if(P[k])return;P[k]=1;
+  if(P.herkunft&&P.nation&&P.kommen&&P.zahlen)P.lesson=1;
+  try{localStorage.setItem(KEY,JSON.stringify(P))}catch{}
+  upd();
+  if(P.lesson&&k!=="lesson")speak("Fantastisch! Du hast alle Stempel gesammelt. Lektion zwei geschafft!");
+}
+try{Object.assign(P,JSON.parse(localStorage.getItem(KEY))||{})}catch{}
+upd();
+
+/* ---------- Sprache ---------- */
+function loadV(){const v=S?S.getVoices():[];V=v.find(x=>x.lang?.toLowerCase()==="de-de"&&/google/i.test(x.name))||v.find(x=>x.lang?.toLowerCase()==="de-de")||v.find(x=>x.lang?.toLowerCase().startsWith("de"))||null}
+function speak(t,r=.88){return new Promise(d=>{if(!S||!t)return d();S.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="de-DE";u.rate=r;if(V)u.voice=V;u.onend=u.onerror=()=>d();S.speak(u)})}
+loadV();S&&S.addEventListener("voiceschanged",loadV);
+$$(".say").forEach(x=>x.addEventListener("click",()=>speak(x.dataset.s)));
+
+/* ---------- Zahlen ---------- */
+const Z=["eins","zwei","drei","vier","fünf","sechs","sieben","acht","neun","zehn","elf","zwölf","dreizehn","vierzehn","fünfzehn","sechzehn","siebzehn","achtzehn","neunzehn","zwanzig"];
+$("nums").innerHTML=Z.map((w,i)=>`<button class="num-b" data-w="${w}"><b>${i+1}</b>${w}</button>`).join("");
+$$(".num-b").forEach(b=>b.onclick=async()=>{$$(".num-b.act").forEach(x=>x.classList.remove("act"));b.classList.add("act");await speak(b.dataset.w,.8);b.classList.remove("act")});
+
+/* ---------- Quiz-Engine ---------- */
+const Q={
+ q1:{stamp:"herkunft",title:"Teste dich: Herkunft",items:[
+  {q:"Wie fragst du einen Freund?",say:"",o:["Woher kommen Sie?","Woher kommst du?"],a:1,ok:"Woher kommst du?"},
+  {q:"Wie fragst du einen Fremden höflich?",o:["Woher kommst du?","Woher kommen Sie?"],a:1,ok:"Woher kommen Sie?"},
+  {q:"Ich komme aus ___ Schweiz.",o:["der","den","–"],a:0,ok:"Ich komme aus der Schweiz."},
+  {q:"Ich komme aus ___ USA.",o:["der","den","–"],a:1,ok:"Ich komme aus den USA."},
+  {q:"Ich komme aus ___ Polen.",o:["der","den","– (kein Artikel)"],a:2,ok:"Ich komme aus Polen."},
+  {q:"Ich komme aus ___ Deutschland.",o:["der","den","– (kein Artikel)"],a:2,ok:"Ich komme aus Deutschland."}]},
+ q2:{stamp:"nation",title:"Teste dich: Nationalitäten",items:[
+  {q:"Er kommt aus Polen. Er ist ___.",o:["Pole","Polin"],a:0,ok:"Er ist Pole."},
+  {q:"Sie kommt aus Polen. Sie ist ___.",o:["Pole","Polin"],a:1,ok:"Sie ist Polin."},
+  {q:"Sie kommt aus Österreich. Sie ist ___.",o:["Österreicher","Österreicherin"],a:1,ok:"Sie ist Österreicherin."},
+  {q:"Er kommt aus Deutschland. Er ist ___.",o:["Deutscher","Deutsche"],a:0,ok:"Er ist Deutscher."},
+  {q:"Sie kommt aus Frankreich. Sie ist ___.",o:["Franzose","Französin"],a:1,ok:"Sie ist Französin."},
+  {q:"Er kommt aus Frankreich. Er ist ___.",o:["Franzose","Französin"],a:0,ok:"Er ist Franzose."}]},
+ q3:{stamp:"kommen",title:"Teste dich: kommen",items:[
+  {q:"Ich ___ aus Spanien.",o:["komme","kommst","kommt","kommen"],a:0,ok:"Ich komme aus Spanien."},
+  {q:"Du ___ aus Frankreich.",o:["komme","kommst","kommt","kommen"],a:1,ok:"Du kommst aus Frankreich."},
+  {q:"Anna ___ aus Österreich.",o:["komme","kommst","kommt","kommen"],a:2,ok:"Anna kommt aus Österreich."},
+  {q:"Wir ___ aus der Schweiz.",o:["komme","kommst","kommt","kommen"],a:3,ok:"Wir kommen aus der Schweiz."},
+  {q:"Ihr ___ aus Italien.",o:["komme","kommst","kommt","kommen"],a:2,ok:"Ihr kommt aus Italien."},
+  {q:"Sie (Plural) ___ aus Deutschland.",o:["komme","kommst","kommt","kommen"],a:3,ok:"Sie kommen aus Deutschland."}]},
+ q4:{stamp:"zahlen",title:"Teste dich: Hörverstehen",items:[
+  {q:"Welche Zahl hörst du?",say:"sieben",o:["6","7","17","70"],a:1,ok:"sieben"},
+  {q:"Welche Zahl hörst du?",say:"dreizehn",o:["3","30","13","23"],a:2,ok:"dreizehn"},
+  {q:"Welche Zahl hörst du?",say:"zwölf",o:["2","12","20","11"],a:1,ok:"zwölf"},
+  {q:"Welche Zahl hörst du?",say:"sechzehn",o:["6","60","16","15"],a:2,ok:"sechzehn"},
+  {q:"Welche Zahl hörst du?",say:"neunzehn",o:["9","19","90","18"],a:1,ok:"neunzehn"},
+  {q:"Welche Zahl hörst du?",say:"zwanzig",o:["2","12","20","22"],a:2,ok:"zwanzig"}]}
+};
+function initQuiz(el){
+  const c=Q[el.dataset.quiz],n=c.items.length;let i=0,s=0,lock=false;
+  function draw(){
+    const it=c.items[i];
+    el.innerHTML=`<h3>${c.title}</h3>${it.say?`<button class="listen">🔊 Hören</button>`:""}<p class="q">${it.q}</p><div class="opts">${it.o.map((t,k)=>`<button class="opt" data-k="${k}">${t} <span>👆</span></button>`).join("")}</div><p class="fb"></p><p class="cnt">Richtige Antworten: ${s} / ${n}</p><div class="track"><div class="fill" style="width:${s/n*100}%"></div></div><div class="fin"></div>`;
+    const lb=el.querySelector(".listen");if(lb){lb.onclick=()=>speak(it.say,.8);speak(it.say,.8)}
+    const fb=el.querySelector(".fb");
+    el.querySelectorAll(".opt").forEach(b=>b.onclick=async()=>{
+      if(lock)return;const ok=+b.dataset.k===it.a;
+      if(!ok){b.classList.add("no");fb.style.color="var(--red)";fb.textContent="Nicht ganz. Versuch es noch einmal!";speak("Nicht ganz. Versuch es noch einmal.");setTimeout(()=>b.classList.remove("no"),500);return}
+      lock=true;s++;b.classList.add("ok");el.querySelectorAll(".opt").forEach(x=>x.disabled=true);
+      fb.style.color="var(--ok)";fb.textContent="Richtig! "+(it.say?it.say:it.ok);
+      el.querySelector(".cnt").textContent=`Richtige Antworten: ${s} / ${n}`;el.querySelector(".fill").style.width=s/n*100+"%";
+      await speak(it.say?it.say:it.ok);
+      setTimeout(()=>{lock=false;if(++i<n)draw();else finish()},500)});
+  }
+  function finish(){
+    el.innerHTML=`<h3>${c.title}</h3><div class="fin on">🎉 Sehr gut! Alles richtig: ${n} / ${n}<br><button>↻ Noch einmal</button></div>`;
+    el.querySelector("button").onclick=()=>{i=s=0;draw()};
+    stamp(c.stamp);speak("Sehr gut! Du hast alles richtig gemacht.");
+  }
+  draw();
+}
+$$("[data-quiz]").forEach(initQuiz);
+
+/* ---------- Ich kann ---------- */
+$("ik-b").onclick=()=>{const o=$("ik-p").classList.toggle("show");$("ik-b").setAttribute("aria-expanded",o);$("ik-b").textContent=o?"Ich kann ▲":"Ich kann ▼"};
+$("reset").onclick=()=>{Object.keys(P).forEach(k=>P[k]=0);try{localStorage.removeItem(KEY)}catch{}upd();$("reset-msg").textContent="Stempel zurückgesetzt. Du kannst sie neu sammeln!";setTimeout(()=>$("reset-msg").textContent="",4000)};
+
+/* ---------- Fortschritt ---------- */
+function prog(){const m=document.documentElement.scrollHeight-innerHeight;$("pbar").style.width=(m<=0?100:Math.min(100,scrollY/m*100))+"%"}
+addEventListener("scroll",prog,{passive:true});addEventListener("resize",prog);prog();
+addEventListener("beforeunload",()=>S&&S.cancel());
+</script>
+</body>
+</html>
