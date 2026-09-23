@@ -18,9 +18,11 @@ button{font:inherit;cursor:pointer}
 .hero{display:flex;align-items:center;gap:28px;padding-bottom:26px;border-bottom:2px dashed #1c24302e}.hero>div:first-child{flex:1}
 h1.main{margin:0 0 12px;font:700 2.6rem/1.12 Fraunces,serif;color:#161616}.hero p{margin:0;color:#334155}
 .topics{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.topics a{padding:8px 14px;background:#fff;border:1px solid var(--line);border-radius:999px;font-size:.92rem;color:var(--text);text-decoration:none}.topics a:hover{background:#fff3c8}
-.globe{flex:0 0 220px;text-align:center;font-size:5.5rem;padding:26px 10px;background:var(--ink);color:#f7efdd;border-radius:50%;aspect-ratio:1;display:grid;place-items:center;overflow:hidden}
-.globe span{display:inline-block;transform-origin:50% 50%;animation:heroEarthTurn 10s linear infinite;will-change:transform}
-@keyframes heroEarthTurn{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.globe{flex:0 0 220px;padding:26px 10px;background:var(--ink);border-radius:50%;aspect-ratio:1;display:grid;place-items:center;overflow:hidden}
+.earth{position:relative;width:92px;height:92px;border-radius:50%;overflow:hidden;background:#2d8fe8;box-shadow:inset -12px -5px 18px #1453a8,0 0 0 1px #ffffff18}
+.earth-map{position:absolute;inset:0;width:300%;height:100%;background-image:url("https://upload.wikimedia.org/wikipedia/commons/8/83/Equirectangular_projection_SW.jpg");background-size:auto 100%;background-repeat:repeat-x;background-position:0 center;mix-blend-mode:screen;filter:saturate(1.8) contrast(1.15);animation:earthSurface 18s linear infinite;will-change:transform}
+.earth-shade{position:absolute;inset:0;border-radius:50%;pointer-events:none;background:radial-gradient(circle at 35% 32%,#ffffff30 0 12%,transparent 38%),linear-gradient(90deg,#071a3d55 0%,transparent 28%,transparent 68%,#071a3d88 100%)}
+@keyframes earthSurface{from{transform:translateX(0)}to{transform:translateX(-33.333%)}}to{transform:rotate(360deg)}}
 .pass{display:flex;align-items:center;gap:18px;margin-top:24px;padding:16px 20px;color:#f7efdd;background:linear-gradient(145deg,#16233a,#20324a);border-radius:18px}
 .pass b{font:700 1.08rem Fraunces,serif}.pass small{display:block;font:.78rem "JetBrains Mono",monospace;color:#f7efddad}
 .stamps{display:flex;justify-content:flex-end;gap:10px;flex:1;flex-wrap:wrap}
@@ -91,7 +93,7 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offse
       <p>Heute lernen wir Länder, Nationalitäten, das Verb <b>kommen</b> und die Zahlen von 1 bis 20. Übe aktiv mit — sammle Stempel für deinen Sprachpass! (Lektion 2 von 30)</p>
       <nav class="topics"><a href="#t1">1 · Herkunft</a><a href="#t2">2 · Nationalitäten</a><a href="#t3">3 · kommen</a><a href="#t4">4 · Zahlen 1–20</a></nav>
     </div>
-    <div class="globe" aria-hidden="true"><span>🌍</span></div>
+    <div class="globe" aria-hidden="true"><div class="earth"><div class="earth-map"></div><div class="earth-shade"></div></div></div>
   </div>
   <div class="pass">
     <div><b>🛂 Dein Sprachpass</b><small id="cnt-stamps">0 / 5 Stempel gesammelt</small></div>
