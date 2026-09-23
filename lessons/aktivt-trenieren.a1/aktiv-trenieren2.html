@@ -19,8 +19,8 @@ button{font:inherit;cursor:pointer}
 h1.main{margin:0 0 12px;font:700 2.6rem/1.12 Fraunces,serif;color:#161616}.hero p{margin:0;color:#334155}
 .topics{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.topics a{padding:8px 14px;background:#fff;border:1px solid var(--line);border-radius:999px;font-size:.92rem;color:var(--text);text-decoration:none}.topics a:hover{background:#fff3c8}
 .globe{flex:0 0 220px;text-align:center;font-size:5.5rem;padding:26px 10px;background:var(--ink);color:#f7efdd;border-radius:50%;aspect-ratio:1;display:grid;place-items:center;overflow:hidden}
-.globe span{display:inline-block;transform-origin:center;animation:heroEarthTurn 9s ease-in-out infinite;will-change:transform}
-@keyframes heroEarthTurn{0%{transform:perspective(180px) rotateY(0deg)}25%{transform:perspective(180px) rotateY(35deg)}50%{transform:perspective(180px) rotateY(0deg)}75%{transform:perspective(180px) rotateY(-35deg)}100%{transform:perspective(180px) rotateY(0deg)}}
+.globe span{display:inline-block;transform-origin:50% 50%;animation:heroEarthTurn 10s linear infinite;will-change:transform}
+@keyframes heroEarthTurn{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 .pass{display:flex;align-items:center;gap:18px;margin-top:24px;padding:16px 20px;color:#f7efdd;background:linear-gradient(145deg,#16233a,#20324a);border-radius:18px}
 .pass b{font:700 1.08rem Fraunces,serif}.pass small{display:block;font:.78rem "JetBrains Mono",monospace;color:#f7efddad}
 .stamps{display:flex;justify-content:flex-end;gap:10px;flex:1;flex-wrap:wrap}
