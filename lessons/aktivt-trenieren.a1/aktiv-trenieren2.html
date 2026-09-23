@@ -19,10 +19,13 @@ button{font:inherit;cursor:pointer}
 h1.main{margin:0 0 12px;font:700 2.6rem/1.12 Fraunces,serif;color:#161616}.hero p{margin:0;color:#334155}
 .topics{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.topics a{padding:8px 14px;background:#fff;border:1px solid var(--line);border-radius:999px;font-size:.92rem;color:var(--text);text-decoration:none}.topics a:hover{background:#fff3c8}
 .globe{flex:0 0 220px;padding:26px 10px;background:var(--ink);border-radius:50%;aspect-ratio:1;display:grid;place-items:center;overflow:hidden}
-.earth{position:relative;width:92px;height:92px;border-radius:50%;overflow:hidden;background:#2d8fe8;box-shadow:inset -12px -5px 18px #1453a8,0 0 0 1px #ffffff18}
-.earth-map{position:absolute;inset:0;width:300%;height:100%;background-image:url("https://upload.wikimedia.org/wikipedia/commons/8/83/Equirectangular_projection_SW.jpg");background-size:auto 100%;background-repeat:repeat-x;background-position:0 center;mix-blend-mode:screen;filter:saturate(1.8) contrast(1.15);animation:earthSurface 18s linear infinite;will-change:transform}
-.earth-shade{position:absolute;inset:0;border-radius:50%;pointer-events:none;background:radial-gradient(circle at 35% 32%,#ffffff30 0 12%,transparent 38%),linear-gradient(90deg,#071a3d55 0%,transparent 28%,transparent 68%,#071a3d88 100%)}
-@keyframes earthSurface{from{transform:translateX(0)}to{transform:translateX(-33.333%)}}to{transform:rotate(360deg)}}
+.earth{position:relative;width:92px;height:92px;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 32% 28%,#69c8ff 0 8%,#2d95ea 35%,#1767c2 72%,#0b3c83 100%);box-shadow:inset -13px -4px 18px #082e6a99,0 0 0 1px #ffffff20}
+.earth-map,.earth-map::before,.earth-map::after{position:absolute;display:block;background:#56d58a;box-shadow:inset -3px -2px 4px #16895766}
+.earth-map{width:30px;height:43px;left:12px;top:19px;border-radius:48% 52% 58% 42%/38% 45% 55% 62%;animation:landTravel 14s linear infinite}
+.earth-map::before{content:"";width:22px;height:27px;left:42px;top:-9px;border-radius:55% 45% 48% 52%/42% 52% 48% 58%}
+.earth-map::after{content:"";width:18px;height:24px;left:78px;top:20px;border-radius:42% 58% 55% 45%}
+.earth-shade{position:absolute;inset:0;border-radius:50%;pointer-events:none;background:linear-gradient(90deg,#061b4355 0%,transparent 23%,transparent 70%,#061b43aa 100%)}
+@keyframes landTravel{0%{transform:translateX(-48px)}100%{transform:translateX(118px)}}
 .pass{display:flex;align-items:center;gap:18px;margin-top:24px;padding:16px 20px;color:#f7efdd;background:linear-gradient(145deg,#16233a,#20324a);border-radius:18px}
 .pass b{font:700 1.08rem Fraunces,serif}.pass small{display:block;font:.78rem "JetBrains Mono",monospace;color:#f7efddad}
 .stamps{display:flex;justify-content:flex-end;gap:10px;flex:1;flex-wrap:wrap}
