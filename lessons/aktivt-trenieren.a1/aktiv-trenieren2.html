@@ -18,9 +18,9 @@ button{font:inherit;cursor:pointer}
 .hero{display:flex;align-items:center;gap:28px;padding-bottom:26px;border-bottom:2px dashed #1c24302e}.hero>div:first-child{flex:1}
 h1.main{margin:0 0 12px;font:700 2.6rem/1.12 Fraunces,serif;color:#161616}.hero p{margin:0;color:#334155}
 .topics{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.topics a{padding:8px 14px;background:#fff;border:1px solid var(--line);border-radius:999px;font-size:.92rem;color:var(--text);text-decoration:none}.topics a:hover{background:#fff3c8}
-.globe{flex:0 0 220px;text-align:center;font-size:5.5rem;padding:26px 10px;background:var(--ink);color:#f7efdd;border-radius:50%;aspect-ratio:1;display:grid;place-items:center;animation:spin 14s linear infinite}
-.globe span{animation:spin 14s linear infinite reverse;display:block}
-@keyframes spin{to{transform:rotate(360deg)}}
+.globe{flex:0 0 220px;text-align:center;font-size:5.5rem;padding:26px 10px;background:var(--ink);color:#f7efdd;border-radius:50%;aspect-ratio:1;display:grid;place-items:center;overflow:hidden}
+.globe span{display:inline-block;transform-origin:50% 50%;animation:heroEarthTurn 2.8s linear infinite;will-change:transform}
+@keyframes heroEarthTurn{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
 .pass{display:flex;align-items:center;gap:18px;margin-top:24px;padding:16px 20px;color:#f7efdd;background:linear-gradient(145deg,#16233a,#20324a);border-radius:18px}
 .pass b{font:700 1.08rem Fraunces,serif}.pass small{display:block;font:.78rem "JetBrains Mono",monospace;color:#f7efddad}
 .stamps{display:flex;justify-content:flex-end;gap:10px;flex:1;flex-wrap:wrap}
@@ -118,7 +118,7 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offse
 <p><span class="say" data-s="Ich bin Polin. Ich komme aus Polen.">🔊 Ich bin <b>Polin</b>. — Ich komme aus Polen.</span><br><span class="say" data-s="Er ist Deutscher. Er kommt aus Deutschland.">🔊 Er ist <b>Deutscher</b>. — Er kommt aus Deutschland.</span><br><span class="say" data-s="Sie ist Österreicherin. Sie kommt aus Österreich.">🔊 Sie ist <b>Österreicherin</b>. — Sie kommt aus Österreich.</span></p>
 <div class="nationality-lab"><div class="help"><span>✏️ Nationalität eingeben</span><em>→</em><span>👆 „Informell“ oder „Formell“ anklicken</span><em>→</em><span>🔊 zuhören</span></div>
 <p>Trag deine Nationalität ein — die Dialoge passen sich an!</p><details class="tr-box"><summary><span class="globe-spin">🌐</span><span class="tr-label">A/文</span></summary><div class="tr-content"><p><b>English:</b> Enter your nationality — the dialogues will adapt automatically.</p><p><b>Polski:</b> Wpisz swoją narodowość — dialogi dopasują się automatycznie.</p><p><b>Italiano:</b> Inserisci la tua nazionalità: i dialoghi si adatteranno automaticamente.</p></div></details>
-<div class="name-row"><label for="nationality"><b>✏️ Deine Nationalität:</b></label><input id="nationality" value="Polin" placeholder="z. B. Polin"></div>
+<div class="name-row"><label for="nationality"><b>✏️ Deine Nationalität:</b></label><input id="nationality" value="" placeholder="z. B. Polin"></div>
 <div class="dialog-tabs"><button class="dialog-tab" id="play-informal" type="button">Informell 🔊</button><button class="dialog-tab" id="play-formal" type="button">Formell 🔊</button></div>
 <div class="dialog-pair">
 <div><h3>Informell</h3><div class="mini-dialog" id="nationality-dialog-informal"></div></div>
@@ -182,7 +182,7 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offse
 "use strict";
 const $=x=>document.getElementById(x),$$=x=>[...document.querySelectorAll(x)],S=window.speechSynthesis;
 const KEY="lektion2-sprachpass",P={herkunft:0,nation:0,kommen:0,zahlen:0,lesson:0},VIS=["herkunft","nation","kommen","zahlen","lesson"];
-let V=null,tok=0;
+let V=null,VM=null,tok=0;
 
 /* ---------- Stempel ---------- */
 function upd(){
@@ -201,8 +201,8 @@ try{Object.assign(P,JSON.parse(localStorage.getItem(KEY))||{})}catch{}
 upd();
 
 /* ---------- Sprache ---------- */
-function loadV(){const v=S?S.getVoices():[];V=v.find(x=>x.lang?.toLowerCase()==="de-de"&&/google/i.test(x.name))||v.find(x=>x.lang?.toLowerCase()==="de-de")||v.find(x=>x.lang?.toLowerCase().startsWith("de"))||null}
-function speak(t,r=.88){return new Promise(d=>{if(!S||!t)return d();S.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="de-DE";u.rate=r;if(V)u.voice=V;u.onend=u.onerror=()=>d();S.speak(u)})}
+function loadV(){const v=S?S.getVoices():[],g=v.filter(x=>x.lang?.toLowerCase().startsWith("de"));V=v.find(x=>x.lang?.toLowerCase()==="de-de"&&/google/i.test(x.name))||v.find(x=>x.lang?.toLowerCase()==="de-de")||g[0]||null;const maleHints=["conrad","stefan","hans","markus","klaus","male","mann","standard-b","standard-d","wavenet-b","wavenet-d"];VM=g.find(x=>maleHints.some(h=>x.name?.toLowerCase().includes(h)))||g.find(x=>x!==V)||V||null}
+function speak(t,r=.88,voice=V,pitch=1){return new Promise(d=>{if(!S||!t)return d();const u=new SpeechSynthesisUtterance(t);u.lang="de-DE";u.rate=r;u.pitch=pitch;if(voice)u.voice=voice;u.onend=u.onerror=()=>d();S.speak(u)})}
 loadV();S&&S.addEventListener("voiceschanged",loadV);
 $$(".say").forEach(x=>x.addEventListener("click",()=>speak(x.dataset.s)));
 
@@ -270,17 +270,17 @@ $$("[data-quiz]").forEach(initQuiz);
 
 /* ---------- Nationalität-Dialog ---------- */
 function nationalityLines(formal){
- const n=($("nationality").value||"Polin").trim();
+ const n=$("nationality").value.trim();
  return formal
- ?["Guten Tag!","Guten Tag!","Woher kommen Sie?","Ich bin "+n+". Und Sie?","Ich komme aus Deutschland."]
- :["Hallo!","Hallo!","Woher kommst du?","Ich bin "+n+". Und du?","Ich komme aus Deutschland."];
+ ?["Guten Tag!","Guten Tag!","Woher kommen Sie?",n?("Ich bin "+n+". Und Sie?"):"Ich bin … . Und Sie?","Ich komme aus Deutschland."]
+ :["Hallo!","Hallo!","Woher kommst du?",n?("Ich bin "+n+". Und du?"):"Ich bin … . Und du?","Ich komme aus Deutschland."];
 }
 function renderNatDialog(){
  const make=(lines)=>lines.map((x,i)=>'<div class="db '+(i%2?"me":"")+'"><b>'+(i%2?"B":"A")+'</b> '+x+(i%2?" 🧑🏻":" 👩🏻")+'</div>').join("");
  $("nationality-dialog-informal").innerHTML=make(nationalityLines(false));
  $("nationality-dialog-formal").innerHTML=make(nationalityLines(true));
 }
-async function playNat(formal){for(const x of nationalityLines(formal)){await speak(x,.86)}}
+async function playNat(formal){if(!S)return;S.cancel();const lines=nationalityLines(formal);for(let i=0;i<lines.length;i++){await speak(lines[i],.86,i%2?VM:V,i%2?.9:1)}}
 $("play-informal").onclick=()=>playNat(false);
 $("play-formal").onclick=()=>playNat(true);
 $("nationality").addEventListener("input",renderNatDialog);
