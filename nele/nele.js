@@ -31,6 +31,7 @@ const Nele = {
     conversationMode: "course",
     courseModeButton: null,
     freeModeButton: null,
+    courseModeSubtitle: null,
 
 
     /* =========================================
@@ -91,6 +92,7 @@ const Nele = {
 
         this.courseModeButton = document.getElementById("course-mode-btn");
         this.freeModeButton = document.getElementById("free-mode-btn");
+        this.courseModeSubtitle = document.getElementById("course-mode-subtitle");
         this.conversationMode = localStorage.getItem("nele_conversation_mode") || "course";
         this.updateModeButtons();
 
@@ -245,6 +247,16 @@ const Nele = {
     },
 
 
+
+    updateCourseSubtitle(meta) {
+        if (!this.courseModeSubtitle) return;
+        const level = String(meta?.level || "A1").toUpperCase();
+        const lesson = Number(meta?.lesson || meta?.current_lesson || 1);
+        if (Number.isFinite(lesson) && lesson > 0) {
+            this.courseModeSubtitle.textContent = `Lektion ${level}.${lesson} · Schritt für Schritt`;
+        }
+    },
+
     /* =========================================
        IDENTYFIKATOR UŻYTKOWNIKA
     ========================================= */
@@ -371,6 +383,8 @@ const Nele = {
 
             const reply =
                 data.reply;
+
+            this.updateCourseSubtitle(data.meta);
 
 
             if (!reply) {
@@ -964,6 +978,8 @@ const Nele = {
             const reply =
                 data.reply ||
                 "Ich weiß gerade nicht, was ich antworten soll.";
+
+            this.updateCourseSubtitle(data.meta);
 
 
             /* pokaż odpowiedź */
