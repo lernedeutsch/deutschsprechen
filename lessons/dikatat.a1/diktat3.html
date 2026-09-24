@@ -1,4 +1,1472 @@
-<!doctype html>
-<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>✍️ Ich schreibe ein Diktat · A1 Lektion 3</title>
-<style>*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:linear-gradient(180deg,#173047,#203a57);font-family:Arial,sans-serif;color:#101820}.card{width:min(720px,100%);padding:42px 28px;text-align:center;background:#fff8eb;border-radius:28px;box-shadow:0 18px 40px #08152466}h1{font-size:clamp(2rem,6vw,3.2rem);margin:0 0 16px}p{font-size:1.2rem;color:#40556b}.back{display:inline-block;margin-top:22px;padding:11px 18px;background:#eef5fb;border:1px solid #d7e1eb;border-radius:999px;color:#101820;text-decoration:none;font-weight:700}</style></head>
-<body><main class="card"><div>🇩🇪 A1 · Lektion 3</div><h1>✍️ Ich schreibe ein Diktat</h1><p>Diese Seite wird gerade erstellt.</p><p>Bitte kommen Sie später wieder.</p><a class="back" href="../a1/lektion-3.html">← Zurück zur Lektion 3</a></main></body></html>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Diktat A1 · 3 — Alter, Zahlen &amp; persönliche Daten</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Nunito+Sans:opsz,wght@6..12,400,600,700,800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#152238;
+  --bg2:#1d3350;
+  --ink:#101820;
+  --muted:#4c5d72;
+  --line:#dde7f2;
+  --paper:#fffaf0;
+  --gold:#f4c95d;
+  --gold-deep:#b98200;
+  --sky:#6ac6ff;
+  --sky-deep:#3da8f0;
+  --leaf:#84df42;
+  --leaf-deep:#5fbd28;
+  --plum:#a88af5;
+  --plum-deep:#825fe0;
+  --rose:#e2685f;
+  --shadow:0 16px 38px rgba(8,16,30,.16);
+  --shadow-soft:0 10px 22px rgba(8,16,30,.10);
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  min-height:100vh;
+  color:var(--ink);
+  font:400 1rem/1.6 "Nunito Sans",sans-serif;
+  background:
+    radial-gradient(circle at 12% -10%,rgba(255,255,255,.10),transparent 38%),
+    radial-gradient(circle at 100% 110%,rgba(255,255,255,.07),transparent 40%),
+    linear-gradient(180deg,var(--bg),var(--bg2));
+}
+
+button,textarea{font:inherit}
+
+.top-back{
+  position:absolute;
+  top:18px;
+  left:18px;
+  z-index:20;
+  max-width:none;
+  margin:0;
+  padding:0;
+}
+.back-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:7px 13px;
+  color:#1d3557;
+  background:#fff;
+  border:1px solid #dce3ed;
+  border-radius:999px;
+  text-decoration:none;
+  font:800 .86rem "Nunito Sans",sans-serif;
+  box-shadow:0 5px 14px rgba(0,0,0,.18);
+}
+.back-btn:hover{
+  border-color:var(--gold);
+  transform:translateY(-1px);
+}
+
+.shell{
+  max-width:760px;
+  margin:0 auto;
+  padding:18px 18px 70px;
+}
+
+/* ---------- HERO ---------- */
+
+.hero{
+  text-align:center;
+  padding:12px 20px 24px;
+  margin-bottom:22px;
+}
+
+.hero-badge{
+  display:inline-block;
+  margin-bottom:16px;
+  padding:7px 16px;
+  color:#1a2a40;
+  background:var(--gold);
+  border-radius:999px;
+  font:800 .78rem "JetBrains Mono",monospace;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+
+.hero h1{
+  margin:0 0 10px;
+  color:#fff;
+  font:700 clamp(2rem,5vw,2.7rem)/1.15 "Kalam",cursive;
+}
+
+.hero p{
+  margin:0 auto;
+  max-width:42ch;
+  color:#c7d7ea;
+  font-size:1.05rem;
+}
+
+.hero-translation{
+  display:flex;
+  justify-content:center;
+  margin-top:10px;
+  position:relative;
+}
+.translation-toggle{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:4px 9px;
+  color:#4c4028;
+  background:#fffdf6;
+  border:1px solid #d8c28c;
+  border-radius:999px;
+  cursor:pointer;
+  font:800 .75rem "Nunito Sans",sans-serif;
+}
+.translation-toggle:hover,.translation-toggle:focus-visible{
+  background:#fff3c8;
+  border-color:#cf9f3f;
+}
+.translation-panel{
+  display:none;
+  position:absolute;
+  top:36px;
+  z-index:30;
+  width:250px;
+  padding:9px;
+  background:#fffdf7;
+  border:1px solid #d9c28e;
+  border-radius:12px;
+  box-shadow:0 12px 25px rgba(0,0,0,.18);
+}
+.hero-translation.open .translation-panel,
+.hero-translation:hover .translation-panel,
+.hero-translation:focus-within .translation-panel{
+  display:block;
+}
+.translation-languages{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  margin-bottom:7px;
+}
+.translation-language{
+  padding:4px 7px;
+  color:#26364b;
+  background:#f7f1e3;
+  border:1px solid #ddcfaa;
+  border-radius:999px;
+  cursor:pointer;
+  font-size:.7rem;
+  font-weight:800;
+}
+.translation-language.active{
+  background:#e4f3e8;
+  border-color:#78bf95;
+  color:#28502f;
+}
+.translation-text{
+  display:none;
+  margin:0;
+  padding:7px 8px;
+  color:#26364b;
+  background:#fff7d8;
+  border-radius:8px;
+  font-size:.76rem;
+  line-height:1.35;
+  font-weight:700;
+}
+.translation-text.show{display:block}
+
+.waveform{
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  gap:6px;
+  height:38px;
+  margin:24px 0 4px;
+}
+
+.waveform span{
+  width:6px;
+  height:8px;
+  border-radius:4px;
+  background:linear-gradient(180deg,var(--sky),var(--gold));
+  transform-origin:bottom;
+  transition:height .18s ease;
+}
+
+.waveform.playing span{
+  animation:dance .9s ease-in-out infinite;
+}
+
+.waveform span:nth-child(1){animation-delay:0s}
+.waveform span:nth-child(2){animation-delay:.1s}
+.waveform span:nth-child(3){animation-delay:.2s}
+.waveform span:nth-child(4){animation-delay:.3s}
+.waveform span:nth-child(5){animation-delay:.15s}
+.waveform span:nth-child(6){animation-delay:.25s}
+.waveform span:nth-child(7){animation-delay:.05s}
+
+@keyframes dance{
+  0%,100%{height:8px}
+  50%{height:34px}
+}
+
+.hero-stats{
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+
+.stat{
+  min-width:96px;
+  padding:12px 16px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:16px;
+  backdrop-filter:blur(6px);
+}
+
+.stat-value{
+  display:block;
+  color:#fff;
+  font:800 1.3rem "JetBrains Mono",monospace;
+}
+
+.stat-label{
+  display:block;
+  margin-top:2px;
+  color:#a9bcd4;
+  font-size:.74rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+
+/* ---------- CARD ---------- */
+
+.card{
+  padding:26px;
+  background:#fff;
+  border-radius:28px;
+  box-shadow:var(--shadow);
+}
+
+.progress-track{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:22px;
+}
+
+.dot{
+  width:13px;
+  height:13px;
+  border-radius:50%;
+  background:#e7eef7;
+  border:2px solid var(--line);
+  transition:all .2s;
+}
+
+.dot.done{background:var(--leaf);border-color:var(--leaf-deep)}
+.dot.active{background:var(--gold);border-color:var(--gold-deep);transform:scale(1.3)}
+
+.listen-row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:6px;
+}
+
+.play-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:14px 22px;
+  border:none;
+  border-radius:999px;
+  cursor:pointer;
+  color:#fff;
+  background:linear-gradient(180deg,var(--sky),var(--sky-deep));
+  font:800 1.02rem "Nunito Sans",sans-serif;
+  box-shadow:0 10px 20px rgba(61,168,240,.30);
+  transition:transform .18s,filter .18s;
+}
+
+.play-btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+
+.hint-btn,
+.skip-btn{
+  background:none;
+  border:1px dashed var(--line);
+  border-radius:999px;
+  padding:10px 16px;
+  cursor:pointer;
+  color:var(--muted);
+  font:700 .82rem "JetBrains Mono",monospace;
+  transition:border-color .16s,color .16s;
+}
+
+.hint-btn:hover,
+.skip-btn:hover{border-color:#81bfff;color:var(--ink)}
+
+.hint-text{
+  display:none;
+  margin:10px 0 0;
+  color:var(--muted);
+  font:600 1.15rem "JetBrains Mono",monospace;
+  letter-spacing:.04em;
+}
+
+.hint-text.show{display:block}
+
+.paper{
+  position:relative;
+  margin-top:18px;
+  padding:20px 46px 16px 20px;
+  background:
+    repeating-linear-gradient(transparent 0,transparent 33px,rgba(80,111,145,.12) 34px),
+    linear-gradient(180deg,var(--paper),#fff);
+  border:1px solid #eee2c8;
+  border-radius:4px 20px 20px 4px;
+  box-shadow:inset 34px 0 0 rgba(226,104,95,.07),var(--shadow-soft);
+}
+
+.paper::before{
+  content:"";
+  position:absolute;
+  top:0;bottom:0;left:34px;
+  width:2px;
+  background:rgba(226,104,95,.25);
+}
+
+.dict-input{
+  position:relative;
+  z-index:1;
+  display:block;
+  width:100%;
+  border:none;
+  background:transparent;
+  resize:none;
+  color:var(--ink);
+  font:600 1.25rem/34px "Kalam",cursive;
+  padding-left:8px;
+}
+
+.dict-input:focus{outline:none}
+.dict-input:disabled{color:#7c8ea3}
+
+.status-icon{
+  position:absolute;
+  right:16px;
+  top:18px;
+  z-index:2;
+  font-size:1.3rem;
+  opacity:0;
+  transition:opacity .2s,transform .2s;
+}
+
+.status-icon.show{opacity:1}
+.status-icon.spin{animation:spin 1s linear infinite}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.feedback{
+  display:none;
+  margin-top:14px;
+  padding:14px 16px;
+  border-radius:14px;
+  font-size:1.02rem;
+  line-height:1.6;
+}
+
+.feedback.show{display:block;animation:pop .22s ease-out}
+
+@keyframes pop{
+  from{opacity:0;transform:translateY(-6px) scale(.98)}
+  to{opacity:1;transform:none}
+}
+
+.feedback.correct{background:#eef9e4;border:1px solid #bfe7a0;color:#2f5c14}
+.feedback.wrong{background:#fdeeee;border:1px solid #f3c5c5;color:#7a2323}
+
+.word-ok{color:#2f8f1a;font-weight:800}
+.word-bad{color:#c23b3b;font-weight:800;text-decoration:underline wavy #c23b3b}
+
+.skip-row{
+  display:flex;
+  justify-content:flex-end;
+  margin-top:12px;
+}
+
+/* ---------- FINAL ---------- */
+
+.final{
+  display:none;
+  text-align:center;
+  padding:20px 10px 6px;
+  position:relative;
+}
+
+.final.show{display:block;animation:pop .3s ease-out}
+
+.final-emoji{font-size:3rem;margin-bottom:6px}
+
+.final-title{
+  margin:0 0 8px;
+  font:700 2rem "Kalam",cursive;
+}
+
+.final-sub{
+  margin:0 0 20px;
+  color:var(--muted);
+}
+
+.final-stars{font-size:2rem;letter-spacing:4px;margin-bottom:22px}
+
+.restart-btn{
+  padding:13px 24px;
+  border:none;
+  border-radius:14px;
+  cursor:pointer;
+  color:#fff;
+  background:linear-gradient(180deg,var(--gold),var(--gold-deep));
+  font:800 1rem "Nunito Sans",sans-serif;
+  box-shadow:0 10px 20px rgba(185,130,0,.28);
+  transition:transform .18s,filter .18s;
+}
+
+.restart-btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+
+/* ---------- CONFETTI ---------- */
+
+.confetti-piece{
+  position:fixed;
+  top:-24px;
+  z-index:50;
+  font-size:1.4rem;
+  pointer-events:none;
+  animation:fall linear forwards;
+}
+
+@keyframes fall{
+  to{
+    transform:translateY(110vh) rotate(360deg);
+    opacity:0;
+  }
+}
+
+.footnote{
+  margin-top:22px;
+  text-align:center;
+  color:#8fa4bd;
+  font-size:.86rem;
+}
+
+.lesson-complete{
+  margin:26px auto 0;
+  text-align:center;
+}
+
+.lesson-complete-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:54px;
+  padding:12px 22px;
+  border:0;
+  border-radius:999px;
+  cursor:pointer;
+  color:#fff;
+  background:linear-gradient(180deg,var(--gold),var(--gold-deep));
+  font:800 1rem "Nunito Sans",sans-serif;
+  box-shadow:0 10px 22px rgba(185,130,0,.30);
+  transition:transform .18s,filter .18s,box-shadow .18s;
+  animation:lessonCompletePulse 1.15s ease-in-out infinite;
+}
+
+@keyframes lessonCompletePulse{
+  0%,100%{
+    transform:scale(1);
+    box-shadow:
+      0 10px 22px rgba(185,130,0,.30),
+      0 0 0 0 rgba(255,210,69,.45);
+  }
+  50%{
+    transform:scale(1.085);
+    box-shadow:
+      0 16px 32px rgba(185,130,0,.45),
+      0 0 0 10px rgba(255,210,69,.12),
+      0 0 28px rgba(255,210,69,.55);
+  }
+}
+
+.lesson-complete-btn:hover{
+  filter:brightness(1.08);
+}
+
+.lesson-complete-paper{
+  display:none;
+  max-width:720px;
+  margin:16px auto 0;
+  padding:22px;
+  color:#172033;
+  text-align:left;
+  background:#fff8e8;
+  border:1px solid #e4c978;
+  border-radius:20px;
+  box-shadow:0 18px 38px rgba(0,0,0,.18);
+}
+
+.lesson-complete-paper.show{
+  display:block;
+  animation:pop .3s ease-out;
+}
+
+.lesson-complete-paper h2{
+  margin:0 0 14px;
+  text-align:center;
+  font:800 1.45rem "Nunito Sans",sans-serif;
+}
+
+.lesson-complete-paper p{
+  margin:10px 0;
+}
+
+.lesson-complete-list{
+  display:grid;
+  gap:7px;
+  margin:12px 0 14px;
+}
+
+.lesson-complete-end{
+  text-align:center;
+  font-weight:800;
+}
+
+.lesson-complete-translation{
+  position:relative;
+  display:flex;
+  justify-content:center;
+  margin:16px 0 2px;
+}
+
+.lesson-complete-translation .translation-panel{
+  left:50%;
+  transform:translateX(-50%);
+  top:34px;
+}
+
+.lesson-complete-translation.open .translation-panel,
+.lesson-complete-translation:hover .translation-panel,
+.lesson-complete-translation:focus-within .translation-panel{
+  display:block;
+}
+
+.lesson-complete-translation-language{
+  padding:4px 7px;
+  color:#26364b;
+  background:#f7f1e3;
+  border:1px solid #ddcfaa;
+  border-radius:999px;
+  cursor:pointer;
+  font-size:.7rem;
+  font-weight:800;
+}
+
+.lesson-complete-translation-language.active{
+  background:#e4f3e8;
+  border-color:#78bf95;
+  color:#28502f;
+}
+
+.continue-learning{
+  max-width:720px;
+  margin:20px auto 0;
+  padding:16px 18px;
+  text-align:center;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:18px;
+}
+
+.continue-learning-title{
+  margin:0 0 12px;
+  color:#fff;
+  font:800 1rem "Nunito Sans",sans-serif;
+}
+
+.continue-learning-actions{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+}
+
+.continue-learning-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:44px;
+  padding:9px 15px;
+  color:#fff;
+  text-decoration:none;
+  border-radius:999px;
+  font-weight:800;
+  box-shadow:0 7px 16px rgba(0,0,0,.18);
+  transition:transform .16s,filter .16s;
+}
+
+.continue-learning-link:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.06);
+}
+
+.continue-learning-link.nele{
+  background:linear-gradient(180deg,#3da8f0,#237fc2);
+}
+
+.continue-learning-link.next{
+  background:linear-gradient(180deg,#6fcf32,#3f9820);
+}
+
+.continue-translation{
+  position:relative;
+  display:flex;
+  justify-content:center;
+  margin-top:12px;
+}
+
+.continue-translation .translation-panel{
+  left:50%;
+  transform:translateX(-50%);
+  top:34px;
+}
+
+.continue-translation.open .translation-panel,
+.continue-translation:hover .translation-panel,
+.continue-translation:focus-within .translation-panel{
+  display:block;
+}
+
+.continue-translation-language{
+  padding:4px 7px;
+  color:#26364b;
+  background:#f7f1e3;
+  border:1px solid #ddcfaa;
+  border-radius:999px;
+  cursor:pointer;
+  font-size:.7rem;
+  font-weight:800;
+}
+
+.continue-translation-language.active{
+  background:#e4f3e8;
+  border-color:#78bf95;
+  color:#28502f;
+}
+
+.a1-overview-arrow{
+  display:grid;
+  place-items:center;
+  width:52px;
+  height:52px;
+  margin:18px auto 0;
+  color:#172033;
+  background:#fff;
+  border:1px solid #d9dfeb;
+  border-radius:50%;
+  text-decoration:none;
+  font-size:1.45rem;
+  font-weight:800;
+  box-shadow:0 8px 18px rgba(0,0,0,.20);
+  transition:transform .18s,filter .18s;
+}
+
+.a1-overview-arrow:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.04);
+}
+
+@media(max-width:520px){
+  .card{padding:18px}
+  .paper{padding:16px 40px 14px 14px}
+  .paper::before{left:20px}
+  .stat{min-width:80px;padding:10px 12px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+  }
+}
+.next-action-pulse{animation:nextActionPulse 1.15s ease-in-out infinite}
+@keyframes nextActionPulse{
+  0%,100%{transform:scale(1);box-shadow:0 10px 20px rgba(61,168,240,.30),0 0 0 0 rgba(106,198,255,.42)}
+  50%{transform:scale(1.06);box-shadow:0 14px 26px rgba(61,168,240,.38),0 0 0 10px rgba(106,198,255,.10)}
+}
+</style>
+
+<style>
+.translation-globe{
+  display:inline-block;
+  font-size:1.30em;
+  line-height:1;
+  vertical-align:-.10em;
+  filter:hue-rotate(115deg) saturate(2.8) brightness(1.28) contrast(1.18) drop-shadow(0 0 4px rgba(255,74,190,.72));
+}
+</style>
+</head>
+<body>
+
+<div class="top-back">
+  <a href="../a1/lektion-3.html" class="back-btn" aria-label="Zurück zu Lektion 3" title="Zurück zu Lektion 3">←</a>
+</div>
+
+<div class="shell">
+
+  <header class="hero">
+
+    <h1>Hör zu. Schreib. Weiter geht's.</h1>
+    <p>
+      Zehn Sätze aus „Wie alt sind Sie?“. Schreib, was du hörst —
+      bei einem richtigen Satz geht es automatisch weiter.
+    </p>
+
+    <div class="hero-translation" id="hero-translation">
+      <button type="button" class="translation-toggle" id="translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung">
+        <span class="translation-globe">🌐</span>A/文
+      </button>
+      <div class="translation-panel">
+        <div class="translation-languages">
+          <button type="button" class="translation-language" data-lang="en">English</button>
+          <button type="button" class="translation-language" data-lang="pl">Polski</button>
+          <button type="button" class="translation-language" data-lang="it">Italiano</button>
+        </div>
+        <p class="translation-text" id="translation-text" aria-live="polite"></p>
+      </div>
+    </div>
+
+    <div class="waveform" id="waveform">
+      <span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span>
+    </div>
+
+    <div class="hero-stats">
+
+      <div class="stat">
+        <span class="stat-value" id="stat-score">0/10</span>
+        <span class="stat-label">Punkte</span>
+      </div>
+
+      <div class="stat">
+        <span class="stat-value" id="stat-streak">0🔥</span>
+        <span class="stat-label">Serie</span>
+      </div>
+
+      <div class="stat">
+        <span class="stat-value" id="stat-progress">1/10</span>
+        <span class="stat-label">Satz</span>
+      </div>
+
+    </div>
+
+  </header>
+
+  <main class="card">
+
+    <div class="progress-track" id="progress-track"></div>
+
+    <div id="stage">
+
+      <div class="listen-row">
+
+        <button type="button" class="play-btn" id="play-btn">
+          🔊 Nochmal hören
+        </button>
+
+        <button type="button" class="hint-btn" id="hint-btn">
+          💡 Tipp
+        </button>
+
+      </div>
+
+      <p class="hint-text" id="hint-text"></p>
+
+      <div class="paper">
+        <textarea
+          class="dict-input"
+          id="dict-input"
+          rows="1"
+          placeholder="… schreib hier, was du hörst …"
+          aria-label="Deine Antwort"
+        ></textarea>
+
+        <span class="status-icon" id="status-icon"></span>
+      </div>
+
+      <div class="feedback" id="feedback"></div>
+
+      <div class="skip-row">
+        <button type="button" class="skip-btn" id="skip-btn">
+          Satz überspringen →
+        </button>
+      </div>
+
+    </div>
+
+    <div class="final" id="final">
+
+      <div class="final-emoji" id="final-emoji">🎉</div>
+      <div class="final-title" id="final-title">Geschafft!</div>
+      <p class="final-sub" id="final-sub"></p>
+      <div class="final-stars" id="final-stars"></div>
+
+      <button type="button" class="restart-btn" id="restart-btn">
+        🔄 Noch einmal
+      </button>
+
+    </div>
+
+  </main>
+
+  <p class="footnote">
+    Tipp: Kopfhörer machen's einfacher. Die Aussprache kommt aus deinem
+    Browser (Web Speech API).
+  </p>
+
+  <section class="lesson-complete">
+    <button
+      type="button"
+      class="lesson-complete-btn"
+      id="lesson-complete-btn"
+      aria-expanded="false"
+      aria-controls="lesson-complete-paper"
+    >
+      🏆 Lektion A1.3 geschafft!
+    </button>
+
+    <div
+      class="lesson-complete-paper"
+      id="lesson-complete-paper"
+      aria-hidden="true"
+    >
+      <h2>🎉 Geschafft! Du hast Lektion A1.3 abgeschlossen.</h2>
+
+      <p>Du hast die Lektion gelesen und alles trainiert:</p>
+
+      <p><strong>Aktiv trainieren · Sprich nach · Übungen · Dialoge · Diktat</strong></p>
+
+      <p><strong>Das kannst du jetzt:</strong></p>
+
+      <div class="lesson-complete-list">
+        <span>✅ nach dem Alter fragen und dein Alter sagen</span>
+        <span>✅ Zahlen von 11 bis 100 verstehen</span>
+        <span>✅ das Verb „sein“ benutzen</span>
+        <span>✅ nach persönlichen Daten fragen</span>
+      </div>
+
+      <p class="lesson-complete-end">Sehr gut gemacht! 🌟</p>
+
+      <div class="lesson-complete-translation" id="lesson-complete-translation">
+        <button
+          type="button"
+          class="translation-toggle"
+          id="lesson-complete-translation-toggle"
+          aria-label="Übersetzung anzeigen"
+          title="Übersetzung"
+        >
+          <span class="translation-globe">🌐</span>A/文
+        </button>
+
+        <div class="translation-panel">
+          <div class="translation-languages">
+            <button type="button" class="lesson-complete-translation-language" data-lang="en">English</button>
+            <button type="button" class="lesson-complete-translation-language" data-lang="pl">Polski</button>
+            <button type="button" class="lesson-complete-translation-language" data-lang="it">Italiano</button>
+          </div>
+          <p class="translation-text" id="lesson-complete-translation-text" aria-live="polite"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="continue-learning">
+      <p class="continue-learning-title">Wie möchtest du weiterlernen?</p>
+
+      <div class="continue-learning-actions">
+        <a href="../../nele.html" class="continue-learning-link nele">
+          💬 Kurz mit Nele sprechen
+        </a>
+
+        <a href="../a1/lektion-4.html" class="continue-learning-link next">
+          📘 Weiter mit Teil A1.4
+        </a>
+      </div>
+
+      <div class="continue-translation" id="continue-translation">
+        <button
+          type="button"
+          class="translation-toggle"
+          id="continue-translation-toggle"
+          aria-label="Übersetzung anzeigen"
+          title="Übersetzung"
+        >
+          <span class="translation-globe">🌐</span>A/文
+        </button>
+
+        <div class="translation-panel">
+          <div class="translation-languages">
+            <button type="button" class="continue-translation-language" data-lang="en">English</button>
+            <button type="button" class="continue-translation-language" data-lang="pl">Polski</button>
+            <button type="button" class="continue-translation-language" data-lang="it">Italiano</button>
+          </div>
+          <p class="translation-text" id="continue-translation-text" aria-live="polite"></p>
+        </div>
+      </div>
+    </div>
+
+    <a
+      href="../a1/index.html"
+      class="a1-overview-arrow"
+      aria-label="Zur A1-Übersicht"
+      title="Zur A1-Übersicht"
+    >
+      ←
+    </a>
+  </section>
+
+</div>
+
+<script>
+/* ---------------- Inhalt ---------------- */
+
+const sentences=[
+  "Wie alt sind Sie?",
+  "Wie alt bist du?",
+  "Ich bin fünfundzwanzig Jahre alt.",
+  "Du bist dreißig Jahre alt.",
+  "Sie ist Frau Müller.",
+  "Wir sind hier.",
+  "Ihr seid praktisch.",
+  "Wie ist Ihr Name?",
+  "Wie ist Ihr Vorname?",
+  "Meine Telefonnummer ist achtundvierzig."
+];
+
+/* ---------------- Sprachausgabe ---------------- */
+
+let germanVoice=null;
+
+function loadGermanVoice(){
+  if(!("speechSynthesis" in window))return;
+
+  const voices=speechSynthesis.getVoices();
+
+  germanVoice=
+    voices.find(v=>v.lang?.toLowerCase()==="de-de"&&v.name.toLowerCase().includes("google"))||
+    voices.find(v=>v.lang?.toLowerCase()==="de-de")||
+    voices.find(v=>v.lang?.toLowerCase().startsWith("de"))||
+    null;
+}
+
+loadGermanVoice();
+
+if("speechSynthesis" in window){
+  speechSynthesis.addEventListener("voiceschanged",loadGermanVoice);
+}
+
+function speakGerman(text,options={}){
+  return new Promise(resolve=>{
+    if(!text||!("speechSynthesis" in window)){
+      resolve();
+      return;
+    }
+
+    speechSynthesis.cancel();
+
+    const utterance=new SpeechSynthesisUtterance(text);
+
+    Object.assign(utterance,{
+      lang:"de-DE",
+      rate:options.rate??.88,
+      pitch:options.pitch??1,
+      volume:options.volume??1
+    });
+
+    if(germanVoice)utterance.voice=germanVoice;
+
+    utterance.onend=resolve;
+    utterance.onerror=resolve;
+
+    speechSynthesis.speak(utterance);
+  });
+}
+
+/* ---------------- Elemente ---------------- */
+
+const els={
+  waveform:document.getElementById("waveform"),
+  progressTrack:document.getElementById("progress-track"),
+  stage:document.getElementById("stage"),
+  playBtn:document.getElementById("play-btn"),
+  hintBtn:document.getElementById("hint-btn"),
+  hintText:document.getElementById("hint-text"),
+  input:document.getElementById("dict-input"),
+  statusIcon:document.getElementById("status-icon"),
+  feedback:document.getElementById("feedback"),
+  skipBtn:document.getElementById("skip-btn"),
+  final:document.getElementById("final"),
+  finalEmoji:document.getElementById("final-emoji"),
+  finalTitle:document.getElementById("final-title"),
+  finalSub:document.getElementById("final-sub"),
+  finalStars:document.getElementById("final-stars"),
+  restartBtn:document.getElementById("restart-btn"),
+  statScore:document.getElementById("stat-score"),
+  statStreak:document.getElementById("stat-streak"),
+  statProgress:document.getElementById("stat-progress")
+};
+
+/* ---------------- Zustand ---------------- */
+
+let order=[];
+let index=0;
+let score=0;
+let streak=0;
+let bestStreak=0;
+let hintUsedFor=[];
+let answered=false;
+let debounceTimer=null;
+
+function shuffle(array){
+  const copy=[...array];
+
+  for(let i=copy.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [copy[i],copy[j]]=[copy[j],copy[i]];
+  }
+
+  return copy;
+}
+
+function normalize(sentence){
+  return sentence
+    .toLowerCase()
+    .replace(/[.,!?;:„“"]/g,"")
+    .replace(/\s+/g," ")
+    .trim();
+}
+
+function target(){
+  return sentences[order[index]];
+}
+
+function buildHint(sentence){
+  return sentence
+    .split(" ")
+    .map(word=>{
+      const match=word.match(/^([A-Za-zÄÖÜäöüß]+)([.,!?;:]*)$/);
+
+      if(!match)return word;
+
+      const letters=match[1];
+      const punctuation=match[2];
+
+      if(letters.length<=1)return letters+punctuation;
+
+      return letters[0]+"_".repeat(letters.length-1)+punctuation;
+    })
+    .join(" ");
+}
+
+function buildWordDiff(targetSentence,typed){
+  const targetWords=targetSentence.split(" ");
+  const typedWords=typed.split(" ");
+  const max=Math.max(targetWords.length,typedWords.length);
+  const html=[];
+
+  for(let i=0;i<max;i++){
+    const t=targetWords[i]?normalize(targetWords[i]):null;
+    const u=typedWords[i]?normalize(typedWords[i]):null;
+    const display=targetWords[i]??`(${typedWords[i]})`;
+
+    html.push(t&&u&&t===u
+      ?`<span class="word-ok">${display}</span>`
+      :`<span class="word-bad">${display}</span>`
+    );
+  }
+
+  return html.join(" ");
+}
+
+function renderStars(count,total){
+  const filled=Math.round((total?count/total:0)*5);
+  return "⭐".repeat(filled)+"☆".repeat(5-filled);
+}
+
+function renderProgress(){
+  els.progressTrack.innerHTML=order
+    .map((_,i)=>{
+      let cls="dot";
+      if(i<index)cls+=" done";
+      else if(i===index)cls+=" active";
+      return `<span class="${cls}"></span>`;
+    })
+    .join("");
+
+  els.statProgress.textContent=`${index+1}/${sentences.length}`;
+}
+
+function updateStats(){
+  els.statScore.textContent=`${score}/${sentences.length}`;
+  els.statStreak.textContent=`${streak}🔥`;
+}
+
+function setStatusIcon(symbol,spinning){
+  els.statusIcon.textContent=symbol;
+  els.statusIcon.classList.toggle("show",Boolean(symbol));
+  els.statusIcon.classList.toggle("spin",Boolean(spinning));
+}
+
+function setNextAction(el){
+  [els.playBtn,els.hintBtn,els.skipBtn].forEach(x=>x.classList.remove("next-action-pulse"));
+  if(el)el.classList.add("next-action-pulse");
+}
+
+function playCurrent(){
+  setNextAction(null);
+  els.waveform.classList.add("playing");
+  els.playBtn.disabled=true;
+
+  speakGerman(target(),{rate:.85}).finally(()=>{
+    els.waveform.classList.remove("playing");
+    els.playBtn.disabled=false;
+    if(!els.input.value.trim())setNextAction(els.playBtn);
+  });
+}
+
+/* ---------------- Konfetti ---------------- */
+
+function burstConfetti(){
+  const emojis=["🎉","✨","🌟","🎊","👏"];
+
+  for(let i=0;i<16;i++){
+    const piece=document.createElement("span");
+
+    piece.className="confetti-piece";
+    piece.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    piece.style.left=`${Math.random()*100}vw`;
+    piece.style.animationDuration=`${1.4+Math.random()*1.2}s`;
+    piece.style.fontSize=`${1+Math.random()*0.8}rem`;
+
+    document.body.appendChild(piece);
+
+    piece.addEventListener("animationend",()=>piece.remove());
+  }
+}
+
+/* ---------------- Ablauf ---------------- */
+
+function loadQuestion(){
+  answered=false;
+
+  els.input.value="";
+  els.input.disabled=false;
+
+  els.feedback.className="feedback";
+  els.feedback.innerHTML="";
+
+  els.hintText.classList.remove("show");
+  els.hintText.textContent="";
+
+  setStatusIcon("",false);
+  renderProgress();
+
+  setNextAction(els.playBtn);
+  window.setTimeout(playCurrent,450);
+  els.input.focus();
+}
+
+function markCorrect(){
+  answered=true;
+
+  score++;
+  streak++;
+  bestStreak=Math.max(bestStreak,streak);
+  updateStats();
+
+  els.input.disabled=true;
+  setStatusIcon("✅",false);
+
+  els.feedback.className="feedback show correct";
+  els.feedback.innerHTML=hintUsedFor[order[index]]
+    ?`✅ Richtig! (mit Tipp genutzt) — <strong>${target()}</strong>`
+    :`✅ Perfekt! — <strong>${target()}</strong>`;
+
+  burstConfetti();
+
+  window.setTimeout(advance,1300);
+}
+
+function markNeedsWork(typedRaw){
+  streak=0;
+  updateStats();
+
+  setStatusIcon("✍️",false);
+
+  els.feedback.className="feedback show wrong";
+  els.feedback.innerHTML=
+    `Noch nicht ganz — richtig wäre: ${buildWordDiff(target(),typedRaw)}`;
+}
+
+function runCheck(){
+  if(answered)return;
+
+  const typedRaw=els.input.value.trim();
+
+  setStatusIcon("",false);
+
+  if(!typedRaw)return;
+
+  const isExact=normalize(typedRaw)===normalize(target());
+
+  if(isExact){
+    markCorrect();
+    return;
+  }
+
+  const closeEnough=typedRaw.length>=target().length-1;
+
+  if(closeEnough){
+    markNeedsWork(typedRaw);
+  }
+}
+
+function scheduleCheck(){
+  setNextAction(null);
+  clearTimeout(debounceTimer);
+  setStatusIcon("⏳",true);
+  debounceTimer=window.setTimeout(runCheck,650);
+}
+
+function advance(){
+  index++;
+
+  if(index>=order.length){
+    showFinal();
+  }else{
+    loadQuestion();
+  }
+}
+
+function showFinal(){
+  renderProgress();
+
+  els.stage.style.display="none";
+  els.final.classList.add("show");
+
+  const total=sentences.length;
+  const percent=Math.round((score/total)*100);
+
+  let emoji,title,subtitle;
+
+  if(percent===100){
+    emoji="🏆";title="Perfekt!";
+    subtitle="Alle zehn Sätze richtig — du bist bereit für die nächste Lektion!";
+  }else if(percent>=70){
+    emoji="🎉";title="Sehr gut!";
+    subtitle="Fast alles richtig. Weiter so!";
+  }else if(percent>=40){
+    emoji="💪";title="Guter Anfang!";
+    subtitle="Übung macht den Meister — versuch es noch einmal.";
+  }else{
+    emoji="📖";title="Weiter üben!";
+    subtitle="Hör dir die Sätze noch einmal an und probiere es erneut.";
+  }
+
+  els.finalEmoji.textContent=emoji;
+  els.finalTitle.textContent=title;
+  els.finalSub.textContent=`${subtitle} (${score}/${total} Punkte, beste Serie: ${bestStreak}🔥)`;
+  els.finalStars.textContent=renderStars(score,total);
+
+  if(percent>=70)burstConfetti();
+}
+
+function init(){
+  order=shuffle([...Array(sentences.length).keys()]);
+  index=0;
+  score=0;
+  streak=0;
+  bestStreak=0;
+  hintUsedFor=new Array(sentences.length).fill(false);
+
+  els.stage.style.display="";
+  els.final.classList.remove("show");
+
+  updateStats();
+  loadQuestion();
+}
+
+/* ---------------- Events ---------------- */
+
+els.playBtn.addEventListener("click",playCurrent);
+
+els.hintBtn.addEventListener("click",()=>{
+  hintUsedFor[order[index]]=true;
+  els.hintText.classList.add("show");
+  els.hintText.textContent=buildHint(target());
+  setNextAction(null);
+});
+
+els.skipBtn.addEventListener("click",()=>{
+  if(answered)return;
+  streak=0;
+  updateStats();
+  advance();
+});
+
+els.restartBtn.addEventListener("click",init);
+
+els.input.addEventListener("input",scheduleCheck);
+
+els.input.addEventListener("keydown",event=>{
+  if(event.key==="Enter"){
+    event.preventDefault();
+    clearTimeout(debounceTimer);
+    runCheck();
+  }
+});
+
+const heroTranslation=document.getElementById("hero-translation");
+const translationToggle=document.getElementById("translation-toggle");
+const translationText=document.getElementById("translation-text");
+const translationButtons=[...document.querySelectorAll(".translation-language")];
+const startTranslations={
+  en:"Ten sentences from “How old are you?”. Write what you hear — when the sentence is correct, the exercise continues automatically.",
+  pl:"Dziesięć zdań z lekcji „Ile ma Pan/Pani lat?”. Napisz to, co słyszysz — gdy zdanie jest poprawne, ćwiczenie przechodzi dalej automatycznie.",
+  it:"Dieci frasi dalla lezione “Quanti anni ha?”. Scrivi ciò che senti — quando la frase è corretta, l’esercizio continua automaticamente."
+};
+
+translationToggle.addEventListener("click",event=>{
+  event.stopPropagation();
+  heroTranslation.classList.toggle("open");
+});
+
+translationButtons.forEach(button=>button.addEventListener("click",event=>{
+  event.stopPropagation();
+  const lang=button.dataset.lang;
+  translationButtons.forEach(item=>item.classList.toggle("active",item===button));
+  translationText.textContent=startTranslations[lang];
+  translationText.classList.add("show");
+  heroTranslation.classList.add("open");
+}));
+
+document.addEventListener("click",event=>{
+  if(!event.target.closest("#hero-translation"))heroTranslation.classList.remove("open");
+});
+
+const lessonCompleteBtn=document.getElementById("lesson-complete-btn");
+const lessonCompletePaper=document.getElementById("lesson-complete-paper");
+const lessonCompleteTranslation=document.getElementById("lesson-complete-translation");
+const lessonCompleteTranslationToggle=document.getElementById("lesson-complete-translation-toggle");
+const lessonCompleteTranslationText=document.getElementById("lesson-complete-translation-text");
+const lessonCompleteTranslationButtons=[...document.querySelectorAll(".lesson-complete-translation-language")];
+
+const lessonCompleteTranslations={
+  en:"Finished! You have completed lesson A1.3. You trained age, numbers from 11 to 100, the verb sein and personal details. Very well done!",
+  pl:"Gotowe! Ukończyłeś lekcję A1.3. Przećwiczyłeś wiek, liczby od 11 do 100, czasownik sein oraz dane osobowe. Bardzo dobra robota!",
+  it:"Fatto! Hai completato la lezione A1.3. Hai esercitato l’età, i numeri da 11 a 100, il verbo sein e i dati personali. Molto bene!"
+};
+
+const lessonCompleteSpeech=
+  "Geschafft! Du hast Lektion A eins Punkt drei abgeschlossen. " +
+  "Du hast die Lektion gelesen und alles trainiert: Aktiv trainieren, Sprich nach, Übungen, Dialoge und Diktat. " +
+  "Das kannst du jetzt: nach dem Alter fragen, dein Alter sagen, Zahlen von elf bis hundert verstehen, das Verb sein benutzen und nach persönlichen Daten fragen. " +
+  "Sehr gut gemacht!";
+
+lessonCompleteTranslationToggle.addEventListener("click",event=>{
+  event.stopPropagation();
+  lessonCompleteTranslation.classList.toggle("open");
+});
+
+lessonCompleteTranslationButtons.forEach(button=>button.addEventListener("click",event=>{
+  event.stopPropagation();
+  const lang=button.dataset.lang;
+  lessonCompleteTranslationButtons.forEach(item=>item.classList.toggle("active",item===button));
+  lessonCompleteTranslationText.textContent=lessonCompleteTranslations[lang];
+  lessonCompleteTranslationText.classList.add("show");
+  lessonCompleteTranslation.classList.add("open");
+}));
+
+lessonCompleteBtn.addEventListener("click",()=>{
+  const isOpen=lessonCompletePaper.classList.toggle("show");
+
+  lessonCompleteBtn.setAttribute("aria-expanded",String(isOpen));
+  lessonCompletePaper.setAttribute("aria-hidden",String(!isOpen));
+
+  if(isOpen){
+    const completedA1Part=Math.max(3,Number(localStorage.getItem("a1CompletedPart")||0));
+    localStorage.setItem("a1CompletedPart",String(completedA1Part));
+
+    burstConfetti();
+    setTimeout(burstConfetti,260);
+    setTimeout(burstConfetti,520);
+    speakGerman(lessonCompleteSpeech,{rate:.94,pitch:1.14,volume:1});
+  }else{
+    if("speechSynthesis" in window)speechSynthesis.cancel();
+    lessonCompleteTranslation.classList.remove("open");
+  }
+});
+
+document.addEventListener("click",event=>{
+  if(!event.target.closest("#lesson-complete-translation")){
+    lessonCompleteTranslation.classList.remove("open");
+  }
+});
+
+const continueTranslation=document.getElementById("continue-translation");
+const continueTranslationToggle=document.getElementById("continue-translation-toggle");
+const continueTranslationText=document.getElementById("continue-translation-text");
+const continueTranslationButtons=[...document.querySelectorAll(".continue-translation-language")];
+
+const continueTranslations={
+  en:"How would you like to continue learning? Have a short conversation with Nele or continue with part A1.4.",
+  pl:"Jak chcesz kontynuować naukę? Porozmawiaj krótko z Nele albo przejdź do części A1.4.",
+  it:"Come vuoi continuare a imparare? Parla brevemente con Nele oppure continua con la parte A1.4."
+};
+
+continueTranslationToggle.addEventListener("click",event=>{
+  event.stopPropagation();
+  continueTranslation.classList.toggle("open");
+});
+
+continueTranslationButtons.forEach(button=>button.addEventListener("click",event=>{
+  event.stopPropagation();
+  const lang=button.dataset.lang;
+  continueTranslationButtons.forEach(item=>item.classList.toggle("active",item===button));
+  continueTranslationText.textContent=continueTranslations[lang];
+  continueTranslationText.classList.add("show");
+  continueTranslation.classList.add("open");
+}));
+
+document.addEventListener("click",event=>{
+  if(!event.target.closest("#continue-translation")){
+    continueTranslation.classList.remove("open");
+  }
+});
+
+init();
+</script>
+
+</body>
+</html>
