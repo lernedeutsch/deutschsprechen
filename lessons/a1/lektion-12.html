@@ -1,1 +1,1304 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Deutschkurs A1 · Lektion 12 · Hobbys und Freizeit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Nunito+Sans:opsz,wght@6..12,400,600,700,800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
 
+:root{
+
+--bg:#20324a;
+
+--bg-soft:#27405c;
+
+--paper:#fbf6ec;
+
+--ink:#23332e;
+
+--chalk:#1d2b39;
+
+--chalk-light:#2a3b50;
+
+--gold:#f4c95d;
+
+--green:#8bd17c;
+
+--blue:#72b8ff;
+
+--pink:#f08bb4;
+
+--orange:#f29f67;
+
+--line:rgba(35,51,46,.18);
+
+--text:#111820;
+
+--text-light:#2a3b50;
+
+}
+
+*{box-sizing:border-box;}
+
+html{scroll-behavior:smooth;}
+
+body{
+
+margin:0;
+
+background:var(--bg);
+
+background-image:
+
+radial-gradient(circle at 12% 10%, rgba(255,255,255,.05), transparent 35%),
+
+radial-gradient(circle at 88% 90%, rgba(255,255,255,.05), transparent 40%);
+
+color:var(--text);
+
+font-family:"Nunito Sans",sans-serif;
+
+line-height:1.6;
+
+padding:0 0 60px;
+
+}
+
+.course-nav{
+
+max-width:880px;
+
+margin:40px auto 60px;
+
+padding:0 20px;
+
+}
+
+.course-nav-title{
+
+font-family:"Kalam",cursive;
+
+font-size:2.2rem;
+
+margin:0 0 24px;
+
+color:#111820;
+
+text-align:center;
+
+}
+
+.course-section{
+
+background:#f7f9fc;
+
+border:1px solid #dce3ed;
+
+border-radius:18px;
+
+padding:16px 18px 14px;
+
+margin-bottom:16px;
+
+}
+
+.section-title{
+
+font-family:"JetBrains Mono",monospace;
+
+font-size:1rem;
+
+letter-spacing:.12em;
+
+text-transform:uppercase;
+
+color:#111820;
+
+margin:0 0 12px;
+
+}
+
+.lesson-list{
+
+list-style:none;
+
+padding:0;
+
+margin:0;
+
+display:grid;
+
+gap:8px;
+
+}
+
+.lesson-list a{
+
+display:block;
+
+color:#111820;
+
+text-decoration:none;
+
+padding:10px 12px;
+
+border-radius:12px;
+
+background:#ffffff;
+
+border:1px solid #dce3ed;
+
+transition:background .15s ease, border-color .15s ease, transform .15s ease;
+
+}
+
+.lesson-list a:hover{
+
+background:#f0f4f8;
+
+border-color:#f4c95d;
+
+transform:translateX(4px);
+
+color:#0a1220;
+
+}
+
+section[id^="lektion"]{
+
+scroll-margin-top:40px;
+
+}
+
+.wrap{
+
+max-width:980px;
+
+margin:0 auto;
+
+padding:32px 20px 0;
+
+}
+
+header.hero{
+
+display:flex;
+
+flex-wrap:wrap;
+
+align-items:center;
+
+gap:28px;
+
+padding:24px 0 36px;
+
+border-bottom:2px dashed rgba(35,51,46,.18);
+
+margin-bottom:36px;
+
+}
+
+.hero-text{flex:1 1 340px;}
+
+.eyebrow{
+
+font-family:"JetBrains Mono", monospace;
+
+letter-spacing:.16em;
+
+text-transform:uppercase;
+
+font-size:.78rem;
+
+color:#f4c95d;
+
+margin:0 0 10px;
+
+}
+
+h1.lesson-title{
+
+font-family:"Kalam",cursive;
+
+font-weight:700;
+
+font-size:2.7rem;
+
+line-height:1.12;
+
+margin:0 0 14px;
+
+color:#111820;
+
+}
+
+.hero-text p{
+
+margin:0;
+
+color:#2a3b50;
+
+max-width:52ch;
+
+}
+
+.topics{
+
+display:flex;
+
+flex-wrap:wrap;
+
+gap:10px;
+
+margin-top:18px;
+
+}
+
+.topics span{
+
+display:inline-flex;
+
+align-items:center;
+
+gap:8px;
+
+background:#f0f4f8;
+
+border:1px solid #dce3ed;
+
+border-radius:999px;
+
+padding:7px 12px;
+
+font-size:.92rem;
+
+color:#111820;
+
+}
+
+.wheel-box{
+
+flex:0 1 320px;
+
+display:grid;
+
+place-items:center;
+
+}
+
+.wheel-box svg{
+
+width:100%;
+
+height:auto;
+
+max-width:320px;
+
+filter:drop-shadow(0 16px 30px rgba(0,0,0,.18));
+
+}
+
+.ring-seg{
+
+stroke:rgba(255,255,255,.14);
+
+stroke-width:2;
+
+}
+
+.ring-spring{fill:#5ca75b;}
+
+.ring-summer{fill:#d9b24c;}
+
+.ring-autumn{fill:#cf6b35;}
+
+.ring-winter{fill:#4f86b8;}
+
+.season-label,.month-label,.center-label,.center-sub{
+
+fill:#111820;
+
+font-family:"JetBrains Mono", monospace;
+
+text-anchor:middle;
+
+}
+
+.season-label{font-size:14px;font-weight:600;}
+
+.month-label{font-size:13px;opacity:.95;}
+
+.month-label.now{font-size:14px;font-weight:700;fill:#f4c95d;}
+
+.center-label{font-size:18px;font-weight:700;}
+
+.center-sub{font-size:13px;opacity:.9;}
+
+.now-marker{fill:#f4c95d;stroke:#20324a;stroke-width:2;}
+
+.part{margin:34px 0 42px;}
+
+.part-head{
+
+display:flex;
+
+flex-wrap:wrap;
+
+align-items:baseline;
+
+gap:12px;
+
+margin-bottom:14px;
+
+}
+
+.part-num{
+
+font-family:"JetBrains Mono", monospace;
+
+font-size:.82rem;
+
+letter-spacing:.14em;
+
+text-transform:uppercase;
+
+color:#f4c95d;
+
+}
+
+.part-title{
+
+font-family:"Kalam",cursive;
+
+font-size:2rem;
+
+margin:0;
+
+color:#111820;
+
+}
+
+.card{
+
+background:#f7f9fc;
+
+border:1px solid #dce3ed;
+
+border-radius:22px;
+
+padding:22px 22px 20px;
+
+box-shadow:0 12px 30px rgba(0,0,0,.06);
+
+margin-top:14px;
+
+}
+
+.lead{font-size:1.04rem;color:#111820;}
+
+.label{
+
+display:inline-block;
+
+font-family:"JetBrains Mono", monospace;
+
+font-size:.74rem;
+
+letter-spacing:.12em;
+
+text-transform:uppercase;
+
+color:#f4c95d;
+
+margin-bottom:8px;
+
+}
+
+.vocab-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+
+gap:12px;
+
+margin-top:16px;
+
+}
+
+.hobby-card{
+
+background:#ffffff;
+
+border:1px solid #dce3ed;
+
+border-radius:18px;
+
+padding:14px;
+
+cursor:pointer;
+
+transition:transform .15s ease, border-color .15s ease, background .15s ease;
+
+min-height:112px;
+
+}
+
+.hobby-card:hover{
+
+transform:translateY(-2px);
+
+border-color:#f4c95d;
+
+background:#f9fbff;
+
+}
+
+.hobby-card h4{margin:0 0 6px;font-size:1.1rem;color:#111820;}
+
+.hobby-card p{margin:0;color:#2a3b50;font-size:.95rem;}
+
+.hobby-card .example{
+
+margin-top:8px;
+
+color:#b8860b;
+
+font-weight:700;
+
+display:none;
+
+}
+
+.hobby-card.show .example{display:block;}
+
+.grammar-box{
+
+background:#f9fbff;
+
+border-left:4px solid #f4c95d;
+
+border-radius:16px;
+
+padding:14px 16px;
+
+margin:16px 0;
+
+}
+
+.scale{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+
+gap:10px;
+
+margin-top:14px;
+
+}
+
+.scale-item{
+
+background:#ffffff;
+
+border:1px solid #dce3ed;
+
+border-radius:14px;
+
+padding:12px;
+
+}
+
+.scale-item b{
+
+display:block;
+
+color:#b8860b;
+
+margin-bottom:4px;
+
+}
+
+.qa{
+
+display:grid;
+
+gap:10px;
+
+margin-top:16px;
+
+}
+
+.q,.a{
+
+padding:12px 14px;
+
+border-radius:14px;
+
+}
+
+.q{
+
+background:#e8f3ff;
+
+border:1px solid #d0e3ff;
+
+color:#111820;
+
+}
+
+.a{
+
+background:#e8f9e8;
+
+border:1px solid #d0e8d0;
+
+color:#111820;
+
+}
+
+.exercise-list{padding-left:18px;}
+
+.exercise-list li{margin:10px 0;}
+
+input[type="text"]{
+
+background:#f9fbff;
+
+color:#1d2b39;
+
+border:1px solid #dce3ed;
+
+border-radius:12px;
+
+padding:9px 10px;
+
+font:inherit;
+
+min-width:180px;
+
+vertical-align:middle;
+
+}
+
+.feedback{
+
+display:inline-block;
+
+min-width:22px;
+
+font-weight:800;
+
+margin-left:8px;
+
+}
+
+.ok{color:#2e7d32;}
+
+.no{color:#c62828;}
+
+.check-btn{
+
+margin-top:12px;
+
+background:linear-gradient(135deg,#f4c95d,#ffd976);
+
+color:#1d2b39;
+
+border:0;
+
+border-radius:999px;
+
+padding:11px 18px;
+
+font-weight:800;
+
+cursor:pointer;
+
+}
+
+.check-btn:hover{filter:brightness(1.03);}
+
+.exercise-result{margin-top:10px;font-weight:700;color:#111820;}
+
+.verb-boxes{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+
+gap:12px;
+
+margin-top:14px;
+
+}
+
+.verb-box{
+
+background:#ffffff;
+
+border:1px solid #dce3ed;
+
+border-radius:16px;
+
+padding:14px;
+
+}
+
+.split-demo{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:12px;
+
+margin-top:14px;
+
+}
+
+.demo{
+
+background:#ffffff;
+
+border:1px solid #dce3ed;
+
+border-radius:16px;
+
+padding:14px;
+
+}
+
+.demo h4{margin:0 0 8px;color:#111820;}
+
+.quiz-q{
+
+background:#ffffff;
+
+border:1px solid #dce3ed;
+
+border-radius:16px;
+
+padding:14px;
+
+margin:12px 0;
+
+}
+
+.quiz-options{
+
+display:grid;
+
+gap:8px;
+
+}
+
+.quiz-options label{
+
+display:block;
+
+background:#f9fbff;
+
+border-radius:12px;
+
+padding:10px 12px;
+
+border:1px solid #dce3ed;
+
+color:#111820;
+
+}
+
+.quiz-options label.correct{
+
+border-color:#2e7d32;
+
+background:#e8f9e8;
+
+}
+
+.quiz-options label.incorrect{
+
+border-color:#c62828;
+
+background:#f9e8e8;
+
+}
+
+.dialog{display:grid;gap:10px;}
+
+.bubble{
+
+padding:12px 14px;
+
+border-radius:18px;
+
+max-width:86%;
+
+color:#111820;
+
+}
+
+.marta{background:#f0f4f8;}
+
+.tom{background:#fff8e1;margin-left:auto;}
+
+.speaker{
+
+display:block;
+
+font-family:"JetBrains Mono",monospace;
+
+font-size:.76rem;
+
+letter-spacing:.12em;
+
+text-transform:uppercase;
+
+color:#b8860b;
+
+margin-bottom:4px;
+
+}
+
+.summary-grid{display:grid;gap:12px;}
+
+.row{
+
+display:grid;
+
+grid-template-columns:180px 1fr;
+
+gap:14px;
+
+align-items:start;
+
+padding:12px 14px;
+
+background:#ffffff;
+
+border:1px solid #dce3ed;
+
+border-radius:14px;
+
+}
+
+.key{font-weight:800;color:#b8860b;}
+
+.lesson-nav{
+
+display:flex;
+
+justify-content:space-between;
+
+flex-wrap:wrap;
+
+gap:10px;
+
+border-top:2px dashed rgba(35,51,46,.18);
+
+padding-top:24px;
+
+margin-top:10px;
+
+font-family:"JetBrains Mono", monospace;
+
+font-size:.9rem;
+
+}
+
+.lesson-nav a{
+
+color:#111820;
+
+text-decoration:none;
+
+border:1px solid #dce3ed;
+
+border-radius:999px;
+
+padding:8px 16px;
+
+transition:background .15s ease,border-color .15s ease;
+
+background:#ffffff;
+
+}
+
+.lesson-nav a:hover{
+
+background:#f0f4f8;
+
+border-color:#f4c95d;
+
+color:#0a1220;
+
+}
+
+.übung-btn{
+
+display:inline-flex;
+
+align-items:center;
+
+gap:10px;
+
+background:linear-gradient(135deg,#72b8ff,#a0d4ff);
+
+color:#1d3557;
+
+border:0;
+
+border-radius:999px;
+
+padding:14px 28px;
+
+font-weight:800;
+
+font-size:1.05rem;
+
+cursor:pointer;
+
+margin:24px auto 0;
+
+text-decoration:none;
+
+transition:transform .15s ease, filter .15s ease;
+
+}
+
+.übung-btn:hover{
+
+transform:translateY(-2px);
+
+filter:brightness(1.05);
+
+}
+
+.back-to-top{
+
+display:inline-flex;
+
+align-items:center;
+
+gap:10px;
+
+background:#ffffff;
+
+color:#111820;
+
+border:1px solid #dce3ed;
+
+border-radius:999px;
+
+padding:12px 26px;
+
+font-weight:700;
+
+font-size:1rem;
+
+cursor:pointer;
+
+margin:20px auto 0;
+
+text-decoration:none;
+
+transition:background .15s ease, border-color .15s ease;
+
+}
+
+.back-to-top:hover{
+
+background:#f0f4f8;
+
+border-color:#f4c95d;
+
+}
+
+a:focus-visible,button:focus-visible,input:focus-visible{
+
+outline:3px solid #f4c95d;
+
+outline-offset:2px;
+
+}
+
+@media (max-width:720px){
+
+h1.lesson-title{font-size:2.2rem;}
+
+.part-title{font-size:1.7rem;}
+
+.row{grid-template-columns:1fr;}
+
+.split-demo{grid-template-columns:1fr;}
+
+.bubble{max-width:100%;}
+
+}
+
+.top-bar{
+
+max-width:880px;
+
+margin:20px auto 0;
+
+padding:0 20px;
+
+display:flex;
+
+}
+
+.aza1-btn{
+
+display:inline-flex;
+
+align-items:center;
+
+justify-content:center;
+
+background:#1d3557;
+
+color:#ffce00;
+
+border:3px solid #ffce00;
+
+border-radius:999px;
+
+padding:14px 28px;
+
+font-size:30px;
+
+font-weight:900;
+
+text-decoration:none;
+
+box-shadow:0 8px 20px rgba(0,0,0,.35);
+
+transition:0.3s;
+
+}
+
+.aza1-btn:hover{
+
+background:#274c77;
+
+color:white;
+
+transform:translateY(-3px) scale(1.05);
+
+}
+
+/* Specjalny kolor tła dla Lektion 14 */
+
+#lektion14 .wrap{
+
+background:linear-gradient(135deg,#f0f4f8,#e8f3ff);
+
+border-radius:22px;
+
+padding:32px;
+
+margin:0 auto;
+
+}
+
+#lektion14 .card{
+
+background:#ffffff;
+
+border:1px solid #d0e3ff;
+
+}
+
+/* Specjalny kolor tła dla Lektion 12 */
+
+#lektion12 .wrap{
+
+background:linear-gradient(135deg,#fffdf6,#fff6df);
+
+border-radius:22px;
+
+padding:32px;
+
+margin:0 auto;
+
+}
+
+#lektion12 .card{
+
+background:#ffffff;
+
+border:1px solid #f3e8d4;
+
+}
+
+</style>
+<style>.source-lesson{max-width:980px;margin:0 auto}.lesson-nav-local{max-width:980px;margin:28px auto 60px;padding:0 20px;display:flex;justify-content:space-between;gap:16px}.lesson-nav-local a{display:inline-block;padding:10px 16px;border-radius:12px;background:#f7f9fc;border:1px solid #dce3ed;color:#111820;text-decoration:none;font-weight:700}.lesson-nav-local a:hover{border-color:#f4c95d}</style></head><body>
+<div class="source-lesson"><section class="part" id="lektion12">
+
+<div class="wrap">
+
+<header class="hero">
+
+<div class="hero-text">
+
+<p class="eyebrow">Deutschkurs A1 · Lektion 12 von 30</p>
+
+<h1 class="lesson-title">Hobbys und Freizeit</h1>
+
+<p>Heute lernen wir, wie man über Hobbys spricht, <b>gern</b> benutzt, trennbare und untrennbare Verben erkennt und Freizeitfragen beantwortet.</p>
+
+<div class="topics">
+
+<span>1 · Hobbys</span>
+
+<span>2 · gern / gerne</span>
+
+<span>3 · Trennbar & untrennbar</span>
+
+<span>4 · Freizeit</span>
+
+</div>
+
+</div>
+
+<div class="wheel-box">
+
+<svg viewBox="0 0 320 320" role="img" aria-label="Freizeit-Symbol mit Hobbys rund um ein Zentrum">
+
+<circle cx="160" cy="160" r="132" fill="rgba(255,255,255,.05)" stroke="rgba(35,51,46,.16)"/>
+
+<circle cx="160" cy="160" r="70" fill="#20324a" stroke="rgba(35,51,46,.12)"/>
+
+<text class="center-label" x="160" y="152">Freizeit</text>
+
+<text class="center-sub" x="160" y="175">Hobbys</text>
+
+<text x="160" y="40" class="month-label" font-size="16">⚽</text>
+
+<text x="252" y="82" class="month-label" font-size="16">🎵</text>
+
+<text x="282" y="164" class="month-label" font-size="16">📚</text>
+
+<text x="250" y="246" class="month-label" font-size="16">✈️</text>
+
+<text x="160" y="292" class="month-label" font-size="16">🍳</text>
+
+<text x="70" y="246" class="month-label" font-size="16">🎾</text>
+
+<text x="38" y="164" class="month-label" font-size="16">🚲</text>
+
+<text x="70" y="82" class="month-label" font-size="16">🧩</text>
+
+</svg>
+
+</div>
+
+</header>
+
+<section class="part" id="teil1">
+
+<div class="part-head"><span class="part-num">Teil 1</span><h2 class="part-title">Hobbys: Wortschatz</h2></div>
+
+<div class="card">
+
+<p class="lead">Ein Hobby ist eine Aktivität, die wir in der Freizeit gern machen. Klicken Sie auf eine Karte — dann sehen Sie ein Beispielsatz.</p>
+
+<div class="vocab-grid">
+
+<div class="hobby-card" onclick="this.classList.toggle('show')"><h4>⚽ Sport</h4><p>aktiv sein, trainieren, gewinnen</p><div class="example">Beispiel: Ich spiele gern Fußball.</div></div>
+
+<div class="hobby-card" onclick="this.classList.toggle('show')"><h4>🎵 Musik</h4><p>hören, singen, Klavier spielen</p><div class="example">Beispiel: Ich höre gern Musik.</div></div>
+
+<div class="hobby-card" onclick="this.classList.toggle('show')"><h4>📚 Lesen</h4><p>Bücher, Comics, Zeitungen</p><div class="example">Beispiel: Ich lese gern Bücher.</div></div>
+
+<div class="hobby-card" onclick="this.classList.toggle('show')"><h4>🍳 Kochen</h4><p>Rezept, backen, vorbereiten</p><div class="example">Beispiel: Ich koche gern.</div></div>
+
+<div class="hobby-card" onclick="this.classList.toggle('show')"><h4>✈️ Reisen</h4><p>unterwegs sein, neue Orte</p><div class="example">Beispiel: Ich reise gern.</div></div>
+
+<div class="hobby-card" onclick="this.classList.toggle('show')"><h4>📷 Fotografieren</h4><p>Bilder machen, Natur, Stadt</p><div class="example">Beispiel: Ich mache gern Fotos.</div></div>
+
+<div class="hobby-card" onclick="this.classList.toggle('show')"><h4>🎨 Malen</h4><p>zeichnen, kreativ sein</p><div class="example">Beispiel: Ich male gern.</div></div>
+
+<div class="hobby-card" onclick="this.classList.toggle('show')"><h4>🎧 Musik hören</h4><p>Lieder, Podcast, Radio</p><div class="example">Beispiel: Ich höre gern Musik.</div></div>
+
+<div class="hobby-card" onclick="this.classList.toggle('show')"><h4>🎾 Tennis</h4><p>spielen, trainieren, Match</p><div class="example">Beispiel: Ich spiele gern Tennis.</div></div>
+
+<div class="hobby-card" onclick="this.classList.toggle('show')"><h4>🚲 Radfahren</h4><p>fahren, draußen, Bewegung</p><div class="example">Beispiel: Ich fahre gern Rad.</div></div>
+
+<div class="hobby-card" onclick="this.classList.toggle('show')"><h4>🧩 Spiele</h4><p>Karten, Brettspiele, Puzzle</p><div class="example">Beispiel: Ich spiele gern Karten.</div></div>
+
+<div class="hobby-card" onclick="this.classList.toggle('show')"><h4>💻 Computer</h4><p>online, lernen, spielen</p><div class="example">Beispiel: Ich arbeite gern am Computer.</div></div>
+
+</div>
+
+<div class="grammar-box"><span class="label">Wichtige Verben</span> spielen — Fußball spielen, Klavier spielen, Karten spielen<br>treiben — Sport treiben<br>machen — Yoga machen, Sport machen, Fotos machen<br>lesen — ein Buch lesen, Zeitung lesen<br>hören — Musik hören, Radio hören<br>gehen — schwimmen gehen, joggen gehen, tanzen gehen<br>kochen — gern kochen, ein neues Rezept kochen<br>reisen — gern reisen, ins Ausland reisen</div>
+
+</div>
+
+</section>
+
+<section class="part" id="teil2">
+
+<div class="part-head"><span class="part-num">Teil 2</span><h2 class="part-title">Interessen ausdrücken: gern</h2></div>
+
+<div class="card">
+
+<p class="lead">Um zu sagen, was wir gern machen, verwenden wir <b>gern</b> oder <b>gerne</b> nach dem Verb.</p>
+
+<div class="grammar-box"><b>Position:</b> Das Wort <b>gern</b> steht direkt nach dem Verb — oder am Ende, wenn kein Objekt folgt.<br>Ich spiele gern Fußball. · Ich höre gern Musik. · Ich lese gern Bücher. · Ich koche gern.</div>
+
+<div class="scale">
+
+<div class="scale-item"><b>sehr gern</b>Ich tanze sehr gern.</div>
+
+<div class="scale-item"><b>gern</b>Ich lese gern.</div>
+
+<div class="scale-item"><b>ganz gern</b>Ich kann ganz gern kochen.</div>
+
+<div class="scale-item"><b>nicht so gern</b>Ich tanze nicht so gern.</div>
+
+<div class="scale-item"><b>nicht gern</b>Ich putze gar nicht gern.</div>
+
+<div class="scale-item"><b>am liebsten</b>Am liebsten spiele ich Tennis.</div>
+
+</div>
+
+<div class="qa"><div class="q">Was ist dein Hobby?</div><div class="a">Mein Hobby ist Lesen. / Meine Hobbys sind Kochen und Reisen.</div><div class="q">Was machst du gern?</div><div class="a">Ich spiele gern Gitarre und ich gehe gern joggen.</div></div>
+
+</div>
+
+</section>
+
+<section class="part" id="teil3">
+
+<div class="part-head"><span class="part-num">Teil 3</span><h2 class="part-title">Trennbare und untrennbare Verben</h2></div>
+
+<div class="card">
+
+<p class="lead">Viele deutsche Verben haben ein Präfix. Es gibt zwei Typen: trennbare und untrennbare Verben.</p>
+
+<div class="split-demo">
+
+<div class="demo"><h4>Trennbar: fernsehen</h4><p>fern + sehen → Ich sehe heute Abend fern.</p><p>Das Präfix springt ans Ende des Satzes.</p></div>
+
+<div class="demo"><h4>Untrennbar: besuchen</h4><p>be + suchen → Ich besuche am Sonntag meine Großeltern.</p><p>Das Präfix bleibt fest am Verb.</p></div>
+
+</div>
+
+<div class="verb-boxes">
+
+<div class="verb-box"><b>Trennbare Verben:</b><br>einkaufen → Ich kaufe Obst ein.<br>aufstehen → Ich stehe um 7 Uhr auf.<br>mitkommen → Kommst du heute mit?<br>anrufen → Ich rufe meine Mutter an.<br>ausgehen → Wir gehen am Freitag aus.</div>
+
+<div class="verb-box"><b>Untrennbare Präfixe:</b><br>be-, ge-, ver-, er-, ent-, emp-, zer-<br><br><b>Weitere Verben:</b><br>verstehen, erzählen, bekommen</div>
+
+</div>
+
+<div class="grammar-box"><b>Wie erkennt man es?</b><br>Trennbare Präfixe sind oft betont: AUFstehen, EINkaufen, FERNsehen.<br>Untrennbare Präfixe sind unbetont: beSUCHen, verSTEHen, erZÄHlen.</div>
+
+</div>
+
+</section>
+
+<section class="part" id="teil4">
+
+<div class="part-head"><span class="part-num">Teil 4</span><h2 class="part-title">Was machst du in der Freizeit?</h2></div>
+
+<div class="card">
+
+<p class="lead">Jetzt üben wir die wichtigste Frage dieser Lektion.</p>
+
+<div class="qa">
+
+<div class="q">Was machst du in der Freizeit? <i>(informell)</i></div>
+
+<div class="q">Was machen Sie in der Freizeit? <i>(formell)</i></div>
+
+<div class="a">In meiner Freizeit spiele ich gern Fußball. · In meiner Freizeit lese ich gern Bücher. · In meiner Freizeit treibe ich Sport und höre Musik. · In meiner Freizeit gehe ich oft schwimmen.</div>
+
+</div>
+
+<div class="grammar-box"><b>Häufigkeit:</b> immer 100% · oft 70% · manchmal 40% · selten 15% · nie 0%<br>Ich gehe immer am Samstag schwimmen. · Ich lese oft abends ein Buch. · Ich spiele manchmal mit Freunden Karten. · Ich gehe selten ins Kino. · Ich sehe nie fern.</div>
+
+</div>
+
+</section>
+
+<section class="part" id="dialog">
+
+<div class="part-head"><span class="part-num">Dialog</span><h2 class="part-title">Lesen und sprechen</h2></div>
+
+<div class="card">
+
+<p>Achten Sie auf <b>gern</b> und auf die trennbaren Verben.</p>
+
+<div class="dialog">
+
+<div class="bubble marta"><span class="speaker">Nina</span>Hallo Paul! Was machst du in der Freizeit?</div>
+
+<div class="bubble tom"><span class="speaker">Paul</span>Hallo Nina! Ich treibe gern Sport — ich spiele Tennis und gehe oft joggen. Und du?</div>
+
+<div class="bubble marta"><span class="speaker">Nina</span>Ich lese sehr gern Bücher und ich höre gern Musik. Manchmal koche ich auch gern.</div>
+
+<div class="bubble tom"><span class="speaker">Paul</span>Interessant! Siehst du auch fern?</div>
+
+<div class="bubble marta"><span class="speaker">Nina</span>Nein, ich sehe nie fern — das ist langweilig. Aber ich reise sehr gern!</div>
+
+<div class="bubble tom"><span class="speaker">Paul</span>Was ist dein Lieblingshobby?</div>
+
+<div class="bubble marta"><span class="speaker">Nina</span>Am liebsten reise ich. Und dein Lieblingshobby?</div>
+
+<div class="bubble tom"><span class="speaker">Paul</span>Am liebsten spiele ich Fußball mit Freunden. Kommst du am Samstag mit?</div>
+
+<div class="bubble marta"><span class="speaker">Nina</span>Ja, gern! Bis Samstag!</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="part" id="zusammenfassung">
+
+<div class="part-head"><span class="part-num">Merken</span><h2 class="part-title">Das haben Sie heute gelernt!</h2></div>
+
+<div class="card">
+
+<div class="summary-grid">
+
+<div class="row"><span class="key">Hobbys</span><span>Sport, Musik, Lesen, Kochen, Reisen, Fotografieren, Tanzen …</span></div>
+
+<div class="row"><span class="key">Wichtige Verben</span><span>spielen, treiben, machen, lesen, hören, gehen, kochen, reisen</span></div>
+
+<div class="row"><span class="key">gern</span><span>sehr gern → gern → nicht so gern → gar nicht gern · am liebsten</span></div>
+
+<div class="row"><span class="key">Trennbare Verben</span><span>Präfix springt ans Ende — fernsehen → Ich sehe fern.</span></div>
+
+<div class="row"><span class="key">Untrennbare Verben</span><span>Präfix bleibt fest — besuchen → Ich besuche.</span></div>
+
+<div class="row"><span class="key">Freizeitfrage</span><span>Was machst du / machen Sie in der Freizeit?</span></div>
+
+<div class="row"><span class="key">Häufigkeit</span><span>immer, oft, manchmal, selten, nie</span></div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<a href="index.html" class="back-to-top">← A1 Übersicht</a>
+
+
+
+</div>
+
+</section>
+
+<!-- LEKCJA 13 -->
+
+</div>
+<nav class="lesson-nav-local"><a href="lektion-11.html">← Lektion 11</a><a href="index.html">A1 Übersicht</a><a href="lektion-13.html">Lektion 13 →</a></nav>
+</body></html>
