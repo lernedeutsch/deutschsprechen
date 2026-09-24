@@ -1,1 +1,396 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deutschkurs A1 · Lektion 3 · Wie alt sind Sie?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef3f9;--card:#fff;--ink:#14213d;--mute:#5b6b85;--line:#d7e0ee;--sun:#ffc233;--sunD:#e0a000;--ok:#1a9c6b;--okBg:#dff5ea;--bad:#e2504a;--badBg:#fde6e4;--blue:#2d5bff;--blueBg:#e6ecff}
+@media(prefers-color-scheme:dark){:root{--bg:#0e1626;--card:#172238;--ink:#eef3fb;--mute:#9fb0cc;--line:#2a3856;--okBg:#123a2c;--badBg:#3e1c1c;--blueBg:#1c2a55}}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font:17px/1.6 Nunito,system-ui,sans-serif;background:var(--bg);color:var(--ink);padding:0 0 60px}
+h1,h2,h3{font-family:Fredoka,Nunito,sans-serif;font-weight:600;line-height:1.2;margin:0}
+.wrap{max-width:820px;margin:0 auto;padding:0 16px}
+header{background:var(--ink);color:#fff;padding:22px 0 18px;border-bottom:6px solid var(--sun)}
+@media(prefers-color-scheme:dark){header{background:#0a101d}}
+.top{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.crumb{color:#b9c6e0;font-size:14px}
+h1{font-size:clamp(28px,6vw,42px);margin:6px 0}
+.lead{color:#d5deef;margin:0 0 14px;max-width:60ch}
+.stats{display:flex;gap:8px;flex-wrap:wrap}
+.chip{background:rgba(255,255,255,.12);border-radius:99px;padding:3px 12px;font-weight:800;font-size:15px}
+.chip b{color:var(--sun)}
+.btn{font:inherit;font-weight:800;border:0;border-radius:12px;padding:10px 18px;cursor:pointer;background:var(--sun);color:#14213d;box-shadow:0 3px 0 var(--sunD);transition:transform .08s}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--sunD)}
+.btn.ghost{background:transparent;color:inherit;box-shadow:none;border:2px solid currentColor;padding:4px 12px;font-size:14px}
+.btn:disabled{opacity:.45;cursor:default}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0;border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:6px;overflow-x:auto}
+nav button{font:inherit;font-weight:700;font-size:15px;white-space:nowrap;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:6px 14px;cursor:pointer}
+nav button[aria-selected=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+nav button.done::after{content:" ✓";color:var(--ok);font-weight:800}
+nav button[aria-selected=true].done::after{color:var(--sun)}
+.bar{height:8px;background:var(--line);border-radius:9px;margin:10px 0 0;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .4s}
+section{display:none;padding-top:22px}
+section.on{display:block}
+.card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:20px;margin:0 0 18px}
+h2{font-size:28px;margin-bottom:6px}
+h3{font-size:20px;margin:0 0 8px}
+.pl{display:none;color:var(--mute);font-size:15px;font-style:italic}
+body.showpl .pl{display:block}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.two{grid-template-columns:1fr}}
+.say{display:flex;align-items:center;gap:10px;background:var(--blueBg);border-radius:12px;padding:8px 12px;margin:6px 0;font-weight:700}
+.say small{color:var(--mute);font-weight:600}
+.spk{border:0;background:var(--blue);color:#fff;border-radius:50%;width:34px;height:34px;flex:none;cursor:pointer;font-size:16px}
+.numgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.num{font:inherit;text-align:left;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:8px 12px;cursor:pointer}
+.num b{font-family:Fredoka;font-size:22px;color:var(--blue);margin-right:6px}
+.num:hover{border-color:var(--blue)}
+.num.tens{background:var(--blueBg)}
+.gen{text-align:center;padding:16px;background:var(--blueBg);border-radius:14px}
+.gen .big{font-family:Fredoka;font-size:56px;line-height:1}
+.gen .word{font-size:22px;font-weight:800;min-height:34px;color:var(--blue)}
+table{width:100%;border-collapse:collapse}
+td,th{padding:7px 10px;border-bottom:1px solid var(--line);text-align:left}
+th{color:var(--mute);font-size:14px}
+td.v{font-weight:800;color:var(--blue);font-size:19px}
+input[type=text],input[type=number]{font:inherit;padding:10px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);width:100%;max-width:340px}
+.practice{border:2px dashed var(--sunD);background:color-mix(in srgb,var(--sun) 10%,var(--card))}
+.pdots{display:flex;gap:5px;margin-bottom:12px}
+.pdots i{flex:1;height:8px;border-radius:9px;background:var(--line)}
+.pdots i.ok{background:var(--ok)}.pdots i.bad{background:var(--bad)}.pdots i.cur{background:var(--sun)}
+.q{font-size:20px;font-weight:800;margin:0 0 12px}
+.opts{display:grid;gap:8px}
+.opt{font:inherit;font-weight:700;text-align:left;padding:12px 16px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--blue)}
+.opt.ok{background:var(--okBg);border-color:var(--ok)}
+.opt.bad{background:var(--badBg);border-color:var(--bad)}
+.bank,.ans{display:flex;flex-wrap:wrap;gap:8px;min-height:52px;padding:8px;border-radius:12px}
+.ans{border:2px dashed var(--line);margin-bottom:10px}
+.tok{font:inherit;font-weight:700;padding:6px 14px;border-radius:10px;border:2px solid var(--blue);background:var(--blueBg);color:var(--ink);cursor:pointer}
+.fb{margin-top:14px;padding:12px 16px;border-radius:12px;font-weight:700}
+.fb.ok{background:var(--okBg);color:var(--ok)}
+.fb.bad{background:var(--badBg);color:var(--bad)}
+.fb span{display:block;color:var(--ink);font-weight:600;margin-top:4px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.shake{animation:sh .3s}
+@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.line{display:flex;gap:10px;margin:10px 0;align-items:flex-start}
+.who{flex:none;width:34px;height:34px;border-radius:50%;background:var(--ink);color:#fff;font-weight:800;display:grid;place-items:center}
+.line.B .who{background:var(--sunD)}
+.bubble{flex:1;background:var(--blueBg);border-radius:4px 16px 16px 16px;padding:8px 14px;cursor:pointer;font-weight:700}
+.line.B .bubble{background:color-mix(in srgb,var(--sun) 25%,var(--card));border-radius:16px 4px 16px 16px}
+.bubble.hide{filter:blur(6px);user-select:none}
+.check{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+.check .m{font-size:22px}
+.check.todo{opacity:.55}
+.pop{position:fixed;top:-30px;font-size:26px;z-index:20;pointer-events:none;animation:fall 1.6s ease-in forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(360deg);opacity:.6}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="top">
+    <div class="crumb">Deutschkurs A1 · Lektion 3 von 30</div>
+    <button class="btn ghost" id="plBtn" aria-pressed="false" title="Polnische Hilfe ein/aus">🌐 A/文</button>
+  </div>
+  <h1>Wie alt sind Sie?</h1>
+  <p class="lead">Heute lernen wir: Alter fragen und sagen, Zahlen 11–100, das Verb „sein“ und persönliche Daten. Hören, sprechen, üben – und Punkte sammeln!</p>
+  <div class="stats"><span class="chip">⭐ <b id="xp">0</b> XP</span><span class="chip">🔥 Serie <b id="streak">0</b></span><span class="chip">🏅 <b id="doneN">0</b>/5</span></div>
+  <div class="bar"><i id="bar"></i></div>
+</div></header>
 
+<nav><div class="wrap" role="tablist" id="tabs"></div></nav>
+
+<main class="wrap">
+
+<section id="s0">
+  <div class="card">
+    <h2>🎂 Teil 1 · Wie alt sind Sie?</h2>
+    <p class="pl">Pytamy o wiek i mówimy, ile mamy lat.</p>
+    <div class="two">
+      <div><h3>Fragen</h3>
+        <div class="say"><button class="spk" data-say="Wie alt sind Sie?" aria-label="Anhören">🔊</button><div>Wie alt sind Sie? <small>· formell</small></div></div>
+        <div class="say"><button class="spk" data-say="Wie alt bist du?" aria-label="Anhören">🔊</button><div>Wie alt bist du? <small>· informell</small></div></div>
+        <p class="pl">Sie = uprzejmie (pan/pani) · du = na „ty”</p>
+      </div>
+      <div><h3>Antworten</h3>
+        <div class="say"><button class="spk" data-say="Ich bin 25 Jahre alt." aria-label="Anhören">🔊</button><div>Ich bin 25 Jahre alt.</div></div>
+        <div class="say"><button class="spk" data-say="Ich bin 32." aria-label="Anhören">🔊</button><div>Ich bin 32.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>💬 Ich frage: „Wie alt sind Sie?“ – Sie antworten:</h3>
+    <p>Wie alt sind Sie? Geben Sie Ihr Alter ein (1–100):</p>
+    <input type="number" id="myAge" min="1" max="100" placeholder="z. B. 25" aria-label="Ihr Alter">
+    <div class="say" style="margin-top:12px"><button class="spk" id="ageSpk" aria-label="Anhören">🔊</button><div id="ageOut">Ich bin _____ Jahre alt.</div></div>
+  </div>
+  <div class="card practice" data-practice="p1"></div>
+</section>
+
+<section id="s1">
+  <div class="card">
+    <h2>🔢 Teil 2 · Zahlen 11–100</h2>
+    <p class="pl">Czytaj liczby na głos. Kliknij kartę, żeby usłyszeć.</p>
+    <div class="numgrid" id="nums"></div>
+    <h3 style="margin-top:20px">Kombinierte Zahlen</h3>
+    <p class="pl">Zasada: jedności + und + dziesiątki (21 = ein·und·zwanzig)</p>
+    <div class="numgrid" id="combo"></div>
+  </div>
+  <div class="card">
+    <h3>🎲 Zahlen-Generator</h3>
+    <div class="gen"><div class="big" id="gN">?</div><div class="word" id="gW"></div>
+      <div class="row" style="justify-content:center"><button class="btn" id="gBtn">Neue Zahl</button><button class="btn ghost" id="gShow">Zeigen</button><button class="btn ghost" id="gHear">🔊</button></div>
+      <p class="pl">Zgadnij słowo, zanim klikniesz „Zeigen”!</p></div>
+  </div>
+  <div class="card practice" data-practice="p2"></div>
+</section>
+
+<section id="s2">
+  <div class="card">
+    <h2>📊 Teil 3 · Das Verb „sein“</h2>
+    <p class="pl">„sein” = być. Bardzo ważny czasownik!</p>
+    <table><tr><th>Pronomen</th><th>sein</th><th>Beispielsatz</th><th></th></tr>
+      <tr><td>ich</td><td class="v">bin</td><td>Ich bin Anna.</td><td><button class="spk" data-say="Ich bin Anna." aria-label="Anhören">🔊</button></td></tr>
+      <tr><td>du</td><td class="v">bist</td><td>Du bist Paul.</td><td><button class="spk" data-say="Du bist Paul." aria-label="Anhören">🔊</button></td></tr>
+      <tr><td>er / sie / es</td><td class="v">ist</td><td>Sie ist Frau Müller.</td><td><button class="spk" data-say="Sie ist Frau Müller." aria-label="Anhören">🔊</button></td></tr>
+      <tr><td>wir</td><td class="v">sind</td><td>Wir sind hier.</td><td><button class="spk" data-say="Wir sind hier." aria-label="Anhören">🔊</button></td></tr>
+      <tr><td>ihr</td><td class="v">seid</td><td>Ihr seid praktisch.</td><td><button class="spk" data-say="Ihr seid praktisch." aria-label="Anhören">🔊</button></td></tr>
+      <tr><td>sie / Sie</td><td class="v">sind</td><td>Sie sind Lehrer.</td><td><button class="spk" data-say="Sie sind Lehrer." aria-label="Anhören">🔊</button></td></tr>
+    </table>
+    <p>Ich <b>___</b> 30 Jahre alt. → Ich <b>bin</b> 30 Jahre alt.<br>Du <b>___</b> müde. → Du <b>bist</b> müde.</p>
+  </div>
+  <div class="card practice" data-practice="p3"></div>
+</section>
+
+<section id="s3">
+  <div class="card">
+    <h2>✏️ Teil 4 · Persönliche Daten</h2>
+    <p class="pl">Name = nazwisko · Vorname = imię · Adresse = adres · Telefonnummer = numer telefonu</p>
+    <div class="two">
+      <div><h3>Fragen</h3>
+        <div class="say"><button class="spk" data-say="Wie ist Ihr Name?">🔊</button>Wie ist Ihr Name?</div>
+        <div class="say"><button class="spk" data-say="Wie ist Ihr Vorname?">🔊</button>Wie ist Ihr Vorname?</div>
+        <div class="say"><button class="spk" data-say="Wie ist Ihre Adresse?">🔊</button>Wie ist Ihre Adresse?</div>
+        <div class="say"><button class="spk" data-say="Wie ist Ihre Telefonnummer?">🔊</button>Wie ist Ihre Telefonnummer?</div></div>
+      <div><h3>Antworten</h3>
+        <div class="say"><button class="spk" data-say="Mein Name ist Schmidt.">🔊</button>Mein Name ist Schmidt.</div>
+        <div class="say"><button class="spk" data-say="Mein Vorname ist Anna.">🔊</button>Mein Vorname ist Anna.</div>
+        <div class="say"><button class="spk" data-say="Meine Adresse ist">🔊</button>Meine Adresse ist …</div>
+        <div class="say"><button class="spk" data-say="Meine Telefonnummer ist">🔊</button>Meine Telefonnummer ist …</div></div>
+    </div>
+  </div>
+  <div class="card practice" data-practice="p4"></div>
+</section>
+
+<section id="s4">
+  <div class="card">
+    <h2>🗣️ Dialog · Lesen und sprechen</h2>
+    <p>Wählen Sie Ihre Rolle. Ihre Sätze sind unscharf – sprechen Sie zuerst, dann klicken Sie zur Kontrolle.</p>
+    <p class="pl">Wybierz rolę. Twoje kwestie są rozmyte – najpierw powiedz je na głos, potem kliknij.</p>
+    <div class="row"><button class="btn" data-role="A">Ich bin A</button><button class="btn" data-role="B">Ich bin B</button><button class="btn ghost" data-role="">Nur lesen</button><button class="btn ghost" id="playAll">▶ Alles hören</button></div>
+    <div id="dlg" style="margin-top:10px"></div>
+    <div class="row"><button class="btn" id="dlgDone">Ich habe laut gesprochen ✓</button></div>
+  </div>
+</section>
+
+<section id="s5">
+  <div class="card">
+    <h2>Merken · Was haben wir gelernt?</h2>
+    <div id="sum"></div>
+    <p style="font-family:Fredoka;font-size:22px;margin:16px 0 4px" id="bye"></p>
+    <div class="row"><button class="btn" id="again">Alles noch einmal üben</button><button class="btn ghost" id="reset">Fortschritt löschen</button></div>
+  </div>
+</section>
+</main>
+
+<script>
+"use strict";
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const KEY="de-a1-l3", rnd=n=>Math.floor(Math.random()*n), shuf=a=>a.map(x=>[Math.random(),x]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);
+let S={xp:0,streak:0,done:{}};
+try{S=Object.assign(S,JSON.parse(localStorage.getItem(KEY)||"{}"))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+
+/* ---------- Sprache ---------- */
+let voice=null;
+function pickVoice(){voice=(speechSynthesis.getVoices()||[]).find(v=>v.lang&&v.lang.startsWith("de"))||null}
+if("speechSynthesis" in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice}
+function say(t,cb){
+  if(!("speechSynthesis" in window))return;
+  const u=new SpeechSynthesisUtterance(t);u.lang="de-DE";u.rate=.85;if(voice)u.voice=voice;
+  if(cb)u.onend=cb;speechSynthesis.speak(u);
+}
+const sayNow=t=>{if("speechSynthesis" in window)speechSynthesis.cancel();say(t)};
+document.addEventListener("click",e=>{const b=e.target.closest("[data-say]");if(b)sayNow(b.dataset.say)});
+
+/* ---------- Zahlen ---------- */
+const U=["null","eins","zwei","drei","vier","fünf","sechs","sieben","acht","neun","zehn","elf","zwölf","dreizehn","vierzehn","fünfzehn","sechzehn","siebzehn","achtzehn","neunzehn"];
+const T={2:"zwanzig",3:"dreißig",4:"vierzig",5:"fünfzig",6:"sechzig",7:"siebzig",8:"achtzig",9:"neunzig"};
+function nw(n){if(n<20)return U[n];if(n===100)return"hundert";const t=Math.floor(n/10),u=n%10;return u?(u===1?"ein":U[u])+"und"+T[t]:T[t]}
+const norm=s=>s.toLowerCase().replace(/ß/g,"ss").replace(/\s+/g,"").trim();
+
+/* ---------- Statistik / Fortschritt ---------- */
+const PARTS=[["p1","🎂 1 · Alter fragen"],["p2","🔢 2 · Zahlen 11–100"],["p3","📊 3 · sein"],["p4","✏️ 4 · Persönliche Daten"],["dlg","🗣️ Dialog"],["end","🏁 Merken"]];
+function refresh(){
+  $("#xp").textContent=S.xp;$("#streak").textContent=S.streak;
+  const n=["p1","p2","p3","p4","dlg"].filter(k=>S.done[k]).length;
+  $("#doneN").textContent=n;$("#bar").style.width=n*20+"%";
+  $$("#tabs button").forEach((b,i)=>b.classList.toggle("done",!!S.done[PARTS[i][0]]));
+  save();
+}
+function party(){for(let i=0;i<24;i++){const s=document.createElement("span");s.className="pop";s.textContent=["🎉","⭐","🎂","🇩🇪","✨"][rnd(5)];s.style.left=rnd(96)+"vw";s.style.animationDelay=Math.random()*.6+"s";document.body.appendChild(s);setTimeout(()=>s.remove(),2400)}}
+function award(n){S.xp+=n;refresh()}
+
+/* ---------- Tabs ---------- */
+const tabs=$("#tabs");
+PARTS.forEach((p,i)=>{const b=document.createElement("button");b.role="tab";b.textContent=p[1];b.onclick=()=>show(i);tabs.appendChild(b)});
+function show(i){
+  $$("main section").forEach((s,j)=>s.classList.toggle("on",i===j));
+  $$("#tabs button").forEach((b,j)=>b.setAttribute("aria-selected",i===j));
+  if(i===5)summary();window.scrollTo({top:0,behavior:"smooth"});
+}
+$("#plBtn").onclick=e=>{const on=document.body.classList.toggle("showpl");e.currentTarget.setAttribute("aria-pressed",on)};
+
+/* ---------- Teil 1: eigenes Alter ---------- */
+$("#myAge").oninput=e=>{const n=+e.target.value;
+  $("#ageOut").textContent=n>=1&&n<=100?`Ich bin ${n} Jahre alt.`:"Ich bin _____ Jahre alt."};
+$("#ageSpk").onclick=()=>{const n=+$("#myAge").value;if(n>=1&&n<=100)sayNow(`Ich bin ${nw(n)} Jahre alt.`)};
+
+/* ---------- Teil 2: Zahlenkarten ---------- */
+function cards(el,list){list.forEach(n=>{const b=document.createElement("button");b.className="num"+(n%10===0&&n>10?" tens":"");
+  b.innerHTML=`<b>${n}</b>${nw(n)}`;b.onclick=()=>sayNow(nw(n));el.appendChild(b)})}
+cards($("#nums"),[11,12,13,14,15,16,17,18,19,20,30,40,50,60,70,80,90,100]);
+cards($("#combo"),[21,35,48,67,99]);
+let gn=0;
+$("#gBtn").onclick=()=>{gn=11+rnd(90);$("#gN").textContent=gn;$("#gW").textContent="";sayNow(nw(gn))};
+$("#gShow").onclick=()=>{if(gn)$("#gW").textContent=nw(gn)};
+$("#gHear").onclick=()=>{if(gn)sayNow(nw(gn))};
+
+/* ---------- Dialog ---------- */
+const DLG=[["A","Guten Tag. Wie ist Ihr Name?"],["B","Mein Name ist Becker."],["A","Wie ist Ihr Vorname?"],["B","Mein Vorname ist Julia."],["A","Wie alt sind Sie?"],["B","Ich bin 28 Jahre alt."]];
+let role="";
+function drawDlg(){
+  $("#dlg").innerHTML="";
+  DLG.forEach(([w,t])=>{const d=document.createElement("div");d.className="line "+w;
+    d.innerHTML=`<div class="who">${w}</div><div class="bubble${role===w?" hide":""}" tabindex="0">${t}</div>`;
+    const b=$(".bubble",d);b.onclick=()=>{b.classList.remove("hide");sayNow(t)};
+    b.onkeydown=e=>{if(e.key==="Enter")b.click()};$("#dlg").appendChild(d)});
+}
+$$("[data-role]").forEach(b=>b.onclick=()=>{role=b.dataset.role;drawDlg()});
+$("#playAll").onclick=()=>{speechSynthesis.cancel();DLG.forEach(([,t])=>say(t))};
+$("#dlgDone").onclick=()=>{if(!S.done.dlg){S.done.dlg=1;award(30);party()}else refresh()};
+drawDlg();
+
+/* ---------- Übungen ---------- */
+const N=()=>11+rnd(90);
+const BUILD={
+p1:()=>[
+ {t:"choice",q:"Sie fragen Ihre Lehrerin (formell). Was sagen Sie?",o:["Wie alt bist du?","Wie alt sind Sie?","Wie alt ist er?"],a:1,e:"Formell = Sie + sind."},
+ {t:"choice",q:"Sie fragen einen Freund (informell). Was sagen Sie?",o:["Wie alt bist du?","Wie alt sind Sie?","Wie alt seid ihr?"],a:0,e:"Informell = du + bist."},
+ {t:"choice",q:"Hören Sie: Was ist die richtige Antwort?",say:"Wie alt sind Sie?",o:["Ich bin 25 Jahre alt.","Mein Name ist Anna.","Ich bin Lehrerin."],a:0,e:"Alter → „Ich bin … Jahre alt.“"},
+ {t:"order",q:"Bauen Sie den Satz:",w:"Ich bin 25 Jahre alt.",e:"Ich + bin + Zahl + Jahre alt."},
+ {t:"order",q:"Bauen Sie die Frage (informell):",w:"Wie alt bist du?"},
+ {t:"type",q:"Hören Sie und schreiben Sie das Alter als Zahl:",num:1}
+],
+p2:()=>{const a=shuf([13,14,15,16,17,18,19]).slice(0,1)[0],b=[21,35,48,67,99][rnd(5)],c=N(),d=N(),e=N();
+ return[
+ {t:"choice",q:"Was hören Sie?",say:nw(a),o:[String(a),String(a*10>100?a+30:a*10),String(a+1)],a:0,e:`${a} = ${nw(a)}. Achtung: -zehn (13) ≠ -zig (30)!`},
+ {t:"choice",q:"Welche Zahl ist „vierzig“?",o:["14","40","4"],a:1,e:"vierzehn = 14, vierzig = 40."},
+ {t:"type",q:`Schreiben Sie ${b} als Wort:`,ans:[nw(b)],e:`${b} = ${nw(b)} (Einer + und + Zehner).`,hint:true},
+ {t:"type",q:"Hören Sie und schreiben Sie die Zahl:",num:2,n:c},
+ {t:"type",q:`Schreiben Sie ${d} als Wort:`,ans:[nw(d)],e:`${d} = ${nw(d)}`,hint:true},
+ {t:"choice",q:"Was hören Sie?",say:nw(e),o:shuf([String(e),String(+String(e).split("").reverse().join("")||e+1),String(e%90+11)].filter((v,i,x)=>x.indexOf(v)===i)).concat([]),a:null,val:String(e),e:`${e} = ${nw(e)}. Erst die Einer, dann die Zehner!`}
+]},
+p3:()=>[
+ {t:"choice",q:"Ich ___ 30 Jahre alt.",o:["bin","bist","ist"],a:0,e:"ich → bin"},
+ {t:"choice",q:"Du ___ müde.",o:["bin","bist","sind"],a:1,e:"du → bist"},
+ {t:"choice",q:"Sie ___ Lehrer. (Frau Müller)",o:["ist","sind","bist"],a:0,e:"sie (ona) → ist"},
+ {t:"choice",q:"Wir ___ hier.",o:["seid","ist","sind"],a:2,e:"wir → sind"},
+ {t:"choice",q:"Ihr ___ praktisch.",o:["seid","sind","bist"],a:0,e:"ihr → seid"},
+ {t:"type",q:"Schreiben Sie: Sie ___ Lehrer. (Sie = Anrede, formell)",ans:["sind"],e:"Sie (formell) → sind"},
+ {t:"order",q:"Bauen Sie den Satz:",w:"Wir sind hier.",say:1}
+],
+p4:()=>[
+ {t:"choice",q:"Wie ___ Ihr Name?",o:["ist","bist","sind"],a:0,e:"der Name → ist"},
+ {t:"choice",q:"Sie hören: „Wie ist Ihr Vorname?“ – Antwort?",say:"Wie ist Ihr Vorname?",o:["Mein Vorname ist Anna.","Mein Name ist 28.","Ich bin Schmidt."],a:0,e:"Vorname = imię."},
+ {t:"choice",q:"Was fragen Sie nach der Nummer 069 123456?",o:["Wie ist Ihre Adresse?","Wie ist Ihre Telefonnummer?","Wie alt sind Sie?"],a:1,e:"Telefonnummer = numer telefonu."},
+ {t:"type",q:"Meine ___ ist 0151 234567.",ans:["telefonnummer"],e:"Meine Telefonnummer ist …"},
+ {t:"order",q:"Bauen Sie den Satz:",w:"Mein Name ist Schmidt."},
+ {t:"order",q:"Bauen Sie die Frage:",w:"Wie ist Ihre Adresse?"}
+]};
+
+function practice(box){
+  const id=box.dataset.practice;let items,i,score,dots,retried;
+  function start(){items=BUILD[id]();items.forEach(x=>{if(x.num){x.n=x.n||N();x.ans=[String(x.n)];x.say=nw(x.n);x.e=`${x.n} = ${nw(x.n)}`}
+    if(x.val){x.o=shuf([x.val,...x.o.filter(v=>v!==x.val)].slice(0,3));x.a=x.o.indexOf(x.val)}});
+    i=0;score=0;retried=new Set();dots=items.map(()=>"");draw()}
+  function draw(){
+    if(i>=items.length)return finish();
+    const it=items[i];
+    box.innerHTML=`<h3>🎯 Üben Sie – ${items.length===0?"":"Frage "+(i+1)+" von "+items.length}</h3><div class="pdots">${dots.map((d,j)=>`<i class="${d||(j===i?"cur":"")}"></i>`).join("")}</div>
+    <p class="q">${it.q}</p>${it.say&&it.t!=="order"?`<p><button class="btn ghost" id="lis">🔊 Anhören</button></p>`:""}<div id="io"></div><div id="fb"></div>`;
+    if(it.say&&it.t!=="order"){$("#lis",box).onclick=()=>sayNow(it.say);setTimeout(()=>sayNow(it.say),150)}
+    const io=$("#io",box);
+    if(it.t==="choice"){io.className="opts";it.o.forEach((o,k)=>{const b=document.createElement("button");b.className="opt";b.textContent=o;b.onclick=()=>judge(k===it.a,b,it.o[it.a]);io.appendChild(b)})}
+    if(it.t==="type"){io.innerHTML=`<input type="text" id="inp" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Antwort"> <button class="btn" id="chk">Prüfen</button>${it.hint?"":""}`;
+      const inp=$("#inp",box);inp.focus();const go=()=>{if(inp.value.trim())judge(it.ans.some(a=>norm(a)===norm(inp.value)),inp,it.ans[0])};
+      $("#chk",box).onclick=go;inp.onkeydown=e=>{if(e.key==="Enter")go()}}
+    if(it.t==="order"){const words=it.w.split(" ");let pool=shuf(words.map((w,k)=>({w,k})));if(pool.map(p=>p.w).join(" ")===it.w)pool.reverse();
+      io.innerHTML=`<div class="ans" id="ans" aria-label="Ihr Satz"></div><div class="bank" id="bank"></div><div class="row"><button class="btn" id="chk">Prüfen</button>${it.say?`<button class="btn ghost" id="lis2">🔊 Anhören</button>`:""}</div>`;
+      const ans=$("#ans",box),bank=$("#bank",box),put=[];
+      const paint=()=>{ans.innerHTML="";bank.innerHTML="";
+        put.forEach(p=>{const b=document.createElement("button");b.className="tok";b.textContent=p.w;b.onclick=()=>{put.splice(put.indexOf(p),1);paint()};ans.appendChild(b)});
+        pool.filter(p=>!put.includes(p)).forEach(p=>{const b=document.createElement("button");b.className="tok";b.textContent=p.w;b.onclick=()=>{put.push(p);paint()};bank.appendChild(b)})};
+      paint();$("#chk",box).onclick=()=>{if(put.length)judge(put.map(p=>p.w).join(" ")===it.w,ans,it.w)};
+      if(it.say)$("#lis2",box).onclick=()=>sayNow(it.w)}
+  }
+  function judge(ok,el,right){
+    const it=items[i];
+    $$("#io button, #io input",box).forEach(x=>x.disabled=true);
+    if(el.classList&&el.classList.contains("opt"))el.classList.add(ok?"ok":"bad");
+    if(it.t==="choice"&&!ok)$$(".opt",box).find(b=>b.textContent===right).classList.add("ok");
+    dots[i]=ok?"ok":"bad";
+    if(ok){score++;S.streak++;award(10+(S.streak>=3?5:0));sayNow(it.say&&it.t!=="order"?it.say:"")}
+    else{S.streak=0;refresh();el.classList.add("shake");if(!retried.has(it)){retried.add(it);items.push(Object.assign({},it,{q:"🔁 Noch einmal: "+it.q.replace("🔁 Noch einmal: ","")}));dots.push("")}}
+    $("#fb",box).innerHTML=`<div class="fb ${ok?"ok":"bad"}">${ok?"✅ Richtig! +10 XP"+(S.streak>=3?" · 🔥 Serie-Bonus +5":""):"❌ Nicht ganz. Richtig ist: "+right}${it.e?`<span>${it.e}</span>`:""}</div><div class="row"><button class="btn" id="nx">Weiter</button></div>`;
+    $("#nx",box).focus();$("#nx",box).onclick=()=>{i++;draw()};
+  }
+  function finish(){
+    const total=items.filter((_,j)=>!items[j].q.startsWith("🔁")).length;
+    const first=dots.slice(0,total).filter(d=>d==="ok").length;
+    const stars=first===total?"🌟🌟🌟":first>=total-2?"🌟🌟":"🌟";
+    const wasDone=S.done[id];S.done[id]=1;
+    if(!wasDone){award(20);party()}else refresh();
+    box.innerHTML=`<h3>${stars} Teil geschafft!</h3><p>${first} von ${total} sofort richtig. ${first===total?"Perfekt – Sie sind Spitze!":"Üben Sie noch einmal, um drei Sterne zu holen."}</p><p class="pl">Nowe liczby i pytania pojawiają się przy każdej powtórce.</p>
+    <div class="row"><button class="btn" id="re">Nochmal üben</button><button class="btn ghost" id="go">Weiter ▶</button></div>`;
+    $("#re",box).onclick=start;
+    $("#go",box).onclick=()=>show(Math.min(PARTS.findIndex(p=>p[0]===id)+1,5));
+  }
+  box._start=start;start();
+}
+$$("[data-practice]").forEach(practice);
+
+/* ---------- Abschluss ---------- */
+function summary(){
+  const L=[["p1","✅ Alter fragen und sagen","Wie alt sind Sie? · Ich bin 25 Jahre alt."],["p2","✅ Zahlen","11–100: elf, zwölf, dreizehn, … hundert"],["p3","✅ Verb „sein“","bin · bist · ist · sind · seid · sind"],["p4","✅ Persönliche Daten","Name · Vorname · Adresse · Telefonnummer"],["dlg","✅ Dialog","Lesen und sprechen"]];
+  $("#sum").innerHTML=L.map(([k,t,d])=>`<div class="check ${S.done[k]?"":"todo"}"><div class="m">${S.done[k]?t.slice(0,1):"⬜"}</div><div><b>${t.slice(2)}</b><br>${d}</div></div>`).join("");
+  const all=L.every(([k])=>S.done[k]);
+  $("#bye").textContent=all?`Sehr gut! Bis zum nächsten Mal! 🎉 (${S.xp} XP)`:"Noch nicht alles geschafft – üben Sie weiter, dann kommt die Belohnung. 💪";
+  if(all)party();
+}
+$("#again").onclick=()=>{$$("[data-practice]").forEach(b=>b._start());show(0)};
+$("#reset").onclick=()=>{if(confirm("Fortschritt wirklich löschen?")){S={xp:0,streak:0,done:{}};refresh();$$("[data-practice]").forEach(b=>b._start());summary()}};
+
+show(0);refresh();
+</script>
+</body>
+</html>
