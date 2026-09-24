@@ -32,7 +32,8 @@ input[type=text],input[type=number]{width:100%;max-width:340px;padding:10px 14px
 .line{display:flex;gap:10px;margin:12px 0;align-items:flex-start}.who{display:grid;place-items:center;flex:none;width:34px;height:34px;color:#fff;background:#4f7a63;border-radius:10px;font-weight:800}.line.B .who{background:#bd4433}.bubble{flex:1;padding:10px 14px;background:#eee9dc;border:1px solid #e2dccd;border-radius:15px 15px 15px 7px;font-weight:700}.line.B .bubble{background:linear-gradient(145deg,#f0d89f,#e8c989);border-color:#d2a94f;border-radius:15px 15px 7px 15px}.bubble.hide{filter:blur(6px);user-select:none}
 .check{display:flex;gap:12px;padding:12px;border-bottom:1px solid var(--line)}.check .m{font-size:22px}.check.todo{opacity:.55}.pop{position:fixed;top:-30px;font-size:26px;z-index:20;pointer-events:none;animation:fall 1.6s ease-in forwards}
 @keyframes fall{to{transform:translateY(105vh) rotate(360deg);opacity:.6}}@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}.shake{animation:sh .3s}
-@media(max-width:700px){body{padding:18px 10px 45px}.two{grid-template-columns:1fr}header,section{padding:20px;border-radius:20px}h2{font-size:1.85rem}nav{top:4px}.wrap{width:100%}}
+.intro-dialog{padding:26px}.intro-help{margin:0 0 16px;padding:9px 12px;background:#fff7d8;border:2px solid #e4bd57;border-radius:12px;font-weight:800}.intro-fields{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}.intro-fields label{font-weight:800;font-size:.9rem}.intro-fields input{margin-top:5px;max-width:none}.register-switch{display:flex;justify-content:center;gap:80px;margin:24px 0}.register-btn{min-width:150px}.register-btn.active{color:#fff;background:#4f7a63;border-color:#4f7a63}.intro-dialogue{display:grid;gap:12px;margin-top:18px}.intro-line{display:flex;align-items:center;gap:10px}.intro-line.b{justify-content:flex-end}.intro-bubble{position:relative;width:72%;padding:11px 52px 11px 16px;background:#eee9dc;border:1px solid #e2dccd;border-radius:15px 15px 15px 7px;font-weight:700}.intro-line.b .intro-bubble{width:48%;padding:11px 16px 11px 52px;background:linear-gradient(145deg,#f0d89f,#e8c989);border-color:#d2a94f;border-radius:15px 15px 7px 15px}.intro-speaker{display:block;color:#bd4433;font:600 .65rem "JetBrains Mono",monospace;letter-spacing:.12em}.intro-person{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:1.35rem}.intro-line.b .intro-person{left:14px;right:auto}.listen-mini{border:0;background:transparent;font-size:1rem;cursor:pointer}.translation-note{display:none;margin:8px 0;padding:10px;background:#fff7d8;border-radius:10px;color:#334155}body.showpl .translation-note{display:block}
+@media(max-width:700px){.intro-fields{grid-template-columns:1fr 1fr}.register-switch{gap:12px}.intro-bubble,.intro-line.b .intro-bubble{width:88%}body{padding:18px 10px 45px}.two{grid-template-columns:1fr}header,section{padding:20px;border-radius:20px}h2{font-size:1.85rem}nav{top:4px}.wrap{width:100%}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -53,6 +54,24 @@ input[type=text],input[type=number]{width:100%;max-width:340px;padding:10px 14px
 <main class="wrap">
 
 <section id="s0">
+  <div class="card intro-dialog">
+    <h2>Ich stelle mich vor</h2>
+    <div class="intro-help">✏️ Name, Vorname, Alter und Nationalität eingeben → 👆 „Informell“ oder „Formell“ anklicken → 🔊 zuhören</div>
+    <button class="btn ghost" type="button" id="introTranslate">🌐 A/文</button>
+    <p>Trag deinen Namen, Vornamen, dein Alter und deine Nationalität ein — die Dialoge passen sich an!</p>
+    <p class="translation-note" id="introTranslation"><b>Polski:</b> Wpisz nazwisko, imię, wiek i narodowość — dialog dopasuje się do Ciebie.</p>
+    <div class="intro-fields">
+      <label>✏️ Name<input id="introLast" type="text" placeholder="z. B. Kowalski"></label>
+      <label>✏️ Vorname<input id="introFirst" type="text" placeholder="z. B. Monika"></label>
+      <label>✏️ Alter<input id="introAge" type="number" min="1" max="100" placeholder="z. B. 25"></label>
+      <label>✏️ Nationalität<input id="introNat" type="text" placeholder="z. B. Polin"></label>
+    </div>
+    <div class="register-switch">
+      <button class="btn register-btn active" id="introInformal">Informell 🔊</button>
+      <button class="btn register-btn" id="introFormal">Formell 🔊</button>
+    </div>
+    <div class="intro-dialogue" id="introDialogue"></div>
+  </div>
   <div class="card">
     <h2>🎂 Teil 1 · Wie alt sind Sie?</h2>
     <p class="pl">Pytamy o wiek i mówimy, ile mamy lat.</p>
@@ -200,6 +219,48 @@ function show(i){
   if(i===5)summary();window.scrollTo({top:0,behavior:"smooth"});
 }
 $("#plBtn").onclick=e=>{const on=document.body.classList.toggle("showpl");e.currentTarget.setAttribute("aria-pressed",on)};
+
+/* ---------- Ich stelle mich vor ---------- */
+const introData=()=>({
+ last:$("#introLast").value.trim()||"Schmidt",
+ first:$("#introFirst").value.trim()||"Tom",
+ age:$("#introAge").value.trim()||"25",
+ nat:$("#introNat").value.trim()||"Deutscher"
+});
+let introFormal=false;
+function introLines(){
+ const d=introData();
+ return introFormal?[
+  ["A","Guten Tag!","👩🏻"],["B","Guten Tag!","🧑🏻"],
+  ["A","Wie heißen Sie?","👩🏻"],["B",`Ich heiße ${d.first} ${d.last}. Und Sie?`,"🧑🏻"],
+  ["A","Ich heiße Anna Becker.","👩🏻"],["A","Wie alt sind Sie?","👩🏻"],
+  ["B",`Ich bin ${d.age} Jahre alt.`,"🧑🏻"],["A","Welche Nationalität haben Sie?","👩🏻"],
+  ["B",`Ich bin ${d.nat}.`,"🧑🏻"]
+ ]:[
+  ["A","Hallo!","👩🏻"],["B","Hallo!","🧑🏻"],
+  ["A","Wie heißt du?","👩🏻"],["B",`Ich heiße ${d.first}. Und du?`,"🧑🏻"],
+  ["A","Ich heiße Anna.","👩🏻"],["A","Wie alt bist du?","👩🏻"],
+  ["B",`Ich bin ${d.age} Jahre alt.`,"🧑🏻"],["A","Welche Nationalität hast du?","👩🏻"],
+  ["B",`Ich bin ${d.nat}.`,"🧑🏻"]
+ ];
+}
+function drawIntro(){
+ const box=$("#introDialogue");box.innerHTML="";
+ introLines().forEach(([who,t,icon])=>{
+  const row=document.createElement("div");row.className="intro-line "+(who==="B"?"b":"a");
+  row.innerHTML=`<div class="intro-bubble"><span class="intro-speaker">${who}</span>${t}<span class="intro-person">${icon}</span></div><button class="listen-mini" type="button" aria-label="Anhören">🔊</button>`;
+  $(".listen-mini",row).onclick=()=>sayNow(t);box.appendChild(row);
+ });
+}
+function setIntroMode(formal,listen=true){
+ introFormal=formal;$("#introInformal").classList.toggle("active",!formal);$("#introFormal").classList.toggle("active",formal);drawIntro();
+ if(listen){speechSynthesis.cancel();introLines().forEach(([,t])=>say(t))}
+}
+["#introLast","#introFirst","#introAge","#introNat"].forEach(id=>$(id).addEventListener("input",drawIntro));
+$("#introInformal").onclick=()=>setIntroMode(false,true);
+$("#introFormal").onclick=()=>setIntroMode(true,true);
+$("#introTranslate").onclick=()=>$("#introTranslation").style.display=$("#introTranslation").style.display==="block"?"none":"block";
+drawIntro();
 
 /* ---------- Teil 1: eigenes Alter ---------- */
 $("#myAge").oninput=e=>{const n=+e.target.value;
