@@ -1,1 +1,355 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lektion 5 – Du oder Sie?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Fraunces:wght@500;700&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#16233a;--line:#e3d6b8;--red:#bd4433;--gold:#cf9f3f;--green:#4f7a63;--text:#1c2430;--ok:#16864b;--okbg:#e8f8ef;--err:#c53d3d;--errbg:#fff0f0;--box:#fbf6e8;--a:#eee9dc;--b:#e8c989;--informell:#58755f;--formell:#a65e4f}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;padding:45px 20px 60px;color:var(--text);font:400 1rem/1.6 "Nunito Sans",sans-serif;background:radial-gradient(circle at 10% 8%,#cf9f3f12,transparent 35%),radial-gradient(circle at 90% 92%,#4f7a631a,transparent 40%),var(--ink)}
+button,input,select{font:inherit}button{cursor:pointer}
+.ppc{position:fixed;z-index:1000;top:0;left:0;width:100%;height:7px;background:#ffffff29}.ppb{width:0;height:100%;background:linear-gradient(90deg,#f4c95d,#ffb54a);transition:.2s}
+.course-start,.lesson-intro,.page{width:100%;margin:0 auto 38px;background:linear-gradient(160deg,#fff8ea,#f3e2bd);border-radius:24px;box-shadow:0 24px 55px #0004}
+.course-start{max-width:980px;margin-bottom:50px;padding:22px 24px;border:1px solid var(--line)}
+.cs-title{margin:0 0 12px;color:#161616;font:600 .95rem "JetBrains Mono",monospace;letter-spacing:.2em;text-transform:uppercase}.cs-text{margin:0;padding:13px 16px;background:#fff;border:1px solid var(--line);border-radius:14px;font-size:1.05rem}
+.lesson-intro{max-width:980px;padding:34px}.hero{display:flex;align-items:center;gap:28px;padding:10px 4px 28px;border-bottom:2px dashed #1c24302e}.hero-text{flex:1 1 530px}
+.main-title{margin:0 0 14px;color:#161616;font:700 2.6rem/1.12 "Fraunces",serif}.desc{max-width:600px;margin:0;color:#334155;font-size:1.04rem}
+.topics{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}.topic{padding:8px 14px;background:#fff;border:1px solid var(--line);border-radius:999px;font-size:.92rem}
+.wheel{flex:0 0 270px}.wheel svg{width:100%;height:auto;filter:drop-shadow(0 14px 24px #0000002b)}
+.sprachpass{display:flex;align-items:center;gap:18px;margin-top:26px;padding:16px 20px;color:#f7efdd;background:linear-gradient(145deg,#16233a,#20324a);border-radius:18px;box-shadow:0 10px 24px #0000003d}
+.sp-title{font:700 1.08rem "Fraunces",serif}.sp-count{margin:2px 0 0;color:#f7efddad;font:.78rem "JetBrains Mono",monospace}
+.stamps{display:flex;justify-content:flex-end;gap:10px;flex:1;flex-wrap:wrap}
+.stamp{display:grid;place-items:center;width:70px;height:70px;padding:5px;color:#f7efdd8f;text-align:center;border:2px dashed #f7efdd4d;border-radius:50%;font:.6rem/1.08 "JetBrains Mono",monospace;transition:.3s}.stamp i{display:block;font-style:normal;margin-bottom:2px;font-size:1.2rem;opacity:.55}
+.stamp.on{color:#f3c2b8;background:#bd443329;border:2px solid #e57763;transform:rotate(-7deg) scale(1.05);animation:stamp .48s}.stamp.on i{opacity:1}
+@keyframes stamp{0%{opacity:0;transform:rotate(-7deg) scale(.3)}65%{opacity:1;transform:rotate(-10deg) scale(1.16)}100%{transform:rotate(-7deg) scale(1.05)}}
+.page{max-width:900px;padding:28px}
+.part-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px;margin-bottom:16px}.part-num{color:var(--red);font:600 .82rem "JetBrains Mono",monospace;letter-spacing:.16em;text-transform:uppercase}.part-title{margin:0;color:#161616;font:700 2.3rem/1.15 "Kalam",cursive}
+.done{display:none;padding:5px 10px;color:#28502f;background:#e4f3e8;border:1px solid #78bf95;border-radius:999px;font:700 .78rem "JetBrains Mono",monospace}.done.show{display:inline-flex}
+.card{padding:22px;background:#fffdf6;border:1px solid var(--line);border-radius:20px;box-shadow:0 12px 30px #00000012;margin-bottom:16px}
+.lead{margin:0 0 14px;font-size:1.06rem}
+.action-help{position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 14px;padding:8px 112px 8px 10px;color:#26364b;background:#fff7d8;border:2px solid #e4bd57;border-radius:12px;font-weight:700;font-size:.92rem}
+.step{padding:4px 8px;background:#fff;border:1px solid #ead9a9;border-radius:999px}.arr{color:#9d7622;font-weight:800}
+.tr{position:relative}.tc{position:absolute;top:7px;right:8px;z-index:12}.tc.inl{position:relative;top:auto;right:auto;display:inline-block;margin-left:8px}
+.tgl{display:inline-flex;align-items:center;gap:5px;min-height:30px;padding:4px 9px;color:#4c4028;background:#fffdf6;border:1px solid #d8c28c;border-radius:999px;font-size:.78rem;font-weight:800}.tgl:hover{background:#fff3c8}
+.glb{filter:hue-rotate(115deg) saturate(2.8) brightness(1.28) drop-shadow(0 0 4px #ff4abeb8)}
+.tp{display:none;position:absolute;right:0;top:36px;width:240px;padding:9px;background:#fffdf7;border:1px solid #d9c28e;border-radius:12px;box-shadow:0 10px 24px #00000026}.tc.open .tp{display:block}
+.tl{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}.tl button{padding:5px 8px;color:#26364b;background:#f7f1e3;border:1px solid #ddcfaa;border-radius:999px;font-size:.75rem;font-weight:800}.tl button.act{background:#e4f3e8;border-color:#78bf95}
+.tt{display:none;margin:0;padding:8px 9px;background:#fff7d8;border-radius:9px;font-size:.8rem;line-height:1.35;font-weight:700}.tt.show{display:block}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:10px 20px;color:#17342a;background:#edf7f1;border:2px solid #7fa493;border-radius:999px;font-weight:800;box-shadow:0 4px 10px #315b4720;transition:.15s}
+.btn:hover:not(:disabled){background:#dff1e7;transform:translateY(-2px);border-color:var(--green)}.btn:disabled{cursor:default;opacity:.55}
+.btn.ok{color:#28502f;background:#e4f3e8;border-color:var(--green)}.btn.no{color:var(--red);background:#f9e4e1;border-color:var(--red)}
+.btn.solid{color:#fff;background:var(--green);border-color:var(--green)}.btn.dark{color:#fff;background:#20324a;border-color:#20324a}
+.btn.act{background:#20324a;color:#fff;border-color:#20324a}
+.btn.du{background:#e9f2ea;border-color:var(--informell);color:#2c4a34}.btn.du.act,.btn.du.sel{background:var(--informell);color:#fff}
+.btn.sie{background:#f6e9e6;border-color:var(--formell);color:#5c2f26}.btn.sie.act,.btn.sie.sel{background:var(--formell);color:#fff}
+.click{display:inline-block;animation:blink 1.15s ease-in-out infinite}@keyframes blink{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.28)}}
+button:disabled .click{animation:none}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.fb{min-height:28px;margin:10px 0 0;font-weight:800}.fb.g{color:var(--ok)}.fb.b{color:var(--err)}
+.bubble{position:relative;padding:10px 16px;border-radius:15px;box-shadow:0 4px 10px #0000000b;transition:.18s;color:#171717}
+.bubble .who{display:block;color:var(--red);font:600 .65rem "JetBrains Mono",monospace;letter-spacing:.12em;text-transform:uppercase}
+.ba{width:74%;margin-right:auto;background:var(--a);border:1px solid #e2dccd;border-bottom-left-radius:7px}
+.bb{width:56%;min-width:230px;margin-left:auto;background:linear-gradient(145deg,#f0d89f,var(--b));border:1px solid #d2a94f;border-bottom-right-radius:7px}
+.bubble.speaking{transform:translateY(-1px);box-shadow:0 8px 18px #996d193b;outline:3px solid #cf9f3f66}
+.chat{display:grid;gap:12px;min-height:90px;padding:16px;background:#ffffff57;border:2px solid var(--line);border-radius:16px;margin-bottom:14px}
+.pron-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:10px}
+.pron{padding:14px 6px;text-align:center;background:var(--box);border:2px solid var(--line);border-radius:16px;font:800 1.3rem "JetBrains Mono",monospace;transition:.15s}
+.pron:hover{transform:translateY(-3px);border-color:var(--gold)}.pron.heard{background:var(--okbg);border-color:#78bf95}
+.bar{height:12px;overflow:hidden;background:#e8dfca;border:1px solid var(--line);border-radius:999px;margin-top:12px}.bar i{display:block;width:0;height:100%;background:linear-gradient(90deg,#5f9e6e,#79bd84);transition:.5s}
+table{width:100%;border-collapse:collapse;margin-bottom:12px}td,th{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left}th{font:600 .75rem "JetBrains Mono",monospace;color:#5a5140}
+.slot{min-width:80px;padding:6px 10px;background:#fff;border:2px dashed #b9a56c;border-radius:10px;font:800 1rem "JetBrains Mono",monospace;color:#9d7622}.slot.solved{border-style:solid;border-color:var(--green);background:var(--okbg);color:var(--ok)}
+.vchip{padding:7px 15px;background:#f7d98e;border:2px solid #d7aa52;border-radius:12px;font:800 1rem "JetBrains Mono",monospace}.vchip.sel{background:#d99a43;color:#fff;transform:translateY(-3px)}.vchip:disabled{opacity:.35}
+.ex{font-weight:700;color:var(--ok)}
+.shake{animation:shake .28s}@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.opts{display:flex;flex-wrap:wrap;gap:12px;margin:12px 0}
+.machine{display:grid;place-items:center;gap:14px;padding:22px;background:var(--box);border:1px solid var(--line);border-radius:18px;margin-bottom:14px}
+.scene{display:flex;align-items:center;gap:16px}
+.scene .icon{font-size:3.4rem;line-height:1}
+.scene .info{display:grid;gap:2px}.scene .who{font:700 1.15rem "Fraunces",serif}.scene .hint{color:#5a5140;font-weight:700;font-size:.9rem}
+.slog{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px;padding:0;list-style:none}
+.slog li{padding:6px 12px;background:#fff;border:2px solid var(--line);border-radius:10px;font-weight:700;font-size:.9rem}
+.slog li.g{border-color:#78bf95;background:var(--okbg);color:var(--ok)}.slog li.b{border-color:#e79a9a;background:var(--errbg);color:var(--err)}
+.calc{font:.9rem "JetBrains Mono",monospace;color:#5a5140}
+.tabs{display:flex;gap:10px;margin-bottom:14px}
+.sq-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line)}
+.sq-row:last-child{border-bottom:0}
+.sq-q{flex:1;min-width:220px;font-weight:700}
+.sq-group{margin-bottom:6px}
+.sq-label{display:inline-block;margin:14px 0 8px;padding:4px 12px;border-radius:999px;font-weight:800;font-size:.85rem}
+.sq-label.du{background:#e9f2ea;color:var(--informell)}.sq-label.sie{background:#f6e9e6;color:var(--formell)}
+.check{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}.check.todo{opacity:.5}.check .m{font-size:1.3rem}
+.end{max-width:900px;margin:0 auto}.end-btns{display:flex;justify-content:center;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.end-btn{display:inline-flex;align-items:center;min-height:56px;padding:12px 24px;color:#fff;text-decoration:none;font-weight:800;border-radius:19px;background:linear-gradient(#68c7ff,#43aef4);border:2px solid #d7f1ff;box-shadow:0 8px 18px #0000003d;transition:.18s}.end-btn:hover{transform:translateY(-3px)}
+.arrows{display:flex;justify-content:center;gap:12px}.arrow{display:grid;place-items:center;width:52px;height:52px;color:var(--text);background:#fff;border:1px solid var(--line);border-radius:50%;text-decoration:none;font-size:1.5rem;font-weight:800;box-shadow:0 7px 16px #0003}.arrow:hover{background:#f6edda;border-color:var(--gold)}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+@media(max-width:760px){body{padding:20px 12px 35px}.lesson-intro,.page{padding:20px 14px;border-radius:18px}.hero{flex-direction:column;align-items:flex-start}.main-title{font-size:2rem}.wheel{max-width:240px;margin:auto}.sprachpass{flex-direction:column;align-items:flex-start}.stamps{justify-content:space-between}.stamp{width:58px;height:58px;font-size:.5rem}.part-title{font-size:1.9rem}.pron-grid{grid-template-columns:repeat(3,1fr)}.ba,.bb{width:90%}.action-help{padding-right:10px;padding-bottom:44px}.tc{top:auto;bottom:6px}.tp{top:auto;bottom:36px}.scene{flex-direction:column;text-align:center}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body id="top">
+<div class="ppc" aria-hidden="true"><div class="ppb" id="ppb"></div></div>
 
+<section class="course-start"><h2 class="cs-title">Deutschkurs A1 · Lektion 5 von 30</h2><p class="cs-text">Personalpronomen, der Unterschied zwischen du und Sie, Verben im Präsens</p></section>
+
+<header class="lesson-intro">
+<div class="hero">
+<div class="hero-text">
+<h1 class="main-title">Du oder Sie?</h1>
+<p class="desc tr" data-en="Today we learn personal pronouns, the difference between du and Sie, and verbs in the present tense. You learn by doing: listen to pronouns, sort people into du or Sie, build verb tables and read both dialogs aloud. Collect stamps for your language pass!" data-pl="Dziś uczymy się zaimków osobowych, różnicy między du i Sie oraz czasowników w czasie teraźniejszym. Uczysz się w działaniu: słuchasz zaimków, przydzielasz osoby do du lub Sie, budujesz tabele czasowników i czytasz na głos oba dialogi. Zbieraj stemple do paszportu językowego!" data-it="Oggi impariamo i pronomi personali, la differenza tra du e Sie e i verbi al presente. Impari facendo: ascolti i pronomi, assegni le persone a du o Sie, costruisci le tabelle dei verbi e leggi ad alta voce entrambi i dialoghi. Raccogli i timbri per il tuo passaporto linguistico!">Heute lernen wir: Personalpronomen, den Unterschied zwischen du und Sie, und Verben im Präsens. Du lernst durch Tun — hör die Pronomen, ordne Personen du oder Sie zu, baue Verbtabellen und lies beide Dialoge laut vor. Sammle Stempel für deinen Sprachpass!</p>
+<div class="topics"><span class="topic">1 · Personalpronomen</span><span class="topic">2 · du und Sie</span><span class="topic">3 · Verben</span><span class="topic">4 · Dialoge</span></div>
+</div>
+<div class="wheel"><svg viewBox="0 0 320 320" role="img" aria-label="Symbole: Du und Sie"><circle cx="160" cy="160" r="132" fill="#ffffff14" stroke="#1c24302b"/><circle cx="160" cy="160" r="70" fill="#16233a"/><text x="160" y="153" text-anchor="middle" fill="#f7efdd" font-family="JetBrains Mono" font-size="17" font-weight="700">Du</text><text x="160" y="176" text-anchor="middle" fill="#f7efdd" font-family="JetBrains Mono" font-size="17" font-weight="700">Sie</text><g font-size="22" text-anchor="middle"><text x="160" y="42">👤</text><text x="252" y="82">👥</text><text x="282" y="166">💬</text><text x="250" y="248">🗣️</text><text x="160" y="292">🤝</text><text x="70" y="248">😊</text><text x="38" y="166">👔</text><text x="70" y="82">🎯</text></g></svg></div>
+</div>
+<div class="sprachpass">
+<div><div class="sp-title">🛂 Dein Sprachpass</div><p class="sp-count" id="spc">0 / 5 Stempel gesammelt</p></div>
+<div class="stamps">
+<div class="stamp" data-s="pronomen"><span><i>👤</i>Pronomen</span></div>
+<div class="stamp" data-s="dusie"><span><i>🤝</i>du/Sie</span></div>
+<div class="stamp" data-s="verben"><span><i>📊</i>Verben</span></div>
+<div class="stamp" data-s="dialoge"><span><i>💬</i>Dialoge</span></div>
+<div class="stamp" data-s="lesson"><span><i>🏆</i>Lektion 5</span></div>
+</div>
+</div>
+</header>
+
+<main class="page" id="t1">
+<div class="part-head"><span class="part-num">Teil 1</span><h1 class="part-title">Personalpronomen</h1><span class="done" id="d-pronomen">✅ geschafft</span></div>
+<div class="card">
+<div class="action-help tr" data-en="Click a pronoun → hear it and its example sentence. Listen to all 8." data-pl="Kliknij zaimek → posłuchaj go i jego przykładowego zdania. Posłuchaj wszystkich 8." data-it="Clicca su un pronome → ascoltalo con la frase d'esempio. Ascoltali tutti e 8."><span class="step">👆 Pronomen anklicken</span><span class="arr">→</span><span class="step">🔊 hören</span><span class="arr">→</span><span class="step">🗣️ nachsprechen</span></div>
+<p class="lead">Hören und sprechen Sie die Personalpronomen:</p>
+<div class="pron-grid" id="pronGrid"></div>
+<p class="calc" id="pHeard">Gehört: 0 / 8</p>
+</div>
+<div class="card">
+<h3 style="margin:0 0 8px;font:700 1.25rem 'Fraunces',serif">🎧 Welches Pronomen fehlt?</h3>
+<div class="action-help tr" data-en="Listen to the sentence with a gap → click the missing pronoun." data-pl="Posłuchaj zdania z brakującym słowem → kliknij brakujący zaimek." data-it="Ascolta la frase con uno spazio vuoto → clicca il pronome mancante."><span class="step">🔊 Satz hören</span><span class="arr">→</span><span class="step">👆 Pronomen anklicken</span></div>
+<div class="row"><button class="btn" id="pStart">▶ Spiel starten</button><button class="btn" id="pAgain" disabled>🔊 Noch einmal hören</button></div>
+<p class="lead" id="pSentence" style="min-height:1.4em"></p>
+<div class="opts" id="pOpts"></div>
+<p class="fb" id="pFb"></p><p class="calc" id="pCount">Runde 0 / 6</p><div class="bar"><i id="bar1"></i></div>
+</div>
+</main>
+
+<main class="page" id="t2">
+<div class="part-head"><span class="part-num">Teil 2</span><h1 class="part-title">du und Sie</h1><span class="done" id="d-dusie">✅ geschafft</span></div>
+<div class="card">
+<p class="lead">Wann benutzen wir <strong>du</strong> und wann <strong>Sie</strong>?</p>
+<table><tr><th>Form</th><th>Wann benutzen wir?</th><th>Beispiel</th></tr>
+<tr><td><strong>du</strong></td><td>für Freunde, Familie, Kinder</td><td>Wie heißt du? · Wo wohnst du?</td></tr>
+<tr><td><strong>Sie</strong></td><td>für fremde Personen, im Beruf, höflich</td><td>Wie heißen Sie? · Wo wohnen Sie?</td></tr></table>
+<div class="row"><button class="btn" data-say="Wie heißen Sie?">🔊 Wie heißen Sie?</button><button class="btn" data-say="Wie heißt du?">🔊 Wie heißt du?</button></div>
+</div>
+<div class="card">
+<div class="action-help tr" data-en="Look at the person → decide: du or Sie? → hear the right question. 8 people in total." data-pl="Spójrz na osobę → zdecyduj: du czy Sie? → posłuchaj właściwego pytania. 8 osób w sumie." data-it="Guarda la persona → decidi: du o Sie? → ascolta la domanda giusta. 8 persone in totale."><span class="step">👀 Person ansehen</span><span class="arr">→</span><span class="step">👆 du oder Sie?</span><span class="arr">→</span><span class="step">🔊 Frage hören</span></div>
+<div class="machine">
+<div class="scene"><span class="icon" id="scIcon">🙂</span><div class="info"><span class="who" id="scWho">…</span><span class="hint" id="scHint">…</span></div></div>
+<div class="row"><button class="btn du" data-a="du">du <span class="click">👆</span></button><button class="btn sie" data-a="sie">Sie <span class="click">👆</span></button></div>
+</div>
+<ol class="slog" id="sLog"></ol>
+<p class="fb" id="sFb"></p><p class="calc" id="sCount">Person 1 / 8</p><div class="bar"><i id="bar2"></i></div>
+<div class="row" style="margin-top:10px"><button class="btn dark" id="sReset">↻ Noch einmal</button></div>
+</div>
+</main>
+
+<main class="page" id="t3">
+<div class="part-head"><span class="part-num">Teil 3</span><h1 class="part-title">Verben im Präsens</h1><span class="done" id="d-verben">✅ geschafft</span></div>
+<div class="card">
+<div class="action-help tr" data-en="Click a verb form (yellow) → click the empty box in the right row and column → hear it." data-pl="Kliknij formę czasownika (żółta) → kliknij puste pole w właściwym wierszu i kolumnie → posłuchaj." data-it="Clicca una forma del verbo (gialla) → clicca la casella vuota nella riga e colonna giuste → ascolta."><span class="step">👆 Wort wählen</span><span class="arr">→</span><span class="step">👆 Feld anklicken</span><span class="arr">→</span><span class="step">🔊 hören</span></div>
+<p class="lead">Regelmäßige Verben im Präsens. Baue die Tabelle für <strong>lernen</strong> und <strong>arbeiten</strong> selbst!</p>
+<table><tr><th>Pronomen</th><th>lernen</th><th>arbeiten</th></tr><tbody id="vRows"></tbody></table>
+<div class="opts" id="vbank"></div>
+<p class="fb" id="fb3"></p><div class="bar"><i id="bar3"></i></div>
+</div>
+<div class="card">
+<h3 style="margin:0 0 8px;font:700 1.25rem 'Fraunces',serif">✏️ Setze das richtige Verb ein</h3>
+<div class="action-help tr" data-en="Read the sentence with the gap → click the verb that fits." data-pl="Przeczytaj zdanie z luką → kliknij pasujący czasownik." data-it="Leggi la frase con lo spazio vuoto → clicca il verbo adatto."><span class="step">👀 Satz lesen</span><span class="arr">→</span><span class="step">👆 Verb anklicken</span></div>
+<div id="fillList"></div>
+<p class="fb" id="fbFill"></p>
+</div>
+</main>
+
+<main class="page" id="t4">
+<div class="part-head"><span class="part-num">Teil 4</span><h1 class="part-title">Dialoge · Lesen und sprechen</h1><span class="done" id="d-dialoge">✅ geschafft</span></div>
+<div class="card">
+<div class="action-help tr" data-en="Click ▶ to listen to a dialog, or click a bubble to hear just that line. Then read both dialogs aloud." data-pl="Kliknij ▶, aby posłuchać dialogu, albo kliknij dymek, żeby usłyszeć tylko tę kwestię. Potem przeczytaj oba dialogi na głos." data-it="Clicca ▶ per ascoltare un dialogo, oppure clicca una bolla per sentire solo quella battuta. Poi leggi entrambi i dialoghi ad alta voce."><span class="step">▶ Dialog hören</span><span class="arr">→</span><span class="step">🗣️ laut lesen</span></div>
+<h3 style="margin:0 0 8px;font:700 1.2rem 'Fraunces',serif">Dialog 1 <span style="color:var(--formell);font-weight:700">(formell)</span></h3>
+<div class="chat" id="dlg1"></div>
+<div class="row" style="margin-bottom:22px"><button class="btn solid" id="d1Play">▶ Dialog 1 anhören</button></div>
+<h3 style="margin:0 0 8px;font:700 1.2rem 'Fraunces',serif">Dialog 2 <span style="color:var(--informell);font-weight:700">(informell)</span></h3>
+<div class="chat" id="dlg2"></div>
+<div class="row"><button class="btn solid" id="d2Play">▶ Dialog 2 anhören</button></div>
+</div>
+<div class="card">
+<h3 style="margin:0 0 8px;font:700 1.25rem 'Fraunces',serif">🗣️ Sprechen · Antworten Sie</h3>
+<div class="action-help tr" data-en="Click 🔊, listen, say the question aloud, then click “I said it”. Do all 6." data-pl="Kliknij 🔊, posłuchaj, powiedz pytanie na głos, potem kliknij „Powiedziałem/am”. Zrób wszystkie 6." data-it="Clicca 🔊, ascolta, di' la domanda ad alta voce, poi clicca «Detto». Fai tutte e 6."><span class="step">🔊 hören</span><span class="arr">→</span><span class="step">🗣️ laut sprechen</span><span class="arr">→</span><span class="step">✓ abhaken</span></div>
+<p class="sq-label sie">Formell (Sie)</p>
+<div id="sqF"></div>
+<p class="sq-label du">Informell (du)</p>
+<div id="sqD"></div>
+<p class="fb" id="dFb"></p>
+</div>
+</main>
+
+<main class="page" id="t5">
+<div class="part-head"><span class="part-num">Merke</span><h1 class="part-title">Was haben wir gelernt?</h1></div>
+<div class="card"><div id="sum"></div><p class="lead" id="bye" style="margin:14px 0 0;font:700 1.3rem 'Fraunces',serif"></p>
+<div class="row" style="margin-top:12px"><button class="btn dark" id="stReset">↻ Stempel neu sammeln</button></div></div>
+</main>
+
+<nav class="end">
+<div class="end-btns"><a class="end-btn" href="../sprich-nach.a1/sprich-nach5.html">Fertig? Weiter mit Sprich nach</a></div>
+<div class="arrows"><a class="arrow" href="../a1/lektion-5.html" aria-label="Zurück zur Lektion" title="Zurück zur Lektion">←</a><a class="arrow" href="#top" aria-label="Nach oben" title="Nach oben">↑</a></div>
+</nav>
+
+<script>
+"use strict";
+const $=x=>document.getElementById(x),$$=x=>[...document.querySelectorAll(x)],S=window.speechSynthesis,W=t=>new Promise(r=>setTimeout(r,t)),RN=n=>Math.floor(Math.random()*n),sh=a=>[...a].sort(()=>Math.random()-.5);
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let V=null,tok=0;
+function loadVoice(){const g=(S?.getVoices()||[]).filter(v=>v.lang?.toLowerCase().startsWith("de"));V=g.find(v=>/google/i.test(v.name))||g[0]||null}
+loadVoice();S?.addEventListener("voiceschanged",loadVoice);
+function stop(){tok++;S?.cancel();$$(".speaking").forEach(x=>x.classList.remove("speaking"))}
+function speak(t,r=.9){return new Promise(d=>{if(!S||!t)return d();const u=new SpeechSynthesisUtterance(t);u.lang="de-DE";u.rate=r;if(V)u.voice=V;u.onend=d;u.onerror=d;S.speak(u)})}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-say]");if(b){stop();speak(b.dataset.say)}});
+addEventListener("scroll",()=>{const m=document.documentElement.scrollHeight-innerHeight;$("ppb").style.width=(m<=0?100:Math.min(100,scrollY/m*100))+"%"},{passive:true});
+
+/* Stempel */
+const KEY="lektion5-sprachpass",P={pronomen:0,dusie:0,verben:0,dialoge:0,lesson:0},VIS=["pronomen","dusie","verben","dialoge","lesson"];
+function upd(){
+  $$("[data-s]").forEach(x=>x.classList.toggle("on",!!P[x.dataset.s]));
+  $("spc").textContent=VIS.filter(k=>P[k]).length+" / 5 Stempel gesammelt";
+  ["pronomen","dusie","verben","dialoge"].forEach(k=>$("d-"+k).classList.toggle("show",!!P[k]));
+  const L=[["pronomen","Personalpronomen","ich · du · er · sie · es · wir · ihr · Sie"],["dusie","du und Sie","du = Freunde/Familie · Sie = fremde Personen/beruflich/höflich"],["verben","Verben im Präsens","lerne · lernst · lernt · lernen · lernt · lernen"],["dialoge","Dialoge","Formell und informell fragen"]];
+  $("sum").innerHTML=L.map(([k,t,d])=>`<div class="check ${P[k]?"":"todo"}"><div class="m">${P[k]?"✅":"⬜"}</div><div><strong>${t}</strong><br>${d}</div></div>`).join("");
+  $("bye").textContent=P.lesson?"Sehr gut! Bis zum nächsten Mal! 🎉":"Sammle alle Stempel — dann ist die Lektion geschafft. 💪";
+}
+function load(){try{Object.assign(P,JSON.parse(localStorage.getItem(KEY))||{})}catch{}P.lesson=+!!(P.pronomen&&P.dusie&&P.verben&&P.dialoge);upd()}
+function stamp(k){if(P[k])return;P[k]=1;if(P.pronomen&&P.dusie&&P.verben&&P.dialoge)P.lesson=1;try{localStorage.setItem(KEY,JSON.stringify(P))}catch{}upd()}
+$("stReset").onclick=()=>{stop();Object.keys(P).forEach(k=>P[k]=0);try{localStorage.removeItem(KEY)}catch{}upd()};
+
+/* Übersetzungen */
+$$(".tr").forEach(el=>{
+  const c=document.createElement("span");c.className="tc"+(el.classList.contains("desc")?" inl":"");
+  c.innerHTML=`<button type="button" class="tgl" aria-label="Übersetzung"><span class="glb">🌐</span> A/文</button><span class="tp"><span class="tl"><button data-l="en">English</button><button data-l="pl">Polski</button><button data-l="it">Italiano</button></span><span class="tt" aria-live="polite"></span></span>`;
+  el.appendChild(c);const out=c.querySelector(".tt"),bs=[...c.querySelectorAll(".tl button")];
+  c.querySelector(".tgl").onclick=e=>{e.stopPropagation();c.classList.toggle("open")};
+  bs.forEach(b=>b.onclick=e=>{e.stopPropagation();bs.forEach(x=>x.classList.toggle("act",x===b));out.textContent=el.dataset[b.dataset.l];out.classList.add("show")});
+});
+document.addEventListener("click",e=>{if(!e.target.closest(".tc"))$$(".tc.open").forEach(x=>x.classList.remove("open"))});
+
+/* Teil 1: Personalpronomen */
+const PRON=[["ich","Ich bin Anna."],["du","Du bist Paul."],["er","Er ist Lehrer."],["sie","Sie ist Ärztin."],["es","Es ist warm."],["wir","Wir lernen Deutsch."],["ihr","Ihr arbeitet viel."],["Sie","Sie sind freundlich."]];
+let pHeard=new Set();
+$("pronGrid").innerHTML=PRON.map((p,i)=>`<button class="pron" data-i="${i}">${p[0]}</button>`).join("");
+$$(".pron").forEach(b=>b.onclick=async()=>{const i=+b.dataset.i,p=PRON[i];stop();b.classList.add("heard");pHeard.add(i);$("pHeard").textContent=`Gehört: ${pHeard.size} / 8`;
+  await speak(p[0]);await W(150);await speak(p[1]);if(pHeard.size===8)stamp("pronomen")});
+
+/* Teil 1: Welches Pronomen fehlt? */
+let pr=0,pCurI=null;
+function pRound(){
+  const pool=sh([...PRON.keys()]),i=pool[0];pCurI=i;const[pron,satz]=PRON[i];
+  const gapped=satz.replace(new RegExp("^"+pron,"i"),"___");
+  $("pSentence").textContent=gapped;
+  const others=sh(PRON.map(x=>x[0]).filter(x=>x!==pron)).slice(0,2);
+  const opts=sh([pron,...others]);
+  $("pOpts").innerHTML=opts.map(o=>`<button class="btn" data-o="${esc(o)}">${o}</button>`).join("");
+  $("pFb").textContent="Welches Pronomen passt?";$("pFb").className="fb";$("pCount").textContent=`Runde ${pr+1} / 6`;$("pAgain").disabled=false;
+  $$("#pOpts .btn").forEach(b=>b.onclick=async()=>{
+    if(b.dataset.o!==pron){b.classList.add("no");stop();$("pFb").textContent="Nicht ganz. Hör noch einmal zu!";$("pFb").className="fb b";await speak("Nicht ganz. Versuch es noch einmal.");b.classList.remove("no");return}
+    $$("#pOpts .btn").forEach(x=>x.disabled=true);b.classList.add("ok");pr++;$("bar1").style.width=pr/6*100+"%";
+    $("pFb").textContent="Richtig! "+satz;$("pFb").className="fb g";stop();await speak(satz);await W(500);
+    if(pr<6)pRound();else{$("pOpts").innerHTML="";$("pSentence").textContent="";$("pCount").textContent="Runde 6 / 6";$("pFb").textContent="🎉 Sehr gut! Alle Pronomen erkannt.";$("pAgain").disabled=true;$("pStart").textContent="↻ Noch einmal";stamp("pronomen");speak("Sehr gut! Alle Pronomen erkannt.")}
+  });
+  stop();speak(satz);
+}
+$("pStart").onclick=()=>{pr=0;$("bar1").style.width="0";pRound()};
+$("pAgain").onclick=()=>{if(pCurI!==null){stop();speak(PRON[pCurI][1])}};
+
+/* Teil 2: du/Sie Maschine */
+const SCENES=sh([
+ ["👧","deine Freundin Lena","Kind / Freundin",true],
+ ["👨‍💼","Herr Weber, dein Chef","fremde Person / Beruf",false],
+ ["👵","deine Oma Erika","Familie",true],
+ ["👩‍⚕️","Frau Dr. Schmidt","fremde Person / höflich",false],
+ ["🧒","der kleine Max","Kind",true],
+ ["🧑‍✈️","der Pilot im Flugzeug","fremde Person / höflich",false],
+ ["👦","dein kleiner Bruder","Familie",true],
+ ["👩‍💼","die neue Kollegin","fremde Person / Beruf",false]
+]);
+let si=0,sCorrect=0;
+function sShow(){if(si>=SCENES.length)return sFinish();const[icon,who,hint]=SCENES[si];$("scIcon").textContent=icon;$("scWho").textContent=who;$("scHint").textContent=hint;$("sFb").textContent="";$("sCount").textContent=`Person ${si+1} / 8`;$$("[data-a]").forEach(b=>b.disabled=false)}
+$$("[data-a]").forEach(b=>b.onclick=async()=>{
+  const[icon,who,hint,isDu]=SCENES[si],fb=$("sFb");$$("[data-a]").forEach(x=>x.disabled=true);
+  const right=isDu?"du":"sie",q=isDu?"Wie heißt du?":"Wie heißen Sie?";
+  const li=document.createElement("li");
+  if(b.dataset.a===right){sCorrect++;li.className="g";li.textContent=`${who}: ${right} ✓`;fb.textContent="Richtig! "+q;fb.className="fb g";$("bar2").style.width=(si+1)/8*100+"%";stop();await speak(q)}
+  else{li.className="b";li.textContent=`${who} → richtig ist „${right}“`;fb.textContent=`Nicht ganz. ${who} ist ${hint} → wir sagen „${right}“.`;fb.className="fb b";stop();await speak("Nicht ganz.")}
+  $("sLog").appendChild(li);si++;await W(400);sShow();
+});
+function sFinish(){$("scIcon").textContent="🎉";$("scWho").textContent="Fertig!";$("scHint").textContent="";$("sFb").textContent=`${sCorrect} von 8 richtig.`;$("sFb").className="fb g";$$("[data-a]").forEach(x=>x.disabled=true);stamp("dusie");speak("Sehr gut! Du kennst den Unterschied zwischen du und Sie.")}
+$("sReset").onclick=()=>{si=0;sCorrect=0;$("sLog").innerHTML="";$("bar2").style.width="0";SCENES.sort(()=>Math.random()-.5);sShow()};
+sShow();
+
+/* Teil 3: Verben Tabelle */
+const PRONS3=["ich","du","er / sie / es","wir","ihr","Sie"];
+const LERNEN=["lerne","lernst","lernt","lernen","lernt","lernen"];
+const ARBEITEN=["arbeite","arbeitest","arbeitet","arbeiten","arbeitet","arbeiten"];
+const EX3=[["Ich lerne Deutsch.","Ich arbeite viel."],["Du lernst schnell.","Du arbeitest hier."],["Er lernt gut.","Sie arbeitet gern."],["Wir lernen zusammen.","Wir arbeiten zusammen."],["Ihr lernt fleißig.","Ihr arbeitet heute."],["Sie lernen Deutsch.","Sie arbeiten in Berlin."]];
+let selV3=null,solved3=0;
+$("vRows").innerHTML=PRONS3.map((p,i)=>`<tr><td><strong>${p}</strong></td><td><button class="slot" data-col="0" data-i="${i}">?</button></td><td><button class="slot" data-col="1" data-i="${i}">?</button></td></tr>`).join("");
+const BANK3=sh([...LERNEN.map(v=>["l",v]),...ARBEITEN.map(v=>["a",v])]);
+$("vbank").innerHTML=BANK3.map(([g,v],idx)=>`<button class="vchip" data-g="${g}" data-v="${v}" data-idx="${idx}">${v}</button>`).join("");
+$$(".vchip").forEach(c=>c.onclick=()=>{$$(".vchip").forEach(x=>x.classList.remove("sel"));selV3=c;c.classList.add("sel");$("fb3").textContent="Jetzt das passende Feld anklicken.";$("fb3").className="fb"});
+$$(".slot").forEach(s=>s.onclick=async()=>{
+  const i=+s.dataset.i,col=+s.dataset.col,fb=$("fb3");
+  const correctList=col===0?LERNEN:ARBEITEN,correctGroup=col===0?"l":"a";
+  if(s.classList.contains("solved"))return speak(EX3[i][col]);
+  if(!selV3){fb.textContent="Wähle zuerst ein gelbes Wort.";fb.className="fb b";return}
+  if(selV3.dataset.g!==correctGroup||selV3.dataset.v!==correctList[i]){s.classList.add("shake");fb.textContent="Nicht ganz. Schau dir die Tabelle an: lernen oder arbeiten?";fb.className="fb b";setTimeout(()=>s.classList.remove("shake"),300);return}
+  s.textContent=selV3.dataset.v;s.classList.add("solved");selV3.disabled=true;selV3.classList.remove("sel");selV3=null;
+  solved3++;$("bar3").style.width=solved3/12*100+"%";fb.textContent="Richtig!";fb.className="fb g";stop();await speak(EX3[i][col]);
+  if(solved3===12){fb.textContent="🎉 Sehr gut! Beide Tabellen sind komplett.";stamp("verben");speak("Sehr gut! Beide Tabellen sind komplett.")}
+});
+
+/* Teil 3: Lücken füllen */
+const FILL=[["ich ___ (lernen)","lerne",["lerne","lernst","lernen"]],["du ___ (arbeiten)","arbeitest",["arbeitet","arbeitest","arbeite"]],["wir ___ (lernen)","lernen",["lernt","lerne","lernen"]],["Sie ___ (arbeiten)","arbeiten",["arbeitet","arbeiten","arbeitest"]]];
+$("fillList").innerHTML=FILL.map((f,i)=>`<div class="sq-row"><span class="sq-q">${f[0].replace("___","<strong>___</strong>")}</span><div class="opts" style="margin:0" data-i="${i}">${sh(f[2]).map(o=>`<button class="btn" data-o="${esc(o)}">${o}</button>`).join("")}</div></div>`).join("");
+$$("#fillList .opts").forEach(box=>{
+  const i=+box.dataset.i,f=FILL[i];
+  box.querySelectorAll(".btn").forEach(b=>b.onclick=async()=>{
+    const fb=$("fbFill");box.querySelectorAll(".btn").forEach(x=>x.disabled=true);
+    const full=f[0].replace("___",f[1]).replace(/\s*\([^)]*\)/,"");
+    if(b.dataset.o===f[1]){b.classList.add("ok");fb.textContent="Richtig! "+full;fb.className="fb g";stop();await speak(full)}
+    else{b.classList.add("no");fb.textContent="Nicht ganz. Richtig ist: "+full;fb.className="fb b";stop();await speak(full)}
+  });
+});
+
+/* Teil 4: Dialoge */
+const D1=[["A","Guten Tag. Wie heißen Sie?"],["B","Ich heiße Müller."],["A","Wo wohnen Sie?"],["B","Ich wohne in Frankfurt."]];
+const D2=[["A","Hallo! Wie heißt du?"],["B","Ich heiße Tom."],["A","Wo wohnst du?"],["B","Ich wohne in Berlin."]];
+function bub(box,who,txt,cls){const d=document.createElement("div");d.className="bubble "+cls;d.style.cursor="pointer";d.innerHTML=`<span class="who">${esc(who)}</span>${esc(txt)}`;d.onclick=async()=>{stop();d.classList.add("speaking");await speak(txt);d.classList.remove("speaking")};box.appendChild(d);return d}
+function drawDialog(box,data){box.innerHTML="";data.forEach(([w,t])=>bub(box,w,t,w==="A"?"ba":"bb"))}
+drawDialog($("dlg1"),D1);drawDialog($("dlg2"),D2);
+async function playDialog(box,markKey){stop();const v=tok;for(const d of box.querySelectorAll(".bubble")){if(v!==tok)break;d.classList.add("speaking");await speak(d.textContent.replace(/^[AB]/,""));d.classList.remove("speaking")}if(v===tok&&markKey)markKey()}
+$("d1Play").onclick=()=>playDialog($("dlg1"),()=>d1done=true).then(checkDialoge);
+$("d2Play").onclick=()=>playDialog($("dlg2"),()=>d2done=true).then(checkDialoge);
+let d1done=false,d2done=false;
+function checkDialoge(){if(d1done&&d2done)stamp("dialoge")}
+
+/* Teil 4: Sprechen */
+const SQF=["Wie heißen Sie?","Wo wohnen Sie?","Was machen Sie?"];
+const SQD=["Wie heißt du?","Wo wohnst du?","Was machst du?"];
+let spoken=new Set();
+function buildSQ(target,list,offset){target.innerHTML=list.map((q,i)=>`<div class="sq-row"><button class="btn" data-say="${esc(q)}">🔊 ${esc(q)}</button><span class="sq-q">${esc(q)}</span><button class="btn ok" data-done="${offset+i}">✓ Gesagt</button></div>`).join("")}
+buildSQ($("sqF"),SQF,0);buildSQ($("sqD"),SQD,3);
+$$("[data-done]").forEach(b=>b.onclick=()=>{spoken.add(+b.dataset.done);b.disabled=true;b.textContent="✓ Erledigt";$("dFb").textContent=`Gesprochen: ${spoken.size} / 6`;$("dFb").className="fb g";
+  if(spoken.size===6){$("dFb").textContent="🎉 Sehr gut! Alle Fragen gesprochen.";stamp("dialoge")}});
+
+addEventListener("beforeunload",stop);
+load();
+</script>
+</body>
+</html>
