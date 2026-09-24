@@ -1,1 +1,1356 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Deutschkurs A1 · Lektion 9 · Einkaufen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Nunito+Sans:opsz,wght@6..12,400,600,700,800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
 
+:root{
+
+--bg:#20324a;
+
+--bg-soft:#27405c;
+
+--paper:#fbf6ec;
+
+--ink:#23332e;
+
+--chalk:#1d2b39;
+
+--chalk-light:#2a3b50;
+
+--gold:#f4c95d;
+
+--green:#8bd17c;
+
+--blue:#72b8ff;
+
+--pink:#f08bb4;
+
+--orange:#f29f67;
+
+--line:rgba(35,51,46,.18);
+
+--text:#111820;
+
+--text-light:#2a3b50;
+
+}
+
+*{box-sizing:border-box;}
+
+html{scroll-behavior:smooth;}
+
+body{
+
+margin:0;
+
+background:var(--bg);
+
+background-image:
+
+radial-gradient(circle at 12% 10%, rgba(255,255,255,.05), transparent 35%),
+
+radial-gradient(circle at 88% 90%, rgba(255,255,255,.05), transparent 40%);
+
+color:var(--text);
+
+font-family:"Nunito Sans",sans-serif;
+
+line-height:1.6;
+
+padding:0 0 60px;
+
+}
+
+.course-nav{
+
+max-width:880px;
+
+margin:40px auto 60px;
+
+padding:0 20px;
+
+}
+
+.course-nav-title{
+
+font-family:"Kalam",cursive;
+
+font-size:2.2rem;
+
+margin:0 0 24px;
+
+color:#111820;
+
+text-align:center;
+
+}
+
+.course-section{
+
+background:#f7f9fc;
+
+border:1px solid #dce3ed;
+
+border-radius:18px;
+
+padding:16px 18px 14px;
+
+margin-bottom:16px;
+
+}
+
+.section-title{
+
+font-family:"JetBrains Mono",monospace;
+
+font-size:1rem;
+
+letter-spacing:.12em;
+
+text-transform:uppercase;
+
+color:#111820;
+
+margin:0 0 12px;
+
+}
+
+.lesson-list{
+
+list-style:none;
+
+padding:0;
+
+margin:0;
+
+display:grid;
+
+gap:8px;
+
+}
+
+.lesson-list a{
+
+display:block;
+
+color:#111820;
+
+text-decoration:none;
+
+padding:10px 12px;
+
+border-radius:12px;
+
+background:#ffffff;
+
+border:1px solid #dce3ed;
+
+transition:background .15s ease, border-color .15s ease, transform .15s ease;
+
+}
+
+.lesson-list a:hover{
+
+background:#f0f4f8;
+
+border-color:#f4c95d;
+
+transform:translateX(4px);
+
+color:#0a1220;
+
+}
+
+section[id^="lektion"]{
+
+scroll-margin-top:40px;
+
+}
+
+.wrap{
+
+max-width:980px;
+
+margin:0 auto;
+
+padding:32px 20px 0;
+
+}
+
+header.hero{
+
+display:flex;
+
+flex-wrap:wrap;
+
+align-items:center;
+
+gap:28px;
+
+padding:24px 0 36px;
+
+border-bottom:2px dashed rgba(35,51,46,.18);
+
+margin-bottom:36px;
+
+}
+
+.hero-text{flex:1 1 340px;}
+
+.eyebrow{
+
+font-family:"JetBrains Mono", monospace;
+
+letter-spacing:.16em;
+
+text-transform:uppercase;
+
+font-size:.78rem;
+
+color:#f4c95d;
+
+margin:0 0 10px;
+
+}
+
+h1.lesson-title{
+
+font-family:"Kalam",cursive;
+
+font-weight:700;
+
+font-size:2.7rem;
+
+line-height:1.12;
+
+margin:0 0 14px;
+
+color:#111820;
+
+}
+
+.hero-text p{
+
+margin:0;
+
+color:#2a3b50;
+
+max-width:52ch;
+
+}
+
+.topics{
+
+display:flex;
+
+flex-wrap:wrap;
+
+gap:10px;
+
+margin-top:18px;
+
+}
+
+.topics span{
+
+display:inline-flex;
+
+align-items:center;
+
+gap:8px;
+
+background:#f0f4f8;
+
+border:1px solid #dce3ed;
+
+border-radius:999px;
+
+padding:7px 12px;
+
+font-size:.92rem;
+
+color:#111820;
+
+}
+
+.wheel-box{
+
+flex:0 1 320px;
+
+display:grid;
+
+place-items:center;
+
+}
+
+.wheel-box svg{
+
+width:100%;
+
+height:auto;
+
+max-width:320px;
+
+filter:drop-shadow(0 16px 30px rgba(0,0,0,.18));
+
+}
+
+.ring-seg{
+
+stroke:rgba(255,255,255,.14);
+
+stroke-width:2;
+
+}
+
+.ring-spring{fill:#5ca75b;}
+
+.ring-summer{fill:#d9b24c;}
+
+.ring-autumn{fill:#cf6b35;}
+
+.ring-winter{fill:#4f86b8;}
+
+.season-label,.month-label,.center-label,.center-sub{
+
+fill:#111820;
+
+font-family:"JetBrains Mono", monospace;
+
+text-anchor:middle;
+
+}
+
+.season-label{font-size:14px;font-weight:600;}
+
+.month-label{font-size:13px;opacity:.95;}
+
+.month-label.now{font-size:14px;font-weight:700;fill:#f4c95d;}
+
+.center-label{font-size:18px;font-weight:700;}
+
+.center-sub{font-size:13px;opacity:.9;}
+
+.now-marker{fill:#f4c95d;stroke:#20324a;stroke-width:2;}
+
+.part{margin:34px 0 42px;}
+
+.part-head{
+
+display:flex;
+
+flex-wrap:wrap;
+
+align-items:baseline;
+
+gap:12px;
+
+margin-bottom:14px;
+
+}
+
+.part-num{
+
+font-family:"JetBrains Mono", monospace;
+
+font-size:.82rem;
+
+letter-spacing:.14em;
+
+text-transform:uppercase;
+
+color:#f4c95d;
+
+}
+
+.part-title{
+
+font-family:"Kalam",cursive;
+
+font-size:2rem;
+
+margin:0;
+
+color:#111820;
+
+}
+
+.card{
+
+background:#f7f9fc;
+
+border:1px solid #dce3ed;
+
+border-radius:22px;
+
+padding:22px 22px 20px;
+
+box-shadow:0 12px 30px rgba(0,0,0,.06);
+
+margin-top:14px;
+
+}
+
+.lead{font-size:1.04rem;color:#111820;}
+
+.label{
+
+display:inline-block;
+
+font-family:"JetBrains Mono", monospace;
+
+font-size:.74rem;
+
+letter-spacing:.12em;
+
+text-transform:uppercase;
+
+color:#f4c95d;
+
+margin-bottom:8px;
+
+}
+
+.vocab-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+
+gap:12px;
+
+margin-top:16px;
+
+}
+
+.hobby-card{
+
+background:#ffffff;
+
+border:1px solid #dce3ed;
+
+border-radius:18px;
+
+padding:14px;
+
+cursor:pointer;
+
+transition:transform .15s ease, border-color .15s ease, background .15s ease;
+
+min-height:112px;
+
+}
+
+.hobby-card:hover{
+
+transform:translateY(-2px);
+
+border-color:#f4c95d;
+
+background:#f9fbff;
+
+}
+
+.hobby-card h4{margin:0 0 6px;font-size:1.1rem;color:#111820;}
+
+.hobby-card p{margin:0;color:#2a3b50;font-size:.95rem;}
+
+.hobby-card .example{
+
+margin-top:8px;
+
+color:#b8860b;
+
+font-weight:700;
+
+display:none;
+
+}
+
+.hobby-card.show .example{display:block;}
+
+.grammar-box{
+
+background:#f9fbff;
+
+border-left:4px solid #f4c95d;
+
+border-radius:16px;
+
+padding:14px 16px;
+
+margin:16px 0;
+
+}
+
+.scale{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+
+gap:10px;
+
+margin-top:14px;
+
+}
+
+.scale-item{
+
+background:#ffffff;
+
+border:1px solid #dce3ed;
+
+border-radius:14px;
+
+padding:12px;
+
+}
+
+.scale-item b{
+
+display:block;
+
+color:#b8860b;
+
+margin-bottom:4px;
+
+}
+
+.qa{
+
+display:grid;
+
+gap:10px;
+
+margin-top:16px;
+
+}
+
+.q,.a{
+
+padding:12px 14px;
+
+border-radius:14px;
+
+}
+
+.q{
+
+background:#e8f3ff;
+
+border:1px solid #d0e3ff;
+
+color:#111820;
+
+}
+
+.a{
+
+background:#e8f9e8;
+
+border:1px solid #d0e8d0;
+
+color:#111820;
+
+}
+
+.exercise-list{padding-left:18px;}
+
+.exercise-list li{margin:10px 0;}
+
+input[type="text"]{
+
+background:#f9fbff;
+
+color:#1d2b39;
+
+border:1px solid #dce3ed;
+
+border-radius:12px;
+
+padding:9px 10px;
+
+font:inherit;
+
+min-width:180px;
+
+vertical-align:middle;
+
+}
+
+.feedback{
+
+display:inline-block;
+
+min-width:22px;
+
+font-weight:800;
+
+margin-left:8px;
+
+}
+
+.ok{color:#2e7d32;}
+
+.no{color:#c62828;}
+
+.check-btn{
+
+margin-top:12px;
+
+background:linear-gradient(135deg,#f4c95d,#ffd976);
+
+color:#1d2b39;
+
+border:0;
+
+border-radius:999px;
+
+padding:11px 18px;
+
+font-weight:800;
+
+cursor:pointer;
+
+}
+
+.check-btn:hover{filter:brightness(1.03);}
+
+.exercise-result{margin-top:10px;font-weight:700;color:#111820;}
+
+.verb-boxes{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+
+gap:12px;
+
+margin-top:14px;
+
+}
+
+.verb-box{
+
+background:#ffffff;
+
+border:1px solid #dce3ed;
+
+border-radius:16px;
+
+padding:14px;
+
+}
+
+.split-demo{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:12px;
+
+margin-top:14px;
+
+}
+
+.demo{
+
+background:#ffffff;
+
+border:1px solid #dce3ed;
+
+border-radius:16px;
+
+padding:14px;
+
+}
+
+.demo h4{margin:0 0 8px;color:#111820;}
+
+.quiz-q{
+
+background:#ffffff;
+
+border:1px solid #dce3ed;
+
+border-radius:16px;
+
+padding:14px;
+
+margin:12px 0;
+
+}
+
+.quiz-options{
+
+display:grid;
+
+gap:8px;
+
+}
+
+.quiz-options label{
+
+display:block;
+
+background:#f9fbff;
+
+border-radius:12px;
+
+padding:10px 12px;
+
+border:1px solid #dce3ed;
+
+color:#111820;
+
+}
+
+.quiz-options label.correct{
+
+border-color:#2e7d32;
+
+background:#e8f9e8;
+
+}
+
+.quiz-options label.incorrect{
+
+border-color:#c62828;
+
+background:#f9e8e8;
+
+}
+
+.dialog{display:grid;gap:10px;}
+
+.bubble{
+
+padding:12px 14px;
+
+border-radius:18px;
+
+max-width:86%;
+
+color:#111820;
+
+}
+
+.marta{background:#f0f4f8;}
+
+.tom{background:#fff8e1;margin-left:auto;}
+
+.speaker{
+
+display:block;
+
+font-family:"JetBrains Mono",monospace;
+
+font-size:.76rem;
+
+letter-spacing:.12em;
+
+text-transform:uppercase;
+
+color:#b8860b;
+
+margin-bottom:4px;
+
+}
+
+.summary-grid{display:grid;gap:12px;}
+
+.row{
+
+display:grid;
+
+grid-template-columns:180px 1fr;
+
+gap:14px;
+
+align-items:start;
+
+padding:12px 14px;
+
+background:#ffffff;
+
+border:1px solid #dce3ed;
+
+border-radius:14px;
+
+}
+
+.key{font-weight:800;color:#b8860b;}
+
+.lesson-nav{
+
+display:flex;
+
+justify-content:space-between;
+
+flex-wrap:wrap;
+
+gap:10px;
+
+border-top:2px dashed rgba(35,51,46,.18);
+
+padding-top:24px;
+
+margin-top:10px;
+
+font-family:"JetBrains Mono", monospace;
+
+font-size:.9rem;
+
+}
+
+.lesson-nav a{
+
+color:#111820;
+
+text-decoration:none;
+
+border:1px solid #dce3ed;
+
+border-radius:999px;
+
+padding:8px 16px;
+
+transition:background .15s ease,border-color .15s ease;
+
+background:#ffffff;
+
+}
+
+.lesson-nav a:hover{
+
+background:#f0f4f8;
+
+border-color:#f4c95d;
+
+color:#0a1220;
+
+}
+
+.übung-btn{
+
+display:inline-flex;
+
+align-items:center;
+
+gap:10px;
+
+background:linear-gradient(135deg,#72b8ff,#a0d4ff);
+
+color:#1d3557;
+
+border:0;
+
+border-radius:999px;
+
+padding:14px 28px;
+
+font-weight:800;
+
+font-size:1.05rem;
+
+cursor:pointer;
+
+margin:24px auto 0;
+
+text-decoration:none;
+
+transition:transform .15s ease, filter .15s ease;
+
+}
+
+.übung-btn:hover{
+
+transform:translateY(-2px);
+
+filter:brightness(1.05);
+
+}
+
+.back-to-top{
+
+display:inline-flex;
+
+align-items:center;
+
+gap:10px;
+
+background:#ffffff;
+
+color:#111820;
+
+border:1px solid #dce3ed;
+
+border-radius:999px;
+
+padding:12px 26px;
+
+font-weight:700;
+
+font-size:1rem;
+
+cursor:pointer;
+
+margin:20px auto 0;
+
+text-decoration:none;
+
+transition:background .15s ease, border-color .15s ease;
+
+}
+
+.back-to-top:hover{
+
+background:#f0f4f8;
+
+border-color:#f4c95d;
+
+}
+
+a:focus-visible,button:focus-visible,input:focus-visible{
+
+outline:3px solid #f4c95d;
+
+outline-offset:2px;
+
+}
+
+@media (max-width:720px){
+
+h1.lesson-title{font-size:2.2rem;}
+
+.part-title{font-size:1.7rem;}
+
+.row{grid-template-columns:1fr;}
+
+.split-demo{grid-template-columns:1fr;}
+
+.bubble{max-width:100%;}
+
+}
+
+.top-bar{
+
+max-width:880px;
+
+margin:20px auto 0;
+
+padding:0 20px;
+
+display:flex;
+
+}
+
+.aza1-btn{
+
+display:inline-flex;
+
+align-items:center;
+
+justify-content:center;
+
+background:#1d3557;
+
+color:#ffce00;
+
+border:3px solid #ffce00;
+
+border-radius:999px;
+
+padding:14px 28px;
+
+font-size:30px;
+
+font-weight:900;
+
+text-decoration:none;
+
+box-shadow:0 8px 20px rgba(0,0,0,.35);
+
+transition:0.3s;
+
+}
+
+.aza1-btn:hover{
+
+background:#274c77;
+
+color:white;
+
+transform:translateY(-3px) scale(1.05);
+
+}
+
+/* Specjalny kolor tła dla Lektion 14 */
+
+#lektion14 .wrap{
+
+background:linear-gradient(135deg,#f0f4f8,#e8f3ff);
+
+border-radius:22px;
+
+padding:32px;
+
+margin:0 auto;
+
+}
+
+#lektion14 .card{
+
+background:#ffffff;
+
+border:1px solid #d0e3ff;
+
+}
+
+/* Specjalny kolor tła dla Lektion 12 */
+
+#lektion12 .wrap{
+
+background:linear-gradient(135deg,#fffdf6,#fff6df);
+
+border-radius:22px;
+
+padding:32px;
+
+margin:0 auto;
+
+}
+
+#lektion12 .card{
+
+background:#ffffff;
+
+border:1px solid #f3e8d4;
+
+}
+
+</style>
+<style>.source-lesson{max-width:980px;margin:0 auto}.lesson-nav-local{max-width:980px;margin:28px auto 60px;padding:0 20px;display:flex;justify-content:space-between;gap:16px}.lesson-nav-local a{display:inline-block;padding:10px 16px;border-radius:12px;background:#f7f9fc;border:1px solid #dce3ed;color:#111820;text-decoration:none;font-weight:700}.lesson-nav-local a:hover{border-color:#f4c95d}</style></head><body>
+<div class="source-lesson"><section class="part" id="lektion9">
+
+<div class="wrap" style="background:linear-gradient(135deg,#fff8e1,#ffecb3);border-radius:22px;padding:32px;">
+
+<header class="hero">
+
+<div class="hero-text">
+
+<p class="eyebrow">Deutschkurs A1 · Lektion 9 von 30</p>
+
+<h1 class="lesson-title">Einkaufen</h1>
+
+<p>Heute lernen wir: Geschäfte, Preise, <b>Akkusativ (den/die/das)</b> und Dialoge im Geschäft.</p>
+
+<div class="topics">
+
+<span>1 · Geschäfte</span>
+
+<span>2 · Preise</span>
+
+<span>3 · Akkusativ</span>
+
+<span>4 · Dialoge</span>
+
+</div>
+
+</div>
+
+<div class="wheel-box">
+
+<svg viewBox="0 0 320 320" role="img" aria-label="Einkaufen-Symbol mit Einkaufswagen und Geld">
+
+<circle cx="160" cy="160" r="132" fill="rgba(255,255,255,.05)" stroke="rgba(35,51,46,.16)"/>
+
+<circle cx="160" cy="160" r="70" fill="#20324a" stroke="rgba(35,51,46,.12)"/>
+
+<text class="center-label" x="160" y="152">Einkaufen</text>
+
+<text class="center-sub" x="160" y="175">Geld</text>
+
+<text x="160" y="40" class="month-label" font-size="20">🛒</text>
+
+<text x="252" y="82" class="month-label" font-size="20">🛍️</text>
+
+<text x="282" y="164" class="month-label" font-size="20">💰</text>
+
+<text x="250" y="246" class="month-label" font-size="20">🏪</text>
+
+<text x="160" y="292" class="month-label" font-size="20">🏬</text>
+
+<text x="70" y="246" class="month-label" font-size="20">🥐</text>
+
+<text x="38" y="164" class="month-label" font-size="20">🍎</text>
+
+<text x="70" y="82" class="month-label" font-size="20">💵</text>
+
+</svg>
+
+</div>
+
+</header>
+
+<section class="part" id="teil1">
+
+<div class="part-head"><span class="part-num">Teil 1</span><h2 class="part-title">Geschäfte und Orte</h2></div>
+
+<div class="card">
+
+<p class="lead">Jetzt lernen wir die Geschäfte:</p>
+
+<div class="alphabet" style="display:flex;flex-wrap:wrap;gap:14px;margin:24px 0;">
+
+<span style="background:#f0f4f8;padding:14px 18px;border-radius:12px;font-weight:700;font-size:1.2rem;border:1px solid #dce3ed;">der Supermarkt</span>
+
+<span style="background:#f0f4f8;padding:14px 18px;border-radius:12px;font-weight:700;font-size:1.2rem;border:1px solid #dce3ed;">die Bäckerei</span>
+
+<span style="background:#f0f4f8;padding:14px 18px;border-radius:12px;font-weight:700;font-size:1.2rem;border:1px solid #dce3ed;">die Metzgerei</span>
+
+<span style="background:#f0f4f8;padding:14px 18px;border-radius:12px;font-weight:700;font-size:1.2rem;border:1px solid #dce3ed;">der Markt</span>
+
+</div>
+
+<div class="gruessen">
+
+<p style="font-size:1.3rem;margin:16px 0;">Ich gehe in <b>den Supermarkt</b>.</p>
+
+<p style="font-size:1.3rem;margin:16px 0;">Ich kaufe Brot in <b>der Bäckerei</b>.</p>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="part" id="teil2">
+
+<div class="part-head"><span class="part-num">Teil 2</span><h2 class="part-title">Preise und Geld</h2></div>
+
+<div class="card">
+
+<p class="lead">Wir fragen nach den Preise:</p>
+
+<div class="grammar-box" style="margin:24px 0;"><br><b>Fragen:</b><br><br>Wie viel kostet das?<br><br>Wie viel kostet der Apfel?<br></div>
+
+<div class="grammar-box" style="margin:24px 0;"><br><b>Antworten:</b><br><br>Das kostet 2 Euro.<br><br>Der Apfel kostet 1 Euro.<br></div>
+
+<div class="gruessen">
+
+<p style="font-size:1.3rem;margin:16px 0;">Das Brot kostet <b>3 Euro</b>.</p>
+
+<p style="font-size:1.3rem;margin:16px 0;">Die Milch kostet <b>1 Euro</b>.</p>
+
+</div>
+
+<div class="gruessen">
+
+<p style="font-size:1.3rem;margin:16px 0;">Wie viel kostet das Brot?</p>
+
+<p style="font-size:1.3rem;margin:16px 0;">Wie viel kostet die Milch?</p>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="part" id="teil3">
+
+<div class="part-head"><span class="part-num">Teil 3</span><h2 class="part-title">Akkusativ (den, die, das)</h2></div>
+
+<div class="card">
+
+<p class="lead">Im Akkusativ ändert sich der Artikel:</p>
+
+<table class="gruss-tabelle" style="margin:24px 0;">
+
+<thead>
+
+<tr>
+
+<th style="padding:18px 14px;">Nominativ</th>
+
+<th style="padding:18px 14px;">Akkusativ</th>
+
+<th style="padding:18px 14px;">Beispiel</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="padding:18px 14px;"><b style="font-size:1.1rem;">der</b></td>
+
+<td style="padding:18px 14px;"><b style="font-size:1.1rem;color:#d32f2f;">den</b></td>
+
+<td style="padding:18px 14px;">Ich kaufe <b>den Apfel</b>.</td>
+
+</tr>
+
+<tr>
+
+<td style="padding:18px 14px;"><b style="font-size:1.1rem;">die</b></td>
+
+<td style="padding:18px 14px;"><b style="font-size:1.1rem;">die</b></td>
+
+<td style="padding:18px 14px;">Ich kaufe <b>die Banane</b>.</td>
+
+</tr>
+
+<tr>
+
+<td style="padding:18px 14px;"><b style="font-size:1.1rem;">das</b></td>
+
+<td style="padding:18px 14px;"><b style="font-size:1.1rem;">das</b></td>
+
+<td style="padding:18px 14px;">Ich kaufe <b>das Brot</b>.</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+<div class="gruessen">
+
+<p style="font-size:1.3rem;margin:16px 0;">Ich kaufe <b>den Apfel</b>.</p>
+
+<p style="font-size:1.3rem;margin:16px 0;">Ich kaufe <b>die Banane</b>.</p>
+
+<p style="font-size:1.3rem;margin:16px 0;">Ich kaufe <b>das Brot</b>.</p>
+
+</div>
+
+<div class="gruessen">
+
+<p style="font-size:1.3rem;margin:16px 0;">Ich kaufe ___ Apfel. → Ich kaufe <b>den</b> Apfel.</p>
+
+<p style="font-size:1.3rem;margin:16px 0;">Ich kaufe ___ Banane. → Ich kaufe <b>die</b> Banane.</p>
+
+<p style="font-size:1.3rem;margin:16px 0;">Ich kaufe ___ Brot. → Ich kaufe <b>das</b> Brot.</p>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="part" id="dialog">
+
+<div class="part-head"><span class="part-num">Dialog</span><h2 class="part-title">Dialog im Geschäft</h2></div>
+
+<div class="card">
+
+<p>Lesen Sie die Dialoge laut vor.</p>
+
+<h4 style="color:#111820;margin:24px 0 16px;font-size:1.3rem;">Dialog 1</h4>
+
+<div class="dialog">
+
+<div class="bubble marta"><span class="speaker">A</span>Guten Tag.</div>
+
+<div class="bubble tom"><span class="speaker">B</span>Guten Tag.</div>
+
+<div class="bubble marta"><span class="speaker">A</span>Ich möchte ein Brot.</div>
+
+<div class="bubble tom"><span class="speaker">B</span>Bitte.</div>
+
+<div class="bubble marta"><span class="speaker">A</span>Wie viel kostet das Brot?</div>
+
+<div class="bubble tom"><span class="speaker">B</span>3 Euro.</div>
+
+<div class="bubble marta"><span class="speaker">A</span>Danke.</div>
+
+</div>
+
+<h4 style="color:#111820;margin:24px 0 16px;font-size:1.3rem;">Dialog 2</h4>
+
+<div class="dialog">
+
+<div class="bubble marta"><span class="speaker">A</span>Ich möchte einen Apfel.</div>
+
+<div class="bubble tom"><span class="speaker">B</span>Bitte.</div>
+
+<div class="bubble marta"><span class="speaker">A</span>Wie viel kostet der Apfel?</div>
+
+<div class="bubble tom"><span class="speaker">B</span>1 Euro.</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="part" id="sprechen">
+
+<div class="part-head"><span class="part-num">Sprechen</span><h2 class="part-title">Antworten Sie</h2></div>
+
+<div class="card">
+
+<p class="lead">Sprechen Sie diese Fragen laut:</p>
+
+<div class="gruessen">
+
+<p style="font-size:1.3rem;margin:16px 0;">Wo kaufen Sie ein?</p>
+
+<p style="font-size:1.3rem;margin:16px 0;">Kaufen Sie im Supermarkt?</p>
+
+<p style="font-size:1.3rem;margin:16px 0;">Was kaufen Sie?</p>
+
+<p style="font-size:1.3rem;margin:16px 0;">Wie viel kostet das?</p>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="part" id="zusammenfassung">
+
+<div class="part-head"><span class="part-num">Merken</span><h2 class="part-title">Abschluss — Was haben wir gelernt?</h2></div>
+
+<div class="card">
+
+<div class="summary-grid">
+
+<div class="row" style="padding:16px 18px;"><span class="key" style="font-size:1.1rem;">✅ Geschäfte</span><span style="font-size:1.05rem;">Supermarkt, Bäckerei, Metzgerei, Markt</span></div>
+
+<div class="row" style="padding:16px 18px;"><span class="key" style="font-size:1.1rem;">✅ Preise</span><span style="font-size:1.05rem;">Wie viel kostet das? · Das kostet 3 Euro</span></div>
+
+<div class="row" style="padding:16px 18px;"><span class="key" style="font-size:1.1rem;">✅ Akkusativ</span><span style="font-size:1.05rem;">der → den · die → die · das → das</span></div>
+
+<div class="row" style="padding:16px 18px;"><span class="key" style="font-size:1.1rem;">✅ Dialoge im Geschäft</span><span style="font-size:1.05rem;">Ich möchte ein Brot · Wie viel kostet das?</span></div>
+
+</div>
+
+<p style="text-align:center;margin:24px 0;font-size:1.3rem;color:#111820;">Sehr gut! Bis zum nächsten Mal!</p>
+
+</div>
+
+</section>
+
+
+
+<a href="index.html" class="back-to-top">← A1 Übersicht</a>
+
+
+
+</div>
+
+</section>
+
+<!-- LEKCJA 10 -->
+
+</div>
+<nav class="lesson-nav-local"><a href="lektion-8.html">← Lektion 8</a><a href="index.html">A1 Übersicht</a><a href="lektion-10.html">Lektion 10 →</a></nav>
+</body></html>
