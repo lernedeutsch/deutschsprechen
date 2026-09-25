@@ -2,7 +2,6 @@ name: Deutschsprechen CI
 
 on:
   push:
-    branches: [main]
   pull_request:
     branches: [main]
 
@@ -37,5 +36,16 @@ jobs:
           npm install
           npx playwright install --with-deps chromium
 
-      - name: Run browser tests
+      - name: Run browser tests (global A1 quality gate)
         run: npm run test:browser
+
+      - name: Upload browser diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nele-quality-gate-diagnostics
+          path: |
+            playwright-report/
+            test-results/
+          if-no-files-found: ignore
+          retention-days: 14
