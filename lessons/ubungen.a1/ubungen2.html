@@ -25,6 +25,7 @@
 a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 @media(max-width:720px){.lesson-title{font-size:2.2rem}.part-title{font-size:1.7rem}.match-grid{grid-template-columns:1fr}.card{padding:18px}.check-btn{width:100%;min-height:52px}input[type=text]{width:100%;margin:5px 0}.top-bar{top:10px;left:10px}.wrap{padding-top:55px}}
 </style><link rel="stylesheet" href="../../css/click-hints.css">
+<link rel="stylesheet" href="../../css/page-progress.css">
 </head>
 <body id="top">
 <div class="top-bar"><a href="../a1/lektion-2.html" class="back-btn" aria-label="Zurück zu Lektion 2">←</a></div>
@@ -76,4 +77,5 @@ let selected=null,matched=0;document.querySelectorAll(".match").forEach(b=>b.onc
 const zone=document.getElementById("build");document.querySelectorAll(".word").forEach(b=>b.onclick=()=>{if(b.classList.contains("used"))return;b.classList.add("used");const x=document.createElement("button");x.className="built";x.textContent=b.textContent;x.onclick=()=>{b.classList.remove("used");x.remove()};zone.appendChild(x)});
 function checkBuild(){attempts.ex5=(attempts.ex5||0)+1;const s=[...zone.children].map(x=>x.textContent).join(" ");if(norm(s)==="ich komme aus polen"){msg("ex5",true,"Richtig! ✓ „Ich komme aus Polen.“");done("ex5")}else msg("ex5",false,attempts.ex5<2?"Noch nicht. Klick auf ein Wort im Satz, um es zurückzunehmen.":"Tipp: Der Satz beginnt mit „Ich komme …“.")}
 </script><script src="../../js/click-hints.js"></script>
+<script src="../../js/page-progress.js" defer></script>
 </body></html>
