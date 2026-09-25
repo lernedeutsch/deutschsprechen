@@ -148,6 +148,19 @@ body{padding:20px 12px 35px}.course-start{margin-bottom:38px;padding:18px 15px;b
 .intro-page .part-head{display:block}.intro-page .part-num{display:block;margin-bottom:5px}.intro-page .part-title{font-size:1.6rem}.description{font-size:.95rem}.tab-buttons{gap:40px}.tab-button{flex:1;min-width:0;padding:9px 8px}.bubble{padding:10px 13px}.bubble-a{width:90%}.bubble-b{width:72%}.bubble-a.speaking{padding-right:54px}.bubble-b.speaking{padding-left:54px}.person-icon{width:31px;height:31px;font-size:1.1rem}.bubble-a .person-icon{right:10px}.bubble-b .person-icon{left:10px}      
 .spelling-form{flex-direction:column}.spelling-button{width:100%}.farewell-type{font-size:1.05rem}.end-buttons{flex-wrap:wrap}.end-button{flex:1 1 100%;max-width:100%;font-size:1rem}}      
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}      
+/* Quality gate: keep interactive rows inside narrow tablet/phone viewports. */
+@media(max-width:840px){
+  .exercise-guide-row{flex-wrap:wrap;gap:8px}
+  .exercise-guide-row .action-help{white-space:normal}
+  .exercise-guide-row .register-key{flex-wrap:wrap;justify-content:center}
+  .tab-buttons{gap:clamp(12px,8vw,64px)}
+  .category-buttons{gap:clamp(12px,8vw,48px)}
+}
+@media(max-width:480px){
+  body{padding-left:12px;padding-right:12px}
+  .exercise-sentence{white-space:normal;overflow-wrap:anywhere}
+  .bubble-a,.bubble-b{width:100%;min-width:0}
+}
 </style>      
 
 <style>
