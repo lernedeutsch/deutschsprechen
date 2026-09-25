@@ -29,6 +29,9 @@ jobs:
       - name: Run Nele safety tests
         run: node tests/nele-safety.js
 
+      - name: Test Sprich nach number matching
+        run: node tests/sprich-nach-numbers.js
+
       - name: Install browser test dependencies
         run: |
           npm install
