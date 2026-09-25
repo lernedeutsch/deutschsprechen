@@ -1,0 +1,16 @@
+/* Global translation globe animation for Deutschsprechen */
+.translation-globe{
+  display:inline-block;
+  transform-origin:50% 50%;
+  will-change:transform;
+  animation:translationGlobeTurn 4.8s ease-in-out infinite;
+}
+@keyframes translationGlobeTurn{
+  0%,58%,100%{transform:rotate(0deg)}
+  68%{transform:rotate(-12deg)}
+  80%{transform:rotate(360deg)}
+  90%{transform:rotate(372deg)}
+}
+@media (prefers-reduced-motion: reduce){
+  .translation-globe{animation:none!important}
+}
