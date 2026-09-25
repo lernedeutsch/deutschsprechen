@@ -1,0 +1,7 @@
+/* Global lesson scroll progress */
+(function(){"use strict";if(window.__dsPageProgressLoaded)return;window.__dsPageProgressLoaded=true;
+function ensure(){var h=document.getElementById("ds-page-progress"),b=document.getElementById("ds-page-progress-bar");if(!h){var l=document.querySelector(".page-progress-container");if(l){h=l;h.id="ds-page-progress";b=l.querySelector(".page-progress-bar");if(b)b.id="ds-page-progress-bar"}}if(!h){h=document.createElement("div");h.id="ds-page-progress";h.setAttribute("aria-hidden","true");b=document.createElement("div");b.id="ds-page-progress-bar";h.appendChild(b);document.body.appendChild(h)}else if(!b){b=document.createElement("div");b.id="ds-page-progress-bar";h.appendChild(b)}return b}
+var bar,ticking=false;function update(){ticking=false;if(!bar)bar=ensure();var d=document.documentElement,b=document.body,t=window.pageYOffset||d.scrollTop||b.scrollTop||0,f=Math.max(d.scrollHeight,b.scrollHeight,d.offsetHeight,b.offsetHeight,d.clientHeight),m=Math.max(0,f-window.innerHeight),v=m===0?100:Math.max(0,Math.min(100,t/m*100));bar.style.width=v+"%"}
+function request(){if(ticking)return;ticking=true;requestAnimationFrame(update)}
+function init(){bar=ensure();update();addEventListener("scroll",request,{passive:true});addEventListener("resize",request,{passive:true});addEventListener("load",request,{once:true});if("ResizeObserver"in window)new ResizeObserver(request).observe(document.documentElement)}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});else init()})();
