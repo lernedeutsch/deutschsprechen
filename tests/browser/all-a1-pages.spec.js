@@ -51,13 +51,32 @@ for (const target of pages) {
     expect(pageErrors, `JavaScript errors on ${target}`).toEqual([]);
 
     // Guard the tablet/phone layout against accidental horizontal breakage.
-    const overflow = await page.evaluate(() => ({
-      scrollWidth: document.documentElement.scrollWidth,
-      clientWidth: document.documentElement.clientWidth
-    }));
+    const overflow = await page.evaluate(() => {
+      const clientWidth = document.documentElement.clientWidth;
+      const offenders = [...document.querySelectorAll("body *")]
+        .map(el => {
+          const rect = el.getBoundingClientRect();
+          return {
+            tag: el.tagName.toLowerCase(),
+            id: el.id || "",
+            cls: typeof el.className === "string" ? el.className : "",
+            left: Math.round(rect.left),
+            right: Math.round(rect.right),
+            width: Math.round(rect.width)
+          };
+        })
+        .filter(x => x.right > clientWidth + 4 || x.left < -4)
+        .sort((a, b) => Math.max(b.right - clientWidth, -b.left) - Math.max(a.right - clientWidth, -a.left))
+        .slice(0, 8);
+      return {
+        scrollWidth: document.documentElement.scrollWidth,
+        clientWidth,
+        offenders
+      };
+    });
     expect(
       overflow.scrollWidth,
-      `Horizontal overflow on ${target}: ${overflow.scrollWidth}px > ${overflow.clientWidth}px`
+      `Horizontal overflow on ${target}: ${overflow.scrollWidth}px > ${overflow.clientWidth}px; offenders=${JSON.stringify(overflow.offenders)}`
     ).toBeLessThanOrEqual(overflow.clientWidth + 4);
   });
 }
