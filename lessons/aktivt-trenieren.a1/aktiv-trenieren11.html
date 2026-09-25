@@ -95,6 +95,7 @@ table{width:100%;border-collapse:collapse;margin-bottom:12px}td,th{padding:8px 1
 @media(max-width:760px){body{padding:20px 12px 35px}.lesson-intro,.page{padding:20px 14px;border-radius:18px}.hero{flex-direction:column;align-items:flex-start}.main-title{font-size:2rem}.wheel{max-width:240px;margin:auto}.sprachpass{flex-direction:column;align-items:flex-start}.stamps{justify-content:space-between}.stamp{width:52px;height:52px;font-size:.46rem}.part-title{font-size:1.9rem}.ba,.bb{width:90%}.action-help{padding-right:10px;padding-bottom:44px}.tc{top:auto;bottom:6px}.tp{top:auto;bottom:36px}.fields{grid-template-columns:1fr}.months{grid-template-columns:repeat(3,1fr)}.seasoncards{grid-template-columns:repeat(2,1fr)}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 </style>
+<link rel="stylesheet" href="../../css/page-progress.css">
 </head>
 <body id="top">
 <div class="ppc" aria-hidden="true"><div class="ppb" id="ppb"></div></div>
@@ -420,5 +421,6 @@ $$("#comp .opts").forEach(box=>{const c=COMP[+box.dataset.i];box.querySelectorAl
 addEventListener("beforeunload",stop);
 load();
 </script>
+<script src="../../js/page-progress.js" defer></script>
 </body>
 </html>
