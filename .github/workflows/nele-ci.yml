@@ -37,5 +37,4 @@ jobs:
           npm install
           npx playwright install --with-deps chromium
 
-      - name: Run browser tests
-        run: npm run test:browser
+      - name: Run browser tests (global A1 quality gate)\n        run: npm run test:browser\n\n      - name: Upload browser diagnostics on failure\n        if: failure()\n        uses: actions/upload-artifact@v4\n        with:\n          name: nele-quality-gate-diagnostics\n          path: |\n            playwright-report/\n            test-results/\n          if-no-files-found: ignore\n          retention-days: 14\n
