@@ -1,0 +1,4 @@
+/* Global lesson scroll progress */
+#ds-page-progress{position:fixed;top:0;left:0;width:100%;height:7px;z-index:2147483647;background:rgba(238,242,247,.96);pointer-events:none;overflow:hidden}
+#ds-page-progress-bar{width:0;height:100%;background:#f4c95d;transform-origin:left center;transition:width .12s linear}
+@media (prefers-reduced-motion:reduce){#ds-page-progress-bar{transition:none}}
