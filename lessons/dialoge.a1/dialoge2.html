@@ -2252,7 +2252,12 @@ async function repeatPromptAfterWrongAnswer(){
 
   els.liveTranscript.textContent="";
 
-  await speakGerman(current().prompt);
+  if(attempts>=2 && current().example){
+    els.micStatus.textContent="Tipp — hör zu und sprich nach …";
+    await speakGerman(current().example);
+  }else{
+    await speakGerman(current().prompt);
+  }
 
   retrying=false;
 
@@ -2445,11 +2450,17 @@ if(recognizer){
       resultIndex<event.results.length;
       resultIndex++
     ){
-      const transcript=
-        event.results[resultIndex][0].transcript;
+      const result=event.results[resultIndex];
+      const transcript=result[0].transcript;
 
-      if(event.results[resultIndex].isFinal){
-        finalText+=transcript;
+      if(result.isFinal){
+        const alternatives=[...result]
+          .map(item=>item.transcript)
+          .filter(Boolean);
+        const matchingAlternative=alternatives.find(candidate=>
+          current().check(normalize(candidate))
+        );
+        finalText+=matchingAlternative||transcript;
       }else{
         interimText+=transcript;
       }
