@@ -93,6 +93,11 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offse
   .nationality-lab input{width:100%;min-width:0}
   table{max-width:100%}
 }
+
+@media(max-width:480px){
+  .nums{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .num-b{width:100%;min-width:0;max-width:100%;}
+}
 </style>
 <link rel="stylesheet" href="../../css/click-hints.css">
 <link rel="stylesheet" href="../../css/translation-globe.css">
