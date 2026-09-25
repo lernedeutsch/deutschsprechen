@@ -53,6 +53,7 @@ input[type="range"].tap-cue{animation:rangePulse 1.35s ease-in-out infinite}
 @media(prefers-reduced-motion:reduce){.tap-cue,.click-cue{animation:none!important}}
 </style><link rel="stylesheet" href="../../css/click-hints.css">
 <link rel="stylesheet" href="../../css/translation-globe.css">
+<link rel="stylesheet" href="../../css/page-progress.css">
 </head>
 <body>
 <main class="page">
@@ -127,4 +128,5 @@ $("#regBtn").onclick=()=>{const v=$("#regIn").value.trim();if(!v)return;const t=
 const DLG=[["A","Guten Tag. Wie ist Ihr Name?"],["B","Mein Name ist Becker."],["A","Wie ist Ihr Vorname?"],["B","Mein Vorname ist Julia."],["A","Wie alt sind Sie?"],["B","Ich bin 28 Jahre alt."]];let hideB=false;function drawDlg(){ $("#dlg").innerHTML=DLG.map(([w,t])=>`<div class="xline ${w==="B"?"me":""}" data-w="${w}" data-t="${t}" style="${hideB&&w==="B"?"filter:blur(6px);cursor:pointer":""}"><b>${w}</b> ${t}</div>`).join("");document.querySelectorAll("#dlg [data-w=B]").forEach(x=>x.onclick=()=>{x.style.filter="none";say(x.dataset.t)})}drawDlg();$("#dRole").onclick=()=>{hideB=!hideB;drawDlg()};$("#dPlay").onclick=async()=>{for(const [,t] of DLG){say(t);await new Promise(r=>setTimeout(r,1600))}};
 
 </script><script src="../../js/click-hints.js"></script>
+<script src="../../js/page-progress.js" defer></script>
 </body></html>
