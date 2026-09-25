@@ -32,6 +32,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #f4c9
 @media(max-width:900px){header.hero{grid-template-columns:1fr}.hero-art{min-height:220px}.grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:720px){.course-shell{padding:18px 12px 42px}.wrap{padding:18px 12px}.lesson-title{font-size:2.05rem}.card{padding:16px}.grid{grid-template-columns:1fr}.bubble{max-width:100%}.ich-kann-paper{padding:25px 14px 20px}.map{min-height:300px}.place{width:28%;min-width:0;font-size:1rem;padding:13px 5px}.route{left:20%;width:55%}.you{left:7%;font-size:.9rem}.blank{width:42vw}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
+<link rel="stylesheet" href="../../css/page-progress.css">
 </head>
 <body id="seitenanfang"><main class="course-shell">
 <a class="back-to-top" href="index.html" aria-label="Zurück zur A1-Übersicht" title="Zurück zur A1-Übersicht">←</a>
@@ -80,4 +81,5 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #f4c9
 const transports=[["🚆","der Zug","Ich fahre mit dem Zug."],["🚌","der Bus","Ich fahre mit dem Bus."],["✈️","das Flugzeug","Ich fliege mit dem Flugzeug."],["🚗","das Auto","Ich fahre mit dem Auto."],["🚲","das Fahrrad","Ich fahre mit dem Fahrrad."],["🚇","die U-Bahn","Ich fahre mit der U-Bahn."],["⛴️","das Schiff","Ich fahre mit dem Schiff."],["🚶","zu Fuß","Ich gehe zu Fuß."]];
 document.getElementById("transport").innerHTML=transports.map(x=>'<div class="card transport"><span class="transport-icon">'+x[0]+'</span><strong>'+x[1]+'</strong></div>').join("");
 const ichKannButton=document.getElementById("ichKannButton"),ichKannPaper=document.getElementById("ichKannPaper");if(ichKannButton&&ichKannPaper){ichKannButton.addEventListener("click",()=>{const open=ichKannPaper.classList.toggle("show");ichKannButton.classList.toggle("open",open);ichKannButton.setAttribute("aria-expanded",String(open))})}
-</script></body></html>
+</script><script src="../../js/page-progress.js" defer></script>
+</body></html>
