@@ -825,6 +825,7 @@ button,input{font:inherit}
 
 </div>
 
+<script src="../../js/sprich-nach-match.js"></script>
 <script>
 /* ---------- Übungssätze aus Lektion 1 ---------- */
 const sentences=[
@@ -1139,6 +1140,9 @@ function levenshtein(a,b){
 }
 
 function isMatch(said,target){
+  if(window.SprichNachMatcher){
+    return window.SprichNachMatcher.isMatch(said,target);
+  }
   const a=normalize(said);
   const b=normalize(target);
   if(!a)return false;
@@ -1156,7 +1160,7 @@ if(SpeechRec){
   recognition.lang="de-DE";
   recognition.interimResults=true;
   recognition.continuous=false;
-  recognition.maxAlternatives=1;
+  recognition.maxAlternatives=5;
 }else{
   noMicNote.style.display="block";
 }
