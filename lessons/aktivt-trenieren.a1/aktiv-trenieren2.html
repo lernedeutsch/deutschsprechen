@@ -87,6 +87,7 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offse
 .instruction-panel{padding:12px 14px;background:#fff7d8;border:2px solid #e4bd57;border-radius:16px;margin-bottom:14px}.instruction-panel .help{padding:0;margin:0 0 8px;background:transparent;border:0}.instruction-panel .instruction-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.instruction-panel .instruction-row p{margin:0}.instruction-panel .tr-box{margin:0}.click-cue{display:inline-block;font-size:1.22em;transform-origin:center;animation:clickCuePulse 1.15s ease-in-out infinite}@keyframes clickCuePulse{0%,100%{transform:scale(1);filter:none}50%{transform:scale(1.28);filter:drop-shadow(0 0 4px #e3a51c)}}</style>
 <link rel="stylesheet" href="../../css/click-hints.css">
 <link rel="stylesheet" href="../../css/translation-globe.css">
+<link rel="stylesheet" href="../../css/page-progress.css">
 </head>
 <body id="oben">
 <a href="../a1/lektion-2.html#seitenanfang" class="arr top-left" aria-label="Zurück zur Lektion" title="Zurück zur Lektion">←</a>
@@ -324,5 +325,6 @@ addEventListener("scroll",prog,{passive:true});addEventListener("resize",prog);p
 addEventListener("beforeunload",()=>S&&S.cancel());
 </script>
 <script src="../../js/click-hints.js"></script>
+<script src="../../js/page-progress.js" defer></script>
 </body>
 </html>
