@@ -24,7 +24,8 @@
 .next-training,.bottom-arrows{display:flex;justify-content:center;gap:12px;margin-top:24px}.next-training a{display:inline-flex;min-height:52px;align-items:center;padding:11px 22px;border-radius:999px;background:linear-gradient(180deg,#ff9d76,#e8623a);color:#fff;text-decoration:none;font-weight:800}.bottom-arrows{border-top:2px dashed rgba(255,255,255,.18);padding-top:24px}.bottom-arrows .back-btn{width:52px;height:52px;padding:0}
 a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 @media(max-width:720px){.lesson-title{font-size:2.2rem}.part-title{font-size:1.7rem}.match-grid{grid-template-columns:1fr}.card{padding:18px}.check-btn{width:100%;min-height:52px}input[type=text]{width:100%;margin:5px 0}.top-bar{top:10px;left:10px}.wrap{padding-top:55px}}
-</style></head>
+</style><link rel="stylesheet" href="../../css/click-hints.css">
+</head>
 <body id="top">
 <div class="top-bar"><a href="../a1/lektion-2.html" class="back-btn" aria-label="Zurück zu Lektion 2">←</a></div>
 <main class="wrap">
@@ -74,4 +75,5 @@ function checkInputs(key){attempts[key]=(attempts[key]||0)+1;const ins=[...docum
 let selected=null,matched=0;document.querySelectorAll(".match").forEach(b=>b.onclick=()=>{if(b.classList.contains("matched"))return;if(!selected){selected=b;b.classList.add("selected");return}if(selected.dataset.side===b.dataset.side){selected.classList.remove("selected");selected=b;b.classList.add("selected");return}if(selected.dataset.key===b.dataset.key){selected.classList.remove("selected");selected.classList.add("matched");b.classList.add("matched");matched++;document.getElementById("ex2-result").textContent=matched+" / 3 Paare.";if(matched===3){msg("ex2",true,"Richtig! ✓ Alle Paare gefunden.");done("ex2")}}else{selected.classList.remove("selected");msg("ex2",false,"Noch nicht. Versuch ein anderes Paar.")}selected=null});
 const zone=document.getElementById("build");document.querySelectorAll(".word").forEach(b=>b.onclick=()=>{if(b.classList.contains("used"))return;b.classList.add("used");const x=document.createElement("button");x.className="built";x.textContent=b.textContent;x.onclick=()=>{b.classList.remove("used");x.remove()};zone.appendChild(x)});
 function checkBuild(){attempts.ex5=(attempts.ex5||0)+1;const s=[...zone.children].map(x=>x.textContent).join(" ");if(norm(s)==="ich komme aus polen"){msg("ex5",true,"Richtig! ✓ „Ich komme aus Polen.“");done("ex5")}else msg("ex5",false,attempts.ex5<2?"Noch nicht. Klick auf ein Wort im Satz, um es zurückzunehmen.":"Tipp: Der Satz beginnt mit „Ich komme …“.")}
-</script></body></html>
+</script><script src="../../js/click-hints.js"></script>
+</body></html>
