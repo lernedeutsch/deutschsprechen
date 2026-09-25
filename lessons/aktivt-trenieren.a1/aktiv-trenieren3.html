@@ -51,7 +51,8 @@ h1{margin:0 0 12px;color:#161616;font:700 2.6rem/1.12 "Kalam",cursive}
 input[type="range"].tap-cue{animation:rangePulse 1.35s ease-in-out infinite}
 @keyframes rangePulse{0%,100%{filter:none}50%{filter:drop-shadow(0 0 5px #e3a51c)}}
 @media(prefers-reduced-motion:reduce){.tap-cue,.click-cue{animation:none!important}}
-</style></head>
+</style><link rel="stylesheet" href="../../css/click-hints.css">
+</head>
 <body>
 <main class="page">
 <section class="hero">
@@ -124,4 +125,5 @@ function regStart(){ri=0;answers=[];$("#reg").innerHTML="";$("#idcard").innerHTM
 $("#regBtn").onclick=()=>{const v=$("#regIn").value.trim();if(!v)return;const t=STEPS[ri][2](v);answers.push(v);$("#reg").innerHTML+=`<div class="xline me">${t}</div>`;say(t);ri++;if(ri<STEPS.length)askReg();else{$("#regAsk").hidden=true;$("#idcard").innerHTML=`<div class="idcard"><b>🪪 Dein Ausweis</b><br>Name: ${answers[0]}<br>Vorname: ${answers[1]}<br>Alter: ${answers[2]}<br>Adresse: ${answers[3]}<br>Telefon: ${answers[4]}</div>`;$("#regFb").textContent="🎉 Sehr gut! Du bist angemeldet."}};$("#regReset").onclick=regStart;regStart();
 const DLG=[["A","Guten Tag. Wie ist Ihr Name?"],["B","Mein Name ist Becker."],["A","Wie ist Ihr Vorname?"],["B","Mein Vorname ist Julia."],["A","Wie alt sind Sie?"],["B","Ich bin 28 Jahre alt."]];let hideB=false;function drawDlg(){ $("#dlg").innerHTML=DLG.map(([w,t])=>`<div class="xline ${w==="B"?"me":""}" data-w="${w}" data-t="${t}" style="${hideB&&w==="B"?"filter:blur(6px);cursor:pointer":""}"><b>${w}</b> ${t}</div>`).join("");document.querySelectorAll("#dlg [data-w=B]").forEach(x=>x.onclick=()=>{x.style.filter="none";say(x.dataset.t)})}drawDlg();$("#dRole").onclick=()=>{hideB=!hideB;drawDlg()};$("#dPlay").onclick=async()=>{for(const [,t] of DLG){say(t);await new Promise(r=>setTimeout(r,1600))}};
 
-</script></body></html>
+</script><script src="../../js/click-hints.js"></script>
+</body></html>
