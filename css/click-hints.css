@@ -1,0 +1,21 @@
+/* Global semantic pointer guidance for Deutschsprechen.
+   Pointer icons are static by default. Only JS-selected current click hints pulse. */
+.click-cue,
+.click-icon {
+  animation: none !important;
+}
+.click-hint-pointer {
+  display: inline-block;
+  animation: none !important;
+  transform-origin: center;
+}
+.click-hint-pointer.click-hint-active {
+  animation: clickHintSemanticPulse 1.35s ease-in-out infinite !important;
+}
+@keyframes clickHintSemanticPulse {
+  0%,100% { transform: scale(1); filter: none; }
+  50% { transform: scale(1.24); filter: drop-shadow(0 0 4px rgba(207,159,63,.65)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .click-hint-pointer.click-hint-active { animation: none !important; }
+}
