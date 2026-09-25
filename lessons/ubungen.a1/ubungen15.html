@@ -7,7 +7,8 @@
 main{max-width:980px;margin:auto;padding:24px 16px 50px}.back{display:inline-block;margin-bottom:18px;padding:10px 16px;background:#fff;border-radius:999px;text-decoration:none;color:var(--text);font-weight:700}
 .sheet{background:#fff;border-radius:26px;padding:28px;box-shadow:0 14px 35px rgba(0,0,0,.16)}h1{margin:0 0 6px}h2{margin-top:0}.lead{color:var(--muted);margin-top:0}.exercise{margin:22px 0;padding:20px;border:1px solid var(--line);border-radius:20px;background:#fbfdff}.q{margin:13px 0}.blank{width:min(220px,42vw);border:0;border-bottom:2px solid #81bfff;padding:6px 8px;background:#f7fbff}.check,.reset{padding:10px 15px;border:1px solid #cbd7e4;border-radius:12px;background:#fff;cursor:pointer;font-weight:700}.feedback{margin-top:12px;font-weight:700}.ok{color:#16713a}.bad{color:#b83b3b}.correct{background:#effcf3;border-bottom-color:#27a65b}.wrong{background:#fff1f1;border-bottom-color:#d94b4b}.quiz-q{padding:15px;margin:11px 0;background:#f7faff;border:1px solid var(--line);border-radius:15px}.choices{display:grid;gap:8px;margin-top:9px}.choice{padding:10px 12px;text-align:left;background:#fff;border:1px solid var(--line);border-radius:10px;cursor:pointer}.choice.selected{outline:3px solid #81bfff}.choice.good{background:#effcf3;border-color:#27a65b}.choice.no{background:#fff1f1;border-color:#d94b4b}
 @media(max-width:600px){.sheet{padding:18px}.blank{width:46vw}}
-</style></head><body><main>
+</style><link rel="stylesheet" href="../../css/page-progress.css">
+</head><body><main>
 <a class="back" href="../a1/lektion-15.html">← Lektion 15</a>
 <section class="sheet"><h1>Übungen — Lektion 15</h1><p class="lead">Reisen · Verkehrsmittel · Wohin? · Nach dem Weg fragen</p>
 <section class="exercise"><h2>Übung 1 — Ergänze: dem oder der?</h2><div id="ex1"></div><button class="check" data-check="ex1">Antworten prüfen ✓</button><div class="feedback" id="ex1-feedback"></div></section>
@@ -22,4 +23,5 @@ const quiz=document.getElementById("quiz");quiz.innerHTML=questions.map((q,i)=>'
 quiz.addEventListener("click",e=>{const x=e.target.closest(".choice");if(!x)return;x.parentElement.querySelectorAll(".choice").forEach(b=>b.classList.remove("selected"));x.classList.add("selected")});
 document.getElementById("quizCheck").addEventListener("click",()=>{let score=0;document.querySelectorAll(".quiz-q").forEach((box,i)=>{const sel=box.querySelector(".selected");box.querySelectorAll(".choice").forEach((x,j)=>{x.classList.toggle("good",j===questions[i][2]);x.classList.toggle("no",!!sel&&x===sel&&j!==questions[i][2])});if(sel&&Number(sel.dataset.a)===questions[i][2])score++});const f=document.getElementById("quizFeedback");f.className="feedback "+(score>=7?"ok":"bad");f.textContent=score+" / "+questions.length+" richtig."});
 document.getElementById("quizReset").addEventListener("click",()=>{document.querySelectorAll(".choice").forEach(x=>x.classList.remove("selected","good","no"));document.getElementById("quizFeedback").textContent=""});
-</script></body></html>
+</script><script src="../../js/page-progress.js" defer></script>
+</body></html>
