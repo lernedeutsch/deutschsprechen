@@ -1753,32 +1753,64 @@ function nameCheck(answer){
 
 /* ---------------- Inhalt: vier Mini-Dialoge ---------------- */
 
-const jobs=["arzt","ärztin","arztin","lehrer","lehrerin","ingenieur","ingenieurin","student","studentin","verkäufer","verkaufer","verkäuferin","verkauferin"];
+const jobs=[
+ "arzt","ärztin","arztin","lehrer","lehrerin","ingenieur","ingenieurin",
+ "student","studentin","verkäufer","verkaufer","verkäuferin","verkauferin",
+ "kellner","kellnerin","koch","köchin","kochin","fahrer","fahrerin",
+ "friseur","friseurin","mechaniker","mechanikerin","elektriker","elektrikerin",
+ "pfleger","pflegerin","pflegekraft","reinigungskraft","hausdame","housekeeper",
+ "polizist","polizistin","bäcker","bäckerin","backer","backerin",
+ "sekretär","sekretärin","sekretar","sekretarin","erzieher","erzieherin",
+ "informatiker","informatikerin","manager","managerin","fotograf","fotografin"
+];
+const workplaces=[
+ "büro","buro","restaurant","hotel","schule","krankenhaus","praxis","geschäft","geschaft",
+ "supermarkt","firma","fabrik","werkstatt","café","cafe","kindergarten","universität",
+ "universitat","pflegeheim","reinigungsfirma","küche","kuche"
+];
 function hasJob(a){return jobs.some(j=>fuzzyContains(a,j,.28));}
-function jobAnswer(a){return hasJob(a)&&(fuzzyContains(a,"ich bin",.35)||a.split(" ").length<=3);}
+function jobAnswer(a){return hasJob(a)&&fuzzyContains(a,"ich bin",.35);}
+function negativeJobAnswer(a){
+ return /^(nein|nein ich|nein, ich)/.test(a)&&(
+   fuzzyContains(a,"bin nicht",.3)||
+   fuzzyContains(a,"ich bin",.35)||
+   hasJob(a)
+ );
+}
 function yesNo(a){return ["ja","nein","ja ich","nein ich"].some(x=>fuzzyContains(a,x,.3));}
-function workAnswer(a){return fuzzyContains(a,"ich arbeite",.32)||fuzzyContains(a,"arbeite",.25)||fuzzyContains(a,"im büro",.25)||fuzzyContains(a,"in frankfurt",.25);}
-function learnAnswer(a){return fuzzyContains(a,"ich lerne deutsch",.32)||fuzzyContains(a,"lerne deutsch",.25)||yesNo(a);}
+function hasWorkplace(a){return workplaces.some(w=>fuzzyContains(a,w,.28));}
+function workAnswer(a){
+ return fuzzyContains(a,"ich arbeite",.32)&&(
+   fuzzyContains(a,"in",.2)||fuzzyContains(a,"im",.2)||fuzzyContains(a,"bei",.2)||hasWorkplace(a)
+ );
+}
+function learnAnswer(a){
+ return fuzzyContains(a,"ich lerne deutsch",.32)||
+        fuzzyContains(a,"lerne deutsch",.25)||
+        fuzzyContains(a,"ja ich lerne deutsch",.3)||
+        fuzzyContains(a,"nein ich lerne",.3)||
+        /^ja/.test(a)||/^nein/.test(a);
+}
 const dialogues=[
  {title:"Dialog 1 · Mein Beruf",role:"informell",speaker:"Mia",avatar:"👩",turns:[
-  {prompt:"Hallo! Was bist du von Beruf?",instruction:"Sag deinen Beruf.",example:"Ich bin Verkäuferin.",check:jobAnswer},
-  {prompt:"Bist du Lehrer oder Lehrerin?",instruction:"Antworte mit deinem Beruf. Ein Wort ist auch okay.",example:"Ich bin Lehrerin.",check:a=>jobAnswer(a)||hasJob(a)},
-  {prompt:"Ich bin eine Lehrerin. Und du?",instruction:"Sag: Ich bin ein … oder Ich bin eine …",example:"Ich bin eine Verkäuferin.",check:a=>jobAnswer(a)||hasJob(a)}
+  {prompt:"Hallo! Was bist du von Beruf?",instruction:"Sag deinen Beruf in einem ganzen Satz.",example:"Ich bin Kellnerin.",requireFullSentence:true,check:jobAnswer},
+  {prompt:"Bist du Lehrer oder Lehrerin?",instruction:"Antworte natürlich mit ja oder nein und sag deinen Beruf.",example:"Nein, ich bin Kellnerin.",requireFullSentence:true,check:a=>jobAnswer(a)||negativeJobAnswer(a)},
+  {prompt:"Interessant! Und wo arbeitest du?",instruction:"Sag in einem ganzen Satz, wo du arbeitest.",example:"Ich arbeite in einem Restaurant.",requireFullSentence:true,check:workAnswer}
  ]},
  {title:"Dialog 2 · Was sind Sie von Beruf?",role:"formell",speaker:"Herr Becker",avatar:"👨‍💼",turns:[
-  {prompt:"Guten Tag. Was sind Sie von Beruf?",instruction:"Antworten Sie: Ich bin …",example:"Ich bin Ingenieur.",check:jobAnswer},
-  {prompt:"Sind Sie Student oder Studentin?",instruction:"Antworten Sie kurz oder mit einem ganzen Satz.",example:"Ich bin Studentin.",check:a=>jobAnswer(a)||hasJob(a)},
-  {prompt:"Frau Klein ist Lehrerin. Sagen Sie: Sie ist eine Lehrerin.",instruction:"Wiederholen Sie den Satz mit eine.",example:"Sie ist eine Lehrerin.",check:a=>fuzzyContains(a,"sie ist eine lehrerin",.32)||fuzzyContains(a,"eine lehrerin",.25)}
+  {prompt:"Guten Tag. Was sind Sie von Beruf?",instruction:"Antworten Sie mit einem ganzen Satz.",example:"Ich bin Lehrerin.",requireFullSentence:true,check:jobAnswer},
+  {prompt:"Arbeiten Sie in einer Schule?",instruction:"Antworten Sie natürlich mit ja oder nein. Sie können auch Ihren Arbeitsplatz nennen.",example:"Nein, ich arbeite in einem Krankenhaus.",requireFullSentence:true,check:a=>(/^ja/.test(a)&&a.split(" ").length>=3)||(/^nein/.test(a)&&a.split(" ").length>=3)||workAnswer(a)},
+  {prompt:"Was machen Sie bei der Arbeit?",instruction:"Sagen Sie einen einfachen ganzen Satz über Ihre Arbeit.",example:"Ich arbeite mit Menschen.",requireFullSentence:true,check:a=>fuzzyContains(a,"ich arbeite",.32)||fuzzyContains(a,"ich helfe",.3)||fuzzyContains(a,"ich mache",.3)||fuzzyContains(a,"ich putze",.3)||fuzzyContains(a,"ich koche",.3)||fuzzyContains(a,"ich unterrichte",.3)}
  ]},
  {title:"Dialog 3 · Wo arbeiten Sie?",role:"formell",speaker:"Frau Klein",avatar:"👩‍💼",turns:[
-  {prompt:"Wo arbeiten Sie?",instruction:"Sagen Sie, wo Sie arbeiten.",example:"Ich arbeite in Frankfurt.",check:workAnswer},
-  {prompt:"Arbeiten Sie im Büro?",instruction:"Antworten Sie mit ja oder nein. Ein ganzer Satz ist noch besser.",example:"Ja, ich arbeite im Büro.",check:a=>yesNo(a)||workAnswer(a)},
-  {prompt:"Ich arbeite. Du arbeitest. Und wir?",instruction:"Ergänzen Sie: Wir arbeiten.",example:"Wir arbeiten.",check:a=>fuzzyContains(a,"wir arbeiten",.25)}
+  {prompt:"Wo arbeiten Sie?",instruction:"Sagen Sie Ihren Arbeitsplatz in einem ganzen Satz.",example:"Ich arbeite in einem Restaurant.",requireFullSentence:true,check:workAnswer},
+  {prompt:"Arbeiten Sie gern dort?",instruction:"Antworten Sie mit einem ganzen Satz.",example:"Ja, ich arbeite gern dort.",requireFullSentence:true,check:a=>fuzzyContains(a,"ich arbeite gern",.3)||fuzzyContains(a,"arbeite gern",.25)||fuzzyContains(a,"arbeite nicht gern",.28)},
+  {prompt:"Mit wem arbeiten Sie?",instruction:"Antworten Sie natürlich in einem ganzen Satz.",example:"Ich arbeite mit meinen Kollegen.",requireFullSentence:true,check:a=>fuzzyContains(a,"ich arbeite mit",.3)||fuzzyContains(a,"arbeite mit",.25)}
  ]},
  {title:"Dialog 4 · Arbeit & Deutsch",role:"informell",speaker:"Tom",avatar:"🧑",turns:[
-  {prompt:"Was machst du? Arbeitest du oder studierst du?",instruction:"Antworte mit einem kurzen Satz.",example:"Ich arbeite.",check:a=>fuzzyContains(a,"ich arbeite",.3)||fuzzyContains(a,"ich studiere",.3)||fuzzyContains(a,"arbeite",.22)||fuzzyContains(a,"studiere",.22)},
-  {prompt:"Lernst du Deutsch?",instruction:"Antworte mit ja oder nein. Du kannst auch sagen: Ich lerne Deutsch.",example:"Ja, ich lerne Deutsch.",check:learnAnswer},
-  {prompt:"Wo wohnst du?",instruction:"Sag, wo du wohnst.",example:"Ich wohne in Frankfurt.",check:a=>fuzzyContains(a,"ich wohne in",.32)||fuzzyContains(a,"wohne in",.25)}
+  {prompt:"Was machst du? Arbeitest du oder studierst du?",instruction:"Antworte in einem ganzen Satz.",example:"Ich arbeite.",requireFullSentence:true,check:a=>fuzzyContains(a,"ich arbeite",.3)||fuzzyContains(a,"ich studiere",.3)},
+  {prompt:"Lernst du Deutsch?",instruction:"Antworte mit einem ganzen Satz.",example:"Ja, ich lerne Deutsch.",requireFullSentence:true,check:learnAnswer},
+  {prompt:"Wo wohnst du?",instruction:"Sag in einem ganzen Satz, wo du wohnst.",example:"Ich wohne in Heidelberg.",requireFullSentence:true,check:a=>fuzzyContains(a,"ich wohne in",.32)||fuzzyContains(a,"ich wohne",.28)}
  ]}
 ];
 
