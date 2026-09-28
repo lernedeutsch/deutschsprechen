@@ -1745,7 +1745,7 @@ function nameCheck(answer){
 
 /* ---------------- Inhalt: vier Mini-Dialoge ---------------- */
 
-const dialogues=[{title:"Dialog · Große Wiederholung II",role:"aktiv",speaker:"Bekannter",avatar:"🌍",turns:[{prompt:"Entschuldigung, können Sie mir helfen?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Ja, natürlich.",check:answer=>normalize(answer).length>=2},{prompt:"Wo ist Gleis zwei?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Dort rechts, neben dem Aufzug.",check:answer=>normalize(answer).length>=2}]}];
+const dialogues=[{title:"Dialog · Große Wiederholung II",role:"aktiv",speaker:"Bekannter",avatar:"🌍",turns:[{prompt:"Entschuldigung, können Sie mir helfen?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Ja, natürlich.",requireFullSentence:true,check:answer=>normalize(answer).length>=2},{prompt:"Wo ist Gleis zwei?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Dort rechts, neben dem Aufzug.",requireFullSentence:true,check:answer=>normalize(answer).length>=2}]}];
 
 /* ---------------- Dialoge in Züge umwandeln ---------------- */
 
