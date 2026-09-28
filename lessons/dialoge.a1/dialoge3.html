@@ -1765,41 +1765,40 @@ function nameCheck(answer){
 /* ---------------- Inhalt: vier Mini-Dialoge · Lektion 3 ---------------- */
 const dialogues=[
   {
-    title:"Dialog 1 · Wie alt bist du?",
+    title:"Dialog 1 · Alter",
     role:"informell", speaker:"Tom", avatar:"🧑",
     turns:[
-      {prompt:"Hallo! Wie alt bist du?",instruction:"Sag dein Alter — informell.",example:"Ich bin 25 Jahre alt.",check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
-      {prompt:"Ich bin 32 Jahre alt. Bist du 25?",instruction:"Antworte mit „Ja, ich bin …“.",example:"Ja, ich bin 25.",check:a=>fuzzyContains(a,"ich bin",.35)||fuzzyContains(a,"ja",.3)},
-      {prompt:"Und wie alt ist deine Freundin?",instruction:"Antworte mit „Sie ist … Jahre alt.“.",example:"Sie ist 28 Jahre alt.",check:a=>fuzzyContains(a,"sie ist",.35)&&(a.includes("jahr")||/\d/.test(a))}
+      {prompt:"Hallo! Wie alt bist du?",instruction:"Sag dein Alter.",example:"Ich bin 30 Jahre alt.",check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
+      {prompt:"Ich bin 32 Jahre alt. Und du?",instruction:"Sag dein Alter. Du kannst auch zurückfragen.",example:"Ich bin 30 Jahre alt. Und du?",check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
+      {prompt:"Ah, schön! Dann sind wir beide über zwanzig.",instruction:"Reagiere kurz und natürlich.",example:"Ja, genau.",check:a=>fuzzyContains(a,"ja",.35)||fuzzyContains(a,"genau",.35)||fuzzyContains(a,"stimmt",.35)}
     ]
   },
   {
-    title:"Dialog 2 · Zahlen 11–100",
+    title:"Dialog 2 · Kennenlernen",
     role:"informell", speaker:"Lena", avatar:"👩",
     turns:[
-      {prompt:"Welche Zahl ist das: 21?",instruction:"Sag die Zahl auf Deutsch.",example:"Einundzwanzig.",check:a=>fuzzyContains(a,"einundzwanzig",.35)||a.includes("21")},
-      {prompt:"Und 35?",instruction:"Sag die Zahl auf Deutsch.",example:"Fünfunddreißig.",check:a=>fuzzyContains(a,"fünfunddreißig",.35)||fuzzyContains(a,"funfunddreissig",.4)||a.includes("35")},
-      {prompt:"Und 48?",instruction:"Sag die Zahl auf Deutsch.",example:"Achtundvierzig.",check:a=>fuzzyContains(a,"achtundvierzig",.35)||a.includes("48")}
+      {prompt:"Hallo! Ich bin Lena. Wie heißt du?",instruction:"Stell dich kurz vor.",example:"Ich heiße Monika.",check:nameCheck},
+      {prompt:"Freut mich! Ich bin 28 Jahre alt. Und du?",instruction:"Sag dein Alter. „Und du?“ ist auch möglich.",example:"Ich bin 30 Jahre alt. Und du?",check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
+      {prompt:"Schön, dich kennenzulernen!",instruction:"Reagiere kurz.",example:"Freut mich auch!",check:a=>fuzzyContains(a,"freut mich",.35)||fuzzyContains(a,"mich auch",.35)||fuzzyContains(a,"danke",.35)}
     ]
   },
   {
-    title:"Dialog 3 · Das Verb „sein“",
+    title:"Dialog 3 · Mit Freunden",
     role:"informell", speaker:"Paul", avatar:"🧑",
     turns:[
-      {prompt:"Ich bin 30 Jahre alt. Und du?",instruction:"Antworte mit „Ich bin …“.",example:"Ich bin 28 Jahre alt.",check:a=>fuzzyContains(a,"ich bin",.3)},
-      {prompt:"Anna ist 25 Jahre alt. Wie alt ist sie?",instruction:"Antworte mit „Sie ist …“.",example:"Sie ist 25 Jahre alt.",check:a=>fuzzyContains(a,"sie ist",.3)},
-      {prompt:"Wir sind hier. Seid ihr auch hier?",instruction:"Antworte mit „Ja, wir sind hier.“.",example:"Ja, wir sind hier.",check:a=>fuzzyContains(a,"wir sind",.3)}
+      {prompt:"Ich bin 30 Jahre alt. Und du?",instruction:"Sag dein Alter. Mit oder ohne „Und du?“.",example:"Ich bin 20 Jahre alt. Und du?",check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
+      {prompt:"Wir sind hier. Seid ihr auch hier?",instruction:"Antworte positiv oder negativ.",example:"Ja, wir sind auch hier. / Nein, wir sind nicht hier.",check:a=>(fuzzyContains(a,"ja",.35)&&fuzzyContains(a,"wir sind",.35))||(fuzzyContains(a,"nein",.35)&&(fuzzyContains(a,"wir sind nicht",.4)||fuzzyContains(a,"nicht hier",.4)))}
     ]
   },
   {
     title:"Dialog 4 · Persönliche Daten",
     role:"formell", speaker:"Frau Becker", avatar:"👩‍💼",
     turns:[
-      {prompt:"Guten Tag. Wie ist Ihr Name?",instruction:"Nenne deinen Nachnamen.",example:"Mein Name ist Schmidt.",check:nameCheck},
-      {prompt:"Wie ist Ihr Vorname?",instruction:"Nenne deinen Vornamen.",example:"Mein Vorname ist Anna.",check:a=>fuzzyContains(a,"mein vorname ist",.32)||fuzzyContains(a,"ich heiße",.32)||isBareName(a)},
-      {prompt:"Wie alt sind Sie?",instruction:"Sag dein Alter — formell.",example:"Ich bin 28 Jahre alt.",check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
-      {prompt:"Wie ist Ihre Adresse?",instruction:"Nenne deine Adresse.",example:"Meine Adresse ist Hauptstraße 12.",check:a=>fuzzyContains(a,"meine adresse ist",.35)||/straße|strasse|weg|platz|gasse|allee|\d/.test(a)},
-      {prompt:"Wie ist Ihre Telefonnummer?",instruction:"Nenne deine Telefonnummer.",example:"Meine Telefonnummer ist 0151 234567.",check:a=>fuzzyContains(a,"meine telefonnummer ist",.35)||/\d/.test(a)}
+      {prompt:"Guten Tag. Wie ist Ihr Name?",instruction:"Begrüße Frau Becker und nenne deinen Namen.",example:"Guten Tag. Mein Name ist Monika.",check:a=>nameCheck(a)||fuzzyContains(a,"mein name ist",.3)},
+      {prompt:"Wie ist Ihr Vorname?",instruction:"Nenne deinen Vornamen.",example:"Mein Vorname ist Monika.",check:a=>fuzzyContains(a,"mein vorname ist",.32)||fuzzyContains(a,"ich heiße",.32)||isBareName(a)},
+      {prompt:"Wie alt sind Sie?",instruction:"Sag dein Alter.",example:"Ich bin 30 Jahre alt.",check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
+      {prompt:"Wie ist Ihre Adresse?",instruction:"Nenne deine Adresse. Eine kurze Antwort ist erlaubt.",example:"Bahnhofstraße 10. / Meine Adresse ist Bahnhofstraße 10.",check:a=>fuzzyContains(a,"meine adresse ist",.35)||/straße|strasse|weg|platz|gasse|allee|\d/.test(a)},
+      {prompt:"Wie ist Ihre Telefonnummer?",instruction:"Nenne deine Telefonnummer. Eine kurze Antwort ist erlaubt.",example:"123456. / Meine Telefonnummer ist 123456.",check:a=>fuzzyContains(a,"meine telefonnummer ist",.35)||/\d/.test(a)}
     ]
   }
 ];
@@ -2317,11 +2316,9 @@ function markWrong(spokenText){
 
   els.micStatus.classList.remove("live");
 
-  if(attempts>=3){
-    els.exampleText.classList.add("show");
-    els.exampleText.textContent=
-      `Tipp: „${current().example}“`;
-  }
+  els.exampleText.classList.add("show");
+  els.exampleText.textContent=
+    `Tipp: Du kannst zum Beispiel sagen: „${current().example}“`;
 
   clearTimeout(restartTimer);
 
