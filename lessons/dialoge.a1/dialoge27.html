@@ -1746,7 +1746,7 @@ function nameCheck(answer){
 
 /* ---------------- Inhalt: vier Mini-Dialoge ---------------- */
 
-const dialogues=[{title:"Dialog · In der Schule",role:"aktiv",speaker:"Mitschüler",avatar:"🎓",turns:[{prompt:"Was ist dein Lieblingsfach?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Mein Lieblingsfach ist Deutsch.",requireFullSentence:true,check:answer=>normalize(answer).length>=2},{prompt:"Wann beginnt der Unterricht?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Um acht Uhr.",requireFullSentence:true,check:answer=>normalize(answer).length>=2}]}];
+const dialogues=[{title:"Dialog · In der Schule",role:"aktiv",speaker:"Mitschüler",avatar:"🎓",turns:[{prompt:"Was ist dein Lieblingsfach?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Mein Lieblingsfach ist Deutsch.",requireFullSentence:true,check:answer=>/mein lieblingsfach ist|ich mag .* am liebsten|deutsch|mathe|englisch|sport|musik|kunst/.test(normalize(answer))},{prompt:"Wann beginnt der Unterricht?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Um acht Uhr.",requireFullSentence:true,check:answer=>/um .*uhr|unterricht beginnt|beginnt um|\d/.test(normalize(answer))}]}];
 
 /* ---------------- Dialoge in Züge umwandeln ---------------- */
 
