@@ -1253,7 +1253,7 @@ function addToHistory(index,text){
   const item=document.createElement("p");
   item.className="history-item";
   const step=Math.min(index,26);
-  const brightness=Math.min(0.72,0.02+step*0.085);
+  const brightness=Math.min(0.68,step*0.13);
   item.style.setProperty("--step-brightness",brightness.toFixed(3));
   item.style.setProperty("--step-text",brightness>0.48?"#101820":"#fff");
   item.innerHTML=`<span class="h-num">${index+1}.</span>${text}`;
