@@ -1745,7 +1745,7 @@ function nameCheck(answer){
 
 /* ---------------- Inhalt: vier Mini-Dialoge ---------------- */
 
-const dialogues=[{title:"Dialog · Am Bahnhof",role:"aktiv",speaker:"Mitarbeiter",avatar:"🚆",turns:[{prompt:"Wohin möchten Sie fahren?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Ich möchte nach Heidelberg fahren.",check:answer=>normalize(answer).length>=2},{prompt:"Einfach oder hin und zurück?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Hin und zurück, bitte.",check:answer=>normalize(answer).length>=2}]}];
+const dialogues=[{title:"Dialog · Am Bahnhof",role:"aktiv",speaker:"Mitarbeiter",avatar:"🚆",turns:[{prompt:"Wohin möchten Sie fahren?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Ich möchte nach Heidelberg fahren.",requireFullSentence:true,check:answer=>normalize(answer).length>=2},{prompt:"Einfach oder hin und zurück?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Hin und zurück, bitte.",requireFullSentence:true,check:answer=>normalize(answer).length>=2}]}];
 
 /* ---------------- Dialoge in Züge umwandeln ---------------- */
 
