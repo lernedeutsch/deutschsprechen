@@ -139,8 +139,8 @@ button,input{font:inherit}
   margin:0;
   padding:9px 10px;
   color:var(--step-text,#fff);
+  filter:brightness(var(--step-filter,.58));
   background:
-    linear-gradient(rgba(255,255,255,var(--step-brightness,0)),rgba(255,255,255,var(--step-brightness,0))),
     linear-gradient(100deg,
       rgb(205,66,96) 0%,
       rgb(213,137,57) 20%,
@@ -154,7 +154,7 @@ button,input{font:inherit}
   line-height:1.35;
   box-shadow:0 4px 10px rgba(3,14,27,.14);
   animation:historyIn .3s ease;
-  transition:background .25s ease,color .25s ease;
+  transition:filter .25s ease,color .25s ease;
 }
 
 .history-item .h-num{
@@ -1253,9 +1253,9 @@ function addToHistory(index,text){
   const item=document.createElement("p");
   item.className="history-item";
   const step=Math.min(index,26);
-  const brightness=Math.min(0.68,step*0.13);
-  item.style.setProperty("--step-brightness",brightness.toFixed(3));
-  item.style.setProperty("--step-text",brightness>0.48?"#101820":"#fff");
+  const level=Math.min(1.55,0.58+step*0.18);
+  item.style.setProperty("--step-filter",level.toFixed(2));
+  item.style.setProperty("--step-text",level>1.30?"#101820":"#fff");
   item.innerHTML=`<span class="h-num">${index+1}.</span>${text}`;
   historyList.prepend(item);
   historyList.scrollTop=historyList.scrollHeight;
