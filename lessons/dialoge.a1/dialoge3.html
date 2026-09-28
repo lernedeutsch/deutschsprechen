@@ -1764,22 +1764,46 @@ function nameCheck(answer){
 
 /* ---------------- Inhalt: vier Mini-Dialoge · Lektion 3 ---------------- */
 const dialogues=[
-{title:"Dialog 1 · Neue Bekanntschaft",role:"informell",speaker:"Tom",avatar:"🧑",turns:[
-{prompt:"Hallo! Wie alt bist du?",instruction:"Sag dein Alter — informell.",example:"Ich bin 28 Jahre alt.",check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\\d/.test(a))},
-{prompt:"Ich bin 30. Und wo wohnst du?",instruction:"Sag, wo du wohnst.",example:"Ich wohne in Heidelberg.",check:a=>fuzzyContains(a,"ich wohne",.3)||fuzzyContains(a,"wohne in",.3)},
-{prompt:"Schön, dich kennenzulernen!",instruction:"Reagiere freundlich.",example:"Freut mich auch!",check:a=>fuzzyContains(a,"freut mich",.35)||fuzzyContains(a,"mich auch",.35)||fuzzyContains(a,"danke",.3)}]},
-{title:"Dialog 2 · An der Anmeldung",role:"formell",speaker:"Frau Becker",avatar:"👩‍💼",turns:[
-{prompt:"Guten Tag. Wie ist Ihr Name?",instruction:"Nenne deinen Namen — formell.",example:"Mein Name ist Kowalski.",check:nameCheck},
-{prompt:"Wie ist Ihr Vorname?",instruction:"Nenne deinen Vornamen.",example:"Mein Vorname ist Monika.",check:a=>fuzzyContains(a,"mein vorname ist",.32)||fuzzyContains(a,"ich heiße",.32)||isBareName(a)},
-{prompt:"Wie alt sind Sie?",instruction:"Sag dein Alter — formell.",example:"Ich bin 28 Jahre alt.",check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\\d/.test(a))}]},
-{title:"Dialog 3 · Persönliche Daten",role:"formell",speaker:"Herr Weber",avatar:"👨‍💼",turns:[
-{prompt:"Wie ist Ihre Adresse?",instruction:"Nenne deine Adresse.",example:"Meine Adresse ist Hauptstraße 12.",check:a=>fuzzyContains(a,"meine adresse ist",.35)||/straße|strasse|weg|platz|gasse|allee|\\d/.test(a)},
-{prompt:"Wie ist Ihre Telefonnummer?",instruction:"Nenne deine Telefonnummer.",example:"Meine Telefonnummer ist 0151 234567.",check:a=>fuzzyContains(a,"meine telefonnummer ist",.35)||/\\d/.test(a)},
-{prompt:"Vielen Dank. Das ist alles.",instruction:"Verabschiede dich höflich.",example:"Danke. Auf Wiedersehen!",check:a=>fuzzyContains(a,"auf wiedersehen",.3)||fuzzyContains(a,"danke",.3)}]},
-{title:"Dialog 4 · Auf einer Feier",role:"informell",speaker:"Lena",avatar:"👩",turns:[
-{prompt:"Hi! Ich bin Lena. Wie heißt du?",instruction:"Stell dich vor.",example:"Ich heiße Tom.",check:nameCheck},
-{prompt:"Wie alt bist du?",instruction:"Sag dein Alter.",example:"Ich bin 25 Jahre alt.",check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\\d/.test(a))},
-{prompt:"Super! Ich bin 27. Bis später!",instruction:"Verabschiede dich informell.",example:"Bis später!",check:a=>fuzzyContains(a,"bis später",.35)||fuzzyContains(a,"tschüss",.3)||fuzzyContains(a,"tschuess",.3)}]}];
+  {
+    title:"Dialog 1 · Wie alt bist du?",
+    role:"informell", speaker:"Tom", avatar:"🧑",
+    turns:[
+      {prompt:"Hallo! Wie alt bist du?",instruction:"Sag dein Alter — informell.",example:"Ich bin 25 Jahre alt.",check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
+      {prompt:"Ich bin 32 Jahre alt. Bist du 25?",instruction:"Antworte mit „Ja, ich bin …“.",example:"Ja, ich bin 25.",check:a=>fuzzyContains(a,"ich bin",.35)||fuzzyContains(a,"ja",.3)},
+      {prompt:"Und wie alt ist deine Freundin?",instruction:"Antworte mit „Sie ist … Jahre alt.“.",example:"Sie ist 28 Jahre alt.",check:a=>fuzzyContains(a,"sie ist",.35)&&(a.includes("jahr")||/\d/.test(a))}
+    ]
+  },
+  {
+    title:"Dialog 2 · Zahlen 11–100",
+    role:"informell", speaker:"Lena", avatar:"👩",
+    turns:[
+      {prompt:"Welche Zahl ist das: 21?",instruction:"Sag die Zahl auf Deutsch.",example:"Einundzwanzig.",check:a=>fuzzyContains(a,"einundzwanzig",.35)||a.includes("21")},
+      {prompt:"Und 35?",instruction:"Sag die Zahl auf Deutsch.",example:"Fünfunddreißig.",check:a=>fuzzyContains(a,"fünfunddreißig",.35)||fuzzyContains(a,"funfunddreissig",.4)||a.includes("35")},
+      {prompt:"Und 48?",instruction:"Sag die Zahl auf Deutsch.",example:"Achtundvierzig.",check:a=>fuzzyContains(a,"achtundvierzig",.35)||a.includes("48")}
+    ]
+  },
+  {
+    title:"Dialog 3 · Das Verb „sein“",
+    role:"informell", speaker:"Paul", avatar:"🧑",
+    turns:[
+      {prompt:"Ich bin 30 Jahre alt. Und du?",instruction:"Antworte mit „Ich bin …“.",example:"Ich bin 28 Jahre alt.",check:a=>fuzzyContains(a,"ich bin",.3)},
+      {prompt:"Anna ist 25 Jahre alt. Wie alt ist sie?",instruction:"Antworte mit „Sie ist …“.",example:"Sie ist 25 Jahre alt.",check:a=>fuzzyContains(a,"sie ist",.3)},
+      {prompt:"Wir sind hier. Seid ihr auch hier?",instruction:"Antworte mit „Ja, wir sind hier.“.",example:"Ja, wir sind hier.",check:a=>fuzzyContains(a,"wir sind",.3)}
+    ]
+  },
+  {
+    title:"Dialog 4 · Persönliche Daten",
+    role:"formell", speaker:"Frau Becker", avatar:"👩‍💼",
+    turns:[
+      {prompt:"Guten Tag. Wie ist Ihr Name?",instruction:"Nenne deinen Nachnamen.",example:"Mein Name ist Schmidt.",check:nameCheck},
+      {prompt:"Wie ist Ihr Vorname?",instruction:"Nenne deinen Vornamen.",example:"Mein Vorname ist Anna.",check:a=>fuzzyContains(a,"mein vorname ist",.32)||fuzzyContains(a,"ich heiße",.32)||isBareName(a)},
+      {prompt:"Wie alt sind Sie?",instruction:"Sag dein Alter — formell.",example:"Ich bin 28 Jahre alt.",check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
+      {prompt:"Wie ist Ihre Adresse?",instruction:"Nenne deine Adresse.",example:"Meine Adresse ist Hauptstraße 12.",check:a=>fuzzyContains(a,"meine adresse ist",.35)||/straße|strasse|weg|platz|gasse|allee|\d/.test(a)},
+      {prompt:"Wie ist Ihre Telefonnummer?",instruction:"Nenne deine Telefonnummer.",example:"Meine Telefonnummer ist 0151 234567.",check:a=>fuzzyContains(a,"meine telefonnummer ist",.35)||/\d/.test(a)}
+    ]
+  }
+];
+
 /* ---------------- Dialoge in Züge umwandeln ---------------- */
 
 const flatTurns=[];
