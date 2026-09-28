@@ -1746,7 +1746,7 @@ function nameCheck(answer){
 
 /* ---------------- Inhalt: vier Mini-Dialoge ---------------- */
 
-const dialogues=[{title:"Dialog · ️ Im Restaurant",role:"aktiv",speaker:"Kellnerin",avatar:"🍽",turns:[{prompt:"Was möchten Sie bestellen?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Ich hätte gern einen Salat.",requireFullSentence:true,check:answer=>normalize(answer).length>=2},{prompt:"Möchten Sie etwas trinken?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Ein Wasser, bitte.",requireFullSentence:true,check:answer=>normalize(answer).length>=2}]}];
+const dialogues=[{title:"Dialog · ️ Im Restaurant",role:"aktiv",speaker:"Kellnerin",avatar:"🍽",turns:[{prompt:"Was möchten Sie bestellen?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Ich hätte gern einen Salat.",requireFullSentence:true,check:answer=>/ich hätte gern|ich hatte gern|ich möchte|ich mochte|ich nehme|bestelle/.test(normalize(answer))},{prompt:"Möchten Sie etwas trinken?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Ein Wasser, bitte.",requireFullSentence:true,check:answer=>/wasser|saft|kaffee|tee|cola|bier|wein|trinken|nehme|möchte|mochte/.test(normalize(answer))}]}];
 
 /* ---------------- Dialoge in Züge umwandeln ---------------- */
 
