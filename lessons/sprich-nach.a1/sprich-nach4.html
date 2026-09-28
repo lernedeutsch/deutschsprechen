@@ -119,10 +119,11 @@ button,input{font:inherit}
   flex:1;
   overflow-y:auto;
   display:flex;
-  flex-direction:column-reverse;
-  justify-content:flex-start;
+  flex-direction:column;
+  justify-content:flex-end;
   gap:7px;
   padding-right:2px;
+  min-height:0;
 }
 
 .history-empty{
@@ -134,9 +135,17 @@ button,input{font:inherit}
 
 .history-item{
   padding:9px 10px;
-  color:#fff;
-  background:hsl(207 54% var(--step-light,18%));
-  border:1px solid rgba(255,255,255,.12);
+  color:var(--step-text,#fff);
+  background:
+    linear-gradient(105deg,
+      hsla(345,72%,var(--step-light,24%),.96) 0%,
+      hsla(28,78%,calc(var(--step-light,24%) + 3%),.96) 18%,
+      hsla(52,72%,calc(var(--step-light,24%) + 5%),.96) 34%,
+      hsla(145,48%,calc(var(--step-light,24%) + 4%),.96) 51%,
+      hsla(195,64%,calc(var(--step-light,24%) + 2%),.96) 68%,
+      hsla(225,58%,var(--step-light,24%),.96) 84%,
+      hsla(285,52%,calc(var(--step-light,24%) + 2%),.96) 100%);
+  border:1px solid rgba(255,255,255,.16);
   border-radius:11px;
   font-size:.82rem;
   line-height:1.35;
@@ -1241,12 +1250,12 @@ function addToHistory(index,text){
   const item=document.createElement("p");
   item.className="history-item";
   const step=Math.min(index,26);
-  const light=18+(step/26)*64;
+  const light=22+(step/26)*55;
   item.style.setProperty("--step-light",light.toFixed(1)+"%");
-  if(light>55)item.style.color="#101820";
+  item.style.setProperty("--step-text",light>53?"#101820":"#fff");
   item.innerHTML=`<span class="h-num">${index+1}.</span>${text}`;
   historyList.appendChild(item);
-  historyList.scrollTop=0;
+  historyList.scrollTop=historyList.scrollHeight;
 }
 
 function clearHistory(){
