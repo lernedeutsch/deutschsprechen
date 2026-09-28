@@ -1253,9 +1253,9 @@ function addToHistory(index,text){
   const item=document.createElement("p");
   item.className="history-item";
   const step=Math.min(index,26);
-  const level=Math.min(1.55,0.58+step*0.18);
+  const level=Math.min(1.55,0.38+step*0.13);
   item.style.setProperty("--step-filter",level.toFixed(2));
-  item.style.setProperty("--step-text",level>1.30?"#101820":"#fff");
+  item.style.setProperty("--step-text",level>1.38?"#101820":"#fff");
   item.innerHTML=`<span class="h-num">${index+1}.</span>${text}`;
   historyList.prepend(item);
   historyList.scrollTop=historyList.scrollHeight;
