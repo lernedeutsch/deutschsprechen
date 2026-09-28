@@ -2409,14 +2409,18 @@ function markWrong(spokenText){
 }
 
 function evaluate(rawText){
-  const normalized=normalize(rawText);
   const turn=current();
-
-  if(turn.check(normalized)){
-    markCorrect(rawText);
-  }else{
+  if(window.DeutschsprechenCorrector){
+    const result=window.DeutschsprechenCorrector.assess(rawText,turn);
+    if(result.ok){ markCorrect(rawText); return; }
     markWrong(rawText);
+    els.micStatus.textContent=result.status;
+    els.exampleText.classList.add("show");
+    els.exampleText.textContent=result.help;
+    return;
   }
+  const normalized=normalize(rawText);
+  if(turn.check(normalized)){ markCorrect(rawText); }else{ markWrong(rawText); }
 }
 
 function advance(){
