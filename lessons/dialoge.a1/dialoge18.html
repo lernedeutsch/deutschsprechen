@@ -1765,14 +1765,14 @@ const dialogues=[
         instruction:"Antworte passend und in einem ganzen Satz.",
         example:"Ja, ich suche einen Regenschirm.",
         requireFullSentence:true,
-        check:answer=>normalize(answer).length>=2
+        check:answer=>/^(ja|nein)|ich suche|ich brauche|ich möchte|ich mochte/.test(normalize(answer))
       },
       {
         prompt:"Möchten Sie ihn kaufen?",
         instruction:"Antworte passend und in einem ganzen Satz.",
         example:"Ja, ich nehme ihn.",
         requireFullSentence:true,
-        check:answer=>normalize(answer).length>=2
+        check:answer=>/^(ja|nein)|ich nehme|ich kaufe|möchte|mochte/.test(normalize(answer))
       }
     ]
   }
