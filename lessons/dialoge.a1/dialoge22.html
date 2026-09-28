@@ -1745,7 +1745,7 @@ function nameCheck(answer){
 
 /* ---------------- Inhalt: vier Mini-Dialoge ---------------- */
 
-const dialogues=[{title:"Dialog · Perfekt im Alltag",role:"aktiv",speaker:"Kollegin",avatar:"⏳",turns:[{prompt:"Was hast du gestern gemacht?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Ich habe gearbeitet.",check:answer=>normalize(answer).length>=2},{prompt:"Was hast du am Abend gemacht?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Ich habe einen Film gesehen.",check:answer=>normalize(answer).length>=2}]}];
+const dialogues=[{title:"Dialog · Perfekt im Alltag",role:"aktiv",speaker:"Kollegin",avatar:"⏳",turns:[{prompt:"Was hast du gestern gemacht?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Ich habe gearbeitet.",requireFullSentence:true,check:answer=>normalize(answer).length>=2},{prompt:"Was hast du am Abend gemacht?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Ich habe einen Film gesehen.",requireFullSentence:true,check:answer=>normalize(answer).length>=2}]}];
 
 /* ---------------- Dialoge in Züge umwandeln ---------------- */
 
