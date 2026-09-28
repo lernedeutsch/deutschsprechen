@@ -1780,7 +1780,7 @@ const dialogues=[
     turns:[
       {prompt:"Hallo! Ich bin Lena. Wie heißt du?",instruction:"Stell dich kurz vor.",example:"Ich heiße Monika.",requireFullSentence:true,check:nameCheck},
       {prompt:"Freut mich! Ich bin 28 Jahre alt. Und du?",instruction:"Sag dein Alter. „Und du?“ ist auch möglich.",example:"Ich bin 30 Jahre alt. Und du?",requireFullSentence:true,check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
-      {prompt:"Schön, dich kennenzulernen!",instruction:"Reagiere kurz.",example:"Dich auch! / Freut mich auch! / Schön, dich auch kennenzulernen!",allowShort:true,check:a=>fuzzyContains(a,"dich auch",.28)||fuzzyContains(a,"freut mich auch",.28)||fuzzyContains(a,"mich auch",.28)||fuzzyContains(a,"schön dich auch kennenzulernen",.28)}
+      {prompt:"Schön, dich kennenzulernen!",instruction:"Reagiere kurz.",example:"Dich auch! / Freut mich auch! / Schön, dich auch kennenzulernen!",allowShort:true,check:a=>fuzzyContains(a,"dich auch",.28)||fuzzyContains(a,"freut mich auch",.28)||fuzzyContains(a,"mich auch",.28)||fuzzyContains(a,"schön dich auch kennenzulernen",.28)||fuzzyContains(a,"schön dich kennenzulernen auch",.28)||fuzzyContains(a,"dich kennenzulernen auch schön",.28)}
     ]
   },
   {
@@ -1796,7 +1796,7 @@ const dialogues=[
     role:"formell", speaker:"Frau Becker", avatar:"👩‍💼",
     turns:[
       {prompt:"Guten Tag. Wie ist Ihr Name?",instruction:"Begrüße Frau Becker und nenne deinen Namen.",example:"Guten Tag. Mein Name ist Monika.",requireFullSentence:true,check:a=>nameCheck(a)||fuzzyContains(a,"mein name ist",.3)},
-      {prompt:"Wie ist Ihr Vorname?",instruction:"Nenne deinen Vornamen.",example:"Mein Vorname ist Monika.",requireFullSentence:true,check:a=>fuzzyContains(a,"mein vorname ist",.32)||fuzzyContains(a,"ich heiße",.32)||isBareName(a)},
+      {prompt:"Wie ist Ihr Vorname?",instruction:"Nenne deinen Vornamen.",example:"Mein Vorname ist Monika.",requireFullSentence:true,check:a=>fuzzyContains(a,"mein vorname ist",.32)||fuzzyContains(a,"ich heiße",.32)},
       {prompt:"Wie alt sind Sie?",instruction:"Sag dein Alter.",example:"Ich bin 30 Jahre alt.",requireFullSentence:true,check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
       {prompt:"Wie ist Ihre Adresse?",instruction:"Nenne deine Adresse in einem ganzen Satz.",example:"Meine Adresse ist Bahnhofstraße 30.",requireFullSentence:true,check:a=>fuzzyContains(a,"meine adresse ist",.25)&&/straße|strasse|weg|platz|gasse|allee|\d/.test(a)},
       {prompt:"Wie ist Ihre Telefonnummer?",instruction:"Nenne deine Telefonnummer in einem ganzen Satz.",example:"Meine Telefonnummer ist 0123.",requireFullSentence:true,check:a=>fuzzyContains(a,"meine telefonnummer ist",.25)&&/\d/.test(a)}
