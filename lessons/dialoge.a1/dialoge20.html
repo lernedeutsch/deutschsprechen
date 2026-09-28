@@ -1373,6 +1373,7 @@ body{
 
 <link rel="stylesheet" href="../../css/translation-globe.css">
 <link rel="stylesheet" href="../../css/page-progress.css">
+<script src="../../js/answer-corrector.js"></script>
 </head>
 
 <body>
@@ -2252,15 +2253,20 @@ function markWrong(spokenText){
 }
 
 function evaluate(rawText){
-  const normalized=normalize(rawText);
   const turn=current();
-  const wordCount=normalized.split(" ").filter(Boolean).length;
-  if(turn.requireFullSentence && wordCount<=2){ markWrong(rawText); return; }
-  if(turn.check(normalized)){
-    markCorrect(rawText);
-  }else{
-    markWrong(rawText);
+  if(window.DeutschsprechenCorrector){
+    const result=window.DeutschsprechenCorrector.assess(rawText,turn);
+    if(result.ok){ markCorrect(rawText); return; }
+    if(typeof markWrong==="function"){
+      markWrong(rawText);
+      els.micStatus.textContent=result.status;
+      els.exampleText.classList.add("show");
+      els.exampleText.textContent=result.help;
+      return;
+    }
   }
+  const normalized=normalize(rawText);
+  if(turn.check(normalized)){ markCorrect(rawText); }else{ markWrong(rawText); }
 }
 
 function advance(){
