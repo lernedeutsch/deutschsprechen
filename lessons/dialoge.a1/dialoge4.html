@@ -1768,7 +1768,10 @@ const workplaces=[
  "supermarkt","firma","fabrik","werkstatt","café","cafe","kindergarten","universität",
  "universitat","pflegeheim","reinigungsfirma","küche","kuche"
 ];
-function hasJob(a){return jobs.some(j=>fuzzyContains(a,j,.28));}
+function hasJob(a){
+ const words=normalize(a).split(" ").filter(Boolean);
+ return jobs.some(job=>words.includes(normalize(job)));
+}
 function jobAnswer(a){return hasJob(a)&&fuzzyContains(a,"ich bin",.35);}
 function negativeJobAnswer(a){
  return /^(nein|nein ich|nein, ich)/.test(a)&&(
@@ -1780,16 +1783,15 @@ function negativeJobAnswer(a){
 function yesNo(a){return ["ja","nein","ja ich","nein ich"].some(x=>fuzzyContains(a,x,.3));}
 function hasWorkplace(a){return workplaces.some(w=>fuzzyContains(a,w,.28));}
 function workAnswer(a){
- return fuzzyContains(a,"ich arbeite",.32)&&(
-   fuzzyContains(a,"in",.2)||fuzzyContains(a,"im",.2)||fuzzyContains(a,"bei",.2)||hasWorkplace(a)
+ const text=normalize(a);
+ return fuzzyContains(text,"ich arbeite",.32)&&(
+   /\b(in|im|bei|an|auf)\b/.test(text)||hasWorkplace(text)
  );
 }
 function learnAnswer(a){
  return fuzzyContains(a,"ich lerne deutsch",.32)||
-        fuzzyContains(a,"lerne deutsch",.25)||
         fuzzyContains(a,"ja ich lerne deutsch",.3)||
-        fuzzyContains(a,"nein ich lerne",.3)||
-        /^ja/.test(a)||/^nein/.test(a);
+        fuzzyContains(a,"nein ich lerne deutsch",.3);
 }
 const dialogues=[
  {title:"Dialog 1 · Mein Beruf",role:"informell",speaker:"Mia",avatar:"👩",turns:[
@@ -2329,26 +2331,29 @@ function markWrong(spokenText){
   );
 
   els.micStatus.textContent=
-    "Das war noch nicht richtig.";
+    "Noch nicht ganz. Nutze die Hilfe und versuche es noch einmal.";
 
   els.micStatus.classList.remove("live");
-
-  if(attempts>=2){
-    els.exampleText.classList.add("show");
-    els.exampleText.textContent=
-      `Tipp: „${current().example}“`;
-  }
+  els.exampleText.classList.add("show");
+  els.exampleText.textContent=
+    `Hilfe: ${current().instruction} Zum Beispiel: „${current().example}“`;
 
   clearTimeout(restartTimer);
 
   restartTimer=window.setTimeout(()=>{
     repeatPromptAfterWrongAnswer();
-  },700);
+  },1400);
 }
 
 function evaluate(rawText){
   const normalized=normalize(rawText);
   const turn=current();
+  const words=normalized.split(" ").filter(Boolean);
+
+  if(turn.requireFullSentence && !turn.allowShort && words.length<=2){
+    markWrong(rawText);
+    return;
+  }
 
   if(turn.check(normalized)){
     markCorrect(rawText);
