@@ -1779,7 +1779,7 @@ const dialogues=[
     turns:[
       {prompt:"Hallo! Ich bin Lena. Wie heißt du?",instruction:"Stell dich kurz vor.",example:"Ich heiße Monika.",requireFullSentence:true,check:nameCheck},
       {prompt:"Freut mich! Ich bin 28 Jahre alt. Und du?",instruction:"Sag dein Alter. „Und du?“ ist auch möglich.",example:"Ich bin 30 Jahre alt. Und du?",requireFullSentence:true,check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
-      {prompt:"Schön, dich kennenzulernen!",instruction:"Reagiere kurz.",example:"Dich auch! / Freut mich auch! / Schön, dich auch kennenzulernen!",allowShort:true,check:a=>fuzzyContains(a,"dich auch",.35)||fuzzyContains(a,"freut mich auch",.35)||fuzzyContains(a,"mich auch",.35)||fuzzyContains(a,"schön dich auch kennenzulernen",.4)||fuzzyContains(a,"dich kennenzulernen auch",.4)||fuzzyContains(a,"danke",.35)}
+      {prompt:"Schön, dich kennenzulernen!",instruction:"Reagiere kurz.",example:"Dich auch! / Freut mich auch! / Schön, dich auch kennenzulernen!",allowShort:true,check:a=>fuzzyContains(a,"dich auch",.28)||fuzzyContains(a,"freut mich auch",.28)||fuzzyContains(a,"mich auch",.28)||fuzzyContains(a,"schön dich auch kennenzulernen",.28)}
     ]
   },
   {
@@ -1797,8 +1797,8 @@ const dialogues=[
       {prompt:"Guten Tag. Wie ist Ihr Name?",instruction:"Begrüße Frau Becker und nenne deinen Namen.",example:"Guten Tag. Mein Name ist Monika.",requireFullSentence:true,check:a=>nameCheck(a)||fuzzyContains(a,"mein name ist",.3)},
       {prompt:"Wie ist Ihr Vorname?",instruction:"Nenne deinen Vornamen.",example:"Mein Vorname ist Monika.",requireFullSentence:true,check:a=>fuzzyContains(a,"mein vorname ist",.32)||fuzzyContains(a,"ich heiße",.32)||isBareName(a)},
       {prompt:"Wie alt sind Sie?",instruction:"Sag dein Alter.",example:"Ich bin 30 Jahre alt.",requireFullSentence:true,check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
-      {prompt:"Wie ist Ihre Adresse?",instruction:"Nenne deine Adresse. Eine kurze Antwort ist erlaubt.",example:"Bahnhofstraße 10. / Meine Adresse ist Bahnhofstraße 10.",check:a=>fuzzyContains(a,"meine adresse ist",.35)||/straße|strasse|weg|platz|gasse|allee|\d/.test(a)},
-      {prompt:"Wie ist Ihre Telefonnummer?",instruction:"Nenne deine Telefonnummer. Eine kurze Antwort ist erlaubt.",example:"123456. / Meine Telefonnummer ist 123456.",check:a=>fuzzyContains(a,"meine telefonnummer ist",.35)||/\d/.test(a)}
+      {prompt:"Wie ist Ihre Adresse?",instruction:"Nenne deine Adresse in einem ganzen Satz.",example:"Meine Adresse ist Bahnhofstraße 30.",requireFullSentence:true,check:a=>fuzzyContains(a,"meine adresse ist",.25)&&/straße|strasse|weg|platz|gasse|allee|\d/.test(a)},
+      {prompt:"Wie ist Ihre Telefonnummer?",instruction:"Nenne deine Telefonnummer in einem ganzen Satz.",example:"Meine Telefonnummer ist 0123.",requireFullSentence:true,check:a=>fuzzyContains(a,"meine telefonnummer ist",.25)&&/\d/.test(a)}
     ]
   }
 ];
@@ -2245,8 +2245,9 @@ async function repeatPromptAfterWrongAnswer(){
   clearTimeout(restartTimer);
   setMicReady(false);
 
-  els.micStatus.textContent="Noch einmal. Hör gut zu …";
+  els.micStatus.textContent="Noch einmal. Nutze den Tipp und antworte.";
   els.micStatus.classList.remove("live");
+  els.exampleText.classList.add("show");
 
   await waitForMicrophoneToStop();
 
@@ -2313,7 +2314,7 @@ function markNeedsFullSentence(spokenText){
     `Sag bitte einen ganzen Satz, zum Beispiel: „${current().example}“`;
 
   clearTimeout(restartTimer);
-  restartTimer=window.setTimeout(()=>{ repeatPromptAfterWrongAnswer(); },1100);
+  restartTimer=window.setTimeout(()=>{ repeatPromptAfterWrongAnswer(); },2600);
 }
 
 function markWrong(spokenText){
@@ -2345,7 +2346,7 @@ function markWrong(spokenText){
 
   restartTimer=window.setTimeout(()=>{
     repeatPromptAfterWrongAnswer();
-  },700);
+  },2600);
 }
 
 function evaluate(rawText){
@@ -2354,7 +2355,11 @@ function evaluate(rawText){
 
   const words=normalized.split(" ").filter(Boolean);
 
-  if(turn.requireFullSentence && words.length===1){
+  const needsHelp=/^(weiß nicht|weiss nicht|ich weiß nicht|ich weiss nicht|keine ahnung)$/.test(normalized);
+
+  if(needsHelp){
+    markNeedsFullSentence(rawText);
+  }else if(turn.requireFullSentence && words.length===1){
     markNeedsFullSentence(rawText);
   }else if(turn.check(normalized)){
     markCorrect(rawText);
