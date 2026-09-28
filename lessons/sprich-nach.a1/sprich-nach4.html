@@ -1258,7 +1258,7 @@ function addToHistory(index,text){
   item.style.setProperty("--rainbow-alpha",(0.38+(step/26)*0.20).toFixed(2));
   item.style.setProperty("--step-text",light>55?"#101820":"#fff");
   item.innerHTML=`<span class="h-num">${index+1}.</span>${text}`;
-  historyList.appendChild(item);
+  historyList.prepend(item);
   historyList.scrollTop=historyList.scrollHeight;
 }
 
