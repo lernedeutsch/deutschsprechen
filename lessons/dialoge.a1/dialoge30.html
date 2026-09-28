@@ -1745,7 +1745,7 @@ function nameCheck(answer){
 
 /* ---------------- Inhalt: vier Mini-Dialoge ---------------- */
 
-const dialogues=[{title:"Dialog · A1 Prüfung",role:"aktiv",speaker:"Prüferin",avatar:"🎓",turns:[{prompt:"Stellen Sie sich bitte kurz vor.",instruction:"Antworte passend und in einem ganzen Satz.",example:"Guten Tag. Ich heiße Monika und komme aus Polen.",check:answer=>normalize(answer).length>=2},{prompt:"Was machen Sie in Ihrer Freizeit?",instruction:"Antworte passend und in einem ganzen Satz.",example:"In meiner Freizeit lerne ich Deutsch.",check:answer=>normalize(answer).length>=2}]}];
+const dialogues=[{title:"Dialog · A1 Prüfung",role:"aktiv",speaker:"Prüferin",avatar:"🎓",turns:[{prompt:"Stellen Sie sich bitte kurz vor.",instruction:"Antworte passend und in einem ganzen Satz.",example:"Guten Tag. Ich heiße Monika und komme aus Polen.",requireFullSentence:true,check:answer=>normalize(answer).length>=2},{prompt:"Was machen Sie in Ihrer Freizeit?",instruction:"Antworte passend und in einem ganzen Satz.",example:"In meiner Freizeit lerne ich Deutsch.",requireFullSentence:true,check:answer=>normalize(answer).length>=2}]}];
 
 /* ---------------- Dialoge in Züge umwandeln ---------------- */
 
@@ -2240,43 +2240,20 @@ function markCorrect(spokenText){
 }
 
 function markWrong(spokenText){
-  streak=0;
-  attempts++;
-  micReady=false;
-  els.micBtnWrap.classList.remove("ready");
-  els.micBtn.classList.remove("ready");
-  els.micBtn.disabled=true;
-
-  updateStats();
-
-  addHistoryEntry(
-    "user",
-    "Du",
-    `${spokenText} ✗`
-  );
-
-  els.micStatus.textContent=
-    "Das war noch nicht richtig.";
-
+  streak=0; attempts++; micReady=false;
+  els.micBtnWrap.classList.remove("ready"); els.micBtn.classList.remove("ready"); els.micBtn.disabled=true;
+  updateStats(); addHistoryEntry("user","Du",`${spokenText} ✗`);
+  els.micStatus.textContent="Noch nicht ganz. Nutze die Hilfe und versuche es noch einmal.";
   els.micStatus.classList.remove("live");
-
-  if(attempts>=3){
-    els.exampleText.classList.add("show");
-    els.exampleText.textContent=
-      `Tipp: „${current().example}“`;
-  }
-
-  clearTimeout(restartTimer);
-
-  restartTimer=window.setTimeout(()=>{
-    repeatPromptAfterWrongAnswer();
-  },700);
+  els.exampleText.classList.add("show");
+  els.exampleText.textContent=`Hilfe: ${current().instruction} Zum Beispiel: „${current().example}“`;
+  clearTimeout(restartTimer); restartTimer=window.setTimeout(()=>{repeatPromptAfterWrongAnswer();},1400);
 }
-
 function evaluate(rawText){
   const normalized=normalize(rawText);
   const turn=current();
-
+  const wordCount=normalized.split(" ").filter(Boolean).length;
+  if(turn.requireFullSentence && wordCount<=2){ markWrong(rawText); return; }
   if(turn.check(normalized)){
     markCorrect(rawText);
   }else{
