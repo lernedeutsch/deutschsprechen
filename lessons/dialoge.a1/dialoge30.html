@@ -1746,7 +1746,7 @@ function nameCheck(answer){
 
 /* ---------------- Inhalt: vier Mini-Dialoge ---------------- */
 
-const dialogues=[{title:"Dialog · A1 Prüfung",role:"aktiv",speaker:"Prüferin",avatar:"🎓",turns:[{prompt:"Stellen Sie sich bitte kurz vor.",instruction:"Antworte passend und in einem ganzen Satz.",example:"Guten Tag. Ich heiße Monika und komme aus Polen.",requireFullSentence:true,check:answer=>normalize(answer).length>=2},{prompt:"Was machen Sie in Ihrer Freizeit?",instruction:"Antworte passend und in einem ganzen Satz.",example:"In meiner Freizeit lerne ich Deutsch.",requireFullSentence:true,check:answer=>normalize(answer).length>=2}]}];
+const dialogues=[{title:"Dialog · A1 Prüfung",role:"aktiv",speaker:"Prüferin",avatar:"🎓",turns:[{prompt:"Stellen Sie sich bitte kurz vor.",instruction:"Antworte passend und in einem ganzen Satz.",example:"Guten Tag. Ich heiße Monika und komme aus Polen.",requireFullSentence:true,check:answer=>/ich heiße|ich heisse|mein name ist|ich komme aus|ich wohne|ich bin .* jahre/.test(normalize(answer))},{prompt:"Was machen Sie in Ihrer Freizeit?",instruction:"Antworte passend und in einem ganzen Satz.",example:"In meiner Freizeit lerne ich Deutsch.",requireFullSentence:true,check:answer=>/in meiner freizeit|ich .* gern|mein hobby|am wochenende/.test(normalize(answer))}]}];
 
 /* ---------------- Dialoge in Züge umwandeln ---------------- */
 
