@@ -1746,7 +1746,7 @@ function nameCheck(answer){
 
 /* ---------------- Inhalt: vier Mini-Dialoge ---------------- */
 
-const dialogues=[{title:"Dialog · Pläne machen",role:"aktiv",speaker:"Freund",avatar:"📅",turns:[{prompt:"Kannst du heute Abend kommen?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Ja, ich kann kommen.",requireFullSentence:true,check:answer=>normalize(answer).length>=2},{prompt:"Musst du morgen arbeiten?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Ja, ich muss früh arbeiten.",requireFullSentence:true,check:answer=>normalize(answer).length>=2}]}];
+const dialogues=[{title:"Dialog · Pläne machen",role:"aktiv",speaker:"Freund",avatar:"📅",turns:[{prompt:"Kannst du heute Abend kommen?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Ja, ich kann kommen.",requireFullSentence:true,check:answer=>/^(ja|nein)|ich kann|kann nicht|leider/.test(normalize(answer))},{prompt:"Musst du morgen arbeiten?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Ja, ich muss früh arbeiten.",requireFullSentence:true,check:answer=>/^(ja|nein)|ich muss|muss nicht|habe frei/.test(normalize(answer))}]}];
 
 /* ---------------- Dialoge in Züge umwandeln ---------------- */
 
