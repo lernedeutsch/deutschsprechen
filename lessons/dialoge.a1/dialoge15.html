@@ -2202,14 +2202,17 @@ async function repeatPromptAfterWrongAnswer(){
   clearTimeout(restartTimer);
   setMicReady(false);
 
-  els.micStatus.textContent="Noch einmal. Die Hilfe bleibt unten sichtbar.";
+  const turn=current();
+  const spokenHelp=`${turn.instruction} Zum Beispiel: ${turn.example}`;
+
+  els.micStatus.textContent=`${turn.speaker} hilft dir. Hör gut zu …`;
   els.micStatus.classList.remove("live");
 
   await waitForMicrophoneToStop();
-
   els.liveTranscript.textContent="";
 
-  await speakGerman(current().prompt);
+  // Pomoc mówi ten sam lektor/partner, który prowadzi aktualny dialog.
+  await speakGerman(spokenHelp);
 
   retrying=false;
 
@@ -2221,7 +2224,7 @@ async function repeatPromptAfterWrongAnswer(){
   ){
     setMicReady(
       true,
-      "Jetzt noch einmal — Mikrofon anklicken und antworten."
+      "Jetzt du — Mikrofon anklicken und noch einmal antworten."
     );
   }
 }
@@ -2261,7 +2264,7 @@ function markWrong(spokenText){
   els.exampleText.classList.add("show");
   els.exampleText.textContent=`Hilfe: ${current().instruction} Zum Beispiel: „${current().example}“`;
   clearTimeout(restartTimer);
-  restartTimer=window.setTimeout(()=>{repeatPromptAfterWrongAnswer();},2600);
+  restartTimer=window.setTimeout(()=>{repeatPromptAfterWrongAnswer();},700);
 }
 
 function evaluate(rawText){
