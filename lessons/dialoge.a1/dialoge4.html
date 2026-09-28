@@ -1802,7 +1802,7 @@ const dialogues=[
  ]},
  {title:"Dialog 2 · Was sind Sie von Beruf?",role:"formell",speaker:"Herr Becker",avatar:"👨‍💼",turns:[
   {prompt:"Guten Tag. Was sind Sie von Beruf?",instruction:"Antworten Sie mit einem ganzen Satz.",example:"Ich bin Lehrerin.",requireFullSentence:true,check:jobAnswer},
-  {prompt:"Arbeiten Sie in einer Schule?",instruction:"Antworten Sie natürlich mit ja oder nein. Sie können auch Ihren Arbeitsplatz nennen.",example:"Nein, ich arbeite in einem Krankenhaus.",requireFullSentence:true,check:a=>(/^ja/.test(a)&&a.split(" ").length>=3)||(/^nein/.test(a)&&a.split(" ").length>=3)||workAnswer(a)},
+  {prompt:"Arbeiten Sie in einer Schule?",instruction:"Antworten Sie natürlich mit ja oder nein. Sie können auch Ihren Arbeitsplatz nennen.",example:"Nein, ich arbeite in einem Krankenhaus.",requireFullSentence:true,check:a=>workAnswer(a)||(/^ja/.test(a)&&(/schule|dort|da/.test(a))&&/arbeite/.test(a))||(/^nein/.test(a)&&(/schule|dort|da/.test(a))&&/arbeite/.test(a))},
   {prompt:"Was machen Sie bei der Arbeit?",instruction:"Sagen Sie einen einfachen ganzen Satz über Ihre Arbeit.",example:"Ich arbeite mit Menschen.",requireFullSentence:true,check:a=>fuzzyContains(a,"ich arbeite",.32)||fuzzyContains(a,"ich helfe",.3)||fuzzyContains(a,"ich mache",.3)||fuzzyContains(a,"ich putze",.3)||fuzzyContains(a,"ich koche",.3)||fuzzyContains(a,"ich unterrichte",.3)}
  ]},
  {title:"Dialog 3 · Wo arbeiten Sie?",role:"formell",speaker:"Frau Klein",avatar:"👩‍💼",turns:[
