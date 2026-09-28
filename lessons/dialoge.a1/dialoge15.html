@@ -1756,8 +1756,8 @@ function nameCheck(answer){
 const dialogues=[
 {title:"Dialog 1 · Reisen",role:"aktiv",speaker:"Anna",avatar:"💬",turns:[{prompt:"Wohin reist du gern?",instruction:"Antworte in einem ganzen Satz.",example:"Ich reise gern nach Italien.",requireFullSentence:true,check:answer=>/reise|fahre|fliege/.test(normalize(answer))}]},
 {title:"Dialog 2 · Reisen",role:"aktiv",speaker:"Tom",avatar:"💬",turns:[{prompt:"Wie reist du am liebsten?",instruction:"Antworte in einem ganzen Satz.",example:"Ich fahre am liebsten mit dem Zug.",requireFullSentence:true,check:answer=>/zug|auto|bus|flugzeug|fahre|fliege/.test(normalize(answer))}]},
-{title:"Dialog 3 · Reisen",role:"aktiv",speaker:"Mia",avatar:"💬",turns:[{prompt:"Wo übernachtest du im Urlaub?",instruction:"Antworte in einem ganzen Satz.",example:"Ich übernachte gern in einem Hotel.",requireFullSentence:true,check:answer=>/hotel|pension|wohnung|camping|übernachte/.test(normalize(answer))}]},
-{title:"Dialog 4 · Reisen",role:"aktiv",speaker:"Paul",avatar:"💬",turns:[{prompt:"Was nimmst du auf eine Reise mit?",instruction:"Nenne etwas in einem ganzen Satz.",example:"Ich nehme meinen Koffer und meinen Pass mit.",requireFullSentence:true,check:answer=>/koffer|pass|tasche|kleidung|nehme/.test(normalize(answer))}]}
+{title:"Dialog 3 · Reisen",role:"aktiv",speaker:"Mia",avatar:"💬",turns:[{prompt:"Wo übernachtest du im Urlaub?",instruction:"Antworte mit „Ich übernachte …“ in einem ganzen Satz.",example:"Ich übernachte gern in einem Hotel.",requireFullSentence:true,check:answer=>/hotel|pension|wohnung|camping|übernachte/.test(normalize(answer))}]},
+{title:"Dialog 4 · Reisen",role:"aktiv",speaker:"Paul",avatar:"💬",turns:[{prompt:"Was nimmst du auf eine Reise mit?",instruction:"Antworte mit „Ich nehme … mit“ in einem ganzen Satz.",example:"Ich nehme meinen Koffer und meinen Pass mit.",requireFullSentence:true,check:answer=>/koffer|pass|tasche|kleidung|nehme/.test(normalize(answer))}]}
 ];
 
 /* ---------------- Dialoge in Züge umwandeln ---------------- */
@@ -2202,7 +2202,7 @@ async function repeatPromptAfterWrongAnswer(){
   clearTimeout(restartTimer);
   setMicReady(false);
 
-  els.micStatus.textContent="Noch einmal. Hör gut zu …";
+  els.micStatus.textContent="Noch einmal. Die Hilfe bleibt unten sichtbar.";
   els.micStatus.classList.remove("live");
 
   await waitForMicrophoneToStop();
@@ -2261,7 +2261,7 @@ function markWrong(spokenText){
   els.exampleText.classList.add("show");
   els.exampleText.textContent=`Hilfe: ${current().instruction} Zum Beispiel: „${current().example}“`;
   clearTimeout(restartTimer);
-  restartTimer=window.setTimeout(()=>{repeatPromptAfterWrongAnswer();},1400);
+  restartTimer=window.setTimeout(()=>{repeatPromptAfterWrongAnswer();},2600);
 }
 
 function evaluate(rawText){
