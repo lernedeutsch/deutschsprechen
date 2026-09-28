@@ -2314,7 +2314,7 @@ function markNeedsFullSentence(spokenText){
     `Sag bitte einen ganzen Satz, zum Beispiel: „${current().example}“`;
 
   clearTimeout(restartTimer);
-  restartTimer=window.setTimeout(()=>{ repeatPromptAfterWrongAnswer(); },2600);
+  restartTimer=window.setTimeout(()=>{ repeatPromptAfterWrongAnswer(); },1400);
 }
 
 function markWrong(spokenText){
@@ -2334,19 +2334,19 @@ function markWrong(spokenText){
   );
 
   els.micStatus.textContent=
-    "Das war noch nicht richtig.";
+    "Noch nicht ganz. Nutze die Hilfe und versuche es noch einmal.";
 
   els.micStatus.classList.remove("live");
 
   els.exampleText.classList.add("show");
   els.exampleText.textContent=
-    `Tipp: Du kannst zum Beispiel sagen: „${current().example}“`;
+    `Hilfe: ${current().instruction} Zum Beispiel: „${current().example}“`;
 
   clearTimeout(restartTimer);
 
   restartTimer=window.setTimeout(()=>{
     repeatPromptAfterWrongAnswer();
-  },2600);
+  },1400);
 }
 
 function evaluate(rawText){
@@ -2359,7 +2359,7 @@ function evaluate(rawText){
 
   if(needsHelp){
     markNeedsFullSentence(rawText);
-  }else if(turn.requireFullSentence && words.length===1){
+  }else if(turn.requireFullSentence && !turn.allowShort && words.length<=2){
     markNeedsFullSentence(rawText);
   }else if(turn.check(normalized)){
     markCorrect(rawText);
