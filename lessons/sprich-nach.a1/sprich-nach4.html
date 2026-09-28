@@ -140,14 +140,14 @@ button,input{font:inherit}
   padding:9px 10px;
   color:var(--step-text,#fff);
   background:
+    linear-gradient(rgba(255,255,255,var(--step-brightness,0)),rgba(255,255,255,var(--step-brightness,0))),
     linear-gradient(100deg,
-      rgba(255,82,120,var(--rainbow-alpha,.42)) 0%,
-      rgba(255,170,70,var(--rainbow-alpha,.42)) 20%,
-      rgba(245,220,85,var(--rainbow-alpha,.42)) 38%,
-      rgba(83,205,145,var(--rainbow-alpha,.42)) 56%,
-      rgba(72,169,235,var(--rainbow-alpha,.42)) 74%,
-      rgba(165,105,225,var(--rainbow-alpha,.42)) 100%),
-    linear-gradient(180deg,var(--step-base,#18354d),var(--step-base,#18354d));
+      rgb(205,66,96) 0%,
+      rgb(213,137,57) 20%,
+      rgb(191,170,67) 38%,
+      rgb(59,158,110) 56%,
+      rgb(53,133,187) 74%,
+      rgb(125,79,176) 100%);
   border:1px solid rgba(255,255,255,.20);
   border-radius:11px;
   font-size:.82rem;
@@ -1253,10 +1253,9 @@ function addToHistory(index,text){
   const item=document.createElement("p");
   item.className="history-item";
   const step=Math.min(index,26);
-  const light=12+(step/26)*68;
-  item.style.setProperty("--step-base",`hsl(207 48% ${light.toFixed(1)}%)`);
-  item.style.setProperty("--rainbow-alpha",(0.30+(step/26)*0.34).toFixed(2));
-  item.style.setProperty("--step-text",light>55?"#101820":"#fff");
+  const brightness=0.02+(step/26)*0.66;
+  item.style.setProperty("--step-brightness",brightness.toFixed(3));
+  item.style.setProperty("--step-text",brightness>0.48?"#101820":"#fff");
   item.innerHTML=`<span class="h-num">${index+1}.</span>${text}`;
   historyList.prepend(item);
   historyList.scrollTop=historyList.scrollHeight;
