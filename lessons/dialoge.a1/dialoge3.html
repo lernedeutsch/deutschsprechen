@@ -1768,8 +1768,8 @@ const dialogues=[
     title:"Dialog 1 · Alter",
     role:"informell", speaker:"Tom", avatar:"🧑",
     turns:[
-      {prompt:"Hallo! Wie alt bist du?",instruction:"Sag dein Alter.",example:"Ich bin 30 Jahre alt.",check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
-      {prompt:"Ich bin 32 Jahre alt. Und du?",instruction:"Sag dein Alter. Du kannst auch zurückfragen.",example:"Ich bin 30 Jahre alt. Und du?",check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
+      {prompt:"Hallo! Wie alt bist du?",instruction:"Sag dein Alter.",example:"Ich bin 30 Jahre alt.",requireFullSentence:true,check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
+      {prompt:"Ich bin 32 Jahre alt. Und du?",instruction:"Sag dein Alter. Du kannst auch zurückfragen.",example:"Ich bin 30 Jahre alt. Und du?",requireFullSentence:true,check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
       {prompt:"Ah, schön! Dann sind wir beide über zwanzig.",instruction:"Reagiere kurz und natürlich.",example:"Ja, genau.",check:a=>fuzzyContains(a,"ja",.35)||fuzzyContains(a,"genau",.35)||fuzzyContains(a,"stimmt",.35)}
     ]
   },
@@ -1777,26 +1777,26 @@ const dialogues=[
     title:"Dialog 2 · Kennenlernen",
     role:"informell", speaker:"Lena", avatar:"👩",
     turns:[
-      {prompt:"Hallo! Ich bin Lena. Wie heißt du?",instruction:"Stell dich kurz vor.",example:"Ich heiße Monika.",check:nameCheck},
-      {prompt:"Freut mich! Ich bin 28 Jahre alt. Und du?",instruction:"Sag dein Alter. „Und du?“ ist auch möglich.",example:"Ich bin 30 Jahre alt. Und du?",check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
-      {prompt:"Schön, dich kennenzulernen!",instruction:"Reagiere kurz.",example:"Freut mich auch!",check:a=>fuzzyContains(a,"freut mich",.35)||fuzzyContains(a,"mich auch",.35)||fuzzyContains(a,"danke",.35)}
+      {prompt:"Hallo! Ich bin Lena. Wie heißt du?",instruction:"Stell dich kurz vor.",example:"Ich heiße Monika.",requireFullSentence:true,check:nameCheck},
+      {prompt:"Freut mich! Ich bin 28 Jahre alt. Und du?",instruction:"Sag dein Alter. „Und du?“ ist auch möglich.",example:"Ich bin 30 Jahre alt. Und du?",requireFullSentence:true,check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
+      {prompt:"Schön, dich kennenzulernen!",instruction:"Reagiere kurz.",example:"Dich auch! / Freut mich auch! / Schön, dich auch kennenzulernen!",allowShort:true,check:a=>fuzzyContains(a,"dich auch",.35)||fuzzyContains(a,"freut mich auch",.35)||fuzzyContains(a,"mich auch",.35)||fuzzyContains(a,"schön dich auch kennenzulernen",.4)||fuzzyContains(a,"dich kennenzulernen auch",.4)||fuzzyContains(a,"danke",.35)}
     ]
   },
   {
     title:"Dialog 3 · Mit Freunden",
     role:"informell", speaker:"Paul", avatar:"🧑",
     turns:[
-      {prompt:"Ich bin 30 Jahre alt. Und du?",instruction:"Sag dein Alter. Mit oder ohne „Und du?“.",example:"Ich bin 20 Jahre alt. Und du?",check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
-      {prompt:"Wir sind hier. Seid ihr auch hier?",instruction:"Antworte positiv oder negativ.",example:"Ja, wir sind auch hier. / Nein, wir sind nicht hier.",check:a=>(fuzzyContains(a,"ja",.35)&&fuzzyContains(a,"wir sind",.35))||(fuzzyContains(a,"nein",.35)&&(fuzzyContains(a,"wir sind nicht",.4)||fuzzyContains(a,"nicht hier",.4)))}
+      {prompt:"Ich bin 30 Jahre alt. Und du?",instruction:"Sag dein Alter. Mit oder ohne „Und du?“.",example:"Ich bin 20 Jahre alt. Und du?",requireFullSentence:true,check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
+      {prompt:"Wir sind hier. Seid ihr auch hier?",instruction:"Antworte positiv oder negativ.",example:"Ja, wir sind auch hier. / Nein, wir sind nicht hier.",requireFullSentence:true,check:a=>(fuzzyContains(a,"ja",.35)&&fuzzyContains(a,"wir sind",.35))||(fuzzyContains(a,"nein",.35)&&(fuzzyContains(a,"wir sind nicht",.4)||fuzzyContains(a,"nicht hier",.4)))}
     ]
   },
   {
     title:"Dialog 4 · Persönliche Daten",
     role:"formell", speaker:"Frau Becker", avatar:"👩‍💼",
     turns:[
-      {prompt:"Guten Tag. Wie ist Ihr Name?",instruction:"Begrüße Frau Becker und nenne deinen Namen.",example:"Guten Tag. Mein Name ist Monika.",check:a=>nameCheck(a)||fuzzyContains(a,"mein name ist",.3)},
-      {prompt:"Wie ist Ihr Vorname?",instruction:"Nenne deinen Vornamen.",example:"Mein Vorname ist Monika.",check:a=>fuzzyContains(a,"mein vorname ist",.32)||fuzzyContains(a,"ich heiße",.32)||isBareName(a)},
-      {prompt:"Wie alt sind Sie?",instruction:"Sag dein Alter.",example:"Ich bin 30 Jahre alt.",check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
+      {prompt:"Guten Tag. Wie ist Ihr Name?",instruction:"Begrüße Frau Becker und nenne deinen Namen.",example:"Guten Tag. Mein Name ist Monika.",requireFullSentence:true,check:a=>nameCheck(a)||fuzzyContains(a,"mein name ist",.3)},
+      {prompt:"Wie ist Ihr Vorname?",instruction:"Nenne deinen Vornamen.",example:"Mein Vorname ist Monika.",requireFullSentence:true,check:a=>fuzzyContains(a,"mein vorname ist",.32)||fuzzyContains(a,"ich heiße",.32)||isBareName(a)},
+      {prompt:"Wie alt sind Sie?",instruction:"Sag dein Alter.",example:"Ich bin 30 Jahre alt.",requireFullSentence:true,check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
       {prompt:"Wie ist Ihre Adresse?",instruction:"Nenne deine Adresse. Eine kurze Antwort ist erlaubt.",example:"Bahnhofstraße 10. / Meine Adresse ist Bahnhofstraße 10.",check:a=>fuzzyContains(a,"meine adresse ist",.35)||/straße|strasse|weg|platz|gasse|allee|\d/.test(a)},
       {prompt:"Wie ist Ihre Telefonnummer?",instruction:"Nenne deine Telefonnummer. Eine kurze Antwort ist erlaubt.",example:"123456. / Meine Telefonnummer ist 123456.",check:a=>fuzzyContains(a,"meine telefonnummer ist",.35)||/\d/.test(a)}
     ]
@@ -2295,6 +2295,27 @@ function markCorrect(spokenText){
   window.setTimeout(advance,900);
 }
 
+function markNeedsFullSentence(spokenText){
+  streak=0;
+  attempts++;
+  micReady=false;
+  els.micBtnWrap.classList.remove("ready");
+  els.micBtn.classList.remove("ready");
+  els.micBtn.disabled=true;
+  updateStats();
+
+  addHistoryEntry("user","Du",spokenText);
+
+  els.micStatus.textContent="Sag bitte einen ganzen Satz.";
+  els.micStatus.classList.remove("live");
+  els.exampleText.classList.add("show");
+  els.exampleText.textContent=
+    `Sag bitte einen ganzen Satz, zum Beispiel: „${current().example}“`;
+
+  clearTimeout(restartTimer);
+  restartTimer=window.setTimeout(()=>{ repeatPromptAfterWrongAnswer(); },1100);
+}
+
 function markWrong(spokenText){
   streak=0;
   attempts++;
@@ -2331,7 +2352,11 @@ function evaluate(rawText){
   const normalized=normalize(rawText);
   const turn=current();
 
-  if(turn.check(normalized)){
+  const words=normalized.split(" ").filter(Boolean);
+
+  if(turn.requireFullSentence && words.length===1){
+    markNeedsFullSentence(rawText);
+  }else if(turn.check(normalized)){
     markCorrect(rawText);
   }else{
     markWrong(rawText);
