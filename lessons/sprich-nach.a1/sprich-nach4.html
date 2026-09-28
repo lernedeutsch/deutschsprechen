@@ -1253,9 +1253,9 @@ function addToHistory(index,text){
   const item=document.createElement("p");
   item.className="history-item";
   const step=Math.min(index,26);
-  const light=20+(step/26)*56;
+  const light=12+(step/26)*68;
   item.style.setProperty("--step-base",`hsl(207 48% ${light.toFixed(1)}%)`);
-  item.style.setProperty("--rainbow-alpha",(0.38+(step/26)*0.20).toFixed(2));
+  item.style.setProperty("--rainbow-alpha",(0.30+(step/26)*0.34).toFixed(2));
   item.style.setProperty("--step-text",light>55?"#101820":"#fff");
   item.innerHTML=`<span class="h-num">${index+1}.</span>${text}`;
   historyList.prepend(item);
