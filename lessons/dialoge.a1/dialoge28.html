@@ -1746,7 +1746,7 @@ function nameCheck(answer){
 
 /* ---------------- Inhalt: vier Mini-Dialoge ---------------- */
 
-const dialogues=[{title:"Dialog · Große Wiederholung I",role:"aktiv",speaker:"Freundin",avatar:"🏆",turns:[{prompt:"Kannst du mir heute helfen?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Ja, ich kann dir helfen.",requireFullSentence:true,check:answer=>normalize(answer).length>=2},{prompt:"Was hast du gestern gemacht?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Ich habe Deutsch gelernt.",requireFullSentence:true,check:answer=>normalize(answer).length>=2}]}];
+const dialogues=[{title:"Dialog · Große Wiederholung I",role:"aktiv",speaker:"Freundin",avatar:"🏆",turns:[{prompt:"Kannst du mir heute helfen?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Ja, ich kann dir helfen.",requireFullSentence:true,check:answer=>/^(ja|nein)|ich kann|kann nicht|leider/.test(normalize(answer))},{prompt:"Was hast du gestern gemacht?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Ich habe Deutsch gelernt.",requireFullSentence:true,check:answer=>/ich habe .*?(t|en)|ich bin .*?(t|en)|gestern/.test(normalize(answer))}]}];
 
 /* ---------------- Dialoge in Züge umwandeln ---------------- */
 

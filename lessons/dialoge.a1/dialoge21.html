@@ -1746,7 +1746,7 @@ function nameCheck(answer){
 
 /* ---------------- Inhalt: vier Mini-Dialoge ---------------- */
 
-const dialogues=[{title:"Dialog · Telefonieren",role:"aktiv",speaker:"Anna",avatar:"📱",turns:[{prompt:"Wann stehst du morgen auf?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Ich stehe um sieben Uhr auf.",requireFullSentence:true,check:answer=>normalize(answer).length>=2},{prompt:"Rufst du mich danach an?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Ja, ich rufe dich an.",requireFullSentence:true,check:answer=>normalize(answer).length>=2}]}];
+const dialogues=[{title:"Dialog · Telefonieren",role:"aktiv",speaker:"Anna",avatar:"📱",turns:[{prompt:"Wann stehst du morgen auf?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Ich stehe um sieben Uhr auf.",requireFullSentence:true,check:answer=>/ich stehe|um .*uhr|gegen .*uhr/.test(normalize(answer))},{prompt:"Rufst du mich danach an?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Ja, ich rufe dich an.",requireFullSentence:true,check:answer=>/^(ja|nein)|ich rufe|rufe dich|kann dich/.test(normalize(answer))}]}];
 
 /* ---------------- Dialoge in Züge umwandeln ---------------- */
 

@@ -1746,7 +1746,7 @@ function nameCheck(answer){
 
 /* ---------------- Inhalt: vier Mini-Dialoge ---------------- */
 
-const dialogues=[{title:"Dialog · Im Kleidungsgeschäft",role:"aktiv",speaker:"Verkäuferin",avatar:"👗",turns:[{prompt:"Was suchen Sie?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Ich suche eine schwarze Hose.",requireFullSentence:true,check:answer=>normalize(answer).length>=2},{prompt:"Welche Größe brauchen Sie?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Größe vierzig, bitte.",requireFullSentence:true,check:answer=>normalize(answer).length>=2}]}];
+const dialogues=[{title:"Dialog · Im Kleidungsgeschäft",role:"aktiv",speaker:"Verkäuferin",avatar:"👗",turns:[{prompt:"Was suchen Sie?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Ich suche eine schwarze Hose.",requireFullSentence:true,check:answer=>/ich suche|ich brauche|ich möchte|ich mochte/.test(normalize(answer))},{prompt:"Welche Größe brauchen Sie?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Größe vierzig, bitte.",requireFullSentence:true,check:answer=>/größe|grosse|groesse|nummer|\b(s|m|l|xl)\b|\d/.test(normalize(answer))}]}];
 
 /* ---------------- Dialoge in Züge umwandeln ---------------- */
 

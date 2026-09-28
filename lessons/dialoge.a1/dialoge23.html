@@ -1746,7 +1746,7 @@ function nameCheck(answer){
 
 /* ---------------- Inhalt: vier Mini-Dialoge ---------------- */
 
-const dialogues=[{title:"Dialog · ️ In der Stadt",role:"aktiv",speaker:"Passantin",avatar:"🏙",turns:[{prompt:"Entschuldigung, wo ist der Bahnhof?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Gehen Sie geradeaus und dann links.",requireFullSentence:true,check:answer=>normalize(answer).length>=2},{prompt:"Ist es weit?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Nein, nur fünf Minuten zu Fuß.",requireFullSentence:true,check:answer=>normalize(answer).length>=2}]}];
+const dialogues=[{title:"Dialog · ️ In der Stadt",role:"aktiv",speaker:"Passantin",avatar:"🏙",turns:[{prompt:"Entschuldigung, wo ist der Bahnhof?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Gehen Sie geradeaus und dann links.",requireFullSentence:true,check:answer=>/geradeaus|links|rechts|neben|gegenüber|gegenuber|straße|strasse|gehen sie|bahnhof ist/.test(normalize(answer))},{prompt:"Ist es weit?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Nein, nur fünf Minuten zu Fuß.",requireFullSentence:true,check:answer=>/^(ja|nein)|minute|meter|weit|nah|zu fuß|zu fuss/.test(normalize(answer))}]}];
 
 /* ---------------- Dialoge in Züge umwandeln ---------------- */
 

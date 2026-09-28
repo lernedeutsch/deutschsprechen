@@ -1746,7 +1746,7 @@ function nameCheck(answer){
 
 /* ---------------- Inhalt: vier Mini-Dialoge ---------------- */
 
-const dialogues=[{title:"Dialog · Große Wiederholung II",role:"aktiv",speaker:"Bekannter",avatar:"🌍",turns:[{prompt:"Entschuldigung, können Sie mir helfen?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Ja, natürlich.",requireFullSentence:true,check:answer=>normalize(answer).length>=2},{prompt:"Wo ist Gleis zwei?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Dort rechts, neben dem Aufzug.",requireFullSentence:true,check:answer=>normalize(answer).length>=2}]}];
+const dialogues=[{title:"Dialog · Große Wiederholung II",role:"aktiv",speaker:"Bekannter",avatar:"🌍",turns:[{prompt:"Entschuldigung, können Sie mir helfen?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Ja, natürlich.",requireFullSentence:true,check:answer=>/^(ja|nein)|natürlich|naturlich|gern|leider/.test(normalize(answer))},{prompt:"Wo ist Gleis zwei?",instruction:"Antworte passend und in einem ganzen Satz.",example:"Dort rechts, neben dem Aufzug.",requireFullSentence:true,check:answer=>/gleis .* (ist|liegt)|rechts|links|geradeaus|neben|dort/.test(normalize(answer))}]}];
 
 /* ---------------- Dialoge in Züge umwandeln ---------------- */
 
