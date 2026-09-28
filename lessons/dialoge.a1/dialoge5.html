@@ -1759,25 +1759,25 @@ function liveAnswer(a){return fuzzyContains(a,"ich wohne",.3)||fuzzyContains(a,"
 function learnAnswer(a){return fuzzyContains(a,"ich lerne",.3)||fuzzyContains(a,"lerne deutsch",.28)||yesNo(a);}
 function workAnswer(a){return fuzzyContains(a,"ich arbeite",.3)||fuzzyContains(a,"arbeite",.25)||yesNo(a);}
 const dialogues=[
- {title:"Dialog 1 · Du: Wie heißt du?",role:"informell",speaker:"Anna",avatar:"👩",turns:[
-  {prompt:"Hallo! Wie heißt du?",instruction:"Antworte mit deinem Namen.",example:"Ich heiße Monika.",check:nameAnswer},
-  {prompt:"Wo wohnst du?",instruction:"Sag, wo du wohnst.",example:"Ich wohne in Frankfurt.",check:liveAnswer},
-  {prompt:"Lernst du Deutsch?",instruction:"Antworte mit ja oder nein. Ein ganzer Satz ist noch besser.",example:"Ja, ich lerne Deutsch.",check:learnAnswer}
+ {title:"Dialog 1 · Kennenlernen mit du",role:"informell",speaker:"Anna",avatar:"👩",turns:[
+  {prompt:"Hallo! Wie heißt du?",instruction:"Stell dich mit einem ganzen Satz vor.",example:"Ich heiße Monika.",requireFullSentence:true,check:nameAnswer},
+  {prompt:"Wo wohnst du?",instruction:"Sag in einem ganzen Satz, wo du wohnst.",example:"Ich wohne in Heidelberg.",requireFullSentence:true,check:liveAnswer},
+  {prompt:"Lernst du Deutsch?",instruction:"Antworte natürlich mit ja oder nein und einem ganzen Satz.",example:"Ja, ich lerne Deutsch.",requireFullSentence:true,check:learnAnswer}
  ]},
- {title:"Dialog 2 · Sie: Wie heißen Sie?",role:"formell",speaker:"Herr Müller",avatar:"👨‍💼",turns:[
-  {prompt:"Guten Tag. Wie heißen Sie?",instruction:"Antworten Sie höflich mit Ihrem Namen.",example:"Ich heiße Monika.",check:nameAnswer},
-  {prompt:"Wo wohnen Sie?",instruction:"Sagen Sie, wo Sie wohnen.",example:"Ich wohne in Frankfurt.",check:liveAnswer},
-  {prompt:"Lernen Sie Deutsch?",instruction:"Antworten Sie mit ja oder nein.",example:"Ja, ich lerne Deutsch.",check:learnAnswer}
+ {title:"Dialog 2 · Kennenlernen mit Sie",role:"formell",speaker:"Herr Müller",avatar:"👨‍💼",turns:[
+  {prompt:"Guten Tag. Wie heißen Sie?",instruction:"Stellen Sie sich höflich mit einem ganzen Satz vor.",example:"Ich heiße Monika.",requireFullSentence:true,check:nameAnswer},
+  {prompt:"Wo wohnen Sie?",instruction:"Sagen Sie in einem ganzen Satz, wo Sie wohnen.",example:"Ich wohne in Heidelberg.",requireFullSentence:true,check:liveAnswer},
+  {prompt:"Lernen Sie Deutsch?",instruction:"Antworten Sie natürlich mit ja oder nein und einem ganzen Satz.",example:"Ja, ich lerne Deutsch.",requireFullSentence:true,check:learnAnswer}
  ]},
- {title:"Dialog 3 · lernen & arbeiten",role:"informell",speaker:"Paul",avatar:"🧑",turns:[
-  {prompt:"Ich lerne Deutsch. Und du?",instruction:"Sag, was du lernst.",example:"Ich lerne Deutsch.",check:a=>fuzzyContains(a,"ich lerne",.3)||fuzzyContains(a,"lerne deutsch",.25)},
-  {prompt:"Arbeitest du?",instruction:"Antworte kurz oder mit einem ganzen Satz.",example:"Ja, ich arbeite.",check:workAnswer},
-  {prompt:"Wir lernen Deutsch. Ergänze: Wir … Deutsch.",instruction:"Sag den ganzen Satz mit wir.",example:"Wir lernen Deutsch.",check:a=>fuzzyContains(a,"wir lernen deutsch",.3)||fuzzyContains(a,"wir lernen",.25)}
+ {title:"Dialog 3 · Arbeit und Lernen",role:"informell",speaker:"Paul",avatar:"🧑",turns:[
+  {prompt:"Was lernst du gerade?",instruction:"Sag in einem ganzen Satz, was du lernst.",example:"Ich lerne Deutsch.",requireFullSentence:true,check:a=>fuzzyContains(a,"ich lerne",.3)||fuzzyContains(a,"lerne deutsch",.25)},
+  {prompt:"Arbeitest du auch?",instruction:"Antworte natürlich in einem ganzen Satz.",example:"Ja, ich arbeite.",requireFullSentence:true,check:workAnswer},
+  {prompt:"Wo arbeitest du?",instruction:"Sag in einem ganzen Satz, wo du arbeitest.",example:"Ich arbeite in einem Hotel.",requireFullSentence:true,check:a=>fuzzyContains(a,"ich arbeite",.3)}
  ]},
- {title:"Dialog 4 · Du oder Sie?",role:"formell",speaker:"Frau Becker",avatar:"👩‍💼",turns:[
-  {prompt:"Sie sprechen mit einer fremden Person. Sagen Sie: Guten Tag. Wie heißen Sie?",instruction:"Benutzen Sie die höfliche Form Sie.",example:"Guten Tag. Wie heißen Sie?",check:a=>fuzzyContains(a,"wie heißen sie",.3)||fuzzyContains(a,"wie heissen sie",.3)},
-  {prompt:"Jetzt sprechen Sie mit einem Freund. Fragen Sie nach dem Wohnort.",instruction:"Benutze jetzt du.",example:"Wo wohnst du?",check:a=>fuzzyContains(a,"wo wohnst du",.28)},
-  {prompt:"Sehr gut. Fragen Sie mich jetzt höflich: Arbeiten Sie?",instruction:"Benutzen Sie Sie und arbeiten.",example:"Arbeiten Sie?",check:a=>fuzzyContains(a,"arbeiten sie",.28)}
+ {title:"Dialog 4 · Du oder Sie im Alltag",role:"formell",speaker:"Frau Becker",avatar:"👩‍💼",turns:[
+  {prompt:"Guten Tag! Wie heißen Sie?",instruction:"Antworten Sie höflich mit einem ganzen Satz.",example:"Ich heiße Monika.",requireFullSentence:true,check:nameAnswer},
+  {prompt:"Wo wohnen Sie?",instruction:"Antworten Sie höflich mit einem ganzen Satz.",example:"Ich wohne in Heidelberg.",requireFullSentence:true,check:liveAnswer},
+  {prompt:"Arbeiten Sie oder lernen Sie Deutsch?",instruction:"Antworten Sie natürlich mit einem ganzen Satz.",example:"Ich arbeite und lerne Deutsch.",requireFullSentence:true,check:a=>fuzzyContains(a,"ich arbeite",.3)||fuzzyContains(a,"ich lerne",.3)}
  ]}
 ];
 
@@ -2286,36 +2286,25 @@ function markWrong(spokenText){
   els.micBtnWrap.classList.remove("ready");
   els.micBtn.classList.remove("ready");
   els.micBtn.disabled=true;
-
   updateStats();
-
-  addHistoryEntry(
-    "user",
-    "Du",
-    `${spokenText} ✗`
-  );
-
-  els.micStatus.textContent=
-    "Das war noch nicht richtig.";
-
+  addHistoryEntry("user","Du",`${spokenText} ✗`);
+  els.micStatus.textContent="Noch nicht ganz. Nutze die Hilfe und versuche es noch einmal.";
   els.micStatus.classList.remove("live");
-
-  if(attempts>=2){
-    els.exampleText.classList.add("show");
-    els.exampleText.textContent=
-      `Tipp: „${current().example}“`;
-  }
-
+  els.exampleText.classList.add("show");
+  els.exampleText.textContent=`Hilfe: ${current().instruction} Zum Beispiel: „${current().example}“`;
   clearTimeout(restartTimer);
-
-  restartTimer=window.setTimeout(()=>{
-    repeatPromptAfterWrongAnswer();
-  },700);
+  restartTimer=window.setTimeout(()=>{ repeatPromptAfterWrongAnswer(); },1400);
 }
 
 function evaluate(rawText){
   const normalized=normalize(rawText);
   const turn=current();
+  const wordCount=normalized.split(" ").filter(Boolean).length;
+
+  if(turn.requireFullSentence && wordCount<=2){
+    markWrong(rawText);
+    return;
+  }
 
   if(turn.check(normalized)){
     markCorrect(rawText);
