@@ -1050,6 +1050,15 @@ header.hero{display:grid;grid-template-columns:1.35fr .95fr;gap:26px;align-items
 .lesson-nav{max-width:1080px;margin:20px auto 0;padding:20px 20px 28px;border-top:2px dashed rgba(255,255,255,.2)}
 @media(max-width:900px){header.hero{grid-template-columns:1fr}}@media(max-width:720px){.a1-master-shell{padding:18px 12px 0}.wrap,#lektion2 .wrap,#lektion3 .wrap,#lektion4 .wrap,#lektion5 .wrap{padding:18px 12px!important}.card{padding:16px}.a1-stage-buttons a{flex:1 1 100%;min-height:54px}.lesson-title,h1.lesson-title{font-size:2.05rem}}
 </style>
+
+<style id="a1-master-visual-only">
+/* Visual shell aligned with Lektion 1. Content is intentionally untouched. */
+.training-rail{display:none!important}
+.a1-master-next-step{display:flex;justify-content:center;margin:28px auto 22px;padding:0 16px}
+.a1-master-next-step a{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:12px 22px;border-radius:18px;background:linear-gradient(180deg,#6fcf32,#3f9820);color:#fff;text-decoration:none;font:800 1rem/1.3 "Nunito Sans",sans-serif;box-shadow:0 10px 20px rgba(0,0,0,.16);transition:transform .18s,filter .18s}
+.a1-master-next-step a:hover{transform:translateY(-2px);filter:brightness(1.05)}
+@media(max-width:640px){.a1-master-next-step{margin:22px auto 18px}.a1-master-next-step a{width:100%;max-width:440px;padding:12px 16px;text-align:center}}
+</style>
 </head><body id="seitenanfang">
 <div class="a1-master-shell">
 <a href="index.html" class="back-to-top" aria-label="Zurück zur A1-Übersicht" title="Zurück zur A1-Übersicht">←</a>
@@ -1456,5 +1465,9 @@ header.hero{display:grid;grid-template-columns:1.35fr .95fr;gap:26px;align-items
 
 <!-- LEKCJA 6 -->
 
+
+<div class="next-step-box a1-master-next-step" aria-label="Nächster Lernschritt">
+  <a href="../aktivt-trenieren.a1/aktiv-trenieren5.html">Fertig gelesen? Weiter mit <span class="step-number">②</span> Aktiv trainieren</a>
+</div>
 <nav class="lesson-nav"><a href="lektion-4.html">← Lektion 4</a><a href="index.html">A1 Übersicht</a><a href="lektion-6.html">Lektion 6 →</a></nav><script src="../../js/page-progress.js" defer></script>\n<script id="a1-master-ich-kann">document.querySelectorAll('.ich-kann-button').forEach(function(b){if(b.dataset.masterBound)return;b.dataset.masterBound='1';b.addEventListener('click',function(){var p=b.nextElementSibling;if(!p)return;var open=p.classList.toggle('show');b.setAttribute('aria-expanded',String(open));b.classList.toggle('open',open);});});</script>
 </body></html>
