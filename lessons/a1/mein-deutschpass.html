@@ -47,13 +47,25 @@
 .house{background:linear-gradient(90deg,#e9d3ae,#f5e6c9)}.school{background:linear-gradient(90deg,#ead8b8,#fff0d1)}.shop{background:linear-gradient(90deg,#ddbd91,#f2dbb2)}.cafe{background:linear-gradient(90deg,#d9ad82,#edc9a4)}
 .house:after,.shop:after{filter:drop-shadow(inset 0 0 4px white)}
 .street-edge{position:absolute;left:0;right:0;bottom:62px;height:20px;background:repeating-linear-gradient(90deg,#b9b3a5 0 38px,#d4cec0 38px 40px);opacity:.85}
+
+/* Realistic Deutschstadt image supplied by the project owner */
+.world{height:620px;background:#dbe8ef url("../../deutschstadt.png") center center/cover no-repeat!important}
+.world>.sun,.world>.town-backdrop,.world>.ground-detail,.world>.street-edge,.world>.cloud,.world>.mountain,.world>.river,.world>.skyline{display:none!important}
+.scene{position:absolute;inset:0;z-index:3;pointer-events:none}
+.scene .unlock{display:none!important}
+.city-reveal{position:absolute;inset:0;z-index:2;background:#e7efe6;transition:clip-path .9s ease,opacity .6s ease;pointer-events:none}
+.city-reveal:after{content:"Deine Stadt wächst mit deinem Deutsch.";position:absolute;left:50%;top:55%;transform:translate(-50%,-50%);color:#496052;font-weight:800;font-size:clamp(1rem,2vw,1.25rem);opacity:.72;white-space:nowrap}
+.progress-pill,.passport-btn,.hint{z-index:8}
+.progress-pill{background:rgba(7,24,44,.88);box-shadow:0 5px 16px rgba(0,0,0,.22)}
+.passport-btn{box-shadow:0 14px 32px rgba(0,0,0,.4)}
+@media(max-width:700px){.world{height:500px;background-position:center}.city-reveal:after{white-space:normal;width:65%;text-align:center}.scene{transform:none}}
 </style></head>
 <body><main class="page">
 <div class="topbar"><a class="btn" href="index.html">← A1-Kurs</a><a class="btn" href="../../nele.html">🎙️ Mit Nele sprechen</a></div>
 <header class="hero"><h1>Meine Deutschstadt</h1><p>Dein Deutsch wächst – und deine Stadt wächst mit. Öffne deinen Deutschpass und markiere selbst, was du schon kannst.</p></header>
 <section class="world" aria-label="Deine wachsende Deutschstadt">
 <div class="sun"></div><div class="town-backdrop"></div><div class="ground-detail"></div><div class="street-edge"></div><div class="cloud c1"></div><div class="cloud c2"></div><div class="mountain"></div><div class="river"></div><div class="skyline"></div>
-<div class="progress-pill"><span id="count">0</span> / <span id="total">0</span> geschafft</div>
+<div class="city-reveal" id="cityReveal"></div><div class="progress-pill"><span id="count">0</span> / <span id="total">0</span> geschafft</div>
 <button class="passport-btn" id="openPass" aria-haspopup="dialog"><span class="eagle" style="font-size:28px">◆</span>DEUTSCH<br>PASS<br><small>A1</small></button>
 <div class="scene"><div class="road unlock" data-u="1"></div><div class="bridge unlock building" data-u="2"></div><div class="house unlock building" data-u="3"></div><div class="tree1 unlock" data-u="4"></div><div class="school unlock building" data-u="5"></div><div class="lamp unlock" data-u="6"></div><div class="shop unlock building" data-u="7"></div><div class="bike unlock" data-u="8"></div><div class="cafe unlock building" data-u="9"></div><div class="mail unlock" data-u="10"></div><div class="bus unlock building" data-u="11"></div><div class="tree2 unlock" data-u="12"></div><div class="flowers unlock" data-u="13"></div><div class="park unlock" data-u="13"></div><div class="fountain unlock" data-u="13"></div></div>
 <div class="hint">💡 Jedes Häkchen im Deutschpass macht deine Stadt ein Stück lebendiger.</div>
@@ -81,7 +93,7 @@
 const KEY="deutschpass-a1-v1", boxes=[...document.querySelectorAll('.skill input')], unlocks=[...document.querySelectorAll('.unlock')], overlay=document.getElementById('overlay');
 let saved={};try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
 boxes.forEach(b=>{b.checked=!!saved[b.dataset.key];b.addEventListener('change',()=>{saved[b.dataset.key]=b.checked;localStorage.setItem(KEY,JSON.stringify(saved));render()})});
-function render(){const n=boxes.filter(b=>b.checked).length;document.getElementById('count').textContent=n;document.getElementById('total').textContent=boxes.length;unlocks.forEach((el,i)=>el.classList.toggle('on',n>=i+1))}
+function render(){const n=boxes.filter(b=>b.checked).length,total=boxes.length;document.getElementById('count').textContent=n;document.getElementById('total').textContent=total;unlocks.forEach((el,i)=>el.classList.toggle('on',n>=i+1));const cover=document.getElementById('cityReveal');const pct=n/total*100;if(n===0){cover.style.clipPath='inset(0 0 0 0)';cover.style.opacity='1'}else{cover.style.clipPath='inset(0 0 0 '+pct+'%)';cover.style.opacity=n===total?'0':'1'}}
 render();
 document.getElementById('openPass').onclick=()=>overlay.classList.add('open');document.getElementById('closePass').onclick=()=>overlay.classList.remove('open');overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.classList.remove('open')});document.addEventListener('keydown',e=>{if(e.key==='Escape')overlay.classList.remove('open')});
 </script></body></html>
