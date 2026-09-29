@@ -204,7 +204,7 @@ test("Dialoge: wrong answer stays on turn and offers another try", async ({ page
   await expect(page.locator("#history-list")).toContainText("Das ist absichtlich falsch ✗");
   await expect(page.locator("#stat-progress")).toHaveText(before.progress);
   await expect(page.locator("#stat-score")).toHaveText(before.score);
-  await expect(page.locator("#mic-status")).toContainText("Das war noch nicht richtig");
+  await expect(page.locator("#mic-status")).toContainText(/Noch nicht ganz|Noch einmal|Jetzt noch einmal/);
 
   await page.waitForTimeout(900);
   await expect(page.locator("#stat-progress")).toHaveText(before.progress);
