@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mein Deutschpass · A1</title>
+<style>
+:root{--navy:#07182c;--navy2:#0c2744;--paper:#fffaf0;--ink:#26364b;--gold:#f4c95d;--green:#78c99a;--line:rgba(255,255,255,.12)}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Arial,sans-serif;color:#f7fbff;background:radial-gradient(circle at top,#174c77 0,#0c2744 35%,#07182c 100%)}
+.page{width:min(1120px,94%);margin:auto;padding:22px 0 60px}.topbar{display:flex;justify-content:space-between;gap:12px;margin-bottom:18px}.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 15px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.08);color:#fff;text-decoration:none;font-weight:800}
+.hero{text-align:center;margin:12px auto 20px}.hero h1{font-size:clamp(2rem,5vw,3.4rem);margin:4px}.hero p{color:#b9c9da;margin:8px auto;max-width:650px;line-height:1.5}
+.world{position:relative;height:510px;overflow:hidden;border-radius:30px;border:1px solid rgba(255,255,255,.15);box-shadow:0 24px 60px rgba(0,0,0,.3);background:linear-gradient(#bce8ff 0 53%,#b6d891 53% 100%)}
+.sun{position:absolute;left:8%;top:9%;width:70px;height:70px;border-radius:50%;background:#ffe28a;box-shadow:0 0 45px #ffe28a}.cloud{position:absolute;font-size:62px;opacity:.9;animation:float 12s ease-in-out infinite alternate}.c1{left:18%;top:8%}.c2{right:17%;top:17%;animation-delay:-5s}@keyframes float{to{transform:translateX(30px)}}
+.hills{position:absolute;left:-5%;right:-5%;bottom:165px;height:190px;background:#7ebc70;clip-path:polygon(0 65%,15% 35%,28% 63%,43% 25%,58% 62%,72% 32%,88% 60%,100% 38%,100% 100%,0 100%)}
+.road{position:absolute;left:39%;bottom:-25px;width:220px;height:330px;background:#7b8085;transform:perspective(260px) rotateX(25deg);clip-path:polygon(40% 0,60% 0,100% 100%,0 100%);border-left:6px solid #e8e1c8;border-right:6px solid #e8e1c8}
+.scene{position:absolute;inset:0}.unlock{position:absolute;opacity:.06;filter:grayscale(1) blur(2px);transform:translateY(10px) scale(.96);transition:opacity .8s,filter .8s,transform .8s}.unlock.on{opacity:1;filter:none;transform:none}.house{font-size:100px;left:10%;bottom:110px}.shop{font-size:90px;right:9%;bottom:115px}.tree1{font-size:72px;left:3%;bottom:55px}.tree2{font-size:78px;right:2%;bottom:48px}.bus{font-size:70px;left:45%;bottom:50px}.bike{font-size:54px;left:25%;bottom:42px}.cafe{font-size:76px;right:27%;bottom:180px}.school{font-size:82px;left:27%;bottom:185px}.flowers{font-size:45px;left:7%;bottom:20px}.park{font-size:62px;right:12%;bottom:18px}.lamp{font-size:52px;left:39%;bottom:145px}.mail{font-size:48px;right:39%;bottom:105px}
+.passport-btn{position:absolute;z-index:20;right:22px;top:20px;width:122px;height:158px;border:0;border-radius:12px;background:linear-gradient(145deg,#7c1f2c,#4f1019);color:#f8df9c;box-shadow:0 10px 25px rgba(0,0,0,.35);cursor:pointer;font-weight:900;letter-spacing:.04em;transform:rotate(2deg);transition:.2s}.passport-btn:hover{transform:rotate(0) scale(1.04)}.passport-btn .eagle{display:block;font-size:34px;margin-bottom:12px}.progress-pill{position:absolute;left:20px;top:20px;z-index:5;padding:9px 13px;border-radius:999px;background:rgba(7,24,44,.78);font-weight:800}
+.hint{position:absolute;left:20px;bottom:18px;z-index:5;max-width:350px;padding:10px 14px;border-radius:14px;background:rgba(7,24,44,.76);font-size:.9rem}
+.overlay{display:none;position:fixed;inset:0;z-index:100;background:rgba(2,10,20,.72);backdrop-filter:blur(5px);padding:18px;overflow:auto}.overlay.open{display:grid;place-items:center}.passport{width:min(760px,100%);max-height:92vh;overflow:auto;background:var(--paper);color:var(--ink);border-radius:22px;box-shadow:0 30px 80px rgba(0,0,0,.45);border:10px solid #6d1723}.pass-head{position:sticky;top:0;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:18px 20px;background:#fff4d8;border-bottom:1px solid #dfc994}.pass-head h2{margin:0;color:#641b25}.close{border:0;background:#641b25;color:#fff;width:38px;height:38px;border-radius:50%;font-size:20px;cursor:pointer}.part{padding:18px 20px;border-bottom:1px dashed #d8c69c}.part h3{margin:0 0 5px;color:#641b25}.part-note{margin:0 0 15px;color:#6c7784;font-size:.9rem}.skill{display:grid;grid-template-columns:28px 1fr;gap:9px;margin:12px 0;cursor:pointer;align-items:start}.skill input{appearance:none;width:22px;height:22px;margin:1px 0;border:2px solid #58a879;border-radius:5px;background:white;cursor:pointer}.skill input:checked{background:#58a879;box-shadow:inset 0 0 0 4px white}.skill strong{display:block}.examples{display:block;margin-top:3px;color:#6a7683;font-size:.9rem;line-height:1.35}.pass-foot{padding:15px 20px;background:#fff4d8;text-align:center;font-weight:800;color:#641b25}
+@media(max-width:700px){.world{height:470px}.passport-btn{width:98px;height:130px;right:12px;top:12px}.progress-pill{top:auto;bottom:72px}.hint{right:12px;max-width:none}.house{font-size:78px}.shop{font-size:70px}.school,.cafe{font-size:62px}}
+</style></head>
+<body><main class="page">
+<div class="topbar"><a class="btn" href="index.html">← A1-Kurs</a><a class="btn" href="../../nele.html">🎙️ Mit Nele sprechen</a></div>
+<header class="hero"><h1>🏘️ Meine Deutschstadt</h1><p>Dein Deutsch wächst – und deine Stadt wächst mit. Öffne deinen Deutschpass und markiere selbst, was du schon kannst.</p></header>
+<section class="world" aria-label="Deine wachsende Deutschstadt">
+<div class="sun"></div><div class="cloud c1">☁️</div><div class="cloud c2">☁️</div><div class="hills"></div>
+<div class="progress-pill"><span id="count">0</span> / <span id="total">0</span> geschafft</div>
+<button class="passport-btn" id="openPass" aria-haspopup="dialog"><span class="eagle">🦅</span>DEUTSCH<br>PASS<br><small>A1</small></button>
+<div class="scene"><div class="road unlock" data-u="1"></div><div class="house unlock" data-u="2">🏠</div><div class="tree1 unlock" data-u="3">🌳</div><div class="school unlock" data-u="4">🏫</div><div class="lamp unlock" data-u="5">💡</div><div class="shop unlock" data-u="6">🏪</div><div class="bike unlock" data-u="7">🚲</div><div class="cafe unlock" data-u="8">☕</div><div class="mail unlock" data-u="9">📮</div><div class="bus unlock" data-u="10">🚌</div><div class="tree2 unlock" data-u="11">🌲</div><div class="flowers unlock" data-u="12">🌷</div><div class="park unlock" data-u="13">🛝</div></div>
+<div class="hint">💡 Jedes Häkchen im Deutschpass macht deine Stadt ein Stück lebendiger.</div>
+</section></main>
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="passTitle"><div class="passport">
+<div class="pass-head"><div><small>MEIN LERNPASS</small><h2 id="passTitle">Meine Deutschkenntnisse · A1</h2></div><button class="close" id="closePass" aria-label="Schließen">×</button></div>
+<div class="part"><h3>Teil A1.1 · Erste Schritte</h3><p class="part-note">Begrüßen · vorstellen · Alphabet · Herkunft · Zahlen · persönliche Daten</p>
+<label class="skill"><input type="checkbox" data-key="gruss"><span><strong>Ich kann grüßen.</strong><span class="examples">Guten Morgen! · Guten Tag! · Guten Abend! · Hallo! · Tschüss!</span></span></label>
+<label class="skill"><input type="checkbox" data-key="vorstellen"><span><strong>Ich kann mich vorstellen.</strong><span class="examples">Ich heiße … · Mein Name ist … · Ich bin …</span></span></label>
+<label class="skill"><input type="checkbox" data-key="name"><span><strong>Ich kann nach dem Namen fragen.</strong><span class="examples">Wie heißen Sie? · Wie heißt du?</span></span></label>
+<label class="skill"><input type="checkbox" data-key="alphabet"><span><strong>Ich kann das deutsche Alphabet sagen.</strong><span class="examples">A, B, C, D …</span></span></label>
+<label class="skill"><input type="checkbox" data-key="herkunft"><span><strong>Ich kann sagen, woher ich komme.</strong><span class="examples">Ich komme aus Polen. · Ich komme aus Deutschland.</span></span></label>
+<label class="skill"><input type="checkbox" data-key="fragen-herkunft"><span><strong>Ich kann nach der Herkunft fragen.</strong><span class="examples">Woher kommen Sie? · Woher kommst du?</span></span></label>
+<label class="skill"><input type="checkbox" data-key="zahlen20"><span><strong>Ich kann von 1 bis 20 zählen.</strong><span class="examples">eins · zwei · drei … zwanzig</span></span></label>
+<label class="skill"><input type="checkbox" data-key="alter"><span><strong>Ich kann mein Alter sagen und danach fragen.</strong><span class="examples">Ich bin 46 Jahre alt. · Wie alt sind Sie?</span></span></label>
+<label class="skill"><input type="checkbox" data-key="zahlen100"><span><strong>Ich kann Zahlen bis 100 verstehen und sagen.</strong><span class="examples">einundzwanzig · fünfunddreißig · achtundvierzig …</span></span></label>
+<label class="skill"><input type="checkbox" data-key="beruf"><span><strong>Ich kann über meinen Beruf sprechen.</strong><span class="examples">Ich bin … · Ich arbeite als … · Was machen Sie beruflich?</span></span></label>
+<label class="skill"><input type="checkbox" data-key="du-sie"><span><strong>Ich kann „du“ und „Sie“ richtig verwenden.</strong><span class="examples">Wie heißt du? · Wie heißen Sie?</span></span></label>
+<label class="skill"><input type="checkbox" data-key="praesens"><span><strong>Ich kann einfache Sätze im Präsens bilden.</strong><span class="examples">Ich wohne … · Du arbeitest … · Sie kommen …</span></span></label>
+<label class="skill"><input type="checkbox" data-key="dialog"><span><strong>Ich kann ein kurzes Kennenlerngespräch führen.</strong><span class="examples">Name · Herkunft · Alter · Beruf · du/Sie</span></span></label>
+</div>
+<div class="pass-foot">Du entscheidest selbst, was du schon kannst. 🌱</div>
+</div></div>
+<script>
+const KEY="deutschpass-a1-v1", boxes=[...document.querySelectorAll('.skill input')], unlocks=[...document.querySelectorAll('.unlock')], overlay=document.getElementById('overlay');
+let saved={};try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
+boxes.forEach(b=>{b.checked=!!saved[b.dataset.key];b.addEventListener('change',()=>{saved[b.dataset.key]=b.checked;localStorage.setItem(KEY,JSON.stringify(saved));render()})});
+function render(){const n=boxes.filter(b=>b.checked).length;document.getElementById('count').textContent=n;document.getElementById('total').textContent=boxes.length;unlocks.forEach((el,i)=>el.classList.toggle('on',n>=i+1))}
+render();
+document.getElementById('openPass').onclick=()=>overlay.classList.add('open');document.getElementById('closePass').onclick=()=>overlay.classList.remove('open');overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.classList.remove('open')});document.addEventListener('keydown',e=>{if(e.key==='Escape')overlay.classList.remove('open')});
+</script></body></html>
