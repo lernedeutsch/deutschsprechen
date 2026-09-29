@@ -71,6 +71,23 @@
 .l1{left:13%;top:47%}.l2{left:20%;top:38%}.l3{left:34%;top:35%}.l4{left:8%;top:62%}.l5{left:35%;top:55%}.l6{left:20%;top:27%}.l7{right:24%;top:35%}.l8{right:8%;top:56%}.l9{left:52%;top:60%}.l10{left:61%;top:70%}.l11{right:23%;top:70%}.l12{right:10%;bottom:11%}.l13{left:42%;bottom:5%}
 .world.completed{box-shadow:0 0 0 2px rgba(244,201,93,.7),0 24px 65px rgba(0,0,0,.36),0 0 38px rgba(244,201,93,.22)}
 @media(max-width:700px){.life b{display:none}.life{font-size:26px}}
+
+/* Refined realistic progress effects — no emoji stickers */
+.life-layer{position:absolute;inset:0;z-index:6;pointer-events:none}
+.life{position:absolute;opacity:0;transition:opacity .65s ease,transform .65s ease;transform:scale(.88)}
+.life.on{opacity:1;transform:scale(1)}
+.glow{width:72px;height:72px;border-radius:50%;background:radial-gradient(circle,rgba(255,220,120,.55),rgba(255,220,120,0) 68%);filter:blur(3px)}.g1{left:27%;top:42%}
+.window-light{width:18px;height:20px;background:rgba(255,214,113,.7);box-shadow:0 0 14px 5px rgba(255,205,92,.45);border-radius:2px}.w1{left:18.8%;top:48%}.w2{left:42.2%;top:45%}
+.tree-light{left:31%;top:37%;width:82px;height:82px;border-radius:50%;box-shadow:0 0 25px 8px rgba(118,170,86,.3)}
+.sign{font:700 11px/1 Arial,sans-serif;letter-spacing:.03em;color:#fff;background:rgba(61,104,52,.92);border:1px solid rgba(255,255,255,.75);padding:5px 8px;border-radius:5px;box-shadow:0 3px 9px rgba(0,0,0,.3)}.bakery-sign{left:13%;top:59%}.cafe-sign{left:35%;top:50%}.market-sign{right:11%;top:54%}
+.bridge-light{left:19%;top:28%;width:190px;height:16px;border-radius:50%;box-shadow:0 5px 14px 2px rgba(255,218,130,.38)}
+.school-light{right:26%;top:39%;width:55px;height:55px;border-radius:50%;box-shadow:0 0 25px 8px rgba(255,214,116,.42)}
+.fountain-live{left:48.5%;top:59%;width:58px;height:48px;border-radius:50%;border-top:3px solid rgba(177,231,247,.9);box-shadow:0 -13px 17px rgba(138,215,240,.58)}
+.lamp-live{width:14px;height:14px;border-radius:50%;background:#ffe3a0;box-shadow:0 0 18px 8px rgba(255,210,108,.55)}.la1{left:29.5%;top:61%}.la2{left:41.7%;top:68%}
+.stop-live{right:25%;bottom:22%;width:34px;height:34px;border-radius:50%;box-shadow:0 0 0 3px rgba(83,163,74,.75),0 0 17px rgba(123,211,104,.7)}
+.bus-live{right:9%;bottom:11%;width:180px;height:74px;border-radius:18px;box-shadow:0 0 22px 5px rgba(102,180,236,.32)}
+.flower-live{left:25%;bottom:8%;width:220px;height:34px;background:radial-gradient(circle at 10% 60%,#ef7380 0 3px,transparent 4px),radial-gradient(circle at 25% 35%,#f1c84f 0 3px,transparent 4px),radial-gradient(circle at 42% 70%,#ec89ac 0 3px,transparent 4px),radial-gradient(circle at 58% 40%,#fff0cf 0 3px,transparent 4px),radial-gradient(circle at 74% 65%,#ef7567 0 3px,transparent 4px),radial-gradient(circle at 90% 35%,#f4d45b 0 3px,transparent 4px)}
+@media(max-width:700px){.sign{font-size:9px;padding:4px 6px}}
 </style></head>
 <body><main class="page">
 <div class="topbar"><a class="btn" href="index.html">← A1-Kurs</a><a class="btn" href="../../nele.html">🎙️ Mit Nele sprechen</a></div>
@@ -78,7 +95,11 @@
 <section class="world" aria-label="Deine wachsende Deutschstadt">
 <div class="sun"></div><div class="town-backdrop"></div><div class="ground-detail"></div><div class="street-edge"></div><div class="cloud c1"></div><div class="cloud c2"></div><div class="mountain"></div><div class="river"></div><div class="skyline"></div>
 <div class="life-layer" id="lifeLayer" aria-hidden="true">
-<span class="life l1">✨</span><span class="life l2">🏠💡</span><span class="life l3">🌳</span><span class="life l4">🥐 <b>Bäckerei offen</b></span><span class="life l5">☕ <b>Café geöffnet</b></span><span class="life l6">🌉✨</span><span class="life l7">🏫</span><span class="life l8">🛍️ <b>Markt offen</b></span><span class="life l9">⛲</span><span class="life l10">🚲 💡</span><span class="life l11">🚏</span><span class="life l12">🚌</span><span class="life l13">🌷 🇩🇪 🌼</span>
+<span class="life glow g1"></span><span class="life window-light w1"></span><span class="life window-light w2"></span>
+<span class="life tree-light"></span><span class="life sign bakery-sign">Geöffnet</span><span class="life sign cafe-sign">Geöffnet</span>
+<span class="life bridge-light"></span><span class="life school-light"></span><span class="life sign market-sign">Geöffnet</span>
+<span class="life fountain-live"></span><span class="life lamp-live la1"></span><span class="life lamp-live la2"></span>
+<span class="life stop-live"></span><span class="life bus-live"></span><span class="life flower-live"></span>
 </div><div class="progress-pill"><span id="count">0</span> / <span id="total">0</span> geschafft</div>
 <button class="passport-btn" id="openPass" aria-haspopup="dialog"><span class="eagle" style="font-size:28px">◆</span>DEUTSCH<br>PASS<br><small>A1</small></button>
 <div class="scene"><div class="road unlock" data-u="1"></div><div class="bridge unlock building" data-u="2"></div><div class="house unlock building" data-u="3"></div><div class="tree1 unlock" data-u="4"></div><div class="school unlock building" data-u="5"></div><div class="lamp unlock" data-u="6"></div><div class="shop unlock building" data-u="7"></div><div class="bike unlock" data-u="8"></div><div class="cafe unlock building" data-u="9"></div><div class="mail unlock" data-u="10"></div><div class="bus unlock building" data-u="11"></div><div class="tree2 unlock" data-u="12"></div><div class="flowers unlock" data-u="13"></div><div class="park unlock" data-u="13"></div><div class="fountain unlock" data-u="13"></div></div>
@@ -107,7 +128,7 @@
 const KEY="deutschpass-a1-v1", boxes=[...document.querySelectorAll('.skill input')], unlocks=[...document.querySelectorAll('.unlock')], overlay=document.getElementById('overlay');
 let saved={};try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
 boxes.forEach(b=>{b.checked=!!saved[b.dataset.key];b.addEventListener('change',()=>{saved[b.dataset.key]=b.checked;localStorage.setItem(KEY,JSON.stringify(saved));render()})});
-function render(){const n=boxes.filter(b=>b.checked).length,total=boxes.length;document.getElementById('count').textContent=n;document.getElementById('total').textContent=total;unlocks.forEach(el=>el.classList.remove('on'));document.querySelectorAll('.life').forEach((el,i)=>el.classList.toggle('on',n>=i+1));document.querySelector('.world').classList.toggle('completed',n===total)}
+function render(){const n=boxes.filter(b=>b.checked).length,total=boxes.length;document.getElementById('count').textContent=n;document.getElementById('total').textContent=total;unlocks.forEach(el=>el.classList.remove('on'));const stages=[1,2,2,3,4,5,6,7,8,9,10,10,11,12,13];document.querySelectorAll('.life').forEach((el,i)=>el.classList.toggle('on',n>=stages[i]));document.querySelector('.world').classList.toggle('completed',n===total)}
 render();
 document.getElementById('openPass').onclick=()=>overlay.classList.add('open');document.getElementById('closePass').onclick=()=>overlay.classList.remove('open');overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.classList.remove('open')});document.addEventListener('keydown',e=>{if(e.key==='Escape')overlay.classList.remove('open')});
 </script></body></html>
