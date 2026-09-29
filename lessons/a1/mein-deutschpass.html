@@ -90,7 +90,7 @@
 @media(max-width:700px){.sign{font-size:9px;padding:4px 6px}}
 /* Passport-only progress */.life-layer,.progress-pill,.hint{display:none!important}.pass-progress{margin:14px 20px 4px;display:flex;gap:16px;align-items:center;padding:14px;border:1px solid #ddcba5;border-radius:16px;background:#fff8e9}.medal{--p:0;width:82px;height:82px;flex:0 0 82px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#8b2635 calc(var(--p)*1%),#e6dcc9 0);position:relative}.medal:before{content:"";position:absolute;inset:7px;border-radius:50%;background:#fffaf0}.medal-text{position:relative;z-index:1;text-align:center;color:#6d1723;font-weight:900}.stamp-board{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}.stamp-chip{padding:5px;border:1px dashed #cbbd9f;border-radius:7px;text-align:center;color:#a39783;font:700 10px Arial}.stamp-chip.on{color:#7b2330;border:2px solid #9b4a54;background:#fff}.stamp-chip.on:after{content:" ✓";color:#4e7d56}.final-stamp{display:none;margin:14px auto;width:180px;padding:12px;border:4px double #8b2635;border-radius:50%;color:#8b2635;text-align:center;font:900 18px Georgia;transform:rotate(-5deg)}.final-stamp.on{display:block}@media(max-width:600px){.stamp-board{grid-template-columns:repeat(3,1fr)}}
 /* A1.1 completion walker — CSS only, existing city image stays unchanged */
-.completion-walker{position:absolute;z-index:7;left:27%;bottom:25%;width:34px;height:76px;opacity:0;pointer-events:none;transform:translateX(0);transition:opacity .45s ease}
+.completion-walker{position:absolute;z-index:7;left:27%;bottom:28%;width:34px;height:76px;opacity:0;pointer-events:none;transform:translateX(0);transition:opacity .45s ease}
 .world.completed .completion-walker{opacity:1;animation:walkAcross 22s linear infinite alternate}
 .walker-head{position:absolute;left:10px;top:0;width:16px;height:16px;border-radius:50%;background:#e2b48f;box-shadow:inset -3px -2px 0 rgba(0,0,0,.09)}
 .walker-hair{position:absolute;left:9px;top:-2px;width:18px;height:9px;border-radius:12px 12px 5px 5px;background:#5b4638}
@@ -99,10 +99,10 @@
 .walker-arm.a1{left:6px;animation:armWalk .9s ease-in-out infinite alternate}.walker-arm.a2{right:4px;animation:armWalk .9s ease-in-out infinite alternate-reverse}
 .walker-leg{position:absolute;top:42px;width:8px;height:31px;border-radius:5px;background:#263746;transform-origin:50% 3px}
 .walker-leg.lg1{left:9px;animation:legWalk .9s ease-in-out infinite alternate}.walker-leg.lg2{right:7px;animation:legWalk .9s ease-in-out infinite alternate-reverse}
-@keyframes walkAcross{0%{left:27%;bottom:25%}25%{left:32%;bottom:20%}50%{left:38%;bottom:14%}75%{left:44%;bottom:8%}100%{left:49%;bottom:3%}}
+@keyframes walkAcross{0%{left:27%;bottom:28%}25%{left:30%;bottom:25%}50%{left:33%;bottom:22%}75%{left:36%;bottom:19%}100%{left:39%;bottom:16%}}
 @keyframes legWalk{from{transform:rotate(22deg)}to{transform:rotate(-22deg)}}
 @keyframes armWalk{from{transform:rotate(24deg)}to{transform:rotate(-24deg)}}
-@media(max-width:700px){.completion-walker{left:27%;bottom:25%;transform:scale(.78);transform-origin:center bottom}.world.completed .completion-walker{animation-duration:18s}}
+@media(max-width:700px){.completion-walker{left:27%;bottom:28%;transform:scale(.78);transform-origin:center bottom}.world.completed .completion-walker{animation-duration:18s}}
 @media(prefers-reduced-motion:reduce){.world.completed .completion-walker{animation:none;left:48%}.walker-arm,.walker-leg{animation:none!important}}
 </style></head>
 <body><main class="page">
