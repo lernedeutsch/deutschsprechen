@@ -33,8 +33,8 @@ body{font-family:"Nunito Sans",Arial,sans-serif}
 .art{position:relative;display:grid;place-items:center;min-height:280px;padding:14px;overflow:hidden;background:radial-gradient(circle at center,rgba(132,223,66,.10),transparent 62%),linear-gradient(180deg,#fdfefe,#f4f8fc);border:1px solid var(--line);border-radius:24px;font-size:0}
 .art span{position:absolute;bottom:20px;font-size:.9rem;color:var(--muted)}
 .lesson2-globe{width:190px;height:190px;border-radius:50%;position:relative;background:radial-gradient(circle at 32% 28%,#8ce0ff 0 8%,#35aee8 25%,#0877bd 58%,#07558e 100%);box-shadow:inset -24px -14px 32px rgba(0,0,0,.22),0 18px 28px rgba(0,0,0,.18);overflow:hidden}
-.lesson2-globe::before{content:"🌍";position:absolute;inset:0;display:grid;place-items:center;font-size:176px;line-height:1;animation:lesson2EarthAxis 7s linear infinite;transform-origin:center}
-@keyframes lesson2EarthAxis{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.lesson2-globe::before{content:"🌍";position:absolute;inset:0;display:grid;place-items:center;font-size:176px;line-height:1;animation:lesson2EarthAxis 7s linear infinite;transform-origin:center;backface-visibility:visible}
+@keyframes lesson2EarthAxis{from{transform:perspective(500px) rotateY(0deg)}to{transform:perspective(500px) rotateY(360deg)}}
 @media(max-width:720px){.lesson2-wrap{padding:20px 14px 24px}.hero{grid-template-columns:1fr}.lesson2-globe{width:150px;height:150px}.lesson2-globe::before{font-size:140px}}
 </style><link rel="stylesheet" href="../../css/translation-globe.css">
 <link rel="stylesheet" href="../../css/page-progress.css">\n</head><body id="oben" id="seitenanfang"><main class="shell">
@@ -87,7 +87,7 @@ body{font-family:"Nunito Sans",Arial,sans-serif}
 <p>✅ <b>Ich kann das Verb „kommen“ benutzen.</b><br>komme · kommst · kommt · kommen · kommt · kommen</p>
 <p>✅ <b>Ich kann Zahlen 1–20 sagen.</b><br>eins, zwei, drei, … zwanzig</p>
 </div></section>
-<nav class="nav"><a class="back" href="index.html">← A1 Übersicht</a><a class="top" href="#oben">↑ Nach oben</a></nav>
+<nav class="nav"><a class="top" href="#oben">↑ Zurück nach oben</a></nav>
 </div></article></main>
 <script>let v=null;function voices(){if(!("speechSynthesis"in window))return;v=speechSynthesis.getVoices().find(x=>x.lang?.toLowerCase()==="de-de")||speechSynthesis.getVoices().find(x=>x.lang?.toLowerCase().startsWith("de"))||null}voices();if("speechSynthesis"in window)speechSynthesis.addEventListener("voiceschanged",voices);document.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(b.dataset.s);u.lang="de-DE";u.rate=.82;if(v)u.voice=v;speechSynthesis.speak(u)});const ik=document.getElementById("ich-kann-button"),ip=document.getElementById("ich-kann-paper");ik.addEventListener("click",()=>{const o=ip.classList.toggle("show");ik.classList.toggle("open",o);ik.setAttribute("aria-expanded",String(o));ip.setAttribute("aria-hidden",String(!o))})</script>
 <script src="../../js/page-progress.js" defer></script>\n</body></html>
