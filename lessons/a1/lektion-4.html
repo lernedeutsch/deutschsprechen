@@ -1032,7 +1032,37 @@ border:1px solid #f3e8d4;
 .training-rail{position:fixed;left:16px;top:50%;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column;gap:14px;width:187px}.training-rail a{display:flex;align-items:center;justify-content:center;gap:9px;min-height:64px;padding:8px 12px;border-radius:24px;color:#fff;text-decoration:none;text-align:center;font-weight:800;font-size:20px;line-height:1.05;box-shadow:0 8px 18px #0002}.training-rail .num{color:#08121f;font-size:22px}.training-rail .aktiv{background:linear-gradient(#61d524,#4cbd15)}.training-rail .sprich{background:linear-gradient(#3aa9ee,#248fd0)}.training-rail .ueb{background:linear-gradient(#a77af2,#8c5fe4)}.training-rail .dia{background:linear-gradient(#ff916b,#ff7147)}.training-rail .dik{background:linear-gradient(#39bdb7,#188f89)}.training-rail a:hover{transform:translateY(-2px);filter:brightness(1.06)}
 @media(max-width:1380px){.training-rail{position:static;transform:none;width:auto;max-width:980px;margin:20px auto;padding:0 20px;flex-direction:row;flex-wrap:wrap}.training-rail a{flex:1 1 160px;font-size:16px;min-height:52px}}
 </style><link rel="stylesheet" href="../../css/page-progress.css">\n<link rel="stylesheet" href="../../css/translation-globe.css">
-</head><body><nav class="training-rail" aria-label="Training Lektion 4">
+<style id="a1-master-template-sync">
+/* Lektion 1 is the visual source of truth for A1 lessons 1–5. */
+:root{--bg:#173047;--bg2:#203a57;--surface:#f8fbff;--surface-2:#eef4fb;--card:#fff;--text:#101820;--muted:#41556b;--line:#d9e4f0;--accent:#f4c95d;--accent-2:#6ac6ff;--accent-3:#84df42;--accent-4:#a88af5;--shadow:0 14px 35px rgba(10,18,32,.12);--shadow-2:0 10px 22px rgba(10,18,32,.10)}
+body{margin:0;color:var(--text);font:400 1rem/1.65 "Nunito Sans",sans-serif;background:radial-gradient(circle at top left,rgba(255,255,255,.08),transparent 30%),radial-gradient(circle at bottom right,rgba(255,255,255,.06),transparent 34%),linear-gradient(180deg,var(--bg),var(--bg2));min-height:100vh}
+.a1-master-shell{max-width:1180px;margin:0 auto;padding:28px 18px 0}.a1-master-shell .back-to-top{margin:0 0 18px}
+.learning-guide{margin:0 auto 22px;padding:16px 18px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.14);border-radius:18px;color:#fff;box-shadow:var(--shadow-2)}.learning-guide strong{display:block;margin-bottom:4px;color:#fff}.learning-guide span{color:#dcecff}.step-number{color:#000;font-weight:900}
+.a1-stage-buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin:0 auto 22px}.a1-stage-buttons a{display:inline-flex;flex:1 1 170px;align-items:center;justify-content:center;gap:8px;min-height:58px;padding:12px 16px;color:#fff;text-decoration:none;text-align:center;border-radius:18px;font-weight:800;box-shadow:0 10px 20px rgba(0,0,0,.18)}.a1-stage-buttons .aktiv{background:linear-gradient(180deg,#6fcf32,#3f9820)}.a1-stage-buttons .sprich{background:linear-gradient(180deg,#3da8f0,#237fc2)}.a1-stage-buttons .ueb{background:linear-gradient(180deg,#b08df7,#825fe0)}.a1-stage-buttons .dia{background:linear-gradient(180deg,#ff9d76,#e8623a)}.a1-stage-buttons .dik{background:linear-gradient(180deg,#35b8af,#177f78)}
+.course-nav{margin:0 auto 22px;padding:18px 18px 14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:22px;box-shadow:var(--shadow-2)}.course-nav-title{margin:0 0 14px;text-align:center;color:#fff;font:700 2rem/1.1 "Kalam",cursive}.course-section{padding:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);border-radius:18px}.section-title{margin:0;color:#dcecff;font:700 .82rem "JetBrains Mono",monospace;letter-spacing:.16em;text-transform:uppercase}
+.training-rail{display:none!important}
+.lesson,.part#lektion2,.part#lektion3,.part#lektion4,.part#lektion5{max-width:1180px;margin:0 auto;background:linear-gradient(180deg,#fff8eb 0%,#fff 20%,#fff 100%);border-radius:28px;overflow:hidden;box-shadow:var(--shadow)}
+.wrap,#lektion2 .wrap,#lektion3 .wrap,#lektion4 .wrap,#lektion5 .wrap{max-width:1080px!important;margin:0 auto!important;padding:34px 20px 24px!important;background:transparent!important;border-radius:0!important}
+header.hero{display:grid;grid-template-columns:1.35fr .95fr;gap:26px;align-items:center;padding:28px;margin-bottom:28px;background:linear-gradient(135deg,rgba(244,201,93,.16),rgba(106,198,255,.12)),linear-gradient(180deg,#fff,#fff);border:1px solid #e7edf5;border-radius:28px;box-shadow:var(--shadow-2)}
+.eyebrow{margin:0 0 10px;color:#8c6700;font:700 .78rem "JetBrains Mono",monospace;letter-spacing:.16em;text-transform:uppercase}.lesson-title,h1.lesson-title{margin:0 0 14px;font:700 clamp(2rem,4vw,3.3rem)/1.08 "Kalam",cursive;color:var(--text)}
+.part{margin:26px 0 34px;padding:0 4px}.part-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;margin:0 0 14px}.part-num{color:#b98200;font:700 .78rem "JetBrains Mono",monospace;letter-spacing:.14em;text-transform:uppercase}.part-title{margin:0;color:var(--text);font:700 clamp(1.55rem,2.4vw,2.15rem)/1.15 "Kalam",cursive}.card{padding:22px;background:rgba(255,255,255,.97);border:1px solid #e3ebf4;border-radius:24px;box-shadow:var(--shadow-2)}
+.ich-kann-master{margin:28px 0 10px;text-align:center}.ich-kann-button{display:flex;align-items:center;justify-content:center;gap:9px;min-width:180px;min-height:52px;margin:0 auto;padding:11px 22px;color:#fff;background:linear-gradient(180deg,#f0bd3a,#b98200);border:2px solid #ffe59a;border-radius:18px;cursor:pointer;font-weight:800;font-size:1.05rem;box-shadow:0 10px 20px rgba(0,0,0,.18)}.ich-kann-paper{display:none;margin:22px auto 0;padding:26px;background:linear-gradient(145deg,#fffdf6,#fff7df);border:1px solid #e8d9b0;border-radius:4px 18px 18px 4px;box-shadow:0 18px 35px rgba(0,0,0,.14);text-align:left}.ich-kann-paper.show{display:block}.ich-kann-paper li{margin:8px 0}
+.lesson-nav{max-width:1080px;margin:20px auto 0;padding:20px 20px 28px;border-top:2px dashed rgba(255,255,255,.2)}
+@media(max-width:900px){header.hero{grid-template-columns:1fr}}@media(max-width:720px){.a1-master-shell{padding:18px 12px 0}.wrap,#lektion2 .wrap,#lektion3 .wrap,#lektion4 .wrap,#lektion5 .wrap{padding:18px 12px!important}.card{padding:16px}.a1-stage-buttons a{flex:1 1 100%;min-height:54px}.lesson-title,h1.lesson-title{font-size:2.05rem}}
+</style>
+</head><body id="seitenanfang">
+<div class="a1-master-shell">
+<a href="index.html" class="back-to-top" aria-label="Zurück zur A1-Übersicht" title="Zurück zur A1-Übersicht">←</a>
+<div class="learning-guide"><strong><span class="step-number">①</span> Zuerst: Lies die ganze Lektion.</strong><span>Danach übst du Schritt für Schritt mit den Aufgaben in dieser Reihenfolge.</span></div>
+<div class="a1-stage-buttons" aria-label="Übungsstufen Lektion 4">
+<a class="aktiv" href="../aktivt-trenieren.a1/aktiv-trenieren4.html"><span class="step-number">②</span> 🏋️ Aktiv trainieren</a>
+<a class="sprich" href="../sprich-nach.a1/sprich-nach4.html"><span class="step-number">③</span> 🎤 Sprich nach</a>
+<a class="ueb" href="../ubungen.a1/ubungen4.html"><span class="step-number">④</span> ✏️ Übungen</a>
+<a class="dia" href="../dialoge.a1/dialoge4.html"><span class="step-number">⑤</span> 💬 Dialoge</a>
+<a class="dik" href="../dikatat.a1/diktat4.html"><span class="step-number">⑥</span> ✍️ Ich schreibe ein Diktat</a>
+</div>
+<nav class="course-nav" aria-label="Inhaltsverzeichnis der Lektion 4"><h2 class="course-nav-title">A1 — 4</h2><div class="course-section"><h3 class="section-title">Berufe und Arbeit</h3></div></nav>
+</div><nav class="training-rail" aria-label="Training Lektion 4">
 <a class="aktiv" href="../aktivt-trenieren.a1/aktiv-trenieren4.html"><span class="num">②</span>🏋️ Aktiv<br>trainieren</a>
 <a class="sprich" href="../sprich-nach.a1/sprich-nach4.html"><span class="num">③</span>🎤 Sprich<br>nach</a>
 <a class="ueb" href="../ubungen.a1/ubungen4.html"><span class="num">④</span>✏️ Übungen</a>
@@ -1046,7 +1076,7 @@ border:1px solid #f3e8d4;
 
 <div class="hero-text">
 
-<p class="eyebrow">Deutschkurs A1 · Lektion 4 von 30</p>
+<p class="eyebrow">Deutschkurs A1 · 4 von 30</p>
 
 <h1 class="lesson-title">Was machen Sie beruflich?</h1>
 
@@ -1456,4 +1486,5 @@ border:1px solid #f3e8d4;
 
 <!-- LEKCJA 5 -->
 
-<nav class="lesson-nav"><a href="lektion-3.html">← Lektion 3</a><a href="index.html">A1 Übersicht</a><a href="lektion-5.html">Lektion 5 →</a></nav><script src="../../js/page-progress.js" defer></script>\n</body></html>
+<nav class="lesson-nav"><a href="lektion-3.html">← Lektion 3</a><a href="index.html">A1 Übersicht</a><a href="lektion-5.html">Lektion 5 →</a></nav><script src="../../js/page-progress.js" defer></script>\n<script id="a1-master-ich-kann">document.querySelectorAll('.ich-kann-button').forEach(function(b){if(b.dataset.masterBound)return;b.dataset.masterBound='1';b.addEventListener('click',function(){var p=b.nextElementSibling;if(!p)return;var open=p.classList.toggle('show');b.setAttribute('aria-expanded',String(open));b.classList.toggle('open',open);});});</script>
+</body></html>
