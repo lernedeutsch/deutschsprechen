@@ -88,6 +88,20 @@
 .bus-live{right:9%;bottom:11%;width:180px;height:74px;border-radius:18px;box-shadow:0 0 22px 5px rgba(102,180,236,.32)}
 .flower-live{left:25%;bottom:8%;width:220px;height:34px;background:radial-gradient(circle at 10% 60%,#ef7380 0 3px,transparent 4px),radial-gradient(circle at 25% 35%,#f1c84f 0 3px,transparent 4px),radial-gradient(circle at 42% 70%,#ec89ac 0 3px,transparent 4px),radial-gradient(circle at 58% 40%,#fff0cf 0 3px,transparent 4px),radial-gradient(circle at 74% 65%,#ef7567 0 3px,transparent 4px),radial-gradient(circle at 90% 35%,#f4d45b 0 3px,transparent 4px)}
 @media(max-width:700px){.sign{font-size:9px;padding:4px 6px}}
+
+/* Deutschpass progress redesign: clean city + stamps + medal */
+.life-layer{display:none!important}
+.progress-pill{display:none!important}
+.hint{display:none!important}
+.pass-progress{margin:14px 20px 4px;display:flex;align-items:center;gap:18px;padding:14px 16px;border:1px solid #ddcba5;border-radius:16px;background:linear-gradient(135deg,#fffaf0,#f5ead2)}
+.medal{--p:0;position:relative;width:88px;height:88px;flex:0 0 88px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#8b2635 calc(var(--p)*1%),#e7ddca 0);box-shadow:0 5px 15px rgba(70,45,30,.14)}
+.medal:before{content:"";position:absolute;inset:7px;border-radius:50%;background:#fffaf0}
+.medal-text{position:relative;z-index:1;text-align:center;font-weight:900;color:#6d1723;line-height:1.05}.medal-text strong{font-size:1.25rem}.medal-text small{display:block;font-size:.65rem;margin-top:4px}
+.progress-copy{flex:1}.progress-copy strong{display:block;color:#641b25;font-size:1.05rem}.progress-copy span{display:block;color:#6f6b63;font-size:.86rem;margin-top:4px}
+.stamp-board{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:10px}.stamp-chip{min-height:32px;display:grid;place-items:center;text-align:center;padding:5px;border:1px dashed #cbbd9f;border-radius:8px;color:#a69b88;background:rgba(255,255,255,.45);font:700 10px/1.1 Arial,sans-serif;transition:.3s}.stamp-chip.on{color:#7b2330;border:2px solid #9b4a54;background:#fff8e9;transform:rotate(-1deg);box-shadow:inset 0 0 0 2px rgba(155,74,84,.08)}.stamp-chip.on:after{content:" ✓";color:#497b55}
+.final-stamp{display:none;margin:16px auto 4px;width:180px;padding:13px 8px;border:4px double #8b2635;border-radius:50%;color:#8b2635;text-align:center;font:900 18px/1.05 Georgia,serif;letter-spacing:.04em;transform:rotate(-5deg);background:rgba(255,250,240,.75)}.final-stamp.on{display:block;animation:stampIn .5s cubic-bezier(.2,.9,.3,1.25)}@keyframes stampIn{from{opacity:0;transform:rotate(-5deg) scale(1.5)}to{opacity:1;transform:rotate(-5deg) scale(1)}}
+.skill input:checked + span strong{color:#641b25}
+@media(max-width:600px){.pass-progress{align-items:flex-start}.medal{width:72px;height:72px;flex-basis:72px}.stamp-board{grid-template-columns:repeat(3,1fr)}}
 </style></head>
 <body><main class="page">
 <div class="topbar"><a class="btn" href="index.html">← A1-Kurs</a><a class="btn" href="../../nele.html">🎙️ Mit Nele sprechen</a></div>
@@ -107,6 +121,11 @@
 </section></main>
 <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="passTitle"><div class="passport">
 <div class="pass-head"><div><small>MEIN LERNPASS</small><h2 id="passTitle">Meine Deutschkenntnisse · A1</h2></div><button class="close" id="closePass" aria-label="Schließen">×</button></div>
+<div class="pass-progress">
+<div class="medal" id="medal"><div class="medal-text"><strong id="medalCount">0/13</strong><small>A1.1</small></div></div>
+<div class="progress-copy"><strong>Mein Fortschritt · A1.1</strong><span>Jede Fähigkeit bekommt ihre eigene Stempelmarke.</span>
+<div class="stamp-board" id="stampBoard"></div></div></div>
+<div class="final-stamp" id="finalStamp">A1.1<br>GESCHAFFT ✓</div>
 <div class="part"><h3>Teil A1.1 · Erste Schritte</h3><p class="part-note">Begrüßen · vorstellen · Alphabet · Herkunft · Zahlen · persönliche Daten</p>
 <label class="skill"><input type="checkbox" data-key="gruss"><span><strong>Ich kann grüßen.</strong><span class="examples">Guten Morgen! · Guten Tag! · Guten Abend! · Hallo! · Tschüss!</span></span></label>
 <label class="skill"><input type="checkbox" data-key="vorstellen"><span><strong>Ich kann mich vorstellen.</strong><span class="examples">Ich heiße … · Mein Name ist … · Ich bin …</span></span></label>
@@ -128,7 +147,10 @@
 const KEY="deutschpass-a1-v1", boxes=[...document.querySelectorAll('.skill input')], unlocks=[...document.querySelectorAll('.unlock')], overlay=document.getElementById('overlay');
 let saved={};try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
 boxes.forEach(b=>{b.checked=!!saved[b.dataset.key];b.addEventListener('change',()=>{saved[b.dataset.key]=b.checked;localStorage.setItem(KEY,JSON.stringify(saved));render()})});
-function render(){const n=boxes.filter(b=>b.checked).length,total=boxes.length;document.getElementById('count').textContent=n;document.getElementById('total').textContent=total;unlocks.forEach(el=>el.classList.remove('on'));const stages=[1,2,2,3,4,5,6,7,8,9,10,10,11,12,13];document.querySelectorAll('.life').forEach((el,i)=>el.classList.toggle('on',n>=stages[i]));document.querySelector('.world').classList.toggle('completed',n===total)}
+const stampNames=['Grüßen','Vorstellen','Name','Alphabet','Herkunft','Herkunft fragen','Zahlen 20','Alter','Zahlen 100','Beruf','du / Sie','Präsens','Dialog'];
+const stampBoard=document.getElementById('stampBoard');
+stampNames.forEach((name,i)=>{const s=document.createElement('span');s.className='stamp-chip';s.textContent=name;s.dataset.i=i;stampBoard.appendChild(s)});
+function render(){const n=boxes.filter(b=>b.checked).length,total=boxes.length;document.getElementById('count').textContent=n;document.getElementById('total').textContent=total;unlocks.forEach(el=>el.classList.remove('on'));document.querySelectorAll('.life').forEach(el=>el.classList.remove('on'));document.getElementById('medal').style.setProperty('--p',(n/total*100).toFixed(2));document.getElementById('medalCount').textContent=n+'/'+total;document.querySelectorAll('.stamp-chip').forEach((el,i)=>el.classList.toggle('on',boxes[i].checked));document.getElementById('finalStamp').classList.toggle('on',n===total);document.querySelector('.world').classList.toggle('completed',n===total)}
 render();
 document.getElementById('openPass').onclick=()=>overlay.classList.add('open');document.getElementById('closePass').onclick=()=>overlay.classList.remove('open');overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.classList.remove('open')});document.addEventListener('keydown',e=>{if(e.key==='Escape')overlay.classList.remove('open')});
 </script></body></html>
