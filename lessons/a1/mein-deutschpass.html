@@ -35,14 +35,26 @@
 .hint{position:absolute;left:20px;bottom:18px;z-index:5;max-width:350px;padding:10px 14px;border-radius:14px;background:rgba(7,24,44,.76);font-size:.9rem}
 .overlay{display:none;position:fixed;inset:0;z-index:100;background:rgba(2,10,20,.72);backdrop-filter:blur(5px);padding:18px;overflow:auto}.overlay.open{display:grid;place-items:center}.passport{width:min(760px,100%);max-height:92vh;overflow:auto;background:var(--paper);color:var(--ink);border-radius:22px;box-shadow:0 30px 80px rgba(0,0,0,.45);border:10px solid #6d1723}.pass-head{position:sticky;top:0;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:18px 20px;background:#fff4d8;border-bottom:1px solid #dfc994}.pass-head h2{margin:0;color:#641b25}.close{border:0;background:#641b25;color:#fff;width:38px;height:38px;border-radius:50%;font-size:20px;cursor:pointer}.part{padding:18px 20px;border-bottom:1px dashed #d8c69c}.part h3{margin:0 0 5px;color:#641b25}.part-note{margin:0 0 15px;color:#6c7784;font-size:.9rem}.skill{display:grid;grid-template-columns:28px 1fr;gap:9px;margin:12px 0;cursor:pointer;align-items:start}.skill input{appearance:none;width:22px;height:22px;margin:1px 0;border:2px solid #58a879;border-radius:5px;background:white;cursor:pointer}.skill input:checked{background:#58a879;box-shadow:inset 0 0 0 4px white}.skill strong{display:block}.examples{display:block;margin-top:3px;color:#6a7683;font-size:.9rem;line-height:1.35}.pass-foot{padding:15px 20px;background:#fff4d8;text-align:center;font-weight:800;color:#641b25}
 @media(max-width:700px){.world{height:470px}.passport-btn{width:98px;height:130px;right:12px;top:12px}.progress-pill{top:auto;bottom:72px}.hint{right:12px;max-width:none}.scene{transform:scale(.78);transform-origin:center bottom}.mountain{top:135px}.river{top:300px}}
+
+/* richer illustrated town */
+.world{background:linear-gradient(#92cbe9 0 43%,#d9e8c4 43% 100%)}
+.world:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,rgba(255,255,255,.2),transparent 35%);z-index:1}
+.mountain{background:linear-gradient(155deg,#6f9671 0 45%,#456b50 46% 100%);filter:drop-shadow(0 8px 10px rgba(30,65,45,.18))}
+.river{background:linear-gradient(175deg,#77bfd7,#9bd4df 48%,#66adc7);box-shadow:inset 0 7px 12px rgba(255,255,255,.3),0 4px 10px rgba(42,95,110,.18)}
+.ground-detail{position:absolute;left:0;right:0;bottom:0;height:215px;background:linear-gradient(165deg,#dce8c5,#bfd59e);clip-path:polygon(0 20%,100% 0,100% 100%,0 100%)}
+.town-backdrop{position:absolute;left:3%;right:3%;bottom:155px;height:120px;opacity:.24;background:repeating-linear-gradient(90deg,#b78d6d 0 42px,#e7d0a9 42px 82px,#d5b18d 82px 122px);clip-path:polygon(0 55%,5% 25%,10% 55%,15% 12%,20% 55%,26% 30%,31% 55%,38% 18%,44% 55%,50% 28%,56% 55%,63% 15%,69% 55%,76% 26%,82% 55%,90% 10%,96% 55%,100% 35%,100% 100%,0 100%)}
+.house,.school,.shop,.cafe{box-shadow:inset 0 0 25px rgba(255,255,255,.35),0 12px 18px rgba(36,48,35,.3)}
+.house{background:linear-gradient(90deg,#e9d3ae,#f5e6c9)}.school{background:linear-gradient(90deg,#ead8b8,#fff0d1)}.shop{background:linear-gradient(90deg,#ddbd91,#f2dbb2)}.cafe{background:linear-gradient(90deg,#d9ad82,#edc9a4)}
+.house:after,.shop:after{filter:drop-shadow(inset 0 0 4px white)}
+.street-edge{position:absolute;left:0;right:0;bottom:62px;height:20px;background:repeating-linear-gradient(90deg,#b9b3a5 0 38px,#d4cec0 38px 40px);opacity:.85}
 </style></head>
 <body><main class="page">
 <div class="topbar"><a class="btn" href="index.html">← A1-Kurs</a><a class="btn" href="../../nele.html">🎙️ Mit Nele sprechen</a></div>
-<header class="hero"><h1>🏘️ Meine Deutschstadt</h1><p>Dein Deutsch wächst – und deine Stadt wächst mit. Öffne deinen Deutschpass und markiere selbst, was du schon kannst.</p></header>
+<header class="hero"><h1>Meine Deutschstadt</h1><p>Dein Deutsch wächst – und deine Stadt wächst mit. Öffne deinen Deutschpass und markiere selbst, was du schon kannst.</p></header>
 <section class="world" aria-label="Deine wachsende Deutschstadt">
-<div class="sun"></div><div class="cloud c1"></div><div class="cloud c2"></div><div class="mountain"></div><div class="river"></div><div class="skyline"></div>
+<div class="sun"></div><div class="town-backdrop"></div><div class="ground-detail"></div><div class="street-edge"></div><div class="cloud c1"></div><div class="cloud c2"></div><div class="mountain"></div><div class="river"></div><div class="skyline"></div>
 <div class="progress-pill"><span id="count">0</span> / <span id="total">0</span> geschafft</div>
-<button class="passport-btn" id="openPass" aria-haspopup="dialog"><span class="eagle">🦅</span>DEUTSCH<br>PASS<br><small>A1</small></button>
+<button class="passport-btn" id="openPass" aria-haspopup="dialog"><span class="eagle" style="font-size:28px">◆</span>DEUTSCH<br>PASS<br><small>A1</small></button>
 <div class="scene"><div class="road unlock" data-u="1"></div><div class="bridge unlock building" data-u="2"></div><div class="house unlock building" data-u="3"></div><div class="tree1 unlock" data-u="4"></div><div class="school unlock building" data-u="5"></div><div class="lamp unlock" data-u="6"></div><div class="shop unlock building" data-u="7"></div><div class="bike unlock" data-u="8"></div><div class="cafe unlock building" data-u="9"></div><div class="mail unlock" data-u="10"></div><div class="bus unlock building" data-u="11"></div><div class="tree2 unlock" data-u="12"></div><div class="flowers unlock" data-u="13"></div><div class="park unlock" data-u="13"></div><div class="fountain unlock" data-u="13"></div></div>
 <div class="hint">💡 Jedes Häkchen im Deutschpass macht deine Stadt ein Stück lebendiger.</div>
 </section></main>
