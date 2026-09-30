@@ -32,7 +32,7 @@ body{font-family:"Nunito Sans",Arial,sans-serif}
 .hero h1{font:700 clamp(2rem,4vw,3.3rem)/1.08 "Kalam",cursive}
 .art{position:relative;display:grid;place-items:center;min-height:280px;padding:14px;overflow:hidden;background:radial-gradient(circle at center,rgba(132,223,66,.10),transparent 62%),linear-gradient(180deg,#fdfefe,#f4f8fc);border:1px solid var(--line);border-radius:24px;font-size:0}
 .art span{position:absolute;bottom:20px;font-size:.9rem;color:var(--muted)}
-.lesson2-globe{width:190px;height:190px;border-radius:50%;position:relative;display:grid;place-items:center;overflow:hidden;background:var(--ink)}
+.lesson2-globe{width:190px;height:190px;border-radius:50%;position:relative;display:grid;place-items:center;overflow:hidden;}
 .lesson2-earth{position:relative;width:92px;height:92px;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 32% 28%,#69c8ff 0 8%,#2d95ea 35%,#1767c2 72%,#0b3c83 100%);box-shadow:inset -13px -4px 18px #082e6a99,0 0 0 1px #ffffff20}
 .lesson2-earth-map,.lesson2-earth-map::before,.lesson2-earth-map::after{position:absolute;display:block;background:#56d58a;box-shadow:inset -3px -2px 4px #16895766}
 .lesson2-earth-map{width:30px;height:43px;left:12px;top:19px;border-radius:48% 52% 58% 42%/38% 45% 55% 62%;animation:lesson2LandTravel 14s linear infinite}
@@ -50,7 +50,7 @@ body{font-family:"Nunito Sans",Arial,sans-serif}
 .lesson2-wrap header.hero .art{background:linear-gradient(145deg,#0b2b45,#0d3653);border-color:#1b5574}
 
 /* Lektion 2: jeden odcień granatu w górnych panelach */
-.guide,.course-nav,.course-section,.lesson2-wrap header.hero,.lesson2-wrap header.hero .art{background:#082b47!important}
+.guide,.lesson2-wrap header.hero,.lesson2-wrap header.hero .art{background:#082b47!important}
 /* Fix: translation text inside the dark hero must stay visible */
 .lesson2-wrap header.hero .tr-box .tr-content{color:#101820;background:#fff;border-color:#e3d6b8}
 .lesson2-wrap header.hero .tr-box .tr-content p,.lesson2-wrap header.hero .tr-box .tr-content b{color:#101820}
@@ -59,7 +59,8 @@ body{font-family:"Nunito Sans",Arial,sans-serif}
 .lesson2-wrap header.hero{background:#2a4156!important}
 .lesson2-wrap header.hero .art{background:#082b47!important}
 </style><link rel="stylesheet" href="../../css/translation-globe.css">
-<link rel="stylesheet" href="../../css/page-progress.css">\n</head><body id="oben" id="seitenanfang"><main class="shell">
+<link rel="stylesheet" href="../../css/page-progress.css">
+</head><body id="oben"><main class="shell">
 <a class="back" href="index.html" aria-label="Zurück zur A1 Übersicht">←</a>
 <div class="guide"><strong>① Zuerst: Lies die ganze Lektion.</strong><p>Danach übst du Schritt für Schritt mit den Aufgaben in dieser Reihenfolge.</p><details class="learning-translation"><summary>▶ <span class="translation-globe">🌐</span> A/文</summary><div class="tr-content"><p><b>English:</b> First, read the whole lesson. Then practise step by step with the tasks in this order.</p><p><b>Polski:</b> Najpierw przeczytaj całą lekcję. Następnie ćwicz krok po kroku, wykonując zadania w tej kolejności.</p><p><b>Italiano:</b> Per prima cosa, leggi tutta la lezione. Poi esercitati passo dopo passo con gli esercizi in quest’ordine.</p></div></details></div>
 <nav class="training-buttons" aria-label="Übungen zu A1 · 2">
@@ -114,4 +115,5 @@ body{font-family:"Nunito Sans",Arial,sans-serif}
 <nav class="nav"><a class="top" href="#oben">↑ Zurück nach oben</a></nav>
 </div></article></main>
 <script>let v=null;function voices(){if(!("speechSynthesis"in window))return;v=speechSynthesis.getVoices().find(x=>x.lang?.toLowerCase()==="de-de")||speechSynthesis.getVoices().find(x=>x.lang?.toLowerCase().startsWith("de"))||null}voices();if("speechSynthesis"in window)speechSynthesis.addEventListener("voiceschanged",voices);document.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(b.dataset.s);u.lang="de-DE";u.rate=.82;if(v)u.voice=v;speechSynthesis.speak(u)});const ik=document.getElementById("ich-kann-button"),ip=document.getElementById("ich-kann-paper");ik.addEventListener("click",()=>{const o=ip.classList.toggle("show");ik.classList.toggle("open",o);ik.setAttribute("aria-expanded",String(o));ip.setAttribute("aria-hidden",String(!o))})</script>
-<script src="../../js/page-progress.js" defer></script>\n</body></html>
+<script src="../../js/page-progress.js" defer></script>
+</body></html>
