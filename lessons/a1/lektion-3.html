@@ -72,6 +72,18 @@ body{font-family:"Nunito Sans",sans-serif;background:radial-gradient(circle at t
 /* Personal data: always 2 + 2 on larger screens; stack on phones */
 .numgrid.personal-data-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 @media(max-width:600px){.numgrid.personal-data-grid{grid-template-columns:1fr!important}}
+
+/* Lektion 3 — visual polish */
+.lesson3-art{width:min(100%,300px);height:270px;border:0;border-radius:28px;background:linear-gradient(145deg,#eef7ff,#fff8e8);box-shadow:inset 0 0 0 1px #d9e4f0;display:grid;place-items:center;padding:28px}
+.lesson3-art:before{display:none}
+.lesson3-art-card{width:100%;max-width:215px;padding:18px;background:rgba(255,255,255,.92);border:1px solid #d9e4f0;border-radius:22px;box-shadow:0 14px 28px rgba(23,48,71,.12);transform:rotate(2deg)}
+.lesson3-art-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px;padding-bottom:12px;border-bottom:1px dashed #d7e1eb}.lesson3-cake{font-size:2rem}.lesson3-age{display:grid;place-items:center;width:54px;height:54px;border-radius:50%;background:#203750;color:#fff;font:800 1.35rem "Nunito Sans",sans-serif}
+.lesson3-art-line{display:grid;grid-template-columns:30px 1fr;align-items:center;gap:9px;margin:8px 0;color:#40556b;font-weight:800;font-size:.92rem}
+#teil2 .numgrid{gap:14px!important}#teil2 .numgrid .num{min-height:72px!important;padding:12px 16px!important;background:linear-gradient(180deg,#f7faff,#eef4fa);box-shadow:0 5px 12px rgba(23,48,71,.05)}
+#teil2 .note{margin-top:24px;padding:22px 24px;background:linear-gradient(135deg,#fffdf7,#fff8e8);border:1px solid #eadfbf;border-left:5px solid var(--gold);box-shadow:0 8px 18px rgba(23,48,71,.06)}
+#teil4 .personal-data-pair{grid-auto-rows:1fr}#teil4 .personal-data-pair .note{display:flex;flex-direction:column;padding:22px 24px}#teil4 .personal-data-pair .note>b{display:block;margin-bottom:7px;font-size:1.05rem}#teil4 .personal-data-pair .note p{margin:7px 0}
+#teil4 .personal-practice-pair{margin-top:22px}
+@media(max-width:720px){.lesson3-art{height:235px;margin-top:8px}.lesson3-art-card{max-width:205px}.lesson3-art-top{margin-bottom:9px}}
 </style></head>
 <body id="oben"><main class="shell"><a class="back" href="index.html">←</a>
 <div class="learning-guide"><strong>① Zuerst: Lies die ganze Lektion.</strong><p>Danach übst du Schritt für Schritt mit den Aufgaben in dieser Reihenfolge.</p><details class="learning-translation"><summary>▶ <span class="translation-globe">🌐</span> A/文</summary><p><strong>English:</strong> First, read the whole lesson. Then practise step by step with the tasks in this order.</p><p><strong>Polski:</strong> Najpierw przeczytaj całą lekcję. Następnie ćwicz krok po kroku, wykonując zadania w tej kolejności.</p><p><strong>Italiano:</strong> Per prima cosa, leggi tutta la lezione. Poi esercitati passo dopo passo con gli esercizi in quest’ordine.</p></details></div>
@@ -86,7 +98,14 @@ body{font-family:"Nunito Sans",sans-serif;background:radial-gradient(circle at t
 <header class="hero"><div><div class="eyebrow">Deutschkurs A1 · Lektion 3 von 30</div><h1>Wie alt sind Sie?</h1>
 <p>Heute lernen wir: nach dem Alter fragen und sagen, wie alt wir sind, Zahlen 11–100, das Verb „sein“ und persönliche Daten.</p><details class="tr-box"><summary><span class="translation-globe">🌐</span>A/文</summary><div class="tr-content"><p><b>English:</b> Today we learn how to ask and say age, numbers 11–100, the verb “sein”, and personal information.</p><p><b>Polski:</b> Dzisiaj uczymy się pytać o wiek i go podawać, liczb 11–100, czasownika „sein” oraz danych osobowych.</p><p><b>Italiano:</b> Oggi impariamo a chiedere e dire l’età, i numeri 11–100, il verbo “sein” e i dati personali.</p></div></details>
 <nav class="topics"><a href="#teil1">1 · Alter fragen</a><a href="#teil2">2 · Zahlen 11–100</a><a href="#teil3">3 · sein</a><a href="#teil4">4 · Persönliche Daten</a></nav></div>
-<div class="art"><span>🎂 ✏️ 🔢 📊 ⏱️</span></div></header>
+<div class="art lesson3-art" aria-hidden="true">
+  <div class="lesson3-art-card">
+    <div class="lesson3-art-top"><span class="lesson3-cake">🎂</span><span class="lesson3-age">25</span></div>
+    <div class="lesson3-art-line"><span>👤</span><span>Name</span></div>
+    <div class="lesson3-art-line"><span>🔢</span><span>11–100</span></div>
+    <div class="lesson3-art-line"><span>📍</span><span>Adresse</span></div>
+  </div>
+</div></header>
 
 <section class="part" id="teil1"><div class="part-title"><span class="label">Teil 1</span><h2>Wie alt sind Sie?</h2></div><div class="card">
 <p>Wir fragen nach dem Alter und sagen, wie alt wir sind.</p><details class="tr-box"><summary><span class="translation-globe">🌐</span>A/文</summary><div class="tr-content"><p><b>English:</b> We ask someone’s age and say our age.</p><p><b>Polski:</b> Pytamy o wiek i podajemy swój wiek.</p><p><b>Italiano:</b> Chiediamo l’età e diciamo la nostra età.</p></div></details>
