@@ -269,16 +269,14 @@ header.hero{
   gap:14px;
 }
 
-.grammar-box,
-.callout{
+.grammar-box{
   padding:16px 16px 14px;
   background:linear-gradient(180deg,#fbfdff,#f4f8fc);
   border:1px solid var(--line);
   border-left:5px solid var(--accent);
   border-radius:18px;
 }
-
-.callout strong,
+,
 .grammar-box strong{
   color:#8c6700;
 }
@@ -377,58 +375,7 @@ header.hero{
   .greeting-card{align-items:flex-start}
 }
 
-.merke-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-top:12px;
-}
 
-.merke-col{
-  padding:14px 14px 12px;
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:16px;
-}
-
-.merke-title{
-  display:block;
-  margin-bottom:10px;
-  color:#8c6700;
-  font-weight:800;
-}
-
-.gruss-tabelle{
-  width:100%;
-  margin:18px 0 0;
-  border-collapse:separate;
-  border-spacing:0;
-  overflow:hidden;
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:18px;
-}
-
-.gruss-tabelle th{
-  background:#eef4fb;
-  color:var(--text);
-  text-align:left;
-  font:700 .95rem "Nunito Sans",sans-serif;
-}
-
-.gruss-tabelle th,
-.gruss-tabelle td{
-  padding:15px 14px;
-  border-bottom:1px solid var(--line);
-  vertical-align:top;
-}
-
-.gruss-tabelle tbody tr:last-child td{border-bottom:none}
-
-.gruss{
-  font-weight:800;
-  color:#8c6700;
-}
 
 .dialog-title,
 .section-subtitle{
@@ -453,23 +400,23 @@ header.hero{
 }
 
 /* Pytanie — wyraźnie po lewej, chłodny niebieski akcent */
-.marta{
+.dialog-a{
   background:#eaf5ff;
   border:1px solid #b9dcfb;
   border-left:5px solid #2a8fdb;
 }
 
-.marta .speaker{color:#0d6ba3}
+.dialog-a .speaker{color:#0d6ba3}
 
 /* Odpowiedź — wyraźnie po prawej, ciepły akcent */
-.tom{
+.dialog-b{
   margin-left:auto;
   background:#fff6e3;
   border:1px solid #ffdf9e;
   border-right:5px solid #e29a1a;
 }
 
-.tom .speaker{color:#a3690a}
+.dialog-b .speaker{color:#a3690a}
 
 .speaker{
   display:block;
@@ -534,12 +481,6 @@ header.hero{
   box-shadow:0 10px 18px rgba(0,0,0,.06);
 }
 
-.training-buttons-wrapper{
-  display:flex;
-  flex-wrap:wrap;
-  gap:12px;
-  margin:28px 0 0;
-}
 
 .training-btn{
   display:inline-flex;
@@ -884,7 +825,6 @@ button:focus-visible,
   .card{padding:16px}
   .bubble{max-width:100%}
   .training-btn{flex:1 1 100%;min-height:54px}
-  .gruss-tabelle{display:block;overflow-x:auto}
   .ich-kann-paper{padding:25px 14px 20px}
   .ich-kann-paper::before{left:18px}
 }
@@ -1180,27 +1120,27 @@ button:focus-visible,
 
           <div class="dialog">
 
-            <div class="bubble marta">
+            <div class="bubble dialog-a">
               <span class="speaker">A</span>
               Hallo!
             </div>
 
-            <div class="bubble tom">
+            <div class="bubble dialog-b">
               <span class="speaker">B</span>
               Hallo!
             </div>
 
-            <div class="bubble marta">
+            <div class="bubble dialog-a">
               <span class="speaker">A</span>
               Wie heißt du?
             </div>
 
-            <div class="bubble tom">
+            <div class="bubble dialog-b">
               <span class="speaker">B</span>
               Ich heiße Lena. Und du?
             </div>
 
-            <div class="bubble marta">
+            <div class="bubble dialog-a">
               <span class="speaker">A</span>
               Ich heiße Max.
             </div>
@@ -1211,27 +1151,27 @@ button:focus-visible,
 
           <div class="dialog">
 
-            <div class="bubble marta">
+            <div class="bubble dialog-a">
               <span class="speaker">A</span>
               Guten Tag.
             </div>
 
-            <div class="bubble tom">
+            <div class="bubble dialog-b">
               <span class="speaker">B</span>
               Guten Tag.
             </div>
 
-            <div class="bubble marta">
+            <div class="bubble dialog-a">
               <span class="speaker">A</span>
               Wie heißen Sie?
             </div>
 
-            <div class="bubble tom">
+            <div class="bubble dialog-b">
               <span class="speaker">B</span>
               Ich heiße Thomas. Und Sie?
             </div>
 
-            <div class="bubble marta">
+            <div class="bubble dialog-a">
               <span class="speaker">A</span>
               Ich heiße Julia.
             </div>
