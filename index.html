@@ -1041,6 +1041,45 @@ and
 
 }
 
+/* KURS-SUCHE */
+.course-search{
+    width:calc(100% + 120px);
+    margin:16px 0 0 -60px;
+    padding:22px;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:22px;
+    background:linear-gradient(135deg,rgba(244,201,93,.10),rgba(91,188,244,.08));
+}
+.course-search h2{margin:0 0 6px;font-size:1.25rem}
+.course-search p{margin:0 0 15px;color:var(--muted);line-height:1.45}
+.course-search-row{display:flex;gap:10px}
+.course-search input{
+    flex:1;min-width:0;padding:14px 16px;border-radius:14px;
+    border:1px solid rgba(255,255,255,.18);background:#0b2038;color:#fff;
+    font:inherit;outline:none
+}
+.course-search input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(244,201,93,.12)}
+.course-search button{
+    padding:13px 18px;border:0;border-radius:14px;background:var(--gold);
+    color:#172235;font-weight:900;font-size:.95rem;cursor:pointer
+}
+.course-search-results{display:none;margin-top:14px;gap:9px}
+.course-search-results.show{display:grid}
+.search-result{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:13px 15px;border-radius:14px;background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.10);color:#fff;text-decoration:none
+}
+.search-result:hover{background:rgba(255,255,255,.12)}
+.search-result strong{display:block}.search-result small{display:block;color:var(--muted);margin-top:3px}
+.search-result .go{color:var(--gold);font-size:1.35rem}
+.search-empty{padding:12px 2px;color:var(--muted)}
+@media(max-width:700px){
+    .course-search{width:100%;margin-left:0}
+    .course-search-row{flex-direction:column}
+    .course-search button{width:100%}
+}
+
 </style>
 </head>
 
@@ -1288,9 +1327,15 @@ and
     </a>
 
 
-</div>
-
-
+<section class="course-search" aria-labelledby="course-search-title">
+    <h2 id="course-search-title">🔎 Wo finde ich das?</h2>
+    <p>Schreib ein Wort oder Thema, zum Beispiel: <strong>Akkusativ</strong>, <strong>Familie</strong>, <strong>Perfekt</strong>, <strong>Arzt</strong> oder <strong>Uhrzeit</strong>. Du siehst sofort, wo du es im A1-Kurs findest.</p>
+    <form class="course-search-row" id="course-search-form">
+        <input id="course-search-input" type="search" autocomplete="off" placeholder="Was suchst du?" aria-label="Im A1-Kurs suchen">
+        <button type="submit">Suchen</button>
+    </form>
+    <div class="course-search-results" id="course-search-results" aria-live="polite"></div>
+</section>
 
 </div>
 
@@ -1318,6 +1363,55 @@ and
         window.setTimeout(finishIntro,2600);
     });
 })();
+
+(function(){
+ const items=[
+  ["Begrüßung, Vorstellung und Alphabet","Lektion 1","lessons/a1/lektion-1.html","hallo guten tag name heißen heissen vorstellung alphabet buchstabieren"],
+  ["Herkunft, Länder, Nationalitäten, kommen, Zahlen 1–20","Lektion 2","lessons/a1/lektion-2.html","herkunft land länder laender nationalität nationalitaet kommen zahlen 1 20 woher"],
+  ["Alter, Zahlen 11–100, sein, persönliche Daten","Lektion 3","lessons/a1/lektion-3.html","alter zahlen sein persönliche daten adresse wie alt"],
+  ["Berufe, ein/eine, arbeiten","Lektion 4","lessons/a1/lektion-4.html","beruf berufe arbeit arbeiten ein eine lehrer ärztin arzt"],
+  ["Personalpronomen, du/Sie, Präsens","Lektion 5","lessons/a1/lektion-5.html","personalpronomen pronomen du sie präsens praesens verb verben konjugation lernen arbeiten"],
+  ["Familie, mein/meine, dein/deine, Plural","Lektion 6","lessons/a1/lektion-6.html","familie mutter vater eltern schwester bruder mein meine dein deine possessiv plural"],
+  ["Wohnen, Räume, Möbel, Präpositionen","Lektion 7","lessons/a1/lektion-7.html","wohnen wohnung haus raum räume raeume möbel moebel präposition praeposition in auf unter neben an"],
+  ["Essen, Trinken, mögen, gern, möchten","Lektion 8","lessons/a1/lektion-8.html","essen trinken getränke getraenke mögen moegen gern möchten moechten kaffee tee"],
+  ["Einkaufen, Preise, Akkusativ","Lektion 9","lessons/a1/lektion-9.html","einkaufen geschäft geschaeft preis preise akkusativ den die das kaufen kostet"],
+  ["Uhrzeiten und Zeitpräpositionen","Lektion 10","lessons/a1/lektion-10.html","uhr uhrzeit uhrzeiten zeit halb viertel um am im von bis tageszeiten"],
+  ["Wochentage, Monate, Jahreszeiten, Datum","Lektion 11","lessons/a1/lektion-11.html","wochentag montag monat monate januar jahreszeit datum geburtstag am im"],
+  ["Hobbys, gern, trennbare/untrennbare Verben","Lektion 12","lessons/a1/lektion-12.html","hobby hobbys freizeit gern gerne trennbar untrennbar fernsehen einkaufen aufstehen anrufen"],
+  ["Sport und können","Lektion 13","lessons/a1/lektion-13.html","sport können koennen modalverb fähigkeit faehigkeit spielen machen treiben schwimmen"],
+  ["Musik, Kultur, gehen, Einladungen","Lektion 14","lessons/a1/lektion-14.html","musik instrument kultur kino theater museum gehen ins in die einladen lust"],
+  ["Reisen, Verkehrsmittel, Richtung","Lektion 15","lessons/a1/lektion-15.html","reisen verkehrsmittel zug bus auto flugzeug wohin nach in zu an dativ weg bahnhof"],
+  ["Wetter, Temperaturen, wenn","Lektion 16","lessons/a1/lektion-16.html","wetter temperatur grad sonnig regen regnet schnee schneit wenn"],
+  ["Gesundheit, Arzt, müssen, dürfen","Lektion 17","lessons/a1/lektion-17.html","gesundheit arzt körper koerper schmerzen beschwerden müssen muessen dürfen duerfen fieber husten"],
+  ["Nominativ und Akkusativ","Lektion 18","lessons/a1/lektion-18.html","nominativ akkusativ artikel personalpronomen mich dich ihn direktes objekt subjekt"],
+  ["Dativ und Dativpräpositionen","Lektion 19","lessons/a1/lektion-19.html","dativ mit bei nach seit von zu aus gegenüber helfen danken gefallen"],
+  ["Modalverben und Satzbau","Lektion 20","lessons/a1/lektion-20.html","modalverb modalverben können koennen müssen muessen wollen sollen dürfen duerfen möchten moechten satzbau infinitiv"],
+  ["Trennbare und untrennbare Verben","Lektion 21","lessons/a1/lektion-21.html","trennbar untrennbar vorsilbe präfix praefix aufstehen anrufen einkaufen fernsehen verstehen besuchen"],
+  ["Perfekt und Partizip II","Lektion 22","lessons/a1/lektion-22.html","perfekt partizip vergangenheit gestern haben sein gemacht gelernt gekauft gesehen"],
+  ["Stadt, Weg, Wo?/Wohin?","Lektion 23","lessons/a1/lektion-23.html","stadt weg wo wohin dativ akkusativ park post bank krankenhaus rathaus"],
+  ["Öffentliche Verkehrsmittel und Fahrplan","Lektion 24","lessons/a1/lektion-24.html","verkehrsmittel u-bahn s-bahn straßenbahn bus taxi fahrkarte fahrplan abfahren ankommen umsteigen"],
+  ["Restaurant, Bestellen, Bezahlen","Lektion 25","lessons/a1/lektion-25.html","restaurant bestellen bezahlen speisekarte rechnung essen hätte haette gern"],
+  ["Kleidung, Farben, Adjektive","Lektion 26","lessons/a1/lektion-26.html","kleidung mode farben adjektiv adjektive hemd hose kleid jacke schuhe größe groesse"],
+  ["Schule, Studium und Lernen","Lektion 27","lessons/a1/lektion-27.html","schule studium lernen fach fächer faecher universität universitaet prüfung pruefung"],
+  ["Große Wiederholung: Grammatik","Lektion 28","lessons/a1/lektion-28.html","wiederholung grammatik nominativ akkusativ dativ verben modalverben perfekt satzbau"],
+  ["Große Wiederholung: Alltag und Kommunikation","Lektion 29","lessons/a1/lektion-29.html","wiederholung alltag kommunikation schreiben hören hoeren email nachricht postkarte formular"],
+  ["Prüfungsvorbereitung A1","Lektion 30","lessons/a1/lektion-30.html","prüfung pruefung lesen hören hoeren schreiben sprechen goethe vorbereitung"],
+  ["Gesamte A1-Grammatik","Grammatik A1","lessons/a1/grammatik.html","grammatik übersicht uebersicht regeln pronomen präsens praesens artikel nominativ akkusativ dativ präpositionen praepositionen modalverben perfekt satzbau"]
+ ];
+ const norm=s=>s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/ß/g,"ss").trim();
+ const form=document.getElementById("course-search-form"),input=document.getElementById("course-search-input"),out=document.getElementById("course-search-results");
+ function search(){
+   const q=norm(input.value);
+   if(!q){out.className="course-search-results";out.innerHTML="";return}
+   const words=q.split(/\s+/).filter(Boolean);
+   const hits=items.map(x=>({x,score:words.reduce((n,w)=>n+(norm(x.join(" ")).includes(w)?1:0),0)})).filter(v=>v.score>0).sort((a,b)=>b.score-a.score).slice(0,6);
+   out.className="course-search-results show";
+   out.innerHTML=hits.length?hits.map(({x})=>'<a class="search-result" href="'+x[2]+'"><span><strong>'+x[0]+'</strong><small>'+x[1]+'</small></span><span class="go">→</span></a>').join(""):'<div class="search-empty">Dazu habe ich im A1-Kurs noch keinen passenden Eintrag gefunden. Versuche ein anderes Wort.</div>';
+ }
+ form.addEventListener("submit",e=>{e.preventDefault();search()});
+ input.addEventListener("input",search);
+})();
+
 </script>
 
 </body>
