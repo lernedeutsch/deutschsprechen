@@ -191,8 +191,8 @@ table{width:100%;border-collapse:collapse;margin-bottom:12px}td,th{padding:8px 1
 </div>
 <div class="verb-step" id="formsStep" hidden>
 <strong>2. Bilde die Formen:</strong>
-<div class="build-row"><span id="learnStem">lern__</span><div class="opts" id="learnChoices"></div></div>
-<div class="build-row"><span id="workStem">arbeit__</span><div class="opts" id="workChoices"></div></div>
+<div class="build-row"><span><b class="build-pronoun" id="learnPronoun">ich</b> <span id="learnStem">lern__</span></span><div class="opts" id="learnChoices"></div></div>
+<div class="build-row"><span><b class="build-pronoun" id="workPronoun">ich</b> <span id="workStem">arbeit__</span></span><div class="opts" id="workChoices"></div></div>
 </div>
 </div>
 <p class="fb" id="fb3">Wähle zuerst die richtige Endung.</p><div class="bar"><i id="bar3"></i></div>
@@ -357,7 +357,7 @@ function showVerb(){
   }
   const [pron,end,l,a]=VERBS[vOrder[vi]];
   endingOK=learnOK=workOK=false;
-  $("verbPronoun").textContent=pron;$("verbCount").textContent=`Pronomen ${vi+1} / 6`;
+  $("verbPronoun").textContent=pron;$("learnPronoun").textContent=pron;$("workPronoun").textContent=pron;$("verbCount").textContent=`Pronomen ${vi+1} / 6`;
   $("endingStep").hidden=false;$("formsStep").hidden=true;
   $("learnStem").textContent="lern__";$("workStem").textContent="arbeit__";
   $("fb3").textContent="Wähle zuerst die richtige Endung.";$("fb3").className="fb";
