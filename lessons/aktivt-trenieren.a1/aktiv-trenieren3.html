@@ -109,6 +109,9 @@ details.tr-mini:not([open]) > *:not(summary),details.learning-translation:not([o
 
 /* Teil 3 sein: kompakt, czytelnie i bez wielkiej pustej przestrzeni */
 #sein table{width:100%!important;max-width:760px;margin:18px auto 12px;border-collapse:separate;border-spacing:0 8px}#sein table tr{background:#fffaf0}#sein table td{padding:9px 14px;border-top:1px solid #ead8ad;border-bottom:1px solid #ead8ad;vertical-align:middle}#sein table td:first-child{width:34%;border-left:1px solid #ead8ad;border-radius:12px 0 0 12px;font-size:1.03rem}#sein table td:nth-child(2){width:90px;text-align:center}#sein table td:last-child{border-right:1px solid #ead8ad;border-radius:0 12px 12px 0;color:#53645b;font-weight:700}#sein .slot{min-width:64px;min-height:44px;border:2px dashed #c5a04d;border-radius:11px;background:#fffdf8;font-size:1.05rem;font-weight:800;cursor:pointer}#sein #vbank{max-width:760px;margin:14px auto 4px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;padding:14px;background:#fff7d8;border:1px solid #ead29a;border-radius:14px}#sein .vchip{min-width:78px;padding:10px 15px;border-radius:11px}#sein #seinFb{max-width:760px;margin:10px auto 0}
+
+/* Vorstellung: tłumaczenie naprawdę ukryte + duże pulsujące ołówki */
+#translation[hidden]{display:none!important}#vorstellung .intro-pencil{display:inline-block;font-size:1.55em;line-height:1;vertical-align:-.12em;transform-origin:center;animation:introPencilPulse 1.25s ease-in-out infinite}@keyframes introPencilPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.28)}}
 </style><link rel="stylesheet" href="../../css/click-hints.css">
 <link rel="stylesheet" href="../../css/translation-globe.css">
 <link rel="stylesheet" href="../../css/page-progress.css">
@@ -126,12 +129,12 @@ details.tr-mini:not([open]) > *:not(summary),details.learning-translation:not([o
 </section>
 <div class="pass"><div class="pass-title"><b>🛂 Dein Sprachpass</b><small>Lektion 3 · Aktiv trainieren · <span id="passCount">0 / 5 Stempel gesammelt</span></small></div><div class="stamps"><span class="st" data-st="vorstellung"><i>👋</i>Vorstellung</span><span class="st" data-st="alter"><i>🎂</i>Alter</span><span class="st" data-st="zahlen"><i>🔢</i>Zahlen</span><span class="st" data-st="sein"><i>✏️</i>sein</span><span class="st" data-st="daten"><i>🪪</i>Daten</span><span class="st" data-st="lesson"><i>🏆</i>Lektion 3</span></div></div>
 <div class="card lesson-main" id="vorstellung">
-<div class="command-panel"><div class="help">✏️ Name, Vorname, Alter und Nationalität eingeben → <span class="click-cue">👆</span> „Informell“ oder „Formell“ anklicken → 🔊 zuhören</div><div class="command-line"><p class="intro">Trag deinen Namen, Vornamen, dein Alter und deine Nationalität ein — die Dialoge passen sich an!</p><button class="btn ghost" id="translate" type="button"><span class="globe-spin">🌐</span> A/文</button></div><p class="translation" id="translation"><p><b>English:</b> Enter your surname, first name, age and nationality — the dialogues adapt to you.</p><p><b>Polski:</b> Wpisz nazwisko, imię, wiek i narodowość — dialogi dopasują się do Ciebie.</p><p><b>Italiano:</b> Inserisci cognome, nome, età e nazionalità — i dialoghi si adattano a te.</p></p></div>
+<div class="command-panel"><div class="help">✏️ Name, Vorname, Alter und Nationalität eingeben → <span class="click-cue">👆</span> „Informell“ oder „Formell“ anklicken → 🔊 zuhören</div><div class="command-line"><p class="intro">Trag deinen Namen, Vornamen, dein Alter und deine Nationalität ein — die Dialoge passen sich an!</p><button class="btn ghost" id="translate" type="button"><span class="globe-spin">🌐</span> A/文</button></div><div class="translation" id="translation" hidden><p><b>English:</b> Enter your surname, first name, age and nationality — the dialogues adapt to you.</p><p><b>Polski:</b> Wpisz nazwisko, imię, wiek i narodowość — dialogi dopasują się do Ciebie.</p><p><b>Italiano:</b> Inserisci cognome, nome, età e nazionalità — i dialoghi si adattano a te.</p></div></div>
 <div class="continuity-card"><strong>🔁 Aus Lektion 1 und 2</strong><span>Du kannst schon sagen, wie du heißt und woher du kommst. Jetzt sagst du zusätzlich, wie alt du bist.</span><div class="continuity-example"><b>Ich heiße Anna.</b><span class="continuity-arrow">↓</span><b>Ich heiße Anna. Ich komme aus Polen.</b><span class="continuity-arrow">↓</span><b>Ich heiße Anna. Ich komme aus Polen. Ich bin 30 Jahre alt.</b></div></div><div class="fields">
-<label>✏️ Name<input id="last" type="text" placeholder="z. B. Kowalski"></label>
-<label>✏️ Vorname<input id="first" type="text" placeholder="z. B. Monika"></label>
-<label>✏️ Alter<input id="age" type="number" min="1" max="100" placeholder="z. B. 25"></label>
-<label>✏️ Nationalität<input id="nat" type="text" placeholder="z. B. Polin"></label>
+<label><span class="intro-pencil">✏️</span> Name<input id="last" type="text" placeholder="z. B. Kowalski"></label>
+<label><span class="intro-pencil">✏️</span> Vorname<input id="first" type="text" placeholder="z. B. Monika"></label>
+<label><span class="intro-pencil">✏️</span> Alter<input id="age" type="number" min="1" max="100" placeholder="z. B. 25"></label>
+<label><span class="intro-pencil">✏️</span> Nationalität<input id="nat" type="text" placeholder="z. B. Polin"></label>
 </div><p class="nat-note">Tipp: Schreibe eine Nationalität, z. B. Polin, Pole, Deutsche, Deutscher, Österreicherin oder Österreicher.</p>
 <div class="switch"><button class="btn active tap-cue" id="informal">Informell 🔊</button><button class="btn tap-cue" id="formal">Formell 🔊</button></div>
 <div class="dialogue" id="dialogue"></div>
@@ -192,7 +195,7 @@ function draw(){const box=$("#dialogue");box.innerHTML="";lines().forEach(([w,t,
 async function mode(f){formal=f;$("#informal").classList.toggle("active",!f);$("#formal").classList.toggle("active",f);draw();stamp("vorstellung");for(const [w,t] of lines()){say(t,w);await new Promise(r=>setTimeout(r,1350))}}
 ["#last","#first","#age","#nat"].forEach(x=>$(x).addEventListener("input",draw));
 $("#informal").onclick=()=>mode(false);$("#formal").onclick=()=>mode(true);
-$("#translate").onclick=()=>{const x=$("#translation");x.style.display=x.style.display==="block"?"none":"block"};
+
 draw();
 
 /* zusätzliche Übungen aus dem gelieferten Lektion-3-Code */
@@ -267,6 +270,10 @@ function regStart(){ri=0;answers=[];$("#reg").innerHTML="";$("#idcard").innerHTM
 $("#regBtn").onclick=()=>{const v=$("#regIn").value.trim();if(!v)return;const t=STEPS[ri][2](v);answers.push(v);$("#reg").innerHTML+=`<div class="xline me">${t}</div>`;say(t);ri++;if(ri<STEPS.length)askReg();else{$("#regAsk").hidden=true;$("#idcard").innerHTML=`<div class="idcard"><b>🪪 Dein Ausweis</b><br>Name: ${answers[0]}<br>Vorname: ${answers[1]}<br>Alter: ${answers[2]}<br>Adresse: ${answers[3]}<br>Telefon: ${answers[4]}</div>`;$("#regFb").textContent="Alle Angaben sind vollständig.";stamp("daten");finishBox("#daten","Du hast deine persönlichen Daten vollständig angegeben.")}};$("#regReset").onclick=regStart;regStart();
 const DLG=[["A","Guten Tag. Wie ist Ihr Name?"],["B","Mein Name ist Becker."],["A","Wie ist Ihr Vorname?"],["B","Mein Vorname ist Julia."],["A","Wie alt sind Sie?"],["B","Ich bin 28 Jahre alt."]];let hideB=false;function drawDlg(){ $("#dlg").innerHTML=DLG.map(([w,t])=>`<div class="xline ${w==="B"?"me":""}" data-w="${w}" data-t="${t}" style="${hideB&&w==="B"?"filter:blur(6px);cursor:pointer":""}"><b>${w}</b> ${t}</div>`).join("");document.querySelectorAll("#dlg [data-w=B]").forEach(x=>x.onclick=()=>{x.style.filter="none";say(x.dataset.t,"B")})}drawDlg();$("#dRole").onclick=()=>{hideB=!hideB;drawDlg()};$("#dPlay").onclick=async()=>{for(const [w,t] of DLG){say(t,w);await new Promise(r=>setTimeout(r,1600))}};
 
+
+// Robuste Übersetzung: standardmäßig verborgen, nur per Globus öffnen/schließen.
+const introTranslateBtn=document.getElementById("translate"),introTranslation=document.getElementById("translation");
+if(introTranslateBtn&&introTranslation){introTranslation.hidden=true;introTranslateBtn.onclick=()=>{introTranslation.hidden=!introTranslation.hidden;};}
 </script><script src="../../js/click-hints.js"></script>
 <script src="../../js/page-progress.js" defer></script>
 </body></html>
