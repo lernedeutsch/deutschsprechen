@@ -1798,7 +1798,8 @@ const dialogues=[
       {prompt:"Guten Tag. Wie ist Ihr Name?",instruction:"Begrüße Frau Becker und nenne deinen Namen.",example:"Guten Tag. Mein Name ist Monika.",requireFullSentence:true,check:a=>nameCheck(a)||fuzzyContains(a,"mein name ist",.3)},
       {prompt:"Wie ist Ihr Vorname?",instruction:"Nenne deinen Vornamen.",example:"Mein Vorname ist Monika.",requireFullSentence:true,check:a=>fuzzyContains(a,"mein vorname ist",.32)||fuzzyContains(a,"ich heiße",.32)},
       {prompt:"Wie alt sind Sie?",instruction:"Sag dein Alter.",example:"Ich bin 30 Jahre alt.",requireFullSentence:true,check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
-      {prompt:"Wie ist Ihre Adresse?",instruction:"Nenne deine Adresse in einem ganzen Satz.",example:"Meine Adresse ist Bahnhofstraße 30.",requireFullSentence:true,check:a=>fuzzyContains(a,"meine adresse ist",.25)&&/straße|strasse|weg|platz|gasse|allee|\d/.test(a)},
+      {prompt:"Wo wohnen Sie?",instruction:"Sagen Sie Ihren Wohnort in einem ganzen Satz.",example:"Ich wohne in Heidelberg.",requireFullSentence:true,check:a=>fuzzyContains(a,"ich wohne in",.25)},
+       {prompt:"Wie ist Ihre Adresse?",instruction:"Nenne deine Adresse in einem ganzen Satz.",example:"Meine Adresse ist Bahnhofstraße 30.",requireFullSentence:true,check:a=>fuzzyContains(a,"meine adresse ist",.25)&&/straße|strasse|weg|platz|gasse|allee|\d/.test(a)},
       {prompt:"Wie ist Ihre Telefonnummer?",instruction:"Nenne deine Telefonnummer in einem ganzen Satz.",example:"Meine Telefonnummer ist 0123.",requireFullSentence:true,check:a=>fuzzyContains(a,"meine telefonnummer ist",.25)&&/\d/.test(a)}
     ]
   }
