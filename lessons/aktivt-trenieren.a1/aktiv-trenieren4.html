@@ -167,11 +167,12 @@ table{width:100%;border-collapse:collapse;margin-bottom:12px}td,th{padding:8px 1
 <div class="opts" id="q2" hidden><button class="btn interview-question-pulse" id="askBtn">Was sind Sie von Beruf? <span class="click">👆</span></button></div>
 <p class="fb" id="fb2"></p><div class="bar"><i id="bar2"></i></div>
 </div>
-<div class="card">
-<h3 style="margin:0 0 8px;font:700 1.25rem 'Fraunces',serif">Und du? Was bist du von Beruf?</h3>
-<p style="margin:0 0 8px">Wähle deinen Beruf. Sag dann den ganzen Satz selbst.</p>
-<div class="opts" id="myJob"></div><p class="fb" id="myJobOut"></p>
-<div class="row" id="myJobRecall" hidden><button class="btn interview-question-pulse" id="myJobModel">👀 Musterlösung</button></div>
+<div class="card" id="ownJobCard">
+<h3 style="margin:0 0 8px;font:800 1.25rem 'Nunito Sans',sans-serif">Und du? Was bist du von Beruf?</h3>
+<p class="lead">1. Wähle deinen Beruf. 2. Sag selbst: „Ich bin …“ 3. Prüfe deine Antwort.</p>
+<div class="opts" id="myJob"></div>
+<p class="fb" id="myJobOut">Wähle zuerst einen Beruf.</p>
+<div class="row" id="myJobRecall" hidden><button class="btn interview-question-pulse" id="myJobModel">👀 Antwort prüfen</button></div>
 </div>
 </main>
 
@@ -179,16 +180,9 @@ table{width:100%;border-collapse:collapse;margin-bottom:12px}td,th{padding:8px 1
 <div class="part-head"><span class="part-num">Teil 3</span><h1 class="part-title">ein / eine</h1><span class="done" id="d-artikel">✅ geschafft</span></div>
 <div class="card">
 <p class="lead"><strong>Beruf sagen:</strong> Ich bin Lehrer. – ohne Artikel.<br><strong>Person zeigen:</strong> Das ist ein Lehrer. / Das ist eine Lehrerin.</p>
-<table><tr><th>Geschlecht</th><th>Artikel</th><th>Beispiel</th></tr>
-<tr><td>Maskulin</td><td><strong>ein</strong></td><td>Das ist ein Arzt. · Das ist ein Lehrer.</td></tr>
-<tr><td>Feminin</td><td><strong>eine</strong></td><td>Das ist eine Ärztin. · Das ist eine Lehrerin.</td></tr></table>
-<div class="row"><button class="btn" data-say="Ich bin Lehrer.">🔊 Ich bin Lehrer.</button><button class="btn" data-say="Das ist ein Lehrer.">🔊 Das ist ein Lehrer.</button><button class="btn" data-say="Das ist eine Lehrerin.">🔊 Das ist eine Lehrerin.</button></div>
-</div>
-<div class="card">
-<div class="action-help tr" data-en="Look at the profession → click “ein” or “eine” → hear the whole sentence. 8 words in total." data-pl="Spójrz na zawód → kliknij „ein” lub „eine” → posłuchaj całego zdania. 8 słów w sumie." data-it="Guarda la professione → clicca «ein» o «eine» → ascolta la frase intera. 8 parole in totale."><span class="step">👀 Beruf ansehen</span><span class="arr">→</span><span class="step">👆 ein oder eine?</span><span class="arr">→</span><span class="step">🔊 Satz hören</span></div>
-<div class="machine"><div class="word" id="aWord">…</div><div class="row"><button class="btn" data-a="ein">ein <span class="click">👆</span></button><button class="btn" data-a="eine">eine <span class="click">👆</span></button></div></div>
-<ol class="slog" id="aLog"></ol>
-<p class="fb" id="aFb"></p><p class="calc" id="aCount">Wort 1 / 8</p><div class="bar"><i id="bar3"></i></div>
+<div class="action-help"><span class="step">👀 Beruf lesen</span><span class="arr">→</span><span class="step">👆 ein / eine wählen</span><span class="arr">→</span><span class="step">🔊 Satz hören</span></div>
+<div class="machine"><div class="word" id="aWord">Arzt</div><div class="row"><button class="btn" id="articleEin">ein 👆</button><button class="btn" id="articleEine">eine 👆</button></div></div>
+<p class="fb" id="aFb">Wähle ein oder eine.</p><p class="calc" id="aCount">Wort 1 / 8</p><div class="bar"><i id="bar3"></i></div>
 <div class="row" style="margin-top:10px"><button class="btn dark" id="aReset">↻ Noch einmal</button></div>
 </div>
 </main>
@@ -196,38 +190,31 @@ table{width:100%;border-collapse:collapse;margin-bottom:12px}td,th{padding:8px 1
 <main class="page" id="t4">
 <div class="part-head"><span class="part-num">Teil 4</span><h1 class="part-title">Das Verb „arbeiten“</h1><span class="done" id="d-arbeiten">✅ geschafft</span></div>
 <div class="card">
-<div class="action-help tr" data-en="Click a verb form (yellow) → click the empty box of the right pronoun → hear the sentence." data-pl="Kliknij formę czasownika (żółta) → kliknij puste pole właściwego zaimka → posłuchaj zdania." data-it="Clicca una forma del verbo (gialla) → clicca la casella vuota del pronome giusto → ascolta la frase."><span class="step">👆 Wort wählen</span><span class="arr">→</span><span class="step">👆 Feld anklicken</span><span class="arr">→</span><span class="step">🔊 Satz hören</span></div>
-<p class="lead">„arbeiten“ ist ein regelmäßiges Verb. Baue die Tabelle selbst!</p>
-<table><tr><th>Pronomen</th><th>arbeiten</th><th>Beispielsatz</th></tr><tbody id="arbRows"></tbody></table>
-<div class="opts" id="vbank"></div>
-<p class="fb" id="fb4"></p><div class="bar"><i id="bar4"></i></div>
+<p class="lead">Wähle die richtige Form von <strong>arbeiten</strong>.</p>
+<div class="action-help"><span class="step">👀 Pronomen lesen</span><span class="arr">→</span><span class="step">👆 Form wählen</span><span class="arr">→</span><span class="step">🔊 Satz hören</span></div>
+<div class="machine"><div class="word" id="workPronoun">ich</div><div class="opts" id="workChoices"></div></div>
+<p class="fb" id="fb4">Wähle die richtige Verbform.</p><p class="calc" id="workCount">Form 1 / 6</p><div class="bar"><i id="bar4"></i></div>
+<div class="row" style="margin-top:10px"><button class="btn dark" id="workReset">↻ Noch einmal</button></div>
 </div>
 <div class="card">
-<h3 style="margin:0 0 8px;font:700 1.25rem 'Fraunces',serif">🔧 Transfer: lernen · studieren · wohnen</h3>
-<p class="lead"><strong>Transfer:</strong> Das gleiche Muster kennst du auch von anderen regelmäßigen Verben.</p>
-<div class="action-help tr" data-en="Read the sentence → click the verb that fits the gap." data-pl="Przeczytaj zdanie → kliknij czasownik pasujący do luki." data-it="Leggi la frase → clicca il verbo adatto allo spazio."><span class="step">👀 Satz lesen</span><span class="arr">→</span><span class="step">👆 Verb anklicken</span></div>
-<div id="verbs"></div>
-<p class="fb" id="fb4b"></p>
+<h3 style="margin:0 0 8px;font:800 1.25rem 'Nunito Sans',sans-serif">Transfer: lernen · wohnen · studieren</h3>
+<p class="lead">Das gleiche Muster kennst du auch von anderen regelmäßigen Verben.</p>
+<div id="verbs"></div><p class="fb" id="fb4b"></p>
 </div>
 </main>
 
 <main class="page" id="t5">
-<div class="part-head"><span class="part-num">Dialog</span><h1 class="part-title">Ich stelle mich vor</h1><span class="done" id="d-dialog">✅ geschafft</span></div>
+<div class="part-head"><span class="part-num">Abschluss</span><h1 class="part-title">Ich stelle mich vor</h1><span class="done" id="d-dialog">✅ geschafft</span></div>
 <div class="card">
-<div class="action-help tr" data-en="Enter your name, profession and workplace → click “Informell” or “Formell” → listen. The dialogs adapt to you!" data-pl="Wpisz imię, zawód i miejsce pracy → kliknij „Informell” lub „Formell” → posłuchaj. Dialogi dopasują się do Ciebie!" data-it="Inserisci nome, professione e luogo di lavoro → clicca «Informell» o «Formell» → ascolta. I dialoghi si adattano a te!"><span class="step">✏️ Name, Beruf, Ort eingeben</span><span class="arr">→</span><span class="step">👆 „Informell“ oder „Formell“</span><span class="arr">→</span><span class="step">🔊 zuhören</span></div>
-<p class="lead">Trag deinen Namen, deinen Beruf und deinen Arbeitsort ein — die Dialoge passen sich an!</p>
+<p class="lead">Baue deine kurze Vorstellung. Der ausführliche Dialog kommt später in „Dialoge 4“.</p>
 <div class="fields">
-<label>✏️ Name<input type="text" id="uName" placeholder="z. B. Anna" autocomplete="given-name"></label>
-<label>✏️ Beruf<select id="uJob"></select></label>
-<label>✏️ Arbeitsort<input type="text" id="uPlace" placeholder="z. B. Frankfurt" autocomplete="off"></label>
+<label>Name<input type="text" id="uName" placeholder="z. B. Anna" autocomplete="given-name"></label>
+<label>Beruf<select id="uJob"></select></label>
+<label>Arbeitsort<input type="text" id="uPlace" placeholder="z. B. Frankfurt" autocomplete="off"></label>
 </div>
-<div class="tabs" role="tablist"><button class="btn act" id="tabI" role="tab" aria-selected="true">Informell <span class="click">🔊</span></button><button class="btn" id="tabF" role="tab" aria-selected="false">Formell <span class="click">🔊</span></button></div>
-<div class="chat" id="dlg"></div>
-</div>
-<div class="card">
-<h3 style="margin:0 0 8px;font:700 1.25rem 'Fraunces',serif">🗣️ Sprechen · Was sagen Sie?</h3>
-<div class="action-help tr" data-en="Click 🔊, listen, say the question aloud, then click “I said it”. Do all 3." data-pl="Kliknij 🔊, posłuchaj, powiedz pytanie na głos, potem kliknij „Powiedziałem/am”. Zrób wszystkie 3." data-it="Clicca 🔊, ascolta, di' la domanda ad alta voce, poi clicca «Detto». Fai tutte e 3."><span class="step">🔊 hören</span><span class="arr">→</span><span class="step">🗣️ laut sprechen</span><span class="arr">→</span><span class="step">✓ abhaken</span></div>
-<div id="sq"></div>
+<div class="row"><button class="btn interview-question-pulse" id="introBuild">Meine Vorstellung zeigen</button></div>
+<div class="chat" id="dlg"><p style="margin:0;color:#5a5140">Fülle die drei Felder aus und klicke auf den Button.</p></div>
+<div class="row" id="introActions" hidden><button class="btn" id="introListen">🔊 Anhören</button><button class="btn ok" id="introDone">✓ Selbst gesagt</button></div>
 <p class="fb" id="dFb"></p>
 </div>
 </main>
@@ -338,107 +325,132 @@ $("askBtn").onclick=async()=>{
   if(asked.size===4){fb.textContent="Super! Du hast alle vier Personen gefragt.";stamp("frage");speak("Sehr gut! Du hast alle vier Personen gefragt.")}
 };
 
-/* Teil 2: eigener Beruf */
-const MYJOBS=[["Lehrer","Ich bin Lehrer."],["Lehrerin","Ich bin Lehrerin."],["Arzt","Ich bin Arzt."],["Ärztin","Ich bin Ärztin."],["Ingenieur","Ich bin Ingenieur."],["Student","Ich bin Student."],["Studentin","Ich bin Studentin."]];
-$("myJob").innerHTML=MYJOBS.map(j=>`<button class="btn" data-j="${esc(j[0])}">${j[0]}</button>`).join("");
+/* Vier Übungen neu aufgebaut */
+
+/* 1: eigener Beruf */
+const MYJOBS=[["Lehrer","Ich bin Lehrer."],["Lehrerin","Ich bin Lehrerin."],["Arzt","Ich bin Arzt."],["Ärztin","Ich bin Ärztin."],["Ingenieur","Ich bin Ingenieur."],["Ingenieurin","Ich bin Ingenieurin."],["Student","Ich bin Student."],["Studentin","Ich bin Studentin."]];
 let myJobSentence="";
-const myJobButtons=document.querySelectorAll("#myJob .btn");
-for(const b of myJobButtons){
-  b.onclick=function(){
-    const j=MYJOBS.find(x=>x[0]===this.dataset.j);
-    if(!j)return;
-    stop();
-    myJobSentence=j[1];
-    for(const x of myJobButtons)x.classList.toggle("sel",x===this);
-    $("myJobOut").textContent="🗣️ Sag jetzt den ganzen Satz selbst: „Ich bin …“";
-    $("myJobOut").className="fb";
-    $("myJobRecall").hidden=false;
-  };
-}
-$("myJobModel").onclick=function(){
-  if(!myJobSentence)return;
-  $("myJobOut").textContent=myJobSentence;
-  $("myJobOut").className="fb g";
-  stop();
-  speak(myJobSentence);
-};
-
-/* Teil 3: ein/eine Maschine */
-const AWORDS=sh([["Arzt","ein"],["Ärztin","eine"],["Lehrer","ein"],["Lehrerin","eine"],["Ingenieur","ein"],["Ingenieurin","eine"],["Student","ein"],["Studentin","eine"]]);
-let ai=0,acorrect=0;
-function aShow(){if(ai>=AWORDS.length)return aFinish();$("aWord").textContent=AWORDS[ai][0];$("aFb").textContent="";$("aCount").textContent=`Wort ${ai+1} / 8`;$$("[data-a]").forEach(b=>b.disabled=false)}
-$$("[data-a]").forEach(b=>b.onclick=async()=>{
-  const w=AWORDS[ai],fb=$("aFb");$$("[data-a]").forEach(x=>x.disabled=true);
-  const li=document.createElement("li");
-  if(b.dataset.a===w[1]){acorrect++;li.className="g";li.textContent=`${w[1]} ${w[0]} ✓`;fb.textContent="Richtig!";fb.className="fb g";$("bar3").style.width=(ai+1)/8*100+"%";
-    stop();await speak(`Das ist ${w[1]} ${w[0]}.`);$("aLog").appendChild(li);ai++;await W(400);aShow();}
-  else{fb.textContent=`Nicht ganz. ${w[0]}: „${w[1]}“. Versuch dasselbe Wort noch einmal.`;fb.className="fb b";stop();await speak(`Nicht ganz. ${w[1]} ${w[0]}.`);await W(250);$("[data-a]").forEach(x=>x.disabled=false);}
-});
-function aFinish(){$(".word")||0;$("aWord").textContent="🎉";$("aFb").textContent="🎉 Sehr gut! Alle 8 Wörter richtig.";$("aFb").className="fb g";$("[data-a]").forEach(x=>x.disabled=true);stamp("artikel");speak("Sehr gut! Du kennst ein und eine.")}
-$("aReset").onclick=()=>{ai=0;acorrect=0;$("aLog").innerHTML="";$("bar3").style.width="0";AWORDS.sort(()=>Math.random()-.5);aShow()};
-aShow();
-
-/* Teil 4: arbeiten Tabelle */
-const ARB=[["ich","arbeite","Ich arbeite."],["du","arbeitest","Du arbeitest."],["Sie / er / sie / es","arbeitet","Sie arbeitet."],["wir","arbeiten","Wir arbeiten."],["ihr","arbeitet","Ihr arbeitet."],["sie / Sie","arbeiten","Sie arbeiten."]];
-let selV=null,sd4=0;
-$("arbRows").innerHTML=ARB.map((r,i)=>`<tr><td><strong>${r[0]}</strong></td><td><button class="slot" data-i="${i}">?</button></td><td class="ex" id="ex4${i}"></td></tr>`).join("");
-$("vbank").innerHTML=sh(ARB.map(r=>r[1])).map((v,idx)=>`<button class="vchip" data-v="${v}" data-idx="${idx}">${v}</button>`).join("");
-$$(".vchip").forEach(c=>c.onclick=()=>{$$(".vchip").forEach(x=>x.classList.remove("sel"));selV=c;c.classList.add("sel");$("fb4").textContent="Jetzt das passende Feld anklicken.";$("fb4").className="fb"});
-$$(".slot").forEach(s=>s.onclick=async()=>{
-  const i=+s.dataset.i,fb=$("fb4");if(s.classList.contains("solved"))return speak(ARB[i][2]);
-  if(!selV){fb.textContent="Wähle zuerst ein gelbes Wort.";fb.className="fb b";return}
-  if(selV.dataset.v!==ARB[i][1]){s.classList.add("shake");fb.textContent=`Nicht ganz. „${ARB[i][0]}“ passt nicht zu „${selV.dataset.v}“.`;fb.className="fb b";setTimeout(()=>s.classList.remove("shake"),300);return}
-  s.textContent=selV.dataset.v;s.classList.add("solved");selV.disabled=true;selV.classList.remove("sel");selV=null;
-  $("ex4"+i).textContent=ARB[i][2];sd4++;$("bar4").style.width=sd4/6*100+"%";fb.textContent="Richtig!";fb.className="fb g";
-  stop();await speak(ARB[i][2]);
-  if(sd4===6){fb.textContent="🎉 Sehr gut! Die Tabelle ist komplett.";stamp("arbeiten");speak("Sehr gut! Die Tabelle ist komplett.")}
-});
-
-/* Teil 4: weitere Verben */
-const VS=[["Ich ___ in Frankfurt.","wohne","Ich wohne in Frankfurt.",["wohne","lerne","arbeite"]],["Ich ___ Deutsch.","lerne","Ich lerne Deutsch.",["lerne","wohne","studiere"]],["Ich ___ im Büro.","arbeite","Ich arbeite im Büro.",["arbeite","studiere","wohne"]]];
-$("verbs").innerHTML=VS.map((v,i)=>`<div class="sq-row"><span class="sq-q">${v[0].replace("___","<strong>___</strong>")}</span><div class="opts" style="margin:0" data-i="${i}">${sh(v[3]).map(o=>`<button class="btn" data-o="${esc(o)}">${o}</button>`).join("")}</div></div>`).join("");
-$$('[data-i] .btn, #verbs [data-o]').length; // noop
-$$("#verbs .opts").forEach(box=>{
-  const i=+box.dataset.i,v=VS[i];
-  box.querySelectorAll(".btn").forEach(b=>b.onclick=async()=>{
-    const fb=$("fb4b");box.querySelectorAll(".btn").forEach(x=>x.disabled=true);
-    if(b.dataset.o===v[1]){b.classList.add("ok");fb.textContent="Richtig! "+v[2];fb.className="fb g";stop();await speak(v[2]);}
-    else{b.classList.add("no");fb.textContent="Nicht ganz. Richtig ist: "+v[2];fb.className="fb b";stop();await speak(v[2]);}
+const myJobBox=document.getElementById("myJob");
+myJobBox.innerHTML=MYJOBS.map(j=>`<button class="btn" type="button" data-own-job="${esc(j[0])}">${esc(j[0])}</button>`).join("");
+myJobBox.querySelectorAll("[data-own-job]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const item=MYJOBS.find(j=>j[0]===btn.dataset.ownJob);
+    myJobBox.querySelectorAll("[data-own-job]").forEach(x=>x.classList.toggle("sel",x===btn));
+    myJobSentence=item[1];
+    document.getElementById("myJobOut").textContent="🗣️ Sag den ganzen Satz jetzt selbst: „Ich bin …“";
+    document.getElementById("myJobOut").className="fb";
+    document.getElementById("myJobRecall").hidden=false;
   });
 });
+document.getElementById("myJobModel").addEventListener("click",()=>{
+  if(!myJobSentence)return;
+  document.getElementById("myJobOut").textContent=myJobSentence;
+  document.getElementById("myJobOut").className="fb g";
+  stop(); speak(myJobSentence);
+});
 
-/* Dialog */
-const MYJOB_LIST=["Lehrer","Lehrerin","Arzt","Ärztin","Ingenieur","Ingenieurin","Student","Studentin","Verkäufer","Verkäuferin"];
-$("uJob").innerHTML=MYJOB_LIST.map(j=>`<option>${j}</option>`).join("");
-let mode="informell";
-function dlgData(){
-  const name=$("uName").value.trim()||"…",job=$("uJob").value||"Student",place=$("uPlace").value.trim()||"Frankfurt";
-  if(mode==="informell")return[
-    ["A","Hallo!"],["B","Hallo!"],
-    ["A","Was bist du von Beruf?"],["B",`Ich bin ${job}. Und du?`],
-    ["A",`Ich bin ${job}.`],
-    ["A","Wo arbeitest du?"],["B",`Ich arbeite in ${place}.`]
-  ];
-  return[
-    ["A","Guten Tag."],["B","Guten Tag."],
-    ["A","Was sind Sie von Beruf?"],["B",`Ich bin ${job}. Und Sie?`],
-    ["A",`Ich bin ${job}.`],
-    ["A","Wo arbeiten Sie?"],["B",`Ich arbeite in ${place}.`]
-  ];
+/* 2: ein / eine */
+const ARTICLE_WORDS=[["Arzt","ein"],["Ärztin","eine"],["Lehrer","ein"],["Lehrerin","eine"],["Ingenieur","ein"],["Ingenieurin","eine"],["Student","ein"],["Studentin","eine"]];
+let articleOrder=[],articleIndex=0;
+function resetArticle(){
+  articleOrder=sh(ARTICLE_WORDS); articleIndex=0;
+  document.getElementById("bar3").style.width="0%";
+  showArticle();
 }
-function drawDlg(){$("dlg").innerHTML="";dlgData().forEach(([w,t])=>{const d=bub($("dlg"),w,t,w==="A"?"ba":"bb");d.style.cursor="pointer";d.onclick=async()=>{stop();d.classList.add("speaking");await speak(t);d.classList.remove("speaking")}})}
-$("uName").oninput=drawDlg;$("uJob").onchange=drawDlg;$("uPlace").oninput=drawDlg;
-$("tabI").onclick=async()=>{mode="informell";$("tabI").classList.add("act");$("tabF").classList.remove("act");$("tabI").setAttribute("aria-selected","true");$("tabF").setAttribute("aria-selected","false");drawDlg();await playDlg()};
-$("tabF").onclick=async()=>{mode="formell";$("tabF").classList.add("act");$("tabI").classList.remove("act");$("tabF").setAttribute("aria-selected","true");$("tabI").setAttribute("aria-selected","false");drawDlg();await playDlg()};
-async function playDlg(){stop();const v=tok;for(const d of $$("#dlg .bubble")){if(v!==tok)break;d.classList.add("speaking");await speak(d.textContent.replace(/^[AB]/,""));d.classList.remove("speaking")}if(v===tok)stamp("dialog")}
-drawDlg();
+function showArticle(){
+  const fb=document.getElementById("aFb");
+  if(articleIndex>=articleOrder.length){
+    document.getElementById("aWord").textContent="🎉";
+    document.getElementById("aCount").textContent="8 / 8";
+    fb.textContent="Sehr gut! Alle 8 Antworten sind richtig.";
+    fb.className="fb g"; stamp("artikel"); return;
+  }
+  document.getElementById("aWord").textContent=articleOrder[articleIndex][0];
+  document.getElementById("aCount").textContent=`Wort ${articleIndex+1} / 8`;
+  fb.textContent="Wähle ein oder eine."; fb.className="fb";
+}
+async function answerArticle(answer){
+  if(articleIndex>=articleOrder.length)return;
+  const [word,right]=articleOrder[articleIndex],fb=document.getElementById("aFb");
+  if(answer!==right){
+    fb.textContent=`Noch nicht. ${word}: „${right}“. Versuch es noch einmal.`;
+    fb.className="fb b"; stop(); await speak(`${right} ${word}`); return;
+  }
+  fb.textContent=`Richtig: Das ist ${right} ${word}.`; fb.className="fb g";
+  stop(); await speak(`Das ist ${right} ${word}.`);
+  articleIndex++; document.getElementById("bar3").style.width=(articleIndex/8*100)+"%";
+  setTimeout(showArticle,350);
+}
+document.getElementById("articleEin").addEventListener("click",()=>answerArticle("ein"));
+document.getElementById("articleEine").addEventListener("click",()=>answerArticle("eine"));
+document.getElementById("aReset").addEventListener("click",resetArticle);
+resetArticle();
 
-/* Sprechen */
-const SQ=["Was sind Sie von Beruf?","Wo arbeiten Sie?","Lernen Sie Deutsch?"];
-let spoken=new Set();
-$("sq").innerHTML=SQ.map((q,i)=>`<div class="sq-row"><button class="btn" data-say="${esc(q)}">🔊 ${esc(q)}</button><span class="sq-q">${esc(q)}</span><button class="btn ok" data-done="${i}">✓ Gesagt</button></div>`).join("");
-$$("[data-done]").forEach(b=>b.onclick=()=>{spoken.add(+b.dataset.done);b.disabled=true;b.textContent="✓ Erledigt";$("dFb").textContent=`Gesprochen: ${spoken.size} / 3`;$("dFb").className="fb g";
-  if(spoken.size===3){$("dFb").textContent="🎉 Sehr gut! Alle Fragen gesprochen.";stamp("dialog")}});
+/* 3: arbeiten */
+const WORK=[["ich","arbeite","Ich arbeite."],["du","arbeitest","Du arbeitest."],["er / sie / es","arbeitet","Sie arbeitet."],["wir","arbeiten","Wir arbeiten."],["ihr","arbeitet","Ihr arbeitet."],["sie / Sie","arbeiten","Sie arbeiten."]];
+let workOrder=[],workIndex=0;
+function resetWork(){workOrder=sh(WORK);workIndex=0;document.getElementById("bar4").style.width="0%";showWork();}
+function showWork(){
+  const fb=document.getElementById("fb4"),box=document.getElementById("workChoices");
+  if(workIndex>=workOrder.length){
+    document.getElementById("workPronoun").textContent="🎉";box.innerHTML="";
+    document.getElementById("workCount").textContent="6 / 6";fb.textContent="Sehr gut! Du kannst arbeiten konjugieren.";fb.className="fb g";stamp("arbeiten");return;
+  }
+  const [pron,right]=workOrder[workIndex];
+  document.getElementById("workPronoun").textContent=pron;
+  document.getElementById("workCount").textContent=`Form ${workIndex+1} / 6`;
+  fb.textContent="Wähle die richtige Verbform.";fb.className="fb";
+  const opts=sh([...new Set([right,"arbeite","arbeitest","arbeitet","arbeiten"]) ]).slice(0,4);
+  if(!opts.includes(right))opts[0]=right;
+  box.innerHTML=sh(opts).map(v=>`<button class="btn" type="button" data-work="${v}">${v}</button>`).join("");
+  box.querySelectorAll("[data-work]").forEach(btn=>btn.addEventListener("click",()=>answerWork(btn.dataset.work)));
+}
+async function answerWork(answer){
+  const [pron,right,sentence]=workOrder[workIndex],fb=document.getElementById("fb4");
+  if(answer!==right){fb.textContent=`Noch nicht. „${pron}“ braucht „${right}“.`;fb.className="fb b";return;}
+  fb.textContent=`Richtig: ${sentence}`;fb.className="fb g";stop();await speak(sentence);
+  workIndex++;document.getElementById("bar4").style.width=(workIndex/6*100)+"%";setTimeout(showWork,350);
+}
+document.getElementById("workReset").addEventListener("click",resetWork);
+resetWork();
+
+const TRANSFER=[
+ ["Ich ___ Deutsch.","lerne","Ich lerne Deutsch.",["lerne","wohne","studiere"]],
+ ["Ich ___ in Frankfurt.","wohne","Ich wohne in Frankfurt.",["wohne","lerne","arbeite"]],
+ ["Ich ___ in Heidelberg.","studiere","Ich studiere in Heidelberg.",["studiere","wohne","lerne"]]
+];
+const verbsBox=document.getElementById("verbs");
+verbsBox.innerHTML=TRANSFER.map((v,i)=>`<div class="sq-row"><span class="sq-q">${v[0]}</span><div class="opts" data-transfer="${i}">${sh(v[3]).map(o=>`<button class="btn" type="button" data-answer="${o}">${o}</button>`).join("")}</div></div>`).join("");
+verbsBox.querySelectorAll("[data-transfer]").forEach(row=>{
+  const item=TRANSFER[Number(row.dataset.transfer)];
+  row.querySelectorAll("[data-answer]").forEach(btn=>btn.addEventListener("click",()=>{
+    const fb=document.getElementById("fb4b");
+    if(btn.dataset.answer===item[1]){fb.textContent="Richtig! "+item[2];fb.className="fb g";stop();speak(item[2]);}
+    else{fb.textContent="Noch nicht. Versuch es noch einmal.";fb.className="fb b";}
+  }));
+});
+
+/* 4: kurze Vorstellung */
+const INTRO_JOBS=["Lehrer","Lehrerin","Arzt","Ärztin","Ingenieur","Ingenieurin","Student","Studentin","Verkäufer","Verkäuferin"];
+document.getElementById("uJob").innerHTML='<option value="">Beruf wählen</option>'+INTRO_JOBS.map(j=>`<option value="${j}">${j}</option>`).join("");
+let introText="";
+document.getElementById("introBuild").addEventListener("click",()=>{
+  const name=document.getElementById("uName").value.trim();
+  const job=document.getElementById("uJob").value;
+  const place=document.getElementById("uPlace").value.trim();
+  const fb=document.getElementById("dFb");
+  if(!name||!job||!place){fb.textContent="Bitte Name, Beruf und Arbeitsort ausfüllen.";fb.className="fb b";return;}
+  introText=`Hallo! Ich heiße ${name}. Ich bin ${job}. Ich arbeite in ${place}.`;
+  document.getElementById("dlg").innerHTML=`<div class="bubble ba"><span class="who">Du</span>${esc(introText)}</div>`;
+  document.getElementById("introActions").hidden=false;
+  fb.textContent="Lies deine Vorstellung laut. Dann hör sie an und sag sie selbst.";fb.className="fb";
+});
+document.getElementById("introListen").addEventListener("click",()=>{if(introText){stop();speak(introText);}});
+document.getElementById("introDone").addEventListener("click",()=>{
+  if(!introText)return;
+  document.getElementById("dFb").textContent="🎉 Sehr gut! Deine Vorstellung ist geschafft.";
+  document.getElementById("dFb").className="fb g";stamp("dialog");
+});
 
 addEventListener("beforeunload",stop);
 load();
