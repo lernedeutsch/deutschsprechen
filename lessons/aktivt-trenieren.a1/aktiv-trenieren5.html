@@ -109,6 +109,18 @@ table{width:100%;border-collapse:collapse;margin-bottom:12px}td,th{padding:8px 1
 
 /* Personalpronomen: zdanie do uzupełnienia jako główny punkt ćwiczenia */
 #pSentence{display:block;width:fit-content;max-width:100%;margin:16px 0 18px;padding:14px 20px;background:#fff;border:2px solid var(--gold);border-radius:14px;font-size:1.45rem;line-height:1.35;font-weight:800;color:var(--ink);box-shadow:0 5px 12px #00000012}
+
+/* Teil 4: aktives du/Sie-Fragentraining */
+.question-builder{margin-top:18px;padding:22px;background:#fffaf0;border:1px solid var(--line);border-radius:18px;text-align:center}
+.question-builder .scene-icon{font-size:2.6rem;line-height:1;margin-bottom:8px}
+.question-builder #qWho{font-size:1.35rem;font-weight:800}
+.question-builder #qHint{margin:5px 0 16px}
+.question-prompt{display:block;margin:12px 0;font-size:1.15rem}
+.question-options{justify-content:center}
+.question-options .btn{min-width:230px}
+#qSpeakRow{justify-content:center;margin-top:16px}
+#qCount{margin:16px 0 8px}
+@media(max-width:650px){.question-options .btn{width:100%;min-width:0}}
 </style>
 <link rel="stylesheet" href="../../css/click-hints.css">
 <link rel="stylesheet" href="../../css/translation-globe.css">
@@ -221,13 +233,18 @@ table{width:100%;border-collapse:collapse;margin-bottom:12px}td,th{padding:8px 1
 <div class="row"><button class="btn solid" id="d2Play">▶ Dialog 2 anhören</button></div>
 </div>
 <div class="card">
-<h3 style="margin:0 0 8px;font:700 1.25rem 'Fraunces',serif">🗣️ Fragen laut sprechen</h3>
-<div class="action-help tr" data-en="Click 🔊, listen, say the question aloud, then click “I said it”. Do all 6." data-pl="Kliknij 🔊, posłuchaj, powiedz pytanie na głos, potem kliknij „Powiedziałem/am”. Zrób wszystkie 6." data-it="Clicca 🔊, ascolta, di' la domanda ad alta voce, poi clicca «Detto». Fai tutte e 6."><span class="step">🔊 hören</span><span class="arr">→</span><span class="step">🗣️ laut sprechen</span><span class="arr">→</span><span class="step">✓ abhaken</span></div>
-<p class="sq-label sie">Formell (Sie)</p>
-<div id="sqF"></div>
-<p class="sq-label du">Informell (du)</p>
-<div id="sqD"></div>
-<p class="fb" id="dFb"></p>
+<h3 style="margin:0 0 8px;font:700 1.25rem 'Fraunces',serif">🗣️ Du oder Sie? Bilde die Frage.</h3>
+<div class="action-help tr" data-en="Look at the person → choose the correct question → listen → say it aloud." data-pl="Spójrz na osobę → wybierz właściwe pytanie → posłuchaj → powiedz je na głos." data-it="Guarda la persona → scegli la domanda corretta → ascolta → dilla ad alta voce."><span class="step">👀 Person ansehen</span><span class="arr">→</span><span class="step">👆 Frage wählen</span><span class="arr">→</span><span class="step">🔊 hören</span><span class="arr">→</span><span class="step">🗣️ laut sprechen</span></div>
+<div class="question-builder">
+<div class="scene-icon" id="qIcon">👩‍💼</div>
+<div class="word" id="qWho">Frau Müller</div>
+<p class="calc" id="qHint">formell · Sie</p>
+<strong class="question-prompt">Welche Frage passt?</strong>
+<div class="opts question-options" id="qOpts"></div>
+<p class="fb" id="dFb">Wähle die passende Frage.</p>
+<div class="row" id="qSpeakRow" hidden><button class="btn solid" id="qHear">🔊 Frage hören</button><button class="btn ok" id="qSaid">✓ Laut gesagt</button></div>
+<p class="calc" id="qCount">Frage 1 / 6</p><div class="bar"><i id="qBar"></i></div>
+</div>
 </div>
 </main>
 
@@ -414,14 +431,31 @@ $("d2Play").onclick=()=>playDialog($("dlg2"),()=>d2done=true).then(checkDialoge)
 let d1done=false,d2done=false;
 function checkDialoge(){if(d1done&&d2done&&spoken.size===6)stamp("dialoge")}
 
-/* Teil 4: Sprechen */
-const SQF=["Wie heißen Sie?","Wo wohnen Sie?","Was sind Sie von Beruf?"];
-const SQD=["Wie heißt du?","Wo wohnst du?","Was bist du von Beruf?"];
-let spoken=new Set();
-function buildSQ(target,list,offset){target.innerHTML=list.map((q,i)=>`<div class="sq-row"><button class="btn" data-say="${esc(q)}">🔊 ${esc(q)}</button><span class="sq-q">${esc(q)}</span><button class="btn ok" data-done="${offset+i}">✓ Gesagt</button></div>`).join("")}
-buildSQ($("sqF"),SQF,0);buildSQ($("sqD"),SQD,3);
-$$("[data-done]").forEach(b=>b.onclick=()=>{spoken.add(+b.dataset.done);b.disabled=true;b.textContent="✓ Erledigt";$("dFb").textContent=`Gesprochen: ${spoken.size} / 6`;$("dFb").className="fb g";
-  if(spoken.size===6){$("dFb").textContent="🎉 Sehr gut! Alle Fragen gesprochen.";checkDialoge()}});
+/* Teil 4: Fragen aktiv bilden */
+const QUESTIONS=[
+ ["👩‍💼","Frau Müller","formell · Sie","Wie heißen Sie?",["Wie heißen Sie?","Wie heißt du?"]],
+ ["👧","deine Freundin Lena","informell · du","Wo wohnst du?",["Wo wohnst du?","Wo wohnen Sie?"]],
+ ["👨","Herr Becker","formell · Sie","Was sind Sie von Beruf?",["Was sind Sie von Beruf?","Was bist du von Beruf?"]],
+ ["👦","dein Freund Paul","informell · du","Wie heißt du?",["Wie heißt du?","Wie heißen Sie?"]],
+ ["👩‍⚕️","Frau Dr. Schmidt","formell · Sie","Wo wohnen Sie?",["Wo wohnen Sie?","Wo wohnst du?"]],
+ ["👧","deine Freundin Anna","informell · du","Was bist du von Beruf?",["Was bist du von Beruf?","Was sind Sie von Beruf?"]]
+];
+let spoken=new Set(),qi=0,qOrder=[];
+function resetQuestions(){qi=0;qOrder=sh([...QUESTIONS.keys()]);spoken.clear();$("qBar").style.width="0";showQuestion()}
+function showQuestion(){
+ if(qi>=qOrder.length){$("qIcon").textContent="🎉";$("qWho").textContent="Sehr gut!";$("qHint").textContent="6 / 6";$("qOpts").innerHTML="";$("qSpeakRow").hidden=true;$("dFb").textContent="Alle Fragen richtig gewählt und laut gesprochen.";$("dFb").className="fb g";$("qCount").textContent="Frage 6 / 6";checkDialoge();return}
+ const [icon,who,hint,right,opts]=QUESTIONS[qOrder[qi]];
+ $("qIcon").textContent=icon;$("qWho").textContent=who;$("qHint").textContent=hint;$("qCount").textContent=`Frage ${qi+1} / 6`;
+ $("qSpeakRow").hidden=true;$("dFb").textContent="Welche Frage passt?";$("dFb").className="fb";
+ $("qOpts").innerHTML=sh(opts).map(q=>`<button class="btn" data-q="${esc(q)}">${esc(q)}</button>`).join("");
+ $$("#qOpts .btn").forEach(b=>b.onclick=()=>{
+   if(b.dataset.q!==right){b.classList.add("no");$("dFb").textContent="Noch nicht. Achte auf du oder Sie.";$("dFb").className="fb b";setTimeout(()=>b.classList.remove("no"),300);return}
+   $$("#qOpts .btn").forEach(x=>x.disabled=true);b.classList.add("ok");$("dFb").textContent="Richtig! Hör jetzt die Frage und sprich sie laut.";$("dFb").className="fb g";$("qSpeakRow").hidden=false;
+ });
+}
+$("qHear").onclick=()=>{const right=QUESTIONS[qOrder[qi]][3];stop();speak(right)};
+$("qSaid").onclick=()=>{spoken.add(qOrder[qi]);qi++;$("qBar").style.width=qi/6*100+"%";showQuestion()};
+resetQuestions();
 
 addEventListener("beforeunload",stop);
 load();
