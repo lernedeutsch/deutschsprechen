@@ -224,6 +224,16 @@ a.lesson-flow-step:hover,a.lesson-flow-step:focus-visible{border-color:var(--gol
 
 /* Slightly larger pencil beside the name field */
 .intro-setup-card .name-pencil{font-size:1.5em}
+
+/* Translation: blue rotating globe, direct translation on click */
+.translation-toggle{color:#fff;background:#1769e8;border-color:#0f57c7;box-shadow:0 4px 10px rgba(23,105,232,.22)}
+.translation-toggle:hover,.translation-toggle:focus-visible{color:#fff;background:#0f5fd8;border-color:#0b4fae}
+.translation-globe{display:inline-block;filter:none;animation:translationGlobeSpin 3s linear infinite;transform-origin:50% 50%}
+@keyframes translationGlobeSpin{to{transform:rotate(360deg)}}
+.translation-languages{display:none!important}
+.translation-panel{width:280px}
+.translation-text{margin:0}
+@media(prefers-reduced-motion:reduce){.translation-globe{animation:none}}
 </style>      
 
 <style>
@@ -595,15 +605,14 @@ function addInlineTranslations(){
     const toggle=control.querySelector(".translation-toggle");
     const out=control.querySelector(".translation-text");
     const langs=[...control.querySelectorAll(".translation-language")];
-    toggle.onclick=e=>{e.stopPropagation();control.classList.toggle("open")};
-    langs.forEach(btn=>btn.onclick=e=>{
+    const browserLang=(navigator.language||"").toLowerCase();
+    const preferred=browserLang.startsWith("pl")?"pl":browserLang.startsWith("it")?"it":"en";
+    toggle.onclick=e=>{
       e.stopPropagation();
-      const lang=btn.dataset.lang;
-      langs.forEach(x=>x.classList.toggle("active",x===btn));
-      out.textContent=data[lang];
-      out.classList.add("show");
-      control.classList.add("open");
-    });
+      const opening=!control.classList.contains("open");
+      control.classList.toggle("open",opening);
+      if(opening){out.textContent=data[preferred];out.classList.add("show")}
+    };
   });
 }
 
@@ -620,17 +629,12 @@ function addHelpTranslations(){
     control.innerHTML=`<button type="button" class="translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung"><span class="globe translation-globe">🌐</span><span>A/文</span></button><div class="translation-panel"><div class="translation-languages"><button type="button" class="translation-language" data-lang="en">English</button><button type="button" class="translation-language" data-lang="pl">Polski</button><button type="button" class="translation-language" data-lang="it">Italiano</button></div><p class="translation-text" aria-live="polite"></p></div>`;
     box.appendChild(control);
     const toggle=control.querySelector(".translation-toggle"),out=control.querySelector(".translation-text"),langs=[...control.querySelectorAll(".translation-language")];
-    toggle.onclick=e=>{e.stopPropagation();control.classList.toggle("open")};
-    langs.forEach(btn=>btn.onclick=e=>{
+    toggle.onclick=e=>{
       e.stopPropagation();
-      const lang=btn.dataset.lang;
-      langs.forEach(x=>x.classList.toggle("active",x===btn));
-      out.textContent=data[lang];
-      out.classList.add("show");
-      control.classList.add("open");
-    });
-    const pref=langs.find(x=>x.dataset.lang===preferred);
-    if(pref)pref.classList.add("preferred");
+      const opening=!control.classList.contains("open");
+      control.classList.toggle("open",opening);
+      if(opening){out.textContent=data[preferred];out.classList.add("show")}
+    };
   });
   document.addEventListener("click",e=>{
     if(!e.target.closest(".translation-control")&&!e.target.closest(".translation-inline-control")){
