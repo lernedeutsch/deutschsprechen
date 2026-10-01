@@ -1121,6 +1121,16 @@ body{padding-bottom:0}
 .lesson9-course-link{display:block;padding:13px 14px;background:rgba(255,255,255,.94);border:1px solid #d9e4f0;border-radius:14px;text-decoration:none;color:#101820}
 #lektion9{padding-top:0;margin-top:0}
 </style>
+<style>
+#zusammenfassung{text-align:center}
+#zusammenfassung .part-head{display:none}
+#zusammenfassung .ich-kann-button{display:flex;align-items:center;justify-content:center;gap:9px;min-width:235px;min-height:70px;margin:0 auto 20px;padding:11px 22px;color:#fff;background:linear-gradient(180deg,#f0bd3a,#d79a00);border:4px double #ffe59a;border-radius:28px;cursor:pointer;font:800 1.05rem "Nunito Sans",sans-serif;box-shadow:0 10px 20px rgba(0,0,0,.18)}
+#zusammenfassung .ich-kann-button::after{content:"▲";font-size:.72em}
+#zusammenfassung .ich-kann-button.open::after{content:"▼"}
+#zusammenfassung .ich-kann-paper{display:none;text-align:left;padding:38px 28px 32px;background:repeating-linear-gradient(180deg,#fff9e9 0,#fff9e9 39px,#eadfbe 40px);border:1px solid #e7cf8b;border-radius:0 22px 22px 0;box-shadow:0 10px 22px rgba(10,18,32,.08)}
+#zusammenfassung .ich-kann-paper.show{display:block}
+#zusammenfassung .ich-kann-paper .summary-grid{background:transparent}
+</style>
 </head><body id="seitenanfang">
 <div class="lesson9-course-shell">
 <a href="index.html" class="modul2-back-to-a1" aria-label="Zurück zur A1-Übersicht" title="Zurück zur A1-Übersicht">←</a>
@@ -1428,11 +1438,8 @@ body{padding-bottom:0}
 </section>
 
 <section class="part" id="zusammenfassung">
-
-<div class="part-head"><span class="part-num">Merken</span><h2 class="part-title">Abschluss — Was haben wir gelernt?</h2></div>
-
-<div class="card">
-
+<button type="button" class="ich-kann-button" id="ich-kann-button-9" aria-expanded="false" aria-controls="ich-kann-paper-9">Ich kann</button>
+<div class="ich-kann-paper" id="ich-kann-paper-9" aria-hidden="true">
 <div class="summary-grid">
 
 <div class="row" style="padding:16px 18px;"><span class="key" style="font-size:1.1rem;">✅ Geschäfte</span><span style="font-size:1.05rem;">Supermarkt, Bäckerei, Metzgerei, Markt</span></div>
@@ -1444,11 +1451,7 @@ body{padding-bottom:0}
 <div class="row" style="padding:16px 18px;"><span class="key" style="font-size:1.1rem;">✅ Dialoge im Geschäft</span><span style="font-size:1.05rem;">Ich möchte ein Brot · Wie viel kostet das?</span></div>
 
 </div>
-
-<p style="text-align:center;margin:24px 0;font-size:1.3rem;color:#111820;">Sehr gut! Bis zum nächsten Mal!</p>
-
 </div>
-
 </section>
 
 </div>
@@ -1459,4 +1462,16 @@ body{padding-bottom:0}
 
 <a href="#seitenanfang" class="back-to-top">↑ Zurück nach oben</a>
 
+<script>
+(function(){
+ const b=document.getElementById("ich-kann-button-9"),p=document.getElementById("ich-kann-paper-9");
+ if(!b||!p)return;
+ b.addEventListener("click",function(){
+  const open=p.classList.toggle("show");
+  b.classList.toggle("open",open);
+  b.setAttribute("aria-expanded",String(open));
+  p.setAttribute("aria-hidden",String(!open));
+ });
+})();
+</script>
 <script src="../../js/page-progress.js" defer></script>\n</body></html>
