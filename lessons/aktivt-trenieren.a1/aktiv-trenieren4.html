@@ -342,8 +342,26 @@ $("askBtn").onclick=async()=>{
 const MYJOBS=[["Lehrer","Ich bin Lehrer."],["Lehrerin","Ich bin Lehrerin."],["Arzt","Ich bin Arzt."],["Ärztin","Ich bin Ärztin."],["Ingenieur","Ich bin Ingenieur."],["Student","Ich bin Student."],["Studentin","Ich bin Studentin."]];
 $("myJob").innerHTML=MYJOBS.map(j=>`<button class="btn" data-j="${esc(j[0])}">${j[0]}</button>`).join("");
 let myJobSentence="";
-$("#myJob .btn").forEach(b=>b.onclick=()=>{const j=MYJOBS.find(x=>x[0]===b.dataset.j);if(!j)return;stop();myJobSentence=j[1];$("#myJob .btn").forEach(x=>x.classList.toggle("sel",x===b));$("myJobOut").textContent="🗣️ Sag jetzt den ganzen Satz selbst: „Ich bin …“";$("myJobOut").className="fb";$("myJobRecall").hidden=false;$("myJobModel").disabled=false});
-$("myJobModel").onclick=()=>{if(!myJobSentence)return;$("myJobOut").textContent=myJobSentence;$("myJobOut").className="fb g";stop();speak(myJobSentence)};
+document.querySelectorAll("#myJob .btn").forEach(b=>{
+  b.addEventListener("click",()=>{
+    const j=MYJOBS.find(x=>x[0]===b.dataset.j);
+    if(!j)return;
+    stop();
+    myJobSentence=j[1];
+    document.querySelectorAll("#myJob .btn").forEach(x=>x.classList.toggle("sel",x===b));
+    $("myJobOut").textContent="🗣️ Sag jetzt den ganzen Satz selbst: „Ich bin …“";
+    $("myJobOut").className="fb";
+    $("myJobRecall").hidden=false;
+    $("myJobModel").disabled=false;
+  });
+});
+$("myJobModel").addEventListener("click",()=>{
+  if(!myJobSentence)return;
+  $("myJobOut").textContent=myJobSentence;
+  $("myJobOut").className="fb g";
+  stop();
+  speak(myJobSentence);
+});
 
 /* Teil 3: ein/eine Maschine */
 const AWORDS=sh([["Arzt","ein"],["Ärztin","eine"],["Lehrer","ein"],["Lehrerin","eine"],["Ingenieur","ein"],["Ingenieurin","eine"],["Student","ein"],["Studentin","eine"]]);
