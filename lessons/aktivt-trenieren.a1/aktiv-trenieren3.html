@@ -135,11 +135,53 @@ draw();
 /* zusätzliche Übungen aus dem gelieferten Lektion-3-Code */
 const U=["null","eins","zwei","drei","vier","fünf","sechs","sieben","acht","neun","zehn","elf","zwölf","dreizehn","vierzehn","fünfzehn","sechzehn","siebzehn","achtzehn","neunzehn"],TN={2:"zwanzig",3:"dreißig",4:"vierzig",5:"fünfzig",6:"sechzig",7:"siebzig",8:"achtzig",9:"neunzig"};
 function nw(n){if(n<20)return U[n];if(n===100)return"hundert";const t=Math.floor(n/10),u=n%10;return u?(u===1?"ein":U[u])+"und"+TN[t]:TN[t]}
-const PEO=[["Lena","👧","informell"],["Herr Weber","👨‍💼","formell"],["Oma Erika","👵","informell"],["Frau Dr. Schmidt","👩‍⚕️","formell"]];let curAge=0,randAge=25,ageDone=0,ageLocked=false,ageTimer=null;
-$("#agePeople").innerHTML=PEO.map((p,i)=>`<div class="pbtn" data-i="${i}" aria-hidden="true"><span>${p[1]}</span>${p[0]}</div>`).join("");
-function presentAgePerson(i=curAge){curAge=i%PEO.length;randAge=20+Math.floor(Math.random()*65);ageLocked=false;document.querySelectorAll("[data-ageq]").forEach(b=>b.disabled=false);document.querySelectorAll("#agePeople .pbtn").forEach((x,j)=>x.classList.toggle("done",j===curAge));$("#ageChat").innerHTML=`<div class="xline">${PEO[curAge][2]==="formell"?"Guten Tag.":"Hallo!"}</div>`;$("#ageFb").textContent="Was fragst du? du oder Sie?";$("#ageFb").className="fb";}
+const PEO=[
+ {name:"Lena",icon:"👧",register:"informell",greeting:"Hallo!"},
+ {name:"Herr Weber",icon:"👨‍💼",register:"formell",greeting:"Guten Tag."},
+ {name:"Oma Erika",icon:"👵",register:"informell",greeting:"Hallo!"},
+ {name:"Frau Dr. Schmidt",icon:"👩‍⚕️",register:"formell",greeting:"Guten Tag."}
+];
+let curAge=0,randAge=25,ageDone=0,ageLocked=false,ageTimer=null;
+$("#agePeople").innerHTML=PEO.map((p,i)=>`<div class="pbtn" data-i="${i}" aria-hidden="true"><span>${p.icon}</span>${p.name}</div>`).join("");
+function presentAgePerson(i=curAge){
+ curAge=i;
+ if(curAge>=PEO.length)return;
+ const p=PEO[curAge];
+ randAge=20+Math.floor(Math.random()*65);
+ ageLocked=false;
+ document.querySelectorAll("[data-ageq]").forEach(b=>b.disabled=false);
+ document.querySelectorAll("#agePeople .pbtn").forEach((x,j)=>x.classList.toggle("done",j===curAge));
+ $("#ageChat").innerHTML=`<div class="xline">${p.greeting}</div>`;
+ $("#ageFb").textContent="Was fragst du? du oder Sie?";
+ $("#ageFb").className="fb";
+}
 presentAgePerson(0);
-document.querySelectorAll("[data-ageq]").forEach(b=>b.onclick=()=>{if(ageLocked)return;const p=PEO[curAge];if(b.dataset.ageq!==p[2]){$("#ageFb").textContent="Nicht ganz. Versuch es noch einmal.";$("#ageFb").className="fb bad";return}ageLocked=true;document.querySelectorAll("[data-ageq]").forEach(x=>x.disabled=true);const q=p[2]==="formell"?"Wie alt sind Sie?":"Wie alt bist du?";const a=`Ich bin ${randAge} Jahre alt.`;$("#ageChat").innerHTML+=`<div class="xline me">${q}</div><div class="xline">${a}</div>`;$("#ageFb").textContent="Richtig! Lies die Antwort.";$("#ageFb").className="fb ok";ageDone++;say(q+" "+a);if(ageDone>=PEO.length){stamp("alter");finishBox("#alter","Du kannst nach dem Alter fragen und antworten.")}else{clearTimeout(ageTimer);ageTimer=setTimeout(()=>presentAgePerson(curAge+1),3500)}});
+document.querySelectorAll("[data-ageq]").forEach(b=>b.onclick=()=>{
+ if(ageLocked)return;
+ const p=PEO[curAge];
+ const chosen=b.dataset.ageq;
+ if(chosen!==p.register){
+   $("#ageFb").textContent=p.register==="formell"?"Nicht ganz. Hier brauchst du „Sie“ – formell. Versuch es noch einmal.":"Nicht ganz. Hier brauchst du „du“ – informell. Versuch es noch einmal.";
+   $("#ageFb").className="fb bad";
+   return;
+ }
+ ageLocked=true;
+ document.querySelectorAll("[data-ageq]").forEach(x=>x.disabled=true);
+ const q=p.register==="formell"?"Wie alt sind Sie?":"Wie alt bist du?";
+ const a=`Ich bin ${randAge} Jahre alt.`;
+ $("#ageChat").innerHTML+=`<div class="xline me">${q}</div><div class="xline">${a}</div>`;
+ $("#ageFb").textContent="Richtig! Lies die Antwort.";
+ $("#ageFb").className="fb ok";
+ ageDone++;
+ say(q+" "+a);
+ if(curAge===PEO.length-1){
+   stamp("alter");
+   finishBox("#alter","Du kannst nach dem Alter fragen und antworten.");
+ }else{
+   clearTimeout(ageTimer);
+   ageTimer=setTimeout(()=>presentAgePerson(curAge+1),3500);
+ }
+});
 $("#myAgeBtn").onclick=()=>{const n=+$("#myAge").value;if(n<1||n>100)return $("#myAgeOut").textContent="Bitte eine Zahl von 1 bis 100.";$("#myAgeOut").textContent=`Ich bin ${n} Jahre alt.`;say(`Ich bin ${nw(n)} Jahre alt.`)};
 function showNum(n){$("#bigN").textContent=n;if(n<20||n%10===0)$("#numParts").innerHTML=`<span class="chip">${nw(n)}</span>`;else{const u=n%10,t=n-u;$("#numParts").innerHTML=`<span class="chip">${u===1?"ein":U[u]}</span><span class="chip">und</span><span class="chip">${TN[t/10]}</span>`}}
 $("#rng").oninput=e=>showNum(+e.target.value);$("#numSay").onclick=()=>say(nw(+$("#rng").value));$("#numRnd").onclick=()=>{const n=11+Math.floor(Math.random()*90);$("#rng").value=n;showNum(n);say(nw(n))};showNum(35);
