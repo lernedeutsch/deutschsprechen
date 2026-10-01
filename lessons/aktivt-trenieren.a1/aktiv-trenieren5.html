@@ -98,6 +98,11 @@ table{width:100%;border-collapse:collapse;margin-bottom:12px}td,th{padding:8px 1
 #t3 #learnChoices,#t3 #workChoices{justify-content:center;margin-top:0}
 #t3 #learnChoices .btn,#t3 #workChoices .btn{min-width:100px}
 @media(max-width:700px){#t3 .machine{grid-template-columns:1fr}#t3 #verbPronoun,#t3 #verbCount{grid-column:1}}
+
+/* Teil 3: równe przyciski w ćwiczeniu z lukami */
+#t3 #fillList .opts{display:grid;grid-template-columns:repeat(3,120px);justify-content:end;gap:14px}
+#t3 #fillList .opts .btn{width:120px;min-width:120px;margin:0;justify-content:center}
+@media(max-width:700px){#t3 #fillList .opts{grid-template-columns:repeat(3,minmax(0,1fr));justify-content:stretch}#t3 #fillList .opts .btn{width:100%;min-width:0}}
 </style>
 <link rel="stylesheet" href="../../css/click-hints.css">
 <link rel="stylesheet" href="../../css/translation-globe.css">
