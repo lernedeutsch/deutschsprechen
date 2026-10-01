@@ -251,7 +251,6 @@ function upd(){
   $$("[data-s]").forEach(x=>x.classList.toggle("on",!!P[x.dataset.s]));
   $("spc").textContent=VIS.filter(k=>P[k]).length+" / 5 Stempel gesammelt";
   ["berufe","frage","artikel","arbeiten","dialog"].forEach(k=>$("d-"+k).classList.toggle("show",!!P[k]));
-  const L=[["berufe","Berufe","Arzt, Ärztin, Lehrer, Lehrerin, Ingenieur, Student …"],["frage","Beruf fragen","Was sind Sie von Beruf?"],["artikel","ein / eine","ein Lehrer · eine Lehrerin"],["arbeiten","arbeiten","arbeite · arbeitest · arbeitet · arbeiten · arbeitet · arbeiten"],["dialog","Dialog","Lesen und sprechen"]];
 
 }
 function load(){try{Object.assign(P,JSON.parse(localStorage.getItem(KEY))||{})}catch{}P.lesson=+!!(P.berufe&&P.frage&&P.artikel&&P.arbeiten&&P.dialog);upd()}
