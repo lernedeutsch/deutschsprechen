@@ -101,6 +101,33 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offse
   .nums{grid-template-columns:repeat(3,minmax(0,1fr));}
   .num-b{width:100%;min-width:0;max-width:100%;}
 }
+
+/* Aktiv 2: ruhigere visuelle Hierarchie ohne Änderung der Übungen */
+.origin-reminder{margin:0 0 18px;padding:14px 18px;background:#eef7f2;border:1px solid #9fc8b3;border-left:4px solid #5f9b7d;border-radius:14px;box-shadow:none}
+.origin-reminder .origin-title{margin:0 0 7px}
+.origin-reminder .origin-examples{margin:0;line-height:1.65}
+.origin-reminder .origin-merke{margin:7px 0 0;color:#7a3d2f;font-size:.94rem}
+.continuity-card{margin:0 0 16px;padding:14px 16px;background:#eef7f2;border:1px solid #9fc8b3;border-left:4px solid #5f9b7d;border-radius:14px;box-shadow:none}
+.continuity-card>strong{display:block;margin-bottom:5px}
+.continuity-card>span{display:block}
+.continuity-example{display:flex;align-items:center;gap:10px;margin-top:9px;padding:0;background:transparent;border:0;border-radius:0}
+.continuity-example b:last-child{color:#7a3d2f}
+.continuity-arrow{flex:0 0 auto;color:#8c6a28;font-weight:900}
+.instruction-panel{padding:11px 14px;background:#fffaf0;border:1px solid #e3d2a8;border-radius:14px;box-shadow:none}
+.instruction-panel .help{gap:7px;margin-bottom:7px}
+.instruction-panel .help span{padding:6px 10px}
+.instruction-panel .instruction-row{justify-content:space-between}
+.instruction-panel .instruction-row>p{flex:1 1 520px}
+.instruction-panel .tr-box{margin-left:auto}
+.nationality-lab{padding:16px;background:#fbf3df;border:1px solid #dfcfaa;box-shadow:none}
+.country-input-card,.examples-intro-card{background:#fffaf0;border:1px solid #e3d2a8}
+.nationality-test-box{padding:16px 18px;background:#fffaf0;border:1px solid #e3d2a8;box-shadow:none}
+@media(max-width:760px){
+ .continuity-example{align-items:flex-start;flex-direction:column;gap:5px}
+ .continuity-arrow{transform:rotate(0deg)}
+ .instruction-panel .instruction-row{align-items:flex-start}
+ .instruction-panel .tr-box{margin-left:0}
+}
 </style>
 <link rel="stylesheet" href="../../css/click-hints.css">
 <link rel="stylesheet" href="../../css/translation-globe.css">
@@ -133,13 +160,13 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offse
 
 <main class="page" id="t1">
 <div class="head"><span class="num">Teil 1</span><h2>Woher kommen Sie?</h2><span class="done" id="d-herkunft">✅ geschafft</span></div>
-<div class="note origin-reminder" style="margin:0 0 18px"><p class="origin-title"><b>Erinnere dich:</b></p><div class="origin-columns"><div><p>• Ich komme aus Polen.</p><p>• Ich komme aus der Schweiz.</p><p style="color:var(--red)">(Achtung: „die Schweiz“ → „aus der Schweiz“!)</p></div><div><p>• Ich komme aus Deutschland.</p><p>• Ich komme aus den USA.</p><p style="color:var(--red)">(Achtung: „die USA“ → „aus den USA“!)</p></div></div></div>
+<div class="note origin-reminder"><p class="origin-title"><b>💡 Erinnere dich</b></p><p class="origin-examples">Ich komme aus Polen. · Ich komme aus Deutschland.<br>Ich komme aus <b>der Schweiz</b>. · Ich komme aus <b>den USA</b>.</p><p class="origin-merke"><b>Merke:</b> die Schweiz → aus der Schweiz · die USA → aus den USA</p></div>
 <div class="card"><div class="situation-intro-card instruction-panel"><div class="help"><span>👀 Situation ansehen</span><em>→</em><span><b class="click-cue">👆</b> richtige Frage anklicken</span></div><div class="situation-instruction-row instruction-row"><p>Schau dir die Situation an und wähle die passende Frage.</p><details class="tr-box"><summary><span class="globe-spin click-cue">🌐</span><span class="tr-label">A/文</span></summary><div class="tr-content"><p><b>English:</b> Look at the situation and choose the matching question.</p><p><b>Polski:</b> Spójrz na sytuację i wybierz pasujące pytanie.</p><p><b>Italiano:</b> Guarda la situazione e scegli la domanda adatta.</p></div></details></div></div><div class="quiz quiz-inline" data-quiz="q1"></div></div></main>
 
 <main class="page" id="t2">
 <div class="head"><span class="num">Teil 2</span><h2>Länder und Nationalitäten</h2><span class="done" id="d-nation">✅ geschafft</span></div>
 <div class="card">
-<div class="nationality-lab"><div class="continuity-card"><strong>🔁 Aus Lektion 1:</strong> <span>Du kannst schon sagen, wie du heißt. Jetzt sagst du zusätzlich, woher du kommst.</span><div class="continuity-example"><b>Hallo! Ich heiße Anna.</b> → <b>Hallo! Ich heiße Anna. Ich komme aus Polen.</b></div></div><div class="country-input-card instruction-panel"><div class="help"><span>✏️ Land eingeben</span><em>→</em><span><b class="click-cue">👆</b> „Informell“ oder „Formell“ anklicken</span><em>→</em><span><span class="click-cue">🔊</span> zuhören</span></div>
+<div class="nationality-lab"><div class="continuity-card"><strong>🔁 Aus Lektion 1</strong><span>Du kannst schon sagen, wie du heißt. Jetzt sagst du zusätzlich, woher du kommst.</span><div class="continuity-example"><b>Hallo! Ich heiße Anna.</b><span class="continuity-arrow">↓</span><b>Hallo! Ich heiße Anna. Ich komme aus Polen.</b></div></div><div class="country-input-card instruction-panel"><div class="help"><span>✏️ Land eingeben</span><em>→</em><span><b class="click-cue">👆</b> „Informell“ oder „Formell“ anklicken</span><em>→</em><span><span class="click-cue">🔊</span> zuhören</span></div>
 <div class="country-instruction-row instruction-row"><p>Trag dein Land ein — die Dialoge passen sich an!</p><details class="tr-box"><summary><span class="globe-spin">🌐</span><span class="tr-label">A/文</span></summary><div class="tr-content"><p><b>English:</b> Enter your country — the dialogues will adapt automatically.</p><p><b>Polski:</b> Wpisz swój kraj — dialogi dopasują się automatycznie.</p><p><b>Italiano:</b> Inserisci il tuo paese: i dialoghi si adatteranno automaticamente.</p></div></details></div>
 <div class="name-row"><label for="nationality" class="country-label"><b><span class="pencil-pulse">✏️</span> Dein Land:</b></label><input id="nationality" value="" placeholder="z. B. Italien"></div></div>
 <div class="dialog-tabs"><button class="dialog-tab" id="play-informal" type="button">Informell 🔊</button><button class="dialog-tab" id="play-formal" type="button">Formell 🔊</button></div>
