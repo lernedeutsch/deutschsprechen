@@ -202,9 +202,9 @@ table{width:100%;border-collapse:collapse;margin-bottom:12px}td,th{padding:8px 1
 </main>
 
 <main class="page" id="t5">
-<div class="part-head"><span class="part-num">Merke</span><h1 class="part-title">Was haben wir gelernt?</h1></div>
-<div class="card"><div id="sum"></div><p class="lead" id="bye" style="margin:14px 0 0;font:700 1.3rem 'Fraunces',serif"></p>
-<div class="row" style="margin-top:12px"><button class="btn dark" id="stReset">↻ Stempel neu sammeln</button></div></div>
+<div class="card">
+<div class="row" style="margin-top:0"><button class="btn dark" id="stReset">↻ Stempel neu sammeln</button></div>
+</div>
 </main>
 
 <nav class="end">
@@ -230,9 +230,6 @@ function upd(){
   $$("[data-s]").forEach(x=>x.classList.toggle("on",!!P[x.dataset.s]));
   $("spc").textContent=VIS.filter(k=>P[k]).length+" / 5 Stempel gesammelt";
   ["pronomen","dusie","verben","dialoge"].forEach(k=>$("d-"+k).classList.toggle("show",!!P[k]));
-  const L=[["pronomen","Personalpronomen","ich · du · er · sie · es · wir · ihr · Sie"],["dusie","du und Sie","du = Freunde/Familie · Sie = fremde Personen/beruflich/höflich"],["verben","Verben im Präsens","lerne · lernst · lernt · lernen · lernt · lernen"],["dialoge","Dialoge","Formell und informell fragen"]];
-  $("sum").innerHTML=L.map(([k,t,d])=>`<div class="check ${P[k]?"":"todo"}"><div class="m">${P[k]?"✅":"⬜"}</div><div><strong>${t}</strong><br>${d}</div></div>`).join("");
-  $("bye").textContent=P.lesson?"Sehr gut! Bis zum nächsten Mal! 🎉":"Sammle alle Stempel — dann ist die Lektion geschafft. 💪";
 }
 function load(){try{Object.assign(P,JSON.parse(localStorage.getItem(KEY))||{})}catch{}P.lesson=+!!(P.pronomen&&P.dusie&&P.verben&&P.dialoge);upd()}
 function stamp(k){if(P[k])return;P[k]=1;if(P.pronomen&&P.dusie&&P.verben&&P.dialoge)P.lesson=1;try{localStorage.setItem(KEY,JSON.stringify(P))}catch{}upd()}
