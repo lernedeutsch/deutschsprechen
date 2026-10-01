@@ -459,11 +459,21 @@ footer{
 
 <style>
 .translation-globe{
-  display:inline-block;
+  display:inline-block!important;
   font-size:1.30em;
   line-height:1;
   vertical-align:-.10em;
-  filter:hue-rotate(115deg) saturate(2.8) brightness(1.28) contrast(1.18) drop-shadow(0 0 4px rgba(255,74,190,.72));
+  filter:none;
+  animation:a1IndexGlobeAxisSpin 2.4s linear infinite!important;
+  transform-origin:50% 50%;
+  transform-style:preserve-3d;
+}
+@keyframes a1IndexGlobeAxisSpin{
+  0%{transform:perspective(120px) rotateY(0deg)}
+  25%{transform:perspective(120px) rotateY(90deg)}
+  50%{transform:perspective(120px) rotateY(180deg)}
+  75%{transform:perspective(120px) rotateY(270deg)}
+  100%{transform:perspective(120px) rotateY(360deg)}
 }
 </style>
 <link rel="stylesheet" href="../../css/translation-globe.css">
