@@ -170,6 +170,15 @@ body{padding:20px 12px 35px}.course-start{margin-bottom:38px;padding:18px 15px;b
     display:flex;flex-wrap:wrap;align-items:center;gap:6px;
   }
 }
+      
+.intro-three-forms{margin:18px 0 6px;padding:16px 18px;background:#fffaf0;border:1px solid var(--line);border-radius:16px}
+.intro-three-title{margin:0 0 10px}
+.intro-form-list{display:grid;gap:8px}
+.intro-form-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:9px 12px;background:#fff;border:1px solid #eadfc7;border-radius:12px}
+.intro-form-text{font-size:1rem}
+.intro-audio-button{flex:0 0 38px;width:38px;height:38px;padding:0;border:1px solid var(--line);border-radius:50%;background:#f7edda;color:var(--ink);font-size:1rem;line-height:1}
+.intro-audio-button:hover,.intro-audio-button:focus-visible{background:#efe0bf;border-color:var(--gold)}
+.intro-repeat-hint{margin:10px 0 0;color:#5a5140;font-size:.92rem}
 </style>      
 
 <style>
@@ -316,7 +325,15 @@ body{padding:20px 12px 35px}.course-start{margin-bottom:38px;padding:18px 15px;b
 <div class="action-help" data-help-key="dialog" aria-label="So funktioniert der Dialog"><span class="action-help-step">✏️ Name eingeben</span><span class="action-help-arrow">→</span><span class="action-help-step">👆 „Informell“ oder „Formell“ anklicken</span><span class="action-help-arrow">→</span><span class="action-help-step">🔊 zuhören</span></div>
 <p class="description">Trag deinen Namen ein — die Dialoge passen sich an!</p>      
 <div class="name-row"><label for="name-input"><span class="name-pencil">✏️</span> <span>Dein Name:</span></label><input id="name-input" type="text" placeholder="Dein Name" autocomplete="given-name"></div>      
-<div class="intro-three-forms"><p class="description"><strong>Sag deinen Namen auf drei Arten:</strong></p><button type="button" class="spelling-button intro-form-button" data-intro-form="Ich heiße">🔊 Ich heiße <span class="dynamic-name">…</span>.</button> <button type="button" class="spelling-button intro-form-button" data-intro-form="Mein Name ist">🔊 Mein Name ist <span class="dynamic-name">…</span>.</button> <button type="button" class="spelling-button intro-form-button" data-intro-form="Ich bin">🔊 Ich bin <span class="dynamic-name">…</span>.</button><p class="description">Hör zu und sprich nach.</p></div>
+<div class="intro-three-forms">
+<p class="description intro-three-title"><strong>Sag deinen Namen auf drei Arten:</strong></p>
+<div class="intro-form-list">
+<div class="intro-form-row"><span class="intro-form-text">Ich heiße <strong class="dynamic-name">…</strong>.</span><button type="button" class="intro-audio-button intro-form-button" data-intro-form="Ich heiße" aria-label="Ich heiße anhören">🔊</button></div>
+<div class="intro-form-row"><span class="intro-form-text">Mein Name ist <strong class="dynamic-name">…</strong>.</span><button type="button" class="intro-audio-button intro-form-button" data-intro-form="Mein Name ist" aria-label="Mein Name ist anhören">🔊</button></div>
+<div class="intro-form-row"><span class="intro-form-text">Ich bin <strong class="dynamic-name">…</strong>.</span><button type="button" class="intro-audio-button intro-form-button" data-intro-form="Ich bin" aria-label="Ich bin anhören">🔊</button></div>
+</div>
+<p class="description intro-repeat-hint">🔊 Hör zu und sprich nach.</p>
+</div>
 </div>
 <div class="tab-buttons" role="tablist"><button class="tab-button active" id="tab-informell" data-dialog="informell" role="tab" aria-selected="true">Informell <span class="click-icon">🔊</span></button><button class="tab-button" id="tab-formell" data-dialog="formell" role="tab" aria-selected="false">Formell <span class="click-icon">🔊</span></button></div>      
 <div class="dialog-box" id="dialog-informell">      
@@ -429,10 +446,10 @@ loadStamps();loadVoice();S?.addEventListener("voiceschanged",loadVoice);
 function pageProgress(){let m=document.documentElement.scrollHeight-innerHeight,t=scrollY||document.documentElement.scrollTop;$("page-progress-bar").style.width=`${m<=0?100:Math.min(100,Math.max(0,t/m*100))}%`}      
 addEventListener("scroll",pageProgress,{passive:true});addEventListener("resize",pageProgress);pageProgress();      
       
-const GB=$(".answer-button"),GT=[[8,"morgen","🌅","Sonnenaufgang am Morgen","Guten Morgen!"],[13,"tag","☀️","Sonniger Tag","Guten Tag!"],[19,"abend","🌙","Mond am Abend","Guten Abend!"],[15,"hallo","🙂","Treffen mit Freunden","Hallo!"]];      
+const GB=$$(".answer-button"),GT=[[8,"morgen","🌅","Sonnenaufgang am Morgen","Guten Morgen!"],[13,"tag","☀️","Sonniger Tag","Guten Tag!"],[19,"abend","🌙","Mond am Abend","Guten Abend!"],[15,"hallo","🙂","Treffen mit Freunden","Hallo!"]];      
 let gi=0,gs=0,gl=false;      
 function lockGreeting(x){GB.forEach(b=>{b.disabled=x;if(!x)b.classList.remove("richtig","falsch")})}      
-function greetingProgress(){$("greeting-counter").textContent=`Richtige Antworten: ${gs} / 3`;$("progress-fill").style.width=`${gs/3*100}%`}      
+function greetingProgress(){$("greeting-counter").textContent=`Richtige Antworten: ${gs} / 4`;$("progress-fill").style.width=`${gs/4*100}%`}      
 function showGreeting(){let[h,k,i,l]=GT[gi];gl=false;lockGreeting(false);$("greeting-feedback").textContent="";$("greeting-feedback").style.color="";$("clock-time").textContent=k==="hallo"?"Freunde treffen":`${String(h).padStart(2,"0")}:00 Uhr`;$("day-picture").className=`day-picture ${k}`;$("day-picture").setAttribute("aria-label",l);$("day-symbol").textContent=i;$("day-symbol").style.transform="scale(.75)";setTimeout(()=>$("day-symbol").style.transform="scale(1)",60)}      
 function nextGreeting(){if(++gi<GT.length)return showGreeting();gl=true;lockGreeting(true);$("greeting-feedback").style.color="#28502f";$("greeting-feedback").textContent="Alle Antworten sind richtig!";$("greeting-finish").classList.add("zeigen");stamp("greetings");stop();speak("Sehr gut! Du hast alle vier Antworten richtig.",.9)}      
 GB.forEach(b=>b.onclick=()=>{if(gl)return;let[,k,,,a]=GT[gi];GB.forEach(x=>x.classList.remove("richtig","falsch"));if(b.dataset.gruss!==k){b.classList.add("falsch");$("greeting-feedback").style.color="var(--red)";$("greeting-feedback").textContent="Versuch es noch einmal!";stop();return speak("Nicht ganz. Versuch es noch einmal.",.9)}gl=true;gs++;b.classList.add("richtig");lockGreeting(true);$("greeting-feedback").style.color="#28502f";$("greeting-feedback").textContent=`Richtig! ${a}`;greetingProgress();stop();speak(a,.9);setTimeout(nextGreeting,1200)});      
@@ -443,7 +460,7 @@ function updateName(){let name=NI.value.trim()||"…";$$(".dynamic-name").forEac
 function bubbleText(b){let c=b.cloneNode(true);c.querySelector(".speaker")?.remove();c.querySelector(".person-icon")?.remove();return c.textContent.replace(/\s+/g," ").trim()}      
 function activate(x){active=x;T.forEach(t=>{let a=t.dataset.dialog===x;t.classList.toggle("active",a);t.setAttribute("aria-selected",a)});Object.entries(D).forEach(([k,d])=>d.hidden=k!==x)}      
 async function readDialog(x){if(!S)return alert("Dein Browser unterstützt die Sprachausgabe nicht.");reading=false;stop();activate(x);reading=true;let version=n;for(let b of $$(`#dialog-${x} .bubble`)){if(!reading||version!==n||active!==x)break;b.classList.add("speaking");const personB=b.classList.contains("bubble-b");await speak(bubbleText(b),.92,personB?VM:V,personB?.9:1);b.classList.remove("speaking")}if(version===n){reading=false}}      
-NI.oninput=updateName;updateName();T.forEach(t=>t.onclick=()=>readDialog(t.dataset.dialog));$(".intro-form-button").forEach(b=>b.onclick=async()=>{const name=NI.value.trim();if(!name){NI.focus();return alert("Bitte gib zuerst deinen Namen ein.")}await speak(`${b.dataset.introForm} ${name}.`,.9);stamp("introduction")});      
+NI.oninput=updateName;updateName();T.forEach(t=>t.onclick=()=>readDialog(t.dataset.dialog));$$(".intro-form-button").forEach(b=>b.onclick=async()=>{const name=NI.value.trim();if(!name){NI.focus();return alert("Bitte gib zuerst deinen Namen ein.")}await speak(`${b.dataset.introForm} ${name}.`,.9);stamp("introduction")});      
       
 const R=$$(".exercise-row"),C=$$(".category-button"),READ=$("exercise-read-button"),CHOICE=document.querySelector(".category-buttons"),EXERCISE=document.querySelector(".exercise-page");      
 let ei=0,es=0,el=false;      
