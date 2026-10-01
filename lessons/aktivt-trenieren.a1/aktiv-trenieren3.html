@@ -105,7 +105,7 @@ input[type="range"].tap-cue{animation:rangePulse 1.35s ease-in-out infinite}
   <div class="age-progress" id="ageProgress">Person 1 von 4</div>
 </div>
 <div class="chat" id="ageChat"><div class="xline">Hallo!</div></div>
-<p class="fb" id="ageFb">Was fragst du? du oder Sie?</p>
+<p class="fb" id="ageFb">Was fragst du? du oder Sie?</p><p class="cnt age-score" id="ageScore">Richtige Antworten: 0 / 4</p><div class="track age-track"><div class="fill" id="ageFill" style="width:0%"></div></div>
 <h3>✏️ Und du? Wie alt bist du?</h3><div class="mini"><input type="number" id="myAge" min="1" max="100" placeholder="z. B. 25"><button class="btn tap-cue" id="myAgeBtn">🔊 Sagen</button></div><p class="fb" id="myAgeOut"></p>
 </div><div class="card" id="zahlen"><div class="head"><span class="num">Teil 2</span><h2>Zahlen 11–100</h2><span class="done" id="done-zahlen">✅ geschafft</span></div>
 <div class="number-step"><span>1</span><div><b>Zahl entdecken</b><small>Bewege den Regler oder wähle eine Zufallszahl. Schau, wie die Zahl auf Deutsch gebaut wird.</small></div></div>
@@ -172,6 +172,8 @@ function renderAgeRound(){
  $("#agePersonName").textContent=p.name;
  $("#agePersonMode").textContent=p.mode==="formell"?"formell · Sie":"informell · du";
  $("#ageProgress").textContent="Person "+(ageIndex+1)+" von "+AGE_PEOPLE.length;
+ $("#ageScore").textContent="Richtige Antworten: "+ageIndex+" / "+AGE_PEOPLE.length;
+ $("#ageFill").style.width=(ageIndex/AGE_PEOPLE.length*100)+"%";
  $("#ageChat").innerHTML='<div class="xline">'+p.greeting+'</div>';
  $("#ageFb").textContent="Was fragst du? du oder Sie?";
  $("#ageFb").className="fb";
@@ -198,6 +200,8 @@ document.querySelectorAll("#ageOpts [data-ageq]").forEach(btn=>{
    }
    ageLocked=true;
    document.querySelectorAll("#ageOpts [data-ageq]").forEach(x=>x.disabled=true);
+   $("#ageScore").textContent="Richtige Antworten: "+(ageIndex+1)+" / "+AGE_PEOPLE.length;
+   $("#ageFill").style.width=((ageIndex+1)/AGE_PEOPLE.length*100)+"%";
    const question=p.mode==="formell"?"Wie alt sind Sie?":"Wie alt bist du?";
    const answer="Ich bin "+ageNumber+" Jahre alt.";
    $("#ageChat").innerHTML='<div class="xline">'+p.greeting+'</div><div class="xline me">'+question+'</div><div class="xline">'+answer+'</div>';
