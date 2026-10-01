@@ -64,7 +64,7 @@ tr.say:hover{background:#fff3c8}
 .fb{min-height:28px;margin:12px 0 0;font-weight:800}
 .cnt{margin:8px 0;color:#5a5140;font:.85rem "JetBrains Mono",monospace}
 .track{height:12px;overflow:hidden;background:#e8dfca;border:1px solid var(--line);border-radius:999px}.fill{width:0;height:100%;background:linear-gradient(90deg,#5f9e6e,#79bd84);transition:.5s}
-.fin{display:none;margin-top:16px;padding:16px;color:#28502f;text-align:center;background:#e4f3e8;border:2px solid var(--green);border-radius:14px;font-weight:800}.fin.on{display:block}
+.fin{display:none;margin-top:16px;padding:16px;color:#28502f;text-align:center;background:#e4f3e8;border:2px solid var(--green);border-radius:14px;font-weight:800}.fin.on{display:block}.fin .finish-title{display:inline-block;margin-bottom:8px;font-size:1.2rem}
 .fin button,.reset{margin-top:10px;padding:9px 18px;color:#fff;background:var(--green);border:0;border-radius:999px;font-weight:800}
 .reset{background:#20324a}
 @keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
@@ -286,9 +286,15 @@ function initQuiz(el){
       setTimeout(()=>{lock=false;if(++i<n)draw();else finish()},500)});
   }
   function finish(){
-    el.innerHTML=`<h3>${c.title}</h3><div class="fin on">🎉 Sehr gut! Alles richtig: ${n} / ${n}<br><button>↻ Noch einmal</button></div>`;
+    const messages={
+      herkunft:"Du hast alle Fragen zur Herkunft richtig beantwortet.",
+      nation:"Du hast alle Länder und Nationalitäten richtig erkannt.",
+      kommen:"Du hast alle Formen von „kommen“ richtig erkannt.",
+      zahlen:"Du hast alle sechs Zahlen richtig erkannt."
+    };
+    el.innerHTML=`<h3>${c.title}</h3><p class="fb" style="color:var(--ok)">Alle Antworten sind richtig!</p><p class="cnt">Richtige Antworten: ${n} / ${n}</p><div class="track"><div class="fill" style="width:100%"></div></div><div class="fin on"><span class="finish-title">🎉 Sehr gut! Übung geschafft!</span><br><span>${messages[c.stamp]||"Du hast alle Antworten richtig erkannt."}</span><br><button>↻ Noch einmal</button></div>`;
     el.querySelector("button").onclick=()=>{i=s=0;draw()};
-    stamp(c.stamp);speak("Sehr gut! Du hast alles richtig gemacht.");
+    stamp(c.stamp);speak("Sehr gut! Übung geschafft.");
   }
   draw();
 }
