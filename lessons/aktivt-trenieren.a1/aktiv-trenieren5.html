@@ -121,6 +121,9 @@ table{width:100%;border-collapse:collapse;margin-bottom:12px}td,th{padding:8px 1
 #qSpeakRow{justify-content:center;margin-top:16px}
 #qCount{margin:16px 0 8px}
 @media(max-width:650px){.question-options .btn{width:100%;min-width:0}}
+
+.question-guide{margin:4px 0 14px;font-weight:700;color:#5b4a2f}
+.question-and{align-self:center;font-weight:800;color:#5b4a2f}
 </style>
 <link rel="stylesheet" href="../../css/click-hints.css">
 <link rel="stylesheet" href="../../css/translation-globe.css">
@@ -240,9 +243,10 @@ table{width:100%;border-collapse:collapse;margin-bottom:12px}td,th{padding:8px 1
 <div class="word" id="qWho">Frau Müller</div>
 <p class="calc" id="qHint">formell · Sie</p>
 <strong class="question-prompt">Welche Frage passt?</strong>
+<p class="question-guide" id="qGuide">1. Schau: du oder Sie? → 2. Wähle die passende Frage.</p>
 <div class="opts question-options" id="qOpts"></div>
 <p class="fb" id="dFb">Wähle die passende Frage.</p>
-<div class="row" id="qSpeakRow" hidden><button class="btn solid" id="qHear">🔊 Frage hören</button><button class="btn ok" id="qSaid">✓ Laut gesagt</button></div>
+<div class="row" id="qSpeakRow" hidden><button class="btn solid" id="qHear">🔊 Frage hören</button><span class="question-and">und</span><button class="btn ok" id="qSaid">✓ Laut gesagt</button></div>
 <p class="calc" id="qCount">Frage 1 / 6</p><div class="bar"><i id="qBar"></i></div>
 </div>
 </div>
@@ -446,11 +450,11 @@ function showQuestion(){
  if(qi>=qOrder.length){$("qIcon").textContent="🎉";$("qWho").textContent="Sehr gut!";$("qHint").textContent="6 / 6";$("qOpts").innerHTML="";$("qSpeakRow").hidden=true;$("dFb").textContent="Alle Fragen richtig gewählt und laut gesprochen.";$("dFb").className="fb g";$("qCount").textContent="Frage 6 / 6";checkDialoge();return}
  const [icon,who,hint,right,opts]=QUESTIONS[qOrder[qi]];
  $("qIcon").textContent=icon;$("qWho").textContent=who;$("qHint").textContent=hint;$("qCount").textContent=`Frage ${qi+1} / 6`;
- $("qSpeakRow").hidden=true;$("dFb").textContent="Welche Frage passt?";$("dFb").className="fb";
+ $("qSpeakRow").hidden=true;$("qGuide").textContent="1. Schau: du oder Sie? → 2. Wähle die passende Frage.";$("dFb").textContent="Welche Frage passt?";$("dFb").className="fb";
  $("qOpts").innerHTML=sh(opts).map(q=>`<button class="btn" data-q="${esc(q)}">${esc(q)}</button>`).join("");
  $$("#qOpts .btn").forEach(b=>b.onclick=()=>{
    if(b.dataset.q!==right){b.classList.add("no");$("dFb").textContent="Noch nicht. Achte auf du oder Sie.";$("dFb").className="fb b";setTimeout(()=>b.classList.remove("no"),300);return}
-   $$("#qOpts .btn").forEach(x=>x.disabled=true);b.classList.add("ok");$("dFb").textContent="Richtig! Hör jetzt die Frage und sprich sie laut.";$("dFb").className="fb g";$("qSpeakRow").hidden=false;
+   $$("#qOpts .btn").forEach(x=>x.disabled=true);b.classList.add("ok");$("dFb").textContent="Richtig! Hör jetzt die Frage und sprich sie laut.";$("dFb").className="fb g";$("qGuide").textContent="3. Hör die richtige Frage. → 4. Sprich sie laut. → 5. Klicke auf „Laut gesagt“.";$("qSpeakRow").hidden=false;
  });
 }
 $("qHear").onclick=()=>{const right=QUESTIONS[qOrder[qi]][3];stop();speak(right)};
