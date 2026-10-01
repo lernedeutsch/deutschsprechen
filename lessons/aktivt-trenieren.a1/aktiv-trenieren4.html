@@ -223,9 +223,9 @@ table{width:100%;border-collapse:collapse;margin-bottom:12px}td,th{padding:8px 1
 </main>
 
 <main class="page" id="t6">
-<div class="part-head"><span class="part-num">Merke</span><h1 class="part-title">Was haben wir gelernt?</h1></div>
-<div class="card"><div id="sum"></div><p class="lead" id="bye" style="margin:14px 0 0;font:700 1.3rem 'Fraunces',serif"></p>
-<div class="row" style="margin-top:12px"><button class="btn dark" id="stReset">↻ Stempel neu sammeln</button></div></div>
+<div class="card">
+<div class="row" style="margin-top:0"><button class="btn dark" id="stReset">↻ Stempel neu sammeln</button></div>
+</div>
 </main>
 
 <nav class="end">
@@ -252,8 +252,7 @@ function upd(){
   $("spc").textContent=VIS.filter(k=>P[k]).length+" / 5 Stempel gesammelt";
   ["berufe","frage","artikel","arbeiten","dialog"].forEach(k=>$("d-"+k).classList.toggle("show",!!P[k]));
   const L=[["berufe","Berufe","Arzt, Ärztin, Lehrer, Lehrerin, Ingenieur, Student …"],["frage","Beruf fragen","Was sind Sie von Beruf?"],["artikel","ein / eine","ein Lehrer · eine Lehrerin"],["arbeiten","arbeiten","arbeite · arbeitest · arbeitet · arbeiten · arbeitet · arbeiten"],["dialog","Dialog","Lesen und sprechen"]];
-  $("sum").innerHTML=L.map(([k,t,d])=>`<div class="check ${P[k]?"":"todo"}"><div class="m">${P[k]?"✅":"⬜"}</div><div><strong>${t}</strong><br>${d}</div></div>`).join("");
-  $("bye").textContent=P.lesson?"🏆 Lektion 4 geschafft! Sehr gut! 🎉":"";
+
 }
 function load(){try{Object.assign(P,JSON.parse(localStorage.getItem(KEY))||{})}catch{}P.lesson=+!!(P.berufe&&P.frage&&P.artikel&&P.arbeiten&&P.dialog);upd()}
 function stamp(k){if(P[k])return;P[k]=1;if(P.berufe&&P.frage&&P.artikel&&P.arbeiten&&P.dialog)P.lesson=1;try{localStorage.setItem(KEY,JSON.stringify(P))}catch{}upd()}
