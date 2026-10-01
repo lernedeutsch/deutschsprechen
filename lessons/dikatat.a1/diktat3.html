@@ -876,6 +876,7 @@ button,textarea{font:inherit}
         <span>✅ nach dem Alter fragen und dein Alter sagen</span>
         <span>✅ Zahlen von 11 bis 100 verstehen</span>
         <span>✅ das Verb „sein“ benutzen</span>
+        <span>✅ nach dem Wohnort fragen und sagen, wo du wohnst</span>
         <span>✅ nach persönlichen Daten fragen</span>
       </div>
 
@@ -963,6 +964,8 @@ const sentences=[
   "Ihr seid praktisch.",
   "Wie ist Ihr Name?",
   "Wie ist Ihr Vorname?",
+  "Wo wohnen Sie?",
+  "Ich wohne in Heidelberg.",
   "Meine Telefonnummer ist achtundvierzig."
 ];
 
@@ -1385,15 +1388,15 @@ const lessonCompleteTranslationText=document.getElementById("lesson-complete-tra
 const lessonCompleteTranslationButtons=[...document.querySelectorAll(".lesson-complete-translation-language")];
 
 const lessonCompleteTranslations={
-  en:"Finished! You have completed lesson A1.3. You trained age, numbers from 11 to 100, the verb sein and personal details. Very well done!",
-  pl:"Gotowe! Ukończyłeś lekcję A1.3. Przećwiczyłeś wiek, liczby od 11 do 100, czasownik sein oraz dane osobowe. Bardzo dobra robota!",
-  it:"Fatto! Hai completato la lezione A1.3. Hai esercitato l’età, i numeri da 11 a 100, il verbo sein e i dati personali. Molto bene!"
+  en:"Finished! You have completed lesson A1.3. You trained age, numbers from 11 to 100, the verb sein, your place of residence and personal details. Very well done!",
+  pl:"Gotowe! Ukończyłeś lekcję A1.3. Przećwiczyłeś wiek, liczby od 11 do 100, czasownik sein, miejsce zamieszkania oraz dane osobowe. Bardzo dobra robota!",
+  it:"Fatto! Hai completato la lezione A1.3. Hai esercitato l’età, i numeri da 11 a 100, il verbo sein, il luogo di residenza e i dati personali. Molto bene!"
 };
 
 const lessonCompleteSpeech=
   "Geschafft! Du hast Lektion A eins Punkt drei abgeschlossen. " +
   "Du hast die Lektion gelesen und alles trainiert: Aktiv trainieren, Sprich nach, Übungen, Dialoge und Diktat. " +
-  "Das kannst du jetzt: nach dem Alter fragen, dein Alter sagen, Zahlen von elf bis hundert verstehen, das Verb sein benutzen und nach persönlichen Daten fragen. " +
+  "Das kannst du jetzt: nach dem Alter fragen, dein Alter sagen, Zahlen von elf bis hundert verstehen, das Verb sein benutzen, nach dem Wohnort fragen, sagen wo du wohnst und nach persönlichen Daten fragen. " +
   "Sehr gut gemacht!";
 
 lessonCompleteTranslationToggle.addEventListener("click",event=>{
