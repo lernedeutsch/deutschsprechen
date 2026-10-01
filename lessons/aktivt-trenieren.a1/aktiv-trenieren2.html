@@ -128,6 +128,8 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offse
  .instruction-panel .instruction-row{align-items:flex-start}
  .instruction-panel .tr-box{margin-left:0}
 }
+
+.country-safe-note{margin:-7px 0 2px;color:#665b49;font-size:.88rem}.drop-slot[aria-label="fehlende Endung"]{font-family:"JetBrains Mono",monospace}
 </style>
 <link rel="stylesheet" href="../../css/click-hints.css">
 <link rel="stylesheet" href="../../css/translation-globe.css">
@@ -168,7 +170,7 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offse
 <div class="card">
 <div class="nationality-lab"><div class="continuity-card"><strong>🔁 Aus Lektion 1</strong><span>Du kannst schon sagen, wie du heißt. Jetzt sagst du zusätzlich, woher du kommst.</span><div class="continuity-example"><b>Hallo! Ich heiße Anna.</b><span class="continuity-arrow">↓</span><b>Hallo! Ich heiße Anna. Ich komme aus Polen.</b></div></div><div class="country-input-card instruction-panel"><div class="help"><span>✏️ Land eingeben</span><em>→</em><span><b class="click-cue">👆</b> „Informell“ oder „Formell“ anklicken</span><em>→</em><span><span class="click-cue">🔊</span> zuhören</span></div>
 <div class="country-instruction-row instruction-row"><p>Trag dein Land ein — die Dialoge passen sich an!</p><details class="tr-box"><summary><span class="globe-spin">🌐</span><span class="tr-label">A/文</span></summary><div class="tr-content"><p><b>English:</b> Enter your country — the dialogues will adapt automatically.</p><p><b>Polski:</b> Wpisz swój kraj — dialogi dopasują się automatycznie.</p><p><b>Italiano:</b> Inserisci il tuo paese: i dialoghi si adatteranno automaticamente.</p></div></details></div>
-<div class="name-row"><label for="nationality" class="country-label"><b><span class="pencil-pulse">✏️</span> Dein Land:</b></label><input id="nationality" value="" placeholder="z. B. Italien"></div></div>
+<div class="name-row"><label for="nationality" class="country-label"><b><span class="pencil-pulse">✏️</span> Dein Land:</b></label><input id="nationality" value="" placeholder="z. B. Italien"></div><p class="country-safe-note">Tipp: Probiere z. B. Polen, Deutschland, Österreich, Italien, Frankreich, Spanien, die Schweiz oder die USA.</p></div>
 <div class="dialog-tabs"><button class="dialog-tab" id="play-informal" type="button">Informell 🔊</button><button class="dialog-tab" id="play-formal" type="button">Formell 🔊</button></div>
 <div class="dialog-pair">
 <div><h3>Informell</h3><div class="mini-dialog" id="nationality-dialog-informal"></div></div>
@@ -181,12 +183,12 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offse
 <div class="card section-card"><div class="head"><span class="num">Teil 3</span><h2>Das Verb „kommen“</h2><span class="done" id="d-kommen">✅ geschafft</span></div><div class="instruction-panel"><div class="help"><span>👀 Satz ansehen</span><em>→</em><span><b class="click-cue">👆</b> richtige Endung anklicken</span><em>→</em><span><span class="click-cue">🔊</span> Satz anhören</span></div><div class="kommen-instruction-row instruction-row"><p>Wähle die richtige Endung für die gelbe Lücke. <b>Endung = e / st / t / en</b></p><details class="tr-box"><summary><span class="globe-spin">🌐</span><span class="tr-label">A/文</span></summary><div class="tr-content"><p><b>English:</b> Look at the sentence. Click the correct ending for the yellow gap. Then click 🔊 and listen.</p><p><b>Polski:</b> Spójrz na zdanie. Kliknij właściwą końcówkę do żółtej luki. Potem kliknij 🔊 i posłuchaj.</p><p><b>Italiano:</b> Guarda la frase. Clicca sulla desinenza corretta per lo spazio giallo. Poi clicca 🔊 e ascolta.</p></div></details></div></div>
 <div class="grammar-practice" style="margin-top:10px">
 <div style="overflow-x:auto"><table class="drop-table"><thead><tr><th>Pronomen</th><th>kommen</th><th>Beispielsatz</th></tr></thead><tbody>
-<tr><td>ich</td><td><b>komm<span class="ending">e</span></b></td><td><span class="say" data-s="Ich komme aus Spanien.">🔊</span> Ich komm<span class="drop-slot" data-answer="e"></span> aus Spanien.</td></tr>
-<tr><td>du</td><td><b>komm<span class="ending">st</span></b></td><td><span class="say" data-s="Du kommst aus Frankreich.">🔊</span> Du komm<span class="drop-slot" data-answer="st"></span> aus Frankreich.</td></tr>
-<tr><td>er / sie / es</td><td><b>komm<span class="ending">t</span></b></td><td><span class="say" data-s="Anna kommt aus Österreich.">🔊</span> Anna komm<span class="drop-slot" data-answer="t"></span> aus Österreich.</td></tr>
-<tr><td>wir</td><td><b>komm<span class="ending">en</span></b></td><td><span class="say" data-s="Wir kommen aus der Schweiz.">🔊</span> Wir komm<span class="drop-slot" data-answer="en"></span> aus der Schweiz.</td></tr>
-<tr><td>ihr</td><td><b>komm<span class="ending">t</span></b></td><td><span class="say" data-s="Ihr kommt aus Italien.">🔊</span> Ihr komm<span class="drop-slot" data-answer="t"></span> aus Italien.</td></tr>
-<tr><td>sie / Sie</td><td><b>komm<span class="ending">en</span></b></td><td><span class="say" data-s="Sie kommen aus Deutschland.">🔊</span> Sie komm<span class="drop-slot" data-answer="en"></span> aus Deutschland.</td></tr>
+<tr><td>ich</td><td><b>komm<span class="ending">e</span></b></td><td><span class="say" data-s="Ich komme aus Spanien.">🔊</span> Ich komm<span class="drop-slot" data-answer="e" aria-label="fehlende Endung">?</span> aus Spanien.</td></tr>
+<tr><td>du</td><td><b>komm<span class="ending">st</span></b></td><td><span class="say" data-s="Du kommst aus Frankreich.">🔊</span> Du komm<span class="drop-slot" data-answer="st" aria-label="fehlende Endung">?</span> aus Frankreich.</td></tr>
+<tr><td>er / sie / es</td><td><b>komm<span class="ending">t</span></b></td><td><span class="say" data-s="Anna kommt aus Österreich.">🔊</span> Anna komm<span class="drop-slot" data-answer="t" aria-label="fehlende Endung">?</span> aus Österreich.</td></tr>
+<tr><td>wir</td><td><b>komm<span class="ending">en</span></b></td><td><span class="say" data-s="Wir kommen aus der Schweiz.">🔊</span> Wir komm<span class="drop-slot" data-answer="en" aria-label="fehlende Endung">?</span> aus der Schweiz.</td></tr>
+<tr><td>ihr</td><td><b>komm<span class="ending">t</span></b></td><td><span class="say" data-s="Ihr kommt aus Italien.">🔊</span> Ihr komm<span class="drop-slot" data-answer="t" aria-label="fehlende Endung">?</span> aus Italien.</td></tr>
+<tr><td>sie / Sie</td><td><b>komm<span class="ending">en</span></b></td><td><span class="say" data-s="Sie kommen aus Deutschland.">🔊</span> Sie komm<span class="drop-slot" data-answer="en" aria-label="fehlende Endung">?</span> aus Deutschland.</td></tr>
 </tbody></table>
 <div class="note"><p><b>Merksatz:</b> <b>komm-<span class="ending">e</span> · komm-<span class="ending">st</span> · komm-<span class="ending">t</span> · komm-<span class="ending">en</span> · komm-<span class="ending">t</span> · komm-<span class="ending">en</span></b></p></div>
 <p class="drag-feedback" id="drag-feedback"></p></div>
@@ -331,15 +333,15 @@ $$("[data-quiz]").forEach(initQuiz);
 
 /* ---------- Nationalität-Dialog ---------- */
 function countryAfterAus(value){
- const raw=value.trim(),key=raw.toLocaleLowerCase("de-DE");
+ const key=value.trim().toLocaleLowerCase("de-DE");
  const forms={"polen":"Polen","deutschland":"Deutschland","österreich":"Österreich","oesterreich":"Österreich","italien":"Italien","frankreich":"Frankreich","spanien":"Spanien","schweiz":"der Schweiz","die schweiz":"der Schweiz","usa":"den USA","die usa":"den USA"};
- return forms[key]||raw;
+ return forms[key]||null;
 }
 function nationalityLines(formal){
- const raw=$("nationality").value.trim(),n=countryAfterAus(raw);
+ const n=countryAfterAus($("nationality").value);
  return formal
- ?["Guten Tag!","Guten Tag!","Wie heißen Sie?","Ich heiße Felix. Und Sie?","Ich heiße Anna.","Woher kommen Sie?",raw?("Ich komme aus "+n+". Und Sie?"):"Ich komme aus … . Und Sie?","Ich komme aus Deutschland."]
- :["Hallo!","Hallo!","Wie heißt du?","Ich heiße Tom. Und du?","Ich heiße Anna.","Woher kommst du?",raw?("Ich komme aus "+n+". Und du?"):"Ich komme aus … . Und du?","Ich komme aus Deutschland."];
+ ?["Guten Tag!","Guten Tag!","Wie heißen Sie?","Ich heiße Felix. Und Sie?","Ich heiße Anna.","Woher kommen Sie?",n?("Ich komme aus "+n+". Und Sie?"):"Ich komme aus … . Und Sie?","Ich komme aus Deutschland."]
+ :["Hallo!","Hallo!","Wie heißt du?","Ich heiße Tom. Und du?","Ich heiße Anna.","Woher kommst du?",n?("Ich komme aus "+n+". Und du?"):"Ich komme aus … . Und du?","Ich komme aus Deutschland."];
 }
 function renderNatDialog(){
  const make=(lines)=>lines.map((x,i)=>'<div class="db '+(i%2?"me":"")+'"><b>'+(i%2?"B":"A")+'</b> '+x+(i%2?" 🧑🏻":" 👩🏻")+'</div>').join("");
