@@ -89,16 +89,19 @@ table{width:100%;border-collapse:collapse;margin-bottom:12px}td,th{padding:8px 1
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 .bottom-arrow{display:grid;place-items:center;width:52px;height:52px;margin:18px 0 22px 18px;color:#1c2430;background:#fff;border:1px solid #e3d6b8;border-radius:50%;text-decoration:none;font-size:1.55rem;line-height:1;font-weight:800;box-shadow:0 7px 16px #0003;transition:.18s}
 
-/* Teil 3: kompakter, klarer Aufbau */
-#t3 .machine{display:grid;grid-template-columns:1fr 1fr;align-items:start;gap:18px 24px;padding:20px 24px}
-#t3 #verbPronoun{grid-column:1/-1;justify-self:center;min-width:150px;padding:10px 24px;background:#fff;border:2px solid var(--gold);border-radius:14px;text-align:center;font-size:1.55rem;font-weight:800}
-#t3 #verbCount{grid-column:1/-1;justify-self:center;margin:-4px 0 2px}
-#t3 .machine>div:not(#verbPronoun){width:100%;padding:14px 16px;background:#fffaf0;border:1px solid var(--line);border-radius:14px}
-#t3 .machine>div:not(#verbPronoun)>strong{display:block;margin-bottom:10px;font-size:1.1rem;text-align:center}
-#t3 #learnChoices,#t3 #workChoices{justify-content:center;margin-top:0}
-#t3 #learnChoices .btn,#t3 #workChoices .btn{min-width:100px}
-@media(max-width:700px){#t3 .machine{grid-template-columns:1fr}#t3 #verbPronoun,#t3 #verbCount{grid-column:1}}
-
+/* Teil 3: końcówka → budowanie form */
+#t3 .verb-builder{display:grid;grid-template-columns:1fr;align-items:start;gap:14px;padding:20px 24px}
+#t3 #verbPronoun{justify-self:center;min-width:180px;padding:10px 24px;background:#fff;border:2px solid var(--gold);border-radius:14px;text-align:center;font-size:1.55rem;font-weight:800}
+#t3 #verbCount{justify-self:center;margin:-4px 0 2px}
+#t3 .verb-step{width:100%;padding:16px 18px;background:#fffaf0;border:1px solid var(--line);border-radius:14px}
+#t3 .verb-step>strong{display:block;margin-bottom:12px;text-align:center;font-size:1.08rem}
+#t3 #endingChoices{justify-content:center}
+#t3 .build-row{display:grid;grid-template-columns:150px 1fr;align-items:center;gap:16px;padding:10px 0;border-top:1px dashed var(--line)}
+#t3 .build-row:first-of-type{border-top:0}
+#t3 .build-row>span{font:800 1.15rem "Nunito Sans",sans-serif;text-align:right}
+#t3 #learnChoices,#t3 #workChoices{justify-content:flex-start;margin:0}
+#t3 #learnChoices .btn,#t3 #workChoices .btn{min-width:105px}
+@media(max-width:700px){#t3 .build-row{grid-template-columns:1fr}#t3 .build-row>span{text-align:center}#t3 #learnChoices,#t3 #workChoices{justify-content:center}}
 /* Teil 3: równe przyciski w ćwiczeniu z lukami */
 #t3 #fillList .opts{display:grid;grid-template-columns:repeat(3,120px);justify-content:end;gap:14px}
 #t3 #fillList .opts .btn{width:120px;min-width:120px;margin:0;justify-content:center}
@@ -177,15 +180,22 @@ table{width:100%;border-collapse:collapse;margin-bottom:12px}td,th{padding:8px 1
 <main class="page" id="t3">
 <div class="part-head"><span class="part-num">Teil 3</span><h1 class="part-title">Verben im Präsens</h1><span class="done" id="d-verben">✅ geschafft</span></div>
 <div class="card">
-<div class="action-help tr" data-en="Read the pronoun → choose the correct form of lernen → choose the correct form of arbeiten." data-pl="Przeczytaj zaimek → wybierz poprawną formę lernen → wybierz poprawną formę arbeiten." data-it="Leggi il pronome → scegli la forma corretta di lernen → scegli la forma corretta di arbeiten."><span class="step">👀 Pronomen lesen</span><span class="arr">→</span><span class="step">👆 lernen wählen</span><span class="arr">→</span><span class="step">👆 arbeiten wählen</span></div>
-<p class="lead">Regelmäßige Verben im Präsens. Übe dieselben Formen wie in Lektion 5 — Schritt für Schritt.</p>
-<div class="machine">
+<div class="action-help tr" data-en="Read the pronoun → choose the ending → build lernen and arbeiten." data-pl="Przeczytaj zaimek → wybierz końcówkę → utwórz lernen i arbeiten." data-it="Leggi il pronome → scegli la desinenza → forma lernen e arbeiten."><span class="step">👀 Pronomen lesen</span><span class="arr">→</span><span class="step">👆 Endung wählen</span><span class="arr">→</span><span class="step">🧩 Formen bilden</span></div>
+<p class="lead">Erkenne zuerst die Endung. Bilde dann die Formen von <strong>lernen</strong> und <strong>arbeiten</strong>.</p>
+<div class="machine verb-builder">
 <div class="word" id="verbPronoun">ich</div>
 <p class="calc" id="verbCount">Pronomen 1 / 6</p>
-<div style="width:100%"><strong>lernen</strong><div class="opts" id="learnChoices"></div></div>
-<div style="width:100%"><strong>arbeiten</strong><div class="opts" id="workChoices"></div></div>
+<div class="verb-step" id="endingStep">
+<strong>1. Welche Endung passt?</strong>
+<div class="opts" id="endingChoices"></div>
 </div>
-<p class="fb" id="fb3">Wähle zuerst die Form von „lernen“.</p><div class="bar"><i id="bar3"></i></div>
+<div class="verb-step" id="formsStep" hidden>
+<strong>2. Bilde die Formen:</strong>
+<div class="build-row"><span id="learnStem">lern__</span><div class="opts" id="learnChoices"></div></div>
+<div class="build-row"><span id="workStem">arbeit__</span><div class="opts" id="workChoices"></div></div>
+</div>
+</div>
+<p class="fb" id="fb3">Wähle zuerst die richtige Endung.</p><div class="bar"><i id="bar3"></i></div>
 <div class="row" style="margin-top:10px"><button class="btn dark" id="verbReset">↻ Noch einmal</button></div>
 </div>
 <div class="card">
@@ -324,33 +334,55 @@ resetSie();
 
 /* Teil 3: Verben im Präsens */
 const VERBS=[
- ["ich","lerne","arbeite","Ich lerne. Ich arbeite."],
- ["du","lernst","arbeitest","Du lernst. Du arbeitest."],
- ["er / sie / es","lernt","arbeitet","Sie lernt. Sie arbeitet."],
- ["wir","lernen","arbeiten","Wir lernen. Wir arbeiten."],
- ["ihr","lernt","arbeitet","Ihr lernt. Ihr arbeitet."],
- ["sie / Sie","lernen","arbeiten","Sie lernen. Sie arbeiten."]
+ ["ich","-e","lerne","arbeite"],
+ ["du","-st","lernst","arbeitest"],
+ ["er / sie / es","-t","lernt","arbeitet"],
+ ["wir","-en","lernen","arbeiten"],
+ ["ihr","-t","lernt","arbeitet"],
+ ["sie / Sie","-en","lernen","arbeiten"]
 ];
-let vi=0,vOrder=[],learnOK=false,workOK=false;
-function verbOptions(right,all,target){
-  const opts=sh([right,...sh([...new Set(all.filter(x=>x!==right))]).slice(0,2)]);
-  target.innerHTML=opts.map(x=>`<button class="btn" data-v="${x}">${x}</button>`).join("");
+let vi=0,vOrder=[],endingOK=false,learnOK=false,workOK=false;
+const ENDINGS=["-e","-st","-t","-en"];
+function choiceButtons(target,values,right,kind){
+  target.innerHTML=sh(values).map(x=>`<button class="btn" data-v="${x}">${x}</button>`).join("");
+  target.querySelectorAll(".btn").forEach(b=>b.onclick=()=>answerBuild(kind,b,right));
 }
 function resetVerbs(){vi=0;vOrder=sh([...VERBS.keys()]);$("bar3").style.width="0";showVerb()}
 function showVerb(){
-  if(vi>=vOrder.length){$("verbPronoun").textContent="🎉";$("verbCount").textContent="6 / 6";$("learnChoices").innerHTML="";$("workChoices").innerHTML="";$("fb3").textContent="Sehr gut! Du kannst lernen und arbeiten im Präsens.";$("fb3").className="fb g";stamp("verben");return}
-  const [pron,l,a]=VERBS[vOrder[vi]];learnOK=false;workOK=false;$("verbPronoun").textContent=pron;$("verbCount").textContent=`Pronomen ${vi+1} / 6`;$("fb3").textContent="Wähle zuerst die Form von „lernen“.";$("fb3").className="fb";
-  verbOptions(l,VERBS.map(x=>x[1]),$("learnChoices"));verbOptions(a,VERBS.map(x=>x[2]),$("workChoices"));
-  $$("#learnChoices .btn").forEach(b=>b.onclick=()=>answerVerb("learn",b,l));
-  $$("#workChoices .btn").forEach(b=>b.onclick=()=>answerVerb("work",b,a));
+  if(vi>=vOrder.length){
+    $("verbPronoun").textContent="🎉";$("verbCount").textContent="6 / 6";
+    $("endingStep").hidden=true;$("formsStep").hidden=true;
+    $("fb3").textContent="Sehr gut! Du erkennst die Endungen und kannst lernen und arbeiten bilden.";$("fb3").className="fb g";
+    stamp("verben");return
+  }
+  const [pron,end,l,a]=VERBS[vOrder[vi]];
+  endingOK=learnOK=workOK=false;
+  $("verbPronoun").textContent=pron;$("verbCount").textContent=`Pronomen ${vi+1} / 6`;
+  $("endingStep").hidden=false;$("formsStep").hidden=true;
+  $("learnStem").textContent="lern__";$("workStem").textContent="arbeit__";
+  $("fb3").textContent="Wähle zuerst die richtige Endung.";$("fb3").className="fb";
+  choiceButtons($("endingChoices"),ENDINGS,end,"ending");
 }
-async function answerVerb(kind,b,right){
+async function answerBuild(kind,b,right){
   const fb=$("fb3");
-  if(b.dataset.v!==right){fb.textContent="Noch nicht. Versuch es noch einmal.";fb.className="fb b";return}
-  const box=kind==="learn"?$("learnChoices"):$("workChoices");box.querySelectorAll(".btn").forEach(x=>x.disabled=true);b.classList.add("ok");
-  if(kind==="learn")learnOK=true;else workOK=true;
-  fb.textContent=learnOK&&workOK?"Beide Formen sind richtig.":(learnOK?"Richtig. Jetzt „arbeiten“.":"Richtig. Jetzt noch „lernen“.");fb.className="fb g";
-  if(learnOK&&workOK){const sentence=VERBS[vOrder[vi]][3];stop();await speak(sentence);vi++;$("bar3").style.width=vi/6*100+"%";await W(450);showVerb()}
+  if(b.dataset.v!==right){
+    b.classList.add("no");fb.textContent="Noch nicht. Versuch es noch einmal.";fb.className="fb b";
+    setTimeout(()=>b.classList.remove("no"),300);return
+  }
+  b.parentElement.querySelectorAll(".btn").forEach(x=>x.disabled=true);b.classList.add("ok");
+  const [pron,end,l,a]=VERBS[vOrder[vi]];
+  if(kind==="ending"){
+    endingOK=true;$("formsStep").hidden=false;
+    choiceButtons($("learnChoices"),sh([...new Set(VERBS.map(x=>x[2]))]).slice(0,3).includes(l)?sh([...new Set(VERBS.map(x=>x[2]))]).slice(0,3):[l,...sh([...new Set(VERBS.map(x=>x[2]).filter(x=>x!==l))]).slice(0,2)],l,"learn");
+    choiceButtons($("workChoices"),sh([...new Set(VERBS.map(x=>x[3]))]).slice(0,3).includes(a)?sh([...new Set(VERBS.map(x=>x[3]))]).slice(0,3):[a,...sh([...new Set(VERBS.map(x=>x[3]).filter(x=>x!==a))]).slice(0,2)],a,"work");
+    fb.textContent=`Richtig: ${pron} → ${end}. Bilde jetzt beide Verbformen.`;fb.className="fb g";return
+  }
+  if(kind==="learn"){learnOK=true;$("learnStem").textContent=l}
+  if(kind==="work"){workOK=true;$("workStem").textContent=a}
+  if(!(learnOK&&workOK)){fb.textContent="Richtig. Jetzt noch die zweite Verbform.";fb.className="fb g";return}
+  fb.textContent=`Richtig: ${pron} ${l} · ${pron} ${a}`;fb.className="fb g";
+  stop();await speak(`${pron} ${l}. ${pron} ${a}.`);
+  vi++;$("bar3").style.width=vi/6*100+"%";await W(550);showVerb();
 }
 $("verbReset").onclick=resetVerbs;
 resetVerbs();
