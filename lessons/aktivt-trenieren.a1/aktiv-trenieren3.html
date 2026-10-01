@@ -100,6 +100,9 @@ details.tr-mini:not([open]) > :not(summary){display:none!important}details.tr-mi
 
 /* Vorstellung: größere pulsierende Stifte */
 #vorstellung .pencil-cue{display:inline-block;font-size:1.45em;line-height:1;transform-origin:center;animation:pencilCuePulse 1.45s ease-in-out infinite}@keyframes pencilCuePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.22)}}
+
+/* Globus: tłumaczenie zawsze schowane do kliknięcia */
+details.tr-mini:not([open]) > *:not(summary),details.learning-translation:not([open]) > *:not(summary){display:none!important}
 </style><link rel="stylesheet" href="../../css/click-hints.css">
 <link rel="stylesheet" href="../../css/translation-globe.css">
 <link rel="stylesheet" href="../../css/page-progress.css">
