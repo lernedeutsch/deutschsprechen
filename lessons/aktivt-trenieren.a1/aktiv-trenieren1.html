@@ -225,15 +225,17 @@ a.lesson-flow-step:hover,a.lesson-flow-step:focus-visible{border-color:var(--gol
 /* Slightly larger pencil beside the name field */
 .intro-setup-card .name-pencil{font-size:1.5em}
 
-/* Translation: blue rotating globe, direct translation on click */
-.translation-toggle{color:#fff;background:#1769e8;border-color:#0f57c7;box-shadow:0 4px 10px rgba(23,105,232,.22)}
-.translation-toggle:hover,.translation-toggle:focus-visible{color:#fff;background:#0f5fd8;border-color:#0b4fae}
-.translation-globe{display:inline-block;filter:none;animation:translationGlobeSpin 3s linear infinite;transform-origin:50% 50%}
-@keyframes translationGlobeSpin{to{transform:rotate(360deg)}}
+/* Translation control aligned with Lektion 2 */
+.translation-toggle{color:#16233a;background:#fff;border:1px solid #d9e2ec;box-shadow:none}
+.translation-toggle:hover,.translation-toggle:focus-visible{color:#16233a;background:#f7fbff;border-color:#b9cde0}
+.translation-globe{display:inline-block!important;filter:none;animation:aktiv1GlobeAxisSpin 2.4s linear infinite!important;transform-origin:50% 50%;transform-style:preserve-3d}
+@keyframes aktiv1GlobeAxisSpin{0%{transform:perspective(120px) rotateY(0deg)}25%{transform:perspective(120px) rotateY(90deg)}50%{transform:perspective(120px) rotateY(180deg)}75%{transform:perspective(120px) rotateY(270deg)}100%{transform:perspective(120px) rotateY(360deg)}}
+.translation-panel{width:310px}
 .translation-languages{display:none!important}
-.translation-panel{width:280px}
 .translation-text{margin:0}
-@media(prefers-reduced-motion:reduce){.translation-globe{animation:none}}
+.translation-text.show{display:grid;gap:7px}
+.translation-line{margin:0;padding:7px 9px;background:#fff;border:1px solid #e3d6b8;border-radius:8px;color:#101820;font-weight:700}
+@media(prefers-reduced-motion:reduce){.translation-globe{animation:none!important}}
 </style>      
 
 <style>
@@ -598,6 +600,11 @@ const INLINE_TRANSLATIONS={
   }
 };
 
+function renderAllTranslations(out,data){
+  out.innerHTML=`<p class="translation-line"><b>English:</b> ${data.en}</p><p class="translation-line"><b>Polski:</b> ${data.pl}</p><p class="translation-line"><b>Italiano:</b> ${data.it}</p>`;
+  out.classList.add("show");
+}
+
 function addInlineTranslations(){
   $$(".translation-inline-control[data-inline-translation]").forEach(control=>{
     const key=control.dataset.inlineTranslation,data=INLINE_TRANSLATIONS[key];
@@ -605,13 +612,11 @@ function addInlineTranslations(){
     const toggle=control.querySelector(".translation-toggle");
     const out=control.querySelector(".translation-text");
     const langs=[...control.querySelectorAll(".translation-language")];
-    const browserLang=(navigator.language||"").toLowerCase();
-    const preferred=browserLang.startsWith("pl")?"pl":browserLang.startsWith("it")?"it":"en";
     toggle.onclick=e=>{
       e.stopPropagation();
       const opening=!control.classList.contains("open");
       control.classList.toggle("open",opening);
-      if(opening){out.textContent=data[preferred];out.classList.add("show")}
+      if(opening)renderAllTranslations(out,data);
     };
   });
 }
@@ -619,9 +624,7 @@ function addInlineTranslations(){
 addInlineTranslations();
 
 function addHelpTranslations(){
-  const browserLang=(navigator.language||"").toLowerCase();
-  const preferred=browserLang.startsWith("pl")?"pl":browserLang.startsWith("it")?"it":"en";
-  $$(".action-help[data-help-key]").forEach(box=>{
+  $(".action-help[data-help-key]").forEach(box=>{
     const key=box.dataset.helpKey,data=HELP_TRANSLATIONS[key];
     if(!data)return;
     const control=document.createElement("div");
@@ -633,7 +636,7 @@ function addHelpTranslations(){
       e.stopPropagation();
       const opening=!control.classList.contains("open");
       control.classList.toggle("open",opening);
-      if(opening){out.textContent=data[preferred];out.classList.add("show")}
+      if(opening)renderAllTranslations(out,data);
     };
   });
   document.addEventListener("click",e=>{
