@@ -103,6 +103,9 @@ details.tr-mini:not([open]) > :not(summary){display:none!important}details.tr-mi
 
 /* Globus: tłumaczenie zawsze schowane do kliknięcia */
 details.tr-mini:not([open]) > *:not(summary),details.learning-translation:not([open]) > *:not(summary){display:none!important}
+
+/* Alter: größerer pulsierender Stift bei „Und du?“ */
+#alter .age-pencil-cue{display:inline-block;font-size:1.45em;line-height:1;transform-origin:center;vertical-align:-.08em;animation:agePencilPulse 1.45s ease-in-out infinite}@keyframes agePencilPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.22)}}
 </style><link rel="stylesheet" href="../../css/click-hints.css">
 <link rel="stylesheet" href="../../css/translation-globe.css">
 <link rel="stylesheet" href="../../css/page-progress.css">
@@ -142,7 +145,7 @@ details.tr-mini:not([open]) > *:not(summary),details.learning-translation:not([o
 </div>
 <div class="chat" id="ageChat"><div class="xline">Hallo!</div></div>
 <p class="fb" id="ageFb">Was fragst du? du oder Sie?</p><p class="cnt age-score" id="ageScore">Richtige Antworten: 0 / 4</p><div class="track age-track"><div class="fill" id="ageFill" style="width:0%"></div></div>
-<h3>✏️ Und du? Wie alt bist du?</h3><div class="mini"><input type="number" id="myAge" min="1" max="100" placeholder="z. B. 25"><button class="btn tap-cue" id="myAgeBtn">🔊 Sagen</button></div><p class="fb" id="myAgeOut"></p>
+<h3><span class="age-pencil-cue">✏️</span> Und du? Wie alt bist du?</h3><div class="mini"><input type="number" id="myAge" min="1" max="100" placeholder="z. B. 25"><button class="btn tap-cue" id="myAgeBtn">🔊 Sagen</button></div><p class="fb" id="myAgeOut"></p>
 </div><div class="card" id="zahlen"><div class="head"><span class="num">Teil 2</span><h2>Zahlen 11–100</h2><span class="done" id="done-zahlen">✅ geschafft</span></div>
 <div class="number-instruction-box"><div class="number-step"><span>1</span><div><b>Zahl entdecken</b><small>Bewege den Regler oder wähle eine Zufallszahl. Schau, wie die Zahl auf Deutsch gebaut wird.</small></div></div><div class="action-help"><span class="click-cue">👆</span> Zahl wählen → 👀 Wortteile ansehen → 🔊 Zahl anhören</div><div class="command-line"><p>Wähle eine Zahl von 11 bis 100. Lies die Wortteile und höre danach die ganze Zahl.</p><details class="tr-mini"><summary><span class="globe-spin">🌐</span> A/文</summary><div class="tr-text"><p><b>English:</b> Choose a number from 11 to 100. Read its word parts, then listen to the complete German number.</p><p><b>Polski:</b> Wybierz liczbę od 11 do 100. Zobacz, z jakich części składa się po niemiecku, a potem posłuchaj całej liczby.</p><p><b>Italiano:</b> Scegli un numero da 11 a 100. Guarda come si compone in tedesco e poi ascolta il numero completo.</p></div></details></div></div>
 <div class="numbox"><div class="number-label">DEINE ZAHL</div><div class="big" id="bigN">35</div><div class="number-build-label">So wird die Zahl gebaut:</div><div class="chips" id="numParts"></div><div class="slider-labels"><span>11</span><b>Regler bewegen</b><span>100</span></div><input type="range" id="rng" class="tap-cue" min="11" max="100" value="35"><div class="row number-actions"><button class="btn tap-cue" id="numSay">🔊 Zahl anhören</button><button class="btn tap-cue" id="numRnd">🎲 Andere Zahl</button></div></div>
