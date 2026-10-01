@@ -250,7 +250,7 @@ function upd(){
   ["berufe","frage","artikel","arbeiten","dialog"].forEach(k=>$("d-"+k).classList.toggle("show",!!P[k]));
   const L=[["berufe","Berufe","Arzt, Ärztin, Lehrer, Lehrerin, Ingenieur, Student …"],["frage","Beruf fragen","Was sind Sie von Beruf?"],["artikel","ein / eine","ein Lehrer · eine Lehrerin"],["arbeiten","arbeiten","arbeite · arbeitest · arbeitet · arbeiten · arbeitet · arbeiten"],["dialog","Dialog","Lesen und sprechen"]];
   $("sum").innerHTML=L.map(([k,t,d])=>`<div class="check ${P[k]?"":"todo"}"><div class="m">${P[k]?"✅":"⬜"}</div><div><strong>${t}</strong><br>${d}</div></div>`).join("");
-  $("bye").textContent=P.lesson?"🏆 Lektion 4 geschafft! Sehr gut! 🎉":"Sammle alle fünf Stempel — dann ist die Lektion geschafft. 💪";
+  $("bye").textContent=P.lesson?"🏆 Lektion 4 geschafft! Sehr gut! 🎉":"";
 }
 function load(){try{Object.assign(P,JSON.parse(localStorage.getItem(KEY))||{})}catch{}P.lesson=+!!(P.berufe&&P.frage&&P.artikel&&P.arbeiten&&P.dialog);upd()}
 function stamp(k){if(P[k])return;P[k]=1;if(P.berufe&&P.frage&&P.artikel&&P.arbeiten&&P.dialog)P.lesson=1;try{localStorage.setItem(KEY,JSON.stringify(P))}catch{}upd()}
