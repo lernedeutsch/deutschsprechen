@@ -1060,6 +1060,54 @@ border:1px solid #f3e8d4;
   .training-rail .num{font-size:1rem}
 }
 </style>
+<style>
+/* Lektion 9: visual structure aligned with Lektion 1 */
+body{padding-bottom:0}
+#lektion9{
+  max-width:1180px;
+  margin:0 auto 60px;
+  padding:28px 18px 60px;
+  background:transparent;
+}
+#lektion9 .wrap{
+  max-width:1080px;
+  margin:0 auto;
+  padding:34px 20px 24px;
+  background:linear-gradient(180deg,#fff8eb 0%,#fff 20%,#fff 100%);
+  border-radius:28px;
+  box-shadow:0 14px 35px rgba(10,18,32,.12);
+}
+#lektion9 header.hero{
+  display:grid;
+  grid-template-columns:1.35fr .95fr;
+  gap:26px;
+  align-items:center;
+  padding:28px;
+  margin:0 0 28px;
+  background:linear-gradient(135deg,rgba(244,201,93,.16),rgba(106,198,255,.12)),linear-gradient(180deg,#fff,#fff);
+  border:1px solid #e7edf5;
+  border-radius:28px;
+  box-shadow:0 10px 22px rgba(10,18,32,.10);
+}
+#lektion9 .hero-text{flex:initial}
+#lektion9 h1.lesson-title{font-size:clamp(2rem,4vw,3.3rem)}
+#lektion9 .wheel-box{
+  flex:initial;
+  min-height:280px;
+  padding:14px;
+  background:radial-gradient(circle at center,rgba(132,223,66,.10),transparent 62%),linear-gradient(180deg,#fdfefe,#f4f8fc);
+  border:1px solid #d9e4f0;
+  border-radius:24px;
+}
+#lektion9 .part{margin:26px 0 34px;padding:0 4px}
+#lektion9 .card{background:rgba(255,255,255,.97);border:1px solid #e3ebf4;border-radius:24px;box-shadow:0 10px 22px rgba(10,18,32,.10)}
+@media(max-width:760px){
+  #lektion9{padding:18px 10px 40px}
+  #lektion9 .wrap{padding:20px 12px}
+  #lektion9 header.hero{grid-template-columns:1fr;padding:20px}
+  #lektion9 .wheel-box{min-height:220px}
+}
+</style>
 </head><body id="seitenanfang">
 <a href="index.html" class="modul2-back-to-a1" aria-label="Zurück zur A1-Übersicht" title="Zurück zur A1-Übersicht">←</a>
 <nav class="training-rail" aria-label="Training Lektion 9">
