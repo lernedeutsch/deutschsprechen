@@ -303,7 +303,6 @@ function pRound(){
     if(b.dataset.o!==pron){b.classList.add("no");$("pFb").textContent="Noch nicht. Versuch es noch einmal.";$("pFb").className="fb b";stop();await speak("Noch nicht. Versuch es noch einmal.");b.classList.remove("no");return}
     $$("#pOpts .btn").forEach(x=>x.disabled=true);b.classList.add("ok");$("pFb").textContent="Richtig! "+satz;$("pFb").className="fb g";stop();await speak(satz);pr++;$("bar1").style.width=pr/9*100+"%";await W(450);pRound();
   });
-  stop();speak(satz);
 }
 $("pStart").onclick=()=>{if(pr>=9||!pOrder.length)resetPronGame();pOrder=sh([...PRON.keys()]);pr=0;$("bar1").style.width="0";pRound()};
 $("pAgain").onclick=()=>{if(pCurI!==null){stop();speak(PRON[pCurI][1])}};
