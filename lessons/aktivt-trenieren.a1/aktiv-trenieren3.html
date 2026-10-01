@@ -199,11 +199,11 @@ document.querySelectorAll("#ageOpts [data-ageq]").forEach(btn=>{
    const question=p.mode==="formell"?"Wie alt sind Sie?":"Wie alt bist du?";
    const answer="Ich bin "+ageNumber+" Jahre alt.";
    $("#ageChat").innerHTML='<div class="xline">'+p.greeting+'</div><div class="xline me">'+question+'</div><div class="xline">'+answer+'</div>';
-   $("#ageFb").textContent="Richtig! Die nächste Person kommt in 5 Sekunden.";
+   $("#ageFb").textContent="Richtig! Die nächste Person kommt in 6 Sekunden.";
    $("#ageFb").className="fb ok";
    say(question+" "+answer);
    clearTimeout(ageTimer);
-   ageTimer=setTimeout(finishAgeRound,5000);
+   ageTimer=setTimeout(finishAgeRound,6000);
  };
 });
 renderAgeRound();
