@@ -417,7 +417,7 @@ resetWork();
 const TRANSFER=[
  ["Ich ___ Deutsch.","lerne","Ich lerne Deutsch.",["lerne","wohne","studiere"]],
  ["Ich ___ in Frankfurt.","wohne","Ich wohne in Frankfurt.",["wohne","lerne","arbeite"]],
- ["Ich ___ in Heidelberg.","studiere","Ich studiere in Heidelberg.",["studiere","wohne","lerne"]]
+ ["Ich ___ an der Universität Heidelberg.","studiere","Ich studiere an der Universität Heidelberg.",["studiere","wohne","lerne"]]
 ];
 const verbsBox=document.getElementById("verbs");
 verbsBox.innerHTML=TRANSFER.map((v,i)=>`<div class="sq-row"><span class="sq-q">${v[0]}</span><div class="opts" data-transfer="${i}">${sh(v[3]).map(o=>`<button class="btn" type="button" data-answer="${o}">${o}</button>`).join("")}</div></div>`).join("");
