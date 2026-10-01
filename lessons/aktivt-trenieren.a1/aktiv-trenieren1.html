@@ -199,6 +199,28 @@ a.lesson-flow-step:hover,a.lesson-flow-step:focus-visible{border-color:var(--gol
 .end-button.sprich-button:hover,.end-button.sprich-button:focus-visible{background:#263b5b}
 @media(max-width:720px){.lesson-introduction{padding:24px}.lesson-hero{display:block}.lesson-wheel{max-width:190px;margin:22px auto 0}.sprachpass{display:block}.sprachpass-information{text-align:center;margin-bottom:14px}.stamps{display:grid;grid-template-columns:repeat(4,1fr)}.stamp-slot{width:68px;height:68px;margin:auto}.greeting-page,.intro-page,.exercise-page,.alphabet-page,.farewell-page{padding:22px 18px}.part-title{font-size:1.9rem}}
 @media(max-width:520px){.stamps{grid-template-columns:repeat(2,1fr);gap:12px}.lesson-flow{grid-template-columns:1fr 1fr}}
+
+/* More visible pulsing audio controls for the three name forms */
+.intro-audio-button{
+  color:#fff;
+  background:#1769e8;
+  border-color:#0f57c7;
+  box-shadow:0 0 0 0 rgba(23,105,232,.38),0 5px 12px rgba(23,105,232,.22);
+  animation:introAudioPulse 1.8s ease-out infinite;
+}
+.intro-audio-button:hover,.intro-audio-button:focus-visible{
+  color:#fff;
+  background:#0f5fd8;
+  border-color:#0b4fae;
+  box-shadow:0 0 0 7px rgba(23,105,232,.14),0 6px 14px rgba(23,105,232,.28);
+}
+.intro-audio-button:active{transform:scale(.94)}
+@keyframes introAudioPulse{
+  0%{box-shadow:0 0 0 0 rgba(23,105,232,.38),0 5px 12px rgba(23,105,232,.22)}
+  65%{box-shadow:0 0 0 9px rgba(23,105,232,0),0 5px 12px rgba(23,105,232,.22)}
+  100%{box-shadow:0 0 0 0 rgba(23,105,232,0),0 5px 12px rgba(23,105,232,.22)}
+}
+@media(prefers-reduced-motion:reduce){.intro-audio-button{animation:none}}
 </style>      
 
 <style>
