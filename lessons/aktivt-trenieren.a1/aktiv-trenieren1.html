@@ -179,6 +179,12 @@ body{padding:20px 12px 35px}.course-start{margin-bottom:38px;padding:18px 15px;b
 .intro-audio-button{flex:0 0 38px;width:38px;height:38px;padding:0;border:1px solid var(--line);border-radius:50%;background:#f7edda;color:var(--ink);font-size:1rem;line-height:1}
 .intro-audio-button:hover,.intro-audio-button:focus-visible{background:#efe0bf;border-color:var(--gold)}
 .intro-repeat-hint{margin:10px 0 0;color:#5a5140;font-size:.92rem}
+
+.lesson-flow{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.lesson-flow-step{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--ink);font-size:.88rem;font-weight:700;text-decoration:none}
+.lesson-flow-step.active{background:var(--ink);border-color:var(--ink);color:#fff;box-shadow:0 5px 14px #16233a24}
+a.lesson-flow-step:hover,a.lesson-flow-step:focus-visible{border-color:var(--gold);background:#fff8e7}
+@media(max-width:620px){.lesson-flow{display:grid;grid-template-columns:1fr 1fr}.lesson-flow-step{padding:7px 8px;font-size:.82rem}}
 </style>      
 
 <style>
@@ -260,7 +266,18 @@ body{padding:20px 12px 35px}.course-start{margin-bottom:38px;padding:18px 15px;b
       
 <div class="page-progress-container" aria-hidden="true"><div class="page-progress-bar" id="page-progress-bar"></div></div>      
       
-<section class="course-start"><h2 class="course-start-title">Erste Schritte</h2><p class="course-start-text">Begrüßung, ich heiße …, das Alphabet</p></section>      
+<section class="course-start">
+<h2 class="course-start-title">Erste Schritte</h2>
+<p class="course-start-text">Begrüßung, ich heiße …, das Alphabet</p>
+<nav class="lesson-flow" aria-label="Ablauf der Lektion">
+<a href="../a1/lektion-1.html#seitenanfang" class="lesson-flow-step">① Lektion</a>
+<span class="lesson-flow-step active" aria-current="step">② Aktiv trainieren</span>
+<a href="../sprechen.a1/sprechen1.html" class="lesson-flow-step">③ Sprich nach</a>
+<span class="lesson-flow-step">④ Übungen</span>
+<span class="lesson-flow-step">⑤ Dialoge</span>
+<span class="lesson-flow-step">⑥ Diktat</span>
+</nav>
+</section>      
       
 <header class="lesson-introduction">      
 <div class="lesson-hero">      
@@ -297,13 +314,13 @@ body{padding:20px 12px 35px}.course-start{margin-bottom:38px;padding:18px 15px;b
 <div class="part-head"><span class="part-num">Teil 1</span><h1 class="part-title" id="greeting-title">Wir begrüßen uns</h1></div>      
 <div class="card greeting-card">      
 <div class="greeting-info-card">
-<p class="lead">Wir sagen verschiedene Grüße je nach Tageszeit. Finde den richtigen Gruß!</p>      
-<details class="grammar-toggle"><summary>Merke! — Grüße nach Tageszeit</summary><div class="grammar-box">morgens: <strong>Guten Morgen!</strong><br><br>tagsüber: <strong>Guten Tag!</strong><br><br>abends: <strong>Guten Abend!</strong><br><br>informell: <strong>Hallo!</strong><br><br>beim Abschied: <strong>Tschüss!</strong></div></details>      
-<div class="action-help" data-help-key="greeting" aria-label="So funktioniert die Übung"><span class="action-help-step">👀 Uhr ansehen</span><span class="action-help-arrow">→</span><span class="action-help-step">👆 richtigen Gruß anklicken</span></div>
+<p class="lead">Wir begrüßen uns in verschiedenen Situationen. Finde den richtigen Gruß!</p>      
+<details class="grammar-toggle"><summary>Merke! — Grüße und Situationen</summary><div class="grammar-box">morgens: <strong>Guten Morgen!</strong><br><br>tagsüber: <strong>Guten Tag!</strong><br><br>abends: <strong>Guten Abend!</strong><br><br>informell: <strong>Hallo!</strong><br><br>beim Abschied: <strong>Tschüss!</strong></div></details>      
+<div class="action-help" data-help-key="greeting" aria-label="So funktioniert die Übung"><span class="action-help-step">👀 Situation ansehen</span><span class="action-help-arrow">→</span><span class="action-help-step">👆 richtigen Gruß anklicken</span></div>
 </div>
 <div class="greeting-game">      
 <div class="clock-display"><div class="day-picture morgen" id="day-picture" role="img" aria-label="Sonnenaufgang am Morgen"><span class="day-symbol" id="day-symbol">🌅</span></div><span class="clock-time" id="clock-time">08:00 Uhr</span></div>      
-<p class="question">Welcher Gruß passt zu dieser Uhrzeit?</p>      
+<p class="question">Welcher Gruß passt zu dieser Situation?</p>      
 <div class="answer-buttons">      
 <button class="answer-button" data-gruss="morgen">Guten Morgen! <span class="click-icon">👆</span></button>      
 <button class="answer-button" data-gruss="tag">Guten Tag! <span class="click-icon">👆</span></button>      
@@ -493,9 +510,9 @@ $("stamp-reset-button").onclick=()=>{stop();Object.keys(P).forEach(x=>P[x]=false
 
 const HELP_TRANSLATIONS={
   greeting:{
-    en:"Look at the time → click the correct greeting",
-    pl:"Spójrz na godzinę → kliknij właściwe powitanie",
-    it:"Guarda l’ora → clicca sul saluto corretto"
+    en:"Look at the situation → click the correct greeting",
+    pl:"Spójrz na sytuację → kliknij właściwe powitanie",
+    it:"Guarda la situazione → clicca sul saluto corretto"
   },
   dialog:{
     en:"Enter your name → click “Informell” or “Formell” → listen",
