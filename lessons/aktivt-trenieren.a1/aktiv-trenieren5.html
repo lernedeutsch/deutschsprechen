@@ -88,6 +88,16 @@ table{width:100%;border-collapse:collapse;margin-bottom:12px}td,th{padding:8px 1
 @media(max-width:760px){body{padding:20px 12px 35px}.lesson-intro,.page{padding:20px 14px;border-radius:18px}.hero{flex-direction:column;align-items:flex-start}.main-title{font-size:2rem}.wheel{max-width:240px;margin:auto}.sprachpass{flex-direction:column;align-items:flex-start}.stamps{justify-content:space-between}.stamp{width:58px;height:58px;font-size:.5rem}.part-title{font-size:1.9rem}.pron-grid{grid-template-columns:repeat(3,1fr)}.ba,.bb{width:90%}.action-help{padding-right:10px;padding-bottom:44px}.tc{top:auto;bottom:6px}.tp{top:auto;bottom:36px}.scene{flex-direction:column;text-align:center}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 .bottom-arrow{display:grid;place-items:center;width:52px;height:52px;margin:18px 0 22px 18px;color:#1c2430;background:#fff;border:1px solid #e3d6b8;border-radius:50%;text-decoration:none;font-size:1.55rem;line-height:1;font-weight:800;box-shadow:0 7px 16px #0003;transition:.18s}
+
+/* Teil 3: kompakter, klarer Aufbau */
+#t3 .machine{display:grid;grid-template-columns:1fr 1fr;align-items:start;gap:18px 24px;padding:20px 24px}
+#t3 #verbPronoun{grid-column:1/-1;justify-self:center;min-width:150px;padding:10px 24px;background:#fff;border:2px solid var(--gold);border-radius:14px;text-align:center;font-size:1.55rem;font-weight:800}
+#t3 #verbCount{grid-column:1/-1;justify-self:center;margin:-4px 0 2px}
+#t3 .machine>div:not(#verbPronoun){width:100%;padding:14px 16px;background:#fffaf0;border:1px solid var(--line);border-radius:14px}
+#t3 .machine>div:not(#verbPronoun)>strong{display:block;margin-bottom:10px;font-size:1.1rem;text-align:center}
+#t3 #learnChoices,#t3 #workChoices{justify-content:center;margin-top:0}
+#t3 #learnChoices .btn,#t3 #workChoices .btn{min-width:100px}
+@media(max-width:700px){#t3 .machine{grid-template-columns:1fr}#t3 #verbPronoun,#t3 #verbCount{grid-column:1}}
 </style>
 <link rel="stylesheet" href="../../css/click-hints.css">
 <link rel="stylesheet" href="../../css/translation-globe.css">
