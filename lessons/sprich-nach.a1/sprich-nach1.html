@@ -1820,7 +1820,7 @@ textInput.addEventListener("keydown",(e)=>{
 
 const SPRICH_TRANSLATIONS={
   en:"You hear a German sentence from Lesson 1, repeat it, and immediately see whether your sentence was recognized. Use “Repeat sentence”, “Next sentence”, “Stop” and “Continue” to control the exercise.",
-  pl:"Usłyszysz niemieckie zdanie z Lekcji 1, powtórzysz je i od razu zobaczysz, czy Twoje zdanie zostało rozpoznane. Użyj „Powtórz zdanie”, „Następne zdanie”, „Stop” i „Dalej”, aby sterować ćwiczeniem.",
+  pl:"Usłyszysz niemieckie zdanie z Lekcji 1 i powtórzysz je do mikrofonu. Możesz ćwiczyć z widocznym tekstem („Mit Text”) albo tylko ze słuchu („Nur hören”). Po odpowiedzi od razu zobaczysz, czy zdanie zostało poprawnie rozpoznane. Możesz też powtórzyć zdanie, przejść do następnego lub zmienić szybkość głosu lektora.",
   it:"Ascolti una frase tedesca della Lezione 1, la ripeti e vedi subito se la tua frase è stata riconosciuta. Usa “Ripeti frase”, “Frase successiva”, “Stop” e “Continua” per controllare l’esercizio."
 };
 
@@ -1831,7 +1831,14 @@ const translationButtons=[...document.querySelectorAll(".translation-language")]
 
 translationToggle.addEventListener("click",e=>{
   e.stopPropagation();
-  translationControl.classList.toggle("open");
+  const willOpen=!translationControl.classList.contains("open");
+  translationControl.classList.toggle("open",willOpen);
+  if(willOpen){
+    const preferred=translationButtons.find(btn=>btn.dataset.lang==="pl") || translationButtons[0];
+    translationButtons.forEach(x=>x.classList.toggle("active",x===preferred));
+    translationText.textContent=SPRICH_TRANSLATIONS[preferred.dataset.lang];
+    translationText.classList.add("show");
+  }
 });
 
 translationButtons.forEach(btn=>btn.addEventListener("click",e=>{
