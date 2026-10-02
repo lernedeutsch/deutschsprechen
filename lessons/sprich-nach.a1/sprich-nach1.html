@@ -96,9 +96,9 @@ button,input{font:inherit}
   flex-direction:column;
   width:240px;
   flex-shrink:0;
-  height:640px;
-  min-height:640px;
-  max-height:640px;
+  height:min(640px,78vh);
+  min-height:0;
+  max-height:min(640px,78vh);
   background:linear-gradient(180deg,#1c3450,#132538);
   border:1px solid rgba(255,255,255,.16);
   border-radius:22px 0 0 22px;
@@ -197,8 +197,9 @@ button,input{font:inherit}
     inset 0 2px 0 rgba(255,255,255,.92),
     inset 0 -16px 30px rgba(35,61,88,.10);
   padding:clamp(16px,3vw,30px);
-  height:640px;
-  min-height:640px;
+  height:min(640px,78vh);
+  min-height:0;
+  max-height:min(640px,78vh);
   box-sizing:border-box;
   overflow:hidden;
 }
