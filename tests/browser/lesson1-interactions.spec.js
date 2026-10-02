@@ -129,12 +129,12 @@ test("Aktiv trainieren: greeting answer and reset work", async ({ page }) => {
   await mockBrowserSpeech(page);
   await page.goto("/lessons/aktivt-trenieren.a1/aktiv-trenieren1.html", { waitUntil: "domcontentloaded" });
 
-  await expect(page.locator("#greeting-counter")).toContainText("0 / 3");
+  await expect(page.locator("#greeting-counter")).toContainText("0 / 4");
   await page.locator('.answer-button[data-gruss="morgen"]').click();
-  await expect(page.locator("#greeting-counter")).toContainText("1 / 3");
+  await expect(page.locator("#greeting-counter")).toContainText("1 / 4");
 
   await page.evaluate(() => document.getElementById("restart-button").click());
-  await expect(page.locator("#greeting-counter")).toContainText("0 / 3");
+  await expect(page.locator("#greeting-counter")).toContainText("0 / 4");
 });
 
 
@@ -144,11 +144,11 @@ test("Aktiv trainieren: wrong greeting can be corrected", async ({ page }) => {
 
   await page.locator('.answer-button[data-gruss="abend"]').click();
   await expect(page.locator("#greeting-feedback")).toContainText("Versuch es noch einmal");
-  await expect(page.locator("#greeting-counter")).toContainText("0 / 3");
+  await expect(page.locator("#greeting-counter")).toContainText("0 / 4");
 
   await page.locator('.answer-button[data-gruss="morgen"]').click();
   await expect(page.locator("#greeting-feedback")).toContainText("Richtig");
-  await expect(page.locator("#greeting-counter")).toContainText("1 / 3");
+  await expect(page.locator("#greeting-counter")).toContainText("1 / 4");
 });
 
 test("Übungen: wrong answers stay retryable and can be corrected", async ({ page }) => {
@@ -243,11 +243,11 @@ test("Lektion 1: complete learner journey across all five modules", async ({ pag
 
   await page.goto("/lessons/aktivt-trenieren.a1/aktiv-trenieren1.html", { waitUntil: "domcontentloaded" });
   await page.locator('.answer-button[data-gruss="abend"]').click();
-  await expect(page.locator("#greeting-counter")).toContainText("0 / 3");
+  await expect(page.locator("#greeting-counter")).toContainText("0 / 4");
   await page.locator('.answer-button[data-gruss="morgen"]').click();
-  await expect(page.locator("#greeting-counter")).toContainText("1 / 3");
+  await expect(page.locator("#greeting-counter")).toContainText("1 / 4");
   await page.evaluate(() => document.getElementById("restart-button").click());
-  await expect(page.locator("#greeting-counter")).toContainText("0 / 3");
+  await expect(page.locator("#greeting-counter")).toContainText("0 / 4");
 
   await page.goto("/lessons/sprich-nach.a1/sprich-nach1.html", { waitUntil: "domcontentloaded" });
   await page.locator("#start-btn").click();
