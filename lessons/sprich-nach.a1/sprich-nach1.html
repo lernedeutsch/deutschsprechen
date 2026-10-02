@@ -453,6 +453,53 @@ button,input{font:inherit}
   min-height:1.4em;
 }
 
+
+/* Audio visualizer: shown only while the lector is speaking */
+.audio-wave{
+  display:none;
+  width:156px;
+  height:92px;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  filter:drop-shadow(0 8px 14px rgba(61,168,240,.20));
+}
+.audio-wave span{
+  width:7px;
+  height:var(--h);
+  min-height:8px;
+  border-radius:999px;
+  background:linear-gradient(180deg,#6ac6ff 0%,#48aef2 45%,#f4c95d 100%);
+  transform-origin:center;
+  animation:audioWave 820ms ease-in-out infinite alternate;
+  animation-delay:var(--d);
+  box-shadow:0 2px 6px rgba(44,145,211,.18);
+}
+.stage[data-state="speaking"] .orb-wrap{display:none}
+.stage[data-state="speaking"] .audio-wave{display:flex}
+@keyframes audioWave{
+  0%{transform:scaleY(.42);opacity:.68}
+  45%{transform:scaleY(1.12);opacity:1}
+  100%{transform:scaleY(.64);opacity:.84}
+}
+/* Keep the approved microphone look, but make the click cue unmistakable. */
+.stage[data-state="idle"] #mic-btn.mic-ready{
+  width:104px;
+  height:104px;
+  font-size:36px;
+  animation:micReadyPulseStrong 1.05s ease-in-out infinite;
+}
+@keyframes micReadyPulseStrong{
+  0%,100%{
+    transform:scale(1);
+    box-shadow:0 14px 30px rgba(11,73,56,.38),0 0 0 0 rgba(93,218,159,.48),inset 0 2px 0 rgba(255,255,255,.18);
+  }
+  50%{
+    transform:scale(1.10);
+    box-shadow:0 18px 38px rgba(11,73,56,.46),0 0 0 15px rgba(93,218,159,.13),0 0 34px rgba(93,218,159,.52),inset 0 2px 0 rgba(255,255,255,.22);
+  }
+}
+
 /* Sentence display */
 .sentence-box{
   margin:10px auto 6px;
@@ -888,6 +935,7 @@ button,input{font:inherit}
       </div>
 
       <div class="stage" id="stage" data-state="idle">
+        <div class="audio-wave" aria-label="Audio wird abgespielt" role="img"><span style="--h:14px;--d:-.48s"></span><span style="--h:25px;--d:-.14s"></span><span style="--h:38px;--d:-.62s"></span><span style="--h:54px;--d:-.28s"></span><span style="--h:72px;--d:-.76s"></span><span style="--h:48px;--d:-.08s"></span><span style="--h:66px;--d:-.54s"></span><span style="--h:42px;--d:-.34s"></span><span style="--h:28px;--d:-.70s"></span><span style="--h:15px;--d:-.20s"></span></div>
         <div class="orb-wrap">
           <div class="orb-ring"></div>
           <button type="button" class="orb" id="mic-btn" aria-label="Mikrofon" title="Mikrofon" disabled>
