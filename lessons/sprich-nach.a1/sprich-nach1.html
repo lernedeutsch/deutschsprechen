@@ -955,7 +955,23 @@ button,input{font:inherit}
   font-size:clamp(1.12rem,2.15vw,1.48rem);
   text-shadow:0 2px 3px rgba(24,34,43,.14);
 }
-.stage{padding:2px 0 0}
+.stage{
+  padding:2px 0 0;
+  height:126px;
+  min-height:126px;
+  max-height:126px;
+  display:grid;
+  place-items:center;
+  overflow:visible;
+}
+.stage .audio-wave,
+.stage .orb-wrap{
+  grid-area:1 / 1;
+}
+.audio-wave{
+  min-height:126px;
+  height:126px;
+}
 .orb-wrap{width:126px;height:126px}
 .orb{width:92px;height:92px;font-size:31px}
 .you-said{margin:0 auto;min-height:18px;font-size:.84rem}
