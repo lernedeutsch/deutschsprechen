@@ -1612,8 +1612,24 @@ if(recognition){
     }
   };
 
-  recognition.onerror=()=>{
+  recognition.onerror=(event)=>{
     clearTimeout(recognitionTimeout);
+    recognizing=false;
+    setMicReady(false);
+
+    const unavailable=["not-allowed","service-not-allowed","audio-capture"];
+    if(unavailable.includes(event.error)){
+      statusLine.textContent="Mikrofon ist nicht verfügbar. Du kannst den Satz unten eintippen.";
+      setStage("idle","⌨️");
+      if(noMicNote){
+        noMicNote.style.display="block";
+        noMicNote.textContent="Mikrofon ist nicht verfügbar — nutze bitte das Textfeld oben.";
+      }
+    }else if(event.error!=="aborted"){
+      statusLine.textContent="Das hat nicht geklappt. Bitte versuche es noch einmal.";
+      setStage("idle","🎤");
+      setMicReady(true);
+    }
   };
 
   recognition.onend=()=>{
