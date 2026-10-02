@@ -479,31 +479,42 @@ button,input{font:inherit}
 
 /* Two listening difficulty modes: text support or listening only */
 .sentence-box{position:relative}
-.difficulty-toggle{
+.difficulty-choice{
   position:absolute;
-  top:8px;
+  top:7px;
   right:10px;
   display:flex;
-  gap:4px;
-  padding:3px;
+  align-items:center;
+  gap:8px;
+  z-index:2;
+}
+.difficulty-label{
+  font:800 .72rem/1 system-ui,-apple-system,"Segoe UI",sans-serif;
+  color:#5b6670;
+  white-space:nowrap;
+}
+.difficulty-toggle{
+  display:flex;
+  gap:5px;
+  padding:4px;
   border-radius:999px;
   background:rgba(36,55,69,.08);
   border:1px solid rgba(45,68,83,.12);
-  z-index:2;
 }
 .difficulty-btn{
   border:0;
   border-radius:999px;
-  padding:5px 9px;
-  font:800 .68rem/1 system-ui,-apple-system,"Segoe UI",sans-serif;
+  padding:7px 12px;
+  font:800 .76rem/1 system-ui,-apple-system,"Segoe UI",sans-serif;
   color:#405566;
   background:transparent;
   cursor:pointer;
 }
 .difficulty-btn.active{
   color:#fff;
-  background:#315b78;
-  box-shadow:0 2px 6px rgba(30,54,72,.20);
+  background:linear-gradient(180deg,#2f806c,#246451);
+  box-shadow:0 4px 9px rgba(26,83,66,.28),inset 0 1px 0 rgba(255,255,255,.20);
+  transform:translateY(-1px);
 }
 .sentence-text.listening-only{
   font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -990,9 +1001,12 @@ button,input{font:inherit}
       <p id="training-step" style="text-align:center;font-weight:800;color:#315b78;margin:0 0 8px">1. 🔊 Hören → 2. 🎤 Nachsprechen → 3. ✅ Feedback</p>
 
       <div class="sentence-box">
-        <div class="difficulty-toggle" role="group" aria-label="Schwierigkeitsgrad">
-          <button type="button" class="difficulty-btn active" id="mode-text" aria-pressed="true">👁 Mit Text</button>
-          <button type="button" class="difficulty-btn" id="mode-listen" aria-pressed="false">🎧 Nur hören</button>
+        <div class="difficulty-choice">
+          <span class="difficulty-label">Wie möchtest du üben?</span>
+          <div class="difficulty-toggle" role="group" aria-label="Wie möchtest du üben?">
+            <button type="button" class="difficulty-btn active" id="mode-text" aria-pressed="true">👁 Mit Text</button>
+            <button type="button" class="difficulty-btn" id="mode-listen" aria-pressed="false">🎧 Nur hören</button>
+          </div>
         </div>
         <p class="sentence-text" id="sentence-text"></p>
       </div>
