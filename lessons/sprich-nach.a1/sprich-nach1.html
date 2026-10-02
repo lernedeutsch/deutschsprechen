@@ -476,6 +476,43 @@ button,input{font:inherit}
     0 2px 4px rgba(83,62,40,.16);
 }
 
+
+/* Two listening difficulty modes: text support or listening only */
+.sentence-box{position:relative}
+.difficulty-toggle{
+  position:absolute;
+  top:8px;
+  right:10px;
+  display:flex;
+  gap:4px;
+  padding:3px;
+  border-radius:999px;
+  background:rgba(36,55,69,.08);
+  border:1px solid rgba(45,68,83,.12);
+  z-index:2;
+}
+.difficulty-btn{
+  border:0;
+  border-radius:999px;
+  padding:5px 9px;
+  font:800 .68rem/1 system-ui,-apple-system,"Segoe UI",sans-serif;
+  color:#405566;
+  background:transparent;
+  cursor:pointer;
+}
+.difficulty-btn.active{
+  color:#fff;
+  background:#315b78;
+  box-shadow:0 2px 6px rgba(30,54,72,.20);
+}
+.sentence-text.listening-only{
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:.92rem;
+  font-weight:800;
+  color:#60717d;
+  letter-spacing:.01em;
+}
+
 /* Audio visualizer: shown only while the lector is speaking */
 .audio-wave{
   display:none;
@@ -953,6 +990,10 @@ button,input{font:inherit}
       <p id="training-step" style="text-align:center;font-weight:800;color:#315b78;margin:0 0 8px">1. 🔊 Hören → 2. 🎤 Nachsprechen → 3. ✅ Feedback</p>
 
       <div class="sentence-box">
+        <div class="difficulty-toggle" role="group" aria-label="Schwierigkeitsgrad">
+          <button type="button" class="difficulty-btn active" id="mode-text" aria-pressed="true">👁 Mit Text</button>
+          <button type="button" class="difficulty-btn" id="mode-listen" aria-pressed="false">🎧 Nur hören</button>
+        </div>
         <p class="sentence-text" id="sentence-text"></p>
       </div>
 
@@ -1061,6 +1102,7 @@ let firstTryCorrect=0;
 let difficultIndices=new Set();
 let attemptCounts={};
 let reviewQueue=null;
+let showSentenceText=true;
 
 const stage=document.getElementById("stage");
 const statusLine=document.getElementById("status-line");
@@ -1079,15 +1121,47 @@ const micButton=document.getElementById("mic-btn");
 const noMicNote=document.getElementById("no-mic-note");
 const historyList=document.getElementById("history-list");
 const historyEmpty=document.getElementById("history-empty");
+const modeTextButton=document.getElementById("mode-text");
+const modeListenButton=document.getElementById("mode-listen");
+
+function updateDifficultyMode(){
+  modeTextButton?.classList.toggle("active",showSentenceText);
+  modeListenButton?.classList.toggle("active",!showSentenceText);
+  modeTextButton?.setAttribute("aria-pressed",String(showSentenceText));
+  modeListenButton?.setAttribute("aria-pressed",String(!showSentenceText));
+  if(!showSentenceText){
+    sentenceText.className="sentence-text listening-only";
+    sentenceText.textContent="🎧 Hör gut zu …";
+  }else{
+    sentenceText.className="sentence-text";
+    if(currentIndex<sentences.length)renderSentenceShell(sentences[currentIndex]);
+  }
+}
+
+modeTextButton?.addEventListener("click",()=>{
+  showSentenceText=true;
+  updateDifficultyMode();
+});
+modeListenButton?.addEventListener("click",()=>{
+  showSentenceText=false;
+  updateDifficultyMode();
+});
 
 /* ---------- Sprachausgabe wie bei Nele ---------- */
 
 function renderSentenceShell(text){
+  if(!showSentenceText){
+    sentenceText.className="sentence-text listening-only";
+    sentenceText.textContent="🎧 Hör gut zu …";
+    return;
+  }
+  sentenceText.className="sentence-text";
   const words=text.split(" ");
   sentenceText.innerHTML=words.map(w=>`<span class="word">${w}</span>`).join(" ");
 }
 
 function revealWordsTimed(text,rate){
+  if(!showSentenceText)return;
   const words=sentenceText.querySelectorAll(".word");
   const wordsPerMs=(150*rate)/60000;
   const stepMs=Math.max(90,1/wordsPerMs);
