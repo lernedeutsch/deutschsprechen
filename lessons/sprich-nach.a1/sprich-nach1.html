@@ -1012,6 +1012,23 @@ button,input{font:inherit}
   100%{transform:perspective(120px) rotateY(360deg)}
 }
 @media (prefers-reduced-motion:reduce){.translation-globe{animation:none!important}}
+
+/* Larger completion actions */
+.done-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.done-actions .pill-btn{
+  min-height:54px;
+  min-width:230px;
+  padding:12px 22px;
+  border-radius:14px;
+  gap:7px;
+  font-size:.92rem;
+  font-weight:800;
+  text-decoration:none;
+  text-align:center;
+  box-shadow:0 7px 16px rgba(20,39,57,.14);
+}
+.done-actions #difficult-btn{min-width:300px}
+@media(max-width:820px){.done-actions .pill-btn,.done-actions #difficult-btn{width:100%;min-width:0}}
 </style>
 <link rel="stylesheet" href="../../css/translation-globe.css">
 <link rel="stylesheet" href="../../css/page-progress.css">
@@ -1132,10 +1149,10 @@ button,input{font:inherit}
         <h2 class="done-title">Geschafft!</h2>
         <p class="done-text">Du hast alle Sätze aus Lektion 1 nachgesprochen. Klasse gemacht!</p>
         <p class="done-text" id="done-summary" style="font-weight:800"></p>
-        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-          <button class="pill-btn" id="difficult-btn" style="max-width:300px">🔁 Schwierige Sätze wiederholen</button>
-          <button class="pill-btn" id="done-restart-btn" style="max-width:260px">🔄 Alle noch einmal üben</button>
-          <a class="pill-btn" href="../ubungen.a1/ubungen1.html" style="max-width:260px;text-decoration:none;text-align:center">➡️ Weiter zu Übungen</a>
+        <div class="done-actions">
+          <button class="pill-btn" id="difficult-btn">🔁 Schwierige Sätze wiederholen</button>
+          <button class="pill-btn" id="done-restart-btn">🔄 Alle noch einmal üben</button>
+          <a class="pill-btn" href="../ubungen.a1/ubungen1.html">➡️ Weiter zu Übungen</a>
         </div>
       </div>
 
