@@ -762,6 +762,7 @@ button,input{font:inherit}
       </div>
 
       <p class="status-line" id="status-line">Bereit …</p>
+      <p id="training-step" style="text-align:center;font-weight:800;color:#315b78;margin:0 0 8px">1. 🔊 Hören → 2. 🎤 Nachsprechen → 3. ✅ Feedback</p>
 
       <div class="sentence-box">
         <p class="sentence-text" id="sentence-text"></p>
@@ -861,7 +862,7 @@ let recognition=null;
 let playbackToken=0;
 let speechRunId=0;
 let activeUtterance=null;
-let germanVoice=null;
+let germanVoice=null;\nlet firstTryCorrect=0;\nlet difficultIndices=new Set();\nlet attemptCounts={};\nlet reviewQueue=null;
 
 const stage=document.getElementById("stage");
 const statusLine=document.getElementById("status-line");
@@ -1292,7 +1293,7 @@ async function playCurrentAndListen(){
   }
 }
 
-function handleAnswer(said){
+function handleAnswer(said){\n  attemptCounts[currentIndex]=(attemptCounts[currentIndex]||0)+1;
   setMicReady(false);
   recognizing=false;
   if(recognition){try{recognition.stop();}catch(e){}}
@@ -1329,7 +1330,7 @@ function handleAnswer(said){
     youSaid.textContent="Du: "+said;
     youSaid.className="you-said bad";
     setStage("incorrect","🙈");
-    statusLine.textContent="Nicht ganz. Bitte noch einmal.";
+    difficultIndices.add(currentIndex);\n    statusLine.textContent="Fast richtig. Hör noch einmal und sprich langsam nach.";
 
     const token=++playbackToken;
 
