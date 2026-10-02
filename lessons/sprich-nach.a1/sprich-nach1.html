@@ -1734,6 +1734,9 @@ function handleAnswer(said){
       statusLine.textContent="Sehr gut — jetzt stimmt es! ✨";
     }
     addToHistory(currentIndex,target);
+    /* Po poprawnym zaliczeniu zdanie nie jest już „trudne”.
+       Dotyczy to także zdań wcześniej pominiętych przyciskiem Nächster Satz. */
+    difficultIndices.delete(currentIndex);
     if(reviewQueue){
       if(reviewQueue.length){
         currentIndex=reviewQueue.shift();
