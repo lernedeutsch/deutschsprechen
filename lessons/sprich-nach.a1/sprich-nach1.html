@@ -1820,6 +1820,8 @@ document.getElementById("next-btn").addEventListener("click",()=>{
   stopRecognitionCompletely();
   stopSpeechSafely();
   if(currentIndex<sentences.length){
+    /* Pominięte zdanie nie przepada — wraca na końcu do powtórki. */
+    difficultIndices.add(currentIndex);
     currentIndex++;
   }
   playCurrentAndListen();
