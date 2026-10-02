@@ -989,38 +989,29 @@ button,input{font:inherit}
   .layout .panel{height:auto;max-height:none;min-height:0;border-radius:20px;overflow:visible}
 }
 
-/* Final visual tuning: lighter history panel + blue rotating translation globe */
+/* Final visual tuning: lighter history panel + Lektion-2-style blue globe */
 .history-panel{
   background:linear-gradient(180deg,#294d70 0%,#1d3e5e 55%,#173650 100%);
 }
 .translation-globe{
-  display:inline-block;
-  filter:hue-rotate(175deg) saturate(3.2) brightness(1.12) contrast(1.14)
-         drop-shadow(0 0 5px rgba(43,164,255,.72)) !important;
-  transform-style:preserve-3d;
-  animation:translationGlobeSpin 2.8s linear infinite;
-}
-@keyframes translationGlobeSpin{
-  0%{transform:perspective(90px) rotateY(0deg)}
-  25%{transform:perspective(90px) rotateY(90deg) scaleX(.72)}
-  50%{transform:perspective(90px) rotateY(180deg)}
-  75%{transform:perspective(90px) rotateY(270deg) scaleX(.72)}
-  100%{transform:perspective(90px) rotateY(360deg)}
-}
-@media (prefers-reduced-motion:reduce){
-  .translation-globe{animation:none}
-}
-
-</style>
-
-<style>
-.translation-globe{
-  display:inline-block;
+  display:inline-block!important;
   font-size:1.30em;
   line-height:1;
   vertical-align:-.10em;
-  filter:hue-rotate(115deg) saturate(2.8) brightness(1.28) contrast(1.18) drop-shadow(0 0 4px rgba(255,74,190,.72));
+  filter:hue-rotate(175deg) saturate(3.4) brightness(1.16) contrast(1.16)
+         drop-shadow(0 0 4px rgba(40,156,255,.58))!important;
+  animation:lektion2GlobeAxisSpin 2.4s linear infinite!important;
+  transform-origin:50% 50%;
+  transform-style:preserve-3d;
 }
+@keyframes lektion2GlobeAxisSpin{
+  0%{transform:perspective(120px) rotateY(0deg)}
+  25%{transform:perspective(120px) rotateY(90deg)}
+  50%{transform:perspective(120px) rotateY(180deg)}
+  75%{transform:perspective(120px) rotateY(270deg)}
+  100%{transform:perspective(120px) rotateY(360deg)}
+}
+@media (prefers-reduced-motion:reduce){.translation-globe{animation:none!important}}
 </style>
 <link rel="stylesheet" href="../../css/translation-globe.css">
 <link rel="stylesheet" href="../../css/page-progress.css">
