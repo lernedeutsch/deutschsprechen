@@ -1755,13 +1755,13 @@ function handleAnswer(said){
     youSaid.className="you-said bad";
     setStage("incorrect","🙈");
     difficultIndices.add(currentIndex);
-    statusLine.textContent="Fast richtig. Hör noch einmal und sprich langsam nach.";
+    statusLine.textContent="Fast richtig, bitte noch einmal.";
 
     const token=++playbackToken;
 
     stopRecognitionCompletely();
 
-    speak("Nicht ganz, bitte noch einmal.").then(()=>{
+    speak("Fast richtig, bitte noch einmal.").then(()=>{
       setTimeout(()=>{
         if(token===playbackToken)playCurrentAndListen();
       },520);
