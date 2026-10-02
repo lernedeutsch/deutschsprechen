@@ -862,7 +862,11 @@ let recognition=null;
 let playbackToken=0;
 let speechRunId=0;
 let activeUtterance=null;
-let germanVoice=null;\nlet firstTryCorrect=0;\nlet difficultIndices=new Set();\nlet attemptCounts={};\nlet reviewQueue=null;
+let germanVoice=null;
+let firstTryCorrect=0;
+let difficultIndices=new Set();
+let attemptCounts={};
+let reviewQueue=null;
 
 const stage=document.getElementById("stage");
 const statusLine=document.getElementById("status-line");
@@ -1293,7 +1297,8 @@ async function playCurrentAndListen(){
   }
 }
 
-function handleAnswer(said){\n  attemptCounts[currentIndex]=(attemptCounts[currentIndex]||0)+1;
+function handleAnswer(said){
+  attemptCounts[currentIndex]=(attemptCounts[currentIndex]||0)+1;
   setMicReady(false);
   recognizing=false;
   if(recognition){try{recognition.stop();}catch(e){}}
@@ -1330,7 +1335,8 @@ function handleAnswer(said){\n  attemptCounts[currentIndex]=(attemptCounts[curre
     youSaid.textContent="Du: "+said;
     youSaid.className="you-said bad";
     setStage("incorrect","🙈");
-    difficultIndices.add(currentIndex);\n    statusLine.textContent="Fast richtig. Hör noch einmal und sprich langsam nach.";
+    difficultIndices.add(currentIndex);
+    statusLine.textContent="Fast richtig. Hör noch einmal und sprich langsam nach.";
 
     const token=++playbackToken;
 
