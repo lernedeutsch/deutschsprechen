@@ -989,6 +989,28 @@ button,input{font:inherit}
   .layout .panel{height:auto;max-height:none;min-height:0;border-radius:20px;overflow:visible}
 }
 
+/* Final visual tuning: lighter history panel + blue rotating translation globe */
+.history-panel{
+  background:linear-gradient(180deg,#294d70 0%,#1d3e5e 55%,#173650 100%);
+}
+.translation-globe{
+  display:inline-block;
+  filter:hue-rotate(175deg) saturate(3.2) brightness(1.12) contrast(1.14)
+         drop-shadow(0 0 5px rgba(43,164,255,.72)) !important;
+  transform-style:preserve-3d;
+  animation:translationGlobeSpin 2.8s linear infinite;
+}
+@keyframes translationGlobeSpin{
+  0%{transform:perspective(90px) rotateY(0deg)}
+  25%{transform:perspective(90px) rotateY(90deg) scaleX(.72)}
+  50%{transform:perspective(90px) rotateY(180deg)}
+  75%{transform:perspective(90px) rotateY(270deg) scaleX(.72)}
+  100%{transform:perspective(90px) rotateY(360deg)}
+}
+@media (prefers-reduced-motion:reduce){
+  .translation-globe{animation:none}
+}
+
 </style>
 
 <style>
