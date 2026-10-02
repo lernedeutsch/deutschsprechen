@@ -938,14 +938,23 @@ button,input{font:inherit}
 }
 .sentence-box{
   margin:6px auto 2px;
-  max-width:720px;
-  min-height:88px;
-  padding:17px 22px;
+  max-width:760px;
+  min-height:100px;
+  padding:20px 25px;
   display:grid;
   place-items:center;
-  border-radius:15px;
+  border-radius:17px;
+  box-shadow:
+    inset 0 2px 1px rgba(255,255,255,.70),
+    inset 0 -4px 10px rgba(72,86,94,.08),
+    0 12px 24px rgba(61,52,40,.24),
+    0 4px 8px rgba(61,52,40,.14);
 }
-.sentence-text{margin:0;font-size:clamp(1.05rem,2vw,1.35rem)}
+.sentence-text{
+  margin:0;
+  font-size:clamp(1.12rem,2.15vw,1.48rem);
+  text-shadow:0 2px 3px rgba(24,34,43,.14);
+}
 .stage{padding:2px 0 0}
 .orb-wrap{width:126px;height:126px}
 .orb{width:92px;height:92px;font-size:31px}
