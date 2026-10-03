@@ -46,3 +46,13 @@ body .a1-standard-guide .learning-translation summary{white-space:nowrap!importa
   body .a1-standard-guide{display:block!important}
   body .a1-standard-guide>strong{white-space:normal!important}
 }
+
+/* A1 lessons 4-5: Lesson 2 arrow placement */
+.training-rail.a1-training-with-back>.back-to-top{
+ position:static!important;inset:auto!important;transform:none!important;
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ flex:0 0 auto!important;width:58px!important;height:58px!important;margin:0!important;padding:0!important;
+ background:#fff!important;border:1px solid #d9e4f0!important;border-radius:999px!important;
+ color:#101820!important;text-decoration:none!important;font-weight:700!important
+}
+@media(min-width:1400px){.training-rail.a1-training-with-back>.back-to-top{align-self:center!important}}
