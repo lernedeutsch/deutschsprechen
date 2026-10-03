@@ -978,6 +978,6 @@ const kb=document.getElementById("ich-kann-button"),kp=document.getElementById("
 kb?.addEventListener("click",()=>{const open=kp.classList.toggle("show");kb.classList.toggle("open",open);kb.setAttribute("aria-expanded",String(open));kp.setAttribute("aria-hidden",String(!open));});
 </script>
 
-<nav class="nav lesson2-bottom-nav"><a class="top" href="#seitenanfang">↑ Zurück nach oben</a></nav><script>document.querySelectorAll(".ich-kann-button").forEach(function(b){if(b.dataset.toggleReady)return;b.dataset.toggleReady="1";b.addEventListener("click",function(){const p=document.getElementById(b.getAttribute("aria-controls"));if(!p)return;const o=p.classList.toggle("show");b.classList.toggle("open",o);b.setAttribute("aria-expanded",String(o));p.setAttribute("aria-hidden",String(!o));});});</script><script src="../../js/page-progress.js" defer></script>
+<script>document.querySelectorAll(".ich-kann-button").forEach(function(b){if(b.dataset.toggleReady)return;b.dataset.toggleReady="1";b.addEventListener("click",function(){const p=document.getElementById(b.getAttribute("aria-controls"));if(!p)return;const o=p.classList.toggle("show");b.classList.toggle("open",o);b.setAttribute("aria-expanded",String(o));p.setAttribute("aria-hidden",String(!o));});});</script><script src="../../js/page-progress.js" defer></script>
 </body>
 </html>
