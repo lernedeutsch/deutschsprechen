@@ -5,3 +5,44 @@
 
 /* A1 standard guide: align with review button */
 .a1-standard-guide{margin-left:18px!important;margin-right:18px!important;padding-left:19px!important;padding-right:19px!important}
+
+/* A1 3-30: force Lesson 2 top-control layout */
+body .a1-standard-guide{
+  box-sizing:border-box!important;
+  width:calc(100% - 36px)!important;
+  max-width:1144px!important;
+  margin:0 auto 22px!important;
+  padding:16px 19px!important;
+  background:#d5e2e9!important;
+  border:1px solid #e2ebf0!important;
+  border-radius:18px!important;
+  color:#173047!important;
+  box-shadow:0 8px 18px rgba(10,18,32,.10)!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:14px!important;
+}
+body .a1-standard-guide>strong{white-space:nowrap!important}
+body .a1-standard-guide .learning-translation{flex:0 0 auto!important}
+body .a1-standard-guide .learning-translation summary{white-space:nowrap!important;cursor:pointer!important}
+.training-rail.a1-training-with-back>.modul2-back-to-a1,
+.training-rail.a1-training-with-back>.back,
+.training-buttons.a1-training-with-back>.modul2-back-to-a1,
+.training-buttons.a1-training-with-back>.back{
+  position:static!important;inset:auto!important;transform:none!important;
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  flex:0 0 auto!important;width:58px!important;height:58px!important;
+  margin:0!important;padding:0!important;background:#fff!important;
+  border:1px solid #d9e4f0!important;border-radius:999px!important;
+  color:#101820!important;text-decoration:none!important;font-weight:700!important;
+}
+@media(min-width:1400px){
+  .training-rail.a1-training-with-back>.modul2-back-to-a1,
+  .training-rail.a1-training-with-back>.back,
+  .training-buttons.a1-training-with-back>.modul2-back-to-a1,
+  .training-buttons.a1-training-with-back>.back{align-self:center!important}
+}
+@media(max-width:899px){
+  body .a1-standard-guide{display:block!important}
+  body .a1-standard-guide>strong{white-space:normal!important}
+}
