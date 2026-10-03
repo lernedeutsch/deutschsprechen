@@ -1736,6 +1736,28 @@ body.is-listening #stop-btn{display:inline-flex}
           <strong>Du bist dran 🎤</strong>
           <span id="main-turn-instruction">Antworte auf die Begrüßung.</span>
         </div>
+        <div class="sidebar-mic">
+          <div class="mic-column">
+            <div class="mic-btn-wrap" id="mic-btn-wrap">
+              <span class="mic-ring"></span><span class="mic-ring"></span><span class="mic-ring"></span>
+              <button type="button" class="mic-btn" id="mic-btn" aria-label="Sprechen">🎤</button>
+            </div>
+            <p class="mic-status" id="mic-status">🎤 Zum Sprechen klicken</p>
+          </div>
+        </div>
+        <div class="sidebar-utility-row">
+          <button type="button" class="utility-btn repeat-btn" id="repeat-btn">🔊 Noch einmal hören</button>
+          <button type="button" class="utility-btn answer-btn" id="answer-btn">💡 Antwort zeigen</button>
+          <button type="button" class="utility-btn stop-btn" id="stop-btn">⏹ Stop</button>
+          <button type="button" class="utility-btn" id="skip-btn">Überspringen →</button>
+        </div>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-value" id="stat-score">0/12</span><span class="stat-label">Punkte</span></div>
+        <div class="stat"><span class="stat-value" id="stat-streak">0🔥</span><span class="stat-label">Serie</span></div>
+        <div class="stat"><span class="stat-value" id="stat-progress">1/12</span><span class="stat-label">Schritt</span></div>
+      </div>
 
     </aside>
 
