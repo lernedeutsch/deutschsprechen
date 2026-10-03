@@ -1427,6 +1427,32 @@ button{font:inherit}
   margin-top:0 !important;
   margin-bottom:0 !important;
 }
+
+/* Use the full height of the large right panel for dialogue history */
+.card{
+  display:flex !important;
+  flex-direction:column !important;
+  min-height:740px !important;
+}
+.main-history-panel{
+  flex:1 1 auto !important;
+  height:auto !important;
+  min-height:650px !important;
+  max-height:none !important;
+}
+.main-history-panel .history-list{
+  height:100% !important;
+  min-height:650px !important;
+  max-height:none !important;
+  overflow-y:auto !important;
+  align-content:start !important;
+  padding-bottom:22px !important;
+}
+@media(max-width:900px){
+  .card{min-height:680px !important;}
+  .main-history-panel,
+  .main-history-panel .history-list{min-height:590px !important;}
+}
 </style>
 
 <style>
