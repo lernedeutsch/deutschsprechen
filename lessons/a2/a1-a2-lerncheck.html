@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bist du bereit für A2? · A1 → A2 Lerncheck</title>
+<style>
+:root{--bg:#07182c;--bg2:#0c2744;--card:#102d4d;--text:#f5f8fc;--muted:#b9c8d8;--gold:#f4c95d;--blue:#72d8ff;--green:#75d64a;--red:#ff9b86;--line:#ffffff1c}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(#07182c,#0c2744);color:var(--text);font:16px/1.55 Arial,sans-serif}.page{max-width:900px;margin:auto;padding:26px 16px 70px}
+.top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.top a,.btn{border:0;border-radius:14px;padding:11px 15px;text-decoration:none;font-weight:850;cursor:pointer}.top a{background:#72d8ff;color:#07182c}
+.hero,.panel{margin:24px 0;padding:26px;border:1px solid var(--line);border-radius:24px;background:#102d4d}.hero h1{font-size:clamp(2rem,6vw,3.2rem);margin:3px 0 10px}.hero p{color:var(--muted);max-width:700px}.pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#ffffff12;color:#dbe7f2;font-weight:800}
+.progress{height:10px;background:#ffffff14;border-radius:999px;overflow:hidden;margin:18px 0}.bar{height:100%;width:0;background:#75d64a;transition:.25s}
+.intro-grid,.result-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.mini{padding:16px;border:1px solid var(--line);border-radius:18px;background:#ffffff0b}.mini b{display:block;margin-bottom:4px}.mini span{color:var(--muted)}
+.question{display:none}.question.active{display:block}.qmeta{color:#72d8ff;font-weight:900}.question h2{margin:8px 0 8px}.hint{color:var(--muted);margin-top:0}
+.options{display:grid;gap:10px;margin:18px 0}.option{width:100%;text-align:left;padding:14px 16px;border:1px solid #ffffff28;border-radius:15px;background:#ffffff0b;color:#fff;font:inherit;cursor:pointer}.option:hover{background:#ffffff16}.option.selected{outline:3px solid #72d8ff;background:#72d8ff18}
+.answer{width:100%;padding:13px;border:1px solid #ffffff35;border-radius:13px;background:#07182c;color:#fff;font:inherit}.nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}.btn.primary{background:#75d64a;color:#07182c}.btn.secondary{background:#ffffff14;color:#fff}.btn:disabled{opacity:.42;cursor:not-allowed}
+.hidden{display:none!important}.score{font-size:2.5rem;font-weight:900;color:#f4c95d}.status{font-weight:900}.good{color:#8fe36c}.warn{color:#ffd777}.bad{color:#ff9b86}.repair{display:block;margin-top:10px;padding:9px 11px;border-radius:11px;background:#72d8ff;color:#07182c;text-decoration:none;font-weight:850}.final-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}.note{padding:14px;border-left:4px solid #f4c95d;background:#ffffff0b;border-radius:12px;color:#dce7f2}
+@media(max-width:650px){.intro-grid,.result-grid{grid-template-columns:1fr}.hero,.panel{padding:20px}.nav{flex-direction:column}.btn{width:100%}}
+</style></head><body><main class="page">
+<div class="top"><a href="index.html">← A2 Übersicht</a><a href="../a1/index.html">A1 wiederholen</a></div>
+<section class="hero"><span class="pill">A1 → A2 Lerncheck</span><h1>Bist du bereit für A2?</h1><p>Dieser Check zeigt dir nicht nur eine Punktzahl. Er prüft wichtige A1-Grundlagen und sagt dir danach konkret, was du vor A2 noch wiederholen solltest.</p><div class="intro-grid"><div class="mini"><b>🗣️ Sprache & Alltag</b><span>Vorstellen, Termine, Einkaufen, typische Situationen</span></div><div class="mini"><b>👂 Hören</b><span>Kurze Informationen verstehen</span></div><div class="mini"><b>📖 Lesen</b><span>Nachrichten, Schilder und kurze Texte</span></div><div class="mini"><b>🧩 Grammatik & Wortschatz</b><span>Verben, Satzbau, Akkusativ, Modalverben</span></div></div></section>
+<section class="panel" id="start"><h2>So funktioniert es</h2><p>Beantworte 18 kurze Aufgaben möglichst ohne Hilfe. Einige Aufgaben prüfen dieselbe Fähigkeit auf unterschiedliche Weise. Danach bekommst du deinen persönlichen Lernplan.</p><p class="note">Der Check ist eine Lernhilfe, keine offizielle Goethe-Prüfung. Wenn etwas noch nicht sitzt, ist das kein Problem: Du bekommst direkt den passenden Weg zurück zum A1-Training.</p><button class="btn primary" id="startBtn">Check starten →</button></section>
+<section class="panel hidden" id="quiz"><div><b id="counter">1 / 18</b><span style="float:right" id="areaLabel"></span></div><div class="progress"><div class="bar" id="bar"></div></div><div id="questions"></div><div class="nav"><button class="btn secondary" id="prev">← Zurück</button><button class="btn primary" id="next">Weiter →</button></div></section>
+<section class="panel hidden" id="results"><span class="pill">Dein Ergebnis</span><h2 id="resultTitle">Dein A1-Check</h2><div class="score" id="score"></div><p id="summary"></p><div class="result-grid" id="resultGrid"></div><div id="repairs"></div><div class="final-actions"><button class="btn secondary" id="again">🔄 A1-Check noch einmal machen</button><a class="btn primary" id="toA2" href="lektion-1.html">🚀 Mit A2 Lektion 1 beginnen</a></div></section>
+</main><script>
+const Q=[
+{a:"Sprechen",t:"Welche Antwort passt zur Vorstellung?",o:["Ich heiße Maria und ich komme aus Polen.","Ich heißen Maria aus Polen.","Maria komme Polen."],c:0},
+{a:"Sprechen",t:"Du wirst gefragt: „Wo wohnst du?“",o:["Ich wohne in Heidelberg.","Ich bin Heidelberg wohnen.","In Heidelberg ich."],c:0},
+{a:"Alltag",t:"Du möchtest einen Termin. Was sagst du?",o:["Ich hätte gern einen Termin.","Ich Termin haben gestern.","Termin ist ich."],c:0},
+{a:"Alltag",t:"Im Geschäft möchtest du den Preis wissen.",o:["Wie viel kostet das?","Wie viele Uhr ist das?","Woher kostet das?"],c:0},
+{a:"Hören",t:"Hör zu: Wann ist der Termin?",s:"Ihr Termin ist am Dienstag um halb zehn.",o:["Dienstag, 9:30 Uhr","Dienstag, 10:30 Uhr","Donnerstag, 9:30 Uhr"],c:0},
+{a:"Hören",t:"Hör zu: Was soll die Person kaufen?",s:"Bitte kauf zwei Äpfel und eine Flasche Wasser.",o:["Äpfel und Wasser","Brot und Milch","Äpfel und Saft"],c:0},
+{a:"Hören",t:"Hör zu: Wo fährt der Zug ab?",s:"Der Zug nach Mannheim fährt heute von Gleis vier.",o:["Gleis 4","Gleis 14","Bussteig 4"],c:0},
+{a:"Lesen",t:"„Heute geschlossen. Morgen ab 8 Uhr geöffnet.“ Was stimmt?",o:["Heute kann man nicht hinein.","Heute ist ab 8 Uhr geöffnet.","Morgen ist geschlossen."],c:0},
+{a:"Lesen",t:"„Hallo Lea, ich komme 20 Minuten später. Warte bitte vor dem Kino.“ Wo soll Lea warten?",o:["vor dem Kino","im Restaurant","am Bahnhof"],c:0},
+{a:"Lesen",t:"„Wohnung: 2 Zimmer, Küche, Bad, 650 € im Monat.“ Was kostet die Wohnung?",o:["650 € pro Monat","2 € pro Monat","650 € pro Woche"],c:0},
+{a:"Grammatik",t:"Ergänze: Ich ___ eine Schwester.",o:["habe","hat","bist"],c:0,tag:"haben"},
+{a:"Grammatik",t:"Ergänze: Wir ___ heute arbeiten.",o:["müssen","muss","musst"],c:0,tag:"modal"},
+{a:"Grammatik",t:"Welcher Satz ist richtig?",o:["Ich kaufe einen Apfel.","Ich kaufe ein Apfel.","Ich einen Apfel kaufe."],c:0,tag:"akk"},
+{a:"Grammatik",t:"Welcher Satz ist richtig?",o:["Ich habe kein Auto.","Ich habe nicht Auto.","Ich kein habe Auto."],c:0,tag:"neg"},
+{a:"Grammatik",t:"Bilde die richtige Frage.",o:["Wann kommst du?","Wann du kommst?","Kommst wann du?"],c:0,tag:"satz"},
+{a:"Wortschatz",t:"Was passt? „Ich bin krank. Ich gehe zum …“",o:["Arzt","Bahnhof","Supermarkt"],c:0},
+{a:"Wortschatz",t:"Was passt zu „Familie“?",o:["Eltern, Bruder, Schwester","Zug, Gleis, Fahrkarte","Hemd, Hose, Kasse"],c:0},
+{a:"Alltag",t:"Jemand sagt: „Entschuldigung, können Sie mir helfen?“ Was ist eine passende Antwort?",o:["Ja, natürlich.","Ich heiße Dienstag.","Zwanzig Euro Uhr."],c:0}
+];
+const map={
+Sprechen:{href:"../a1/lektion-1.html",label:"Sprechen: Vorstellung und einfache Antworten wiederholen"},
+Alltag:{href:"../dialoge.a1/dialoge1.html",label:"Alltagssituationen in A1-Dialogen üben"},
+Hören:{href:"../pruefung.a1/index.html",label:"Hören im A1-Prüfungstraining üben"},
+Lesen:{href:"../pruefung.a1/index.html",label:"Lesen im A1-Prüfungstraining üben"},
+Grammatik:{href:"../a1/grammatik.html",label:"Grammatik A1 gezielt wiederholen"},
+Wortschatz:{href:"../a1/woerterbuch-a1.html",label:"Wortschatz A1 wiederholen"}
+};
+let i=0,ans=Array(Q.length).fill(null),voice=null;
+const qs=document.getElementById("questions");
+function renderAll(){qs.innerHTML=Q.map((q,n)=>'<section class="question" data-n="'+n+'"><div class="qmeta">'+q.a+'</div><h2>'+q.t+'</h2>'+(q.s?'<button class="btn secondary speak" data-text="'+q.s.replace(/"/g,'&quot;')+'">🔊 Anhören</button>':'')+'<div class="options">'+q.o.map((x,j)=>'<button class="option" data-q="'+n+'" data-v="'+j+'">'+x+'</button>').join("")+'</div></section>').join("");bind()}
+function bind(){document.querySelectorAll(".option").forEach(b=>b.onclick=()=>{ans[+b.dataset.q]=+b.dataset.v;document.querySelectorAll('.option[data-q="'+b.dataset.q+'"]').forEach(x=>x.classList.toggle("selected",x===b));document.getElementById("next").disabled=false});document.querySelectorAll(".speak").forEach(b=>b.onclick=()=>speak(b.dataset.text))}
+function speak(t){if(!("speechSynthesis" in window))return;speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang="de-DE";u.rate=.82;if(voice)u.voice=voice;speechSynthesis.speak(u)}
+function voices(){if(!("speechSynthesis" in window))return;let v=speechSynthesis.getVoices();voice=v.find(x=>x.lang.toLowerCase()==="de-de")||v.find(x=>x.lang.toLowerCase().startsWith("de"))||null}voices();if("speechSynthesis" in window)speechSynthesis.addEventListener("voiceschanged",voices);
+function show(){document.querySelectorAll(".question").forEach((x,n)=>x.classList.toggle("active",n===i));counter.textContent=(i+1)+" / "+Q.length;areaLabel.textContent=Q[i].a;bar.style.width=((i+1)/Q.length*100)+"%";prev.disabled=i===0;next.textContent=i===Q.length-1?"Ergebnis anzeigen →":"Weiter →";next.disabled=ans[i]===null}
+startBtn.onclick=()=>{start.classList.add("hidden");quiz.classList.remove("hidden");renderAll();show()};
+prev.onclick=()=>{if(i>0){i--;show()}};
+next.onclick=()=>{if(ans[i]===null)return;if(i<Q.length-1){i++;show()}else finish()};
+again.onclick=()=>{i=0;ans=Array(Q.length).fill(null);results.classList.add("hidden");quiz.classList.remove("hidden");renderAll();show()};
+function finish(){quiz.classList.add("hidden");results.classList.remove("hidden");const areas={};Q.forEach((q,n)=>{areas[q.a]??={ok:0,total:0};areas[q.a].total++;if(ans[n]===q.c)areas[q.a].ok++});const total=Q.reduce((s,q,n)=>s+(ans[n]===q.c),0),pct=Math.round(total/Q.length*100);score.textContent=total+" / "+Q.length+" · "+pct+"%";let weak=[];resultGrid.innerHTML=Object.entries(areas).map(([a,v])=>{let p=v.ok/v.total,s=p>=.75?"sicher":p>=.5?"noch üben":"wiederholen",cl=p>=.75?"good":p>=.5?"warn":"bad";if(p<.75)weak.push(a);return '<div class="mini"><b>'+a+'</b><span class="status '+cl+'">'+v.ok+' / '+v.total+' · '+s+'</span></div>'}).join("");
+const ready=weak.length===0&&pct>=75;resultTitle.textContent=ready?"Du hast eine gute A1-Basis für A2.":"Dein persönlicher A1-Lernplan";summary.textContent=ready?"Du kannst mit A2 beginnen. Nutze die Wiederholungen trotzdem, wenn du dich bei einem Thema noch unsicher fühlst.":"Vor A2 solltest du die markierten Bereiche noch einmal üben. Danach kannst du den Check wiederholen.";repairs.innerHTML=weak.length?'<h3>Das solltest du vor A2 wiederholen:</h3>'+[...new Set(weak)].map(a=>'<a class="repair" href="'+map[a].href+'">⚠️ '+map[a].label+' →</a>').join(""):'<p class="note">🎉 Alle geprüften Kernbereiche sind ausreichend sicher.</p>';toA2.textContent=ready?"🚀 Mit A2 Lektion 1 beginnen":"A2 trotzdem öffnen →";localStorage.setItem("a1A2Lerncheck",JSON.stringify({date:new Date().toISOString(),score:total,total:Q.length,areas}))}
+const saved=localStorage.getItem("a1A2Lerncheck");if(saved){try{const s=JSON.parse(saved);start.insertAdjacentHTML("beforeend",'<p class="note" style="margin-top:18px">Letzter Check: '+s.score+' / '+s.total+'. Du kannst den Check jederzeit neu machen.</p>')}catch(e){}}
+</script></body></html>
