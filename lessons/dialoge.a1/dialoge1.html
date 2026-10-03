@@ -1315,6 +1315,63 @@ button{font:inherit}
   visibility:visible !important;
   z-index:10 !important;
 }
+
+/* Two-column conversation history + smaller bubbles */
+.main-history-panel .history-list{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+  column-gap:26px !important;
+  row-gap:9px !important;
+  align-content:start !important;
+  position:relative !important;
+}
+.main-history-panel .history-list::after{
+  content:"";
+  position:absolute;
+  top:8px;
+  bottom:8px;
+  left:50%;
+  width:1px;
+  background:rgba(155,190,175,.18);
+  pointer-events:none;
+}
+.main-history-panel .history-divider{
+  grid-column:1 / -1 !important;
+  width:100% !important;
+  margin:5px 0 2px !important;
+}
+.main-history-panel .history-entry{
+  width:max-content !important;
+  max-width:82% !important;
+  padding:8px 12px !important;
+  font-size:.88rem !important;
+  line-height:1.3 !important;
+  border-radius:14px 14px 14px 5px !important;
+  justify-self:start !important;
+  align-self:start !important;
+}
+.main-history-panel .history-entry.user{
+  justify-self:end !important;
+  border-radius:14px 14px 5px 14px !important;
+}
+.main-history-panel .history-entry .speaker{
+  font-size:.68rem !important;
+  margin-bottom:1px !important;
+}
+.main-history-panel .history-entry.dialog-0,
+.main-history-panel .history-entry.dialog-2{
+  grid-column:1 !important;
+}
+.main-history-panel .history-entry.dialog-1,
+.main-history-panel .history-entry.dialog-3{
+  grid-column:2 !important;
+}
+.main-history-panel .history-divider:nth-of-type(4n+1){grid-column:1 / -1 !important;}
+@media(max-width:760px){
+ .main-history-panel .history-list{grid-template-columns:1fr !important;}
+ .main-history-panel .history-list::after{display:none !important;}
+ .main-history-panel .history-entry{grid-column:1 !important;}
+}
 </style>
 
 <style>
