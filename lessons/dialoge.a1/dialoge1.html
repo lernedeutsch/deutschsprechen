@@ -1453,6 +1453,22 @@ button{font:inherit}
   .main-history-panel,
   .main-history-panel .history-list{min-height:590px !important;}
 }
+
+/* Separator after each completed dialogue, inside its own compartment */
+.main-history-panel .history-divider{
+  display:block !important;
+  width:calc(100% - 20px) !important;
+  height:1px !important;
+  padding:0 !important;
+  margin:7px 10px 9px !important;
+  background:rgba(151,190,173,.28) !important;
+  color:transparent !important;
+  overflow:hidden !important;
+  align-self:center !important;
+  justify-self:stretch !important;
+}
+.main-history-panel .history-divider.left-column{grid-column:1 !important;}
+.main-history-panel .history-divider.right-column{grid-column:2 !important;}
 </style>
 
 <style>
@@ -2639,9 +2655,17 @@ function addHistoryDivider(title){
   }
 
   const divider=document.createElement("div");
+  const dialogueIndex=current().dialogueIndex;
+  const leftColumn=(dialogueIndex%2===0);
+  const columnSelector=leftColumn
+    ? ".history-entry.dialog-0, .history-entry.dialog-2, .history-divider.left-column"
+    : ".history-entry.dialog-1, .history-entry.dialog-3, .history-divider.right-column";
+  const earlierItemsInColumn=
+    els.historyList.querySelectorAll(columnSelector).length;
 
-  divider.className="history-divider";
-  divider.textContent=`— ${title} —`;
+  divider.className=`history-divider ${leftColumn?"left-column":"right-column"}`;
+  divider.setAttribute("aria-label",`Koniec: ${title}`);
+  divider.style.gridRow=String(earlierItemsInColumn+1);
 
   els.historyList.appendChild(divider);
   els.historyList.scrollTop=
