@@ -56,3 +56,10 @@ body .a1-standard-guide .learning-translation summary{white-space:nowrap!importa
  color:#101820!important;text-decoration:none!important;font-weight:700!important
 }
 @media(min-width:1400px){.training-rail.a1-training-with-back>.back-to-top{align-self:center!important}}
+
+/* A1 lessons 4-5: exact Lesson 2 arrow geometry */
+.training-rail.a1-training-with-back>.back-to-top{
+ width:58px!important;height:58px!important;min-width:58px!important;min-height:58px!important;
+ box-sizing:border-box!important;padding:0!important;margin:0!important;gap:0!important;
+ line-height:1!important;font-size:1rem!important;border-radius:999px!important;
+}
