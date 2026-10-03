@@ -1100,8 +1100,8 @@ button,input{font:inherit}
         <div class="orb"><span class="orb-icon">👋</span></div>
       </div>
       <p class="start-lead">
-        Du hörst einen natürlichen Smalltalk-Satz für das Vorstellungsgespräch, sprichst ihn nach
-        und siehst sofort, ob dein Satz erkannt wurde. 20 Sätze warten.
+        Du hörst natürliche Smalltalk-Sätze für das Vorstellungsgespräch, sprichst sie nach
+        und siehst sofort, ob dein Satz erkannt wurde. 48 Sätze warten.
       </p>
       <button class="start-btn" id="start-btn">▶ Start</button>
     </div>
@@ -1113,7 +1113,7 @@ button,input{font:inherit}
         <div class="progress-track">
           <div class="progress-fill" id="progress-fill"></div>
         </div>
-        <span class="progress-count" id="progress-count">0 / 20</span>
+        <span class="progress-count" id="progress-count">0 / 48</span>
       </div>
 
       <p class="status-line" id="status-line">Bereit …</p>
@@ -1197,25 +1197,53 @@ button,input{font:inherit}
 /* ---------- Übungssätze: Vorstellungsgespräch ---------- */
 const sentences=[
   "Guten Morgen. Vielen Dank für die Einladung.",
+  "Schön, Sie kennenzulernen.",
+  "Vielen Dank, dass Sie sich Zeit für das Gespräch nehmen.",
   "Ja, danke. Ich habe alles gut gefunden.",
-  "Die Fahrt war gut. Vielen Dank.",
+  "Danke, mit Ihrer Wegbeschreibung war es kein Problem.",
+  "Die Anreise hat gut geklappt.",
+  "Ich bin mit dem Zug gekommen.",
+  "Die Verbindung war heute sehr gut.",
+  "Ja, ich war schon ein paar Mal in Heidelberg.",
+  "Nein, ich bin heute zum ersten Mal hier.",
+  "Die Gegend gefällt mir sehr gut.",
+  "Das Gebäude habe ich schnell gefunden.",
+  "Sie haben hier wirklich schöne Räumlichkeiten.",
+  "Es ist sehr hell und freundlich hier.",
   "Heute ist es wirklich ziemlich kalt.",
-  "Ja, das stimmt.",
+  "Ja, das stimmt. Zum Glück regnet es nicht.",
   "Das Wetter ist heute ganz angenehm.",
+  "Ja, heute ist wirklich schönes Wetter.",
   "Ein Wasser wäre sehr nett, danke.",
-  "Ohne Kohlensäure, bitte.",
+  "Ein Kaffee wäre sehr nett, danke.",
+  "Stilles Wasser, bitte.",
+  "Mit Kohlensäure, bitte.",
   "Nein, danke. Im Moment brauche ich nichts.",
+  "Vielen Dank, das ist sehr freundlich.",
   "Kein Problem. Alles gut.",
   "Nein, ich habe nur ein paar Minuten gewartet.",
+  "Kein Problem, ich bin selbst gerade erst angekommen.",
   "Ja, gerne. Wir können anfangen.",
-  "Ja, ein bisschen. Ich kenne Heidelberg.",
-  "Es gefällt mir hier sehr gut.",
-  "Das kann ich mir gut vorstellen.",
+  "Natürlich, gerne.",
+  "Ja, ich bin bereit.",
+  "Das klingt interessant.",
+  "Das hört sich gut an.",
+  "Ja, das kann ich mir gut vorstellen.",
+  "Das ist gut zu wissen.",
+  "Vielen Dank für die Information.",
+  "Entschuldigung, könnten Sie das bitte noch einmal sagen?",
+  "Könnten Sie bitte etwas langsamer sprechen?",
   "Vielen Dank für das Gespräch.",
   "Das Gespräch war sehr angenehm.",
+  "Vielen Dank für Ihre Zeit.",
+  "Vielen Dank für die freundliche Atmosphäre.",
+  "Ich habe mich sehr über das Gespräch gefreut.",
   "Nein, heute habe ich nichts Besonderes mehr vor.",
+  "Ich fahre danach wieder nach Hause.",
+  "Dann wünsche ich Ihnen noch einen schönen Tag.",
   "Vielen Dank. Ihnen auch einen schönen Tag.",
-  "Auf Wiedersehen und vielen Dank."
+  "Auf Wiedersehen und vielen Dank.",
+  "Ich freue mich auf Ihre Rückmeldung."
 ]
 
 let currentIndex=0;
