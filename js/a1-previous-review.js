@@ -31,7 +31,14 @@ const D={
 29:{w:["Lesen","Hören","Schreiben","Sprechen","Alltag","Nachricht","Frage","Antwort"],q:[["Schreiben Sie einen kurzen Alltagssatz.",["ich"]],["Stellen Sie eine Frage auf Deutsch.",["wie","wo","wann","was","wer","kann","haben","sind"]]]}
 };
 const d=D[n-1];if(!d)return;const prev=n-1;
-if(n>=3){const back=document.querySelector("main.shell>.back"),training=document.querySelector(".training-buttons");if(back&&training){training.classList.add("a1-training-with-back");training.insertBefore(back,training.firstChild)}}
+if(n>=3){
+  const back=document.querySelector("main.shell>.back,.modul2-back-to-a1"),
+        training=document.querySelector(".training-buttons,.training-rail");
+  if(back&&training){
+    training.classList.add("a1-training-with-back");
+    training.insertBefore(back,training.firstChild)
+  }
+}
 const guideHtml=`<div class="guide a1-standard-guide"><strong>① Zuerst: Lies die ganze Lektion. Danach übst du Schritt für Schritt mit den Aufgaben in dieser Reihenfolge.</strong><details class="learning-translation"><summary>▶ <span class="translation-globe">🌐</span> A/文</summary><div class="tr-content"><p><b>English:</b> First, read the whole lesson. Then practise step by step with the tasks in this order.</p><p><b>Polski:</b> Najpierw przeczytaj całą lekcję. Następnie ćwicz krok po kroku, wykonując zadania w tej kolejności.</p><p><b>Italiano:</b> Per prima cosa, leggi tutta la lezione. Poi esercitati passo dopo passo con gli esercizi in quest’ordine.</p></div></details></div>`;
 const box=document.createElement("section");box.className="prev-review";box.innerHTML='<button class="prev-review-toggle" type="button" aria-expanded="false"><span>🔄 Kurz wiederholen: Lektion '+prev+'</span><span>▼</span></button><div class="prev-review-panel"><h2>Bevor du mit Lektion '+n+' beginnst …</h2><p class="prev-review-intro">Erinnere dich kurz an das Wichtigste aus Lektion '+prev+'. So startest du ohne unnötige Wissenslücken.</p><div class="prev-review-step"><h3>📚 Wörter & Sätze aus Lektion '+prev+'</h3><div class="prev-review-chips">'+d.w.map(x=>'<span class="prev-review-chip">'+x+'</span>').join("")+'</div></div><div class="prev-review-step"><h3>🗣️ Kannst du das noch sagen?</h3>'+d.q.map((x,i)=>'<div class="prev-review-q"><label>'+x[0]+'</label><input type="text" data-k="'+x[1].join("|")+'" placeholder="Antworte selbst auf Deutsch …"><button class="prev-review-check" type="button">Antwort prüfen</button><span class="prev-review-feedback"></span></div>').join("")+'</div><div class="prev-review-step"><h3>✅ Bereit für Lektion '+n+'?</h3><p>Wenn du die Wörter verstehst und die Fragen selbst beantworten kannst, geh weiter. Wenn nicht, wiederhole Lektion '+prev+' kurz.</p><div class="prev-review-actions"><a class="prev-review-back" href="lektion-'+prev+'.html">↩ Lektion '+prev+' kurz wiederholen</a><button class="prev-review-ready" type="button">✓ Weiter mit Lektion '+n+'</button></div></div></div>';
 if(n===2){const teil1=document.querySelector("#teil1");if(teil1){teil1.insertAdjacentElement("beforebegin",box);box.insertAdjacentHTML("afterend",guideHtml)}else document.body.prepend(box)}else{
