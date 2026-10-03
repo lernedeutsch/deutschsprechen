@@ -1385,6 +1385,47 @@ body{
 .sidebar-mic .mic-status{max-width:150px;font-family:"Nunito Sans",sans-serif;font-size:.72rem;font-weight:800}
 @media(max-width:520px){.main-turn-cue{align-items:flex-start;flex-direction:column;gap:2px}.translation-label{display:none}}
 
+
+/* Conversation-first redesign */
+.layout{grid-template-columns:250px minmax(0,1fr);gap:18px}
+.card{padding:18px;background:#20332b}
+.main-history-panel{background:#10251f;border:1px solid rgba(255,255,255,.08);padding:18px;min-height:330px}
+.main-history-panel .history-screen-bar{margin-bottom:16px}
+.main-history-panel .history-list{min-height:245px;max-height:390px;gap:12px}
+.history-entry{max-width:72%;width:max-content;padding:12px 16px;border-radius:18px 18px 18px 5px;background:#edf4f0!important;color:#203128;font-size:1rem;box-shadow:0 7px 18px rgba(0,0,0,.12)}
+.history-entry .speaker{display:block;color:#39745c;font-size:.76rem;margin-bottom:2px}
+.history-entry.user{align-self:flex-end;border-radius:18px 18px 5px 18px;background:#d9f1e5!important;color:#183327}
+.history-entry.user .speaker{color:#287154}
+.history-entry:last-child{font-size:1rem;padding:12px 16px}
+.history-divider{width:100%;margin:4px 0;color:#8ca99d}
+.main-turn-cue{margin:0 0 14px;padding:13px 16px;border-radius:14px;background:rgba(116,174,147,.15);border-color:rgba(116,174,147,.42)}
+.main-turn-cue strong{font-size:.96rem;color:#bce7d2}
+.dialog-controls{display:flex;flex-direction:column;align-items:center}
+.dialog-controls .utility-row{order:2;display:flex;justify-content:center;width:100%;gap:8px;margin-top:12px}
+.dialog-controls .utility-btn{flex:0 1 auto;min-width:135px;padding:9px 13px;font-family:"Nunito Sans",sans-serif;font-size:.76rem;border-radius:12px}
+#stop-btn{display:none}
+body.is-listening #stop-btn{display:inline-flex}
+.sidebar-mic{position:absolute;left:-9999px}
+.card #stage{margin-top:0;border-top:0;padding-top:0}
+#stage:before{content:"🎤";display:block;width:86px;height:86px;margin:4px auto -86px;visibility:hidden}
+.mic-column{margin-top:0}
+.text-answer-row{max-width:500px;margin:12px auto 0;border-top:0;padding-top:0;opacity:.72}
+.text-answer-row:before{content:"⌨️";font-size:.9rem}
+.text-answer-input{background:#172a23}
+.current-dialog-panel{height:auto;min-height:0;padding:17px}
+.current-dialog-panel .partner-left{padding-top:10px}
+.current-dialog-panel .hero-stats{margin-top:12px;padding-top:10px}
+.current-dialog-panel .hero-stats .stat{padding:5px 4px}
+.current-dialog-panel .stat-value{font-size:.86rem}
+.current-dialog-panel .stat-label{font-size:.55rem}
+.dialog-menu-item{padding:8px 9px}
+@media(max-width:860px){
+ .layout{grid-template-columns:1fr}
+ .current-dialog-panel{grid-column:1;grid-row:2}
+ .card{grid-column:1;grid-row:1}
+ .history-entry{max-width:88%}
+}
+
 </style>
 
 <link rel="stylesheet" href="../../css/translation-globe.css">
@@ -1484,16 +1525,14 @@ body{
 
         <div class="dialog-control-divider"></div>
 
-        <div class="dialog-controls">
-
-          <div class="utility-row">
+        <div class="dialog-controls">\n\n          <div class="mic-column main-mic-column">\n            <div class="mic-btn-wrap" id="main-mic-proxy-wrap">\n              <span class="mic-ring"></span><span class="mic-ring"></span><span class="mic-ring"></span>\n              <button type="button" class="mic-btn" id="main-mic-proxy" aria-label="Sprechen">🎤</button>\n            </div>\n            <strong style="color:#bce7d2;font-size:.86rem">Sprechen</strong>\n          </div>\n\n          <div class="utility-row">
 
             <button type="button" class="utility-btn repeat-btn" id="repeat-btn">
-              🔁 Wiederholen
+              🔊 Noch einmal hören
             </button>
 
             <button type="button" class="utility-btn answer-btn" id="answer-btn">
-              ✓ Antwort anzeigen
+              💡 Antwort zeigen
             </button>
 
             <button type="button" class="utility-btn stop-btn" id="stop-btn">
@@ -2622,6 +2661,24 @@ els.micBtn.addEventListener("click",()=>{
     startListening();
   }
 });
+
+const mainMicProxy=document.getElementById("main-mic-proxy");
+const mainMicProxyWrap=document.getElementById("main-mic-proxy-wrap");
+if(mainMicProxy){
+  mainMicProxy.addEventListener("click",()=>els.micBtn.click());
+  const syncMainMic=()=>{
+    mainMicProxy.disabled=els.micBtn.disabled;
+    mainMicProxy.textContent=listening?"⏹️":"🎤";
+    mainMicProxy.classList.toggle("ready",micReady&&!listening);
+    mainMicProxy.classList.toggle("listening",listening);
+    mainMicProxyWrap.classList.toggle("ready",micReady&&!listening);
+    mainMicProxyWrap.classList.toggle("listening",listening);
+    document.body.classList.toggle("is-listening",listening);
+  };
+  new MutationObserver(syncMainMic).observe(els.micBtn,{attributes:true,childList:true,subtree:true});
+  window.setInterval(syncMainMic,250);
+  syncMainMic();
+}
 
 const textAnswerInput=document.getElementById("text-answer-input");
 const textAnswerSend=document.getElementById("text-answer-send");
