@@ -1428,6 +1428,59 @@ body.is-listening #stop-btn{display:inline-flex}
  .history-entry{max-width:88%}
 }
 
+
+/* Compact conversation v2 */
+.shell{max-width:1240px;padding-top:12px}
+.hero{padding:4px 0 8px;margin-bottom:4px}
+.hero h1{font-size:clamp(1.35rem,2.5vw,1.75rem)}
+.layout{grid-template-columns:220px minmax(0,1fr);gap:14px;align-items:start}
+.current-dialog-panel{padding:14px;border-radius:16px}
+.dialog-menu-title{margin-bottom:7px}
+.dialog-menu-list{gap:2px;margin-bottom:10px}
+.dialog-menu-item{padding:7px 8px;font-size:.8rem}
+.current-dialog-panel .partner-left{padding-top:8px}
+.current-dialog-panel .partner-title{font-size:.9rem}
+.current-dialog-panel .turn-instruction{font-size:.7rem}
+.current-dialog-panel .hero-stats{margin-top:8px;padding-top:8px}
+.current-dialog-panel .hero-stats .stat{padding:4px 3px}
+.card{padding:14px;border-radius:16px}
+.progress-track{margin-bottom:10px}
+.main-history-panel{min-height:0;height:330px;margin-bottom:10px;padding:12px 16px;border-radius:18px}
+.main-history-panel .history-screen-bar{margin-bottom:8px}
+.main-history-panel .history-list{min-height:0;max-height:270px;height:270px;gap:8px;padding:2px 6px 4px}
+.history-entry{max-width:62%;padding:9px 13px;font-size:.94rem}
+.history-entry:last-child{font-size:.94rem;padding:9px 13px}
+.history-entry .speaker{font-size:.7rem}
+.history-divider{margin:2px 0;font-size:.6rem}
+.main-turn-cue{margin:0 auto 8px;max-width:760px;padding:9px 13px}
+.main-turn-cue strong{font-size:.86rem}
+.main-turn-cue span{font-size:.8rem}
+.card #stage{display:flex;flex-direction:column;align-items:center}
+.dialog-controls{gap:4px;width:100%}
+.main-mic-column{gap:2px}
+.main-mic-column .mic-btn-wrap{width:82px;height:82px}
+.main-mic-column .mic-btn{width:66px;height:66px;font-size:1.55rem}
+.main-mic-column strong{font-size:.74rem!important}
+.dialog-controls .utility-row{gap:6px;margin-top:4px}
+.dialog-controls .utility-btn{min-width:0;padding:7px 11px;font-size:.7rem}
+.text-answer-row{display:none;width:min(520px,100%);margin:6px auto 0}
+.text-answer-row.open{display:flex}
+.write-toggle{display:block;margin:5px auto 0;padding:3px 9px;border:0;background:transparent;color:#9fb8ad;cursor:pointer;font:700 .7rem "Nunito Sans",sans-serif}
+.write-toggle:hover{color:#d9e8e1}
+.mic-status-row{min-height:0;padding:0}
+.example-text{margin-top:5px;font-size:.8rem}
+.footnote{margin-top:10px;font-size:.72rem}
+.next-training{margin-top:10px}
+.next-training a{min-height:42px;padding:8px 17px;font-size:.86rem}
+@media(min-width:861px){
+ .layout.show{min-height:0}
+ .current-dialog-panel{position:sticky;top:12px}
+}
+@media(max-width:860px){
+ .layout{grid-template-columns:1fr}
+ .main-history-panel{height:310px}
+ .main-history-panel .history-list{height:250px}
+}
 </style>
 
 <link rel="stylesheet" href="../../css/translation-globe.css">
@@ -1572,7 +1625,7 @@ body.is-listening #stop-btn{display:inline-flex}
           </button>
         </div>
 
-        <div class="mic-status-row">
+        <button type="button" class="write-toggle" id="write-toggle">⌨️ Lieber schreiben</button>\n\n        <div class="mic-status-row">
 
           <p class="live-transcript" id="live-transcript"></p>
 
@@ -2690,6 +2743,16 @@ if(mainMicProxy){
   new MutationObserver(syncMainMic).observe(els.micBtn,{attributes:true,childList:true,subtree:true});
   window.setInterval(syncMainMic,250);
   syncMainMic();
+}
+
+const writeToggle=document.getElementById("write-toggle");
+const textAnswerRow=document.querySelector(".text-answer-row");
+if(writeToggle&&textAnswerRow){
+  writeToggle.addEventListener("click",()=>{
+    const open=textAnswerRow.classList.toggle("open");
+    writeToggle.textContent=open?"⌨️ Schreibfeld schließen":"⌨️ Lieber schreiben";
+    if(open) document.getElementById("text-answer-input").focus();
+  });
 }
 
 const textAnswerInput=document.getElementById("text-answer-input");
