@@ -1787,6 +1787,31 @@ body.is-listening #stop-btn{display:inline-flex}
 <link rel="stylesheet" href="../../css/translation-globe.css">
 <link rel="stylesheet" href="../../css/page-progress.css">
 <script src="../../js/answer-corrector.js"></script>
+
+<style id="final-dialog-spacing-fix">
+/* FINAL override: compact bubbles and genuinely tighter vertical rhythm */
+.main-history-panel .history-list{
+  gap:0 !important;
+  row-gap:0 !important;
+  column-gap:24px !important;
+}
+.main-history-panel .history-entry{
+  padding:4px 9px !important;
+  margin:0 !important;
+  font-size:1rem !important;
+  line-height:1.22 !important;
+  align-self:start !important;
+}
+.main-history-panel .history-entry .speaker{
+  margin-bottom:0 !important;
+  line-height:1.05 !important;
+}
+/* each next bubble in a dialogue sits directly below the previous one */
+.main-history-panel .history-entry + .history-entry{
+  margin-top:2px !important;
+}
+</style>
+
 </head>
 
 <body>
