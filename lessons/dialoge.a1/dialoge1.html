@@ -2093,6 +2093,7 @@ let historyCounter=0;
 let promptStarting=false;
 let retrying=false;
 let micReady=false;
+let hintUsed=false;
 
 function renderStars(count,total){
   const filled=Math.round((total?count/total:0)*5);
@@ -2252,6 +2253,7 @@ function setMicReady(ready,message=""){
 function loadTurn(){
   answered=false;
   attempts=0;
+  hintUsed=false;
   retrying=false;
 
   const turn=current();
@@ -2354,7 +2356,7 @@ function markCorrect(spokenText){
   answered=true;
   retrying=false;
   streak++;
-  score++;
+  if(!hintUsed){ score++; }
 
   bestStreak=Math.max(bestStreak,streak);
 
@@ -2544,10 +2546,13 @@ if(recognizer){
 
     if(
       event.error==="not-allowed"||
-      event.error==="service-not-allowed"
+      event.error==="service-not-allowed"||
+      event.error==="audio-capture"
     ){
       els.micStatus.textContent=
-        "Mikrofonzugriff blockiert — bitte in den Browser-Einstellungen erlauben.";
+        event.error==="audio-capture"
+          ?"Kein Mikrofon gefunden. Du kannst deine Antwort unten eintippen."
+          :"Mikrofonzugriff blockiert — du kannst deine Antwort unten eintippen oder den Zugriff im Browser erlauben.";
 
       return;
     }
@@ -2735,6 +2740,7 @@ document.addEventListener("click",event=>{
 });
 
 els.answerBtn.addEventListener("click",()=>{
+  hintUsed=true;
   els.exampleText.classList.add("show");
 
   els.exampleText.textContent=
@@ -2875,18 +2881,17 @@ function init(){
 }
 
 els.gateBtn.addEventListener("click",()=>{
-  if(!recognizer){
-    els.gateWarning.classList.add("show");
-    return;
-  }
-
   els.gate.style.display="none";
   els.layout.classList.add("show");
-
+  if(!recognizer){
+    els.gateWarning.classList.remove("show");
+  }
   init();
 });
 
 if(!recognizer){
+  els.gateBtn.textContent="⌨️ Ohne Mikrofon starten";
+  els.gateWarning.textContent="Spracherkennung ist in diesem Browser nicht verfügbar. Du kannst den Dialog trotzdem mit dem Textfeld üben.";
   els.gateWarning.classList.add("show");
 }
 </script>
