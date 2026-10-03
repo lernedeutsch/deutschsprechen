@@ -63,3 +63,30 @@ body .a1-standard-guide .learning-translation summary{white-space:nowrap!importa
  box-sizing:border-box!important;padding:0!important;margin:0!important;gap:0!important;
  line-height:1!important;font-size:1rem!important;border-radius:999px!important;
 }
+
+/* A1 7-30 unified Lesson 2 top controls */
+.training-rail.a1-training-with-back,
+.training-buttons.a1-training-with-back{align-items:center!important}
+.training-rail.a1-training-with-back>.back,
+.training-rail.a1-training-with-back>.modul2-back-to-a1,
+.training-rail.a1-training-with-back>.back-to-top,
+.training-buttons.a1-training-with-back>.back,
+.training-buttons.a1-training-with-back>.modul2-back-to-a1,
+.training-buttons.a1-training-with-back>.back-to-top{
+ position:static!important;inset:auto!important;transform:none!important;
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ box-sizing:border-box!important;flex:0 0 58px!important;width:58px!important;height:58px!important;
+ min-width:58px!important;min-height:58px!important;margin:0!important;padding:0!important;gap:0!important;
+ background:#fff!important;border:1px solid #d9e4f0!important;border-radius:999px!important;
+ color:#101820!important;text-decoration:none!important;font-weight:700!important;font-size:1rem!important;line-height:1!important
+}
+body .prev-review{box-sizing:border-box!important;max-width:1180px!important;margin:18px auto 22px!important;padding:0 18px!important}
+body .a1-standard-guide{
+ box-sizing:border-box!important;max-width:1144px!important;width:calc(100% - 36px)!important;
+ margin:0 auto 22px!important;padding:16px 19px!important;background:#d5e2e9!important;
+ border:1px solid #e2ebf0!important;border-radius:18px!important;color:#173047!important;
+ box-shadow:0 8px 18px rgba(10,18,32,.10)!important;display:flex!important;align-items:center!important;gap:14px!important
+}
+body .a1-standard-guide>strong{white-space:nowrap!important}
+body .a1-standard-guide .learning-translation{flex:0 0 auto!important}
+@media(max-width:899px){body .a1-standard-guide{display:block!important}body .a1-standard-guide>strong{white-space:normal!important}}
