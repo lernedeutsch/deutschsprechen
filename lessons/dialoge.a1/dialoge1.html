@@ -1669,6 +1669,283 @@ body{
   .main-history-panel .history-list{min-height:230px;max-height:230px}
 }
 
+
+/* ===== ACTUAL SCENE UI — replace dashboard feeling ===== */
+.layout{
+  grid-template-columns:190px minmax(0,1fr);
+  gap:18px;
+}
+.current-dialog-panel{
+  padding:15px 12px;
+  background:transparent;
+  border:0;
+  box-shadow:none;
+}
+.current-dialog-panel .dialog-menu-title{
+  margin:0 0 10px 6px;
+}
+.current-dialog-panel .dialog-menu-item{
+  min-height:40px;
+  padding:9px 10px;
+  background:transparent;
+}
+.current-dialog-panel .dialog-menu-item.active{
+  background:#2b5143;
+  border-color:#56816e;
+  box-shadow:none;
+}
+.current-dialog-panel .partner-left,
+.current-dialog-panel .hero-stats,
+.current-dialog-panel .compact-info{
+  display:none !important;
+}
+
+.card{
+  padding:0;
+  background:#f4efe4;
+  border:0;
+  border-radius:28px;
+  overflow:hidden;
+  box-shadow:0 22px 48px rgba(0,0,0,.24);
+}
+.progress-track{
+  position:relative;
+  display:block;
+  height:58px;
+  margin:0;
+  padding:13px 24px 0;
+  background:#fffaf1;
+  border-bottom:1px solid #e6dccb;
+}
+.progress-track:before{
+  content:"Gespräch 1 von 4";
+  display:block;
+  margin:0 0 6px;
+  color:#31594b;
+  font:800 .76rem "Nunito Sans",sans-serif;
+  letter-spacing:.02em;
+  text-transform:none;
+}
+.progress-track:after{
+  content:"Auf der Straße";
+  position:absolute;
+  right:24px;
+  top:14px;
+  color:#8a7761;
+  font:700 .72rem "Nunito Sans",sans-serif;
+}
+.progress-track .dot{
+  display:inline-block;
+  width:28px;
+  height:4px;
+  margin-right:3px;
+  border-radius:999px;
+  background:#ddd2bf;
+  transform:none;
+}
+.progress-track .dot.done{background:#79b996}
+.progress-track .dot.active{background:#e3a64b;transform:none}
+.progress-track .dot.gap{margin-right:3px}
+
+.main-history-panel{
+  position:relative;
+  height:390px;
+  min-height:390px;
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:0;
+  overflow:hidden;
+  background:
+    linear-gradient(180deg,rgba(255,250,239,.30),rgba(235,222,196,.40)),
+    linear-gradient(180deg,#dce9df 0 60%,#c8d5bc 60% 63%,#d9cfb9 63% 100%);
+}
+.main-history-panel:before{
+  content:"🌤️";
+  position:absolute;
+  top:26px;
+  right:52px;
+  left:auto;
+  color:inherit;
+  font-size:2.2rem;
+  opacity:.72;
+  letter-spacing:0;
+  text-transform:none;
+}
+.main-history-panel:after{
+  content:"🌳          🏙️          🌳";
+  position:absolute;
+  right:24px;
+  bottom:25px;
+  opacity:.32;
+  filter:none;
+  font-size:2.6rem;
+  letter-spacing:0;
+  white-space:pre;
+}
+.main-history-panel .history-list{
+  position:relative;
+  z-index:2;
+  min-height:390px;
+  max-height:390px;
+  padding:54px 38px 42px;
+  gap:16px;
+  overflow-y:auto;
+}
+.history-divider{
+  display:none;
+}
+.history-entry{
+  width:max-content;
+  max-width:68%;
+  padding:13px 17px;
+  border:1px solid rgba(49,89,75,.10);
+  border-radius:8px 20px 20px 20px;
+  background:#fffdf7 !important;
+  color:#283a32;
+  box-shadow:0 8px 20px rgba(54,70,60,.13);
+  font-size:1.04rem;
+}
+.history-entry.partner{
+  margin-left:56px;
+}
+.history-entry.partner:before{
+  content:"👩";
+  position:absolute;
+  left:-54px;
+  top:0;
+  display:grid;
+  place-items:center;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:#fff8e9;
+  border:2px solid rgba(255,255,255,.8);
+  box-shadow:0 5px 12px rgba(0,0,0,.12);
+  font-size:1.35rem;
+}
+.history-entry .speaker{
+  display:block;
+  margin-bottom:2px;
+  color:#3d795f !important;
+  font-size:.76rem;
+}
+.history-entry.user{
+  align-self:flex-end;
+  margin-right:52px;
+  border-radius:20px 8px 20px 20px;
+  background:#d9f0e4 !important;
+}
+.history-entry.user:after{
+  content:"🙂";
+  position:absolute;
+  right:-52px;
+  top:0;
+  display:grid;
+  place-items:center;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:#e8f3ed;
+  border:2px solid rgba(255,255,255,.8);
+  box-shadow:0 5px 12px rgba(0,0,0,.10);
+}
+.history-entry:last-child{font-size:1.04rem;padding:13px 17px}
+
+.main-turn-cue{
+  width:calc(100% - 44px);
+  max-width:620px;
+  margin:-24px auto 0;
+  position:relative;
+  z-index:4;
+  padding:13px 18px 12px;
+  background:#fffdf8;
+  color:#31594b;
+  border:1px solid #ded1bc;
+  border-radius:18px;
+  box-shadow:0 10px 24px rgba(64,67,52,.14);
+}
+.main-turn-cue strong{
+  color:#2e654f;
+  font-size:.9rem;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+}
+.main-turn-cue span{
+  color:#6d665a;
+  font-size:.84rem;
+}
+#stage{
+  padding:12px 18px 17px !important;
+  background:#fffaf1;
+}
+.dialog-controls{
+  gap:4px;
+}
+.mic-column .mic-btn-wrap{
+  width:92px;height:92px;
+}
+.mic-column .mic-btn{
+  width:70px;height:70px;
+  color:#214b3a;
+  background:linear-gradient(180deg,#a9e1c6,#70bc97);
+  box-shadow:0 8px 18px rgba(62,142,103,.25);
+}
+.dialog-controls .mic-column strong{
+  color:#456f5d !important;
+}
+.dialog-controls .utility-row{
+  width:min(100%,560px);
+  margin-top:2px;
+}
+.dialog-controls .utility-btn{
+  background:#f4eee2;
+  color:#675f54;
+  border-color:#d9cdb9;
+}
+.dialog-controls .utility-btn:hover{
+  background:#ebe2d3;
+  color:#3d554a;
+}
+.dialog-controls .repeat-btn{
+  background:#edf5f2;color:#3d6958;border-color:#c9ddd4;
+}
+.dialog-controls .answer-btn{
+  background:#fff2cc;color:#75551a;border-color:#e4ca82;
+}
+.dialog-controls .stop-btn{
+  background:#fae9e6;color:#874e48;border-color:#e4c2bd;
+}
+.text-answer-row{width:min(100%,560px)}
+.text-answer-input{
+  background:#fff;
+  color:#33453d;
+  border-color:#d7ccba;
+}
+.text-answer-input::placeholder{color:#9a9081}
+.text-answer-send{
+  background:#e5eee9;
+  color:#31594b;
+  border-color:#c5d8cf;
+}
+.write-toggle{color:#776f63}
+.example-text{color:#7c5c1d}
+.mic-status{color:#596f65}
+.footnote{color:#b8ccc3}
+@media(max-width:860px){
+  .layout{grid-template-columns:1fr}
+  .current-dialog-panel{
+    padding:8px 0;
+  }
+  .current-dialog-panel .dialog-menu-list{
+    flex-direction:row;
+    overflow-x:auto;
+  }
+  .current-dialog-panel .dialog-menu-item{min-width:max-content}
+  .main-history-panel{height:340px;min-height:340px}
+  .main-history-panel .history-list{min-height:340px;max-height:340px;padding:50px 22px 38px}
+}
+
 </style>
 
 <style>
