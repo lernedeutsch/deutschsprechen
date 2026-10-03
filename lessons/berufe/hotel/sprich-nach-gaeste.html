@@ -1100,8 +1100,8 @@ button,input{font:inherit}
         <div class="orb"><span class="orb-icon">👋</span></div>
       </div>
       <p class="start-lead">
-        Du hörst einen deutschen Satz aus Lektion 2, sprichst ihn nach
-        und siehst sofort, ob dein Satz erkannt wurde. 21 Sätze und Dialoge warten.
+        Du hörst einen typischen Satz aus dem Hotel, sprichst ihn nach
+        und siehst sofort, ob dein Satz erkannt wurde. 20 Sätze warten.
       </p>
       <button class="start-btn" id="start-btn">▶ Start</button>
     </div>
@@ -1113,7 +1113,7 @@ button,input{font:inherit}
         <div class="progress-track">
           <div class="progress-fill" id="progress-fill"></div>
         </div>
-        <span class="progress-count" id="progress-count">0 / 21</span>
+        <span class="progress-count" id="progress-count">0 / 20</span>
       </div>
 
       <p class="status-line" id="status-line">Bereit …</p>
@@ -1204,7 +1204,7 @@ const sentences=[
   "Brauchen Sie noch etwas?",
   "Ich bringe Ihnen gerne ein zusätzliches Kissen.",
   "Soll ich das Kissen auf das Bett legen?",
-  "Entschuldigung, ich komme vom Zimmermädchen & Gäste.",
+  "Entschuldigung, ich komme vom Housekeeping.",
   "Darf ich das Zimmer jetzt reinigen?",
   "Kein Problem. Ich komme später wieder.",
   "Möchten Sie heute eine Zimmerreinigung?",
@@ -1217,6 +1217,331 @@ const sentences=[
   "Sehr gerne. Kann ich sonst noch etwas für Sie tun?",
   "Vielen Dank. Ich wünsche Ihnen einen schönen Tag."
 ]
+
+let currentIndex=0;
+let currentRate=0.95;
+let awaitingRetry=false;
+let recognizing=false;
+let recognition=null;
+let playbackToken=0;
+let speechRunId=0;
+let activeUtterance=null;
+let germanVoice=null;
+let firstTryCorrect=0;
+let difficultIndices=new Set();
+let attemptCounts={};
+let reviewQueue=null;
+let showSentenceText=true;
+
+const stage=document.getElementById("stage");
+const statusLine=document.getElementById("status-line");
+const sentenceText=document.getElementById("sentence-text");
+const youSaid=document.getElementById("you-said");
+const progressFill=document.getElementById("progress-fill");
+const progressCount=document.getElementById("progress-count");
+const controls=document.getElementById("controls");
+const doneWrap=document.getElementById("done-wrap");
+const doneSummary=document.getElementById("done-summary");
+const difficultBtn=document.getElementById("difficult-btn");
+const exerciseWrap=document.getElementById("exercise-wrap");
+const startWrap=document.getElementById("start-wrap");
+const orbIcon=document.getElementById("orb-icon");
+const micButton=document.getElementById("mic-btn");
+const noMicNote=document.getElementById("no-mic-note");
+const historyList=document.getElementById("history-list");
+const historyEmpty=document.getElementById("history-empty");
+const modeTextButton=document.getElementById("mode-text");
+const modeListenButton=document.getElementById("mode-listen");
+
+function updateDifficultyMode(){
+  modeTextButton?.classList.toggle("active",showSentenceText);
+  modeListenButton?.classList.toggle("active",!showSentenceText);
+  modeTextButton?.setAttribute("aria-pressed",String(showSentenceText));
+  modeListenButton?.setAttribute("aria-pressed",String(!showSentenceText));
+  if(!showSentenceText){
+    sentenceText.className="sentence-text listening-only";
+    sentenceText.textContent="🎧 Hör gut zu …";
+  }else{
+    sentenceText.className="sentence-text";
+    if(currentIndex<sentences.length)renderSentenceShell(sentences[currentIndex]);
+  }
+}
+
+modeTextButton?.addEventListener("click",()=>{
+  showSentenceText=true;
+  updateDifficultyMode();
+});
+modeListenButton?.addEventListener("click",()=>{
+  showSentenceText=false;
+  updateDifficultyMode();
+});
+
+/* ---------- Sprachausgabe wie bei Nele ---------- */
+
+function renderSentenceShell(text){
+  if(!showSentenceText){
+    sentenceText.className="sentence-text listening-only";
+    sentenceText.textContent="🎧 Hör gut zu …";
+    return;
+  }
+  sentenceText.className="sentence-text";
+  const words=text.split(" ");
+  sentenceText.innerHTML=words.map(w=>`<span class="word">${w}</span>`).join(" ");
+}
+
+function revealWordsTimed(text,rate){
+  if(!showSentenceText)return;
+  const words=sentenceText.querySelectorAll(".word");
+  const wordsPerMs=(150*rate)/60000;
+  const stepMs=Math.max(90,1/wordsPerMs);
+
+  words.forEach((w,i)=>{
+    setTimeout(()=>w.classList.add("show"),i*stepMs);
+  });
+}
+
+function loadGermanVoice(){
+  if(!("speechSynthesis" in window))return null;
+
+  const voices=window.speechSynthesis.getVoices();
+
+  const germanVoices=voices.filter(
+    voice=>
+      voice.lang&&
+      voice.lang.toLowerCase().startsWith("de")
+  );
+
+  germanVoice=
+    germanVoices.find(
+      voice=>voice.name.toLowerCase().includes("google")
+    )||
+    germanVoices.find(
+      voice=>voice.lang==="de-DE"
+    )||
+    germanVoices[0]||
+    null;
+
+  return germanVoice;
+}
+
+loadGermanVoice();
+
+if("speechSynthesis" in window){
+  window.speechSynthesis.addEventListener(
+    "voiceschanged",
+    loadGermanVoice
+  );
+}
+
+async function waitForGermanVoice(){
+  if(germanVoice)return germanVoice;
+
+  loadGermanVoice();
+
+  if(germanVoice)return germanVoice;
+
+  await wait(180);
+  loadGermanVoice();
+
+  if(germanVoice)return germanVoice;
+
+  await wait(260);
+  loadGermanVoice();
+
+  return germanVoice;
+}
+
+async function stopSpeechSafely(){
+  if(!("speechSynthesis" in window))return;
+
+  speechRunId++;
+  activeUtterance=null;
+
+  if(
+    window.speechSynthesis.speaking||
+    window.speechSynthesis.pending||
+    window.speechSynthesis.paused
+  ){
+    window.speechSynthesis.cancel();
+
+    /*
+     * Chrome potrzebuje chwili, żeby naprawdę opróżnić starą kolejkę.
+     * Nowe speak() nie może wejść w ten sam moment co cancel().
+     */
+    await wait(240);
+  }
+}
+
+async function speak(text){
+  if(!("speechSynthesis" in window)){
+    renderSentenceShell(text);
+    revealWordsTimed(text,currentRate);
+    return;
+  }
+
+  const runId=++speechRunId;
+  const voice=await waitForGermanVoice();
+
+  if(runId!==speechRunId)return;
+
+  return new Promise(resolve=>{
+    const utterance=new SpeechSynthesisUtterance(text);
+
+    activeUtterance=utterance;
+
+    utterance.lang="de-DE";
+    utterance.rate=Number.isFinite(currentRate)?currentRate:0.95;
+    utterance.pitch=1.0;
+    utterance.volume=1.0;
+
+    if(voice){
+      utterance.voice=voice;
+    }
+
+    let finished=false;
+
+    const finish=()=>{
+      if(finished)return;
+      finished=true;
+
+      if(runId===speechRunId){
+        activeUtterance=null;
+      }
+
+      resolve();
+    };
+
+    utterance.onstart=()=>{
+      if(runId!==speechRunId)return;
+
+      renderSentenceShell(text);
+      revealWordsTimed(
+        text,
+        Number.isFinite(currentRate)?currentRate:0.95
+      );
+    };
+
+    utterance.onend=finish;
+
+    utterance.onerror=event=>{
+      /*
+       * canceled/interrupted pojawiają się przy świadomym Stop,
+       * Wiederholen, Neustart albo Nächster Satz.
+       */
+      if(
+        event.error!=="canceled"&&
+        event.error!=="interrupted"
+      ){
+        console.warn(
+          "Sprachausgabe Sprich nach:",
+          event.error
+        );
+      }
+
+      finish();
+    };
+
+    /*
+     * Trzymamy utterance w activeUtterance aż do onend/onerror.
+     * To zapobiega zniknięciu obiektu podczas odtwarzania.
+     */
+    window.setTimeout(()=>{
+      if(
+        runId!==speechRunId||
+        activeUtterance!==utterance
+      ){
+        finish();
+        return;
+      }
+
+      /*
+       * Niesłyszalny warm-up zapobiega ucinaniu początku
+       * pierwszego słowa przez Chrome/Windows SpeechSynthesis.
+       */
+      const warmup=new SpeechSynthesisUtterance("\u00A0");
+      warmup.lang="de-DE";
+      warmup.volume=0;
+      warmup.rate=1;
+      if(voice)warmup.voice=voice;
+      warmup.onend=()=>{
+        if(
+          runId!==speechRunId||
+          activeUtterance!==utterance
+        ){
+          finish();
+          return;
+        }
+        window.setTimeout(()=>window.speechSynthesis.speak(utterance),120);
+      };
+      warmup.onerror=()=>{
+        if(runId===speechRunId&&activeUtterance===utterance){
+          window.setTimeout(()=>window.speechSynthesis.speak(utterance),120);
+        }else{
+          finish();
+        }
+      };
+      window.speechSynthesis.speak(warmup);
+    },180);
+  });
+}
+
+function wait(ms){
+  return new Promise(resolve=>setTimeout(resolve,ms));
+}
+
+function stopRecognitionCompletely(){
+  recognizing=false;
+  gotFinal=true;
+  clearTimeout(recognitionTimeout);
+
+  if(recognition){
+    try{
+      recognition.abort();
+    }catch(error){
+      try{recognition.stop();}catch(stopError){}
+    }
+  }
+}
+
+function setMicReady(ready){
+  if(!micButton)return;
+
+  micButton.disabled=!ready;
+  micButton.classList.toggle("mic-ready",ready);
+
+  if(ready){
+    micButton.title="Jetzt sprechen – Mikrofon anklicken";
+    micButton.setAttribute("aria-label","Jetzt sprechen – Mikrofon anklicken");
+  }else{
+    micButton.title="Mikrofon";
+    micButton.setAttribute("aria-label","Mikrofon");
+  }
+}
+
+/* ---------- Textvergleich (tolerant) ---------- */
+function normalize(str){
+  return str
+    .toLowerCase()
+    .replace(/[.,!?;:„“"']/g,"")
+    .replace(/ß/g,"ss")
+    .replace(/ä/g,"a").replace(/ö/g,"o").replace(/ü/g,"u")
+    .trim()
+    .replace(/\s+/g," ");
+}
+
+function levenshtein(a,b){
+  const m=a.length,n=b.length;
+  const dp=Array.from({length:m+1},()=>new Array(n+1).fill(0));
+  for(let i=0;i<=m;i++)dp[i][0]=i;
+  for(let j=0;j<=n;j++)dp[0][j]=j;
+  for(let i=1;i<=m;i++){
+    for(let j=1;j<=n;j++){
+      dp[i][j]=a[i-1]===b[j-1]
+        ?dp[i-1][j-1]
+        :1+Math.min(dp[i-1][j-1],dp[i-1][j],dp[i][j-1]);
+    }
+  }
+  return dp[m][n];
 }
 
 function isMatch(said,target){
