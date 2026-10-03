@@ -32,7 +32,7 @@ const D={
 };
 const d=D[n-1];if(!d)return;const prev=n-1;
 if(n>=3){
-  const back=document.querySelector("main.shell>.back,.modul2-back-to-a1"),
+  const back=document.querySelector("main.shell>.back,.modul2-back-to-a1,.course-shell>.back-to-top"),
         training=document.querySelector(".training-buttons,.training-rail");
   if(back&&training){
     training.classList.add("a1-training-with-back");
