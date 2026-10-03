@@ -44,8 +44,8 @@ const box=document.createElement("section");box.className="prev-review";box.inne
 if(n===2){const teil1=document.querySelector("#teil1");if(teil1){teil1.insertAdjacentElement("beforebegin",box);box.insertAdjacentHTML("afterend",guideHtml)}else document.body.prepend(box)}else{
   const oldGuide=document.querySelector(".learning-guide,.guide");
   if(oldGuide)oldGuide.remove();
-  const continuation=document.querySelector("#kurs-fortsetzung"),teil1=document.querySelector("#teil1");
-  const target=continuation||teil1;
+  const continuation=document.querySelector("#kurs-fortsetzung"),teil1=document.querySelector("#teil1"),firstLessonSection=document.querySelector("header.lesson.hero + .section");
+  const target=continuation||teil1||firstLessonSection;
   if(target){target.insertAdjacentElement("beforebegin",box);box.insertAdjacentHTML("afterend",guideHtml)}
   else{const page=document.querySelector("article.page");if(page){page.insertAdjacentElement("afterend",box);box.insertAdjacentHTML("afterend",guideHtml)}else{const main=document.querySelector("main");main.appendChild(box);box.insertAdjacentHTML("afterend",guideHtml)}}
 }
