@@ -1126,6 +1126,38 @@ button{font:inherit}
     transition-duration:.01ms!important;
   }
 }
+
+.sidebar-speaking-panel{
+  margin-top:14px;
+  padding-top:14px;
+  border-top:1px solid #314b41;
+}
+.sidebar-turn-cue{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  margin-bottom:8px;
+  color:#f5f1e8;
+  text-align:center;
+  font-size:.78rem;
+}
+.sidebar-turn-cue strong{color:#bce7d2;font-size:.9rem}
+.sidebar-speaking-panel .sidebar-mic{margin-top:0}
+.sidebar-speaking-panel .mic-btn-wrap{width:78px;height:78px}
+.sidebar-speaking-panel .mic-btn{width:62px;height:62px;font-size:1.45rem}
+.sidebar-speaking-panel .mic-status{font-size:.62rem;max-width:180px}
+.sidebar-utility-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+  margin-top:8px;
+}
+.sidebar-utility-row .utility-btn{
+  padding:7px 5px;
+  font-size:.62rem;
+  white-space:normal;
+  line-height:1.2;
+}
 </style>
 
 <style>
@@ -1571,46 +1603,7 @@ body.is-listening #stop-btn{display:inline-flex}
         </div>
       </div>
 
-      <div class="main-turn-cue" id="main-turn-cue" aria-live="polite">
-        <strong>Du bist dran 🎤</strong>
-        <span id="main-turn-instruction">Antworte auf die Begrüßung.</span>
-      </div>
-
       <div id="stage">
-
-        <div class="dialog-control-divider"></div>
-
-        <div class="dialog-controls">
-
-          <div class="mic-column main-mic-column">
-            <div class="mic-btn-wrap" id="main-mic-proxy-wrap">
-              <span class="mic-ring"></span><span class="mic-ring"></span><span class="mic-ring"></span>
-              <button type="button" class="mic-btn" id="main-mic-proxy" aria-label="Sprechen">🎤</button>
-            </div>
-            <strong style="color:#bce7d2;font-size:.86rem">Sprechen</strong>
-          </div>
-
-          <div class="utility-row">
-
-            <button type="button" class="utility-btn repeat-btn" id="repeat-btn">
-              🔊 Noch einmal hören
-            </button>
-
-            <button type="button" class="utility-btn answer-btn" id="answer-btn">
-              💡 Antwort zeigen
-            </button>
-
-            <button type="button" class="utility-btn stop-btn" id="stop-btn">
-              ⏹ Stop
-            </button>
-
-            <button type="button" class="utility-btn" id="skip-btn">
-              Überspringen →
-            </button>
-
-          </div>
-
-        </div>
 
         <div class="text-answer-row">
           <input
@@ -1738,42 +1731,11 @@ body.is-listening #stop-btn{display:inline-flex}
 
       </div>
 
-      <div class="hero-stats">
-
-        <div class="stat">
-          <span class="stat-value" id="stat-score">0/12</span>
-          <span class="stat-label">Punkte</span>
+      <div class="sidebar-speaking-panel">
+        <div class="sidebar-turn-cue">
+          <strong>Du bist dran 🎤</strong>
+          <span id="main-turn-instruction">Antworte auf die Begrüßung.</span>
         </div>
-
-        <div class="stat">
-          <span class="stat-value" id="stat-streak">0🔥</span>
-          <span class="stat-label">Serie</span>
-        </div>
-
-        <div class="stat">
-          <span class="stat-value" id="stat-progress">1/12</span>
-          <span class="stat-label">Schritt</span>
-        </div>
-
-      </div>
-
-      <div class="sidebar-mic">
-        <div class="mic-column">
-
-          <div class="mic-btn-wrap" id="mic-btn-wrap">
-            <span class="mic-ring"></span>
-            <span class="mic-ring"></span>
-            <span class="mic-ring"></span>
-
-            <button type="button" class="mic-btn" id="mic-btn">
-              🎤
-            </button>
-          </div>
-
-          <p class="mic-status" id="mic-status">🎤 Zum Sprechen klicken</p>
-
-        </div>
-      </div>
 
     </aside>
 
