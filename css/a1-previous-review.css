@@ -2,3 +2,6 @@
 /* A1 lessons 3-30: back arrow aligned with training buttons */
 .a1-training-with-back>.back{display:inline-flex!important;align-items:center!important;justify-content:center!important;flex:0 0 auto!important;width:58px!important;height:58px!important;margin:0!important;padding:0!important;background:#fff!important;border:1px solid #d9e4f0!important;border-radius:999px!important;color:#101820!important;text-decoration:none!important;font-weight:700!important}
 @media(min-width:1400px){.training-buttons.a1-training-with-back>.back{width:58px!important;height:58px!important;align-self:center!important;margin-bottom:0!important}}
+
+/* A1 standard guide: align with review button */
+.a1-standard-guide{margin-left:18px!important;margin-right:18px!important;padding-left:19px!important;padding-right:19px!important}
