@@ -1400,14 +1400,16 @@ body{
 .history-divider{width:100%;margin:4px 0;color:#8ca99d}
 .main-turn-cue{margin:0 0 14px;padding:13px 16px;border-radius:14px;background:rgba(116,174,147,.15);border-color:rgba(116,174,147,.42)}
 .main-turn-cue strong{font-size:.96rem;color:#bce7d2}
-.dialog-controls{display:flex;flex-direction:column;align-items:center}
-.dialog-controls .utility-row{order:2;display:flex;justify-content:center;width:100%;gap:8px;margin-top:12px}
+.dialog-controls{display:flex;flex-direction:column;align-items:center;gap:10px}
+.main-mic-column{display:flex!important;position:static!important;left:auto!important;margin:0!important;align-items:center}
+.main-mic-column .mic-btn-wrap{width:108px;height:108px}
+.main-mic-column .mic-btn{width:88px;height:88px;font-size:2rem}
+.dialog-controls .utility-row{order:2;display:flex;justify-content:center;width:100%;gap:8px;margin-top:4px}
 .dialog-controls .utility-btn{flex:0 1 auto;min-width:135px;padding:9px 13px;font-family:"Nunito Sans",sans-serif;font-size:.76rem;border-radius:12px}
 #stop-btn{display:none}
 body.is-listening #stop-btn{display:inline-flex}
 .sidebar-mic{position:absolute;left:-9999px}
 .card #stage{margin-top:0;border-top:0;padding-top:0}
-#stage:before{content:"🎤";display:block;width:86px;height:86px;margin:4px auto -86px;visibility:hidden}
 .mic-column{margin-top:0}
 .text-answer-row{max-width:500px;margin:12px auto 0;border-top:0;padding-top:0;opacity:.72}
 .text-answer-row:before{content:"⌨️";font-size:.9rem}
@@ -1525,7 +1527,17 @@ body.is-listening #stop-btn{display:inline-flex}
 
         <div class="dialog-control-divider"></div>
 
-        <div class="dialog-controls">\n\n          <div class="mic-column main-mic-column">\n            <div class="mic-btn-wrap" id="main-mic-proxy-wrap">\n              <span class="mic-ring"></span><span class="mic-ring"></span><span class="mic-ring"></span>\n              <button type="button" class="mic-btn" id="main-mic-proxy" aria-label="Sprechen">🎤</button>\n            </div>\n            <strong style="color:#bce7d2;font-size:.86rem">Sprechen</strong>\n          </div>\n\n          <div class="utility-row">
+        <div class="dialog-controls">
+
+          <div class="mic-column main-mic-column">
+            <div class="mic-btn-wrap" id="main-mic-proxy-wrap">
+              <span class="mic-ring"></span><span class="mic-ring"></span><span class="mic-ring"></span>
+              <button type="button" class="mic-btn" id="main-mic-proxy" aria-label="Sprechen">🎤</button>
+            </div>
+            <strong style="color:#bce7d2;font-size:.86rem">Sprechen</strong>
+          </div>
+
+          <div class="utility-row">
 
             <button type="button" class="utility-btn repeat-btn" id="repeat-btn">
               🔊 Noch einmal hören
