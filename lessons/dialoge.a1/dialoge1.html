@@ -1369,6 +1369,22 @@ body{
     position:static;
   }
 }
+
+/* UX clarity: current action, controls and translation */
+.main-turn-cue{display:flex;align-items:center;gap:10px;margin:-4px 0 14px;padding:10px 14px;color:var(--probe-text);background:rgba(116,174,147,.12);border:1px solid rgba(116,174,147,.36);border-radius:10px;font-size:.82rem}
+.main-turn-cue strong{color:#a8d9c1;white-space:nowrap}
+.main-turn-cue span{color:#d9e5de}
+.dialog-controls .utility-btn{opacity:1;color:#e7eee9;border-width:1px;font-weight:800}
+.dialog-controls .repeat-btn{color:#b9e4cf;background:rgba(116,174,147,.20);border-color:rgba(116,174,147,.68)}
+.dialog-controls .answer-btn{color:#ffd69a;background:rgba(217,138,61,.23);border-color:rgba(217,138,61,.72)}
+.dialog-controls .stop-btn{color:#f0b4aa;background:rgba(201,106,90,.18);border-color:rgba(201,106,90,.62)}
+.dialog-controls #skip-btn{color:#d8e4dd;background:rgba(255,255,255,.055);border-color:rgba(238,232,210,.28)}
+.dialog-controls #skip-btn:hover{color:#fff;border-color:rgba(238,232,210,.55);background:rgba(255,255,255,.09)}
+.translation-toggle{gap:6px;padding:4px 9px}
+.translation-label{font-size:.68rem;letter-spacing:.01em}
+.sidebar-mic .mic-status{max-width:150px;font-family:"Nunito Sans",sans-serif;font-size:.72rem;font-weight:800}
+@media(max-width:520px){.main-turn-cue{align-items:flex-start;flex-direction:column;gap:2px}.translation-label{display:none}}
+
 </style>
 
 <link rel="stylesheet" href="../../css/translation-globe.css">
@@ -1407,7 +1423,7 @@ body{
     <div class="gate-translation-row">
       <span class="translation-control" id="gate-translation-control">
         <button type="button" class="translation-toggle" id="gate-translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung">
-          <span class="translation-globe">🌐</span>A/文
+          <span class="translation-globe">🌐</span><span class="translation-label">Übersetzung</span>
         </button>
         <span class="translation-panel">
           <span class="translation-languages">
@@ -1457,6 +1473,11 @@ body{
           </p>
 
         </div>
+      </div>
+
+      <div class="main-turn-cue" id="main-turn-cue" aria-live="polite">
+        <strong>Du bist dran 🎤</strong>
+        <span id="main-turn-instruction">Antworte auf die Begrüßung.</span>
       </div>
 
       <div id="stage">
@@ -1557,7 +1578,7 @@ body{
         <div class="hero-translation-row">
           <span class="translation-control" id="hero-translation-control">
             <button type="button" class="translation-toggle" id="hero-translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung">
-              <span class="translation-globe">🌐</span>A/文
+              <span class="translation-globe">🌐</span><span class="translation-label">Übersetzung</span>
             </button>
             <span class="translation-panel">
               <span class="translation-languages">
@@ -1596,7 +1617,7 @@ body{
 
             <span class="translation-control" id="translation-control">
               <button type="button" class="translation-toggle" id="translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung">
-                <span class="translation-globe">🌐</span>A/文
+                <span class="translation-globe">🌐</span><span class="translation-label">Übersetzung</span>
               </button>
               <span class="translation-panel">
                 <span class="translation-languages">
@@ -1627,7 +1648,7 @@ body{
 
         <div class="stat">
           <span class="stat-value" id="stat-progress">1/12</span>
-          <span class="stat-label">Zug</span>
+          <span class="stat-label">Schritt</span>
         </div>
 
       </div>
@@ -1645,7 +1666,7 @@ body{
             </button>
           </div>
 
-          <p class="mic-status" id="mic-status">Hör zu …</p>
+          <p class="mic-status" id="mic-status">Zum Sprechen klicken</p>
 
         </div>
       </div>
@@ -2058,6 +2079,7 @@ const els={
   micStatus:document.getElementById("mic-status"),
   liveTranscript:document.getElementById("live-transcript"),
   instructionText:document.getElementById("instruction-text"),
+  mainTurnInstruction:document.getElementById("main-turn-instruction"),
   translationControl:document.getElementById("translation-control"),
   translationToggle:document.getElementById("translation-toggle"),
   translationText:document.getElementById("translation-text"),
@@ -2273,6 +2295,7 @@ function loadTurn(){
   els.exampleText.classList.remove("show");
   els.exampleText.textContent="";
   els.instructionText.textContent=turn.instruction;
+  if(els.mainTurnInstruction)els.mainTurnInstruction.textContent=turn.instruction;
   els.translationText.textContent="";
   els.translationText.classList.remove("show");
   els.translationButtons.forEach(button=>button.classList.remove("active"));
@@ -2312,7 +2335,7 @@ async function playPromptThenListen(){
     !speaking&&
     !listening
   ){
-    setMicReady(true);
+    setMicReady(true,"Zum Sprechen klicken");
   }
 }
 
@@ -2345,7 +2368,7 @@ async function repeatPromptAfterWrongAnswer(){
   ){
     setMicReady(
       true,
-      "Jetzt noch einmal — Mikrofon anklicken und antworten."
+      "Zum Sprechen klicken"
     );
   }
 }
