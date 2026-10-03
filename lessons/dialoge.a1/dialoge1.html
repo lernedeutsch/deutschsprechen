@@ -1615,6 +1615,60 @@ body{
   .history-entry{max-width:82%}
 }
 
+
+/* ---------- FINAL VISUAL POLISH ---------- */
+.card{padding:15px 18px 18px}
+.main-history-panel{
+  min-height:285px;
+  height:285px;
+  padding:14px 18px 16px;
+  background:
+    radial-gradient(circle at 15% 20%,rgba(119,177,147,.08),transparent 22%),
+    radial-gradient(circle at 86% 88%,rgba(244,201,93,.045),transparent 25%),
+    #10271f;
+}
+.main-history-panel:after{
+  content:"🌿   🚶   🌳";
+  position:absolute;
+  right:20px;
+  bottom:13px;
+  opacity:.10;
+  filter:grayscale(1);
+  font-size:1.5rem;
+  letter-spacing:.45rem;
+}
+.main-history-panel .history-list{
+  min-height:245px;
+  max-height:245px;
+  padding-top:34px;
+}
+.history-entry{
+  box-shadow:0 5px 13px rgba(0,0,0,.13);
+}
+.history-entry.partner{
+  margin-left:6px;
+}
+.main-turn-cue{
+  margin:10px auto 3px;
+  padding:7px 18px 8px;
+}
+#stage{padding-top:0 !important}
+.dialog-controls{gap:2px}
+.mic-column .mic-btn-wrap{width:92px;height:92px}
+.mic-column .mic-btn{width:70px;height:70px;font-size:1.7rem}
+.dialog-controls .mic-column strong{font-size:.72rem !important}
+.dialog-controls .utility-row{margin-top:0}
+.dialog-controls .utility-btn{padding:7px 11px}
+.text-answer-row{margin-top:5px}
+.write-toggle{margin-top:2px}
+.current-dialog-panel{padding:16px}
+.current-dialog-panel .partner-left{margin-top:13px;padding-top:12px}
+.current-dialog-panel .hero-stats{margin-top:12px}
+@media(max-width:860px){
+  .main-history-panel{height:270px;min-height:270px}
+  .main-history-panel .history-list{min-height:230px;max-height:230px}
+}
+
 </style>
 
 <style>
