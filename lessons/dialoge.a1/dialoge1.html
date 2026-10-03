@@ -1372,6 +1372,52 @@ button{font:inherit}
  .main-history-panel .history-list::after{display:none !important;}
  .main-history-panel .history-entry{grid-column:1 !important;}
 }
+
+/* Stable two-compartment conversation: current dialogue never pushes the other side */
+.main-history-panel .history-list{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+  grid-auto-flow:row !important;
+  column-gap:30px !important;
+  row-gap:8px !important;
+  align-content:start !important;
+}
+.main-history-panel .history-divider{
+  display:none !important;
+}
+.main-history-panel .history-entry{
+  width:max-content !important;
+  max-width:88% !important;
+  padding:5px 9px !important;
+  margin:0 !important;
+  font-size:1rem !important;
+  line-height:1.3 !important;
+  min-height:0 !important;
+  justify-self:start !important;
+  align-self:start !important;
+}
+.main-history-panel .history-entry .speaker{
+  display:block !important;
+  margin:0 0 1px !important;
+  font-size:.78rem !important;
+  line-height:1.15 !important;
+}
+.main-history-panel .history-entry.user{
+  justify-self:end !important;
+}
+/* Dialogues 1 and 3 live only in the left compartment; 2 and 4 only in the right. */
+.main-history-panel .history-entry.dialog-0,
+.main-history-panel .history-entry.dialog-2{
+  grid-column:1 !important;
+}
+.main-history-panel .history-entry.dialog-1,
+.main-history-panel .history-entry.dialog-3{
+  grid-column:2 !important;
+}
+/* Independent vertical stacks: rows are assigned per dialogue by JS below. */
+@media(max-width:760px){
+ .main-history-panel .history-entry{max-width:92% !important;}
+}
 </style>
 
 <style>
@@ -2497,6 +2543,16 @@ function addHistoryEntry(role,speakerLabel,text){
 
   entry.innerHTML=
     `<span><span class="speaker">${speakerLabel}:</span> ${text}</span>`;
+
+  /* Keep each dialogue in its own visual compartment.
+     Dialogues 1/3 use the left column; 2/4 the right column.
+     Row numbering is local to that dialogue, so activity in one column
+     never pushes bubbles already visible in the other column. */
+  const sameDialogueEntries=
+    els.historyList.querySelectorAll(
+      `.history-entry.dialog-${current().dialogueIndex}`
+    ).length;
+  entry.style.gridRow=String(sameDialogueEntries+1);
 
   els.historyList.appendChild(entry);
   els.historyList.scrollTop=
