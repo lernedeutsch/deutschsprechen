@@ -2619,6 +2619,31 @@ html body .layout.show > .current-dialog-panel{
   }
 }
 </style>
+<style id="history-bubbles-3d">
+/* Give dialogue bubbles in the large history panel a clear raised 3D feel. */
+html body .main-history-panel .history-entry{
+  border:1px solid rgba(255,255,255,.58) !important;
+  box-shadow:
+    0 8px 14px rgba(0,0,0,.38),
+    0 3px 5px rgba(0,0,0,.28),
+    inset 0 2px 0 rgba(255,255,255,.72),
+    inset 0 -3px 5px rgba(0,0,0,.12) !important;
+  transform:translateY(-1px);
+}
+html body .main-history-panel .history-entry:not(.user){
+  background:linear-gradient(180deg,#fffaf0 0%,#eee8d6 100%) !important;
+}
+html body .main-history-panel .history-entry.user{
+  background:linear-gradient(180deg,#e6f7ee 0%,#c9e7d8 100%) !important;
+  border-color:rgba(201,255,232,.65) !important;
+  box-shadow:
+    0 8px 14px rgba(0,0,0,.40),
+    0 3px 5px rgba(0,0,0,.28),
+    0 0 10px rgba(105,225,190,.18),
+    inset 0 2px 0 rgba(255,255,255,.62),
+    inset 0 -3px 5px rgba(0,0,0,.11) !important;
+}
+</style>
 </head>
 
 <body>
