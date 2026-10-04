@@ -1942,6 +1942,23 @@ body.is-listening #stop-btn{display:inline-flex}
  .main-history-panel{height:310px}
  .main-history-panel .history-list{height:250px}
 }
+/* FINAL dialogue menu compaction: keep font sizes, remove forced row height/padding. */
+.current-dialog-panel .dialog-menu-list{
+  gap:0 !important;
+  row-gap:0 !important;
+  margin-bottom:5px !important;
+}
+.current-dialog-panel .dialog-menu-item{
+  min-height:0 !important;
+  height:auto !important;
+  padding:2px 8px !important;
+  margin:0 !important;
+  line-height:1.15 !important;
+}
+.current-dialog-panel .dialog-menu-item + .dialog-menu-item{
+  margin-top:0 !important;
+}
+
 </style>
 
 <link rel="stylesheet" href="../../css/translation-globe.css">
