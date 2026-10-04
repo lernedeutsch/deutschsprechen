@@ -896,7 +896,13 @@ button{font:inherit}
 /* Kompaktowy nagłówek i lista dialogów — bez zmniejszania tekstu. */
 .current-dialog-panel .dialog-menu-title{margin-bottom:5px}
 .current-dialog-panel .dialog-menu-list{gap:1px;margin-bottom:7px}
-.current-dialog-panel .dialog-menu-item{padding:5px 10px}
+.current-dialog-panel .dialog-menu-item{
+  padding:3px 10px;
+  min-height:0;
+  line-height:1.25;
+}
+.current-dialog-panel .dialog-menu-list{row-gap:0}
+.current-dialog-panel .dialog-menu-item + .dialog-menu-item{margin-top:1px}
 .current-dialog-panel .partner-left{gap:7px}
 .current-dialog-panel .partner-meta{gap:0}
 .current-dialog-panel .partner-title{
