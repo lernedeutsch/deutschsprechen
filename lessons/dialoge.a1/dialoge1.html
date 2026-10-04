@@ -4373,42 +4373,32 @@ els.restartBtn.addEventListener("click",init);
 /* ---------------- Start und Ende ---------------- */
 
 function showFinal(){
-  renderProgress();
+  /* Final state must not depend on current(), because index is now
+     flatTurns.length. Build and render the ending first, then speak it once. */
+  const total=flatTurns.length;
+  const percent=Math.round((score/total)*100);
+  const closingText="Danke! Du hast jetzt alle Dialoge geübt. Sehr gut gemacht!";
+  const hasReview=reviewAnswers.length>0;
+  const reviewIntro=hasReview
+    ?"Diese Antworten solltest du noch wiederholen:"
+    :"Heute musst du nichts extra wiederholen. Sehr gut!";
 
   els.stage.style.display="none";
   els.final.classList.add("show");
 
-  /* Friendly spoken closing, followed by a short review of answers
-     that caused difficulty during this practice run. */
-  const closingText="Danke! Du hast jetzt alle Dialoge geübt. Sehr gut gemacht!";
   addHistoryEntry("partner","Lena",closingText);
 
-  const reviewIntro=reviewAnswers.length
-    ?"Diese Antworten solltest du noch wiederholen:"
-    :"Heute musst du nichts extra wiederholen. Sehr gut!";
-
-  if(reviewAnswers.length){
+  if(hasReview){
     addHistoryEntry(
       "partner",
       "Zum Wiederholen",
-      reviewAnswers.map((answer,itemIndex)=>`${itemIndex+1}. ${answer}`).join("<br>")
+      reviewIntro+"<br>"+reviewAnswers
+        .map((answer,itemIndex)=>`${itemIndex+1}. ${answer}`)
+        .join("<br>")
     );
   }else{
     addHistoryEntry("partner","Lena",reviewIntro);
   }
-
-  setLecturerSpeaking(true);
-  (async()=>{
-    await speakGerman(closingText);
-    await speakGerman(reviewIntro);
-    for(const answer of reviewAnswers){
-      await speakGerman(answer);
-    }
-    setLecturerSpeaking(false);
-  })();
-
-  const total=flatTurns.length;
-  const percent=Math.round((score/total)*100);
 
   let emoji;
   let title;
@@ -4417,8 +4407,7 @@ function showFinal(){
   if(percent===100){
     emoji="🏆";
     title="Alle Dialoge perfekt!";
-    subtitle=
-      "Informell und formell — du beherrschst beide Register!";
+    subtitle="Informell und formell — du beherrschst beide Register!";
   }else if(percent>=70){
     emoji="🎉";
     title="Sehr gut!";
@@ -4426,23 +4415,31 @@ function showFinal(){
   }else if(percent>=40){
     emoji="💪";
     title="Guter Anfang!";
-    subtitle=
-      "Übung macht den Meister — sprich die Dialoge noch einmal.";
+    subtitle="Übung macht den Meister — sprich die Dialoge noch einmal.";
   }else{
     emoji="📖";
     title="Weiter üben!";
-    subtitle=
-      "Hör die Sätze noch einmal an und probiere es erneut.";
+    subtitle="Hör die Sätze noch einmal an und probiere es erneut.";
   }
 
   els.finalEmoji.textContent=emoji;
   els.finalTitle.textContent=title;
-
   els.finalSub.textContent=
     `${subtitle} (${score}/${total} Punkte, beste Serie: ${bestStreak}🔥)`;
+  els.finalStars.textContent=renderStars(score,total);
 
-  els.finalStars.textContent=
-    renderStars(score,total);
+  /* One TTS call is intentional: sequential speakGerman() calls cancel
+     each other internally, so the whole ending is spoken as one utterance. */
+  const spokenEnding=[
+    closingText,
+    reviewIntro,
+    ...reviewAnswers
+  ].join(" ");
+
+  setLecturerSpeaking(true);
+  speakGerman(spokenEnding).finally(()=>{
+    setLecturerSpeaking(false);
+  });
 }
 
 function init(){
