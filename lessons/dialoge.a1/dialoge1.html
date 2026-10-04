@@ -2932,6 +2932,30 @@ html body .layout.show > .current-dialog-panel{
     inset -7px 0 12px rgba(0,0,0,.18) !important;
 }
 </style>
+<style id="double-frame-left-panel">
+/* Add the subtle outer frame seen on the large right card, while preserving the existing inner turquoise frame. */
+html body .layout.show > .current-dialog-panel{
+  position:relative !important;
+  margin:18px !important;
+}
+html body .layout.show > .current-dialog-panel::before{
+  content:"" !important;
+  position:absolute !important;
+  z-index:-1 !important;
+  top:-20px !important;
+  right:-20px !important;
+  bottom:-20px !important;
+  left:-20px !important;
+  border:1px solid rgba(126,188,168,.62) !important;
+  border-radius:22px !important;
+  background:linear-gradient(180deg,rgba(75,119,101,.42),rgba(28,65,54,.30)) !important;
+  box-shadow:
+    0 16px 30px rgba(0,0,0,.38),
+    inset 0 2px 4px rgba(210,255,239,.12),
+    inset 0 -6px 10px rgba(0,0,0,.20) !important;
+  pointer-events:none !important;
+}
+</style>
 </head>
 
 <body>
