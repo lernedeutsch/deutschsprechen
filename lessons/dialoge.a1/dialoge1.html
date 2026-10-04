@@ -2913,6 +2913,33 @@ html body .current-dialog-panel .speaker-wave span{
     inset 0 -3px 3px rgba(35,29,89,.20) !important;
 }
 </style>
+<style id="deeper-matte-3d-speaker-wave">
+/* Deeper matte 3D: stronger cylindrical side shading and cast shadow, still no gloss.
+   Animation and transform are intentionally untouched. */
+html body .current-dialog-panel .speaker-wave{
+  filter:
+    drop-shadow(0 12px 8px rgba(0,0,0,.48))
+    drop-shadow(5px 3px 4px rgba(0,0,0,.26)) !important;
+}
+html body .current-dialog-panel .speaker-wave span{
+  border:1px solid #3c3486 !important;
+  background:linear-gradient(90deg,
+    #332b7d 0%,
+    #4a419b 13%,
+    #6a60bd 34%,
+    #776dcc 50%,
+    #665bb6 68%,
+    #493f96 86%,
+    #302873 100%) !important;
+  box-shadow:
+    8px 9px 7px rgba(0,0,0,.46),
+    4px 5px 3px rgba(0,0,0,.34),
+    -2px 2px 3px rgba(0,0,0,.18),
+    inset 5px 0 4px rgba(139,130,203,.20),
+    inset -6px 0 5px rgba(25,19,76,.46),
+    inset 0 -5px 4px rgba(24,19,68,.30) !important;
+}
+</style>
 </head>
 
 <body>
