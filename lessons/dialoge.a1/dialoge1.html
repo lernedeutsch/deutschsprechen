@@ -2888,6 +2888,28 @@ html body .main-history-panel .history-entry.review-summary .speaker{
 }
 </style>
 
+<style id="restore-wave-motion-explicitly">
+/* Restore the original waveform motion exactly; visual 3D stays separate. */
+html body .current-dialog-panel .speaker-wave span{
+  animation-name:speakerWave !important;
+  animation-duration:1s !important;
+  animation-timing-function:ease-in-out !important;
+  animation-iteration-count:infinite !important;
+  animation-direction:alternate !important;
+  transform-origin:center center !important;
+}
+html body .current-dialog-panel .speaker-wave span:nth-child(1){animation-delay:0s !important;}
+html body .current-dialog-panel .speaker-wave span:nth-child(2){animation-delay:.12s !important;}
+html body .current-dialog-panel .speaker-wave span:nth-child(3){animation-delay:.24s !important;}
+html body .current-dialog-panel .speaker-wave span:nth-child(4){animation-delay:.36s !important;}
+html body .current-dialog-panel .speaker-wave span:nth-child(5){animation-delay:.48s !important;}
+html body .current-dialog-panel .speaker-wave span:nth-child(6){animation-delay:.60s !important;}
+html body .current-dialog-panel .speaker-wave span:nth-child(7){animation-delay:.48s !important;}
+html body .current-dialog-panel .speaker-wave span:nth-child(8){animation-delay:.36s !important;}
+html body .current-dialog-panel .speaker-wave span:nth-child(9){animation-delay:.24s !important;}
+html body .current-dialog-panel .speaker-wave span:nth-child(10){animation-delay:.12s !important;}
+html body .current-dialog-panel .speaker-wave span:nth-child(11){animation-delay:0s !important;}
+</style>
 </head>
 
 <body>
