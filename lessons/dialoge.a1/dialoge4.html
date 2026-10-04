@@ -1377,7 +1377,8 @@ body{
 <link rel="stylesheet" href="../../css/page-progress.css">
 <script src="../../js/answer-corrector.js"></script>
 
-<!-- Dialoge 1 visual system copied to Dialoge 4 only -->
+
+<!-- Exact current Dialoge 1 visual layer -->
 <style id="friendly-forest-palette-final">
 /* Friendly Forest palette: softer sage controls, mint actions, honey help, warm cream dialogue. */
 html body{
@@ -1648,6 +1649,154 @@ html body .main-history-panel .history-entry.user{
     inset 0 -5px 7px rgba(38,104,82,.22) !important;
 }
 </style>
+<style id="hide-sidebar-dialog-details">
+/* Remove duplicated dialogue details from the small sidebar panel. */
+html body .current-dialog-panel .partner-title,
+html body .current-dialog-panel .partner-sub,
+html body .current-dialog-panel .turn-instruction{
+  display:none !important;
+}
+html body .current-dialog-panel .partner-left{
+  margin-top:0 !important;
+  padding-top:0 !important;
+  border-top:0 !important;
+}
+</style>
+<style id="unified-sidebar-action-buttons">
+/* Unified sidebar action buttons; Skip sits next to Send. */
+html body .current-dialog-panel .sidebar-text-answer-row{
+  grid-template-columns:minmax(0,1fr) auto auto !important;
+  align-items:center !important;
+}
+html body .current-dialog-panel .sidebar-action-btn,
+html body .current-dialog-panel .sidebar-utility-row .utility-btn{
+  box-sizing:border-box !important;
+  min-width:0 !important;
+  width:auto !important;
+  height:50px !important;
+  min-height:50px !important;
+  padding:8px 15px !important;
+  border:1px solid #76b7a3 !important;
+  border-radius:16px !important;
+  background:linear-gradient(180deg,#3b7466 0%,#2d5d53 100%) !important;
+  color:#f7fff9 !important;
+  -webkit-text-fill-color:#f7fff9 !important;
+  font-size:.92rem !important;
+  line-height:1.12 !important;
+  font-weight:900 !important;
+  box-shadow:
+    0 6px 10px rgba(0,0,0,.24),
+    inset 0 2px 0 rgba(220,255,243,.16),
+    inset 0 -3px 5px rgba(0,0,0,.14) !important;
+}
+html body .current-dialog-panel .sidebar-text-answer-row #text-answer-send,
+html body .current-dialog-panel .sidebar-text-answer-row #skip-btn{
+  min-width:118px !important;
+  max-width:none !important;
+  align-self:center !important;
+}
+html body .current-dialog-panel .sidebar-utility-row{
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:10px !important;
+}
+html body .current-dialog-panel .sidebar-utility-row .utility-btn{
+  width:100% !important;
+}
+</style>
+<style id="fix-four-action-buttons-layout">
+/* Exact requested layout: Send + Skip in one row; Repeat + Answer in the next.
+   All four controls share identical dimensions and visual treatment. */
+html body .current-dialog-panel .sidebar-text-answer-row{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+  gap:10px !important;
+}
+html body .current-dialog-panel .sidebar-text-answer-row .text-answer-input{
+  grid-column:1 / -1 !important;
+  width:100% !important;
+}
+html body .current-dialog-panel #text-answer-send,
+html body .current-dialog-panel #skip-btn,
+html body .current-dialog-panel #repeat-btn,
+html body .current-dialog-panel #answer-btn{
+  box-sizing:border-box !important;
+  width:100% !important;
+  min-width:0 !important;
+  max-width:none !important;
+  height:58px !important;
+  min-height:58px !important;
+  padding:8px 10px !important;
+  margin:0 !important;
+  border:1px solid #76b7a3 !important;
+  border-radius:18px !important;
+  background:linear-gradient(180deg,#3b7466 0%,#2d5d53 100%) !important;
+  color:#f7fff9 !important;
+  -webkit-text-fill-color:#f7fff9 !important;
+  font-size:.92rem !important;
+  line-height:1.15 !important;
+  font-weight:900 !important;
+  box-shadow:
+    0 7px 11px rgba(0,0,0,.27),
+    inset 0 2px 0 rgba(220,255,243,.18),
+    inset 0 -3px 5px rgba(0,0,0,.15) !important;
+  align-self:stretch !important;
+}
+html body .current-dialog-panel .sidebar-utility-row{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+  gap:10px !important;
+}
+</style>
+<style id="large-final-review-bubble">
+/* The end-of-session review is a key learning element, so make it prominent. */
+html body .main-history-panel .history-entry.review-summary{
+  width:calc(100% - 28px) !important;
+  max-width:none !important;
+  min-width:0 !important;
+  min-height:150px !important;
+  padding:18px 22px !important;
+  margin:14px !important;
+  border-radius:20px !important;
+  font-size:1.18rem !important;
+  line-height:1.55 !important;
+  box-sizing:border-box !important;
+  grid-column:1 / -1 !important;
+  justify-self:stretch !important;
+  background:linear-gradient(145deg,#fffdf5 0%,#f7f0dc 52%,#ded4ba 100%) !important;
+  border:2px solid rgba(255,255,255,.88) !important;
+  box-shadow:
+    0 16px 24px rgba(0,0,0,.52),
+    0 7px 10px rgba(0,0,0,.34),
+    inset 0 3px 2px rgba(255,255,255,.90),
+    inset 0 -5px 8px rgba(75,62,38,.18) !important;
+}
+html body .main-history-panel .history-entry.review-summary .speaker{
+  display:block !important;
+  margin-bottom:8px !important;
+  font-size:1.22rem !important;
+  font-weight:900 !important;
+}
+</style>
+<style id="extra-large-final-review-bubble">
+/* Make the final repetition block substantially larger and easier to study. */
+html body .main-history-panel .history-entry.review-summary{
+  width:calc(100% - 20px) !important;
+  min-height:230px !important;
+  padding:26px 30px !important;
+  margin:18px 10px 24px !important;
+  border-radius:24px !important;
+  font-size:1.42rem !important;
+  line-height:1.65 !important;
+}
+html body .main-history-panel .history-entry.review-summary .speaker{
+  margin-bottom:12px !important;
+  font-size:1.52rem !important;
+  line-height:1.25 !important;
+}
+</style>
+
+
 <style id="matte-3d-speaker-wave">
 /* Canonical matte 3D waveform appearance. This is exactly the previously winning visual rule; animation and transform remain untouched. */
 html body .current-dialog-panel .speaker-wave{
@@ -1733,78 +1882,12 @@ html body .layout.show > .card .main-history-panel{
     inset -11px 0 16px rgba(0,0,0,.25) !important;
 }
 </style>
-<style id="dialoge4-dialoge1-compat">
-html body .layout.show{align-items:stretch !important;}
-html body .layout.show > .current-dialog-panel,
-html body .layout.show > .card{height:100% !important;}
-html body .layout.show > .card{background:#24463d !important;}
-html body .layout.show > .card .main-history-panel{background:#18514f !important;}
-html body .main-history-panel .history-list{min-height:240px !important;}
-html body .current-dialog-panel .mic-btn{border-radius:50% !important;}
-</style>
-<style id="dialoge4-force-dialoge1-visible">
-/* Force the current Dialoge 1 visual language onto Dialoge 4's actual DOM. */
-html body{background:#10261f !important;}
-html body .layout.show{gap:20px !important;align-items:stretch !important;}
-html body .layout.show > .current-dialog-panel{
-  background:#3f6657 !important;
-  border:3px solid #62cbbb !important;
-  border-radius:22px !important;
-  box-shadow:0 24px 38px rgba(0,0,0,.68),0 12px 18px rgba(0,0,0,.48),0 0 14px rgba(111,247,218,.62),inset 0 5px 6px rgba(224,255,247,.26),inset 0 -12px 18px rgba(0,0,0,.32) !important;
-}
-html body .layout.show > .card{
-  background:#25473a !important;
-  border:1px solid #6c9a87 !important;
-  border-radius:22px !important;
-  box-shadow:0 24px 46px rgba(0,0,0,.55),0 10px 20px rgba(0,0,0,.38),0 0 24px rgba(100,220,190,.20),inset 0 2px 0 rgba(207,255,238,.24),inset 0 -5px 12px rgba(0,0,0,.24) !important;
-}
-html body .layout.show > .card .main-history-panel{
-  background:#18514f !important;
-  border:3px solid #62cbbb !important;
-  border-radius:18px !important;
-  box-shadow:0 32px 48px rgba(0,0,0,.72),0 18px 24px rgba(0,0,0,.54),0 8px 10px rgba(0,0,0,.44),0 0 17px rgba(111,247,218,.76),0 0 38px rgba(68,224,195,.44),inset 0 7px 8px rgba(224,255,247,.34),inset 0 -18px 24px rgba(0,0,0,.46) !important;
-}
-html body .current-dialog-panel .dialog-menu-item.active{background:#72a58f !important;border-color:#72a58f !important;}
-html body .current-dialog-panel .dialog-menu-info,
-html body .current-dialog-panel .stat{background:#223a31 !important;border-color:#3b564b !important;}
-html body .main-history-panel .history-entry{
-  width:max-content !important;
-  max-width:78% !important;
-  border:1px solid rgba(255,255,255,.82) !important;
-  border-radius:14px !important;
-  box-shadow:0 12px 16px rgba(0,0,0,.48),0 6px 7px rgba(0,0,0,.34),inset 0 3px 2px rgba(255,255,255,.90),inset 0 -5px 7px rgba(75,62,38,.20) !important;
-}
-html body .main-history-panel .history-entry:not(.user){background:linear-gradient(145deg,#fffdf5,#f7f0dc 52%,#ded4ba) !important;color:#20352c !important;}
-html body .main-history-panel .history-entry.user{margin-left:auto !important;background:linear-gradient(145deg,#effff7,#d7f2e5 50%,#abd8c6) !important;color:#18372b !important;}
-html body .current-dialog-panel .mic-btn{
-  background:linear-gradient(145deg,#a2ead0,#78cdb0 48%,#58aa90) !important;
-  border:2px solid rgba(220,255,244,.72) !important;
-  box-shadow:0 13px 20px rgba(0,0,0,.42),0 5px 8px rgba(0,0,0,.30),0 0 14px rgba(125,235,199,.38),inset 0 5px 6px rgba(255,255,255,.42),inset 0 -7px 9px rgba(20,79,61,.32) !important;
-}
-</style>
-<style id="dialoge4-match-dialoge1-structure">
-/* Dialoge 4 now uses the same visible sidebar/control composition as Dialoge 1. */
+<style id="dialoge4-dialoge1-exact-compat">
+/* Dialoge 4 content, Dialoge 1 presentation. */
 html body .card #stage .dialog-control-divider,
 html body .card #stage .dialog-controls,
 html body .card #stage > .text-answer-row{display:none !important;}
 html body .current-dialog-panel .sidebar-speaking-panel{display:block !important;}
-html body .current-dialog-panel .partner-title,
-html body .current-dialog-panel .partner-sub,
-html body .current-dialog-panel .turn-instruction{display:none !important;}
-html body .current-dialog-panel .partner-left{margin-top:0 !important;padding-top:0 !important;border-top:0 !important;}
-html body .current-dialog-panel .sidebar-text-answer-row{display:grid !important;grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;gap:10px !important;}
-html body .current-dialog-panel .sidebar-text-answer-row .text-answer-input{grid-column:1/-1 !important;width:100% !important;}
-html body .current-dialog-panel .sidebar-utility-row{display:grid !important;grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;gap:10px !important;}
-html body .current-dialog-panel #text-answer-send,
-html body .current-dialog-panel #skip-btn,
-html body .current-dialog-panel #repeat-btn,
-html body .current-dialog-panel #answer-btn{
- box-sizing:border-box !important;width:100% !important;height:58px !important;min-height:58px !important;
- border:1px solid #76b7a3 !important;border-radius:18px !important;
- background:linear-gradient(180deg,#3b7466,#2d5d53) !important;color:#f7fff9 !important;font-weight:900 !important;
-}
-html body .current-dialog-panel .sidebar-mic{margin:16px 0 !important;}
-html body .current-dialog-panel .mic-btn{width:100px !important;height:100px !important;}
 </style>
 </head>
 
