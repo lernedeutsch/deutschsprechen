@@ -2887,48 +2887,7 @@ html body .main-history-panel .history-entry.review-summary .speaker{
   line-height:1.25 !important;
 }
 </style>
-<style id="ultra-3d-speaker-wave">
-/* More sculpted, glossy 3D waveform bars while preserving the animation. */
-html body .current-dialog-panel .speaker-wave{
-  perspective:420px !important;
-  filter:
-    drop-shadow(0 10px 7px rgba(0,0,0,.42))
-    drop-shadow(0 0 11px rgba(139,126,255,.38)) !important;
-}
-html body .current-dialog-panel .speaker-wave span{
-  position:relative !important;
-  border:1px solid rgba(232,228,255,.78) !important;
-  border-radius:999px !important;
-  background:
-    linear-gradient(90deg,
-      #4c42a9 0%,
-      #695dd6 18%,
-      #a59cff 43%,
-      #7b70ed 66%,
-      #5046b7 100%) !important;
-  box-shadow:
-    5px 8px 7px rgba(0,0,0,.42),
-    2px 3px 3px rgba(0,0,0,.32),
-    0 0 11px rgba(146,130,255,.52),
-    inset 3px 0 3px rgba(255,255,255,.60),
-    inset -4px 0 5px rgba(42,31,126,.48),
-    inset 0 3px 3px rgba(255,255,255,.38),
-    inset 0 -4px 4px rgba(45,33,132,.34) !important;
-  /* Do not override transform here: the waveform keyframes animate transform. */
-}
-html body .current-dialog-panel .speaker-wave span::after{
-  content:"" !important;
-  position:absolute !important;
-  top:12% !important;
-  left:17% !important;
-  width:24% !important;
-  height:60% !important;
-  border-radius:999px !important;
-  background:linear-gradient(180deg,rgba(255,255,255,.72),rgba(255,255,255,.08)) !important;
-  opacity:.72 !important;
-  pointer-events:none !important;
-}
-</style>
+
 </head>
 
 <body>
