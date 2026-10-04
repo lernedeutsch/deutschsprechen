@@ -2644,6 +2644,45 @@ html body .main-history-panel .history-entry.user{
     inset 0 -3px 5px rgba(0,0,0,.11) !important;
 }
 </style>
+<style id="mic-wave-strong-3d">
+/* Strong 3D treatment for the student microphone and lecturer waveform. */
+html body .current-dialog-panel .mic-btn{
+  border:2px solid rgba(220,255,244,.72) !important;
+  background:linear-gradient(145deg,#a2ead0 0%,#78cdb0 48%,#58aa90 100%) !important;
+  box-shadow:
+    0 13px 20px rgba(0,0,0,.42),
+    0 5px 8px rgba(0,0,0,.30),
+    0 0 14px rgba(125,235,199,.38),
+    inset 0 5px 6px rgba(255,255,255,.42),
+    inset 0 -7px 9px rgba(20,79,61,.32),
+    inset 5px 0 8px rgba(255,255,255,.12) !important;
+}
+html body .current-dialog-panel .mic-btn-wrap{
+  filter:drop-shadow(0 8px 8px rgba(0,0,0,.28));
+}
+html body .current-dialog-panel .speaker-wave{
+  filter:
+    drop-shadow(0 8px 6px rgba(0,0,0,.38))
+    drop-shadow(0 0 8px rgba(137,126,255,.28));
+}
+html body .current-dialog-panel .speaker-wave span{
+  border:1px solid rgba(218,214,255,.48) !important;
+  background:linear-gradient(90deg,#5b50b9 0%,#8279eb 45%,#9b94f4 100%) !important;
+  box-shadow:
+    3px 5px 5px rgba(0,0,0,.32),
+    0 0 8px rgba(135,123,245,.42),
+    inset 2px 0 2px rgba(255,255,255,.34),
+    inset -2px 0 3px rgba(45,35,130,.30) !important;
+}
+html body .current-dialog-panel .mic-btn.listening{
+  box-shadow:
+    0 13px 20px rgba(0,0,0,.42),
+    0 5px 8px rgba(0,0,0,.30),
+    0 0 18px rgba(125,235,199,.55),
+    inset 0 5px 6px rgba(255,255,255,.42),
+    inset 0 -7px 9px rgba(20,79,61,.32) !important;
+}
+</style>
 </head>
 
 <body>
