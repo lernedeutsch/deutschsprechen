@@ -889,9 +889,36 @@ button{font:inherit}
   display:none;
 }
 .current-dialog-panel .partner-left{
-  padding-top:12px;
+  padding-top:8px;
   border-top:1px solid #314b41;
 }
+
+/* Kompaktowy nagłówek i lista dialogów — bez zmniejszania tekstu. */
+.current-dialog-panel .dialog-menu-title{margin-bottom:5px}
+.current-dialog-panel .dialog-menu-list{gap:1px;margin-bottom:7px}
+.current-dialog-panel .dialog-menu-item{
+  padding:3px 10px;
+  min-height:0;
+  line-height:1.25;
+}
+.current-dialog-panel .dialog-menu-list{row-gap:0}
+.current-dialog-panel .dialog-menu-item + .dialog-menu-item{margin-top:0}
+
+/* Jeszcze ciaśniejsza lista 01–04: rozmiar tekstu bez zmian. */
+.current-dialog-panel .dialog-menu-list{
+  gap:0 !important;
+  margin-bottom:5px !important;
+}
+.current-dialog-panel .dialog-menu-item{
+  padding-top:1px !important;
+  padding-bottom:1px !important;
+  margin:0 !important;
+  min-height:0 !important;
+  height:auto !important;
+  line-height:1.15 !important;
+}
+.current-dialog-panel .partner-left{gap:7px}
+.current-dialog-panel .partner-meta{gap:0}
 .current-dialog-panel .partner-title{
   font-size:1rem;
   font-weight:900;
@@ -922,6 +949,47 @@ button{font:inherit}
 }
 .sidebar-mic .mic-column{
   margin-top:0;
+}
+
+/* Lektor mówi: zamiast mikrofonu pokazuje się animowana fala głosu. */
+.speaker-wave{
+  display:none;
+  width:150px;
+  height:102px;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+}
+.speaker-wave span{
+  width:7px;
+  height:18px;
+  border-radius:999px;
+  background:#7770d9;
+  box-shadow:0 0 8px rgba(119,112,217,.22);
+  animation:speakerWave 1s ease-in-out infinite alternate;
+}
+.speaker-wave span:nth-child(2){animation-delay:.12s;height:34px}
+.speaker-wave span:nth-child(3){animation-delay:.24s;height:58px}
+.speaker-wave span:nth-child(4){animation-delay:.36s;height:28px}
+.speaker-wave span:nth-child(5){animation-delay:.48s;height:50px}
+.speaker-wave span:nth-child(6){animation-delay:.60s;height:36px}
+.speaker-wave span:nth-child(7){animation-delay:.48s;height:48px}
+.speaker-wave span:nth-child(8){animation-delay:.36s;height:24px}
+.speaker-wave span:nth-child(9){animation-delay:.24s;height:54px}
+.speaker-wave span:nth-child(10){animation-delay:.12s;height:38px}
+.speaker-wave span:nth-child(11){height:22px}
+.sidebar-mic.lecturer-speaking .speaker-wave{display:flex}
+/* Podczas głosu lektora ukryj bezwarunkowo cały mikrofon ucznia. */
+.sidebar-mic.lecturer-speaking .mic-column,
+.sidebar-mic.lecturer-speaking .mic-btn-wrap,
+.sidebar-mic.lecturer-speaking .mic-btn,
+.sidebar-mic.lecturer-speaking .mic-status{display:none!important}
+@keyframes speakerWave{
+  from{transform:scaleY(.45);opacity:.72}
+  to{transform:scaleY(1.18);opacity:1}
+}
+@media(prefers-reduced-motion:reduce){
+  .speaker-wave span{animation:none}
 }
 .dialog-controls{
   align-items:stretch;
@@ -971,6 +1039,17 @@ button{font:inherit}
 .text-answer-row:focus-within{
   opacity:1;
 }
+/* Equal-height desktop columns: both outer panels always end on the same line. */
+@media(min-width:861px){
+  .layout.show{align-items:stretch}
+  .current-dialog-panel,
+  .card{
+    height:auto;
+    min-height:100%;
+    align-self:stretch;
+  }
+}
+
 @media(max-width:860px){.current-dialog-panel,.card{grid-column:1;grid-row:auto}.current-dialog-panel{position:static;width:100%}}
 
 /* ---------- FINAL ---------- */
@@ -1125,6 +1204,392 @@ button{font:inherit}
     animation-iteration-count:1!important;
     transition-duration:.01ms!important;
   }
+}
+
+.sidebar-speaking-panel{
+  margin-top:14px;
+  padding-top:14px;
+  border-top:1px solid #314b41;
+}
+.sidebar-turn-cue{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  margin-bottom:8px;
+  color:#f5f1e8;
+  text-align:center;
+  font-size:.78rem;
+}
+.sidebar-turn-cue strong{color:#bce7d2;font-size:.9rem}
+.sidebar-speaking-panel .sidebar-mic{margin-top:0}
+.sidebar-speaking-panel .mic-btn-wrap{width:78px;height:78px}
+.sidebar-speaking-panel .mic-btn{width:62px;height:62px;font-size:1.45rem}
+.sidebar-speaking-panel .mic-status{font-size:.62rem;max-width:180px}
+.sidebar-utility-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+  margin-top:8px;
+}
+.sidebar-utility-row .utility-btn{
+  padding:7px 5px;
+  font-size:.62rem;
+  white-space:normal;
+  line-height:1.2;
+}
+.sidebar-write-toggle{
+  display:block !important;
+  margin:6px auto 2px !important;
+  padding:4px 10px !important;
+}
+.sidebar-text-answer-row{
+  width:100% !important;
+  margin:6px 0 8px !important;
+}
+.sidebar-text-answer-row{
+  display:flex !important;
+}
+.sidebar-text-answer-row.open{display:flex !important}
+.sidebar-write-toggle{display:none !important}
+.sidebar-text-answer-row .text-answer-input{min-width:0}
+.sidebar-text-answer-row .text-answer-send{flex:0 0 auto}
+
+/* Sidebar controls correction */
+.layout{grid-template-columns:320px minmax(0,1fr) !important;}
+.sidebar-speaking-panel .sidebar-mic{
+  display:block !important;
+  margin:8px auto 4px !important;
+}
+.sidebar-speaking-panel .mic-column{
+  display:flex !important;
+  flex-direction:column;
+  align-items:center;
+  margin:0 !important;
+}
+.sidebar-speaking-panel .mic-btn-wrap{
+  display:grid !important;
+  width:92px !important;
+  height:92px !important;
+}
+.sidebar-speaking-panel .mic-btn{
+  display:block !important;
+  width:72px !important;
+  height:72px !important;
+  font-size:1.7rem !important;
+}
+.sidebar-speaking-panel .mic-status{
+  display:block !important;
+  margin:4px auto 0 !important;
+  max-width:240px !important;
+  text-align:center;
+}
+#stage{display:none !important;}
+
+/* State override must come AFTER Sidebar controls correction.
+   Lecturer: waveform only. Student: microphone only. */
+.sidebar-speaking-panel .sidebar-mic.lecturer-speaking .speaker-wave{
+  display:flex !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+.sidebar-speaking-panel .sidebar-mic.lecturer-speaking .mic-column,
+.sidebar-speaking-panel .sidebar-mic.lecturer-speaking .mic-btn-wrap,
+.sidebar-speaking-panel .sidebar-mic.lecturer-speaking .mic-btn,
+.sidebar-speaking-panel .sidebar-mic.lecturer-speaking .mic-status{
+  display:none !important;
+}
+@media(max-width:900px){
+  .layout{grid-template-columns:280px minmax(0,1fr) !important;}
+}
+@media(max-width:760px){
+  .layout{grid-template-columns:1fr !important;}
+}
+
+/* Hide score / streak / step counters */
+.hero-stats{display:none !important;}
+
+/* Compact, usable left control panel */
+.layout{grid-template-columns:350px minmax(0,1fr) !important;gap:18px !important;}
+.current-dialog-panel{padding:16px 18px !important;}
+.current-dialog-panel .dialog-menu-list{gap:3px !important;}
+.current-dialog-panel .dialog-menu-item{min-height:38px !important;padding:8px 10px !important;}
+.current-dialog-panel .partner-left{margin-top:10px !important;padding-top:11px !important;}
+.current-dialog-panel .partner-title{margin-bottom:3px !important;}
+.current-dialog-panel .partner-sub{margin-bottom:6px !important;}
+.current-dialog-panel .turn-instruction{margin:6px 0 8px !important;}
+.current-dialog-panel .translation-btn{margin-top:0 !important;}
+.sidebar-speaking-panel{
+  margin-top:11px !important;
+  padding-top:11px !important;
+}
+.sidebar-turn-cue{margin-bottom:5px !important;gap:1px !important;}
+.sidebar-turn-cue strong{font-size:.88rem !important;}
+.sidebar-turn-cue span{font-size:.75rem !important;}
+.sidebar-speaking-panel .sidebar-mic{
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  height:auto !important;
+  overflow:visible !important;
+  margin:4px auto 5px !important;
+}
+.sidebar-speaking-panel .mic-column{
+  display:flex !important;
+  visibility:visible !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  margin:0 !important;
+}
+.sidebar-speaking-panel .mic-btn-wrap{
+  display:grid !important;
+  visibility:visible !important;
+  place-items:center !important;
+  width:84px !important;
+  height:84px !important;
+  margin:0 auto !important;
+}
+.sidebar-speaking-panel .mic-btn{
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  position:relative !important;
+  width:66px !important;
+  height:66px !important;
+  min-width:66px !important;
+  min-height:66px !important;
+  padding:0 !important;
+  font-size:1.55rem !important;
+  z-index:3 !important;
+}
+.sidebar-speaking-panel .mic-ring{display:block !important;}
+.sidebar-speaking-panel .mic-status{
+  display:block !important;
+  visibility:visible !important;
+  margin:2px 0 0 !important;
+  font-size:.58rem !important;
+  line-height:1.15 !important;
+}
+.sidebar-utility-row{
+  grid-template-columns:1fr 1fr !important;
+  gap:5px !important;
+  margin-top:5px !important;
+}
+.sidebar-utility-row .utility-btn{
+  min-height:34px !important;
+  padding:6px 6px !important;
+  font-size:.60rem !important;
+}
+.sidebar-utility-row #skip-btn{grid-column:1 / -1 !important;}
+@media(max-width:1050px){
+ .layout{grid-template-columns:320px minmax(0,1fr) !important;}
+}
+@media(max-width:760px){
+ .layout{grid-template-columns:1fr !important;}
+}
+
+/* definitive sidebar microphone placement */
+.current-dialog-panel .sidebar-speaking-panel .sidebar-mic{
+  display:block !important;
+  position:static !important;
+  left:auto !important;
+  top:auto !important;
+  width:auto !important;
+  height:auto !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  overflow:visible !important;
+  margin:6px auto !important;
+}
+.current-dialog-panel .sidebar-speaking-panel .mic-column{
+  display:flex !important;
+  position:static !important;
+  flex-direction:column !important;
+  align-items:center !important;
+}
+.current-dialog-panel .sidebar-speaking-panel #mic-btn-wrap{
+  display:grid !important;
+  place-items:center !important;
+  position:relative !important;
+  width:90px !important;
+  height:90px !important;
+}
+.current-dialog-panel .sidebar-speaking-panel #mic-btn{
+  display:block !important;
+  position:relative !important;
+  width:70px !important;
+  height:70px !important;
+  min-width:70px !important;
+  min-height:70px !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  z-index:10 !important;
+}
+
+/* Two-column conversation history + smaller bubbles */
+.main-history-panel .history-list{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+  column-gap:26px !important;
+  row-gap:9px !important;
+  align-content:start !important;
+  position:relative !important;
+}
+.main-history-panel .history-list::after{
+  content:"";
+  position:absolute;
+  top:8px;
+  bottom:8px;
+  left:50%;
+  width:1px;
+  background:rgba(155,190,175,.18);
+  pointer-events:none;
+}
+.main-history-panel .history-divider{
+  grid-column:1 / -1 !important;
+  width:100% !important;
+  margin:5px 0 2px !important;
+}
+.main-history-panel .history-entry{
+  width:max-content !important;
+  max-width:82% !important;
+  padding:8px 12px !important;
+  font-size:.88rem !important;
+  line-height:1.3 !important;
+  border-radius:14px 14px 14px 5px !important;
+  justify-self:start !important;
+  align-self:start !important;
+}
+.main-history-panel .history-entry.user{
+  justify-self:end !important;
+  border-radius:14px 14px 5px 14px !important;
+}
+.main-history-panel .history-entry .speaker{
+  font-size:.68rem !important;
+  margin-bottom:1px !important;
+}
+.main-history-panel .history-entry.dialog-0,
+.main-history-panel .history-entry.dialog-2{
+  grid-column:1 !important;
+}
+.main-history-panel .history-entry.dialog-1,
+.main-history-panel .history-entry.dialog-3{
+  grid-column:2 !important;
+}
+.main-history-panel .history-divider:nth-of-type(4n+1){grid-column:1 / -1 !important;}
+@media(max-width:760px){
+ .main-history-panel .history-list{grid-template-columns:1fr !important;}
+ .main-history-panel .history-list::after{display:none !important;}
+ .main-history-panel .history-entry{grid-column:1 !important;}
+}
+
+/* Stable two-compartment conversation: current dialogue never pushes the other side */
+.main-history-panel .history-list{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+  grid-auto-flow:row !important;
+  column-gap:30px !important;
+  row-gap:8px !important;
+  align-content:start !important;
+}
+.main-history-panel .history-divider{
+  display:none !important;
+}
+.main-history-panel .history-entry{
+  width:max-content !important;
+  max-width:88% !important;
+  padding:5px 9px !important;
+  margin:0 !important;
+  font-size:1rem !important;
+  line-height:1.3 !important;
+  min-height:0 !important;
+  justify-self:start !important;
+  align-self:start !important;
+}
+.main-history-panel .history-entry .speaker{
+  display:block !important;
+  margin:0 0 1px !important;
+  font-size:.78rem !important;
+  line-height:1.15 !important;
+}
+.main-history-panel .history-entry.user{
+  justify-self:end !important;
+}
+/* Dialogues 1 and 3 live only in the left compartment; 2 and 4 only in the right. */
+.main-history-panel .history-entry.dialog-0,
+.main-history-panel .history-entry.dialog-2{
+  grid-column:1 !important;
+}
+.main-history-panel .history-entry.dialog-1,
+.main-history-panel .history-entry.dialog-3{
+  grid-column:2 !important;
+}
+/* Independent vertical stacks: rows are assigned per dialogue by JS below. */
+@media(max-width:760px){
+ .main-history-panel .history-entry{max-width:92% !important;}
+}
+
+/* Tighter vertical spacing between speech bubbles — keep text size unchanged */
+.main-history-panel .history-list{
+  row-gap:3px !important;
+}
+.main-history-panel .history-entry{
+  margin-top:0 !important;
+  margin-bottom:0 !important;
+}
+
+/* Use the full height of the large right panel for dialogue history */
+.card{
+  display:flex !important;
+  flex-direction:column !important;
+  min-height:740px !important;
+}
+.main-history-panel{
+  flex:1 1 auto !important;
+  height:auto !important;
+  min-height:650px !important;
+  max-height:none !important;
+}
+.main-history-panel .history-list{
+  height:100% !important;
+  min-height:650px !important;
+  max-height:none !important;
+  overflow-y:auto !important;
+  align-content:start !important;
+  padding-bottom:22px !important;
+}
+@media(max-width:900px){
+  .card{min-height:680px !important;}
+  .main-history-panel,
+  .main-history-panel .history-list{min-height:590px !important;}
+}
+
+/* Separator after each completed dialogue, inside its own compartment */
+.main-history-panel .history-divider{
+  display:block !important;
+  width:calc(100% - 20px) !important;
+  height:1px !important;
+  padding:0 !important;
+  margin:7px 10px 9px !important;
+  background:rgba(151,190,173,.28) !important;
+  color:transparent !important;
+  overflow:hidden !important;
+  align-self:center !important;
+  justify-self:stretch !important;
+}
+.main-history-panel .history-divider.left-column{grid-column:1 !important;}
+.main-history-panel .history-divider.right-column{grid-column:2 !important;}
+
+.card{min-height:0 !important;height:auto !important;}
+.main-history-panel{min-height:610px !important;height:610px !important;flex:none !important;}
+.main-history-panel .history-list{min-height:610px !important;height:610px !important;max-height:610px !important;}
+
+/* Equal visual length for both dialogue compartments */
+.main-history-panel .history-list{
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+}
+.main-history-panel .history-list::after{
+  top:0 !important;
+  bottom:0 !important;
 }
 </style>
 
