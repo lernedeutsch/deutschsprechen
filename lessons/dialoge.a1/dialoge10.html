@@ -313,6 +313,10 @@ button{font:inherit}
   background:#ece3fb;
   color:#5a3ca8;
 }
+.partner-tag.aktiv{
+  background:#e9f7dc;
+  color:#3d6b1d;
+}
 
 .instruction-wrap{
   display:flex;
@@ -3144,8 +3148,8 @@ html body .layout.show > .card .main-history-panel{
 
             <span id="partner-name">Anna</span>
 
-            <span class="partner-tag informell" id="partner-tag">
-              informell
+            <span class="partner-tag aktiv" id="partner-tag">
+              aktiv
             </span>
 
           </span>
@@ -4236,9 +4240,19 @@ gateTranslationButtons.forEach(button=>button.addEventListener("click",event=>{
 
 const instructionTranslations={
   "Antworte mit einem ganzen Satz.":{
-    en:"Respond to the greeting.",
-    pl:"Odpowiedz na powitanie.",
-    it:"Rispondi al saluto."
+    en:"Answer with a complete sentence.",
+    pl:"Odpowiedz pełnym zdaniem.",
+    it:"Rispondi con una frase completa."
+  },
+  "Sag in einem ganzen Satz, wann du aufstehst.":{
+    en:"Say in a complete sentence when you get up.",
+    pl:"Powiedz pełnym zdaniem, o której wstajesz.",
+    it:"Di’ con una frase completa a che ora ti alzi."
+  },
+  "Antworte in einem ganzen Satz.":{
+    en:"Answer with a complete sentence.",
+    pl:"Odpowiedz pełnym zdaniem.",
+    it:"Rispondi con una frase completa."
   },
   "Sag deinen Namen — informell.":{
     en:"Say your name — informal.",
