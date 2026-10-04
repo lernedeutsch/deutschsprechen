@@ -4237,15 +4237,25 @@ document.addEventListener("click",event=>{
 });
 
 els.answerBtn.addEventListener("click",()=>{
+  if(answered||promptStarting||retrying)return;
+
   hintUsed=true;
 
-  /* Show the suggested answer as a real learner speech bubble
-     in the large conversation panel instead of the hidden helper text. */
   const existingHint=els.historyList.querySelector(
     `.history-entry.answer-hint[data-turn="${index}"]`
   );
 
   if(existingHint)return;
+
+  /* Treat "Antwort zeigen" as completing this learner turn:
+     show the model answer as Du, then continue with the lecturer's next turn. */
+  answered=true;
+  streak=0;
+  clearTimeout(restartTimer);
+
+  if(recognizer&&listening){
+    try{ recognizer.stop(); }catch(error){}
+  }
 
   addHistoryEntry(
     "user",
@@ -4258,6 +4268,12 @@ els.answerBtn.addEventListener("click",()=>{
     addedEntry.classList.add("answer-hint");
     addedEntry.dataset.turn=String(index);
   }
+
+  els.micStatus.textContent="💡 Antwort gezeigt";
+  els.micStatus.classList.remove("live");
+  setMicReady(false);
+
+  window.setTimeout(advance,900);
 });
 
 els.repeatBtn.addEventListener("click",()=>{
