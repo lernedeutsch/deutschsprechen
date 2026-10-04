@@ -2713,6 +2713,34 @@ html body .current-dialog-panel .sidebar-utility-row .answer-btn{
     inset 0 -3px 5px rgba(0,0,0,.16) !important;
 }
 </style>
+<style id="extra-strong-history-bubbles-3d">
+/* Stronger raised 3D speech bubbles in the conversation history. */
+html body .main-history-panel .history-entry{
+  border:1px solid rgba(255,255,255,.82) !important;
+  box-shadow:
+    0 12px 16px rgba(0,0,0,.48),
+    0 6px 7px rgba(0,0,0,.34),
+    0 2px 2px rgba(0,0,0,.26),
+    inset 0 3px 2px rgba(255,255,255,.90),
+    inset 3px 0 4px rgba(255,255,255,.34),
+    inset 0 -5px 7px rgba(75,62,38,.20) !important;
+  transform:translateY(-2px) !important;
+}
+html body .main-history-panel .history-entry:not(.user){
+  background:linear-gradient(145deg,#fffdf5 0%,#f7f0dc 52%,#ded4ba 100%) !important;
+}
+html body .main-history-panel .history-entry.user{
+  background:linear-gradient(145deg,#effff7 0%,#d7f2e5 50%,#abd8c6 100%) !important;
+  border-color:rgba(226,255,244,.90) !important;
+  box-shadow:
+    0 12px 16px rgba(0,0,0,.50),
+    0 6px 7px rgba(0,0,0,.36),
+    0 0 13px rgba(107,235,197,.24),
+    inset 0 3px 2px rgba(255,255,255,.88),
+    inset 3px 0 4px rgba(255,255,255,.30),
+    inset 0 -5px 7px rgba(38,104,82,.22) !important;
+}
+</style>
 </head>
 
 <body>
