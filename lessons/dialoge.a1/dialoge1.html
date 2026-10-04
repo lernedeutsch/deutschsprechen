@@ -2350,6 +2350,33 @@ body{
 }
 </style>
 
+<style id="final-layer-separation-override">
+/* Final paint layer: intentionally strong separation between the three surfaces. */
+html body{
+  background:#0b1b16 !important;
+}
+html body .layout.show > .current-dialog-panel{
+  background:#29483d !important;
+  border:1px solid #587a6c !important;
+  box-shadow:0 12px 28px rgba(0,0,0,.18) !important;
+}
+html body .layout.show > .card{
+  background:#213a31 !important;
+  border:1px solid #4b6a5d !important;
+}
+html body .layout.show > .card .main-history-panel{
+  background:#06241c !important;
+  border:1px solid #315548 !important;
+}
+html body .current-dialog-panel .dialog-menu-item.active{
+  background:#3d725f !important;
+}
+html body .current-dialog-panel .text-answer-input,
+html body .current-dialog-panel .text-answer-send{
+  background:#17352b !important;
+  border-color:#7fc0a4 !important;
+}
+</style>
 </head>
 
 <body>
