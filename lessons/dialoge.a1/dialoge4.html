@@ -1782,6 +1782,30 @@ html body .current-dialog-panel .mic-btn{
   box-shadow:0 13px 20px rgba(0,0,0,.42),0 5px 8px rgba(0,0,0,.30),0 0 14px rgba(125,235,199,.38),inset 0 5px 6px rgba(255,255,255,.42),inset 0 -7px 9px rgba(20,79,61,.32) !important;
 }
 </style>
+<style id="dialoge4-match-dialoge1-structure">
+/* Dialoge 4 now uses the same visible sidebar/control composition as Dialoge 1. */
+html body .card #stage .dialog-control-divider,
+html body .card #stage .dialog-controls,
+html body .card #stage > .text-answer-row{display:none !important;}
+html body .current-dialog-panel .sidebar-speaking-panel{display:block !important;}
+html body .current-dialog-panel .partner-title,
+html body .current-dialog-panel .partner-sub,
+html body .current-dialog-panel .turn-instruction{display:none !important;}
+html body .current-dialog-panel .partner-left{margin-top:0 !important;padding-top:0 !important;border-top:0 !important;}
+html body .current-dialog-panel .sidebar-text-answer-row{display:grid !important;grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;gap:10px !important;}
+html body .current-dialog-panel .sidebar-text-answer-row .text-answer-input{grid-column:1/-1 !important;width:100% !important;}
+html body .current-dialog-panel .sidebar-utility-row{display:grid !important;grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;gap:10px !important;}
+html body .current-dialog-panel #text-answer-send,
+html body .current-dialog-panel #skip-btn,
+html body .current-dialog-panel #repeat-btn,
+html body .current-dialog-panel #answer-btn{
+ box-sizing:border-box !important;width:100% !important;height:58px !important;min-height:58px !important;
+ border:1px solid #76b7a3 !important;border-radius:18px !important;
+ background:linear-gradient(180deg,#3b7466,#2d5d53) !important;color:#f7fff9 !important;font-weight:900 !important;
+}
+html body .current-dialog-panel .sidebar-mic{margin:16px 0 !important;}
+html body .current-dialog-panel .mic-btn{width:100px !important;height:100px !important;}
+</style>
 </head>
 
 <body>
@@ -2027,24 +2051,45 @@ html body .current-dialog-panel .mic-btn{
 
       </div>
 
-      <div class="sidebar-mic">
-        <div class="mic-column">
-
-          <div class="mic-btn-wrap" id="mic-btn-wrap">
-            <span class="mic-ring"></span>
-            <span class="mic-ring"></span>
-            <span class="mic-ring"></span>
-
-            <button type="button" class="mic-btn" id="mic-btn">
-              🎤
-            </button>
+      <div class="sidebar-speaking-panel">
+        <div class="sidebar-turn-cue">
+          <strong>Du bist dran 🎤</strong>
+          <span id="main-turn-instruction">Antworte auf die Begrüßung.</span>
+        </div>
+        <div class="sidebar-mic">
+          <div class="speaker-wave" id="speaker-wave" aria-label="Lektor spricht" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
           </div>
+          <div class="mic-column">
+            <div class="mic-btn-wrap" id="mic-btn-wrap">
+              <span class="mic-ring"></span><span class="mic-ring"></span><span class="mic-ring"></span>
+              <button type="button" class="mic-btn" id="mic-btn" aria-label="Sprechen">🎤</button>
+            </div>
+            <p class="mic-status" id="mic-status">🎤 Zum Sprechen klicken</p>
+          </div>
+        </div>
 
-          <p class="mic-status" id="mic-status">Hör zu …</p>
+        <button type="button" class="write-toggle sidebar-write-toggle" id="write-toggle">⌨️ Lieber schreiben</button>
+        <div class="text-answer-row sidebar-text-answer-row">
+          <input
+            type="text"
+            class="text-answer-input"
+            id="text-answer-input"
+            placeholder="Schreibe deine Antwort auf Deutsch"
+            autocomplete="off"
+          >
+          <button type="button" class="text-answer-send sidebar-action-btn" id="text-answer-send">Senden</button>
+          <button type="button" class="utility-btn sidebar-action-btn" id="skip-btn">Überspringen →</button>
+        </div>
 
+        <div class="sidebar-utility-row">
+          <button type="button" class="utility-btn repeat-btn" id="repeat-btn">🔊 Noch einmal hören</button>
+          <button type="button" class="utility-btn answer-btn" id="answer-btn">💡 Antwort zeigen</button>
+          <button type="button" class="utility-btn stop-btn" id="stop-btn">⏹ Stop</button>
         </div>
       </div>
 
+      
     </aside>
 
   </div>
