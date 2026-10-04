@@ -3529,6 +3529,7 @@ let promptStarting=false;
 let retrying=false;
 let micReady=false;
 let hintUsed=false;
+let reviewAnswers=[];
 
 function renderStars(count,total){
   const filled=Math.round((total?count/total:0)*5);
@@ -3848,6 +3849,10 @@ function markCorrect(spokenText){
 function markWrong(spokenText){
   streak=0;
   attempts++;
+
+  if(attempts===1&&!reviewAnswers.includes(current().example)){
+    reviewAnswers.push(current().example);
+  }
   micReady=false;
   els.micBtnWrap.classList.remove("ready");
   els.micBtn.classList.remove("ready");
@@ -4368,11 +4373,34 @@ function showFinal(){
   els.stage.style.display="none";
   els.final.classList.add("show");
 
-  /* Friendly spoken closing after all four dialogues are finished. */
+  /* Friendly spoken closing, followed by a short review of answers
+     that caused difficulty during this practice run. */
   const closingText="Danke! Du hast jetzt alle Dialoge geübt. Sehr gut gemacht!";
   addHistoryEntry("partner","Lena",closingText);
+
+  const reviewIntro=reviewAnswers.length
+    ?"Diese Antworten solltest du noch wiederholen:"
+    :"Heute musst du nichts extra wiederholen. Sehr gut!";
+
+  if(reviewAnswers.length){
+    addHistoryEntry(
+      "partner",
+      "Zum Wiederholen",
+      reviewAnswers.map((answer,itemIndex)=>`${itemIndex+1}. ${answer}`).join("<br>")
+    );
+  }else{
+    addHistoryEntry("partner","Lena",reviewIntro);
+  }
+
   setLecturerSpeaking(true);
-  speakGerman(closingText).finally(()=>setLecturerSpeaking(false));
+  (async()=>{
+    await speakGerman(closingText);
+    await speakGerman(reviewIntro);
+    for(const answer of reviewAnswers){
+      await speakGerman(answer);
+    }
+    setLecturerSpeaking(false);
+  })();
 
   const total=flatTurns.length;
   const percent=Math.round((score/total)*100);
@@ -4422,6 +4450,7 @@ function init(){
   promptStarting=false;
   retrying=false;
   micReady=false;
+  reviewAnswers=[];
 
   clearTimeout(restartTimer);
 
