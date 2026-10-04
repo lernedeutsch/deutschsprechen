@@ -959,7 +959,11 @@ button{font:inherit}
 .speaker-wave span:nth-child(10){animation-delay:.12s;height:38px}
 .speaker-wave span:nth-child(11){height:22px}
 .sidebar-mic.lecturer-speaking .speaker-wave{display:flex}
-.sidebar-mic.lecturer-speaking .mic-column{display:none}
+/* Podczas głosu lektora ukryj bezwarunkowo cały mikrofon ucznia. */
+.sidebar-mic.lecturer-speaking .mic-column,
+.sidebar-mic.lecturer-speaking .mic-btn-wrap,
+.sidebar-mic.lecturer-speaking .mic-btn,
+.sidebar-mic.lecturer-speaking .mic-status{display:none!important}
 @keyframes speakerWave{
   from{transform:scaleY(.45);opacity:.72}
   to{transform:scaleY(1.18);opacity:1}
