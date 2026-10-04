@@ -2754,6 +2754,48 @@ html body .current-dialog-panel .partner-left{
   border-top:0 !important;
 }
 </style>
+<style id="unified-sidebar-action-buttons">
+/* Unified sidebar action buttons; Skip sits next to Send. */
+html body .current-dialog-panel .sidebar-text-answer-row{
+  grid-template-columns:minmax(0,1fr) auto auto !important;
+  align-items:center !important;
+}
+html body .current-dialog-panel .sidebar-action-btn,
+html body .current-dialog-panel .sidebar-utility-row .utility-btn{
+  box-sizing:border-box !important;
+  min-width:0 !important;
+  width:auto !important;
+  height:50px !important;
+  min-height:50px !important;
+  padding:8px 15px !important;
+  border:1px solid #76b7a3 !important;
+  border-radius:16px !important;
+  background:linear-gradient(180deg,#3b7466 0%,#2d5d53 100%) !important;
+  color:#f7fff9 !important;
+  -webkit-text-fill-color:#f7fff9 !important;
+  font-size:.92rem !important;
+  line-height:1.12 !important;
+  font-weight:900 !important;
+  box-shadow:
+    0 6px 10px rgba(0,0,0,.24),
+    inset 0 2px 0 rgba(220,255,243,.16),
+    inset 0 -3px 5px rgba(0,0,0,.14) !important;
+}
+html body .current-dialog-panel .sidebar-text-answer-row #text-answer-send,
+html body .current-dialog-panel .sidebar-text-answer-row #skip-btn{
+  min-width:118px !important;
+  max-width:none !important;
+  align-self:center !important;
+}
+html body .current-dialog-panel .sidebar-utility-row{
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:10px !important;
+}
+html body .current-dialog-panel .sidebar-utility-row .utility-btn{
+  width:100% !important;
+}
+</style>
 </head>
 
 <body>
@@ -2981,14 +3023,14 @@ html body .current-dialog-panel .partner-left{
             placeholder="Schreibe deine Antwort auf Deutsch"
             autocomplete="off"
           >
-          <button type="button" class="text-answer-send" id="text-answer-send">Senden</button>
+          <button type="button" class="text-answer-send sidebar-action-btn" id="text-answer-send">Senden</button>
+          <button type="button" class="utility-btn sidebar-action-btn" id="skip-btn">Überspringen →</button>
         </div>
 
         <div class="sidebar-utility-row">
           <button type="button" class="utility-btn repeat-btn" id="repeat-btn">🔊 Noch einmal hören</button>
           <button type="button" class="utility-btn answer-btn" id="answer-btn">💡 Antwort zeigen</button>
           <button type="button" class="utility-btn stop-btn" id="stop-btn">⏹ Stop</button>
-          <button type="button" class="utility-btn" id="skip-btn">Überspringen →</button>
         </div>
       </div>
 
