@@ -1376,6 +1376,372 @@ body{
 <link rel="stylesheet" href="../../css/translation-globe.css">
 <link rel="stylesheet" href="../../css/page-progress.css">
 <script src="../../js/answer-corrector.js"></script>
+
+<!-- Dialoge 1 visual system copied to Dialoge 4 only -->
+<style id="friendly-forest-palette-final">
+/* Friendly Forest palette: softer sage controls, mint actions, honey help, warm cream dialogue. */
+html body{
+  background:#10261f !important;
+}
+html body .layout.show > .current-dialog-panel{
+  background:#3f6657 !important;
+  border-color:#7fa793 !important;
+}
+html body .layout.show > .card{
+  background:#25473a !important;
+  border-color:#5f8875 !important;
+}
+html body .layout.show > .card .main-history-panel{
+  background:#07382b !important;
+  border-color:#426b5a !important;
+}
+
+/* Active / learner = mint. */
+html body .current-dialog-panel .dialog-menu-item.active{
+  background:#72a58f !important;
+}
+html body .current-dialog-panel .mic-btn{
+  background:#8bd8b8 !important;
+  border-color:#a6dfc8 !important;
+  box-shadow:
+    0 0 0 6px rgba(121,201,170,.10),
+    0 0 0 12px rgba(121,201,170,.055) !important;
+}
+html body .current-dialog-panel .sidebar-turn-title{
+  color:#d1f4e5 !important;
+}
+html body .current-dialog-panel .sidebar-text-answer-row .text-answer-input,
+html body .current-dialog-panel .sidebar-text-answer-row .text-answer-send{
+  background:#25483c !important;
+  border-color:#92cbb3 !important;
+}
+
+/* Help = warm honey rather than brown. */
+html body .current-dialog-panel .sidebar-utility-row .answer-btn{
+  background:#9a7426 !important;
+  border-color:#ddb653 !important;
+  color:#fff5d2 !important;
+  -webkit-text-fill-color:#fff5d2 !important;
+}
+
+/* Neutral controls = soft eucalyptus. */
+html body .current-dialog-panel .sidebar-utility-row .repeat-btn{
+  background:#365e50 !important;
+  border-color:#77a18f !important;
+}
+html body .current-dialog-panel .sidebar-utility-row #skip-btn{
+  background:#284c40 !important;
+  border-color:#66877a !important;
+}
+
+/* Warm cream for Lena / teacher bubbles. */
+html body .main-history-panel .history-entry:not(.user){
+  background:#f3efdf !important;
+  color:#20352c !important;
+}
+html body .main-history-panel .history-entry.user{
+  background:#d9efe4 !important;
+  color:#18372b !important;
+}
+
+/* Secondary copy gets sage/mint instead of grey-white. */
+html body .current-dialog-panel .partner-register,
+html body .current-dialog-panel .mic-hint,
+html body .current-dialog-panel .sidebar-turn-instruction,
+html body .current-dialog-panel .dialog-menu-item .dialog-number{
+  color:#c0dfd1 !important;
+  -webkit-text-fill-color:#c0dfd1 !important;
+}
+html body .main-history-panel .history-divider{
+  color:#b4e7d0 !important;
+}
+</style>
+<style id="main-panel-petrol-forest">
+/* Softer petrol-forest conversation canvas; keep the rest of Friendly Forest unchanged. */
+html body .layout.show > .card .main-history-panel{
+  background:#18514f !important;
+}
+</style>
+<style id="strong-3d-conversation-frame">
+/* Strong 3D depth around the large conversation area. */
+html body .layout.show > .card{
+  border:1px solid #6c9a87 !important;
+  box-shadow:
+    0 18px 34px rgba(0,0,0,.42),
+    0 7px 12px rgba(0,0,0,.28),
+    inset 0 2px 0 rgba(190,238,218,.16),
+    inset 0 -4px 10px rgba(0,0,0,.20) !important;
+}
+html body .layout.show > .card .main-history-panel{
+  border:2px solid #2f8178 !important;
+  box-shadow:
+    0 12px 22px rgba(0,0,0,.46),
+    0 4px 7px rgba(0,0,0,.34),
+    inset 0 3px 4px rgba(151,238,220,.15),
+    inset 0 -7px 12px rgba(0,0,0,.27),
+    0 0 0 5px rgba(55,151,137,.11) !important;
+}
+</style>
+<style id="strong-highlighted-panel-shadow">
+/* Strong illuminated 3D frame around the large conversation panel. */
+html body .layout.show > .card{
+  box-shadow:
+    0 24px 46px rgba(0,0,0,.55),
+    0 10px 20px rgba(0,0,0,.38),
+    0 0 24px rgba(100,220,190,.20),
+    inset 0 2px 0 rgba(207,255,238,.24),
+    inset 0 -5px 12px rgba(0,0,0,.24) !important;
+}
+html body .layout.show > .card .main-history-panel{
+  border:2px solid #53b8a8 !important;
+  box-shadow:
+    0 16px 30px rgba(0,0,0,.58),
+    0 7px 14px rgba(0,0,0,.42),
+    0 0 12px rgba(98,238,211,.58),
+    0 0 28px rgba(65,214,188,.30),
+    inset 0 3px 4px rgba(207,255,242,.22),
+    inset 0 -8px 15px rgba(0,0,0,.30),
+    inset 4px 0 8px rgba(115,238,214,.10) !important;
+}
+</style>
+<style id="strong-highlighted-sidebar-3d">
+/* Matching illuminated 3D treatment for the smaller left panel. */
+html body .layout.show > .current-dialog-panel{
+  border:2px solid #6fb8a2 !important;
+  box-shadow:
+    0 20px 38px rgba(0,0,0,.52),
+    0 8px 16px rgba(0,0,0,.38),
+    0 0 12px rgba(117,232,199,.42),
+    0 0 26px rgba(75,203,169,.22),
+    inset 0 3px 4px rgba(220,255,242,.18),
+    inset 0 -8px 14px rgba(0,0,0,.25),
+    inset 4px 0 8px rgba(140,239,211,.08) !important;
+}
+</style>
+<style id="desktop-panel-gap-tighten">
+@media(min-width:861px){
+  html body .layout.show{
+    column-gap:20px !important;
+    gap:20px !important;
+  }
+}
+</style>
+<style id="history-bubbles-3d">
+/* Give dialogue bubbles in the large history panel a clear raised 3D feel. */
+html body .main-history-panel .history-entry{
+  border:1px solid rgba(255,255,255,.58) !important;
+  box-shadow:
+    0 8px 14px rgba(0,0,0,.38),
+    0 3px 5px rgba(0,0,0,.28),
+    inset 0 2px 0 rgba(255,255,255,.72),
+    inset 0 -3px 5px rgba(0,0,0,.12) !important;
+  transform:translateY(-1px);
+}
+html body .main-history-panel .history-entry:not(.user){
+  background:linear-gradient(180deg,#fffaf0 0%,#eee8d6 100%) !important;
+}
+html body .main-history-panel .history-entry.user{
+  background:linear-gradient(180deg,#e6f7ee 0%,#c9e7d8 100%) !important;
+  border-color:rgba(201,255,232,.65) !important;
+  box-shadow:
+    0 8px 14px rgba(0,0,0,.40),
+    0 3px 5px rgba(0,0,0,.28),
+    0 0 10px rgba(105,225,190,.18),
+    inset 0 2px 0 rgba(255,255,255,.62),
+    inset 0 -3px 5px rgba(0,0,0,.11) !important;
+}
+</style>
+<style id="mic-wave-strong-3d">
+/* Strong 3D treatment for the student microphone and lecturer waveform. */
+html body .current-dialog-panel .mic-btn{
+  border:2px solid rgba(220,255,244,.72) !important;
+  background:linear-gradient(145deg,#a2ead0 0%,#78cdb0 48%,#58aa90 100%) !important;
+  box-shadow:
+    0 13px 20px rgba(0,0,0,.42),
+    0 5px 8px rgba(0,0,0,.30),
+    0 0 14px rgba(125,235,199,.38),
+    inset 0 5px 6px rgba(255,255,255,.42),
+    inset 0 -7px 9px rgba(20,79,61,.32),
+    inset 5px 0 8px rgba(255,255,255,.12) !important;
+}
+html body .current-dialog-panel .mic-btn-wrap{
+  filter:drop-shadow(0 8px 8px rgba(0,0,0,.28));
+}
+html body .current-dialog-panel .speaker-wave{
+  filter:
+    drop-shadow(0 8px 6px rgba(0,0,0,.38))
+    drop-shadow(0 0 8px rgba(137,126,255,.28));
+}
+html body .current-dialog-panel .speaker-wave span{
+  border:1px solid rgba(218,214,255,.48) !important;
+  background:linear-gradient(90deg,#5b50b9 0%,#8279eb 45%,#9b94f4 100%) !important;
+  box-shadow:
+    3px 5px 5px rgba(0,0,0,.32),
+    0 0 8px rgba(135,123,245,.42),
+    inset 2px 0 2px rgba(255,255,255,.34),
+    inset -2px 0 3px rgba(45,35,130,.30) !important;
+}
+html body .current-dialog-panel .mic-btn.listening{
+  box-shadow:
+    0 13px 20px rgba(0,0,0,.42),
+    0 5px 8px rgba(0,0,0,.30),
+    0 0 18px rgba(125,235,199,.55),
+    inset 0 5px 6px rgba(255,255,255,.42),
+    inset 0 -7px 9px rgba(20,79,61,.32) !important;
+}
+</style>
+<style id="extra-strong-main-panel-3d">
+/* Stronger 3D depth on the large conversation screen. */
+html body .layout.show > .card .main-history-panel{
+  border:3px solid #62cbbb !important;
+  box-shadow:
+    0 24px 38px rgba(0,0,0,.68),
+    0 12px 18px rgba(0,0,0,.48),
+    0 5px 7px rgba(0,0,0,.38),
+    0 0 14px rgba(111,247,218,.72),
+    0 0 34px rgba(68,224,195,.42),
+    0 0 58px rgba(50,190,166,.20),
+    inset 0 5px 6px rgba(224,255,247,.30),
+    inset 0 -12px 18px rgba(0,0,0,.38),
+    inset 7px 0 12px rgba(141,255,230,.12),
+    inset -7px 0 12px rgba(0,0,0,.18) !important;
+}
+</style>
+<style id="answer-button-friendly-petrol">
+/* Replace the mustard/gold answer button with a calmer petrol-mint accent. */
+html body .current-dialog-panel .sidebar-utility-row .answer-btn{
+  background:linear-gradient(180deg,#3f7f70 0%,#32685d 100%) !important;
+  border-color:#7fc5ae !important;
+  color:#f5fff9 !important;
+  -webkit-text-fill-color:#f5fff9 !important;
+  box-shadow:
+    0 7px 12px rgba(0,0,0,.28),
+    inset 0 2px 0 rgba(220,255,242,.18),
+    inset 0 -3px 5px rgba(0,0,0,.16) !important;
+}
+</style>
+<style id="extra-strong-history-bubbles-3d">
+/* Stronger raised 3D speech bubbles in the conversation history. */
+html body .main-history-panel .history-entry{
+  border:1px solid rgba(255,255,255,.82) !important;
+  box-shadow:
+    0 12px 16px rgba(0,0,0,.48),
+    0 6px 7px rgba(0,0,0,.34),
+    0 2px 2px rgba(0,0,0,.26),
+    inset 0 3px 2px rgba(255,255,255,.90),
+    inset 3px 0 4px rgba(255,255,255,.34),
+    inset 0 -5px 7px rgba(75,62,38,.20) !important;
+  transform:translateY(-2px) !important;
+}
+html body .main-history-panel .history-entry:not(.user){
+  background:linear-gradient(145deg,#fffdf5 0%,#f7f0dc 52%,#ded4ba 100%) !important;
+}
+html body .main-history-panel .history-entry.user{
+  background:linear-gradient(145deg,#effff7 0%,#d7f2e5 50%,#abd8c6 100%) !important;
+  border-color:rgba(226,255,244,.90) !important;
+  box-shadow:
+    0 12px 16px rgba(0,0,0,.50),
+    0 6px 7px rgba(0,0,0,.36),
+    0 0 13px rgba(107,235,197,.24),
+    inset 0 3px 2px rgba(255,255,255,.88),
+    inset 3px 0 4px rgba(255,255,255,.30),
+    inset 0 -5px 7px rgba(38,104,82,.22) !important;
+}
+</style>
+<style id="matte-3d-speaker-wave">
+/* Canonical matte 3D waveform appearance. This is exactly the previously winning visual rule; animation and transform remain untouched. */
+html body .current-dialog-panel .speaker-wave{
+  filter:
+    drop-shadow(0 12px 8px rgba(0,0,0,.48))
+    drop-shadow(5px 3px 4px rgba(0,0,0,.26)) !important;
+}
+html body .current-dialog-panel .speaker-wave span{
+  border:1px solid #3c3486 !important;
+  background:linear-gradient(90deg,
+    #332b7d 0%,
+    #4a419b 13%,
+    #6a60bd 34%,
+    #776dcc 50%,
+    #665bb6 68%,
+    #493f96 86%,
+    #302873 100%) !important;
+  box-shadow:
+    8px 9px 7px rgba(0,0,0,.46),
+    4px 5px 3px rgba(0,0,0,.34),
+    -2px 2px 3px rgba(0,0,0,.18),
+    inset 5px 0 4px rgba(139,130,203,.20),
+    inset -6px 0 5px rgba(25,19,76,.46),
+    inset 0 -5px 4px rgba(24,19,68,.30) !important;
+}
+</style>
+<style id="match-left-panel-border-to-main">
+/* Match the small left panel's frame/depth to the large right conversation panel. */
+html body .layout.show > .current-dialog-panel{
+  border:3px solid #62cbbb !important;
+  box-shadow:
+    0 24px 38px rgba(0,0,0,.68),
+    0 12px 18px rgba(0,0,0,.48),
+    0 5px 7px rgba(0,0,0,.38),
+    0 0 14px rgba(111,247,218,.72),
+    0 0 34px rgba(68,224,195,.42),
+    0 0 58px rgba(50,190,166,.20),
+    inset 0 5px 6px rgba(224,255,247,.30),
+    inset 0 -12px 18px rgba(0,0,0,.38),
+    inset 7px 0 12px rgba(141,255,230,.12),
+    inset -7px 0 12px rgba(0,0,0,.18) !important;
+}
+</style>
+<style id="double-frame-left-panel">
+/* Add the subtle outer frame seen on the large right card, while preserving the existing inner turquoise frame. */
+html body .layout.show > .current-dialog-panel{
+  position:relative !important;
+  margin:0 !important;
+}
+html body .layout.show > .current-dialog-panel::before{
+  content:"" !important;
+  position:absolute !important;
+  z-index:-1 !important;
+  top:-20px !important;
+  right:-20px !important;
+  bottom:-20px !important;
+  left:-20px !important;
+  border:1px solid rgba(126,188,168,.62) !important;
+  border-radius:22px !important;
+  background:linear-gradient(180deg,rgba(75,119,101,.42),rgba(28,65,54,.30)) !important;
+  box-shadow:
+    0 16px 30px rgba(0,0,0,.38),
+    inset 0 2px 4px rgba(210,255,239,.12),
+    inset 0 -6px 10px rgba(0,0,0,.20) !important;
+  pointer-events:none !important;
+}
+</style>
+<style id="deeper-main-conversation-panel-3d">
+/* Stronger depth for the large right panel only; layout and behavior stay untouched. */
+html body .layout.show > .card .main-history-panel{
+  border:3px solid #62cbbb !important;
+  box-shadow:
+    0 32px 48px rgba(0,0,0,.72),
+    0 18px 24px rgba(0,0,0,.54),
+    0 8px 10px rgba(0,0,0,.44),
+    0 3px 4px rgba(0,0,0,.34),
+    0 0 17px rgba(111,247,218,.76),
+    0 0 38px rgba(68,224,195,.44),
+    0 0 68px rgba(50,190,166,.22),
+    inset 0 7px 8px rgba(224,255,247,.34),
+    inset 0 -18px 24px rgba(0,0,0,.46),
+    inset 10px 0 15px rgba(141,255,230,.15),
+    inset -11px 0 16px rgba(0,0,0,.25) !important;
+}
+</style>
+<style id="dialoge4-dialoge1-compat">
+html body .layout.show{align-items:stretch !important;}
+html body .layout.show > .current-dialog-panel,
+html body .layout.show > .card{height:100% !important;}
+html body .layout.show > .card{background:#24463d !important;}
+html body .layout.show > .card .main-history-panel{background:#18514f !important;}
+html body .main-history-panel .history-list{min-height:240px !important;}
+html body .current-dialog-panel .mic-btn{border-radius:50% !important;}
+</style>
 </head>
 
 <body>
