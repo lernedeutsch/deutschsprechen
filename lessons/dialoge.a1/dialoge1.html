@@ -1248,6 +1248,18 @@ button{font:inherit}
   text-align:center;
 }
 #stage{display:none !important;}
+
+/* State override must come AFTER Sidebar controls correction.
+   Lecturer: waveform only. Student: microphone only. */
+.sidebar-speaking-panel .sidebar-mic.lecturer-speaking .speaker-wave{
+  display:flex !important;
+}
+.sidebar-speaking-panel .sidebar-mic.lecturer-speaking .mic-column,
+.sidebar-speaking-panel .sidebar-mic.lecturer-speaking .mic-btn-wrap,
+.sidebar-speaking-panel .sidebar-mic.lecturer-speaking .mic-btn,
+.sidebar-speaking-panel .sidebar-mic.lecturer-speaking .mic-status{
+  display:none !important;
+}
 @media(max-width:900px){
   .layout{grid-template-columns:280px minmax(0,1fr) !important;}
 }
