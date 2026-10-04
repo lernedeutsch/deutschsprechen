@@ -3103,19 +3103,19 @@ html body .layout.show > .card .main-history-panel{
       <div class="dialog-menu-list">
         <div class="dialog-menu-item active" data-dialog-index="0">
           <span class="dialog-menu-number">01</span>
-          <span>Uhrzeiten</span>
+          <span>Wie spät ist es?</span>
         </div>
         <div class="dialog-menu-item" data-dialog-index="1">
           <span class="dialog-menu-number">02</span>
-          <span>Uhrzeiten</span>
+          <span>Morgens aufstehen</span>
         </div>
         <div class="dialog-menu-item" data-dialog-index="2">
           <span class="dialog-menu-number">03</span>
-          <span>Uhrzeiten</span>
+          <span>Arbeitsbeginn</span>
         </div>
         <div class="dialog-menu-item" data-dialog-index="3">
           <span class="dialog-menu-number">04</span>
-          <span>Uhrzeiten</span>
+          <span>Schlafen gehen</span>
         </div>
       </div>
 
@@ -3142,7 +3142,7 @@ html body .layout.show > .card .main-history-panel{
         <div class="partner-meta">
 
           <span class="partner-title" id="partner-title">
-            Dialog 1 · Uhrzeiten
+            Dialog 1 · Wie spät ist es?
           </span>
 
           <span class="partner-sub">
@@ -3340,9 +3340,9 @@ function nameCheck(answer){
 
 const dialogues=[
 {title:"Dialog 1 · Uhrzeiten",role:"aktiv",speaker:"Anna",avatar:"💬",turns:[{prompt:"Wie spät ist es?",instruction:"Antworte mit einem ganzen Satz.",example:"Es ist acht Uhr.",requireFullSentence:true,check:answer=>/uhr|ist/.test(normalize(answer))}]},
-{title:"Dialog 2 · Uhrzeiten",role:"aktiv",speaker:"Tom",avatar:"💬",turns:[{prompt:"Wann stehst du morgens auf?",instruction:"Sag in einem ganzen Satz, wann du aufstehst.",example:"Ich stehe um sechs Uhr auf.",requireFullSentence:true,check:answer=>/uhr|stehe|auf/.test(normalize(answer))}]},
-{title:"Dialog 3 · Uhrzeiten",role:"aktiv",speaker:"Mia",avatar:"💬",turns:[{prompt:"Um wie viel Uhr beginnt deine Arbeit?",instruction:"Antworte in einem ganzen Satz.",example:"Meine Arbeit beginnt um acht Uhr.",requireFullSentence:true,check:answer=>/uhr|beginnt|arbeite/.test(normalize(answer))}]},
-{title:"Dialog 4 · Uhrzeiten",role:"aktiv",speaker:"Paul",avatar:"💬",turns:[{prompt:"Wann gehst du schlafen?",instruction:"Antworte in einem ganzen Satz.",example:"Ich gehe um zehn Uhr schlafen.",requireFullSentence:true,check:answer=>/uhr|schlafen|bett/.test(normalize(answer))}]}
+{title:"Dialog 2 · Morgens aufstehen",role:"aktiv",speaker:"Tom",avatar:"💬",turns:[{prompt:"Wann stehst du morgens auf?",instruction:"Sag in einem ganzen Satz, wann du aufstehst.",example:"Ich stehe um sechs Uhr auf.",requireFullSentence:true,check:answer=>/uhr|stehe|auf/.test(normalize(answer))}]},
+{title:"Dialog 3 · Arbeitsbeginn",role:"aktiv",speaker:"Mia",avatar:"💬",turns:[{prompt:"Um wie viel Uhr beginnt deine Arbeit?",instruction:"Antworte in einem ganzen Satz.",example:"Meine Arbeit beginnt um acht Uhr.",requireFullSentence:true,check:answer=>/uhr|beginnt|arbeite/.test(normalize(answer))}]},
+{title:"Dialog 4 · Schlafen gehen",role:"aktiv",speaker:"Paul",avatar:"💬",turns:[{prompt:"Wann gehst du schlafen?",instruction:"Antworte in einem ganzen Satz.",example:"Ich gehe um zehn Uhr schlafen.",requireFullSentence:true,check:answer=>/uhr|schlafen|bett/.test(normalize(answer))}]}
 ];
 
 /* ---------------- Dialoge in Züge umwandeln ---------------- */
