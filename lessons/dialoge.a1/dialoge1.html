@@ -4238,10 +4238,26 @@ document.addEventListener("click",event=>{
 
 els.answerBtn.addEventListener("click",()=>{
   hintUsed=true;
-  els.exampleText.classList.add("show");
 
-  els.exampleText.textContent=
-    `Richtige Antwort: „${current().example}“`;
+  /* Show the suggested answer as a real learner speech bubble
+     in the large conversation panel instead of the hidden helper text. */
+  const existingHint=els.historyList.querySelector(
+    `.history-entry.answer-hint[data-turn="${index}"]`
+  );
+
+  if(existingHint)return;
+
+  addHistoryEntry(
+    "user",
+    "Du",
+    current().example
+  );
+
+  const addedEntry=els.historyList.lastElementChild;
+  if(addedEntry){
+    addedEntry.classList.add("answer-hint");
+    addedEntry.dataset.turn=String(index);
+  }
 });
 
 els.repeatBtn.addEventListener("click",()=>{
