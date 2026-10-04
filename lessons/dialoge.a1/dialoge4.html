@@ -1889,6 +1889,12 @@ html body .card #stage .dialog-controls,
 html body .card #stage > .text-answer-row{display:none !important;}
 html body .current-dialog-panel .sidebar-speaking-panel{display:block !important;}
 </style>
+<style id="dialoge4-use-dialoge1-sidebar-controls">
+html body .layout.show > .card #stage .dialog-control-divider,
+html body .layout.show > .card #stage .dialog-controls,
+html body .layout.show > .card #stage > .text-answer-row{display:none !important;}
+html body .current-dialog-panel .sidebar-speaking-panel{display:block !important;}
+</style>
 </head>
 
 <body>
@@ -2113,6 +2119,44 @@ html body .current-dialog-panel .sidebar-speaking-panel{display:block !important
 
         </div>
 
+      </div>
+
+      <div class="sidebar-speaking-panel">
+        <div class="sidebar-turn-cue">
+          <strong>Du bist dran 🎤</strong>
+          <span id="main-turn-instruction">Antworte auf die Begrüßung.</span>
+        </div>
+        <div class="sidebar-mic">
+          <div class="speaker-wave" id="speaker-wave" aria-label="Lektor spricht" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div class="mic-column">
+            <div class="mic-btn-wrap" id="mic-btn-wrap">
+              <span class="mic-ring"></span><span class="mic-ring"></span><span class="mic-ring"></span>
+              <button type="button" class="mic-btn" id="mic-btn" aria-label="Sprechen">🎤</button>
+            </div>
+            <p class="mic-status" id="mic-status">🎤 Zum Sprechen klicken</p>
+          </div>
+        </div>
+
+        <button type="button" class="write-toggle sidebar-write-toggle" id="write-toggle">⌨️ Lieber schreiben</button>
+        <div class="text-answer-row sidebar-text-answer-row">
+          <input
+            type="text"
+            class="text-answer-input"
+            id="text-answer-input"
+            placeholder="Schreibe deine Antwort auf Deutsch"
+            autocomplete="off"
+          >
+          <button type="button" class="text-answer-send sidebar-action-btn" id="text-answer-send">Senden</button>
+          <button type="button" class="utility-btn sidebar-action-btn" id="skip-btn">Überspringen →</button>
+        </div>
+
+        <div class="sidebar-utility-row">
+          <button type="button" class="utility-btn repeat-btn" id="repeat-btn">🔊 Noch einmal hören</button>
+          <button type="button" class="utility-btn answer-btn" id="answer-btn">💡 Antwort zeigen</button>
+          <button type="button" class="utility-btn stop-btn" id="stop-btn">⏹ Stop</button>
+        </div>
       </div>
 
       <div class="hero-stats">
