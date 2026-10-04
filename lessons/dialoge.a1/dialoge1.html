@@ -4342,6 +4342,12 @@ function showFinal(){
   els.stage.style.display="none";
   els.final.classList.add("show");
 
+  /* Friendly spoken closing after all four dialogues are finished. */
+  const closingText="Danke! Du hast jetzt alle Dialoge geübt. Sehr gut gemacht!";
+  addHistoryEntry("partner","Lena",closingText);
+  setLecturerSpeaking(true);
+  speakGerman(closingText).finally(()=>setLecturerSpeaking(false));
+
   const total=flatTurns.length;
   const percent=Math.round((score/total)*100);
 
