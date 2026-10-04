@@ -971,6 +971,17 @@ button{font:inherit}
 .text-answer-row:focus-within{
   opacity:1;
 }
+/* Equal-height desktop columns: both outer panels always end on the same line. */
+@media(min-width:861px){
+  .layout.show{align-items:stretch}
+  .current-dialog-panel,
+  .card{
+    height:auto;
+    min-height:100%;
+    align-self:stretch;
+  }
+}
+
 @media(max-width:860px){.current-dialog-panel,.card{grid-column:1;grid-row:auto}.current-dialog-panel{position:static;width:100%}}
 
 /* ---------- FINAL ---------- */
