@@ -2082,6 +2082,56 @@ body.is-listening #stop-btn{display:inline-flex}
 <link rel="stylesheet" href="../../css/page-progress.css">
 <script src="../../js/answer-corrector.js"></script>
 
+<style id="dark-forest-mint-hierarchy-final">
+/* Stronger visual hierarchy: page -> control panel -> conversation surface. */
+body{
+  background:#10211b !important;
+}
+.current-dialog-panel{
+  background:#20392f !important;
+  border-color:#426153 !important;
+}
+.card{
+  background:#193229 !important;
+  border-color:#38574a !important;
+}
+.main-history-panel{
+  background:#08271f !important;
+  border-color:#23483b !important;
+}
+.current-dialog-panel .dialog-menu-item.active{
+  background:#2d5b49 !important;
+}
+.current-dialog-panel .mic-btn{
+  background:#75c7a7 !important;
+  border-color:#a2e0c7 !important;
+}
+.current-dialog-panel .sidebar-text-answer-row .text-answer-input,
+.current-dialog-panel .sidebar-text-answer-row .text-answer-send{
+  background:#173129 !important;
+  border:1px solid #5d9c83 !important;
+}
+.current-dialog-panel .sidebar-text-answer-row .text-answer-input:focus{
+  border-color:#83d4b3 !important;
+  box-shadow:0 0 0 3px rgba(131,212,179,.14) !important;
+}
+.main-history-panel .history-entry:not(.user){
+  background:#edf2e5 !important;
+  color:#1c3027 !important;
+}
+.main-history-panel .history-entry.user{
+  background:#d8eee2 !important;
+  color:#173428 !important;
+}
+.main-history-panel .history-divider{
+  color:#9fd9c0 !important;
+  font-family:inherit !important;
+  font-size:.80rem !important;
+  font-weight:800 !important;
+  letter-spacing:0 !important;
+}
+</style>
+
 <style id="dialog-title-in-history-final">
 /* Definitive dialogue heading: override the old separator rule that hid its text. */
 .main-history-panel .history-divider{
