@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Dialogübung A1 — Begrüßung &amp; Vorstellung</title>
+<title>Dialoge A1 · 10 — Uhrzeiten</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2974,7 +2974,6 @@ html body .layout.show > .card .main-history-panel{
     inset -11px 0 16px rgba(0,0,0,.25) !important;
 }
 </style>
-<meta name="a110-ui-sync" content="a110sync-muuf4o0o">
 </head>
 
 <body>
@@ -3138,12 +3137,12 @@ html body .layout.show > .card .main-history-panel{
         <div class="partner-meta">
 
           <span class="partner-title" id="partner-title">
-            Dialog 1 · Uhrzeiten
+            Dialog 1 · Auf der Straße
           </span>
 
           <span class="partner-sub">
 
-            <span id="partner-name">Anna</span>
+            <span id="partner-name">Lena</span>
 
             <span class="partner-tag informell" id="partner-tag">
               informell
@@ -3153,7 +3152,7 @@ html body .layout.show > .card .main-history-panel{
 
           <span class="instruction-wrap">
             <span class="turn-instruction" id="instruction-text">
-              Antworte mit einem ganzen Satz.
+              Antworte auf die Begrüßung.
             </span>
 
             <span class="translation-control" id="translation-control">
@@ -3178,7 +3177,7 @@ html body .layout.show > .card .main-history-panel{
       <div class="sidebar-speaking-panel">
         <div class="sidebar-turn-cue">
           <strong>Du bist dran 🎤</strong>
-          <span id="main-turn-instruction">Antworte mit einem ganzen Satz.</span>
+          <span id="main-turn-instruction">Antworte auf die Begrüßung.</span>
         </div>
         <div class="sidebar-mic">
           <div class="speaker-wave" id="speaker-wave" aria-label="Lektor spricht" aria-hidden="true">
@@ -3214,9 +3213,9 @@ html body .layout.show > .card .main-history-panel{
       </div>
 
       <div class="hero-stats">
-        <div class="stat"><span class="stat-value" id="stat-score">0/4</span><span class="stat-label">Punkte</span></div>
+        <div class="stat"><span class="stat-value" id="stat-score">0/12</span><span class="stat-label">Punkte</span></div>
         <div class="stat"><span class="stat-value" id="stat-streak">0🔥</span><span class="stat-label">Serie</span></div>
-        <div class="stat"><span class="stat-value" id="stat-progress">1/4</span><span class="stat-label">Schritt</span></div>
+        <div class="stat"><span class="stat-value" id="stat-progress">1/12</span><span class="stat-label">Schritt</span></div>
       </div>
 
     </aside>
@@ -3229,7 +3228,7 @@ html body .layout.show > .card .main-history-panel{
   </p>
 
   <div class="next-training">
-    <a href="../dikatat.a1/diktat16.html">
+    <a href="../dikatat.a1/diktat1.html">
       Fertig gelesen? Weiter mit Ich schreibe ein Diktat
     </a>
   </div>
@@ -4192,9 +4191,9 @@ const heroTranslationToggle=document.getElementById("hero-translation-toggle");
 const heroTranslationText=document.getElementById("hero-translation-text");
 const heroTranslationButtons=[...document.querySelectorAll(".hero-translation-language")];
 const heroTranslations={
-  en:"Four short dialogues — informal and formal. You hear the sentence, the microphone starts automatically, and you answer out loud.",
-  pl:"Cztery krótkie dialogi — nieformalne i formalne. Słyszysz zdanie, mikrofon uruchamia się automatycznie, a ty odpowiadasz na głos.",
-  it:"Quattro brevi dialoghi — informali e formali. Ascolti la frase, il microfono si avvia automaticamente e rispondi ad alta voce."
+  en:"Four short dialogues about telling time. You hear the sentence, the microphone starts automatically, and you answer out loud.",
+  pl:"Cztery krótkie dialogi o godzinach. Słyszysz zdanie, mikrofon uruchamia się automatycznie, a ty odpowiadasz na głos.",
+  it:"Quattro brevi dialoghi sugli orari. Ascolti la frase, il microfono si avvia automaticamente e rispondi ad alta voce."
 };
 
 heroTranslationToggle.addEventListener("click",event=>{
@@ -4432,7 +4431,7 @@ function showFinal(){
   if(percent===100){
     emoji="🏆";
     title="Alle Dialoge perfekt!";
-    subtitle="Informell und formell — du beherrschst beide Register!";
+    subtitle="Du kannst jetzt über Uhrzeiten sprechen!";
   }else if(percent>=70){
     emoji="🎉";
     title="Sehr gut!";
