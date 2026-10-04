@@ -2840,6 +2840,36 @@ html body .current-dialog-panel .sidebar-utility-row{
   gap:10px !important;
 }
 </style>
+<style id="large-final-review-bubble">
+/* The end-of-session review is a key learning element, so make it prominent. */
+html body .main-history-panel .history-entry.review-summary{
+  width:calc(100% - 28px) !important;
+  max-width:none !important;
+  min-width:0 !important;
+  min-height:150px !important;
+  padding:18px 22px !important;
+  margin:14px !important;
+  border-radius:20px !important;
+  font-size:1.18rem !important;
+  line-height:1.55 !important;
+  box-sizing:border-box !important;
+  grid-column:1 / -1 !important;
+  justify-self:stretch !important;
+  background:linear-gradient(145deg,#fffdf5 0%,#f7f0dc 52%,#ded4ba 100%) !important;
+  border:2px solid rgba(255,255,255,.88) !important;
+  box-shadow:
+    0 16px 24px rgba(0,0,0,.52),
+    0 7px 10px rgba(0,0,0,.34),
+    inset 0 3px 2px rgba(255,255,255,.90),
+    inset 0 -5px 8px rgba(75,62,38,.18) !important;
+}
+html body .main-history-panel .history-entry.review-summary .speaker{
+  display:block !important;
+  margin-bottom:8px !important;
+  font-size:1.22rem !important;
+  font-weight:900 !important;
+}
+</style>
 </head>
 
 <body>
@@ -4390,7 +4420,7 @@ function showFinal(){
 
   if(hasReview){
     addHistoryEntry(
-      "partner",
+      "partner review-summary",
       "Zum Wiederholen",
       reviewIntro+"<br>"+reviewAnswers
         .map((answer,itemIndex)=>`${itemIndex+1}. ${answer}`)
