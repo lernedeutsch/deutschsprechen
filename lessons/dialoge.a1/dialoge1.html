@@ -2443,6 +2443,25 @@ html body .current-dialog-panel .partner-register{
   opacity:1 !important;
 }
 </style>
+<style id="write-row-width-balance">
+/* Give the writing field more room; keep Send compact. */
+html body .current-dialog-panel .sidebar-text-answer-row{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) auto !important;
+  gap:10px !important;
+}
+html body .current-dialog-panel .sidebar-text-answer-row .text-answer-input{
+  width:100% !important;
+  min-width:0 !important;
+}
+html body .current-dialog-panel .sidebar-text-answer-row .text-answer-send{
+  width:auto !important;
+  min-width:96px !important;
+  max-width:110px !important;
+  padding-left:14px !important;
+  padding-right:14px !important;
+}
+</style>
 </head>
 
 <body>
