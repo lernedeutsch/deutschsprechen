@@ -2796,6 +2796,50 @@ html body .current-dialog-panel .sidebar-utility-row .utility-btn{
   width:100% !important;
 }
 </style>
+<style id="fix-four-action-buttons-layout">
+/* Exact requested layout: Send + Skip in one row; Repeat + Answer in the next.
+   All four controls share identical dimensions and visual treatment. */
+html body .current-dialog-panel .sidebar-text-answer-row{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+  gap:10px !important;
+}
+html body .current-dialog-panel .sidebar-text-answer-row .text-answer-input{
+  grid-column:1 / -1 !important;
+  width:100% !important;
+}
+html body .current-dialog-panel #text-answer-send,
+html body .current-dialog-panel #skip-btn,
+html body .current-dialog-panel #repeat-btn,
+html body .current-dialog-panel #answer-btn{
+  box-sizing:border-box !important;
+  width:100% !important;
+  min-width:0 !important;
+  max-width:none !important;
+  height:58px !important;
+  min-height:58px !important;
+  padding:8px 10px !important;
+  margin:0 !important;
+  border:1px solid #76b7a3 !important;
+  border-radius:18px !important;
+  background:linear-gradient(180deg,#3b7466 0%,#2d5d53 100%) !important;
+  color:#f7fff9 !important;
+  -webkit-text-fill-color:#f7fff9 !important;
+  font-size:.92rem !important;
+  line-height:1.15 !important;
+  font-weight:900 !important;
+  box-shadow:
+    0 7px 11px rgba(0,0,0,.27),
+    inset 0 2px 0 rgba(220,255,243,.18),
+    inset 0 -3px 5px rgba(0,0,0,.15) !important;
+  align-self:stretch !important;
+}
+html body .current-dialog-panel .sidebar-utility-row{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+  gap:10px !important;
+}
+</style>
 </head>
 
 <body>
