@@ -2082,6 +2082,32 @@ body.is-listening #stop-btn{display:inline-flex}
 <link rel="stylesheet" href="../../css/page-progress.css">
 <script src="../../js/answer-corrector.js"></script>
 
+<style id="dialog-title-in-history-final">
+/* Definitive dialogue heading: override the old separator rule that hid its text. */
+.main-history-panel .history-divider{
+  display:block !important;
+  height:auto !important;
+  min-height:28px !important;
+  width:calc(100% - 12px) !important;
+  padding:5px 8px 6px !important;
+  margin:4px 6px 6px !important;
+  background:transparent !important;
+  color:#b7e8d3 !important;
+  overflow:visible !important;
+  text-align:left !important;
+  font-size:.78rem !important;
+  line-height:1.2 !important;
+  font-weight:900 !important;
+  letter-spacing:.01em !important;
+  text-transform:none !important;
+  border-bottom:1px solid rgba(183,232,211,.25) !important;
+  align-self:start !important;
+  justify-self:stretch !important;
+}
+.main-history-panel .history-divider.left-column{grid-column:1 !important;}
+.main-history-panel .history-divider.right-column{grid-column:2 !important;}
+</style>
+
 <style id="dialog-title-in-history">
 /* Show each dialogue title above its first bubble in the large history panel. */
 .main-history-panel .history-divider{
