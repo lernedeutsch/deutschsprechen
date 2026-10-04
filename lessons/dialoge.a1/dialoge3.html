@@ -1943,6 +1943,117 @@ html body .text-answer-send{
  box-shadow:0 12px 20px rgba(0,0,0,.38),0 0 20px rgba(54,246,219,.34),inset 0 3px 3px rgba(255,255,255,.36) !important;
 }
 </style>
+<style id="next-gen-dialoge3-ui">
+/* Next-gen refinement: cleaner glass, layered depth, light rails and premium controls. */
+html body .current-dialog-panel,
+html body .card{
+  backdrop-filter:blur(22px) saturate(125%) !important;
+  -webkit-backdrop-filter:blur(22px) saturate(125%) !important;
+}
+html body .current-dialog-panel::after,
+html body .card::after{
+  content:"" !important;
+  position:absolute !important;
+  inset:8px !important;
+  border:1px solid rgba(194,255,246,.10) !important;
+  border-radius:18px !important;
+  pointer-events:none !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.10) !important;
+}
+html body .main-history-panel{
+  overflow:hidden !important;
+  isolation:isolate !important;
+}
+html body .main-history-panel::before{
+  content:"" !important;
+  position:absolute !important;
+  z-index:-1 !important;
+  width:62% !important;
+  height:52% !important;
+  left:-12% !important;
+  bottom:-18% !important;
+  border-radius:50% !important;
+  background:radial-gradient(ellipse,rgba(27,255,226,.24),rgba(10,188,188,.08) 48%,transparent 72%) !important;
+  filter:blur(10px) !important;
+  transform:rotate(-8deg) !important;
+}
+html body .main-history-panel::after{
+  content:"" !important;
+  position:absolute !important;
+  z-index:-1 !important;
+  inset:0 !important;
+  background:
+    linear-gradient(115deg,transparent 0 68%,rgba(121,255,240,.07) 68.2% 68.8%,transparent 69%),
+    linear-gradient(115deg,transparent 0 77%,rgba(77,226,236,.055) 77.2% 84%,transparent 84.2%) !important;
+  pointer-events:none !important;
+}
+html body .history-screen-bar{
+  position:relative !important;
+  z-index:2 !important;
+  padding:2px 4px 8px !important;
+}
+html body .history-divider{
+  text-shadow:0 0 12px rgba(102,255,232,.30) !important;
+}
+html body .dialog-menu-item{
+  border:1px solid transparent !important;
+}
+html body .dialog-menu-item:not(.active):hover{
+  border-color:rgba(84,239,215,.25) !important;
+  background:rgba(31,150,135,.16) !important;
+  transform:translateX(3px) !important;
+}
+html body .dialog-menu-item.active{
+  position:relative !important;
+  overflow:hidden !important;
+}
+html body .dialog-menu-item.active::after{
+  content:"›" !important;
+  position:absolute !important;
+  right:14px !important;
+  top:50% !important;
+  transform:translateY(-52%) !important;
+  color:#06463f !important;
+  font-size:1.45rem !important;
+  font-weight:900 !important;
+}
+html body .stat{
+  box-shadow:0 7px 14px rgba(0,0,0,.18),inset 0 1px 0 rgba(219,255,248,.12) !important;
+}
+html body .mic-btn{
+  position:relative !important;
+  transition:transform .18s ease,filter .18s ease !important;
+}
+html body .mic-btn:hover{
+  transform:translateY(-3px) scale(1.025) !important;
+  filter:brightness(1.08) saturate(1.08) !important;
+}
+html body .history-entry{
+  backdrop-filter:blur(8px) !important;
+  -webkit-backdrop-filter:blur(8px) !important;
+}
+html body .dialog-controls .utility-btn,
+html body .text-answer-send{
+  transition:transform .16s ease,filter .16s ease,box-shadow .16s ease !important;
+}
+html body .dialog-controls .utility-btn:hover,
+html body .text-answer-send:hover{
+  transform:translateY(-2px) !important;
+  filter:brightness(1.08) !important;
+}
+html body .text-answer-row{
+  position:relative !important;
+  border-top:1px solid rgba(100,242,220,.16) !important;
+}
+html body .text-answer-input:focus{
+  border-color:#9affeb !important;
+  box-shadow:inset 0 5px 10px rgba(0,0,0,.36),0 0 0 3px rgba(83,244,220,.10),0 0 22px rgba(67,241,220,.20) !important;
+}
+html body .text-answer-send{
+  font-weight:900 !important;
+  letter-spacing:.01em !important;
+}
+</style>
 </head>
 
 <body>
