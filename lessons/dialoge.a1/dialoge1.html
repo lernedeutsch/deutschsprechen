@@ -2082,6 +2082,27 @@ body.is-listening #stop-btn{display:inline-flex}
 <link rel="stylesheet" href="../../css/page-progress.css">
 <script src="../../js/answer-corrector.js"></script>
 
+<style id="final-text-sharpness">
+/* Sharper sidebar typography: remove glow/blur and use native font rendering. */
+.current-dialog-panel,
+.current-dialog-panel button,
+.current-dialog-panel input{
+  text-shadow:none !important;
+  filter:none !important;
+  -webkit-font-smoothing:auto !important;
+  text-rendering:optimizeLegibility !important;
+}
+.current-dialog-panel .sidebar-utility-row .repeat-btn,
+.current-dialog-panel .sidebar-utility-row .answer-btn,
+.current-dialog-panel .sidebar-utility-row #skip-btn,
+.current-dialog-panel .text-answer-send,
+.current-dialog-panel .text-answer-input{
+  text-shadow:none !important;
+  filter:none !important;
+  opacity:1 !important;
+}
+</style>
+
 <style id="final-write-controls-size">
 .current-dialog-panel .sidebar-text-answer-row .text-answer-input{
   font-size:1.18rem !important;
