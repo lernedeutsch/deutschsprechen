@@ -2082,6 +2082,22 @@ body.is-listening #stop-btn{display:inline-flex}
 <link rel="stylesheet" href="../../css/page-progress.css">
 <script src="../../js/answer-corrector.js"></script>
 
+<style id="dialog-title-in-history">
+/* Show each dialogue title above its first bubble in the large history panel. */
+.main-history-panel .history-divider{
+  display:block !important;
+  text-align:left !important;
+  color:#b7e8d3 !important;
+  font-size:.78rem !important;
+  font-weight:900 !important;
+  letter-spacing:.02em !important;
+  text-transform:none !important;
+  padding:6px 10px 5px !important;
+  margin:5px 0 4px !important;
+  border-bottom:1px solid rgba(183,232,211,.22) !important;
+}
+</style>
+
 <style id="dark-forest-mint-theme">
 /* Dark Forest + Mint — color-only refinement. */
 body{
@@ -3033,7 +3049,8 @@ function addHistoryDivider(title){
     els.historyList.querySelectorAll(columnSelector).length;
 
   divider.className=`history-divider ${leftColumn?"left-column":"right-column"}`;
-  divider.setAttribute("aria-label",`Koniec: ${title}`);
+  divider.setAttribute("aria-label",`Początek: ${title}`);
+  divider.textContent=title;
   divider.style.gridRow=String(earlierItemsInColumn+1);
 
   els.historyList.appendChild(divider);
