@@ -1237,6 +1237,18 @@ button{font:inherit}
   white-space:normal;
   line-height:1.2;
 }
+.sidebar-write-toggle{
+  display:block !important;
+  margin:6px auto 2px !important;
+  padding:4px 10px !important;
+}
+.sidebar-text-answer-row{
+  width:100% !important;
+  margin:6px 0 8px !important;
+}
+.sidebar-text-answer-row.open{display:flex !important}
+.sidebar-text-answer-row .text-answer-input{min-width:0}
+.sidebar-text-answer-row .text-answer-send{flex:0 0 auto}
 
 /* Sidebar controls correction */
 .layout{grid-template-columns:320px minmax(0,1fr) !important;}
@@ -2056,20 +2068,7 @@ body.is-listening #stop-btn{display:inline-flex}
 
       <div id="stage">
 
-        <div class="text-answer-row">
-          <input
-            type="text"
-            class="text-answer-input"
-            id="text-answer-input"
-            placeholder="…oder schreibe deine Antwort auf Deutsch"
-            autocomplete="off"
-          >
-          <button type="button" class="text-answer-send" id="text-answer-send">
-            Senden
-          </button>
-        </div>
-
-        <button type="button" class="write-toggle" id="write-toggle">⌨️ Lieber schreiben</button>\n\n        <div class="mic-status-row">
+        <div class="mic-status-row">
 
           <p class="live-transcript" id="live-transcript"></p>
 
@@ -2199,6 +2198,19 @@ body.is-listening #stop-btn{display:inline-flex}
             <p class="mic-status" id="mic-status">🎤 Zum Sprechen klicken</p>
           </div>
         </div>
+
+        <button type="button" class="write-toggle sidebar-write-toggle" id="write-toggle">⌨️ Lieber schreiben</button>
+        <div class="text-answer-row sidebar-text-answer-row">
+          <input
+            type="text"
+            class="text-answer-input"
+            id="text-answer-input"
+            placeholder="Schreibe deine Antwort auf Deutsch"
+            autocomplete="off"
+          >
+          <button type="button" class="text-answer-send" id="text-answer-send">Senden</button>
+        </div>
+
         <div class="sidebar-utility-row">
           <button type="button" class="utility-btn repeat-btn" id="repeat-btn">🔊 Noch einmal hören</button>
           <button type="button" class="utility-btn answer-btn" id="answer-btn">💡 Antwort zeigen</button>
