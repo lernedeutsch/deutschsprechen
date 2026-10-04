@@ -3866,13 +3866,39 @@ function markWrong(spokenText){
 
   els.micStatus.classList.remove("live");
 
-  if(attempts>=3){
-    els.exampleText.classList.add("show");
-    els.exampleText.textContent=
-      `Tipp: „${current().example}“`;
-  }
-
   clearTimeout(restartTimer);
+
+  if(attempts>=2){
+    /* After the second wrong answer, give the correct model naturally,
+       show it as the learner's dialogue bubble, and continue the dialogue. */
+    hintUsed=true;
+    answered=true;
+    retrying=true;
+    setMicReady(false);
+
+    const modelAnswer=current().example;
+    const helpText=`Du kannst es so sagen: ${modelAnswer}`;
+
+    window.setTimeout(async()=>{
+      await waitForMicrophoneToStop();
+
+      setLecturerSpeaking(true);
+      await speakGerman(helpText);
+      setLecturerSpeaking(false);
+
+      addHistoryEntry("user","Du",modelAnswer);
+      const addedEntry=els.historyList.lastElementChild;
+      if(addedEntry){
+        addedEntry.classList.add("answer-hint");
+        addedEntry.dataset.turn=String(index);
+      }
+
+      retrying=false;
+      window.setTimeout(advance,450);
+    },650);
+
+    return;
+  }
 
   restartTimer=window.setTimeout(()=>{
     repeatPromptAfterWrongAnswer();
