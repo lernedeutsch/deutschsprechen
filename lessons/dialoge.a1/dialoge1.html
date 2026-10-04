@@ -902,7 +902,20 @@ button{font:inherit}
   line-height:1.25;
 }
 .current-dialog-panel .dialog-menu-list{row-gap:0}
-.current-dialog-panel .dialog-menu-item + .dialog-menu-item{margin-top:1px}
+.current-dialog-panel .dialog-menu-item + .dialog-menu-item{margin-top:0}
+
+/* Jeszcze ciaśniejsza lista 01–04: rozmiar tekstu bez zmian. */
+.current-dialog-panel .dialog-menu-list{
+  gap:0 !important;
+  margin-bottom:5px !important;
+}
+.current-dialog-panel .dialog-menu-item{
+  padding-top:1px !important;
+  padding-bottom:1px !important;
+  margin:0 !important;
+  min-height:34px !important;
+  line-height:1.15 !important;
+}
 .current-dialog-panel .partner-left{gap:7px}
 .current-dialog-panel .partner-meta{gap:0}
 .current-dialog-panel .partner-title{
