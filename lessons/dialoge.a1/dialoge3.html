@@ -1528,6 +1528,94 @@ html body .stat{
   html body .main-history-panel{min-height:420px !important;}
 }
 </style>
+<style id="modern-dialoge3-match-reference">
+/* Match the compact modern reference: narrow control column + tall conversation screen. */
+html body .shell{max-width:1280px !important;padding-left:24px !important;padding-right:24px !important;}
+html body .layout.show{
+  grid-template-columns:310px minmax(0,1fr) !important;
+  gap:18px !important;
+}
+html body .current-dialog-panel{
+  padding:18px !important;
+  border:2px solid rgba(96,224,200,.72) !important;
+  border-radius:22px !important;
+  background:linear-gradient(145deg,#316f61,#24594f) !important;
+  box-shadow:0 22px 34px rgba(0,0,0,.46),0 0 24px rgba(75,226,199,.16),inset 0 3px 4px rgba(223,255,248,.18),inset 0 -10px 16px rgba(0,0,0,.18) !important;
+}
+html body .current-dialog-panel .dialog-menu-item{padding:7px 10px !important;margin:2px 0 !important;border-radius:12px !important;}
+html body .current-dialog-panel .dialog-menu-item.active{
+  background:linear-gradient(90deg,#69ead4,#58d9c7) !important;
+  color:#073a34 !important;
+  box-shadow:0 6px 12px rgba(0,0,0,.22),inset 0 2px 2px rgba(255,255,255,.34) !important;
+}
+html body .current-dialog-panel .partner-left{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  text-align:center !important;
+  margin:16px 0 10px !important;
+  padding:14px 10px !important;
+  border-radius:17px !important;
+  background:linear-gradient(145deg,rgba(33,112,100,.64),rgba(21,76,69,.50)) !important;
+}
+html body .current-dialog-panel .partner-meta{align-items:center !important;}
+html body .current-dialog-panel .turn-instruction{text-align:center !important;}
+html body .current-dialog-panel .stats{gap:7px !important;}
+html body .current-dialog-panel .stat{padding:8px 6px !important;}
+html body .current-dialog-panel .sidebar-mic{margin-top:14px !important;}
+html body .current-dialog-panel .mic-btn{width:100px !important;height:100px !important;}
+html body .card{
+  padding:14px !important;
+  border:1px solid rgba(102,207,188,.52) !important;
+  border-radius:22px !important;
+  background:linear-gradient(145deg,#1d5b50,#123f39) !important;
+}
+html body .card .progress-track{margin:2px 4px 12px !important;}
+html body .main-history-panel{
+  min-height:610px !important;
+  height:calc(100vh - 230px) !important;
+  padding:16px !important;
+  margin-bottom:12px !important;
+  border:2px solid #64dfce !important;
+  border-radius:22px !important;
+  background:
+    radial-gradient(circle at 100% 0%,rgba(55,215,218,.18),transparent 34%),
+    linear-gradient(145deg,#0d5a58,#0a4548) !important;
+  box-shadow:0 26px 42px rgba(0,0,0,.54),0 0 20px rgba(91,236,211,.30),inset 0 5px 8px rgba(217,255,248,.20),inset 0 -16px 22px rgba(0,0,0,.30) !important;
+}
+html body .main-history-panel .history-list{
+  min-height:520px !important;
+  max-height:none !important;
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  align-content:start !important;
+  column-gap:24px !important;
+}
+html body .main-history-panel .history-entry{
+  width:max-content !important;
+  max-width:78% !important;
+  padding:8px 12px !important;
+  border-radius:16px !important;
+  font-size:1rem !important;
+  background:linear-gradient(145deg,#fffdf4,#e5dcc5) !important;
+  box-shadow:0 10px 14px rgba(0,0,0,.42),inset 0 2px 2px rgba(255,255,255,.82),inset 0 -4px 6px rgba(78,65,38,.14) !important;
+}
+html body .main-history-panel .history-entry.user{
+  justify-self:end !important;
+  background:linear-gradient(145deg,#effff9,#b8e9da) !important;
+}
+html body .main-history-panel .history-divider{grid-column:1 / -1 !important;margin:6px 0 8px !important;}
+html body .card #stage{padding-top:10px !important;}
+html body .dialog-controls{gap:8px !important;}
+html body .dialog-controls .utility-row{gap:8px !important;}
+html body .dialog-controls .utility-btn{min-height:42px !important;border-radius:13px !important;}
+html body .text-answer-row{gap:8px !important;margin-top:8px !important;padding-top:8px !important;}
+html body .text-answer-input,html body .text-answer-send{min-height:44px !important;}
+@media(max-width:860px){
+  html body .layout.show{grid-template-columns:1fr !important;}
+  html body .main-history-panel{height:auto !important;min-height:480px !important;}
+}
+</style>
 </head>
 
 <body>
