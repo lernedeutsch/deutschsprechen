@@ -2640,11 +2640,11 @@ function addHistoryEntry(role,speakerLabel,text){
      dialogue starts below the previous one instead of overlapping it. */
   const leftColumn=(current().dialogueIndex%2===0);
   const columnSelector=leftColumn
-    ? ".history-entry.dialog-0, .history-entry.dialog-2"
-    : ".history-entry.dialog-1, .history-entry.dialog-3";
-  const earlierEntriesInColumn=
+    ? ".history-entry.dialog-0, .history-entry.dialog-2, .history-divider.left-column"
+    : ".history-entry.dialog-1, .history-entry.dialog-3, .history-divider.right-column";
+  const earlierItemsInColumn=
     els.historyList.querySelectorAll(columnSelector).length;
-  entry.style.gridRow=String(earlierEntriesInColumn+1);
+  entry.style.gridRow=String(earlierItemsInColumn+1);
 
   els.historyList.appendChild(entry);
   els.historyList.scrollTop=
