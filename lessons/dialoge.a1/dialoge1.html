@@ -1473,6 +1473,15 @@ button{font:inherit}
 .card{min-height:0 !important;height:auto !important;}
 .main-history-panel{min-height:610px !important;height:610px !important;flex:none !important;}
 .main-history-panel .history-list{min-height:610px !important;height:610px !important;max-height:610px !important;}
+
+/* Equal visual length for both dialogue compartments */
+.main-history-panel .history-list{
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+}
+.main-history-panel .history-list::after{
+  top:0 !important;
+  bottom:0 !important;
+}
 </style>
 
 <style>
