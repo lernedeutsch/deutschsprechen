@@ -309,6 +309,11 @@ button{font:inherit}
   color:#3d6b1d;
 }
 
+.partner-tag.aktiv{
+  background:#e9f7dc;
+  color:#3d6b1d;
+}
+
 .partner-tag.formell{
   background:#ece3fb;
   color:#5a3ca8;
@@ -889,9 +894,36 @@ button{font:inherit}
   display:none;
 }
 .current-dialog-panel .partner-left{
-  padding-top:12px;
+  padding-top:8px;
   border-top:1px solid #314b41;
 }
+
+/* Kompaktowy nagłówek i lista dialogów — bez zmniejszania tekstu. */
+.current-dialog-panel .dialog-menu-title{margin-bottom:5px}
+.current-dialog-panel .dialog-menu-list{gap:1px;margin-bottom:7px}
+.current-dialog-panel .dialog-menu-item{
+  padding:3px 10px;
+  min-height:0;
+  line-height:1.25;
+}
+.current-dialog-panel .dialog-menu-list{row-gap:0}
+.current-dialog-panel .dialog-menu-item + .dialog-menu-item{margin-top:0}
+
+/* Jeszcze ciaśniejsza lista 01–04: rozmiar tekstu bez zmian. */
+.current-dialog-panel .dialog-menu-list{
+  gap:0 !important;
+  margin-bottom:5px !important;
+}
+.current-dialog-panel .dialog-menu-item{
+  padding-top:1px !important;
+  padding-bottom:1px !important;
+  margin:0 !important;
+  min-height:0 !important;
+  height:auto !important;
+  line-height:1.15 !important;
+}
+.current-dialog-panel .partner-left{gap:7px}
+.current-dialog-panel .partner-meta{gap:0}
 .current-dialog-panel .partner-title{
   font-size:1rem;
   font-weight:900;
@@ -922,6 +954,47 @@ button{font:inherit}
 }
 .sidebar-mic .mic-column{
   margin-top:0;
+}
+
+/* Lektor mówi: zamiast mikrofonu pokazuje się animowana fala głosu. */
+.speaker-wave{
+  display:none;
+  width:150px;
+  height:102px;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+}
+.speaker-wave span{
+  width:7px;
+  height:18px;
+  border-radius:999px;
+  background:#7770d9;
+  box-shadow:0 0 8px rgba(119,112,217,.22);
+  animation:speakerWave 1s ease-in-out infinite alternate;
+}
+.speaker-wave span:nth-child(2){animation-delay:.12s;height:34px}
+.speaker-wave span:nth-child(3){animation-delay:.24s;height:58px}
+.speaker-wave span:nth-child(4){animation-delay:.36s;height:28px}
+.speaker-wave span:nth-child(5){animation-delay:.48s;height:50px}
+.speaker-wave span:nth-child(6){animation-delay:.60s;height:36px}
+.speaker-wave span:nth-child(7){animation-delay:.48s;height:48px}
+.speaker-wave span:nth-child(8){animation-delay:.36s;height:24px}
+.speaker-wave span:nth-child(9){animation-delay:.24s;height:54px}
+.speaker-wave span:nth-child(10){animation-delay:.12s;height:38px}
+.speaker-wave span:nth-child(11){height:22px}
+.sidebar-mic.lecturer-speaking .speaker-wave{display:flex}
+/* Podczas głosu lektora ukryj bezwarunkowo cały mikrofon ucznia. */
+.sidebar-mic.lecturer-speaking .mic-column,
+.sidebar-mic.lecturer-speaking .mic-btn-wrap,
+.sidebar-mic.lecturer-speaking .mic-btn,
+.sidebar-mic.lecturer-speaking .mic-status{display:none!important}
+@keyframes speakerWave{
+  from{transform:scaleY(.45);opacity:.72}
+  to{transform:scaleY(1.18);opacity:1}
+}
+@media(prefers-reduced-motion:reduce){
+  .speaker-wave span{animation:none}
 }
 .dialog-controls{
   align-items:stretch;
@@ -971,6 +1044,17 @@ button{font:inherit}
 .text-answer-row:focus-within{
   opacity:1;
 }
+/* Equal-height desktop columns: both outer panels always end on the same line. */
+@media(min-width:861px){
+  .layout.show{align-items:stretch}
+  .current-dialog-panel,
+  .card{
+    height:auto;
+    min-height:100%;
+    align-self:stretch;
+  }
+}
+
 @media(max-width:860px){.current-dialog-panel,.card{grid-column:1;grid-row:auto}.current-dialog-panel{position:static;width:100%}}
 
 /* ---------- FINAL ---------- */
@@ -1125,6 +1209,392 @@ button{font:inherit}
     animation-iteration-count:1!important;
     transition-duration:.01ms!important;
   }
+}
+
+.sidebar-speaking-panel{
+  margin-top:14px;
+  padding-top:14px;
+  border-top:1px solid #314b41;
+}
+.sidebar-turn-cue{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  margin-bottom:8px;
+  color:#f5f1e8;
+  text-align:center;
+  font-size:.78rem;
+}
+.sidebar-turn-cue strong{color:#bce7d2;font-size:.9rem}
+.sidebar-speaking-panel .sidebar-mic{margin-top:0}
+.sidebar-speaking-panel .mic-btn-wrap{width:78px;height:78px}
+.sidebar-speaking-panel .mic-btn{width:62px;height:62px;font-size:1.45rem}
+.sidebar-speaking-panel .mic-status{font-size:.62rem;max-width:180px}
+.sidebar-utility-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+  margin-top:8px;
+}
+.sidebar-utility-row .utility-btn{
+  padding:7px 5px;
+  font-size:.62rem;
+  white-space:normal;
+  line-height:1.2;
+}
+.sidebar-write-toggle{
+  display:block !important;
+  margin:6px auto 2px !important;
+  padding:4px 10px !important;
+}
+.sidebar-text-answer-row{
+  width:100% !important;
+  margin:6px 0 8px !important;
+}
+.sidebar-text-answer-row{
+  display:flex !important;
+}
+.sidebar-text-answer-row.open{display:flex !important}
+.sidebar-write-toggle{display:none !important}
+.sidebar-text-answer-row .text-answer-input{min-width:0}
+.sidebar-text-answer-row .text-answer-send{flex:0 0 auto}
+
+/* Sidebar controls correction */
+.layout{grid-template-columns:320px minmax(0,1fr) !important;}
+.sidebar-speaking-panel .sidebar-mic{
+  display:block !important;
+  margin:8px auto 4px !important;
+}
+.sidebar-speaking-panel .mic-column{
+  display:flex !important;
+  flex-direction:column;
+  align-items:center;
+  margin:0 !important;
+}
+.sidebar-speaking-panel .mic-btn-wrap{
+  display:grid !important;
+  width:92px !important;
+  height:92px !important;
+}
+.sidebar-speaking-panel .mic-btn{
+  display:block !important;
+  width:72px !important;
+  height:72px !important;
+  font-size:1.7rem !important;
+}
+.sidebar-speaking-panel .mic-status{
+  display:block !important;
+  margin:4px auto 0 !important;
+  max-width:240px !important;
+  text-align:center;
+}
+#stage{display:none !important;}
+
+/* State override must come AFTER Sidebar controls correction.
+   Lecturer: waveform only. Student: microphone only. */
+.sidebar-speaking-panel .sidebar-mic.lecturer-speaking .speaker-wave{
+  display:flex !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+.sidebar-speaking-panel .sidebar-mic.lecturer-speaking .mic-column,
+.sidebar-speaking-panel .sidebar-mic.lecturer-speaking .mic-btn-wrap,
+.sidebar-speaking-panel .sidebar-mic.lecturer-speaking .mic-btn,
+.sidebar-speaking-panel .sidebar-mic.lecturer-speaking .mic-status{
+  display:none !important;
+}
+@media(max-width:900px){
+  .layout{grid-template-columns:280px minmax(0,1fr) !important;}
+}
+@media(max-width:760px){
+  .layout{grid-template-columns:1fr !important;}
+}
+
+/* Hide score / streak / step counters */
+.hero-stats{display:none !important;}
+
+/* Compact, usable left control panel */
+.layout{grid-template-columns:350px minmax(0,1fr) !important;gap:18px !important;}
+.current-dialog-panel{padding:16px 18px !important;}
+.current-dialog-panel .dialog-menu-list{gap:3px !important;}
+.current-dialog-panel .dialog-menu-item{min-height:38px !important;padding:8px 10px !important;}
+.current-dialog-panel .partner-left{margin-top:10px !important;padding-top:11px !important;}
+.current-dialog-panel .partner-title{margin-bottom:3px !important;}
+.current-dialog-panel .partner-sub{margin-bottom:6px !important;}
+.current-dialog-panel .turn-instruction{margin:6px 0 8px !important;}
+.current-dialog-panel .translation-btn{margin-top:0 !important;}
+.sidebar-speaking-panel{
+  margin-top:11px !important;
+  padding-top:11px !important;
+}
+.sidebar-turn-cue{margin-bottom:5px !important;gap:1px !important;}
+.sidebar-turn-cue strong{font-size:.88rem !important;}
+.sidebar-turn-cue span{font-size:.75rem !important;}
+.sidebar-speaking-panel .sidebar-mic{
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  height:auto !important;
+  overflow:visible !important;
+  margin:4px auto 5px !important;
+}
+.sidebar-speaking-panel .mic-column{
+  display:flex !important;
+  visibility:visible !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  margin:0 !important;
+}
+.sidebar-speaking-panel .mic-btn-wrap{
+  display:grid !important;
+  visibility:visible !important;
+  place-items:center !important;
+  width:84px !important;
+  height:84px !important;
+  margin:0 auto !important;
+}
+.sidebar-speaking-panel .mic-btn{
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  position:relative !important;
+  width:66px !important;
+  height:66px !important;
+  min-width:66px !important;
+  min-height:66px !important;
+  padding:0 !important;
+  font-size:1.55rem !important;
+  z-index:3 !important;
+}
+.sidebar-speaking-panel .mic-ring{display:block !important;}
+.sidebar-speaking-panel .mic-status{
+  display:block !important;
+  visibility:visible !important;
+  margin:2px 0 0 !important;
+  font-size:.58rem !important;
+  line-height:1.15 !important;
+}
+.sidebar-utility-row{
+  grid-template-columns:1fr 1fr !important;
+  gap:5px !important;
+  margin-top:5px !important;
+}
+.sidebar-utility-row .utility-btn{
+  min-height:34px !important;
+  padding:6px 6px !important;
+  font-size:.60rem !important;
+}
+.sidebar-utility-row #skip-btn{grid-column:1 / -1 !important;}
+@media(max-width:1050px){
+ .layout{grid-template-columns:320px minmax(0,1fr) !important;}
+}
+@media(max-width:760px){
+ .layout{grid-template-columns:1fr !important;}
+}
+
+/* definitive sidebar microphone placement */
+.current-dialog-panel .sidebar-speaking-panel .sidebar-mic{
+  display:block !important;
+  position:static !important;
+  left:auto !important;
+  top:auto !important;
+  width:auto !important;
+  height:auto !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  overflow:visible !important;
+  margin:6px auto !important;
+}
+.current-dialog-panel .sidebar-speaking-panel .mic-column{
+  display:flex !important;
+  position:static !important;
+  flex-direction:column !important;
+  align-items:center !important;
+}
+.current-dialog-panel .sidebar-speaking-panel #mic-btn-wrap{
+  display:grid !important;
+  place-items:center !important;
+  position:relative !important;
+  width:90px !important;
+  height:90px !important;
+}
+.current-dialog-panel .sidebar-speaking-panel #mic-btn{
+  display:block !important;
+  position:relative !important;
+  width:70px !important;
+  height:70px !important;
+  min-width:70px !important;
+  min-height:70px !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  z-index:10 !important;
+}
+
+/* Two-column conversation history + smaller bubbles */
+.main-history-panel .history-list{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+  column-gap:26px !important;
+  row-gap:9px !important;
+  align-content:start !important;
+  position:relative !important;
+}
+.main-history-panel .history-list::after{
+  content:"";
+  position:absolute;
+  top:8px;
+  bottom:8px;
+  left:50%;
+  width:1px;
+  background:rgba(155,190,175,.18);
+  pointer-events:none;
+}
+.main-history-panel .history-divider{
+  grid-column:1 / -1 !important;
+  width:100% !important;
+  margin:5px 0 2px !important;
+}
+.main-history-panel .history-entry{
+  width:max-content !important;
+  max-width:82% !important;
+  padding:8px 12px !important;
+  font-size:.88rem !important;
+  line-height:1.3 !important;
+  border-radius:14px 14px 14px 5px !important;
+  justify-self:start !important;
+  align-self:start !important;
+}
+.main-history-panel .history-entry.user{
+  justify-self:end !important;
+  border-radius:14px 14px 5px 14px !important;
+}
+.main-history-panel .history-entry .speaker{
+  font-size:.68rem !important;
+  margin-bottom:1px !important;
+}
+.main-history-panel .history-entry.dialog-0,
+.main-history-panel .history-entry.dialog-2{
+  grid-column:1 !important;
+}
+.main-history-panel .history-entry.dialog-1,
+.main-history-panel .history-entry.dialog-3{
+  grid-column:2 !important;
+}
+.main-history-panel .history-divider:nth-of-type(4n+1){grid-column:1 / -1 !important;}
+@media(max-width:760px){
+ .main-history-panel .history-list{grid-template-columns:1fr !important;}
+ .main-history-panel .history-list::after{display:none !important;}
+ .main-history-panel .history-entry{grid-column:1 !important;}
+}
+
+/* Stable two-compartment conversation: current dialogue never pushes the other side */
+.main-history-panel .history-list{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+  grid-auto-flow:row !important;
+  column-gap:30px !important;
+  row-gap:8px !important;
+  align-content:start !important;
+}
+.main-history-panel .history-divider{
+  display:none !important;
+}
+.main-history-panel .history-entry{
+  width:max-content !important;
+  max-width:88% !important;
+  padding:5px 9px !important;
+  margin:0 !important;
+  font-size:1rem !important;
+  line-height:1.3 !important;
+  min-height:0 !important;
+  justify-self:start !important;
+  align-self:start !important;
+}
+.main-history-panel .history-entry .speaker{
+  display:block !important;
+  margin:0 0 1px !important;
+  font-size:.78rem !important;
+  line-height:1.15 !important;
+}
+.main-history-panel .history-entry.user{
+  justify-self:end !important;
+}
+/* Dialogues 1 and 3 live only in the left compartment; 2 and 4 only in the right. */
+.main-history-panel .history-entry.dialog-0,
+.main-history-panel .history-entry.dialog-2{
+  grid-column:1 !important;
+}
+.main-history-panel .history-entry.dialog-1,
+.main-history-panel .history-entry.dialog-3{
+  grid-column:2 !important;
+}
+/* Independent vertical stacks: rows are assigned per dialogue by JS below. */
+@media(max-width:760px){
+ .main-history-panel .history-entry{max-width:92% !important;}
+}
+
+/* Tighter vertical spacing between speech bubbles — keep text size unchanged */
+.main-history-panel .history-list{
+  row-gap:3px !important;
+}
+.main-history-panel .history-entry{
+  margin-top:0 !important;
+  margin-bottom:0 !important;
+}
+
+/* Use the full height of the large right panel for dialogue history */
+.card{
+  display:flex !important;
+  flex-direction:column !important;
+  min-height:740px !important;
+}
+.main-history-panel{
+  flex:1 1 auto !important;
+  height:auto !important;
+  min-height:650px !important;
+  max-height:none !important;
+}
+.main-history-panel .history-list{
+  height:100% !important;
+  min-height:650px !important;
+  max-height:none !important;
+  overflow-y:auto !important;
+  align-content:start !important;
+  padding-bottom:22px !important;
+}
+@media(max-width:900px){
+  .card{min-height:680px !important;}
+  .main-history-panel,
+  .main-history-panel .history-list{min-height:590px !important;}
+}
+
+/* Separator after each completed dialogue, inside its own compartment */
+.main-history-panel .history-divider{
+  display:block !important;
+  width:calc(100% - 20px) !important;
+  height:1px !important;
+  padding:0 !important;
+  margin:7px 10px 9px !important;
+  background:rgba(151,190,173,.28) !important;
+  color:transparent !important;
+  overflow:hidden !important;
+  align-self:center !important;
+  justify-self:stretch !important;
+}
+.main-history-panel .history-divider.left-column{grid-column:1 !important;}
+.main-history-panel .history-divider.right-column{grid-column:2 !important;}
+
+.card{min-height:0 !important;height:auto !important;}
+.main-history-panel{min-height:610px !important;height:610px !important;flex:none !important;}
+.main-history-panel .history-list{min-height:610px !important;height:610px !important;max-height:610px !important;}
+
+/* Equal visual length for both dialogue compartments */
+.main-history-panel .history-list{
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+}
+.main-history-panel .history-list::after{
+  top:0 !important;
+  bottom:0 !important;
 }
 </style>
 
@@ -1369,17 +1839,1152 @@ body{
     position:static;
   }
 }
+
+/* UX clarity: current action, controls and translation */
+.main-turn-cue{display:flex;align-items:center;gap:10px;margin:-4px 0 14px;padding:10px 14px;color:var(--probe-text);background:rgba(116,174,147,.12);border:1px solid rgba(116,174,147,.36);border-radius:10px;font-size:.82rem}
+.main-turn-cue strong{color:#a8d9c1;white-space:nowrap}
+.main-turn-cue span{color:#d9e5de}
+.dialog-controls .utility-btn{opacity:1;color:#e7eee9;border-width:1px;font-weight:800}
+.dialog-controls .repeat-btn{color:#b9e4cf;background:rgba(116,174,147,.20);border-color:rgba(116,174,147,.68)}
+.dialog-controls .answer-btn{color:#ffd69a;background:rgba(217,138,61,.23);border-color:rgba(217,138,61,.72)}
+.dialog-controls .stop-btn{color:#f0b4aa;background:rgba(201,106,90,.18);border-color:rgba(201,106,90,.62)}
+.dialog-controls #skip-btn{color:#d8e4dd;background:rgba(255,255,255,.055);border-color:rgba(238,232,210,.28)}
+.dialog-controls #skip-btn:hover{color:#fff;border-color:rgba(238,232,210,.55);background:rgba(255,255,255,.09)}
+.translation-toggle{gap:6px;padding:4px 9px}
+.translation-label{font-size:.68rem;letter-spacing:.01em}
+.sidebar-mic .mic-status{max-width:150px;font-family:"Nunito Sans",sans-serif;font-size:.72rem;font-weight:800}
+@media(max-width:520px){.main-turn-cue{align-items:flex-start;flex-direction:column;gap:2px}.translation-label{display:none}}
+
+
+/* Conversation-first redesign */
+.layout{grid-template-columns:250px minmax(0,1fr);gap:18px}
+.card{padding:18px;background:#20332b}
+.main-history-panel{background:#10251f;border:1px solid rgba(255,255,255,.08);padding:18px;min-height:330px}
+.main-history-panel .history-screen-bar{margin-bottom:16px}
+.main-history-panel .history-list{min-height:245px;max-height:390px;gap:12px}
+.history-entry{max-width:72%;width:max-content;padding:12px 16px;border-radius:18px 18px 18px 5px;background:#edf4f0!important;color:#203128;font-size:1rem;box-shadow:0 7px 18px rgba(0,0,0,.12)}
+.history-entry .speaker{display:block;color:#39745c;font-size:.76rem;margin-bottom:2px}
+.history-entry.user{align-self:flex-end;border-radius:18px 18px 5px 18px;background:#d9f1e5!important;color:#183327}
+.history-entry.user .speaker{color:#287154}
+.history-entry:last-child{font-size:1rem;padding:12px 16px}
+.history-divider{width:100%;margin:4px 0;color:#8ca99d}
+.main-turn-cue{margin:0 0 14px;padding:13px 16px;border-radius:14px;background:rgba(116,174,147,.15);border-color:rgba(116,174,147,.42)}
+.main-turn-cue strong{font-size:.96rem;color:#bce7d2}
+.dialog-controls{display:flex;flex-direction:column;align-items:center;gap:10px}
+.main-mic-column{display:flex!important;position:static!important;left:auto!important;margin:0!important;align-items:center}
+.main-mic-column .mic-btn-wrap{width:108px;height:108px}
+.main-mic-column .mic-btn{width:88px;height:88px;font-size:2rem}
+.dialog-controls .utility-row{order:2;display:flex;justify-content:center;width:100%;gap:8px;margin-top:4px}
+.dialog-controls .utility-btn{flex:0 1 auto;min-width:135px;padding:9px 13px;font-family:"Nunito Sans",sans-serif;font-size:.76rem;border-radius:12px}
+#stop-btn{display:none}
+body.is-listening #stop-btn{display:inline-flex}
+.sidebar-mic{position:static;left:auto}
+.card #stage{margin-top:0;border-top:0;padding-top:0}
+.mic-column{margin-top:0}
+.text-answer-row{max-width:500px;margin:12px auto 0;border-top:0;padding-top:0;opacity:.72}
+.text-answer-row:before{content:"⌨️";font-size:.9rem}
+.text-answer-input{background:#172a23}
+.current-dialog-panel{height:auto;min-height:0;padding:17px}
+.current-dialog-panel .partner-left{padding-top:10px}
+.current-dialog-panel .hero-stats{margin-top:12px;padding-top:10px}
+.current-dialog-panel .hero-stats .stat{padding:5px 4px}
+.current-dialog-panel .stat-value{font-size:.86rem}
+.current-dialog-panel .stat-label{font-size:.55rem}
+.dialog-menu-item{padding:8px 9px}
+@media(max-width:860px){
+ .layout{grid-template-columns:1fr}
+ .current-dialog-panel{grid-column:1;grid-row:2}
+ .card{grid-column:1;grid-row:1}
+ .history-entry{max-width:88%}
+}
+
+
+/* Compact conversation v2 */
+.shell{max-width:1240px;padding-top:12px}
+.hero{padding:4px 0 8px;margin-bottom:4px}
+.hero h1{font-size:clamp(1.35rem,2.5vw,1.75rem)}
+.layout{grid-template-columns:220px minmax(0,1fr);gap:14px;align-items:start}
+.current-dialog-panel{padding:14px;border-radius:16px}
+.dialog-menu-title{margin-bottom:7px}
+.dialog-menu-list{gap:2px;margin-bottom:10px}
+.dialog-menu-item{padding:7px 8px;font-size:.8rem}
+.current-dialog-panel .partner-left{padding-top:8px}
+.current-dialog-panel .partner-title{font-size:.9rem}
+.current-dialog-panel .turn-instruction{font-size:.7rem}
+.current-dialog-panel .hero-stats{margin-top:8px;padding-top:8px}
+.current-dialog-panel .hero-stats .stat{padding:4px 3px}
+.card{padding:14px;border-radius:16px}
+.progress-track{margin-bottom:10px}
+.main-history-panel{min-height:0;height:330px;margin-bottom:10px;padding:12px 16px;border-radius:18px}
+.main-history-panel .history-screen-bar{margin-bottom:8px}
+.main-history-panel .history-list{min-height:0;max-height:270px;height:270px;gap:8px;padding:2px 6px 4px}
+.history-entry{max-width:62%;padding:9px 13px;font-size:.94rem}
+.history-entry:last-child{font-size:.94rem;padding:9px 13px}
+.history-entry .speaker{font-size:.7rem}
+.history-divider{margin:2px 0;font-size:.6rem}
+.main-turn-cue{margin:0 auto 8px;max-width:760px;padding:9px 13px}
+.main-turn-cue strong{font-size:.86rem}
+.main-turn-cue span{font-size:.8rem}
+.card #stage{display:flex;flex-direction:column;align-items:center}
+.dialog-controls{gap:4px;width:100%}
+.main-mic-column{gap:2px}
+.main-mic-column .mic-btn-wrap{width:82px;height:82px}
+.main-mic-column .mic-btn{width:66px;height:66px;font-size:1.55rem}
+.main-mic-column strong{font-size:.74rem!important}
+.dialog-controls .utility-row{gap:6px;margin-top:4px}
+.dialog-controls .utility-btn{min-width:0;padding:7px 11px;font-size:.7rem}
+.text-answer-row{display:none;width:min(520px,100%);margin:6px auto 0}
+.text-answer-row.open{display:flex}
+.write-toggle{display:block;margin:5px auto 0;padding:3px 9px;border:0;background:transparent;color:#9fb8ad;cursor:pointer;font:700 .7rem "Nunito Sans",sans-serif}
+.write-toggle:hover{color:#d9e8e1}
+.mic-status-row{min-height:0;padding:0}
+.example-text{margin-top:5px;font-size:.8rem}
+.footnote{margin-top:10px;font-size:.72rem}
+.next-training{margin-top:10px}
+.next-training a{min-height:42px;padding:8px 17px;font-size:.86rem}
+@media(min-width:861px){
+ .layout.show{min-height:0}
+ .current-dialog-panel{position:sticky;top:12px}
+}
+@media(max-width:860px){
+ .layout{grid-template-columns:1fr}
+ .main-history-panel{height:310px}
+ .main-history-panel .history-list{height:250px}
+}
+/* FINAL dialogue menu compaction: keep font sizes, remove forced row height/padding. */
+.current-dialog-panel .dialog-menu-list{
+  gap:0 !important;
+  row-gap:0 !important;
+  margin-bottom:5px !important;
+}
+.current-dialog-panel .dialog-menu-item{
+  min-height:0 !important;
+  height:auto !important;
+  padding:2px 8px !important;
+  margin:0 !important;
+  line-height:1.15 !important;
+}
+.current-dialog-panel .dialog-menu-item + .dialog-menu-item{
+  margin-top:0 !important;
+}
+
+/* Stronger contrast for sidebar action labels. */
+.sidebar-speaking-panel .sidebar-utility-row .utility-btn{
+  color:#e8f4ef !important;
+  font-weight:800 !important;
+  opacity:1 !important;
+}
+.sidebar-speaking-panel .sidebar-utility-row .repeat-btn{
+  color:#bfe9d7 !important;
+}
+.sidebar-speaking-panel .sidebar-utility-row .answer-btn{
+  color:#ffe3a0 !important;
+}
+.sidebar-speaking-panel #skip-btn{
+  color:#d6e3de !important;
+}
+
+/* FINAL contrast override for all controls visible in the left panel. */
+.current-dialog-panel .sidebar-utility-row .utility-btn,
+.current-dialog-panel .sidebar-utility-row button{
+  color:#f2faf6 !important;
+  -webkit-text-fill-color:#f2faf6 !important;
+  font-weight:900 !important;
+  opacity:1 !important;
+  filter:none !important;
+}
+.current-dialog-panel .sidebar-utility-row .repeat-btn{
+  color:#d7fff0 !important;
+  -webkit-text-fill-color:#d7fff0 !important;
+}
+.current-dialog-panel .sidebar-utility-row .answer-btn{
+  color:#ffe7a6 !important;
+  -webkit-text-fill-color:#ffe7a6 !important;
+}
+.current-dialog-panel .sidebar-utility-row #skip-btn{
+  color:#f2faf6 !important;
+  -webkit-text-fill-color:#f2faf6 !important;
+}
+.current-dialog-panel .text-answer-input{
+  color:#f2faf6 !important;
+  -webkit-text-fill-color:#f2faf6 !important;
+  opacity:1 !important;
+}
+.current-dialog-panel .text-answer-input::placeholder{
+  color:#c4d8d0 !important;
+  opacity:1 !important;
+}
+.current-dialog-panel .text-answer-send{
+  color:#f2faf6 !important;
+  -webkit-text-fill-color:#f2faf6 !important;
+  font-weight:900 !important;
+}
+
+/* FINAL readability: larger, brighter labels on the two primary utility buttons. */
+.current-dialog-panel .sidebar-utility-row .repeat-btn,
+.current-dialog-panel .sidebar-utility-row .answer-btn{
+  font-size:.74rem !important;
+  font-weight:900 !important;
+  letter-spacing:0 !important;
+  text-shadow:0 1px 2px rgba(0,0,0,.55) !important;
+}
+.current-dialog-panel .sidebar-utility-row .repeat-btn{
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+}
+.current-dialog-panel .sidebar-utility-row .answer-btn{
+  color:#fff1b8 !important;
+  -webkit-text-fill-color:#fff1b8 !important;
+}
+
+/* Larger labels in the left-panel answer controls. */
+.current-dialog-panel .text-answer-input,
+.current-dialog-panel .text-answer-send{
+  font-size:.92rem !important;
+}
+.current-dialog-panel .sidebar-utility-row .repeat-btn,
+.current-dialog-panel .sidebar-utility-row .answer-btn{
+  font-size:.86rem !important;
+}
+.current-dialog-panel .sidebar-utility-row #skip-btn{
+  font-size:.80rem !important;
+}
+
+/* FINAL: visibly larger answer controls in sidebar. */
+.current-dialog-panel .sidebar-text-answer-row .text-answer-input{
+  font-size:1.05rem !important;
+  font-weight:800 !important;
+  min-height:46px !important;
+}
+.current-dialog-panel .sidebar-text-answer-row .text-answer-send{
+  font-size:1.05rem !important;
+  font-weight:900 !important;
+  min-height:46px !important;
+  padding-left:18px !important;
+  padding-right:18px !important;
+}
+.current-dialog-panel .sidebar-utility-row .repeat-btn,
+.current-dialog-panel .sidebar-utility-row .answer-btn{
+  font-size:.98rem !important;
+  font-weight:900 !important;
+  min-height:46px !important;
+  padding:10px 8px !important;
+}
+.current-dialog-panel .sidebar-utility-row #skip-btn{
+  font-size:.92rem !important;
+  font-weight:900 !important;
+  min-height:42px !important;
+}
+
+/* Move the lower action buttons slightly down. */
+.current-dialog-panel .sidebar-utility-row{
+  margin-top:12px !important;
+}
+
 </style>
 
 <link rel="stylesheet" href="../../css/translation-globe.css">
 <link rel="stylesheet" href="../../css/page-progress.css">
 <script src="../../js/answer-corrector.js"></script>
+
+<style id="dark-forest-mint-contrast-v2">
+/* Stronger separation visible on ordinary monitors. */
+body{background:#0c1c17 !important;}
+.current-dialog-panel{
+  background:#284239 !important;
+  border-color:#587568 !important;
+}
+.card{
+  background:#1e372e !important;
+  border-color:#49675a !important;
+}
+.main-history-panel{
+  background:#071f19 !important;
+  border-color:#315548 !important;
+}
+.current-dialog-panel .dialog-menu-item.active{
+  background:#39705b !important;
+}
+.current-dialog-panel .partner-left,
+.current-dialog-panel .sidebar-speaking-panel{
+  border-color:#547165 !important;
+}
+.current-dialog-panel .sidebar-text-answer-row .text-answer-input,
+.current-dialog-panel .sidebar-text-answer-row .text-answer-send{
+  background:#1b352c !important;
+  border-color:#78b49a !important;
+}
+</style>
+
+<style id="dark-forest-mint-hierarchy-final">
+/* Stronger visual hierarchy: page -> control panel -> conversation surface. */
+body{
+  background:#10211b !important;
+}
+.current-dialog-panel{
+  background:#20392f !important;
+  border-color:#426153 !important;
+}
+.card{
+  background:#193229 !important;
+  border-color:#38574a !important;
+}
+.main-history-panel{
+  background:#08271f !important;
+  border-color:#23483b !important;
+}
+.current-dialog-panel .dialog-menu-item.active{
+  background:#2d5b49 !important;
+}
+.current-dialog-panel .mic-btn{
+  background:#75c7a7 !important;
+  border-color:#a2e0c7 !important;
+}
+.current-dialog-panel .sidebar-text-answer-row .text-answer-input,
+.current-dialog-panel .sidebar-text-answer-row .text-answer-send{
+  background:#173129 !important;
+  border:1px solid #5d9c83 !important;
+}
+.current-dialog-panel .sidebar-text-answer-row .text-answer-input:focus{
+  border-color:#83d4b3 !important;
+  box-shadow:0 0 0 3px rgba(131,212,179,.14) !important;
+}
+.main-history-panel .history-entry:not(.user){
+  background:#edf2e5 !important;
+  color:#1c3027 !important;
+}
+.main-history-panel .history-entry.user{
+  background:#d8eee2 !important;
+  color:#173428 !important;
+}
+.main-history-panel .history-divider{
+  color:#9fd9c0 !important;
+  font-family:inherit !important;
+  font-size:.80rem !important;
+  font-weight:800 !important;
+  letter-spacing:0 !important;
+}
+</style>
+
+<style id="dialog-title-in-history-final">
+/* Definitive dialogue heading: override the old separator rule that hid its text. */
+.main-history-panel .history-divider{
+  display:block !important;
+  height:auto !important;
+  min-height:28px !important;
+  width:calc(100% - 12px) !important;
+  padding:5px 8px 6px !important;
+  margin:4px 6px 6px !important;
+  background:transparent !important;
+  color:#b7e8d3 !important;
+  overflow:visible !important;
+  text-align:left !important;
+  font-size:.78rem !important;
+  line-height:1.2 !important;
+  font-weight:900 !important;
+  letter-spacing:.01em !important;
+  text-transform:none !important;
+  border-bottom:1px solid rgba(183,232,211,.25) !important;
+  align-self:start !important;
+  justify-self:stretch !important;
+}
+.main-history-panel .history-divider.left-column{grid-column:1 !important;}
+.main-history-panel .history-divider.right-column{grid-column:2 !important;}
+</style>
+
+<style id="dialog-title-in-history">
+/* Show each dialogue title above its first bubble in the large history panel. */
+.main-history-panel .history-divider{
+  display:block !important;
+  text-align:left !important;
+  color:#b7e8d3 !important;
+  font-size:.78rem !important;
+  font-weight:900 !important;
+  letter-spacing:.02em !important;
+  text-transform:none !important;
+  padding:6px 10px 5px !important;
+  margin:5px 0 4px !important;
+  border-bottom:1px solid rgba(183,232,211,.22) !important;
+}
+</style>
+
+<style id="dark-forest-mint-theme">
+/* Dark Forest + Mint — color-only refinement. */
+body{
+  background:#10231d !important;
+  color:#f4efe3 !important;
+}
+.current-dialog-panel{
+  background:#1b342b !important;
+  border-color:#355247 !important;
+}
+.card{
+  background:#1a3028 !important;
+  border-color:#355247 !important;
+}
+.main-history-panel,
+.history-shell,
+.history-panel{
+  background:#09251e !important;
+}
+.current-dialog-panel .dialog-menu-item.active{
+  background:#285444 !important;
+}
+.current-dialog-panel .dialog-menu-item.active,
+.current-dialog-panel .dialog-menu-item.active *{
+  color:#f7f3e8 !important;
+}
+.current-dialog-panel .partner-left,
+.current-dialog-panel .sidebar-speaking-panel{
+  border-color:#35584b !important;
+}
+.current-dialog-panel .turn-title,
+.current-dialog-panel .sidebar-turn-title,
+.current-dialog-panel .sidebar-mic-title{
+  color:#a9e4ca !important;
+}
+.current-dialog-panel .mic-btn{
+  background:#72bea0 !important;
+  border-color:#9ad9bf !important;
+  box-shadow:0 0 0 7px rgba(114,190,160,.10),0 0 0 14px rgba(114,190,160,.07) !important;
+}
+.current-dialog-panel .text-answer-input,
+.current-dialog-panel .text-answer-send{
+  background:#132b24 !important;
+  border-color:#365c4e !important;
+}
+.current-dialog-panel .text-answer-input:focus{
+  border-color:#72bea0 !important;
+  box-shadow:0 0 0 3px rgba(114,190,160,.12) !important;
+}
+.current-dialog-panel .sidebar-utility-row .repeat-btn{
+  background:#25463b !important;
+  border-color:#4d806d !important;
+}
+.current-dialog-panel .sidebar-utility-row .answer-btn{
+  background:#4a3d21 !important;
+  border-color:#9a762a !important;
+}
+.current-dialog-panel .sidebar-utility-row #skip-btn{
+  background:#19332b !important;
+  border-color:#355247 !important;
+}
+.history-bubble,
+.history-message,
+.bubble{
+  background:#eef4e8 !important;
+}
+</style>
+
+<style id="final-text-sharpness">
+/* Sharper sidebar typography: remove glow/blur and use native font rendering. */
+.current-dialog-panel,
+.current-dialog-panel button,
+.current-dialog-panel input{
+  text-shadow:none !important;
+  filter:none !important;
+  -webkit-font-smoothing:auto !important;
+  text-rendering:optimizeLegibility !important;
+}
+.current-dialog-panel .sidebar-utility-row .repeat-btn,
+.current-dialog-panel .sidebar-utility-row .answer-btn,
+.current-dialog-panel .sidebar-utility-row #skip-btn,
+.current-dialog-panel .text-answer-send,
+.current-dialog-panel .text-answer-input{
+  text-shadow:none !important;
+  filter:none !important;
+  opacity:1 !important;
+}
+</style>
+
+<style id="final-write-controls-size">
+.current-dialog-panel .sidebar-text-answer-row .text-answer-input{
+  font-size:1.18rem !important;
+  font-weight:900 !important;
+  min-height:54px !important;
+  padding:11px 14px !important;
+}
+.current-dialog-panel .sidebar-text-answer-row .text-answer-send{
+  font-size:1.18rem !important;
+  font-weight:900 !important;
+  min-height:54px !important;
+  padding:11px 22px !important;
+}
+</style>
+
+<style id="final-sidebar-action-position">
+/* Definitive placement: create a clearly visible gap below the writing row. */
+.current-dialog-panel .sidebar-text-answer-row{
+  margin-bottom:24px !important;
+}
+.current-dialog-panel .sidebar-utility-row{
+  margin-top:0 !important;
+}
+</style>
+
+<style id="final-dialog-spacing-fix">
+/* FINAL override: compact bubbles and genuinely tighter vertical rhythm */
+.main-history-panel .history-list{
+  gap:0 !important;
+  row-gap:0 !important;
+  column-gap:24px !important;
+}
+.main-history-panel .history-entry{
+  padding:4px 9px !important;
+  margin:0 !important;
+  font-size:1rem !important;
+  line-height:1.22 !important;
+  align-self:start !important;
+}
+.main-history-panel .history-entry .speaker{
+  margin-bottom:0 !important;
+  line-height:1.05 !important;
+}
+/* each next bubble in a dialogue sits directly below the previous one */
+.main-history-panel .history-entry + .history-entry{
+  margin-top:0 !important;
+}
+/* tighten the visual rows themselves; text size stays unchanged */
+.main-history-panel .history-entry{
+  padding-top:2px !important;
+  padding-bottom:2px !important;
+  line-height:1.16 !important;
+}
+.main-history-panel .history-entry .speaker{
+  line-height:1 !important;
+}
+</style>
+
+<style id="final-layer-separation-override">
+/* Final paint layer: intentionally strong separation between the three surfaces. */
+html body{
+  background:#0b1b16 !important;
+}
+html body .layout.show > .current-dialog-panel{
+  background:#29483d !important;
+  border:1px solid #587a6c !important;
+  box-shadow:0 12px 28px rgba(0,0,0,.18) !important;
+}
+html body .layout.show > .card{
+  background:#213a31 !important;
+  border:1px solid #4b6a5d !important;
+}
+html body .layout.show > .card .main-history-panel{
+  background:#06241c !important;
+  border:1px solid #315548 !important;
+}
+html body .current-dialog-panel .dialog-menu-item.active{
+  background:#3d725f !important;
+}
+html body .current-dialog-panel .text-answer-input,
+html body .current-dialog-panel .text-answer-send{
+  background:#17352b !important;
+  border-color:#7fc0a4 !important;
+}
+</style>
+<style id="final-layer-brighter-v2">
+/* Brighter Dark Forest surfaces while keeping the conversation area darkest. */
+html body{background:#10271f !important;}
+html body .layout.show > .current-dialog-panel{
+  background:#35594b !important;
+  border-color:#6f9484 !important;
+}
+html body .layout.show > .card{
+  background:#2b4b3f !important;
+  border-color:#628274 !important;
+}
+html body .layout.show > .card .main-history-panel{
+  background:#0b3026 !important;
+  border-color:#426b5a !important;
+}
+html body .current-dialog-panel .dialog-menu-item.active{
+  background:#4b806b !important;
+}
+html body .current-dialog-panel .text-answer-input,
+html body .current-dialog-panel .text-answer-send{
+  background:#21483a !important;
+  border-color:#91cdb3 !important;
+}
+</style>
+<style id="final-crisp-sidebar-type">
+/* Crisp, high-contrast sidebar typography. */
+html body .current-dialog-panel,
+html body .current-dialog-panel *{
+  text-shadow:none !important;
+  filter:none !important;
+  -webkit-font-smoothing:subpixel-antialiased !important;
+  text-rendering:geometricPrecision !important;
+}
+html body .current-dialog-panel .dialog-menu-title,
+html body .current-dialog-panel .dialog-menu-item,
+html body .current-dialog-panel .partner-title,
+html body .current-dialog-panel .partner-name,
+html body .current-dialog-panel .partner-register,
+html body .current-dialog-panel .instruction,
+html body .current-dialog-panel .sidebar-turn-title,
+html body .current-dialog-panel .sidebar-turn-instruction,
+html body .current-dialog-panel .mic-hint,
+html body .current-dialog-panel button{
+  font-weight:800 !important;
+}
+html body .current-dialog-panel{
+  color:#fffaf0 !important;
+}
+html body .current-dialog-panel .dialog-menu-item,
+html body .current-dialog-panel .partner-title,
+html body .current-dialog-panel .partner-name,
+html body .current-dialog-panel .instruction,
+html body .current-dialog-panel .sidebar-turn-instruction,
+html body .current-dialog-panel .mic-hint{
+  color:#f7f3e9 !important;
+  opacity:1 !important;
+}
+html body .current-dialog-panel .sidebar-turn-title{
+  color:#c7f2df !important;
+  opacity:1 !important;
+}
+html body .current-dialog-panel .partner-register{
+  color:#a9ddc7 !important;
+  opacity:1 !important;
+}
+</style>
+<style id="write-row-width-balance">
+/* Give the writing field more room; keep Send compact. */
+html body .current-dialog-panel .sidebar-text-answer-row{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) auto !important;
+  gap:10px !important;
+}
+html body .current-dialog-panel .sidebar-text-answer-row .text-answer-input{
+  width:100% !important;
+  min-width:0 !important;
+}
+html body .current-dialog-panel .sidebar-text-answer-row .text-answer-send{
+  width:auto !important;
+  min-width:96px !important;
+  max-width:110px !important;
+  padding-left:14px !important;
+  padding-right:14px !important;
+}
+</style>
+<style id="send-button-height-tweak">
+html body .current-dialog-panel .sidebar-text-answer-row .text-answer-send{
+  min-height:46px !important;
+  height:46px !important;
+  padding-top:6px !important;
+  padding-bottom:6px !important;
+  align-self:center !important;
+}
+</style>
+<style id="friendly-forest-palette-final">
+/* Friendly Forest palette: softer sage controls, mint actions, honey help, warm cream dialogue. */
+html body{
+  background:#10261f !important;
+}
+html body .layout.show > .current-dialog-panel{
+  background:#3f6657 !important;
+  border-color:#7fa793 !important;
+}
+html body .layout.show > .card{
+  background:#25473a !important;
+  border-color:#5f8875 !important;
+}
+html body .layout.show > .card .main-history-panel{
+  background:#07382b !important;
+  border-color:#426b5a !important;
+}
+
+/* Active / learner = mint. */
+html body .current-dialog-panel .dialog-menu-item.active{
+  background:#72a58f !important;
+}
+html body .current-dialog-panel .mic-btn{
+  background:#8bd8b8 !important;
+  border-color:#a6dfc8 !important;
+  box-shadow:
+    0 0 0 6px rgba(121,201,170,.10),
+    0 0 0 12px rgba(121,201,170,.055) !important;
+}
+html body .current-dialog-panel .sidebar-turn-title{
+  color:#d1f4e5 !important;
+}
+html body .current-dialog-panel .sidebar-text-answer-row .text-answer-input,
+html body .current-dialog-panel .sidebar-text-answer-row .text-answer-send{
+  background:#25483c !important;
+  border-color:#92cbb3 !important;
+}
+
+/* Help = warm honey rather than brown. */
+html body .current-dialog-panel .sidebar-utility-row .answer-btn{
+  background:#9a7426 !important;
+  border-color:#ddb653 !important;
+  color:#fff5d2 !important;
+  -webkit-text-fill-color:#fff5d2 !important;
+}
+
+/* Neutral controls = soft eucalyptus. */
+html body .current-dialog-panel .sidebar-utility-row .repeat-btn{
+  background:#365e50 !important;
+  border-color:#77a18f !important;
+}
+html body .current-dialog-panel .sidebar-utility-row #skip-btn{
+  background:#284c40 !important;
+  border-color:#66877a !important;
+}
+
+/* Warm cream for Lena / teacher bubbles. */
+html body .main-history-panel .history-entry:not(.user){
+  background:#f3efdf !important;
+  color:#20352c !important;
+}
+html body .main-history-panel .history-entry.user{
+  background:#d9efe4 !important;
+  color:#18372b !important;
+}
+
+/* Secondary copy gets sage/mint instead of grey-white. */
+html body .current-dialog-panel .partner-register,
+html body .current-dialog-panel .mic-hint,
+html body .current-dialog-panel .sidebar-turn-instruction,
+html body .current-dialog-panel .dialog-menu-item .dialog-number{
+  color:#c0dfd1 !important;
+  -webkit-text-fill-color:#c0dfd1 !important;
+}
+html body .main-history-panel .history-divider{
+  color:#b4e7d0 !important;
+}
+</style>
+<style id="main-panel-petrol-forest">
+/* Softer petrol-forest conversation canvas; keep the rest of Friendly Forest unchanged. */
+html body .layout.show > .card .main-history-panel{
+  background:#18514f !important;
+}
+</style>
+<style id="strong-3d-conversation-frame">
+/* Strong 3D depth around the large conversation area. */
+html body .layout.show > .card{
+  border:1px solid #6c9a87 !important;
+  box-shadow:
+    0 18px 34px rgba(0,0,0,.42),
+    0 7px 12px rgba(0,0,0,.28),
+    inset 0 2px 0 rgba(190,238,218,.16),
+    inset 0 -4px 10px rgba(0,0,0,.20) !important;
+}
+html body .layout.show > .card .main-history-panel{
+  border:2px solid #2f8178 !important;
+  box-shadow:
+    0 12px 22px rgba(0,0,0,.46),
+    0 4px 7px rgba(0,0,0,.34),
+    inset 0 3px 4px rgba(151,238,220,.15),
+    inset 0 -7px 12px rgba(0,0,0,.27),
+    0 0 0 5px rgba(55,151,137,.11) !important;
+}
+</style>
+<style id="strong-highlighted-panel-shadow">
+/* Strong illuminated 3D frame around the large conversation panel. */
+html body .layout.show > .card{
+  box-shadow:
+    0 24px 46px rgba(0,0,0,.55),
+    0 10px 20px rgba(0,0,0,.38),
+    0 0 24px rgba(100,220,190,.20),
+    inset 0 2px 0 rgba(207,255,238,.24),
+    inset 0 -5px 12px rgba(0,0,0,.24) !important;
+}
+html body .layout.show > .card .main-history-panel{
+  border:2px solid #53b8a8 !important;
+  box-shadow:
+    0 16px 30px rgba(0,0,0,.58),
+    0 7px 14px rgba(0,0,0,.42),
+    0 0 12px rgba(98,238,211,.58),
+    0 0 28px rgba(65,214,188,.30),
+    inset 0 3px 4px rgba(207,255,242,.22),
+    inset 0 -8px 15px rgba(0,0,0,.30),
+    inset 4px 0 8px rgba(115,238,214,.10) !important;
+}
+</style>
+<style id="strong-highlighted-sidebar-3d">
+/* Matching illuminated 3D treatment for the smaller left panel. */
+html body .layout.show > .current-dialog-panel{
+  border:2px solid #6fb8a2 !important;
+  box-shadow:
+    0 20px 38px rgba(0,0,0,.52),
+    0 8px 16px rgba(0,0,0,.38),
+    0 0 12px rgba(117,232,199,.42),
+    0 0 26px rgba(75,203,169,.22),
+    inset 0 3px 4px rgba(220,255,242,.18),
+    inset 0 -8px 14px rgba(0,0,0,.25),
+    inset 4px 0 8px rgba(140,239,211,.08) !important;
+}
+</style>
+<style id="desktop-panel-gap-tighten">
+@media(min-width:861px){
+  html body .layout.show{
+    column-gap:20px !important;
+    gap:20px !important;
+  }
+}
+</style>
+<style id="history-bubbles-3d">
+/* Give dialogue bubbles in the large history panel a clear raised 3D feel. */
+html body .main-history-panel .history-entry{
+  border:1px solid rgba(255,255,255,.58) !important;
+  box-shadow:
+    0 8px 14px rgba(0,0,0,.38),
+    0 3px 5px rgba(0,0,0,.28),
+    inset 0 2px 0 rgba(255,255,255,.72),
+    inset 0 -3px 5px rgba(0,0,0,.12) !important;
+  transform:translateY(-1px);
+}
+html body .main-history-panel .history-entry:not(.user){
+  background:linear-gradient(180deg,#fffaf0 0%,#eee8d6 100%) !important;
+}
+html body .main-history-panel .history-entry.user{
+  background:linear-gradient(180deg,#e6f7ee 0%,#c9e7d8 100%) !important;
+  border-color:rgba(201,255,232,.65) !important;
+  box-shadow:
+    0 8px 14px rgba(0,0,0,.40),
+    0 3px 5px rgba(0,0,0,.28),
+    0 0 10px rgba(105,225,190,.18),
+    inset 0 2px 0 rgba(255,255,255,.62),
+    inset 0 -3px 5px rgba(0,0,0,.11) !important;
+}
+</style>
+<style id="mic-wave-strong-3d">
+/* Strong 3D treatment for the student microphone and lecturer waveform. */
+html body .current-dialog-panel .mic-btn{
+  border:2px solid rgba(220,255,244,.72) !important;
+  background:linear-gradient(145deg,#a2ead0 0%,#78cdb0 48%,#58aa90 100%) !important;
+  box-shadow:
+    0 13px 20px rgba(0,0,0,.42),
+    0 5px 8px rgba(0,0,0,.30),
+    0 0 14px rgba(125,235,199,.38),
+    inset 0 5px 6px rgba(255,255,255,.42),
+    inset 0 -7px 9px rgba(20,79,61,.32),
+    inset 5px 0 8px rgba(255,255,255,.12) !important;
+}
+html body .current-dialog-panel .mic-btn-wrap{
+  filter:drop-shadow(0 8px 8px rgba(0,0,0,.28));
+}
+html body .current-dialog-panel .speaker-wave{
+  filter:
+    drop-shadow(0 8px 6px rgba(0,0,0,.38))
+    drop-shadow(0 0 8px rgba(137,126,255,.28));
+}
+html body .current-dialog-panel .speaker-wave span{
+  border:1px solid rgba(218,214,255,.48) !important;
+  background:linear-gradient(90deg,#5b50b9 0%,#8279eb 45%,#9b94f4 100%) !important;
+  box-shadow:
+    3px 5px 5px rgba(0,0,0,.32),
+    0 0 8px rgba(135,123,245,.42),
+    inset 2px 0 2px rgba(255,255,255,.34),
+    inset -2px 0 3px rgba(45,35,130,.30) !important;
+}
+html body .current-dialog-panel .mic-btn.listening{
+  box-shadow:
+    0 13px 20px rgba(0,0,0,.42),
+    0 5px 8px rgba(0,0,0,.30),
+    0 0 18px rgba(125,235,199,.55),
+    inset 0 5px 6px rgba(255,255,255,.42),
+    inset 0 -7px 9px rgba(20,79,61,.32) !important;
+}
+</style>
+<style id="extra-strong-main-panel-3d">
+/* Stronger 3D depth on the large conversation screen. */
+html body .layout.show > .card .main-history-panel{
+  border:3px solid #62cbbb !important;
+  box-shadow:
+    0 24px 38px rgba(0,0,0,.68),
+    0 12px 18px rgba(0,0,0,.48),
+    0 5px 7px rgba(0,0,0,.38),
+    0 0 14px rgba(111,247,218,.72),
+    0 0 34px rgba(68,224,195,.42),
+    0 0 58px rgba(50,190,166,.20),
+    inset 0 5px 6px rgba(224,255,247,.30),
+    inset 0 -12px 18px rgba(0,0,0,.38),
+    inset 7px 0 12px rgba(141,255,230,.12),
+    inset -7px 0 12px rgba(0,0,0,.18) !important;
+}
+</style>
+<style id="answer-button-friendly-petrol">
+/* Replace the mustard/gold answer button with a calmer petrol-mint accent. */
+html body .current-dialog-panel .sidebar-utility-row .answer-btn{
+  background:linear-gradient(180deg,#3f7f70 0%,#32685d 100%) !important;
+  border-color:#7fc5ae !important;
+  color:#f5fff9 !important;
+  -webkit-text-fill-color:#f5fff9 !important;
+  box-shadow:
+    0 7px 12px rgba(0,0,0,.28),
+    inset 0 2px 0 rgba(220,255,242,.18),
+    inset 0 -3px 5px rgba(0,0,0,.16) !important;
+}
+</style>
+<style id="extra-strong-history-bubbles-3d">
+/* Stronger raised 3D speech bubbles in the conversation history. */
+html body .main-history-panel .history-entry{
+  border:1px solid rgba(255,255,255,.82) !important;
+  box-shadow:
+    0 12px 16px rgba(0,0,0,.48),
+    0 6px 7px rgba(0,0,0,.34),
+    0 2px 2px rgba(0,0,0,.26),
+    inset 0 3px 2px rgba(255,255,255,.90),
+    inset 3px 0 4px rgba(255,255,255,.34),
+    inset 0 -5px 7px rgba(75,62,38,.20) !important;
+  transform:translateY(-2px) !important;
+}
+html body .main-history-panel .history-entry:not(.user){
+  background:linear-gradient(145deg,#fffdf5 0%,#f7f0dc 52%,#ded4ba 100%) !important;
+}
+html body .main-history-panel .history-entry.user{
+  background:linear-gradient(145deg,#effff7 0%,#d7f2e5 50%,#abd8c6 100%) !important;
+  border-color:rgba(226,255,244,.90) !important;
+  box-shadow:
+    0 12px 16px rgba(0,0,0,.50),
+    0 6px 7px rgba(0,0,0,.36),
+    0 0 13px rgba(107,235,197,.24),
+    inset 0 3px 2px rgba(255,255,255,.88),
+    inset 3px 0 4px rgba(255,255,255,.30),
+    inset 0 -5px 7px rgba(38,104,82,.22) !important;
+}
+</style>
+<style id="hide-sidebar-dialog-details">
+/* Remove duplicated dialogue details from the small sidebar panel. */
+html body .current-dialog-panel .partner-title,
+html body .current-dialog-panel .partner-sub,
+html body .current-dialog-panel .turn-instruction{
+  display:none !important;
+}
+html body .current-dialog-panel .partner-left{
+  margin-top:0 !important;
+  padding-top:0 !important;
+  border-top:0 !important;
+}
+</style>
+<style id="unified-sidebar-action-buttons">
+/* Unified sidebar action buttons; Skip sits next to Send. */
+html body .current-dialog-panel .sidebar-text-answer-row{
+  grid-template-columns:minmax(0,1fr) auto auto !important;
+  align-items:center !important;
+}
+html body .current-dialog-panel .sidebar-action-btn,
+html body .current-dialog-panel .sidebar-utility-row .utility-btn{
+  box-sizing:border-box !important;
+  min-width:0 !important;
+  width:auto !important;
+  height:50px !important;
+  min-height:50px !important;
+  padding:8px 15px !important;
+  border:1px solid #76b7a3 !important;
+  border-radius:16px !important;
+  background:linear-gradient(180deg,#3b7466 0%,#2d5d53 100%) !important;
+  color:#f7fff9 !important;
+  -webkit-text-fill-color:#f7fff9 !important;
+  font-size:.92rem !important;
+  line-height:1.12 !important;
+  font-weight:900 !important;
+  box-shadow:
+    0 6px 10px rgba(0,0,0,.24),
+    inset 0 2px 0 rgba(220,255,243,.16),
+    inset 0 -3px 5px rgba(0,0,0,.14) !important;
+}
+html body .current-dialog-panel .sidebar-text-answer-row #text-answer-send,
+html body .current-dialog-panel .sidebar-text-answer-row #skip-btn{
+  min-width:118px !important;
+  max-width:none !important;
+  align-self:center !important;
+}
+html body .current-dialog-panel .sidebar-utility-row{
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:10px !important;
+}
+html body .current-dialog-panel .sidebar-utility-row .utility-btn{
+  width:100% !important;
+}
+</style>
+<style id="fix-four-action-buttons-layout">
+/* Exact requested layout: Send + Skip in one row; Repeat + Answer in the next.
+   All four controls share identical dimensions and visual treatment. */
+html body .current-dialog-panel .sidebar-text-answer-row{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+  gap:10px !important;
+}
+html body .current-dialog-panel .sidebar-text-answer-row .text-answer-input{
+  grid-column:1 / -1 !important;
+  width:100% !important;
+}
+html body .current-dialog-panel #text-answer-send,
+html body .current-dialog-panel #skip-btn,
+html body .current-dialog-panel #repeat-btn,
+html body .current-dialog-panel #answer-btn{
+  box-sizing:border-box !important;
+  width:100% !important;
+  min-width:0 !important;
+  max-width:none !important;
+  height:58px !important;
+  min-height:58px !important;
+  padding:8px 10px !important;
+  margin:0 !important;
+  border:1px solid #76b7a3 !important;
+  border-radius:18px !important;
+  background:linear-gradient(180deg,#3b7466 0%,#2d5d53 100%) !important;
+  color:#f7fff9 !important;
+  -webkit-text-fill-color:#f7fff9 !important;
+  font-size:.92rem !important;
+  line-height:1.15 !important;
+  font-weight:900 !important;
+  box-shadow:
+    0 7px 11px rgba(0,0,0,.27),
+    inset 0 2px 0 rgba(220,255,243,.18),
+    inset 0 -3px 5px rgba(0,0,0,.15) !important;
+  align-self:stretch !important;
+}
+html body .current-dialog-panel .sidebar-utility-row{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+  gap:10px !important;
+}
+</style>
+<style id="large-final-review-bubble">
+/* The end-of-session review is a key learning element, so make it prominent. */
+html body .main-history-panel .history-entry.review-summary{
+  width:calc(100% - 28px) !important;
+  max-width:none !important;
+  min-width:0 !important;
+  min-height:150px !important;
+  padding:18px 22px !important;
+  margin:14px !important;
+  border-radius:20px !important;
+  font-size:1.18rem !important;
+  line-height:1.55 !important;
+  box-sizing:border-box !important;
+  grid-column:1 / -1 !important;
+  justify-self:stretch !important;
+  background:linear-gradient(145deg,#fffdf5 0%,#f7f0dc 52%,#ded4ba 100%) !important;
+  border:2px solid rgba(255,255,255,.88) !important;
+  box-shadow:
+    0 16px 24px rgba(0,0,0,.52),
+    0 7px 10px rgba(0,0,0,.34),
+    inset 0 3px 2px rgba(255,255,255,.90),
+    inset 0 -5px 8px rgba(75,62,38,.18) !important;
+}
+html body .main-history-panel .history-entry.review-summary .speaker{
+  display:block !important;
+  margin-bottom:8px !important;
+  font-size:1.22rem !important;
+  font-weight:900 !important;
+}
+</style>
+<style id="extra-large-final-review-bubble">
+/* Make the final repetition block substantially larger and easier to study. */
+html body .main-history-panel .history-entry.review-summary{
+  width:calc(100% - 20px) !important;
+  min-height:230px !important;
+  padding:26px 30px !important;
+  margin:18px 10px 24px !important;
+  border-radius:24px !important;
+  font-size:1.42rem !important;
+  line-height:1.65 !important;
+}
+html body .main-history-panel .history-entry.review-summary .speaker{
+  margin-bottom:12px !important;
+  font-size:1.52rem !important;
+  line-height:1.25 !important;
+}
+</style>
+
+
+<style id="matte-3d-speaker-wave">
+/* Canonical matte 3D waveform appearance. This is exactly the previously winning visual rule; animation and transform remain untouched. */
+html body .current-dialog-panel .speaker-wave{
+  filter:
+    drop-shadow(0 12px 8px rgba(0,0,0,.48))
+    drop-shadow(5px 3px 4px rgba(0,0,0,.26)) !important;
+}
+html body .current-dialog-panel .speaker-wave span{
+  border:1px solid #3c3486 !important;
+  background:linear-gradient(90deg,
+    #332b7d 0%,
+    #4a419b 13%,
+    #6a60bd 34%,
+    #776dcc 50%,
+    #665bb6 68%,
+    #493f96 86%,
+    #302873 100%) !important;
+  box-shadow:
+    8px 9px 7px rgba(0,0,0,.46),
+    4px 5px 3px rgba(0,0,0,.34),
+    -2px 2px 3px rgba(0,0,0,.18),
+    inset 5px 0 4px rgba(139,130,203,.20),
+    inset -6px 0 5px rgba(25,19,76,.46),
+    inset 0 -5px 4px rgba(24,19,68,.30) !important;
+}
+</style>
+<style id="match-left-panel-border-to-main">
+/* Match the small left panel's frame/depth to the large right conversation panel. */
+html body .layout.show > .current-dialog-panel{
+  border:3px solid #62cbbb !important;
+  box-shadow:
+    0 24px 38px rgba(0,0,0,.68),
+    0 12px 18px rgba(0,0,0,.48),
+    0 5px 7px rgba(0,0,0,.38),
+    0 0 14px rgba(111,247,218,.72),
+    0 0 34px rgba(68,224,195,.42),
+    0 0 58px rgba(50,190,166,.20),
+    inset 0 5px 6px rgba(224,255,247,.30),
+    inset 0 -12px 18px rgba(0,0,0,.38),
+    inset 7px 0 12px rgba(141,255,230,.12),
+    inset -7px 0 12px rgba(0,0,0,.18) !important;
+}
+</style>
+<style id="double-frame-left-panel">
+/* Add the subtle outer frame seen on the large right card, while preserving the existing inner turquoise frame. */
+html body .layout.show > .current-dialog-panel{
+  position:relative !important;
+  margin:0 !important;
+}
+html body .layout.show > .current-dialog-panel::before{
+  content:"" !important;
+  position:absolute !important;
+  z-index:-1 !important;
+  top:-20px !important;
+  right:-20px !important;
+  bottom:-20px !important;
+  left:-20px !important;
+  border:1px solid rgba(126,188,168,.62) !important;
+  border-radius:22px !important;
+  background:linear-gradient(180deg,rgba(75,119,101,.42),rgba(28,65,54,.30)) !important;
+  box-shadow:
+    0 16px 30px rgba(0,0,0,.38),
+    inset 0 2px 4px rgba(210,255,239,.12),
+    inset 0 -6px 10px rgba(0,0,0,.20) !important;
+  pointer-events:none !important;
+}
+</style>
+<style id="deeper-main-conversation-panel-3d">
+/* Stronger depth for the large right panel only; layout and behavior stay untouched. */
+html body .layout.show > .card .main-history-panel{
+  border:3px solid #62cbbb !important;
+  box-shadow:
+    0 32px 48px rgba(0,0,0,.72),
+    0 18px 24px rgba(0,0,0,.54),
+    0 8px 10px rgba(0,0,0,.44),
+    0 3px 4px rgba(0,0,0,.34),
+    0 0 17px rgba(111,247,218,.76),
+    0 0 38px rgba(68,224,195,.44),
+    0 0 68px rgba(50,190,166,.22),
+    inset 0 7px 8px rgba(224,255,247,.34),
+    inset 0 -18px 24px rgba(0,0,0,.46),
+    inset 10px 0 15px rgba(141,255,230,.15),
+    inset -11px 0 16px rgba(0,0,0,.25) !important;
+}
+</style>
 </head>
 
 <body>
 
 <div class="top-back">
-  <a href="../a1/lektion-9.html" class="back-btn" aria-label="Zurück zu Lektion 1" title="Zurück zu Lektion 1">←</a>
+  <a href="../a1/lektion-1.html" class="back-btn" aria-label="Zurück zu Lektion 1" title="Zurück zu Lektion 1">←</a>
 </div>
 
 <div class="shell">
@@ -1407,7 +3012,7 @@ body{
     <div class="gate-translation-row">
       <span class="translation-control" id="gate-translation-control">
         <button type="button" class="translation-toggle" id="gate-translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung">
-          <span class="translation-globe">🌐</span>A/文
+          <span class="translation-globe">🌐</span><span class="translation-label">Übersetzung</span>
         </button>
         <span class="translation-panel">
           <span class="translation-languages">
@@ -1461,45 +3066,6 @@ body{
 
       <div id="stage">
 
-        <div class="dialog-control-divider"></div>
-
-        <div class="dialog-controls">
-
-          <div class="utility-row">
-
-            <button type="button" class="utility-btn repeat-btn" id="repeat-btn">
-              🔁 Wiederholen
-            </button>
-
-            <button type="button" class="utility-btn answer-btn" id="answer-btn">
-              ✓ Antwort anzeigen
-            </button>
-
-            <button type="button" class="utility-btn stop-btn" id="stop-btn">
-              ⏹ Stop
-            </button>
-
-            <button type="button" class="utility-btn" id="skip-btn">
-              Überspringen →
-            </button>
-
-          </div>
-
-        </div>
-
-        <div class="text-answer-row">
-          <input
-            type="text"
-            class="text-answer-input"
-            id="text-answer-input"
-            placeholder="…oder schreibe deine Antwort auf Deutsch"
-            autocomplete="off"
-          >
-          <button type="button" class="text-answer-send" id="text-answer-send">
-            Senden
-          </button>
-        </div>
-
         <div class="mic-status-row">
 
           <p class="live-transcript" id="live-transcript"></p>
@@ -1535,17 +3101,17 @@ body{
       <div class="dialog-menu-title">DIALOGE</div>
 
       <div class="dialog-menu-list">
-        <div class="dialog-menu-item active" data-dialog-index="0">
-          <span class="dialog-menu-number">16</span>
-          <span>🛍️ Einkaufen</span>
-        </div>
+        <div class="dialog-menu-item active" data-dialog-index="0"><span class="dialog-menu-number">01</span><span>Einkaufen · Anna</span></div>
+        <div class="dialog-menu-item" data-dialog-index="1"><span class="dialog-menu-number">02</span><span>Einkaufen · Tom</span></div>
+        <div class="dialog-menu-item" data-dialog-index="2"><span class="dialog-menu-number">03</span><span>Einkaufen · Mia</span></div>
+        <div class="dialog-menu-item" data-dialog-index="3"><span class="dialog-menu-number">04</span><span>Einkaufen · Paul</span></div>
       </div>
 
       <div class="dialog-menu-info compact-info">
         <div class="hero-translation-row">
           <span class="translation-control" id="hero-translation-control">
             <button type="button" class="translation-toggle" id="hero-translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung">
-              <span class="translation-globe">🌐</span>A/文
+              <span class="translation-globe">🌐</span><span class="translation-label">Übersetzung</span>
             </button>
             <span class="translation-panel">
               <span class="translation-languages">
@@ -1564,27 +3130,25 @@ body{
         <div class="partner-meta">
 
           <span class="partner-title" id="partner-title">
-            Dialog 1 · Auf der Straße
+            Dialog 1 · Einkaufen
           </span>
 
           <span class="partner-sub">
 
-            <span id="partner-name">Lena</span>
+            <span id="partner-name">Anna</span>
 
-            <span class="partner-tag informell" id="partner-tag">
-              informell
-            </span>
+            <span class="partner-tag aktiv" id="partner-tag">aktiv</span>
 
           </span>
 
           <span class="instruction-wrap">
             <span class="turn-instruction" id="instruction-text">
-              Antworte auf die Begrüßung.
+              Sag in einem ganzen Satz, was du kaufen möchtest.
             </span>
 
             <span class="translation-control" id="translation-control">
               <button type="button" class="translation-toggle" id="translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung">
-                <span class="translation-globe">🌐</span>A/文
+                <span class="translation-globe">🌐</span><span class="translation-label">Übersetzung</span>
               </button>
               <span class="translation-panel">
                 <span class="translation-languages">
@@ -1601,41 +3165,48 @@ body{
 
       </div>
 
-      <div class="hero-stats">
-
-        <div class="stat">
-          <span class="stat-value" id="stat-score">0/12</span>
-          <span class="stat-label">Punkte</span>
+      <div class="sidebar-speaking-panel">
+        <div class="sidebar-turn-cue">
+          <strong>Du bist dran 🎤</strong>
+          <span id="main-turn-instruction">Antworte auf die Begrüßung.</span>
+        </div>
+        <div class="sidebar-mic">
+          <div class="speaker-wave" id="speaker-wave" aria-label="Lektor spricht" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div class="mic-column">
+            <div class="mic-btn-wrap" id="mic-btn-wrap">
+              <span class="mic-ring"></span><span class="mic-ring"></span><span class="mic-ring"></span>
+              <button type="button" class="mic-btn" id="mic-btn" aria-label="Sprechen">🎤</button>
+            </div>
+            <p class="mic-status" id="mic-status">🎤 Zum Sprechen klicken</p>
+          </div>
         </div>
 
-        <div class="stat">
-          <span class="stat-value" id="stat-streak">0🔥</span>
-          <span class="stat-label">Serie</span>
+        <button type="button" class="write-toggle sidebar-write-toggle" id="write-toggle">⌨️ Lieber schreiben</button>
+        <div class="text-answer-row sidebar-text-answer-row">
+          <input
+            type="text"
+            class="text-answer-input"
+            id="text-answer-input"
+            placeholder="Schreibe deine Antwort auf Deutsch"
+            autocomplete="off"
+          >
+          <button type="button" class="text-answer-send sidebar-action-btn" id="text-answer-send">Senden</button>
+          <button type="button" class="utility-btn sidebar-action-btn" id="skip-btn">Überspringen →</button>
         </div>
 
-        <div class="stat">
-          <span class="stat-value" id="stat-progress">1/12</span>
-          <span class="stat-label">Zug</span>
+        <div class="sidebar-utility-row">
+          <button type="button" class="utility-btn repeat-btn" id="repeat-btn">🔊 Noch einmal hören</button>
+          <button type="button" class="utility-btn answer-btn" id="answer-btn">💡 Antwort zeigen</button>
+          <button type="button" class="utility-btn stop-btn" id="stop-btn">⏹ Stop</button>
         </div>
-
       </div>
 
-      <div class="sidebar-mic">
-        <div class="mic-column">
-
-          <div class="mic-btn-wrap" id="mic-btn-wrap">
-            <span class="mic-ring"></span>
-            <span class="mic-ring"></span>
-            <span class="mic-ring"></span>
-
-            <button type="button" class="mic-btn" id="mic-btn">
-              🎤
-            </button>
-          </div>
-
-          <p class="mic-status" id="mic-status">Hör zu …</p>
-
-        </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-value" id="stat-score">0/12</span><span class="stat-label">Punkte</span></div>
+        <div class="stat"><span class="stat-value" id="stat-streak">0🔥</span><span class="stat-label">Serie</span></div>
+        <div class="stat"><span class="stat-value" id="stat-progress">1/12</span><span class="stat-label">Schritt</span></div>
       </div>
 
     </aside>
@@ -1936,6 +3507,7 @@ const els={
   micStatus:document.getElementById("mic-status"),
   liveTranscript:document.getElementById("live-transcript"),
   instructionText:document.getElementById("instruction-text"),
+  mainTurnInstruction:document.getElementById("main-turn-instruction"),
   translationControl:document.getElementById("translation-control"),
   translationToggle:document.getElementById("translation-toggle"),
   translationText:document.getElementById("translation-text"),
@@ -1971,6 +3543,8 @@ let historyCounter=0;
 let promptStarting=false;
 let retrying=false;
 let micReady=false;
+let hintUsed=false;
+let reviewAnswers=[];
 
 function renderStars(count,total){
   const filled=Math.round((total?count/total:0)*5);
@@ -2046,10 +3620,28 @@ function addHistoryEntry(role,speakerLabel,text){
 
   const entry=document.createElement("div");
 
-  entry.className=`history-entry ${role} dialog-${current().dialogueIndex}`;
+  /* At the final summary index is already past flatTurns.
+     Use the last dialogue as the safe history column in that case. */
+  const historyTurn=flatTurns[Math.min(index,flatTurns.length-1)];
+  const historyDialogueIndex=historyTurn ? historyTurn.dialogueIndex : 0;
+
+  entry.className=`history-entry ${role} dialog-${historyDialogueIndex}`;
 
   entry.innerHTML=
     `<span><span class="speaker">${speakerLabel}:</span> ${text}</span>`;
+
+  /* Keep two independent vertical streams.
+     Dialogues 1 and 3 continue down the LEFT compartment.
+     Dialogues 2 and 4 continue down the RIGHT compartment.
+     The row is based on all earlier bubbles in that compartment, so a new
+     dialogue starts below the previous one instead of overlapping it. */
+  const leftColumn=(historyDialogueIndex%2===0);
+  const columnSelector=leftColumn
+    ? ".history-entry.dialog-0, .history-entry.dialog-2, .history-divider.left-column"
+    : ".history-entry.dialog-1, .history-entry.dialog-3, .history-divider.right-column";
+  const earlierItemsInColumn=
+    els.historyList.querySelectorAll(columnSelector).length;
+  entry.style.gridRow=String(earlierItemsInColumn+1);
 
   els.historyList.appendChild(entry);
   els.historyList.scrollTop=
@@ -2064,9 +3656,18 @@ function addHistoryDivider(title){
   }
 
   const divider=document.createElement("div");
+  const dialogueIndex=current().dialogueIndex;
+  const leftColumn=(dialogueIndex%2===0);
+  const columnSelector=leftColumn
+    ? ".history-entry.dialog-0, .history-entry.dialog-2, .history-divider.left-column"
+    : ".history-entry.dialog-1, .history-entry.dialog-3, .history-divider.right-column";
+  const earlierItemsInColumn=
+    els.historyList.querySelectorAll(columnSelector).length;
 
-  divider.className="history-divider";
-  divider.textContent=`— ${title} —`;
+  divider.className=`history-divider ${leftColumn?"left-column":"right-column"}`;
+  divider.setAttribute("aria-label",`Początek: ${title}`);
+  divider.textContent=title;
+  divider.style.gridRow=String(earlierItemsInColumn+1);
 
   els.historyList.appendChild(divider);
   els.historyList.scrollTop=
@@ -2108,6 +3709,13 @@ function waitForMicrophoneToStop(){
   });
 }
 
+function setLecturerSpeaking(active){
+  const sidebarMic=document.querySelector(".sidebar-mic");
+  const wave=document.getElementById("speaker-wave");
+  if(sidebarMic)sidebarMic.classList.toggle("lecturer-speaking",active);
+  if(wave)wave.setAttribute("aria-hidden",active?"false":"true");
+}
+
 function setMicReady(ready,message=""){
   micReady=ready;
 
@@ -2130,6 +3738,7 @@ function setMicReady(ready,message=""){
 function loadTurn(){
   answered=false;
   attempts=0;
+  hintUsed=false;
   retrying=false;
 
   const turn=current();
@@ -2149,6 +3758,7 @@ function loadTurn(){
   els.exampleText.classList.remove("show");
   els.exampleText.textContent="";
   els.instructionText.textContent=turn.instruction;
+  if(els.mainTurnInstruction)els.mainTurnInstruction.textContent=turn.instruction;
   els.translationText.textContent="";
   els.translationText.classList.remove("show");
   els.translationButtons.forEach(button=>button.classList.remove("active"));
@@ -2179,7 +3789,9 @@ async function playPromptThenListen(){
   els.liveTranscript.textContent="";
 
   await waitForMicrophoneToStop();
+  setLecturerSpeaking(true);
   await speakGerman(current().prompt);
+  setLecturerSpeaking(false);
 
   promptStarting=false;
 
@@ -2188,7 +3800,7 @@ async function playPromptThenListen(){
     !speaking&&
     !listening
   ){
-    setMicReady(true);
+    setMicReady(true,"🎤 Zum Sprechen klicken");
   }
 }
 
@@ -2209,7 +3821,9 @@ async function repeatPromptAfterWrongAnswer(){
 
   els.liveTranscript.textContent="";
 
+  setLecturerSpeaking(true);
   await speakGerman(current().prompt);
+  setLecturerSpeaking(false);
 
   retrying=false;
 
@@ -2221,7 +3835,7 @@ async function repeatPromptAfterWrongAnswer(){
   ){
     setMicReady(
       true,
-      "Jetzt noch einmal — Mikrofon anklicken und antworten."
+      "🎤 Zum Sprechen klicken"
     );
   }
 }
@@ -2232,7 +3846,7 @@ function markCorrect(spokenText){
   answered=true;
   retrying=false;
   streak++;
-  score++;
+  if(!hintUsed){ score++; }
 
   bestStreak=Math.max(bestStreak,streak);
 
@@ -2253,15 +3867,67 @@ function markCorrect(spokenText){
 }
 
 function markWrong(spokenText){
-  streak=0; attempts++; micReady=false;
-  els.micBtnWrap.classList.remove("ready"); els.micBtn.classList.remove("ready"); els.micBtn.disabled=true;
-  updateStats(); addHistoryEntry("user","Du",`${spokenText} ✗`);
-  els.micStatus.textContent="Noch nicht ganz. Nutze die Hilfe und versuche es noch einmal.";
+  streak=0;
+  attempts++;
+
+  if(attempts===1&&!reviewAnswers.includes(current().example)){
+    reviewAnswers.push(current().example);
+  }
+  micReady=false;
+  els.micBtnWrap.classList.remove("ready");
+  els.micBtn.classList.remove("ready");
+  els.micBtn.disabled=true;
+
+  updateStats();
+
+  addHistoryEntry(
+    "user",
+    "Du",
+    `${spokenText} ✗`
+  );
+
+  els.micStatus.textContent=
+    "Das war noch nicht richtig.";
+
   els.micStatus.classList.remove("live");
-  els.exampleText.classList.add("show");
-  els.exampleText.textContent=`Hilfe: ${current().instruction} Zum Beispiel: „${current().example}“`;
+
   clearTimeout(restartTimer);
-  restartTimer=window.setTimeout(()=>{repeatPromptAfterWrongAnswer();},1400);
+
+  if(attempts>=2){
+    /* After the second wrong answer, give the correct model naturally,
+       show it as the learner's dialogue bubble, and continue the dialogue. */
+    hintUsed=true;
+    answered=true;
+    retrying=true;
+    setMicReady(false);
+
+    const modelAnswer=current().example;
+    const helpText=`Du kannst es so sagen: ${modelAnswer}`;
+
+    window.setTimeout(async()=>{
+      await waitForMicrophoneToStop();
+
+      setLecturerSpeaking(true);
+      await speakGerman(helpText);
+      setLecturerSpeaking(false);
+
+      addHistoryEntry("user","Du",modelAnswer);
+      const addedEntry=els.historyList.lastElementChild;
+      if(addedEntry){
+        addedEntry.classList.add("answer-hint");
+        addedEntry.dataset.turn=String(index);
+      }
+
+      retrying=false;
+      window.setTimeout(advance,450);
+    },650);
+
+    return;
+  }
+
+  restartTimer=window.setTimeout(()=>{
+    repeatPromptAfterWrongAnswer();
+  },700);
 }
 
 function evaluate(rawText){
@@ -2400,10 +4066,13 @@ if(recognizer){
 
     if(
       event.error==="not-allowed"||
-      event.error==="service-not-allowed"
+      event.error==="service-not-allowed"||
+      event.error==="audio-capture"
     ){
       els.micStatus.textContent=
-        "Mikrofonzugriff blockiert — bitte in den Browser-Einstellungen erlauben.";
+        event.error==="audio-capture"
+          ?"Kein Mikrofon gefunden. Du kannst deine Antwort unten eintippen."
+          :"Mikrofonzugriff blockiert — du kannst deine Antwort unten eintippen oder den Zugriff im Browser erlauben.";
 
       return;
     }
@@ -2451,6 +4120,34 @@ els.micBtn.addEventListener("click",()=>{
   }
 });
 
+const mainMicProxy=document.getElementById("main-mic-proxy");
+const mainMicProxyWrap=document.getElementById("main-mic-proxy-wrap");
+if(mainMicProxy){
+  mainMicProxy.addEventListener("click",()=>els.micBtn.click());
+  const syncMainMic=()=>{
+    mainMicProxy.disabled=els.micBtn.disabled;
+    mainMicProxy.textContent=listening?"⏹️":"🎤";
+    mainMicProxy.classList.toggle("ready",micReady&&!listening);
+    mainMicProxy.classList.toggle("listening",listening);
+    mainMicProxyWrap.classList.toggle("ready",micReady&&!listening);
+    mainMicProxyWrap.classList.toggle("listening",listening);
+    document.body.classList.toggle("is-listening",listening);
+  };
+  new MutationObserver(syncMainMic).observe(els.micBtn,{attributes:true,childList:true,subtree:true});
+  window.setInterval(syncMainMic,250);
+  syncMainMic();
+}
+
+const writeToggle=document.getElementById("write-toggle");
+const textAnswerRow=document.querySelector(".text-answer-row");
+if(writeToggle&&textAnswerRow){
+  writeToggle.addEventListener("click",()=>{
+    const open=textAnswerRow.classList.toggle("open");
+    writeToggle.textContent=open?"⌨️ Schreibfeld schließen":"⌨️ Lieber schreiben";
+    if(open) document.getElementById("text-answer-input").focus();
+  });
+}
+
 const textAnswerInput=document.getElementById("text-answer-input");
 const textAnswerSend=document.getElementById("text-answer-send");
 
@@ -2485,9 +4182,9 @@ const heroTranslationToggle=document.getElementById("hero-translation-toggle");
 const heroTranslationText=document.getElementById("hero-translation-text");
 const heroTranslationButtons=[...document.querySelectorAll(".hero-translation-language")];
 const heroTranslations={
-  en:"Four short dialogues — informal and formal. You hear the sentence, the microphone starts automatically, and you answer out loud.",
-  pl:"Cztery krótkie dialogi — nieformalne i formalne. Słyszysz zdanie, mikrofon uruchamia się automatycznie, a ty odpowiadasz na głos.",
-  it:"Quattro brevi dialoghi — informali e formali. Ascolti la frase, il microfono si avvia automaticamente e rispondi ad alta voce."
+  en:"Four short shopping dialogues. You hear a question and answer aloud in a complete sentence.",
+  pl:"Cztery krótkie dialogi o zakupach. Słyszysz pytanie i odpowiadasz na głos pełnym zdaniem.",
+  it:"Quattro brevi dialoghi sullo shopping. Ascolti una domanda e rispondi ad alta voce con una frase completa."
 };
 
 heroTranslationToggle.addEventListener("click",event=>{
@@ -2529,40 +4226,25 @@ gateTranslationButtons.forEach(button=>button.addEventListener("click",event=>{
 }));
 
 const instructionTranslations={
-  "Antworte auf die Begrüßung.":{
-    en:"Respond to the greeting.",
-    pl:"Odpowiedz na powitanie.",
-    it:"Rispondi al saluto."
+  "Sag in einem ganzen Satz, was du kaufen möchtest.":{
+    en:"Say in a complete sentence what you would like to buy.",
+    pl:"Powiedz pełnym zdaniem, co chcesz kupić.",
+    it:"Di' con una frase completa cosa vuoi comprare."
   },
-  "Sag deinen Namen — informell.":{
-    en:"Say your name — informal.",
-    pl:"Powiedz swoje imię — nieformalnie.",
-    it:"Di’ il tuo nome — informale."
+  "Antworte in einem ganzen Satz.":{
+    en:"Answer in a complete sentence.",
+    pl:"Odpowiedz pełnym zdaniem.",
+    it:"Rispondi con una frase completa."
   },
-  "Verabschiede dich informell.":{
-    en:"Say goodbye — informal.",
-    pl:"Pożegnaj się — nieformalnie.",
-    it:"Saluta — informale."
+  "Antworte mit einem ganzen Satz und einem Preis.":{
+    en:"Answer with a complete sentence and a price.",
+    pl:"Odpowiedz pełnym zdaniem i podaj cenę.",
+    it:"Rispondi con una frase completa e un prezzo."
   },
-  "Antworte formell.":{
-    en:"Respond formally.",
-    pl:"Odpowiedz formalnie.",
-    it:"Rispondi in modo formale."
-  },
-  "Sag deinen Namen — formell.":{
-    en:"Say your name — formal.",
-    pl:"Powiedz swoje imię — formalnie.",
-    it:"Di’ il tuo nome — formale."
-  },
-  "Verabschiede dich formell.":{
-    en:"Say goodbye — formal.",
-    pl:"Pożegnaj się — formalnie.",
-    it:"Saluta — formale."
-  },
-  "Verabschiede dich.":{
-    en:"Say goodbye.",
-    pl:"Pożegnaj się.",
-    it:"Saluta."
+  "Antworte natürlich in einem ganzen Satz.":{
+    en:"Answer naturally in a complete sentence.",
+    pl:"Odpowiedz naturalnie pełnym zdaniem.",
+    it:"Rispondi in modo naturale con una frase completa."
   }
 };
 
@@ -2591,10 +4273,43 @@ document.addEventListener("click",event=>{
 });
 
 els.answerBtn.addEventListener("click",()=>{
-  els.exampleText.classList.add("show");
+  if(answered||promptStarting||retrying)return;
 
-  els.exampleText.textContent=
-    `Richtige Antwort: „${current().example}“`;
+  hintUsed=true;
+
+  const existingHint=els.historyList.querySelector(
+    `.history-entry.answer-hint[data-turn="${index}"]`
+  );
+
+  if(existingHint)return;
+
+  /* Treat "Antwort zeigen" as completing this learner turn:
+     show the model answer as Du, then continue with the lecturer's next turn. */
+  answered=true;
+  streak=0;
+  clearTimeout(restartTimer);
+
+  if(recognizer&&listening){
+    try{ recognizer.stop(); }catch(error){}
+  }
+
+  addHistoryEntry(
+    "user",
+    "Du",
+    current().example
+  );
+
+  const addedEntry=els.historyList.lastElementChild;
+  if(addedEntry){
+    addedEntry.classList.add("answer-hint");
+    addedEntry.dataset.turn=String(index);
+  }
+
+  els.micStatus.textContent="💡 Antwort gezeigt";
+  els.micStatus.classList.remove("live");
+  setMicReady(false);
+
+  window.setTimeout(advance,900);
 });
 
 els.repeatBtn.addEventListener("click",()=>{
@@ -2658,13 +4373,32 @@ els.restartBtn.addEventListener("click",init);
 /* ---------------- Start und Ende ---------------- */
 
 function showFinal(){
-  renderProgress();
+  /* Final state must not depend on current(), because index is now
+     flatTurns.length. Build and render the ending first, then speak it once. */
+  const total=flatTurns.length;
+  const percent=Math.round((score/total)*100);
+  const closingText="Danke! Du hast jetzt alle Dialoge geübt. Sehr gut gemacht!";
+  const hasReview=reviewAnswers.length>0;
+  const reviewIntro=hasReview
+    ?"Diese Antworten solltest du noch wiederholen:"
+    :"Heute musst du nichts extra wiederholen. Sehr gut!";
 
   els.stage.style.display="none";
   els.final.classList.add("show");
 
-  const total=flatTurns.length;
-  const percent=Math.round((score/total)*100);
+  addHistoryEntry("partner","Lena",closingText);
+
+  if(hasReview){
+    addHistoryEntry(
+      "partner review-summary",
+      "Zum Wiederholen",
+      reviewIntro+"<br>"+reviewAnswers
+        .map((answer,itemIndex)=>`${itemIndex+1}. ${answer}`)
+        .join("<br>")
+    );
+  }else{
+    addHistoryEntry("partner","Lena",reviewIntro);
+  }
 
   let emoji;
   let title;
@@ -2673,8 +4407,7 @@ function showFinal(){
   if(percent===100){
     emoji="🏆";
     title="Alle Dialoge perfekt!";
-    subtitle=
-      "Informell und formell — du beherrschst beide Register!";
+    subtitle="Informell und formell — du beherrschst beide Register!";
   }else if(percent>=70){
     emoji="🎉";
     title="Sehr gut!";
@@ -2682,23 +4415,31 @@ function showFinal(){
   }else if(percent>=40){
     emoji="💪";
     title="Guter Anfang!";
-    subtitle=
-      "Übung macht den Meister — sprich die Dialoge noch einmal.";
+    subtitle="Übung macht den Meister — sprich die Dialoge noch einmal.";
   }else{
     emoji="📖";
     title="Weiter üben!";
-    subtitle=
-      "Hör die Sätze noch einmal an und probiere es erneut.";
+    subtitle="Hör die Sätze noch einmal an und probiere es erneut.";
   }
 
   els.finalEmoji.textContent=emoji;
   els.finalTitle.textContent=title;
-
   els.finalSub.textContent=
     `${subtitle} (${score}/${total} Punkte, beste Serie: ${bestStreak}🔥)`;
+  els.finalStars.textContent=renderStars(score,total);
 
-  els.finalStars.textContent=
-    renderStars(score,total);
+  /* One TTS call is intentional: sequential speakGerman() calls cancel
+     each other internally, so the whole ending is spoken as one utterance. */
+  const spokenEnding=[
+    closingText,
+    reviewIntro,
+    ...reviewAnswers
+  ].join(" ");
+
+  setLecturerSpeaking(true);
+  speakGerman(spokenEnding).finally(()=>{
+    setLecturerSpeaking(false);
+  });
 }
 
 function init(){
@@ -2711,6 +4452,7 @@ function init(){
   promptStarting=false;
   retrying=false;
   micReady=false;
+  reviewAnswers=[];
 
   clearTimeout(restartTimer);
 
@@ -2731,18 +4473,17 @@ function init(){
 }
 
 els.gateBtn.addEventListener("click",()=>{
-  if(!recognizer){
-    els.gateWarning.classList.add("show");
-    return;
-  }
-
   els.gate.style.display="none";
   els.layout.classList.add("show");
-
+  if(!recognizer){
+    els.gateWarning.classList.remove("show");
+  }
   init();
 });
 
 if(!recognizer){
+  els.gateBtn.textContent="⌨️ Ohne Mikrofon starten";
+  els.gateWarning.textContent="Spracherkennung ist in diesem Browser nicht verfügbar. Du kannst den Dialog trotzdem mit dem Textfeld üben.";
   els.gateWarning.classList.add("show");
 }
 </script>
