@@ -2986,20 +2986,23 @@ html body .layout.show > .card .main-history-panel{
   .layout.show > main.card,
   .layout.show > aside.current-dialog-panel{
     grid-row:1!important;
+    box-sizing:border-box!important;
     height:720px!important;
     min-height:720px!important;
     max-height:720px!important;
     margin:0!important;
-    box-sizing:border-box!important;
     align-self:stretch!important;
   }
-  .layout.show > main.card{
-    grid-column:1!important;
-    overflow:hidden!important;
-  }
-  .layout.show > aside.current-dialog-panel{
-    grid-column:2!important;
-    overflow:hidden!important;
+  .layout.show > main.card{grid-column:1!important;overflow:hidden!important}
+  .layout.show > aside.current-dialog-panel{grid-column:2!important;overflow:hidden!important}
+  /* A1.1 ma dekoracyjną ramę ::before wysuniętą o 20px poza prawy panel.
+     To właśnie dawało pozornie dłuższy prawy panel. */
+  .layout.show > aside.current-dialog-panel::before{
+    top:0!important;
+    right:0!important;
+    bottom:0!important;
+    left:0!important;
+    border-radius:inherit!important;
   }
   .layout.show > aside.current-dialog-panel *{box-sizing:border-box!important;max-width:100%}
 }
