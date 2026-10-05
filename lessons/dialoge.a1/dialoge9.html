@@ -2986,31 +2986,32 @@ html body .layout.show > .card .main-history-panel{
   .layout>.card{grid-row:2!important}
 }
 </style>
-<style id="dialog9-equal-panel-height-v2">
-/* Równe zewnętrzne dolne krawędzie obu paneli */
+<style id="dialog9-panel-bottom-align">
 .layout.show{
   align-items:stretch!important;
-  grid-auto-rows:760px!important;
+  grid-template-columns:minmax(0,1fr) 300px!important;
 }
-.layout>.card,
-.layout>.current-dialog-panel{
+.layout.show > .card,
+.layout.show > .current-dialog-panel{
+  align-self:stretch!important;
   box-sizing:border-box!important;
-  height:100%!important;
+  height:auto!important;
   min-height:0!important;
-  max-height:100%!important;
-  margin-top:0!important;
-  margin-bottom:0!important;
+  max-height:none!important;
+  margin:0!important;
 }
-.layout>.card{overflow:hidden!important}
-.layout>.current-dialog-panel{overflow:auto!important}
-@media(max-width:860px){
-  .layout.show{grid-auto-rows:auto!important}
-  .layout>.card,
-  .layout>.current-dialog-panel{
-    height:auto!important;
-    min-height:0!important;
-    max-height:none!important;
+.layout.show > .current-dialog-panel{
+  overflow:hidden!important;
+}
+@media(min-width:861px){
+  .layout.show > .card,
+  .layout.show > .current-dialog-panel{
+    min-height:720px!important;
   }
+}
+@media(max-width:860px){
+  .layout.show > .card,
+  .layout.show > .current-dialog-panel{min-height:0!important}
 }
 </style>
 </head>
