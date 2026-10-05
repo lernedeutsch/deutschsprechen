@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Nunito+Sans:opsz,wght@6..12,400,600,700,800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 
-<style>
+<style id="dialog9-styles">
 :root{
   --bg:#152238;
   --bg2:#1d3350;
@@ -1597,65 +1597,6 @@ button{font:inherit}
   bottom:0 !important;
 }
 
-/* ===== Dialog 9 · Modern UI 2026 ===== */
-:root{--modern-mint:#59f0ce;--modern-cyan:#61cfff;--modern-panel:rgba(8,31,36,.78);--modern-line:rgba(121,244,220,.24)}
-body{background:radial-gradient(circle at 16% 0%,rgba(35,190,164,.18),transparent 32%),radial-gradient(circle at 88% 12%,rgba(59,130,246,.13),transparent 30%),linear-gradient(145deg,#06191b 0%,#082b2c 48%,#071d22 100%);background-attachment:fixed;color:#eafbf7}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:32px 32px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.45),transparent 80%)}
-.shell{max-width:1540px;padding:18px 26px 60px}
-.hero{padding:4px 4px 12px}.hero h1{font-family:"Nunito Sans",sans-serif;font-size:clamp(1.8rem,3vw,2.55rem);font-weight:900;letter-spacing:-.045em;background:linear-gradient(90deg,#fff 0%,#b9fff0 55%,#5ee9d1 100%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 8px 35px rgba(64,234,203,.12)}
-.layout{grid-template-columns:430px minmax(0,1fr);gap:18px}
-.card,.history-panel{border:1px solid var(--modern-line);box-shadow:0 24px 80px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.06);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}
-.current-dialog-panel{background:linear-gradient(160deg,rgba(25,72,62,.84),rgba(8,42,39,.9));border-radius:26px;padding:24px}
-.current-dialog-panel .dialog-menu-title{color:#8ee8d5;font-size:.72rem;letter-spacing:.2em}
-.current-dialog-panel .dialog-menu-item{padding:9px 12px!important;margin:3px 0!important;border-radius:13px;border:1px solid transparent;transition:.2s ease;background:rgba(255,255,255,.025)}
-.current-dialog-panel .dialog-menu-item:hover{transform:translateX(3px);background:rgba(255,255,255,.07);border-color:rgba(128,238,214,.16)}
-.current-dialog-panel .dialog-menu-item.active{background:linear-gradient(90deg,rgba(76,232,196,.28),rgba(96,207,255,.12));border-color:rgba(101,240,210,.42);box-shadow:0 8px 24px rgba(22,208,171,.12),inset 0 1px 0 rgba(255,255,255,.1)}
-.current-dialog-panel .dialog-menu-number{display:grid;place-items:center;width:30px;height:30px;border-radius:10px;background:rgba(0,0,0,.2);color:#8ff7df}
-.current-dialog-panel .partner-left{margin-top:10px;padding-top:18px;border-top:1px solid rgba(150,245,222,.16)}
-.current-dialog-panel .partner-title{font-size:1.15rem}.current-dialog-panel .turn-instruction{font-size:.9rem;color:#d8eee8;opacity:1}
-.current-dialog-panel .translation-toggle{background:rgba(4,25,27,.45);border-color:rgba(115,236,211,.34);padding:7px 12px;color:#eafff9}
-.mic-btn{width:88px;height:88px;background:linear-gradient(145deg,#70f4d8,#16c7ad 55%,#119aa7);box-shadow:0 0 0 8px rgba(82,238,207,.08),0 0 38px rgba(55,235,199,.32),0 18px 38px rgba(0,0,0,.3);font-size:2rem}
-.mic-btn-wrap{width:116px;height:116px}.mic-btn:hover{transform:translateY(-3px) scale(1.03);filter:brightness(1.08)}
-.text-answer-input{background:rgba(4,25,27,.52);border:1px solid rgba(122,230,209,.22);border-radius:14px;padding:13px 15px;color:#f3fffc}.text-answer-input:focus{border-color:#59f0ce;box-shadow:0 0 0 3px rgba(89,240,206,.09)}
-.text-answer-send,.utility-btn{border-radius:14px!important;background:rgba(255,255,255,.055)!important;border:1px solid rgba(150,238,220,.2)!important;color:#e9faf6!important;transition:.2s ease}.text-answer-send:hover,.utility-btn:hover{transform:translateY(-2px);background:rgba(89,240,206,.11)!important;border-color:rgba(89,240,206,.48)!important}
-.history-panel{background:linear-gradient(160deg,rgba(7,38,42,.88),rgba(5,26,31,.94));border-radius:28px;padding:18px;min-height:760px}
-.history-screen-bar{padding:4px 6px 14px;border-bottom:1px solid rgba(134,231,213,.12)}.history-title{color:#a8eadd;letter-spacing:.16em}
-.history-list{max-height:690px;gap:10px;padding:10px 7px 12px}
-.history-entry{max-width:78%;padding:12px 16px;border:1px solid rgba(255,255,255,.08);border-radius:18px 18px 18px 6px;background:linear-gradient(135deg,rgba(255,250,237,.97),rgba(241,246,242,.95))!important;color:#102b2c;box-shadow:0 10px 25px rgba(0,0,0,.16);font-size:1rem;animation:modernBubble .28s ease both}
-.history-entry .speaker{color:#167b6c}.history-entry.user{align-self:flex-end;border-radius:18px 18px 6px 18px;background:linear-gradient(135deg,#d8fff4,#bdf6ea)!important;color:#0a302d}.history-entry.user .speaker{color:#0d7d6d}
-.history-divider{margin:18px 0 8px;padding:8px 12px;border-bottom:1px solid rgba(116,230,209,.2);text-align:left;color:#7ef0d8;font-size:.76rem}
-@keyframes modernBubble{from{opacity:0;transform:translateY(7px) scale(.985)}to{opacity:1;transform:none}}
-.progress-track .dot{border-color:rgba(138,238,219,.2);background:rgba(255,255,255,.08)}.progress-track .dot.done{background:#57e7c7;border-color:#57e7c7}.progress-track .dot.active{background:#ffd467;border-color:#ffd467;box-shadow:0 0 18px rgba(255,212,103,.38)}
-.back-btn{background:rgba(8,35,39,.72);color:#eafffa;border:1px solid rgba(121,236,214,.22);backdrop-filter:blur(14px);box-shadow:0 8px 25px rgba(0,0,0,.2)}
-@media(max-width:1050px){.layout{grid-template-columns:360px minmax(0,1fr)}}
-@media(max-width:860px){.shell{padding:14px}.layout{grid-template-columns:1fr}.history-panel{min-height:520px;position:relative;top:auto}.history-entry{max-width:90%}}
-
-
-/* ===== Dialog 9 · Layout Rebuild v2 ===== */
-body{overflow-x:hidden}
-.shell{max-width:none;width:100%;padding:12px 3vw 50px}
-.hero{padding:0 14px 8px;margin:0}.hero h1{font-size:2rem!important;line-height:1.05}
-.layout.show{display:grid!important;grid-template-columns:390px minmax(0,1fr)!important;gap:18px;align-items:stretch}
-.current-dialog-panel{height:calc(100vh - 105px);min-height:720px;overflow:auto;border-radius:28px!important;padding:24px!important;background:linear-gradient(165deg,rgba(26,74,64,.9),rgba(8,37,35,.96))!important}
-.history-panel{position:relative!important;top:auto!important;height:calc(100vh - 105px);min-height:720px;border-radius:28px!important;padding:18px!important;overflow:hidden}
-.history-list{max-height:none!important;height:calc(100% - 48px);display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:min-content;column-gap:28px;row-gap:10px;padding:14px 12px 20px!important;overflow-y:auto;align-content:start}
-.history-divider{grid-column:auto!important;margin:6px 0 2px!important;padding:10px 12px!important;border:0!important;border-bottom:1px solid rgba(116,230,209,.22)!important;color:#83f4dc!important;font-size:.88rem!important;text-align:left!important}
-.history-entry{width:max-content!important;max-width:82%!important;min-width:220px;margin:0!important;padding:13px 17px!important;border-radius:18px 18px 18px 5px!important;font-size:1.03rem!important;line-height:1.25!important}
-.history-entry.user{justify-self:end!important;border-radius:18px 18px 5px 18px!important}
-.history-entry .speaker{display:block;font-weight:900;margin-right:5px}
-.current-dialog-panel .dialog-menu-list{margin:4px 0 12px!important}
-.current-dialog-panel .dialog-menu-item{padding:9px 11px!important;margin:3px 0!important;border-radius:13px!important;font-size:.95rem!important}
-.current-dialog-panel .dialog-menu-number{width:32px!important;height:32px!important;flex:0 0 32px}
-.current-dialog-panel .partner-left{padding-top:18px!important;margin-top:12px!important}
-.sidebar-mic{margin-top:16px!important}.speaker-wave{height:88px!important}
-.text-answer-row{margin-top:14px!important}.text-answer-input{min-height:54px;font-size:1rem!important}.text-answer-send{min-height:50px;font-size:.92rem!important}
-.dialog-controls .utility-btn{min-height:48px;font-size:.75rem!important}
-@media(max-width:1100px){.layout.show{grid-template-columns:330px minmax(0,1fr)!important}.history-list{grid-template-columns:1fr!important}.history-divider,.history-entry{grid-column:1!important}}
-@media(max-width:860px){.layout.show{grid-template-columns:1fr!important}.current-dialog-panel,.history-panel{height:auto;min-height:0}.history-panel{min-height:600px}.history-list{height:540px}}
-
-</style>
-
-<style>
 .translation-globe{
   display:inline-block;
   font-size:1.30em;
@@ -1663,9 +1604,7 @@ body{overflow-x:hidden}
   vertical-align:-.10em;
   filter:hue-rotate(115deg) saturate(2.8) brightness(1.28) contrast(1.18) drop-shadow(0 0 4px rgba(255,74,190,.72));
 }
-</style>
 
-<style id="probe-3-dialog-theme">
 :root{
   --probe-bg:#15211C;
   --probe-bg-soft:#1B2A24;
@@ -2138,13 +2077,6 @@ body.is-listening #stop-btn{display:inline-flex}
   margin-top:12px !important;
 }
 
-</style>
-
-<link rel="stylesheet" href="../../css/translation-globe.css">
-<link rel="stylesheet" href="../../css/page-progress.css">
-<script src="../../js/answer-corrector.js"></script>
-
-<style id="dark-forest-mint-contrast-v2">
 /* Stronger separation visible on ordinary monitors. */
 body{background:#0c1c17 !important;}
 .current-dialog-panel{
@@ -2171,9 +2103,7 @@ body{background:#0c1c17 !important;}
   background:#1b352c !important;
   border-color:#78b49a !important;
 }
-</style>
 
-<style id="dark-forest-mint-hierarchy-final">
 /* Stronger visual hierarchy: page -> control panel -> conversation surface. */
 body{
   background:#10211b !important;
@@ -2221,9 +2151,7 @@ body{
   font-weight:800 !important;
   letter-spacing:0 !important;
 }
-</style>
 
-<style id="dialog-title-in-history-final">
 /* Definitive dialogue heading: override the old separator rule that hid its text. */
 .main-history-panel .history-divider{
   display:block !important;
@@ -2247,9 +2175,7 @@ body{
 }
 .main-history-panel .history-divider.left-column{grid-column:1 !important;}
 .main-history-panel .history-divider.right-column{grid-column:2 !important;}
-</style>
 
-<style id="dialog-title-in-history">
 /* Show each dialogue title above its first bubble in the large history panel. */
 .main-history-panel .history-divider{
   display:block !important;
@@ -2263,9 +2189,7 @@ body{
   margin:5px 0 4px !important;
   border-bottom:1px solid rgba(183,232,211,.22) !important;
 }
-</style>
 
-<style id="dark-forest-mint-theme">
 /* Dark Forest + Mint — color-only refinement. */
 body{
   background:#10231d !important;
@@ -2331,9 +2255,7 @@ body{
 .bubble{
   background:#eef4e8 !important;
 }
-</style>
 
-<style id="final-text-sharpness">
 /* Sharper sidebar typography: remove glow/blur and use native font rendering. */
 .current-dialog-panel,
 .current-dialog-panel button,
@@ -2352,9 +2274,7 @@ body{
   filter:none !important;
   opacity:1 !important;
 }
-</style>
 
-<style id="final-write-controls-size">
 .current-dialog-panel .sidebar-text-answer-row .text-answer-input{
   font-size:1.18rem !important;
   font-weight:900 !important;
@@ -2367,9 +2287,7 @@ body{
   min-height:54px !important;
   padding:11px 22px !important;
 }
-</style>
 
-<style id="final-sidebar-action-position">
 /* Definitive placement: create a clearly visible gap below the writing row. */
 .current-dialog-panel .sidebar-text-answer-row{
   margin-bottom:24px !important;
@@ -2377,9 +2295,7 @@ body{
 .current-dialog-panel .sidebar-utility-row{
   margin-top:0 !important;
 }
-</style>
 
-<style id="final-dialog-spacing-fix">
 /* FINAL override: compact bubbles and genuinely tighter vertical rhythm */
 .main-history-panel .history-list{
   gap:0 !important;
@@ -2410,9 +2326,7 @@ body{
 .main-history-panel .history-entry .speaker{
   line-height:1 !important;
 }
-</style>
 
-<style id="final-layer-separation-override">
 /* Final paint layer: intentionally strong separation between the three surfaces. */
 html body{
   background:#0b1b16 !important;
@@ -2438,8 +2352,7 @@ html body .current-dialog-panel .text-answer-send{
   background:#17352b !important;
   border-color:#7fc0a4 !important;
 }
-</style>
-<style id="final-layer-brighter-v2">
+
 /* Brighter Dark Forest surfaces while keeping the conversation area darkest. */
 html body{background:#10271f !important;}
 html body .layout.show > .current-dialog-panel{
@@ -2462,8 +2375,7 @@ html body .current-dialog-panel .text-answer-send{
   background:#21483a !important;
   border-color:#91cdb3 !important;
 }
-</style>
-<style id="final-crisp-sidebar-type">
+
 /* Crisp, high-contrast sidebar typography. */
 html body .current-dialog-panel,
 html body .current-dialog-panel *{
@@ -2504,8 +2416,7 @@ html body .current-dialog-panel .partner-register{
   color:#a9ddc7 !important;
   opacity:1 !important;
 }
-</style>
-<style id="write-row-width-balance">
+
 /* Give the writing field more room; keep Send compact. */
 html body .current-dialog-panel .sidebar-text-answer-row{
   display:grid !important;
@@ -2523,8 +2434,7 @@ html body .current-dialog-panel .sidebar-text-answer-row .text-answer-send{
   padding-left:14px !important;
   padding-right:14px !important;
 }
-</style>
-<style id="send-button-height-tweak">
+
 html body .current-dialog-panel .sidebar-text-answer-row .text-answer-send{
   min-height:46px !important;
   height:46px !important;
@@ -2532,8 +2442,7 @@ html body .current-dialog-panel .sidebar-text-answer-row .text-answer-send{
   padding-bottom:6px !important;
   align-self:center !important;
 }
-</style>
-<style id="friendly-forest-palette-final">
+
 /* Friendly Forest palette: softer sage controls, mint actions, honey help, warm cream dialogue. */
 html body{
   background:#10261f !important;
@@ -2610,14 +2519,12 @@ html body .current-dialog-panel .dialog-menu-item .dialog-number{
 html body .main-history-panel .history-divider{
   color:#b4e7d0 !important;
 }
-</style>
-<style id="main-panel-petrol-forest">
+
 /* Softer petrol-forest conversation canvas; keep the rest of Friendly Forest unchanged. */
 html body .layout.show > .card .main-history-panel{
   background:#18514f !important;
 }
-</style>
-<style id="strong-3d-conversation-frame">
+
 /* Strong 3D depth around the large conversation area. */
 html body .layout.show > .card{
   border:1px solid #6c9a87 !important;
@@ -2636,8 +2543,7 @@ html body .layout.show > .card .main-history-panel{
     inset 0 -7px 12px rgba(0,0,0,.27),
     0 0 0 5px rgba(55,151,137,.11) !important;
 }
-</style>
-<style id="strong-highlighted-panel-shadow">
+
 /* Strong illuminated 3D frame around the large conversation panel. */
 html body .layout.show > .card{
   box-shadow:
@@ -2658,8 +2564,7 @@ html body .layout.show > .card .main-history-panel{
     inset 0 -8px 15px rgba(0,0,0,.30),
     inset 4px 0 8px rgba(115,238,214,.10) !important;
 }
-</style>
-<style id="strong-highlighted-sidebar-3d">
+
 /* Matching illuminated 3D treatment for the smaller left panel. */
 html body .layout.show > .current-dialog-panel{
   border:2px solid #6fb8a2 !important;
@@ -2672,16 +2577,14 @@ html body .layout.show > .current-dialog-panel{
     inset 0 -8px 14px rgba(0,0,0,.25),
     inset 4px 0 8px rgba(140,239,211,.08) !important;
 }
-</style>
-<style id="desktop-panel-gap-tighten">
+
 @media(min-width:861px){
   html body .layout.show{
     column-gap:20px !important;
     gap:20px !important;
   }
 }
-</style>
-<style id="history-bubbles-3d">
+
 /* Give dialogue bubbles in the large history panel a clear raised 3D feel. */
 html body .main-history-panel .history-entry{
   border:1px solid rgba(255,255,255,.58) !important;
@@ -2705,8 +2608,7 @@ html body .main-history-panel .history-entry.user{
     inset 0 2px 0 rgba(255,255,255,.62),
     inset 0 -3px 5px rgba(0,0,0,.11) !important;
 }
-</style>
-<style id="mic-wave-strong-3d">
+
 /* Strong 3D treatment for the student microphone and lecturer waveform. */
 html body .current-dialog-panel .mic-btn{
   border:2px solid rgba(220,255,244,.72) !important;
@@ -2744,8 +2646,7 @@ html body .current-dialog-panel .mic-btn.listening{
     inset 0 5px 6px rgba(255,255,255,.42),
     inset 0 -7px 9px rgba(20,79,61,.32) !important;
 }
-</style>
-<style id="extra-strong-main-panel-3d">
+
 /* Stronger 3D depth on the large conversation screen. */
 html body .layout.show > .card .main-history-panel{
   border:3px solid #62cbbb !important;
@@ -2761,8 +2662,7 @@ html body .layout.show > .card .main-history-panel{
     inset 7px 0 12px rgba(141,255,230,.12),
     inset -7px 0 12px rgba(0,0,0,.18) !important;
 }
-</style>
-<style id="answer-button-friendly-petrol">
+
 /* Replace the mustard/gold answer button with a calmer petrol-mint accent. */
 html body .current-dialog-panel .sidebar-utility-row .answer-btn{
   background:linear-gradient(180deg,#3f7f70 0%,#32685d 100%) !important;
@@ -2774,8 +2674,7 @@ html body .current-dialog-panel .sidebar-utility-row .answer-btn{
     inset 0 2px 0 rgba(220,255,242,.18),
     inset 0 -3px 5px rgba(0,0,0,.16) !important;
 }
-</style>
-<style id="extra-strong-history-bubbles-3d">
+
 /* Stronger raised 3D speech bubbles in the conversation history. */
 html body .main-history-panel .history-entry{
   border:1px solid rgba(255,255,255,.82) !important;
@@ -2802,8 +2701,7 @@ html body .main-history-panel .history-entry.user{
     inset 3px 0 4px rgba(255,255,255,.30),
     inset 0 -5px 7px rgba(38,104,82,.22) !important;
 }
-</style>
-<style id="hide-sidebar-dialog-details">
+
 /* Remove duplicated dialogue details from the small sidebar panel. */
 html body .current-dialog-panel .partner-title,
 html body .current-dialog-panel .partner-sub,
@@ -2815,8 +2713,7 @@ html body .current-dialog-panel .partner-left{
   padding-top:0 !important;
   border-top:0 !important;
 }
-</style>
-<style id="unified-sidebar-action-buttons">
+
 /* Unified sidebar action buttons; Skip sits next to Send. */
 html body .current-dialog-panel .sidebar-text-answer-row{
   grid-template-columns:minmax(0,1fr) auto auto !important;
@@ -2857,8 +2754,7 @@ html body .current-dialog-panel .sidebar-utility-row{
 html body .current-dialog-panel .sidebar-utility-row .utility-btn{
   width:100% !important;
 }
-</style>
-<style id="fix-four-action-buttons-layout">
+
 /* Exact requested layout: Send + Skip in one row; Repeat + Answer in the next.
    All four controls share identical dimensions and visual treatment. */
 html body .current-dialog-panel .sidebar-text-answer-row{
@@ -2901,8 +2797,7 @@ html body .current-dialog-panel .sidebar-utility-row{
   grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
   gap:10px !important;
 }
-</style>
-<style id="large-final-review-bubble">
+
 /* The end-of-session review is a key learning element, so make it prominent. */
 html body .main-history-panel .history-entry.review-summary{
   width:calc(100% - 28px) !important;
@@ -2931,8 +2826,7 @@ html body .main-history-panel .history-entry.review-summary .speaker{
   font-size:1.22rem !important;
   font-weight:900 !important;
 }
-</style>
-<style id="extra-large-final-review-bubble">
+
 /* Make the final repetition block substantially larger and easier to study. */
 html body .main-history-panel .history-entry.review-summary{
   width:calc(100% - 20px) !important;
@@ -2948,10 +2842,7 @@ html body .main-history-panel .history-entry.review-summary .speaker{
   font-size:1.52rem !important;
   line-height:1.25 !important;
 }
-</style>
 
-
-<style id="matte-3d-speaker-wave">
 /* Canonical matte 3D waveform appearance. This is exactly the previously winning visual rule; animation and transform remain untouched. */
 html body .current-dialog-panel .speaker-wave{
   filter:
@@ -2976,8 +2867,7 @@ html body .current-dialog-panel .speaker-wave span{
     inset -6px 0 5px rgba(25,19,76,.46),
     inset 0 -5px 4px rgba(24,19,68,.30) !important;
 }
-</style>
-<style id="match-left-panel-border-to-main">
+
 /* Match the small left panel's frame/depth to the large right conversation panel. */
 html body .layout.show > .current-dialog-panel{
   border:3px solid #62cbbb !important;
@@ -2993,8 +2883,7 @@ html body .layout.show > .current-dialog-panel{
     inset 7px 0 12px rgba(141,255,230,.12),
     inset -7px 0 12px rgba(0,0,0,.18) !important;
 }
-</style>
-<style id="double-frame-left-panel">
+
 /* Add the subtle outer frame seen on the large right card, while preserving the existing inner turquoise frame. */
 html body .layout.show > .current-dialog-panel{
   position:relative !important;
@@ -3017,8 +2906,7 @@ html body .layout.show > .current-dialog-panel::before{
     inset 0 -6px 10px rgba(0,0,0,.20) !important;
   pointer-events:none !important;
 }
-</style>
-<style id="deeper-main-conversation-panel-3d">
+
 /* Stronger depth for the large right panel only; layout and behavior stay untouched. */
 html body .layout.show > .card .main-history-panel{
   border:3px solid #62cbbb !important;
@@ -3036,77 +2924,60 @@ html body .layout.show > .card .main-history-panel{
     inset -11px 0 16px rgba(0,0,0,.25) !important;
 }
 </style>
-<style id="dialog9-ultra-modern">
-html body{background:#061719!important;color:#effffc!important;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif!important}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 10% 10%,rgba(46,229,190,.16),transparent 32%),radial-gradient(circle at 88% 4%,rgba(75,156,255,.13),transparent 30%),linear-gradient(135deg,#061719,#092c2e 55%,#071c22);z-index:-1}
-.shell{width:min(1600px,96vw)!important;max-width:none!important;margin:auto!important;padding:22px 0 50px!important}
-.hero{padding:0 8px 16px!important}.hero h1{font-family:Inter,system-ui,sans-serif!important;font-size:clamp(2rem,3vw,3.15rem)!important;font-weight:850!important;letter-spacing:-.055em!important;line-height:1!important;margin:0!important;color:#f4fffc!important;background:linear-gradient(90deg,#fff,#b9fff0 60%,#64e8d0)!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;text-shadow:none!important}
-.layout.show{display:grid!important;grid-template-columns:390px minmax(0,1fr)!important;gap:20px!important;align-items:stretch!important}
-.current-dialog-panel,.history-panel{border:1px solid rgba(115,239,214,.22)!important;background:linear-gradient(160deg,rgba(17,56,55,.82),rgba(5,30,33,.93))!important;box-shadow:0 28px 80px rgba(0,0,0,.38),inset 0 1px rgba(255,255,255,.07)!important;backdrop-filter:blur(24px)!important;border-radius:30px!important}
-.current-dialog-panel{padding:25px!important;min-height:760px!important;height:auto!important}
-.dialog-menu-title{font-family:Inter,system-ui,sans-serif!important;color:#75ead4!important;font-size:.7rem!important;font-weight:800!important;letter-spacing:.22em!important;margin-bottom:10px!important}
-.dialog-menu-list{display:grid!important;gap:7px!important;margin-bottom:16px!important}
-.dialog-menu-item{display:flex!important;align-items:center!important;gap:12px!important;padding:10px 12px!important;margin:0!important;border-radius:15px!important;background:rgba(255,255,255,.035)!important;border:1px solid transparent!important;color:#dff7f1!important;font-family:Inter,system-ui,sans-serif!important;font-weight:650!important;box-shadow:none!important}
-.dialog-menu-item.active{background:linear-gradient(100deg,rgba(78,236,202,.24),rgba(91,178,255,.1))!important;border-color:rgba(105,240,211,.38)!important;box-shadow:0 10px 30px rgba(27,219,180,.1)!important;color:#fff!important}
-.dialog-menu-number{display:grid!important;place-items:center!important;width:32px!important;height:32px!important;min-width:32px!important;border-radius:10px!important;background:#0b3938!important;color:#6ff0d6!important;font:800 .72rem/1 Inter,system-ui!important}
-.translation-toggle{border:1px solid rgba(104,235,209,.28)!important;background:rgba(5,28,31,.52)!important;color:#e9fffa!important;border-radius:999px!important;padding:8px 13px!important;box-shadow:none!important}
-.partner-left{margin-top:16px!important;padding-top:20px!important;border-top:1px solid rgba(116,230,209,.13)!important;text-align:center!important}
-.partner-title{font-family:Inter,system-ui,sans-serif!important;font-size:1.15rem!important;font-weight:800!important;color:#c8fff3!important}
-.turn-instruction{font-family:Inter,system-ui,sans-serif!important;color:#d3e9e5!important;font-size:.91rem!important;line-height:1.5!important}
-.speaker-wave{filter:hue-rotate(115deg) saturate(1.5) brightness(1.2)!important}
-.mic-btn{width:94px!important;height:94px!important;border:0!important;border-radius:50%!important;background:linear-gradient(145deg,#73f5da,#28d9bb 55%,#29a9d4)!important;box-shadow:0 0 0 9px rgba(81,238,207,.07),0 0 42px rgba(58,237,201,.27),0 20px 42px rgba(0,0,0,.32)!important}
-.text-answer-input{font-family:Inter,system-ui,sans-serif!important;background:rgba(3,23,26,.6)!important;border:1px solid rgba(116,231,210,.22)!important;color:#effffc!important;border-radius:16px!important;min-height:56px!important;box-shadow:inset 0 1px rgba(255,255,255,.03)!important}
-.text-answer-input::placeholder{color:#8ca9a4!important}
-.text-answer-send,.utility-btn{font-family:Inter,system-ui,sans-serif!important;background:rgba(255,255,255,.055)!important;border:1px solid rgba(121,232,211,.2)!important;color:#eafffa!important;border-radius:15px!important;box-shadow:none!important;min-height:50px!important}
-.text-answer-send:hover,.utility-btn:hover{background:rgba(79,235,201,.12)!important;border-color:rgba(93,239,207,.48)!important;transform:translateY(-2px)!important}
-.history-panel{padding:20px!important;min-height:760px!important;height:auto!important;overflow:hidden!important}
-.history-screen-bar{display:flex!important;align-items:center!important;padding:3px 7px 15px!important;border-bottom:1px solid rgba(117,229,209,.12)!important}
-.history-title{font-family:Inter,system-ui,sans-serif!important;font-size:.76rem!important;font-weight:850!important;letter-spacing:.18em!important;color:#b8f6e9!important}
-.history-list{height:690px!important;max-height:none!important;overflow-y:auto!important;display:grid!important;grid-template-columns:1fr 1fr!important;grid-auto-rows:min-content!important;align-content:start!important;gap:10px 30px!important;padding:18px 12px 30px!important;background:linear-gradient(90deg,transparent calc(50% - .5px),rgba(119,230,210,.12) 50%,transparent calc(50% + .5px))!important}
-.history-divider{margin:0!important;padding:9px 12px!important;border:0!important;border-bottom:1px solid rgba(112,230,207,.2)!important;color:#73e9d2!important;font:800 .82rem/1.2 Inter,system-ui!important;text-align:left!important}
-.history-entry{justify-self:start!important;width:auto!important;min-width:0!important;max-width:82%!important;margin:0!important;padding:12px 16px!important;border:1px solid rgba(255,255,255,.45)!important;border-radius:18px 18px 18px 5px!important;background:linear-gradient(145deg,#f9f7ee,#e8f1ec)!important;color:#102a29!important;font:500 1rem/1.35 Inter,system-ui!important;box-shadow:0 10px 28px rgba(0,0,0,.24)!important}
-.history-entry.user{justify-self:end!important;border-radius:18px 18px 5px 18px!important;background:linear-gradient(145deg,#d6fff4,#b9f5e7)!important}
-.history-entry .speaker{display:block!important;color:#167b6c!important;font-weight:850!important}
-.progress-track .dot{background:rgba(255,255,255,.06)!important;border-color:rgba(119,231,211,.18)!important}.progress-track .dot.active{background:#ffb04d!important;border-color:#ffb04d!important;box-shadow:0 0 18px rgba(255,176,77,.35)!important}.progress-track .dot.done{background:#55e7c7!important;border-color:#55e7c7!important}
-.back-btn{background:rgba(6,30,33,.72)!important;color:#eafffa!important;border:1px solid rgba(115,231,210,.22)!important;border-radius:15px!important;backdrop-filter:blur(16px)!important}
-@media(max-width:1050px){.layout.show{grid-template-columns:340px minmax(0,1fr)!important}.history-list{grid-template-columns:1fr!important;background:none!important}}
-@media(max-width:820px){.shell{width:94vw!important}.layout.show{grid-template-columns:1fr!important}.current-dialog-panel,.history-panel{min-height:0!important}.history-list{height:560px!important}}
-</style>
-<style id="dialog9-premium-redesign">
-/* Premium redesign: intentionally overrides legacy theme */
-html body{margin:0!important;background:#f5f7f7!important;color:#17312f!important;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif!important}
-body:before{display:none!important}
-.shell{width:min(1460px,94vw)!important;max-width:none!important;margin:0 auto!important;padding:34px 0 64px!important}
-.hero{padding:0 2px 24px!important}.hero h1{margin:0!important;font-family:Inter,system-ui,sans-serif!important;font-size:clamp(2.1rem,3.2vw,3.55rem)!important;font-weight:800!important;letter-spacing:-.06em!important;line-height:.98!important;background:none!important;color:#102d2a!important;-webkit-text-fill-color:#102d2a!important;text-shadow:none!important}
-.layout.show{display:grid!important;grid-template-columns:360px minmax(0,1fr)!important;gap:24px!important;align-items:stretch!important}
-.current-dialog-panel,.history-panel{background:#fff!important;border:1px solid #dce7e4!important;border-radius:24px!important;box-shadow:0 18px 55px rgba(17,54,49,.08)!important;backdrop-filter:none!important}
-.current-dialog-panel{padding:24px!important;min-height:700px!important;height:auto!important}
-.dialog-menu-title{color:#819b96!important;font:750 .68rem/1 Inter,system-ui!important;letter-spacing:.18em!important;margin:0 0 12px!important}
-.dialog-menu-list{display:grid!important;gap:7px!important;margin:0 0 16px!important}
-.dialog-menu-item{display:flex!important;align-items:center!important;gap:11px!important;margin:0!important;padding:10px 11px!important;border:1px solid transparent!important;border-radius:13px!important;background:transparent!important;color:#35534e!important;font:650 .9rem/1.2 Inter,system-ui!important;box-shadow:none!important}
-.dialog-menu-item:hover{background:#f4f8f7!important;transform:none!important}
-.dialog-menu-item.active{background:#e9f8f4!important;border-color:#c5eee4!important;color:#123d37!important;box-shadow:none!important}
-.dialog-menu-number{display:grid!important;place-items:center!important;width:29px!important;height:29px!important;min-width:29px!important;border-radius:9px!important;background:#f0f5f4!important;color:#65847e!important;font:750 .7rem/1 Inter,system-ui!important}
-.dialog-menu-item.active .dialog-menu-number{background:#143f39!important;color:#fff!important}
-.translation-toggle{background:#fff!important;border:1px solid #d6e5e1!important;color:#315650!important;border-radius:12px!important;padding:8px 11px!important;box-shadow:none!important;font-family:Inter,system-ui!important}
-.partner-left{margin-top:18px!important;padding-top:22px!important;border-top:1px solid #e8efed!important;text-align:center!important}
-.partner-title{color:#163d37!important;font:750 1.02rem/1.2 Inter,system-ui!important}.turn-instruction{color:#69817d!important;font:450 .87rem/1.45 Inter,system-ui!important;max-width:290px!important;margin:8px auto!important}
-.speaker-wave{display:none!important}.sidebar-mic{margin:24px 0 12px!important}.mic-btn-wrap{width:104px!important;height:104px!important}.mic-btn{width:78px!important;height:78px!important;border:0!important;border-radius:50%!important;background:#163f39!important;color:#fff!important;box-shadow:0 10px 30px rgba(20,63,57,.22),0 0 0 10px #edf8f5!important;font-size:1.7rem!important}.mic-btn:hover{background:#0e554b!important;transform:translateY(-2px)!important}
-.mic-hint{color:#849b97!important;font:600 .72rem/1.2 Inter,system-ui!important}
-.text-answer-row{margin-top:22px!important}.text-answer-input{min-height:52px!important;background:#f8faf9!important;border:1px solid #dbe6e3!important;border-radius:13px!important;color:#17312f!important;font:500 .92rem/1.2 Inter,system-ui!important;box-shadow:none!important}.text-answer-input::placeholder{color:#9aaba8!important}
-.text-answer-send,.utility-btn{min-height:47px!important;border-radius:12px!important;background:#fff!important;border:1px solid #d8e5e2!important;color:#365852!important;font:650 .82rem/1.2 Inter,system-ui!important;box-shadow:none!important}.text-answer-send:hover,.utility-btn:hover{background:#f0f8f6!important;border-color:#b9ded5!important;transform:none!important}
-.history-panel{padding:0!important;min-height:700px!important;height:auto!important;overflow:hidden!important;position:relative!important;top:auto!important}
-.history-screen-bar{height:62px!important;padding:0 24px!important;display:flex!important;align-items:center!important;background:#fbfcfc!important;border-bottom:1px solid #e6edeb!important}.history-title{color:#607b76!important;font:750 .7rem/1 Inter,system-ui!important;letter-spacing:.15em!important}
-.history-list{height:638px!important;max-height:none!important;overflow-y:auto!important;display:flex!important;flex-direction:column!important;gap:13px!important;padding:26px 30px 50px!important;background:#fff!important}
-.history-divider{width:100%!important;margin:8px 0 2px!important;padding:0 0 12px!important;border:0!important;border-bottom:1px solid #e9efed!important;color:#7c928e!important;font:700 .76rem/1.2 Inter,system-ui!important;text-align:left!important}
-.history-entry{position:relative!important;width:auto!important;min-width:0!important;max-width:62%!important;margin:0!important;padding:12px 15px!important;border:1px solid #e1e9e7!important;border-radius:16px 16px 16px 4px!important;background:#f7f9f8!important;color:#203d39!important;font:500 .96rem/1.4 Inter,system-ui!important;box-shadow:none!important;align-self:flex-start!important}
-.history-entry.user{align-self:flex-end!important;border-color:#cbece4!important;border-radius:16px 16px 4px 16px!important;background:#eaf8f4!important}
-.history-entry .speaker{display:block!important;margin-bottom:2px!important;color:#287668!important;font-weight:750!important}
-.progress-track .dot{background:#e8efed!important;border-color:#e8efed!important}.progress-track .dot.active{background:#1f7b6c!important;border-color:#1f7b6c!important;box-shadow:none!important}.progress-track .dot.done{background:#7bc9ba!important;border-color:#7bc9ba!important}
-.back-btn{background:#fff!important;color:#31534d!important;border:1px solid #d9e5e2!important;border-radius:12px!important;box-shadow:0 8px 25px rgba(20,50,45,.06)!important;backdrop-filter:none!important}
-@media(max-width:980px){.layout.show{grid-template-columns:320px minmax(0,1fr)!important}}
-@media(max-width:800px){.shell{width:92vw!important;padding-top:24px!important}.layout.show{grid-template-columns:1fr!important}.current-dialog-panel,.history-panel{min-height:0!important}.history-list{height:540px!important}.history-entry{max-width:85%!important}}
-</style>
+
+
+
+
+
+<link rel="stylesheet" href="../../css/translation-globe.css">
+<link rel="stylesheet" href="../../css/page-progress.css">
+<script src="../../js/answer-corrector.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </head>
 
 <body>
