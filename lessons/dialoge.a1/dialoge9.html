@@ -2975,19 +2975,16 @@ html body .layout.show > .card .main-history-panel{
 }
 </style>
 <style id="dialog9-final-panel-layout">
-/* Desktop: duży panel po lewej, mały po prawej; identyczna wysokość zewnętrzna. */
 @media (min-width:861px){
   .layout.show{
     display:grid!important;
     grid-template-columns:minmax(0,1fr) 300px!important;
-    grid-template-rows:720px!important;
     gap:16px!important;
-    align-items:stretch!important;
+    align-items:start!important;
   }
   .layout.show > main.card{
     grid-column:1!important;
     grid-row:1!important;
-    width:auto!important;
     height:720px!important;
     min-height:720px!important;
     max-height:720px!important;
@@ -2998,20 +2995,30 @@ html body .layout.show > .card .main-history-panel{
   .layout.show > aside.current-dialog-panel{
     grid-column:2!important;
     grid-row:1!important;
-    width:auto!important;
     height:720px!important;
     min-height:720px!important;
     max-height:720px!important;
     margin:0!important;
+    padding-top:20px!important;
+    padding-bottom:20px!important;
     box-sizing:border-box!important;
     overflow:hidden!important;
   }
-  .layout.show > aside.current-dialog-panel *{max-width:100%;box-sizing:border-box}
-  .layout.show > aside.current-dialog-panel .text-answer-row{min-width:0!important}
-  .layout.show > aside.current-dialog-panel .text-answer-input{width:100%!important;min-width:0!important}
+  /* Stary CSS A1.1 dodaje wysokość wewnętrznemu panelowi historii.
+     Na Dialog 9 musi ją kontrolować wyłącznie zewnętrzny aside. */
+  .layout.show > aside.current-dialog-panel .history-panel,
+  .layout.show > aside.current-dialog-panel .sidebar-speaking-panel{
+    min-height:0!important;
+    height:auto!important;
+    max-height:none!important;
+  }
+  .layout.show > aside.current-dialog-panel *{
+    box-sizing:border-box!important;
+    max-width:100%;
+  }
 }
 @media (max-width:860px){
-  .layout.show{display:grid!important;grid-template-columns:1fr!important;grid-template-rows:auto!important}
+  .layout.show{display:grid!important;grid-template-columns:1fr!important}
   .layout.show > aside.current-dialog-panel{grid-column:1!important;grid-row:1!important;height:auto!important;min-height:0!important;max-height:none!important}
   .layout.show > main.card{grid-column:1!important;grid-row:2!important;height:auto!important;min-height:0!important;max-height:none!important}
 }
