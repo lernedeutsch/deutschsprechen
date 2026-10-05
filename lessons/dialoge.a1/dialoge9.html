@@ -2974,44 +2974,46 @@ html body .layout.show > .card .main-history-panel{
     inset -11px 0 16px rgba(0,0,0,.25) !important;
 }
 </style>
-<style id="dialog9-panel-order-fix">
-/* Dialog 9: duży panel po lewej, mały panel po prawej */
-.layout{grid-template-columns:minmax(0,1fr) 300px!important}
-.layout>.card{grid-column:1!important;grid-row:1!important}
-.layout>.current-dialog-panel{grid-column:2!important;grid-row:1!important}
-@media(max-width:860px){
-  .layout{grid-template-columns:1fr!important}
-  .layout>.card,.layout>.current-dialog-panel{grid-column:1!important}
-  .layout>.current-dialog-panel{grid-row:1!important}
-  .layout>.card{grid-row:2!important}
-}
-</style>
-<style id="dialog9-panel-bottom-align">
-.layout.show{
-  align-items:stretch!important;
-  grid-template-columns:minmax(0,1fr) 300px!important;
-}
-.layout.show > .card,
-.layout.show > .current-dialog-panel{
-  align-self:stretch!important;
-  box-sizing:border-box!important;
-  height:auto!important;
-  min-height:0!important;
-  max-height:none!important;
-  margin:0!important;
-}
-.layout.show > .current-dialog-panel{
-  overflow:hidden!important;
-}
-@media(min-width:861px){
-  .layout.show > .card,
-  .layout.show > .current-dialog-panel{
-    min-height:720px!important;
+<style id="dialog9-final-panel-layout">
+/* Desktop: duży panel po lewej, mały po prawej; identyczna wysokość zewnętrzna. */
+@media (min-width:861px){
+  .layout.show{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) 300px!important;
+    grid-template-rows:720px!important;
+    gap:16px!important;
+    align-items:stretch!important;
   }
+  .layout.show > main.card{
+    grid-column:1!important;
+    grid-row:1!important;
+    width:auto!important;
+    height:720px!important;
+    min-height:720px!important;
+    max-height:720px!important;
+    margin:0!important;
+    box-sizing:border-box!important;
+    overflow:hidden!important;
+  }
+  .layout.show > aside.current-dialog-panel{
+    grid-column:2!important;
+    grid-row:1!important;
+    width:auto!important;
+    height:720px!important;
+    min-height:720px!important;
+    max-height:720px!important;
+    margin:0!important;
+    box-sizing:border-box!important;
+    overflow:hidden!important;
+  }
+  .layout.show > aside.current-dialog-panel *{max-width:100%;box-sizing:border-box}
+  .layout.show > aside.current-dialog-panel .text-answer-row{min-width:0!important}
+  .layout.show > aside.current-dialog-panel .text-answer-input{width:100%!important;min-width:0!important}
 }
-@media(max-width:860px){
-  .layout.show > .card,
-  .layout.show > .current-dialog-panel{min-height:0!important}
+@media (max-width:860px){
+  .layout.show{display:grid!important;grid-template-columns:1fr!important;grid-template-rows:auto!important}
+  .layout.show > aside.current-dialog-panel{grid-column:1!important;grid-row:1!important;height:auto!important;min-height:0!important;max-height:none!important}
+  .layout.show > main.card{grid-column:1!important;grid-row:2!important;height:auto!important;min-height:0!important;max-height:none!important}
 }
 </style>
 </head>
