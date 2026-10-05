@@ -2981,27 +2981,21 @@ html body .layout.show > .card .main-history-panel{
     grid-template-columns:minmax(0,1fr) 300px!important;
     grid-template-rows:720px!important;
     gap:16px!important;
-    align-items:stretch!important;
+    align-items:start!important;
   }
-  .layout.show > main.card,
+  .layout.show > main.card{
+    grid-column:1!important;grid-row:1!important;
+    height:720px!important;min-height:720px!important;max-height:720px!important;
+    margin:0!important;box-sizing:border-box!important;overflow:hidden!important;
+  }
   .layout.show > aside.current-dialog-panel{
-    grid-row:1!important;
-    box-sizing:border-box!important;
-    height:720px!important;
-    min-height:720px!important;
-    max-height:720px!important;
-    margin:0!important;
-    align-self:stretch!important;
+    grid-column:2!important;grid-row:1!important;
+    /* prawa widoczna karta kończy się dokładnie z lewą */
+    height:614px!important;min-height:614px!important;max-height:614px!important;
+    margin:0!important;box-sizing:border-box!important;overflow:hidden!important;
   }
-  .layout.show > main.card{grid-column:1!important;overflow:hidden!important}
-  .layout.show > aside.current-dialog-panel{grid-column:2!important;overflow:hidden!important}
-  /* A1.1 ma dekoracyjną ramę ::before wysuniętą o 20px poza prawy panel.
-     To właśnie dawało pozornie dłuższy prawy panel. */
   .layout.show > aside.current-dialog-panel::before{
-    top:0!important;
-    right:0!important;
-    bottom:0!important;
-    left:0!important;
+    top:0!important;right:0!important;bottom:0!important;left:0!important;
     border-radius:inherit!important;
   }
   .layout.show > aside.current-dialog-panel *{box-sizing:border-box!important;max-width:100%}
