@@ -2986,18 +2986,25 @@ html body .layout.show > .card .main-history-panel{
   .layout>.card{grid-row:2!important}
 }
 </style>
-<style id="dialog9-equal-panel-height">
-/* Oba główne panele mają dokładnie tę samą wysokość */
-.layout.show{align-items:stretch!important}
+<style id="dialog9-equal-panel-height-v2">
+/* Równe zewnętrzne dolne krawędzie obu paneli */
+.layout.show{
+  align-items:stretch!important;
+  grid-auto-rows:760px!important;
+}
 .layout>.card,
 .layout>.current-dialog-panel{
-  height:760px!important;
-  min-height:760px!important;
-  max-height:760px!important;
+  box-sizing:border-box!important;
+  height:100%!important;
+  min-height:0!important;
+  max-height:100%!important;
+  margin-top:0!important;
+  margin-bottom:0!important;
 }
 .layout>.card{overflow:hidden!important}
-.layout>.current-dialog-panel{overflow-y:auto!important}
+.layout>.current-dialog-panel{overflow:auto!important}
 @media(max-width:860px){
+  .layout.show{grid-auto-rows:auto!important}
   .layout>.card,
   .layout>.current-dialog-panel{
     height:auto!important;
