@@ -1596,6 +1596,40 @@ button{font:inherit}
   top:0 !important;
   bottom:0 !important;
 }
+
+/* ===== Dialog 9 · Modern UI 2026 ===== */
+:root{--modern-mint:#59f0ce;--modern-cyan:#61cfff;--modern-panel:rgba(8,31,36,.78);--modern-line:rgba(121,244,220,.24)}
+body{background:radial-gradient(circle at 16% 0%,rgba(35,190,164,.18),transparent 32%),radial-gradient(circle at 88% 12%,rgba(59,130,246,.13),transparent 30%),linear-gradient(145deg,#06191b 0%,#082b2c 48%,#071d22 100%);background-attachment:fixed;color:#eafbf7}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:32px 32px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.45),transparent 80%)}
+.shell{max-width:1540px;padding:18px 26px 60px}
+.hero{padding:4px 4px 12px}.hero h1{font-family:"Nunito Sans",sans-serif;font-size:clamp(1.8rem,3vw,2.55rem);font-weight:900;letter-spacing:-.045em;background:linear-gradient(90deg,#fff 0%,#b9fff0 55%,#5ee9d1 100%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 8px 35px rgba(64,234,203,.12)}
+.layout{grid-template-columns:430px minmax(0,1fr);gap:18px}
+.card,.history-panel{border:1px solid var(--modern-line);box-shadow:0 24px 80px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.06);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}
+.current-dialog-panel{background:linear-gradient(160deg,rgba(25,72,62,.84),rgba(8,42,39,.9));border-radius:26px;padding:24px}
+.current-dialog-panel .dialog-menu-title{color:#8ee8d5;font-size:.72rem;letter-spacing:.2em}
+.current-dialog-panel .dialog-menu-item{padding:9px 12px!important;margin:3px 0!important;border-radius:13px;border:1px solid transparent;transition:.2s ease;background:rgba(255,255,255,.025)}
+.current-dialog-panel .dialog-menu-item:hover{transform:translateX(3px);background:rgba(255,255,255,.07);border-color:rgba(128,238,214,.16)}
+.current-dialog-panel .dialog-menu-item.active{background:linear-gradient(90deg,rgba(76,232,196,.28),rgba(96,207,255,.12));border-color:rgba(101,240,210,.42);box-shadow:0 8px 24px rgba(22,208,171,.12),inset 0 1px 0 rgba(255,255,255,.1)}
+.current-dialog-panel .dialog-menu-number{display:grid;place-items:center;width:30px;height:30px;border-radius:10px;background:rgba(0,0,0,.2);color:#8ff7df}
+.current-dialog-panel .partner-left{margin-top:10px;padding-top:18px;border-top:1px solid rgba(150,245,222,.16)}
+.current-dialog-panel .partner-title{font-size:1.15rem}.current-dialog-panel .turn-instruction{font-size:.9rem;color:#d8eee8;opacity:1}
+.current-dialog-panel .translation-toggle{background:rgba(4,25,27,.45);border-color:rgba(115,236,211,.34);padding:7px 12px;color:#eafff9}
+.mic-btn{width:88px;height:88px;background:linear-gradient(145deg,#70f4d8,#16c7ad 55%,#119aa7);box-shadow:0 0 0 8px rgba(82,238,207,.08),0 0 38px rgba(55,235,199,.32),0 18px 38px rgba(0,0,0,.3);font-size:2rem}
+.mic-btn-wrap{width:116px;height:116px}.mic-btn:hover{transform:translateY(-3px) scale(1.03);filter:brightness(1.08)}
+.text-answer-input{background:rgba(4,25,27,.52);border:1px solid rgba(122,230,209,.22);border-radius:14px;padding:13px 15px;color:#f3fffc}.text-answer-input:focus{border-color:#59f0ce;box-shadow:0 0 0 3px rgba(89,240,206,.09)}
+.text-answer-send,.utility-btn{border-radius:14px!important;background:rgba(255,255,255,.055)!important;border:1px solid rgba(150,238,220,.2)!important;color:#e9faf6!important;transition:.2s ease}.text-answer-send:hover,.utility-btn:hover{transform:translateY(-2px);background:rgba(89,240,206,.11)!important;border-color:rgba(89,240,206,.48)!important}
+.history-panel{background:linear-gradient(160deg,rgba(7,38,42,.88),rgba(5,26,31,.94));border-radius:28px;padding:18px;min-height:760px}
+.history-screen-bar{padding:4px 6px 14px;border-bottom:1px solid rgba(134,231,213,.12)}.history-title{color:#a8eadd;letter-spacing:.16em}
+.history-list{max-height:690px;gap:10px;padding:10px 7px 12px}
+.history-entry{max-width:78%;padding:12px 16px;border:1px solid rgba(255,255,255,.08);border-radius:18px 18px 18px 6px;background:linear-gradient(135deg,rgba(255,250,237,.97),rgba(241,246,242,.95))!important;color:#102b2c;box-shadow:0 10px 25px rgba(0,0,0,.16);font-size:1rem;animation:modernBubble .28s ease both}
+.history-entry .speaker{color:#167b6c}.history-entry.user{align-self:flex-end;border-radius:18px 18px 6px 18px;background:linear-gradient(135deg,#d8fff4,#bdf6ea)!important;color:#0a302d}.history-entry.user .speaker{color:#0d7d6d}
+.history-divider{margin:18px 0 8px;padding:8px 12px;border-bottom:1px solid rgba(116,230,209,.2);text-align:left;color:#7ef0d8;font-size:.76rem}
+@keyframes modernBubble{from{opacity:0;transform:translateY(7px) scale(.985)}to{opacity:1;transform:none}}
+.progress-track .dot{border-color:rgba(138,238,219,.2);background:rgba(255,255,255,.08)}.progress-track .dot.done{background:#57e7c7;border-color:#57e7c7}.progress-track .dot.active{background:#ffd467;border-color:#ffd467;box-shadow:0 0 18px rgba(255,212,103,.38)}
+.back-btn{background:rgba(8,35,39,.72);color:#eafffa;border:1px solid rgba(121,236,214,.22);backdrop-filter:blur(14px);box-shadow:0 8px 25px rgba(0,0,0,.2)}
+@media(max-width:1050px){.layout{grid-template-columns:360px minmax(0,1fr)}}
+@media(max-width:860px){.shell{padding:14px}.layout{grid-template-columns:1fr}.history-panel{min-height:520px;position:relative;top:auto}.history-entry{max-width:90%}}
+
 </style>
 
 <style>
