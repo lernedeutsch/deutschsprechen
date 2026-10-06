@@ -496,18 +496,6 @@ button{font:inherit}
   transition:transform .18s,filter .18s,background .2s;
 }
 
-.mic-btn .mic-icon{
-  width:32px;
-  height:32px;
-  display:block;
-  margin:auto;
-  filter:drop-shadow(0 2px 2px rgba(0,0,0,.18));
-}
-.mic-btn .mic-icon-head{fill:#4b365f}
-.mic-btn .mic-icon-band{fill:#2f2340}
-.mic-btn .mic-icon-body{fill:#9b94a4
-}
-
 .mic-btn:hover{
   transform:translateY(-2px);
   filter:brightness(1.05);
@@ -3221,7 +3209,7 @@ html body .layout.show > .card .main-history-panel{
           <div class="mic-column">
             <div class="mic-btn-wrap" id="mic-btn-wrap">
               <span class="mic-ring"></span><span class="mic-ring"></span><span class="mic-ring"></span>
-              <button type="button" class="mic-btn" id="mic-btn" aria-label="Sprechen"><svg class="mic-icon" viewBox="0 0 32 32" aria-hidden="true"><g transform="rotate(-42 16 16)"><rect class="mic-icon-head" x="11" y="3" width="10" height="15" rx="5"/><rect class="mic-icon-band" x="11" y="10" width="10" height="4" rx="2"/><path class="mic-icon-body" d="M8.5 13.5h3a4.5 4.5 0 0 0 9 0h3A7.5 7.5 0 0 1 17.5 21v4H22v3H10v-3h4.5v-4a7.5 7.5 0 0 1-6-7.5Z"/></g></svg></button>
+              <button type="button" class="mic-btn" id="mic-btn" aria-label="Sprechen">🎤</button>
             </div>
             <p class="mic-status" id="mic-status">🎤 Zum Sprechen klicken</p>
           </div>
@@ -3881,7 +3869,7 @@ function setMicReady(ready,message=""){
   }
 
   if(ready){
-    els.micBtn.innerHTML='<svg class="mic-icon" viewBox="0 0 32 32" aria-hidden="true"><g transform="rotate(-42 16 16)"><rect class="mic-icon-head" x="11" y="3" width="10" height="15" rx="5"/><rect class="mic-icon-band" x="11" y="10" width="10" height="4" rx="2"/><path class="mic-icon-body" d="M8.5 13.5h3a4.5 4.5 0 0 0 9 0h3A7.5 7.5 0 0 1 17.5 21v4H22v3H10v-3h4.5v-4a7.5 7.5 0 0 1-6-7.5Z"/></g></svg>';
+    els.micBtn.innerHTML='🎤';
     els.micStatus.textContent=message;
     els.micStatus.classList.remove("live");
   }
@@ -4165,7 +4153,7 @@ function stopListeningUI(){
 
   els.micBtnWrap.classList.remove("listening");
   els.micBtn.classList.remove("listening");
-  els.micBtn.innerHTML='<svg class="mic-icon" viewBox="0 0 32 32" aria-hidden="true"><g transform="rotate(-42 16 16)"><rect class="mic-icon-head" x="11" y="3" width="10" height="15" rx="5"/><rect class="mic-icon-band" x="11" y="10" width="10" height="4" rx="2"/><path class="mic-icon-body" d="M8.5 13.5h3a4.5 4.5 0 0 0 9 0h3A7.5 7.5 0 0 1 17.5 21v4H22v3H10v-3h4.5v-4a7.5 7.5 0 0 1-6-7.5Z"/></g></svg>';
+  els.micBtn.innerHTML='🎤';
   els.micStatus.classList.remove("live");
 
   if(
