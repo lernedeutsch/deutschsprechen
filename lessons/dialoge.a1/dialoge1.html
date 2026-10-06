@@ -496,6 +496,15 @@ button{font:inherit}
   transition:transform .18s,filter .18s,background .2s;
 }
 
+.mic-btn .mic-icon{
+  width:32px;
+  height:32px;
+  display:block;
+  margin:auto;
+  fill:#F4D58D;
+  filter:drop-shadow(0 2px 2px rgba(0,0,0,.18));
+}
+
 .mic-btn:hover{
   transform:translateY(-2px);
   filter:brightness(1.05);
@@ -3209,7 +3218,7 @@ html body .layout.show > .card .main-history-panel{
           <div class="mic-column">
             <div class="mic-btn-wrap" id="mic-btn-wrap">
               <span class="mic-ring"></span><span class="mic-ring"></span><span class="mic-ring"></span>
-              <button type="button" class="mic-btn" id="mic-btn" aria-label="Sprechen">🎤</button>
+              <button type="button" class="mic-btn" id="mic-btn" aria-label="Sprechen"><svg class="mic-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21H8v2h8v-2h-3v-3.08A7 7 0 0 0 19 11h-2Z"/></svg></button>
             </div>
             <p class="mic-status" id="mic-status">🎤 Zum Sprechen klicken</p>
           </div>
@@ -3869,7 +3878,7 @@ function setMicReady(ready,message=""){
   }
 
   if(ready){
-    els.micBtn.textContent="🎤";
+    els.micBtn.innerHTML='<svg class="mic-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21H8v2h8v-2h-3v-3.08A7 7 0 0 0 19 11h-2Z"/></svg>';
     els.micStatus.textContent=message;
     els.micStatus.classList.remove("live");
   }
@@ -4153,7 +4162,7 @@ function stopListeningUI(){
 
   els.micBtnWrap.classList.remove("listening");
   els.micBtn.classList.remove("listening");
-  els.micBtn.textContent="🎤";
+  els.micBtn.innerHTML='<svg class="mic-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21H8v2h8v-2h-3v-3.08A7 7 0 0 0 19 11h-2Z"/></svg>';
   els.micStatus.classList.remove("live");
 
   if(
