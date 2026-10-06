@@ -3046,6 +3046,19 @@ html body .current-dialog-panel .mic-btn.listening{
     inset 0 -7px 9px rgba(20,79,61,.32) !important;
 }
 </style>
+<style id="pending-user-answer-bubble">
+html body .main-history-panel .history-entry.user.pending-user-answer{
+  min-width:72px!important;
+  min-height:42px!important;
+  opacity:.72;
+  border-style:dashed!important;
+}
+html body .main-history-panel .history-entry.user.pending-user-answer .user-answer-text:empty::after{
+  content:"";
+  display:inline-block;
+  width:28px;
+}
+</style>
 </head>
 
 <body>
@@ -3800,6 +3813,26 @@ function clearHistory(){
     </p>`;
 }
 
+function pendingUserBubble(){
+  return els.historyList.querySelector('.history-entry.user.pending-user-answer[data-turn="'+index+'"]');
+}
+function ensurePendingUserBubble(){
+  let entry=pendingUserBubble();
+  if(entry)return entry;
+  addHistoryEntry("user","Du","");
+  entry=els.historyList.lastElementChild;
+  if(entry){entry.classList.add("pending-user-answer");entry.dataset.turn=String(index);}
+  return entry;
+}
+function fillPendingUserBubble(text,finish=false){
+  const entry=pendingUserBubble();
+  if(!entry)return false;
+  const target=entry.querySelector(".user-answer-text");
+  if(target)target.textContent=text||"";
+  if(finish){entry.classList.remove("pending-user-answer");entry.removeAttribute("data-turn");}
+  return true;
+}
+
 function addHistoryEntry(role,speakerLabel,text){
   const empty=document.getElementById("history-empty");
 
@@ -3818,8 +3851,12 @@ function addHistoryEntry(role,speakerLabel,text){
 
   entry.className=`history-entry ${role} dialog-${historyDialogueIndex}`;
 
-  entry.innerHTML=
-    `<span><span class="speaker">${speakerLabel}:</span> ${text}</span>`;
+  if(role==="user"){
+    entry.innerHTML=`<span><span class="speaker">${speakerLabel}:</span> <span class="user-answer-text"></span></span>`;
+    entry.querySelector(".user-answer-text").textContent=text;
+  }else{
+    entry.innerHTML=`<span><span class="speaker">${speakerLabel}:</span> ${text}</span>`;
+  }
 
   /* Keep two independent vertical streams.
      Dialogues 1 and 3 continue down the LEFT compartment.
@@ -3991,6 +4028,7 @@ async function playPromptThenListen(){
     !speaking&&
     !listening
   ){
+    ensurePendingUserBubble();
     setMicReady(true,"🎤 Zum Sprechen klicken");
   }
 }
@@ -4043,11 +4081,9 @@ function markCorrect(spokenText){
 
   updateStats();
 
-  addHistoryEntry(
-    "user",
-    "Du",
-    spokenText
-  );
+  if(!fillPendingUserBubble(spokenText,true)){
+    addHistoryEntry("user","Du",spokenText);
+  }
 
   clearTimeout(restartTimer);
 
@@ -4071,11 +4107,9 @@ function markWrong(spokenText){
 
   updateStats();
 
-  addHistoryEntry(
-    "user",
-    "Du",
-    `${spokenText} ✗`
-  );
+  if(!fillPendingUserBubble(`${spokenText} ✗`,true)){
+    addHistoryEntry("user","Du",`${spokenText} ✗`);
+  }
 
   els.micStatus.textContent=
     "Das war noch nicht richtig.";
@@ -4246,6 +4280,7 @@ if(recognizer){
 
     els.liveTranscript.textContent=
       finalText||interimText;
+    fillPendingUserBubble(finalText||interimText);
 
     if(finalText){
       evaluate(finalText);
