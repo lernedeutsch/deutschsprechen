@@ -3022,6 +3022,30 @@ html body .current-dialog-panel #answer-btn{
     inset 0 -3px 5px rgba(0,0,0,.15) !important;
 }
 </style>
+<style id="microphone-soft-luminous-glow">
+/* Visual-only glow: no size, state, click or microphone logic changes. */
+html body .current-dialog-panel .mic-btn{
+  box-shadow:
+    0 13px 20px rgba(0,0,0,.42),
+    0 5px 8px rgba(0,0,0,.30),
+    0 0 12px rgba(151,255,222,.72),
+    0 0 27px rgba(104,238,198,.48),
+    0 0 45px rgba(86,211,176,.25),
+    inset 0 5px 6px rgba(255,255,255,.48),
+    inset 0 -7px 9px rgba(20,79,61,.32),
+    inset 5px 0 8px rgba(255,255,255,.14) !important;
+}
+html body .current-dialog-panel .mic-btn.listening{
+  box-shadow:
+    0 13px 20px rgba(0,0,0,.42),
+    0 5px 8px rgba(0,0,0,.30),
+    0 0 15px rgba(151,255,222,.82),
+    0 0 32px rgba(104,238,198,.58),
+    0 0 50px rgba(86,211,176,.30),
+    inset 0 5px 6px rgba(255,255,255,.48),
+    inset 0 -7px 9px rgba(20,79,61,.32) !important;
+}
+</style>
 </head>
 
 <body>
