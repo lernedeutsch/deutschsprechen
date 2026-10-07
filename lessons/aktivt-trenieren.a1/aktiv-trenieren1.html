@@ -387,14 +387,26 @@ body > .bottom-arrow:hover{
   .tab-buttons{gap:58px!important}
 }
 </style>
+<style id="course-start-arrow-exact-position">
+.course-start{position:relative!important}
+.course-start > .course-start-back{
+  position:absolute!important;
+  left:18px!important;
+  top:-58px!important;
+  margin:0!important;
+  z-index:5!important;
+}
+@media(max-width:760px){
+  .course-start > .course-start-back{left:15px!important;top:-54px!important}
+}
+</style>
 </head>      
 <body id="seitenanfang">      
 
-<a href="../a1/lektion-1.html#seitenanfang" class="bottom-arrow" aria-label="Zurück zur Lektion" title="Zurück zur Lektion">←</a>
-      
 <div class="page-progress-container" aria-hidden="true"><div class="page-progress-bar" id="page-progress-bar"></div></div>      
       
 <section class="course-start">
+<a href="../a1/lektion-1.html#seitenanfang" class="bottom-arrow course-start-back" aria-label="Zurück zur Lektion" title="Zurück zur Lektion">←</a>
 <h2 class="course-start-title">Erste Schritte</h2>
 <p class="course-start-text">Begrüßung, ich heiße …, das Alphabet</p>
 <nav class="lesson-flow" aria-label="Ablauf der Lektion">
