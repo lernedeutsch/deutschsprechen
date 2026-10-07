@@ -310,6 +310,35 @@ a.lesson-flow-step:hover,a.lesson-flow-step:focus-visible{border-color:var(--gol
 <link rel="stylesheet" href="../../css/click-hints.css">
 <link rel="stylesheet" href="../../css/translation-globe.css">
 <link rel="stylesheet" href="../../css/page-progress.css">
+<style id="aktiv-a11-top-arrow-match-lesson">
+/* Top arrow: same pill shape and placement as Lektion A1.1. */
+body > .bottom-arrow{
+  display:flex!important;
+  justify-content:center!important;
+  align-items:center!important;
+  width:max-content!important;
+  height:auto!important;
+  margin:0 0 0 max(0px,calc((100vw - 1180px)/2))!important;
+  padding:11px 18px!important;
+  color:var(--text)!important;
+  background:#fff!important;
+  border:1px solid var(--line)!important;
+  border-radius:999px!important;
+  text-decoration:none!important;
+  font:700 .98rem "Nunito Sans",sans-serif!important;
+  line-height:1!important;
+  box-shadow:none!important;
+  transition:background .15s,border-color .15s,transform .15s!important;
+}
+body > .bottom-arrow:hover{
+  background:#f3f7fc!important;
+  border-color:#f2d06f!important;
+  transform:translateY(-2px)!important;
+}
+@media(max-width:1200px){
+  body > .bottom-arrow{margin-left:0!important}
+}
+</style>
 </head>      
 <body id="seitenanfang">      
 
