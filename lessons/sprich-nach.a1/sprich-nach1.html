@@ -913,9 +913,23 @@ button,input{font:inherit}
 .history-list{gap:7px;padding:0 3px 2px}
 .history-item{
   padding:10px 15px;
-  border-radius:20px 20px 20px 6px;
+  border-radius:22px 22px 22px 7px;
   font-size:.78rem;
+  position:relative;
+  margin-left:10px;
+
   filter:brightness(var(--step-filter,.82));
+}
+.history-item::before{
+  content:"";
+  position:absolute;
+  left:-9px;
+  bottom:3px;
+  width:18px;
+  height:18px;
+  background:inherit;
+  clip-path:polygon(100% 0,100% 100%,0 100%);
+  border-bottom-left-radius:4px;
 }
 .panel{
   height:min(610px,78vh);
