@@ -1372,92 +1372,62 @@ body{
 </style>
 
 <style id="dialoge6-cinematic-gate">
-/* Ekran wejściowy: dialoge.png jest dekoracyjnym tłem.
-   Ukrywamy z obrazu obszar z wypalonym UI, przykrywając go warstwą tła,
-   a prawdziwe elementy HTML pozostają jedyną widoczną treścią. */
-body:has(#gate:not([style*="display: none"])) {
+/* Ekran wejściowy korzysta z czystego dialoge.png. Sama lekcja pozostaje bez zmian. */
+body:has(#gate:not([style*="display: none"])){
   background:#071a1b url("../../dialoge.png") center center / cover no-repeat fixed;
-}
-body:has(#gate:not([style*="display: none"]))::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:-1;
-  background:
-    linear-gradient(90deg,rgba(5,20,21,.06),rgba(5,20,21,.16) 38%,rgba(5,20,21,.16) 62%,rgba(5,20,21,.06)),
-    url("../../dialoge.png") center center / cover no-repeat fixed;
 }
 body:has(#gate:not([style*="display: none"])) .shell{
   max-width:none;
   min-height:100vh;
   padding:18px 24px 36px;
-  position:relative;
 }
 body:has(#gate:not([style*="display: none"])) .hero{
   max-width:1180px;
   margin:0 auto;
   padding:8px 0 10px;
-  position:relative;
-  z-index:3;
 }
 body:has(#gate:not([style*="display: none"])) .hero h1{
   color:#fff8e9;
-  text-shadow:0 2px 12px rgba(0,0,0,.7);
-}
-/* Kryjąca warstwa usuwa wizualnie tekst/panel/przyciski zapisane w samym PNG. */
-body:has(#gate:not([style*="display: none"])) .shell::before{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:88px;
-  width:min(760px,72vw);
-  height:610px;
-  transform:translateX(-50%);
-  border-radius:42px;
-  background:rgba(7,29,29,.88);
-  box-shadow:0 0 90px 65px rgba(7,29,29,.72);
-  filter:blur(10px);
-  z-index:0;
-  pointer-events:none;
+  text-shadow:0 2px 12px rgba(0,0,0,.60);
 }
 body:has(#gate:not([style*="display: none"])) .gate{
-  position:relative;
-  z-index:2;
   max-width:620px;
   margin:28px auto 0;
   color:#fff8e9;
-  background:rgba(18,43,40,.27);
-  border:1px solid rgba(255,244,215,.28);
-  box-shadow:0 24px 60px rgba(0,0,0,.30),inset 0 0 50px rgba(255,177,76,.08);
-  backdrop-filter:blur(7px);
-  -webkit-backdrop-filter:blur(7px);
+  background:rgba(14,43,41,.28);
+  border:1px solid rgba(255,244,215,.30);
+  box-shadow:0 24px 60px rgba(0,0,0,.25),inset 0 0 48px rgba(255,177,76,.06);
+  backdrop-filter:blur(5px);
+  -webkit-backdrop-filter:blur(5px);
 }
-body:has(#gate:not([style*="display: none"])) .gate h2{color:#fff8e9;text-shadow:0 2px 10px rgba(0,0,0,.5)}
-body:has(#gate:not([style*="display: none"])) .gate p{color:#f5ead7;text-shadow:0 1px 6px rgba(0,0,0,.55)}
+body:has(#gate:not([style*="display: none"])) .gate h2{
+  color:#fff8e9;
+  text-shadow:0 2px 10px rgba(0,0,0,.55);
+}
+body:has(#gate:not([style*="display: none"])) .gate p{
+  color:#f5ead7;
+  text-shadow:0 1px 6px rgba(0,0,0,.60);
+}
 body:has(#gate:not([style*="display: none"])) .gate-btn{
   color:#071d1d;
   background:linear-gradient(180deg,#55d7cf,#2ab8b0);
   box-shadow:0 10px 26px rgba(0,0,0,.24);
 }
-body:has(#gate:not([style*="display: none"])) .footnote,
-body:has(#gate:not([style*="display: none"])) .next-training{
-  position:relative;
-  z-index:2;
-}
 body:has(#gate:not([style*="display: none"])) .footnote{
-  color:#efe4d3;
-  text-shadow:0 1px 7px rgba(0,0,0,.75);
+  color:#f4eadb;
+  text-shadow:0 1px 7px rgba(0,0,0,.82);
 }
 body:has(#gate:not([style*="display: none"])) .next-training a{
   background:linear-gradient(180deg,#35c7bf,#15958e);
 }
 body:has(#gate:not([style*="display: none"])) .back-btn{
-  color:#fff8e9;background:rgba(16,42,37,.50);border-color:rgba(255,255,255,.16);
+  color:#fff8e9;
+  background:rgba(16,42,37,.50);
+  border-color:rgba(255,255,255,.16);
 }
 @media(max-width:700px){
   body:has(#gate:not([style*="display: none"])) .shell{padding:14px 14px 30px}
   body:has(#gate:not([style*="display: none"])) .gate{margin-top:18px}
-  body:has(#gate:not([style*="display: none"])) .shell::before{width:92vw;height:600px}
 }
 </style>
 
