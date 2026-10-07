@@ -481,6 +481,25 @@ body{padding-top:58px!important}
   .farewell-button .click-icon{animation:none!important}
 }
 </style>
+<style id="intro-exercise-blue-spinning-globe">
+.intro-exercise-translation{display:inline-block;vertical-align:middle;margin-left:10px;font-family:"Nunito Sans",sans-serif;font-size:1rem}
+.intro-exercise-translation .translation-globe{
+  display:inline-block;
+  color:#1689e8;
+  filter:saturate(1.35) drop-shadow(0 0 3px rgba(22,137,232,.35));
+  transform-origin:50% 50%;
+  transform-style:preserve-3d;
+  animation:introExerciseGlobeAxisSpin 2.4s linear infinite!important;
+}
+@keyframes introExerciseGlobeAxisSpin{
+  0%{transform:perspective(120px) rotateY(0deg)}
+  25%{transform:perspective(120px) rotateY(90deg)}
+  50%{transform:perspective(120px) rotateY(180deg)}
+  75%{transform:perspective(120px) rotateY(270deg)}
+  100%{transform:perspective(120px) rotateY(360deg)}
+}
+@media(prefers-reduced-motion:reduce){.intro-exercise-translation .translation-globe{animation:none!important}}
+</style>
 </head>      
 <body id="seitenanfang">      
 
@@ -557,7 +576,11 @@ body{padding-top:58px!important}
 </main>      
       
 <main class="page intro-page">      
-<header class="part-head"><span class="part-num">Teil 2</span><h1 class="part-title">Ich stelle mich vor</h1></header>      
+<header class="part-head"><span class="part-num">Teil 2</span><h1 class="part-title">Ich stelle mich vor
+<span class="translation-inline-control intro-exercise-translation" data-inline-translation="introExercise">
+<button type="button" class="translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung"><span class="globe translation-globe">🌐</span><span>A/文</span></button>
+<span class="translation-panel"><span class="translation-languages"><button type="button" class="translation-language" data-lang="en">English</button><button type="button" class="translation-language" data-lang="pl">Polski</button><button type="button" class="translation-language" data-lang="it">Italiano</button></span><span class="translation-text" aria-live="polite"></span></span>
+</span></h1></header>      
 <section class="card intro-card">      
 <div class="intro-setup-card">
 <div class="action-help" data-help-key="dialog" aria-label="So funktioniert der Dialog"><span class="action-help-step">✏️ Name eingeben</span><span class="action-help-arrow">→</span><span class="action-help-step">👆 „Informell“ oder „Formell“ anklicken</span><span class="action-help-arrow">→</span><span class="action-help-step">🔊 zuhören</span></div>
@@ -762,6 +785,11 @@ const HELP_TRANSLATIONS={
 };
 
 const INLINE_TRANSLATIONS={
+  introExercise:{
+    en:"I introduce myself. Enter your name, listen to the three ways to say your name, then choose an informal or formal dialogue and listen.",
+    pl:"Przedstawiam się. Wpisz swoje imię, posłuchaj trzech sposobów podawania imienia, a następnie wybierz dialog nieformalny lub formalny i posłuchaj.",
+    it:"Mi presento. Inserisci il tuo nome, ascolta i tre modi per dire il tuo nome, poi scegli un dialogo informale o formale e ascolta."
+  },
   registerExercise:{
     en:"Informal or formal? Read the sentence and choose the correct form. “du” is informal; “Sie” is formal.",
     pl:"Nieformalnie czy formalnie? Przeczytaj zdanie i wybierz właściwą formę. „du” jest nieformalne, a „Sie” formalne.",
