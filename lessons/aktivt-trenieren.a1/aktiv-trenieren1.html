@@ -727,10 +727,13 @@ function addInlineTranslations(){
     const out=control.querySelector(".translation-text");
     const langs=[...control.querySelectorAll(".translation-language")];
     toggle.onclick=e=>{
+      e.preventDefault();
       e.stopPropagation();
       const opening=!control.classList.contains("open");
       control.classList.toggle("open",opening);
+      toggle.setAttribute("aria-expanded",String(opening));
       if(opening)renderAllTranslations(out,data);
+      else out.classList.remove("show");
     };
   });
 }
