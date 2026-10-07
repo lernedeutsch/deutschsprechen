@@ -443,6 +443,18 @@ body{padding-top:58px!important}
 }
 @media(prefers-reduced-motion:reduce){.choice-pulse-hand{animation:none}}
 </style>
+<style id="choice-hand-pulse-fix">
+.category-button .choice-pulse-hand{
+  display:inline-block!important;
+  animation:choiceHandPulseFix .85s ease-in-out infinite!important;
+  transform-origin:50% 80%!important;
+  will-change:transform;
+}
+@keyframes choiceHandPulseFix{
+  0%,100%{transform:scale(1) translateY(0)}
+  50%{transform:scale(1.32) translateY(-4px)}
+}
+</style>
 </head>      
 <body id="seitenanfang">      
 
