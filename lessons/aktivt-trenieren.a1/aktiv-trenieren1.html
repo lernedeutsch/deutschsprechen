@@ -696,7 +696,7 @@ SI.disabled=SI.readOnly=false;SI.addEventListener("pointerdown",()=>SI.focus());
 async function spellName(){stop();SM.textContent="";let name=SI.value.trim();if(!name){SM.textContent="Bitte gib deinen Namen ein.";return SI.focus()}let letters=[...name.toLocaleUpperCase("de-DE")].filter(x=>N[x]);if(!letters.length){SM.textContent="Der Name enthält keine unterstützten Buchstaben.";return}SO.innerHTML=letters.map((x,i)=>`<span class="letter-chip" id="letter-${i}">${x}</span>`).join("");SB.disabled=true;let version=n;for(let i=0;i<letters.length&&version===n;i++){let chip=$(`letter-${i}`);chip.classList.add("letter-speaking");await speak(N[letters[i]],.82);chip.classList.remove("letter-speaking");if(version!==n)break;await W(120)}if(version===n){SM.textContent="Jetzt du: Buchstabiere deinen Namen selbst laut.";stamp("alphabet")}SB.disabled=false}      
 SB.onclick=spellName;SI.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();spellName()}};      
       
-const FB=$$(".farewell-button"),FT=[["informell","👋","Tschüss!","🙂 Freunde / Familie"],["formell","🙋","Auf Wiedersehen!","👔 fremde Person / höflich"]];      
+const FB=$$(".farewell-button"),FT=[["informell","👋","Tschüss!","🙂 Freunde / Familie"],["formell","👔","Auf Wiedersehen!","👔 fremde Person / höflich"]];      
 let fi=0,fs=0,fl=false;      
 function lockFarewell(x){FB.forEach(b=>{b.disabled=x;if(!x)b.classList.remove("richtig","falsch")})}      
 function farewellProgress(){$("farewell-counter").textContent=`Richtige Antworten: ${fs} / 2`;$("farewell-progress").style.width=`${fs/2*100}%`}      
