@@ -1124,7 +1124,7 @@ button{font:inherit}
 }
 
 .next-training{
-  display:flex;
+  display:none;
   justify-content:center;
   margin-top:18px;
 }
@@ -4716,6 +4716,7 @@ function init(){
 els.gateBtn.addEventListener("click",()=>{
   els.gate.style.display="none";
   els.layout.classList.add("show");
+  document.querySelector(".next-training").style.display="flex";
   if(!recognizer){
     els.gateWarning.classList.remove("show");
   }
