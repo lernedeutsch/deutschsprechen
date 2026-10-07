@@ -467,6 +467,20 @@ body{padding-top:58px!important}
   20%{transform:translateY(-5px) scale(1.32)}
 }
 </style>
+<style id="farewell-button-hand-pulse">
+.farewell-button .click-icon{
+  display:inline-block;
+  transform-origin:50% 80%;
+  animation:farewellHandPulse 1s ease-in-out infinite!important;
+}
+@keyframes farewellHandPulse{
+  0%,100%{transform:translateY(0) scale(1)}
+  50%{transform:translateY(-4px) scale(1.28)}
+}
+@media(prefers-reduced-motion:reduce){
+  .farewell-button .click-icon{animation:none!important}
+}
+</style>
 </head>      
 <body id="seitenanfang">      
 
