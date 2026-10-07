@@ -455,6 +455,18 @@ body{padding-top:58px!important}
   50%{transform:scale(1.32) translateY(-4px)}
 }
 </style>
+<style id="choice-hands-alternating-pulse">
+.category-button:nth-of-type(1) .choice-pulse-hand{
+  animation:choiceHandPulseAlt 1.4s ease-in-out infinite!important;
+}
+.category-button:nth-of-type(2) .choice-pulse-hand{
+  animation:choiceHandPulseAlt 1.4s ease-in-out .7s infinite!important;
+}
+@keyframes choiceHandPulseAlt{
+  0%,45%,100%{transform:translateY(0) scale(1)}
+  20%{transform:translateY(-5px) scale(1.32)}
+}
+</style>
 </head>      
 <body id="seitenanfang">      
 
