@@ -3091,6 +3091,29 @@ button,.control-btn,.dialog-button,.nav-item,.dialog-item{border-color:#62b7ee!i
 .nav-item.active,.dialog-item.active{background:#78add3!important}
 .mic-button,.mic-circle{background:linear-gradient(180deg,#76c9ff,#438fc8)!important;border-color:#a7ddff!important}
 </style>
+<style id="b1-blue-override-final">
+/* Final blue override: replace remaining green/teal visual tones only */
+:root{
+  --b1-navy:#0b2748;
+  --b1-deep:#123b66;
+  --b1-mid:#1f5f91;
+  --b1-blue:#2d78ad;
+  --b1-light:#79bce8;
+  --b1-pale:#b9ddf4;
+}
+html,body{background:var(--b1-navy)!important}
+body::before,body::after{background:transparent!important}
+.app,.shell,.dialog-shell,.main-panel,.stage-shell,.screen-shell{background:var(--b1-deep)!important}
+.sidebar,.dialog-sidebar,.left-panel,.side-panel{background:#245b88!important}
+.dialog-stage,.conversation-panel,.chat-panel,.stage,.dialog-window,.dialog-area,.right-panel{background:#164d7a!important}
+.dialog-stage::before,.conversation-panel::before,.chat-panel::before{background:#164d7a!important}
+.nav-item.active,.dialog-item.active,[aria-current="true"]{background:#76add2!important}
+.mic-button,.mic-circle,.microphone-button{background:linear-gradient(180deg,#82ccf6,#3988c1)!important;border-color:#a9ddfb!important}
+button,.control-btn,.dialog-button,.pill-btn,input,textarea{border-color:#67b9ed!important}
+.sidebar,.dialog-sidebar,.left-panel,.dialog-stage,.conversation-panel,.chat-panel,.stage,.dialog-window{
+  box-shadow:0 0 24px rgba(55,157,225,.28)!important;
+}
+</style>
 </head>
 
 <body>
