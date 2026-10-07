@@ -1444,12 +1444,15 @@ body:has(#gate:not([style*="display: none"])) .hero h1{
   transform:translate(12px,7px);
 }
 body:has(#gate:not([style*="display: none"])) .footnote{
-  position:fixed;
-  left:24px;
-  right:24px;
-  bottom:8px;
-  z-index:5;
-  margin:0;
+  position:fixed !important;
+  left:0 !important;
+  right:0 !important;
+  bottom:2px !important;
+  z-index:50;
+  width:100%;
+  margin:0 !important;
+  padding:0 20px 2px;
+  text-align:center;
 }
 body:has(#gate:not([style*="display: none"])) .next-training{
   display:none;
