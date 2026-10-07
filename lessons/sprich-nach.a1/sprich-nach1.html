@@ -1093,22 +1093,25 @@ body.sprich-started .lesson-only-next{
 body.sprich-started .lesson-only-next a{display:inline-flex!important}
 </style>
 <style id="start-inner-glass-3d-panel">
-/* ONLY #start-wrap on the start screen. No beige tint: visibly transparent dirty glass. */
+/* ONLY the small start card — transparent glass like the reference screenshot */
 body:not(.sprich-started) #start-wrap{
   width:min(600px,82%)!important;
   min-height:390px!important;
   margin:38px auto!important;
   padding:34px 42px 32px!important;
   box-sizing:border-box!important;
+  position:relative!important;
+  isolation:isolate!important;
   border-radius:34px!important;
-  background:rgba(255,255,255,.025)!important;
-  border:1px solid rgba(255,255,255,.42)!important;
+  background:rgba(255,255,255,.055)!important;
+  background-image:none!important;
+  border:2px solid rgba(255,255,255,.48)!important;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.28),
-    inset 0 0 32px rgba(255,255,255,.035),
-    0 10px 24px rgba(35,29,22,.08)!important;
-  backdrop-filter:none!important;
-  -webkit-backdrop-filter:none!important;
+    inset 0 1px 0 rgba(255,255,255,.30),
+    inset 0 -1px 0 rgba(255,255,255,.10),
+    0 12px 30px rgba(24,31,38,.16)!important;
+  backdrop-filter:blur(8px) brightness(1.04) saturate(.88)!important;
+  -webkit-backdrop-filter:blur(8px) brightness(1.04) saturate(.88)!important;
   opacity:1!important;
   transform:none!important;
   overflow:hidden!important;
@@ -1117,15 +1120,11 @@ body:not(.sprich-started) #start-wrap::before{
   content:"";
   position:absolute;
   inset:0;
+  z-index:-1;
   pointer-events:none;
   border-radius:inherit;
-  opacity:.52;
-  background-image:
-    radial-gradient(ellipse at 16% 22%,rgba(255,255,255,.16) 0 3%,transparent 12%),
-    radial-gradient(ellipse at 76% 34%,rgba(74,61,44,.08) 0 2%,transparent 10%),
-    radial-gradient(ellipse at 42% 78%,rgba(255,255,255,.10) 0 2%,transparent 11%),
-    repeating-radial-gradient(ellipse at 55% 45%,rgba(67,56,42,.035) 0 1px,transparent 1px 11px);
-  mix-blend-mode:soft-light;
+  background:
+    linear-gradient(115deg,rgba(255,255,255,.12),rgba(255,255,255,.018) 35%,rgba(255,255,255,.045) 70%,rgba(255,255,255,.09))!important;
 }
 body:not(.sprich-started) #start-wrap > *{
   position:relative;
