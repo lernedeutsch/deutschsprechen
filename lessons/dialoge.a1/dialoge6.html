@@ -1403,17 +1403,20 @@ body:has(#gate:not([style*="display: none"])) .gate{
   margin:88px auto 0;
   color:#fff8e9;
   background:
-    linear-gradient(145deg,rgba(43,91,87,.25),rgba(10,31,33,.30)),
-    rgba(18,48,45,.18);
-  border:1px solid rgba(255,244,215,.40);
+    linear-gradient(145deg,rgba(255,255,255,.10),rgba(18,61,66,.10)),
+    rgba(18,55,58,.08);
+  border:1px solid rgba(255,244,215,.55);
   box-shadow:
-    0 42px 85px rgba(0,0,0,.46),
-    0 16px 34px rgba(0,0,0,.28),
-    0 -1px 18px rgba(255,210,140,.10),
-    inset 0 1px 0 rgba(255,255,255,.24),
-    inset 0 -20px 42px rgba(0,0,0,.08);
-  backdrop-filter:blur(4px);
-  -webkit-backdrop-filter:blur(4px);
+    0 54px 90px rgba(0,0,0,.52),
+    0 22px 38px rgba(0,0,0,.32),
+    0 4px 0 rgba(0,0,0,.22),
+    0 -2px 20px rgba(255,213,145,.18),
+    inset 0 2px 0 rgba(255,255,255,.34),
+    inset 0 -3px 0 rgba(0,0,0,.16),
+    inset 0 0 42px rgba(255,255,255,.035);
+  backdrop-filter:blur(2.5px) brightness(1.22);
+  -webkit-backdrop-filter:blur(2.5px) brightness(1.22);
+  transform:perspective(1100px) rotateX(.7deg) translateZ(18px);
 }
 body:has(#gate:not([style*="display: none"])) .gate h2{
   color:#fff8e9;
