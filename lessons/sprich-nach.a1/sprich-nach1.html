@@ -1068,6 +1068,36 @@ button,input{font:inherit}
 </style>
 <link rel="stylesheet" href="../../css/translation-globe.css">
 <link rel="stylesheet" href="../../css/page-progress.css">
+<style id="mic-3d-and-plain-history-bubbles">
+/* Visual-only refinements: preserve existing colors and behavior */
+#mic-btn.mic-ready{
+  transform:perspective(420px) rotateX(5deg) translateY(-2px);
+  box-shadow:
+    0 17px 0 rgba(7,55,42,.38),
+    0 24px 34px rgba(11,73,56,.34),
+    0 0 0 0 rgba(93,218,159,.46),
+    inset 0 5px 7px rgba(255,255,255,.24),
+    inset 0 -8px 12px rgba(0,0,0,.18);
+}
+#mic-btn.mic-ready .orb-icon{
+  display:inline-block;
+  transform:translateY(-2px) scale(1.08);
+  filter:drop-shadow(0 5px 3px rgba(0,0,0,.34));
+}
+.history-item{
+  border-radius:18px!important;
+  margin-left:10px!important;
+  padding:10px 14px!important;
+}
+.history-item::before{
+  left:-8px!important;
+  bottom:5px!important;
+  width:15px!important;
+  height:15px!important;
+  clip-path:polygon(100% 0,100% 100%,0 100%)!important;
+  border-radius:0!important;
+}
+</style>
 <style id="start-screen-hide-history-only">
 body:not(.sprich-started) .history-panel{display:none!important}
 body:not(.sprich-started) .layout{grid-template-columns:minmax(0,1fr)!important}
