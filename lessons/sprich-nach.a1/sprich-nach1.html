@@ -1071,6 +1071,17 @@ body:not(.sprich-started) .layout .panel{
   max-height:min(560px,72vh)!important;
 }
 </style>
+<style id="lesson-only-next-visible-fix">
+body.sprich-started .lesson-only-next{
+  display:flex!important;
+  position:relative!important;
+  width:100%!important;
+  margin:14px auto 0!important;
+  justify-content:center!important;
+  z-index:20!important;
+}
+body.sprich-started .lesson-only-next a{display:inline-flex!important}
+</style>
 </head>
 <body id="oben">
 
