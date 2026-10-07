@@ -1093,7 +1093,7 @@ body.sprich-started .lesson-only-next{
 body.sprich-started .lesson-only-next a{display:inline-flex!important}
 </style>
 <style id="start-inner-glass-3d-panel">
-/* ONLY the small start card: transparent dirty glass; parent panel untouched */
+/* ONLY #start-wrap on the start screen. No beige tint: visibly transparent dirty glass. */
 body:not(.sprich-started) #start-wrap{
   width:min(600px,82%)!important;
   min-height:390px!important;
@@ -1101,19 +1101,35 @@ body:not(.sprich-started) #start-wrap{
   padding:34px 42px 32px!important;
   box-sizing:border-box!important;
   border-radius:34px!important;
-  background-color:transparent!important;
-  background-image:
-    radial-gradient(ellipse at 22% 18%,rgba(255,255,255,.11) 0%,rgba(255,255,255,.025) 18%,transparent 38%),
-    radial-gradient(ellipse at 78% 74%,rgba(50,42,32,.055) 0%,transparent 30%)!important;
-  border:1px solid rgba(255,255,255,.34)!important;
+  background:rgba(255,255,255,.025)!important;
+  border:1px solid rgba(255,255,255,.42)!important;
   box-shadow:
-    inset 1px 1px 0 rgba(255,255,255,.20),
-    inset -1px -1px 0 rgba(60,48,34,.07),
-    0 12px 26px rgba(58,47,32,.09)!important;
-  backdrop-filter:blur(1px) saturate(.92) brightness(1.01)!important;
-  -webkit-backdrop-filter:blur(1px) saturate(.92) brightness(1.01)!important;
+    inset 0 1px 0 rgba(255,255,255,.28),
+    inset 0 0 32px rgba(255,255,255,.035),
+    0 10px 24px rgba(35,29,22,.08)!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
   opacity:1!important;
   transform:none!important;
+  overflow:hidden!important;
+}
+body:not(.sprich-started) #start-wrap::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  border-radius:inherit;
+  opacity:.52;
+  background-image:
+    radial-gradient(ellipse at 16% 22%,rgba(255,255,255,.16) 0 3%,transparent 12%),
+    radial-gradient(ellipse at 76% 34%,rgba(74,61,44,.08) 0 2%,transparent 10%),
+    radial-gradient(ellipse at 42% 78%,rgba(255,255,255,.10) 0 2%,transparent 11%),
+    repeating-radial-gradient(ellipse at 55% 45%,rgba(67,56,42,.035) 0 1px,transparent 1px 11px);
+  mix-blend-mode:soft-light;
+}
+body:not(.sprich-started) #start-wrap > *{
+  position:relative;
+  z-index:1;
 }
 </style>
 </head>
