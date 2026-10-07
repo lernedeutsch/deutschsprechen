@@ -1054,6 +1054,11 @@ button,input{font:inherit}
 </style>
 <link rel="stylesheet" href="../../css/translation-globe.css">
 <link rel="stylesheet" href="../../css/page-progress.css">
+<style id="start-screen-hide-history-only">
+body:not(.sprich-started) .history-panel{display:none!important}
+body:not(.sprich-started) .layout{grid-template-columns:minmax(0,1fr)!important}
+body:not(.sprich-started) .layout .panel{border-radius:23px!important;border-left:0!important}
+</style>
 </head>
 <body id="oben">
 
@@ -1815,6 +1820,7 @@ if(micButton){
 }
 
 document.getElementById("start-btn").addEventListener("click",()=>{
+  document.body.classList.add("sprich-started");
   startWrap.style.display="none";
   exerciseWrap.style.display="block";
   controls.classList.add("active");
