@@ -1097,7 +1097,7 @@ body.sprich-started .lesson-only-next{
 body.sprich-started .lesson-only-next a{display:inline-flex!important}
 </style>
 <style id="start-inner-glass-3d-panel">
-/* ONLY the small start card: real transparent glass over the large beige panel */
+/* ONLY the small start card — clear window glass, no beige fill */
 body:not(.sprich-started) #start-wrap{
   width:min(600px,82%)!important;
   min-height:390px!important;
@@ -1105,17 +1105,17 @@ body:not(.sprich-started) #start-wrap{
   padding:34px 42px 32px!important;
   box-sizing:border-box!important;
   border-radius:34px!important;
-  background:rgba(255,255,255,.025)!important;
-  background-color:rgba(255,255,255,.025)!important;
-  border:1px solid rgba(255,255,255,.18)!important;
+  background:rgba(255,255,255,.008)!important;
+  background-image:none!important;
+  border:1px solid rgba(235,247,255,.24)!important;
   box-shadow:
-    inset 1px 1px 0 rgba(255,255,255,.12),
-    inset 0 -1px 0 rgba(20,40,58,.10),
-    0 12px 28px rgba(20,40,58,.12)!important;
-  backdrop-filter:blur(7px) saturate(.72) contrast(.94)!important;
-  -webkit-backdrop-filter:blur(7px) saturate(.72) contrast(.94)!important;
+    inset 0 1px 0 rgba(255,255,255,.16),
+    inset 0 -1px 0 rgba(35,55,70,.07),
+    0 10px 24px rgba(20,40,58,.10)!important;
+  backdrop-filter:blur(1.5px) brightness(1.015) contrast(.985)!important;
+  -webkit-backdrop-filter:blur(1.5px) brightness(1.015) contrast(.985)!important;
   opacity:1!important;
-  transform:perspective(1100px) rotateX(.7deg) translateZ(0)!important;
+  transform:none!important;
 }
 </style>
 </head>
