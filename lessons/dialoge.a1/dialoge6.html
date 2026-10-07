@@ -1374,7 +1374,15 @@ body{
 <style id="dialoge6-cinematic-gate">
 /* Ekran wejściowy korzysta z czystego dialoge.png. Sama lekcja pozostaje bez zmian. */
 body:has(#gate:not([style*="display: none"])){
-  background:#071a1b url("../../dialoge.png") center center / cover no-repeat fixed;
+  background-image:url("../../dialoge.png") !important;
+  background-position:center center !important;
+  background-size:cover !important;
+  background-repeat:no-repeat !important;
+  background-attachment:fixed !important;
+}
+body:has(#gate:not([style*="display: none"]))::before{
+  content:none !important;
+  display:none !important;
 }
 body:has(#gate:not([style*="display: none"])) .shell{
   max-width:none;
