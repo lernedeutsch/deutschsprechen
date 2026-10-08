@@ -1,1 +1,1641 @@
-<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Diktat A1 · 17 — Gesundheit</title><link rel="stylesheet" href="../../css/page-progress.css"><style>:root{--bg:#152238;--bg2:#1d3350;--gold:#f4c95d;--sky:#6ac6ff;--green:#84df42;--red:#e2685f;--line:#dde7f2}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:linear-gradient(180deg,var(--bg),var(--bg2));color:#101820;font:16px/1.55 Arial,sans-serif}.shell{max-width:760px;margin:auto;padding:18px 16px 60px}.back,.nav a{display:inline-flex;background:#fff;color:#1d3557;border-radius:999px;padding:8px 14px;text-decoration:none;font-weight:800}.hero{text-align:center;color:#fff}.badge{display:inline-block;background:var(--gold);color:#1a2a40;border-radius:999px;padding:7px 14px;font-weight:800}.hero p{color:#c7d7ea}.wave{display:flex;justify-content:center;align-items:end;gap:5px;height:34px;margin:15px}.wave i{display:block;width:6px;height:8px;border-radius:5px;background:linear-gradient(var(--sky),var(--gold))}.wave.play i{animation:dance .8s infinite alternate}.wave i:nth-child(2n){animation-delay:.15s}@keyframes dance{to{height:32px}}.stats{display:flex;justify-content:center;gap:10px;margin:12px}.stat{background:#ffffff12;border:1px solid #ffffff20;border-radius:14px;padding:8px 13px}.card{background:#fff;border-radius:27px;padding:24px;box-shadow:0 16px 38px #0003}.dots{display:flex;gap:8px;margin-bottom:20px}.dot{width:13px;height:13px;border-radius:50%;background:#e7eef7;border:2px solid var(--line)}.dot.active{background:var(--gold)}.dot.done{background:var(--green)}.actions{display:flex;gap:9px;flex-wrap:wrap}.play,.hint,.check,.next,.restart{border:0;border-radius:999px;padding:11px 17px;font-weight:800;cursor:pointer}.play{background:linear-gradient(#6ac6ff,#3da8f0);color:#fff}.hint{border:1px dashed #bcc9d8;background:#fff}.paper{margin-top:18px;padding:17px 20px;background:repeating-linear-gradient(transparent 0,transparent 33px,#506f911f 34px),linear-gradient(#fffaf0,#fff);border:1px solid #eee2c8;border-radius:5px 20px 20px 5px}.paper textarea{width:100%;min-height:80px;resize:vertical;border:0;outline:0;background:transparent;font:600 1.25rem/34px cursive}.hinttext{display:none;color:#4c5d72;margin:10px 0}.hinttext.show{display:block}.feedback{display:none;margin-top:13px;padding:12px;border-radius:13px;font-weight:700}.feedback.show{display:block}.feedback.ok{background:#eef9e4;color:#2f5c14}.feedback.no{background:#fdeeee;color:#7a2323}.controls{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:12px}.check{background:var(--gold)}.next{display:none;background:#825fe0;color:#fff}.final{display:none;text-align:center;padding:15px}.final.show{display:block}.restart{background:var(--gold)}.nav{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:22px}@media(max-width:520px){.card{padding:17px}.actions button,.controls button{flex:1}.paper{padding:14px}}</style></head><body><main class="shell"><a class="back" href="../a1/lektion-17.html">← Lektion 17</a><header class="hero"><span class="badge">A1 · Lektion 17</span><h1>✍️ Ich schreibe ein Diktat</h1><p>Gesundheit · Höre genau zu und schreibe den Satz.</p><div class="wave" id="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="stats"><span class="stat" id="count">1 / 5</span><span class="stat" id="score">0 richtig</span></div></header><section class="card"><div id="work"><div class="dots" id="dots"></div><div class="actions"><button class="play" id="play">🔊 Anhören</button><button class="hint" id="hint">💡 Hinweis</button></div><p class="hinttext" id="hinttext"></p><div class="paper"><textarea id="input" placeholder="Schreib hier, was du hörst …"></textarea></div><div class="feedback" id="fb"></div><div class="controls"><button class="check" id="check">Prüfen ✓</button><button class="next" id="next">Nächster Satz →</button></div></div><div class="final" id="final"><div style="font-size:3rem">🎉</div><h2>Sehr gut!</h2><p id="result"></p><button class="restart" id="restart">Noch einmal</button></div></section><nav class="nav"><a href="../dialoge.a1/dialoge17.html">← ⑤ Dialoge</a><a href="../a1/lektion-18.html">Lektion 18 →</a></nav></main><script>const A=["Ich habe Halsschmerzen.","Mein Kopf tut weh.","Ich habe kein Fieber.","Ich brauche einen Termin beim Arzt.","Trinken Sie bitte viel Wasser."];let i=0,score=0,checked=false;const E=x=>document.getElementById(x),N=x=>x.toLowerCase().trim().replace(/[.,!?]/g,"").replace(/\s+/g," ");function dots(){E("dots").innerHTML=A.map((_,j)=>'<span class="dot '+(j<i?"done":j===i?"active":"")+'"></span>').join("")}function speak(){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(A[i]);u.lang="de-DE";u.rate=.78;E("wave").classList.add("play");u.onend=()=>E("wave").classList.remove("play");speechSynthesis.speak(u)}function reset(){checked=false;E("input").value="";E("fb").className="feedback";E("fb").textContent="";E("next").style.display="none";E("hinttext").classList.remove("show");E("hinttext").textContent=A[i].split(" ").map(w=>w[0]+"…").join(" ");E("count").textContent=(i+1)+" / "+A.length;dots()}E("play").onclick=speak;E("hint").onclick=()=>E("hinttext").classList.toggle("show");E("check").onclick=()=>{if(checked)return;let v=N(E("input").value),a=N(A[i]);if(!v)return;if(v===a){score++;E("fb").textContent="✓ Richtig! "+A[i];E("fb").className="feedback show ok"}else{E("fb").textContent="Noch nicht ganz. Richtig ist: „"+A[i]+"“";E("fb").className="feedback show no"}checked=true;E("score").textContent=score+" richtig";E("next").style.display="inline-block"};E("next").onclick=()=>{i++;if(i<A.length){reset();setTimeout(speak,250)}else{E("work").style.display="none";E("final").classList.add("show");E("result").textContent="Du hast "+score+" von "+A.length+" Sätzen richtig geschrieben."}};E("restart").onclick=()=>{i=0;score=0;E("score").textContent="0 richtig";E("work").style.display="block";E("final").classList.remove("show");reset()};reset();</script><script src="../../js/page-progress.js" defer></script></body></html>
+<!DOCTYPE html>
+<!-- Diktat A1.177 based on DIKTAT-TEMPLATE-V1. -->
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Diktat A1 · 17 — Gesundheit</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Nunito+Sans:opsz,wght@6..12,400,600,700,800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#152238;
+  --bg2:#1d3350;
+  --ink:#101820;
+  --muted:#4c5d72;
+  --line:#dde7f2;
+  --paper:#fffaf0;
+  --gold:#f4c95d;
+  --gold-deep:#b98200;
+  --sky:#6ac6ff;
+  --sky-deep:#3da8f0;
+  --leaf:#84df42;
+  --leaf-deep:#5fbd28;
+  --plum:#a88af5;
+  --plum-deep:#825fe0;
+  --rose:#e2685f;
+  --shadow:0 16px 38px rgba(8,16,30,.16);
+  --shadow-soft:0 10px 22px rgba(8,16,30,.10);
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  min-height:100vh;
+  color:var(--ink);
+  font:400 1rem/1.6 "Nunito Sans",sans-serif;
+  background:
+    radial-gradient(circle at 12% -10%,rgba(255,255,255,.10),transparent 38%),
+    radial-gradient(circle at 100% 110%,rgba(255,255,255,.07),transparent 40%),
+    linear-gradient(180deg,var(--bg),var(--bg2));
+}
+
+button,textarea{font:inherit}
+
+.top-back{
+  position:absolute;
+  top:18px;
+  left:18px;
+  z-index:20;
+  max-width:none;
+  margin:0;
+  padding:0;
+}
+.back-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:7px 13px;
+  color:#1d3557;
+  background:#fff;
+  border:1px solid #dce3ed;
+  border-radius:999px;
+  text-decoration:none;
+  font:800 .86rem "Nunito Sans",sans-serif;
+  box-shadow:0 5px 14px rgba(0,0,0,.18);
+}
+.back-btn:hover{
+  border-color:var(--gold);
+  transform:translateY(-1px);
+}
+
+.shell{
+  max-width:760px;
+  margin:0 auto;
+  padding:18px 18px 70px;
+}
+
+/* ---------- HERO ---------- */
+
+.hero > h1,
+.hero > p,
+.hero > .hero-translation{display:none !important}
+
+.hero{
+  text-align:center;
+  padding:6px 20px 12px;
+  margin-bottom:12px;
+}
+
+.hero-badge{
+  display:inline-block;
+  margin-bottom:10px;
+  padding:7px 16px;
+  color:#1a2a40;
+  background:var(--gold);
+  border-radius:999px;
+  font:800 .78rem "JetBrains Mono",monospace;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+
+.hero h1{
+  margin:0 0 6px;
+  color:#fff;
+  font:700 clamp(1.75rem,4.2vw,2.3rem)/1.12 "Kalam",cursive;
+}
+
+.hero p{
+  margin:0 auto;
+  max-width:42ch;
+  color:#c7d7ea;
+  font-size:.94rem;
+  line-height:1.45;
+}
+
+.hero-translation{
+  display:flex;
+  justify-content:center;
+  margin-top:7px;
+  position:relative;
+}
+.translation-toggle{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:4px 9px;
+  color:#4c4028;
+  background:#fffdf6;
+  border:1px solid #d8c28c;
+  border-radius:999px;
+  cursor:pointer;
+  font:800 .75rem "Nunito Sans",sans-serif;
+}
+.translation-toggle:hover,.translation-toggle:focus-visible{
+  background:#fff3c8;
+  border-color:#cf9f3f;
+}
+.translation-panel{
+  display:none;
+  position:absolute;
+  top:36px;
+  z-index:30;
+  width:250px;
+  padding:9px;
+  background:#fffdf7;
+  border:1px solid #d9c28e;
+  border-radius:12px;
+  box-shadow:0 12px 25px rgba(0,0,0,.18);
+}
+.hero-translation.open .translation-panel,
+.hero-translation:hover .translation-panel,
+.hero-translation:focus-within .translation-panel{
+  display:block;
+}
+.translation-languages{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  margin-bottom:7px;
+}
+.translation-language{
+  padding:4px 7px;
+  color:#26364b;
+  background:#f7f1e3;
+  border:1px solid #ddcfaa;
+  border-radius:999px;
+  cursor:pointer;
+  font-size:.7rem;
+  font-weight:800;
+}
+.translation-language.active{
+  background:#e4f3e8;
+  border-color:#78bf95;
+  color:#28502f;
+}
+.translation-text{
+  display:none;
+  margin:0;
+  padding:7px 8px;
+  color:#26364b;
+  background:#fff7d8;
+  border-radius:8px;
+  font-size:.76rem;
+  line-height:1.35;
+  font-weight:700;
+}
+.translation-text.show{display:block}
+
+.waveform{
+  display:flex;
+  flex:0 0 auto;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  height:42px;
+  margin:0 4px;
+  padding:0 4px;
+}
+
+.waveform span{
+  width:8px;
+  height:8px;
+  border-radius:5px;
+  background:linear-gradient(180deg,#5bd6df,#2d9cb6);
+  transform-origin:bottom;
+  transition:height .18s ease;
+}
+
+.waveform.playing span{
+  animation:dance .9s ease-in-out infinite;
+}
+
+.waveform span:nth-child(1){animation-delay:0s}
+.waveform span:nth-child(2){animation-delay:.1s}
+.waveform span:nth-child(3){animation-delay:.2s}
+.waveform span:nth-child(4){animation-delay:.3s}
+.waveform span:nth-child(5){animation-delay:.15s}
+.waveform span:nth-child(6){animation-delay:.25s}
+.waveform span:nth-child(7){animation-delay:.05s}
+
+@keyframes dance{
+  0%,100%{height:8px}
+  50%{height:34px}
+}
+
+.hero-stats{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:5px;
+}
+
+.stat{
+  min-width:82px;
+  padding:8px 12px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:16px;
+  backdrop-filter:blur(6px);
+}
+
+.stat-value{
+  display:block;
+  color:#fff;
+  font:800 1.12rem "JetBrains Mono",monospace;
+}
+
+.stat-label{
+  display:block;
+  margin-top:1px;
+  color:#a9bcd4;
+  font-size:.66rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+
+/* ---------- CARD ---------- */
+
+.card{
+  padding:26px;
+  background:#fff;
+  border-radius:28px;
+  box-shadow:var(--shadow);
+}
+
+.progress-track{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:22px;
+}
+
+.dot{
+  width:13px;
+  height:13px;
+  border-radius:50%;
+  background:#e7eef7;
+  border:2px solid var(--line);
+  transition:all .2s;
+}
+
+.dot.done{background:var(--leaf);border-color:var(--leaf-deep)}
+.dot.active{background:var(--gold);border-color:var(--gold-deep);transform:scale(1.3)}
+
+.listen-row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:6px;
+}
+
+.play-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:14px 22px;
+  border:none;
+  border-radius:999px;
+  cursor:pointer;
+  color:#fff;
+  background:linear-gradient(180deg,var(--sky),var(--sky-deep));
+  font:800 1.02rem "Nunito Sans",sans-serif;
+  box-shadow:0 10px 20px rgba(61,168,240,.30);
+  transition:transform .18s,filter .18s;
+}
+
+.play-btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+
+.hint-btn,
+.skip-btn{
+  background:none;
+  border:1px dashed var(--line);
+  border-radius:999px;
+  padding:10px 16px;
+  cursor:pointer;
+  color:var(--muted);
+  font:700 .82rem "JetBrains Mono",monospace;
+  transition:border-color .16s,color .16s;
+}
+
+.hint-btn:hover,
+.skip-btn:hover{border-color:#81bfff;color:var(--ink)}
+
+.skip-btn:not(.continue-btn){
+  background:#f4f9ff;
+  border:1px dashed #9dbedc;
+  color:#345575;
+  box-shadow:0 2px 7px rgba(44,100,149,.09);
+}
+
+.skip-btn.continue-btn{
+  background:#43adf3;
+  border:2px solid #43adf3;
+  color:#fff;
+  font:800 1rem "JetBrains Mono",monospace;
+  padding:14px 23px;
+  box-shadow:0 7px 20px rgba(39,148,221,.25);
+}
+@keyframes diktat-continue-pulse{
+  0%,100%{transform:scale(1);box-shadow:0 7px 20px rgba(39,148,221,.25)}
+  50%{transform:scale(1.045);box-shadow:0 9px 28px rgba(39,148,221,.48)}
+}
+.skip-btn.continue-btn{
+  animation:diktat-continue-pulse 1.7s ease-in-out infinite;
+}
+@media (prefers-reduced-motion:reduce){
+  .skip-btn.continue-btn{animation:none}
+}
+
+.skip-btn.continue-btn:hover{
+  background:#228fd6;
+  border-color:#228fd6;
+  color:#fff;
+}
+
+.hint-text{
+  display:none;
+  margin:10px 0 0;
+  color:var(--muted);
+  font:600 1.15rem "JetBrains Mono",monospace;
+  letter-spacing:.04em;
+}
+
+.hint-text.show{display:block}
+
+.paper{
+  position:relative;
+  margin-top:18px;
+  padding:30px 46px 26px 20px;
+  min-height:215px;
+  background:
+    repeating-linear-gradient(transparent 0,transparent 33px,rgba(80,111,145,.12) 34px),
+    linear-gradient(180deg,var(--paper),#fff);
+  border:1px solid #eee2c8;
+  border-radius:4px 20px 20px 4px;
+  box-shadow:inset 34px 0 0 rgba(226,104,95,.07),var(--shadow-soft);
+}
+
+.paper::before{
+  content:"";
+  position:absolute;
+  top:0;bottom:0;left:34px;
+  width:2px;
+  background:rgba(226,104,95,.25);
+}
+
+.dict-input{
+  position:relative;
+  z-index:1;
+  display:block;
+  width:100%;
+  border:none;
+  background:transparent;
+  resize:none;
+  color:var(--ink);
+  font:600 1.25rem/34px "Kalam",cursive;
+  min-height:150px;
+  padding:0 0 0 8px;
+}
+
+.dict-input:focus{outline:none}
+.dict-input:disabled{color:#7c8ea3}
+
+.status-icon{
+  position:absolute;
+  right:16px;
+  top:18px;
+  z-index:2;
+  font-size:1.3rem;
+  opacity:0;
+  transition:opacity .2s,transform .2s;
+}
+
+.status-icon.show{opacity:1}
+.status-icon.spin{animation:spin 1s linear infinite}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.feedback{
+  display:none;
+  margin-top:14px;
+  padding:14px 16px;
+  border-radius:14px;
+  font-size:1.02rem;
+  line-height:1.6;
+}
+
+.feedback.show{display:block;animation:pop .22s ease-out}
+
+@keyframes pop{
+  from{opacity:0;transform:translateY(-6px) scale(.98)}
+  to{opacity:1;transform:none}
+}
+
+.feedback.correct{background:#eef9e4;border:1px solid #bfe7a0;color:#2f5c14}
+.feedback.wrong{background:#fdeeee;border:1px solid #f3c5c5;color:#7a2323}
+
+.word-ok{color:#2f8f1a;font-weight:800}
+.word-bad{color:#c23b3b;font-weight:800;text-decoration:underline wavy #c23b3b}
+
+.skip-row{
+  display:flex;
+  justify-content:flex-end;
+  margin-top:12px;
+}
+
+/* ---------- FINAL ---------- */
+
+.final{
+  display:none;
+  text-align:center;
+  padding:20px 10px 6px;
+  position:relative;
+}
+
+.final.show{display:block;animation:pop .3s ease-out}
+
+.final-emoji{font-size:3rem;margin-bottom:6px}
+
+.final-title{
+  margin:0 0 8px;
+  font:700 2rem "Kalam",cursive;
+}
+
+.final-sub{
+  margin:0 0 20px;
+  color:var(--muted);
+}
+
+.final-stars{font-size:2rem;letter-spacing:4px;margin-bottom:22px}
+
+.restart-btn{
+  padding:13px 24px;
+  border:none;
+  border-radius:14px;
+  cursor:pointer;
+  color:#fff;
+  background:linear-gradient(180deg,var(--gold),var(--gold-deep));
+  font:800 1rem "Nunito Sans",sans-serif;
+  box-shadow:0 10px 20px rgba(185,130,0,.28);
+  transition:transform .18s,filter .18s;
+}
+
+.restart-btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+
+/* ---------- CONFETTI ---------- */
+
+.confetti-piece{
+  position:fixed;
+  top:-24px;
+  z-index:50;
+  font-size:1.4rem;
+  pointer-events:none;
+  animation:fall linear forwards;
+}
+
+@keyframes fall{
+  to{
+    transform:translateY(110vh) rotate(360deg);
+    opacity:0;
+  }
+}
+
+.footnote{
+  margin-top:22px;
+  text-align:center;
+  color:#8fa4bd;
+  font-size:.86rem;
+}
+
+.lesson-complete{
+  margin:26px auto 0;
+  text-align:center;
+}
+
+.lesson-complete-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:54px;
+  padding:12px 22px;
+  border:0;
+  border-radius:999px;
+  cursor:pointer;
+  color:#fff;
+  background:linear-gradient(180deg,var(--gold),var(--gold-deep));
+  font:800 1rem "Nunito Sans",sans-serif;
+  box-shadow:0 10px 22px rgba(185,130,0,.30);
+  transition:transform .18s,filter .18s,box-shadow .18s;
+  animation:none;
+}
+
+@keyframes lessonCompletePulse{
+  0%,100%{
+    transform:scale(1);
+    box-shadow:
+      0 10px 22px rgba(185,130,0,.30),
+      0 0 0 0 rgba(255,210,69,.45);
+  }
+  50%{
+    transform:scale(1.085);
+    box-shadow:
+      0 16px 32px rgba(185,130,0,.45),
+      0 0 0 10px rgba(255,210,69,.12),
+      0 0 28px rgba(255,210,69,.55);
+  }
+}
+
+.lesson-complete-btn:hover{
+  filter:brightness(1.08);
+}
+
+.lesson-complete-paper{
+  display:none;
+  max-width:720px;
+  margin:16px auto 0;
+  padding:22px;
+  color:#172033;
+  text-align:left;
+  background:#fff8e8;
+  border:1px solid #e4c978;
+  border-radius:20px;
+  box-shadow:0 18px 38px rgba(0,0,0,.18);
+}
+
+.lesson-complete-paper.show{
+  display:block;
+  animation:pop .3s ease-out;
+}
+
+.lesson-complete-paper h2{
+  margin:0 0 14px;
+  text-align:center;
+  font:800 1.45rem "Nunito Sans",sans-serif;
+}
+
+.lesson-complete-paper p{
+  margin:10px 0;
+}
+
+.lesson-complete-list{
+  display:grid;
+  gap:7px;
+  margin:12px 0 14px;
+}
+
+.lesson-complete-end{
+  text-align:center;
+  font-weight:800;
+}
+
+.lesson-complete-translation{
+  position:relative;
+  display:flex;
+  justify-content:center;
+  margin:16px 0 2px;
+}
+
+.lesson-complete-translation .translation-panel{
+  left:50%;
+  transform:translateX(-50%);
+  top:34px;
+}
+
+.lesson-complete-translation.open .translation-panel,
+.lesson-complete-translation:hover .translation-panel,
+.lesson-complete-translation:focus-within .translation-panel{
+  display:block;
+}
+
+.lesson-complete-translation-language{
+  padding:4px 7px;
+  color:#26364b;
+  background:#f7f1e3;
+  border:1px solid #ddcfaa;
+  border-radius:999px;
+  cursor:pointer;
+  font-size:.7rem;
+  font-weight:800;
+}
+
+.lesson-complete-translation-language.active{
+  background:#e4f3e8;
+  border-color:#78bf95;
+  color:#28502f;
+}
+
+.continue-learning{
+  max-width:720px;
+  margin:20px auto 0;
+  padding:16px 18px;
+  text-align:center;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:18px;
+}
+
+.continue-learning-title{
+  margin:0 0 12px;
+  color:#fff;
+  font:800 1rem "Nunito Sans",sans-serif;
+}
+
+.continue-learning-actions{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+}
+
+.continue-learning-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:44px;
+  padding:9px 15px;
+  color:#fff;
+  text-decoration:none;
+  border-radius:999px;
+  font-weight:800;
+  box-shadow:0 7px 16px rgba(0,0,0,.18);
+  transition:transform .16s,filter .16s;
+}
+
+.continue-learning-link:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.06);
+}
+
+.continue-learning-link.nele{
+  background:linear-gradient(180deg,#3da8f0,#237fc2);
+}
+
+.continue-learning-link.next{
+  background:linear-gradient(180deg,#6fcf32,#3f9820);
+}
+
+.continue-translation{
+  position:relative;
+  display:flex;
+  justify-content:center;
+  margin-top:12px;
+}
+
+.continue-translation .translation-panel{
+  left:50%;
+  transform:translateX(-50%);
+  top:34px;
+}
+
+.continue-translation.open .translation-panel,
+.continue-translation:hover .translation-panel,
+.continue-translation:focus-within .translation-panel{
+  display:block;
+}
+
+.continue-translation-language{
+  padding:4px 7px;
+  color:#26364b;
+  background:#f7f1e3;
+  border:1px solid #ddcfaa;
+  border-radius:999px;
+  cursor:pointer;
+  font-size:.7rem;
+  font-weight:800;
+}
+
+.continue-translation-language.active{
+  background:#e4f3e8;
+  border-color:#78bf95;
+  color:#28502f;
+}
+
+.a1-overview-arrow{
+  display:grid;
+  place-items:center;
+  width:52px;
+  height:52px;
+  margin:18px auto 0;
+  color:#172033;
+  background:#fff;
+  border:1px solid #d9dfeb;
+  border-radius:50%;
+  text-decoration:none;
+  font-size:1.45rem;
+  font-weight:800;
+  box-shadow:0 8px 18px rgba(0,0,0,.20);
+  transition:transform .18s,filter .18s;
+}
+
+.a1-overview-arrow:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.04);
+}
+
+@media(max-width:520px){
+  .card{padding:18px}
+  .paper{padding:16px 40px 14px 14px}
+  .paper::before{left:20px}
+  .stat{min-width:80px;padding:10px 12px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+  }
+}
+</style>
+
+<style>
+.translation-globe{
+  display:inline-block;
+  font-size:1.30em;
+  line-height:1;
+  vertical-align:-.10em;
+  filter:hue-rotate(115deg) saturate(2.8) brightness(1.28) contrast(1.18) drop-shadow(0 0 4px rgba(255,74,190,.72));
+}
+</style>
+<link rel="stylesheet" href="../../css/translation-globe.css">
+<link rel="stylesheet" href="../../css/page-progress.css">
+<style id="diktat-start-screen-style">
+body:not(.diktat-started) .top-back,
+body:not(.diktat-started) .shell{display:none !important}
+.diktat-start-screen{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:35px 20px;
+  color:#fff;
+  text-align:center;
+}
+body.diktat-started .diktat-start-screen{display:none}
+.diktat-start-screen h1{
+  font:700 clamp(2.1rem,5vw,3.5rem)/1.2 "Kalam",cursive;
+  margin:0 0 20px;
+  color:#fff;
+}
+.diktat-start-panel{
+  position:relative;
+  isolation:isolate;
+  width:min(850px,100%);
+  border:2px solid rgba(230,255,255,.56);
+  border-radius:34px;
+  padding:clamp(28px,6vw,65px) 22px;
+  background:linear-gradient(145deg,rgba(67,178,186,.22),rgba(124,221,219,.11) 48%,rgba(29,113,137,.23));
+  backdrop-filter:blur(13px) saturate(140%);
+  -webkit-backdrop-filter:blur(13px) saturate(140%);
+  box-shadow:0 28px 65px rgba(0,15,29,.3),inset 0 2px 5px rgba(255,255,255,.65);
+}
+.diktat-start-glass{
+  position:relative;
+  z-index:1;
+  max-width:640px;
+  margin:auto;
+  padding:40px 24px;
+  border:2px solid rgba(239,255,255,.82);
+  border-radius:30px;
+  background:linear-gradient(130deg,rgba(232,255,255,.23),rgba(139,226,229,.095) 54%,rgba(226,255,252,.16));
+  backdrop-filter:blur(9px) saturate(125%);
+  -webkit-backdrop-filter:blur(9px) saturate(125%);
+  box-shadow:0 32px 48px rgba(0,25,39,.36),0 10px 15px rgba(0,32,44,.22),inset 0 3px 3px rgba(255,255,255,.82),inset 0 -7px 15px rgba(8,84,104,.12);
+  color:#244b5b;
+}
+.diktat-start-glass::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  pointer-events:none;
+  left:9%;
+  right:9%;
+  bottom:-29px;
+  height:35px;
+  border-radius:50%;
+  background:rgba(103,245,246,.62);
+  filter:blur(25px);
+  box-shadow:0 0 45px 18px rgba(93,227,233,.32);
+}
+.diktat-start-glass::after{
+  content:"";
+  position:absolute;
+  pointer-events:none;
+  inset:7px;
+  border-radius:24px;
+  border-top:1px solid rgba(255,255,255,.68);
+  border-left:1px solid rgba(255,255,255,.24);
+}
+.diktat-start-icon{
+  display:grid;
+  place-items:center;
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  margin:0 auto 26px;
+  background:#1b334c;
+  box-shadow:0 8px 22px rgba(0,0,0,.2);
+  font-size:2.6rem;
+}
+.diktat-start-glass > p{font:700 clamp(1.05rem,2.5vw,1.25rem)/1.6 "Nunito Sans",sans-serif;margin:0 auto 28px;max-width:500px;color:#173b4a;text-shadow:0 1px 0 rgba(255,255,255,.42)}
+.diktat-start-button{
+  border:0;
+  border-radius:999px;
+  padding:14px 42px;
+  background:linear-gradient(180deg,#67c6ff,#37a8ee);
+  color:#fff;
+  font:800 1.2rem "Nunito Sans",sans-serif;
+  cursor:pointer;
+  box-shadow:0 10px 24px rgba(37,149,223,.28);
+}
+.diktat-start-translation{position:relative;margin:0 auto 18px;max-width:520px}
+.diktat-start-translation-toggle{border:1px solid rgba(54,81,107,.3);border-radius:999px;padding:7px 14px;background:rgba(255,255,255,.55);color:#36516b;font:700 .85rem "Nunito Sans",sans-serif;cursor:pointer}
+.diktat-start-translation-panel{display:none;margin:10px auto 0;padding:13px;border:1px solid rgba(54,81,107,.15);border-radius:16px;background:rgba(255,255,255,.65);color:#36516b}
+.diktat-start-translation-panel.show{display:block}
+.diktat-start-languages{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+.diktat-start-languages button{border:1px solid rgba(54,81,107,.25);border-radius:12px;padding:6px 10px;background:#fff;color:#36516b;cursor:pointer}
+.diktat-start-glass .diktat-start-translation-text{margin:12px auto 0;font-size:1rem;line-height:1.5}
+.diktat-start-button:hover{filter:brightness(1.06)}
+.diktat-start-button:focus-visible{outline:3px solid #1b334c;outline-offset:4px}
+</style>
+</head>
+<body>
+<section class="diktat-start-screen" id="diktat-start-screen" aria-label="Diktat starten">
+  <h1>Hör zu. Schreib. Weiter geht's.</h1>
+  <div class="diktat-start-panel">
+    <div class="diktat-start-glass">
+      <div class="diktat-start-icon" aria-hidden="true">✍️</div>
+      <p>Du hörst 5 deutsche Sätze aus Lektion 17. Schreib auf, was du hörst. Bei einer richtigen Antwort geht es automatisch weiter.</p>
+      <div class="diktat-start-translation">
+        <button type="button" class="diktat-start-translation-toggle" id="diktat-start-translation-toggle" aria-expanded="false">🌐 A/文</button>
+        <div class="diktat-start-translation-panel" id="diktat-start-translation-panel">
+          <div class="diktat-start-languages">
+            <button type="button" data-start-lang="pl">Polski</button>
+            <button type="button" data-start-lang="en">English</button>
+            <button type="button" data-start-lang="it">Italiano</button>
+          </div>
+          <p class="diktat-start-translation-text" id="diktat-start-translation-text"></p>
+        </div>
+      </div>
+      <button type="button" class="diktat-start-button" id="diktat-start-button">▶ Start</button>
+    </div>
+  </div>
+</section>
+
+
+
+<div class="top-back">
+  <a href="../a1/lektion-17.html" class="back-btn" aria-label="Zurück zu Lektion 17" title="Zurück zu Lektion 17">←</a>
+</div>
+
+<div class="shell">
+
+  <header class="hero">
+
+    <h1>Hör zu. Schreib. Weiter geht's.</h1>
+    <p>
+      5 Sätze aus „Lektion 17“. Schreib, was du hörst —
+      bei einem richtigen Satz geht es automatisch weiter.
+    </p>
+
+    <div class="hero-translation" id="hero-translation">
+      <button type="button" class="translation-toggle" id="translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung">
+        <span class="translation-globe">🌐</span>A/文
+      </button>
+      <div class="translation-panel">
+        <div class="translation-languages">
+          <button type="button" class="translation-language" data-lang="en">English</button>
+          <button type="button" class="translation-language" data-lang="pl">Polski</button>
+          <button type="button" class="translation-language" data-lang="it">Italiano</button>
+        </div>
+        <p class="translation-text" id="translation-text" aria-live="polite"></p>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+
+      <div class="stat">
+        <span class="stat-value" id="stat-score">0/10</span>
+        <span class="stat-label">Punkte</span>
+      </div>
+
+      <div class="stat">
+        <span class="stat-value" id="stat-streak">0🔥</span>
+        <span class="stat-label">Serie</span>
+      </div>
+
+      <div class="stat">
+        <span class="stat-value" id="stat-progress">1/5</span>
+        <span class="stat-label">Satz</span>
+      </div>
+
+    </div>
+
+  </header>
+
+  <main class="card">
+
+    <div class="progress-track" id="progress-track"></div>
+
+    <div id="stage">
+
+      <div class="listen-row">
+
+        <button type="button" class="play-btn" id="play-btn">
+          🔊 Nochmal hören
+        </button>
+
+        <div class="waveform" id="waveform" aria-label="Lektor mówi" role="img">
+          <span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+        </div>
+
+        <button type="button" class="hint-btn" id="hint-btn">
+          💡 Tipp
+        </button>
+
+        <button type="button" class="hint-btn" id="show-answer-btn">
+          👁 Antwort zeigen
+        </button>
+
+      </div>
+
+      <p class="hint-text" id="hint-text"></p>
+
+      <div class="paper">
+        <textarea
+          class="dict-input"
+          id="dict-input"
+          rows="1"
+          placeholder="✍️ … schreib hier, was du hörst …"
+          aria-label="Deine Antwort"
+        ></textarea>
+
+        <span class="status-icon" id="status-icon"></span>
+      </div>
+
+      <div class="feedback" id="feedback"></div>
+
+      <div class="skip-row">
+        <button type="button" class="skip-btn" id="skip-btn">
+          Satz überspringen →
+        </button>
+      </div>
+
+    </div>
+
+    <div class="final" id="final">
+
+      <div class="final-emoji" id="final-emoji">🎉</div>
+      <div class="final-title" id="final-title">Geschafft!</div>
+      <p class="final-sub" id="final-sub"></p>
+      <div class="final-stars" id="final-stars"></div>
+
+      <button type="button" class="restart-btn" id="restart-btn">
+        🔄 Noch einmal
+      </button>
+
+    </div>
+
+  </main>
+
+  <p class="footnote">
+    Tipp: Kopfhörer machen's einfacher. Die Aussprache kommt aus deinem
+    Browser (Web Speech API).
+  </p>
+
+  <section class="lesson-complete">
+    <button
+      type="button"
+      class="lesson-complete-btn"
+      id="lesson-complete-btn"
+      aria-expanded="false"
+      aria-controls="lesson-complete-paper"
+    >
+      🏆 Lektion A1.17 geschafft!
+    </button>
+
+    <div
+      class="lesson-complete-paper"
+      id="lesson-complete-paper"
+      aria-hidden="true"
+    >
+      <h2>🎉 Geschafft! Du hast das Diktat A1.17 abgeschlossen.</h2>
+
+      <p>Du hast das Diktat dieser Lektion trainiert:</p>
+
+      <p><strong>Diktat</strong></p>
+
+      <p><strong>Das hast du geübt:</strong></p>
+
+      <div class="lesson-complete-list"><span>✅ 5 Sätze aus Lektion 17 gehört und geschrieben</span></div>
+
+      <p class="lesson-complete-end">Sehr gut gemacht! 🌟</p>
+
+      <div class="lesson-complete-translation" id="lesson-complete-translation">
+        <button
+          type="button"
+          class="translation-toggle"
+          id="lesson-complete-translation-toggle"
+          aria-label="Übersetzung anzeigen"
+          title="Übersetzung"
+        >
+          <span class="translation-globe">🌐</span>A/文
+        </button>
+
+        <div class="translation-panel">
+          <div class="translation-languages">
+            <button type="button" class="lesson-complete-translation-language" data-lang="en">English</button>
+            <button type="button" class="lesson-complete-translation-language" data-lang="pl">Polski</button>
+            <button type="button" class="lesson-complete-translation-language" data-lang="it">Italiano</button>
+          </div>
+          <p class="translation-text" id="lesson-complete-translation-text" aria-live="polite"></p>
+        </div>
+      </div>
+    </div>
+
+    <a
+      href="../a1/index.html"
+      class="a1-overview-arrow"
+      aria-label="Zur A1-Übersicht"
+      title="Zur A1-Übersicht"
+    >
+      ←
+    </a>
+  </section>
+
+</div>
+
+<script>
+/* ---------------- Inhalt ---------------- */
+
+const sentences=[
+  "Ich habe Halsschmerzen.",
+  "Mein Kopf tut weh.",
+  "Ich habe kein Fieber.",
+  "Ich brauche einen Termin beim Arzt.",
+  "Trinken Sie bitte viel Wasser."
+];
+
+/* ---------------- Sprachausgabe ---------------- */
+
+let germanVoice=null;
+
+function loadGermanVoice(){
+  if(!("speechSynthesis" in window))return;
+
+  const voices=speechSynthesis.getVoices();
+
+  germanVoice=
+    voices.find(v=>v.lang?.toLowerCase()==="de-de"&&v.name.toLowerCase().includes("google"))||
+    voices.find(v=>v.lang?.toLowerCase()==="de-de")||
+    voices.find(v=>v.lang?.toLowerCase().startsWith("de"))||
+    null;
+}
+
+loadGermanVoice();
+
+if("speechSynthesis" in window){
+  speechSynthesis.addEventListener("voiceschanged",loadGermanVoice);
+}
+
+function speakGerman(text,options={}){
+  return new Promise(resolve=>{
+    if(!text||!("speechSynthesis" in window)){
+      resolve();
+      return;
+    }
+
+    speechSynthesis.cancel();
+
+    const utterance=new SpeechSynthesisUtterance(text);
+
+    Object.assign(utterance,{
+      lang:"de-DE",
+      rate:options.rate??.88,
+      pitch:options.pitch??1,
+      volume:options.volume??1
+    });
+
+    if(germanVoice)utterance.voice=germanVoice;
+
+    utterance.onend=resolve;
+    utterance.onerror=resolve;
+
+    speechSynthesis.speak(utterance);
+  });
+}
+
+/* ---------------- Elemente ---------------- */
+
+const els={
+  waveform:document.getElementById("waveform"),
+  progressTrack:document.getElementById("progress-track"),
+  stage:document.getElementById("stage"),
+  playBtn:document.getElementById("play-btn"),
+  hintBtn:document.getElementById("hint-btn"),
+  showAnswerBtn:document.getElementById("show-answer-btn"),
+  hintText:document.getElementById("hint-text"),
+  input:document.getElementById("dict-input"),
+  statusIcon:document.getElementById("status-icon"),
+  feedback:document.getElementById("feedback"),
+  skipBtn:document.getElementById("skip-btn"),
+  final:document.getElementById("final"),
+  finalEmoji:document.getElementById("final-emoji"),
+  finalTitle:document.getElementById("final-title"),
+  finalSub:document.getElementById("final-sub"),
+  finalStars:document.getElementById("final-stars"),
+  restartBtn:document.getElementById("restart-btn"),
+  statScore:document.getElementById("stat-score"),
+  statStreak:document.getElementById("stat-streak"),
+  statProgress:document.getElementById("stat-progress")
+};
+
+/* ---------------- Zustand ---------------- */
+
+let order=[];
+let index=0;
+let score=0;
+let streak=0;
+let bestStreak=0;
+let hintUsedFor=[];
+let answered=false;
+let debounceTimer=null;
+let playbackTimer=null;
+let advanceTimer=null;
+let sessionVersion=0;
+let playbackVersion=0;
+function clearQuestionTimers(){
+  clearTimeout(debounceTimer);
+  clearTimeout(playbackTimer);
+  clearTimeout(advanceTimer);
+  debounceTimer=playbackTimer=advanceTimer=null;
+}
+function stopPlayback(){
+  playbackVersion++;
+  if("speechSynthesis" in window)speechSynthesis.cancel();
+  els.waveform.classList.remove("playing");
+  els.playBtn.disabled=false;
+}
+
+
+function shuffle(array){
+  const copy=[...array];
+
+  for(let i=copy.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [copy[i],copy[j]]=[copy[j],copy[i]];
+  }
+
+  return copy;
+}
+
+function normalize(sentence){
+  return sentence
+    .toLowerCase()
+    .replace(/[.,!?;:„“"]/g,"")
+    .replace(/\s+/g," ")
+    .trim();
+}
+
+function target(){
+  return sentences[order[index]];
+}
+
+function buildHint(sentence){
+  return sentence
+    .split(" ")
+    .map(word=>{
+      const match=word.match(/^([A-Za-zÄÖÜäöüß]+)([.,!?;:]*)$/);
+
+      if(!match)return word;
+
+      const letters=match[1];
+      const punctuation=match[2];
+
+      if(letters.length<=1)return letters+punctuation;
+
+      return letters[0]+"_".repeat(letters.length-1)+punctuation;
+    })
+    .join(" ");
+}
+
+function buildWordDiff(targetSentence,typed){
+  const targetWords=targetSentence.split(" ");
+  const typedWords=typed.split(" ");
+  const max=Math.max(targetWords.length,typedWords.length);
+  const html=[];
+
+  for(let i=0;i<max;i++){
+    const t=targetWords[i]?normalize(targetWords[i]):null;
+    const u=typedWords[i]?normalize(typedWords[i]):null;
+    const display=targetWords[i]??`(${typedWords[i]})`;
+
+    html.push(t&&u&&t===u
+      ?`<span class="word-ok">${display}</span>`
+      :`<span class="word-bad">${display}</span>`
+    );
+  }
+
+  return html.join(" ");
+}
+
+function renderStars(count,total){
+  const filled=Math.round((total?count/total:0)*5);
+  return "⭐".repeat(filled)+"☆".repeat(5-filled);
+}
+
+function renderProgress(){
+  els.progressTrack.innerHTML=order
+    .map((_,i)=>{
+      let cls="dot";
+      if(i<index)cls+=" done";
+      else if(i===index)cls+=" active";
+      return `<span class="${cls}"></span>`;
+    })
+    .join("");
+
+  els.statProgress.textContent=`${Math.min(index+1,sentences.length)}/${sentences.length}`;
+}
+
+function updateStats(){
+  els.statScore.textContent=`${score}/${sentences.length}`;
+  els.statStreak.textContent=`${streak}🔥`;
+}
+
+function setStatusIcon(symbol,spinning){
+  els.statusIcon.textContent=symbol;
+  els.statusIcon.classList.toggle("show",Boolean(symbol));
+  els.statusIcon.classList.toggle("spin",Boolean(spinning));
+}
+
+function playCurrent(){
+  if(index>=order.length || els.stage.style.display==="none")return;
+  const version=++playbackVersion;
+  els.waveform.classList.add("playing");
+  els.playBtn.disabled=true;
+
+  speakGerman(target(),{rate:.85}).finally(()=>{
+    if(version!==playbackVersion)return;
+    els.waveform.classList.remove("playing");
+    els.playBtn.disabled=false;
+  });
+}
+
+/* ---------------- Konfetti ---------------- */
+
+function burstConfetti(){
+  const emojis=["🎉","✨","🌟","🎊","👏"];
+
+  for(let i=0;i<16;i++){
+    const piece=document.createElement("span");
+
+    piece.className="confetti-piece";
+    piece.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    piece.style.left=`${Math.random()*100}vw`;
+    piece.style.animationDuration=`${1.4+Math.random()*1.2}s`;
+    piece.style.fontSize=`${1+Math.random()*0.8}rem`;
+
+    document.body.appendChild(piece);
+
+    piece.addEventListener("animationend",()=>piece.remove());
+  }
+}
+
+/* ---------------- Ablauf ---------------- */
+
+function loadQuestion(){
+  clearQuestionTimers();
+  stopPlayback();
+  const version=++sessionVersion;
+  answered=false;
+  els.showAnswerBtn.disabled=false;
+  els.skipBtn.textContent="Satz überspringen →";
+  els.skipBtn.classList.remove("continue-btn");
+
+  els.input.value="";
+  els.input.disabled=false;
+
+  els.feedback.className="feedback";
+  els.feedback.innerHTML="";
+
+  els.hintText.classList.remove("show");
+  els.hintText.textContent="";
+
+  setStatusIcon("",false);
+  renderProgress();
+
+  playbackTimer=window.setTimeout(()=>{
+    if(version===sessionVersion)playCurrent();
+  },450);
+  els.input.focus();
+}
+
+function markCorrect(){
+  answered=true;
+
+  score++;
+  streak++;
+  bestStreak=Math.max(bestStreak,streak);
+  updateStats();
+
+  els.input.disabled=true;
+  setStatusIcon("✅",false);
+
+  els.feedback.className="feedback show correct";
+  els.feedback.innerHTML=hintUsedFor[order[index]]
+    ?`✅ Richtig! (mit Tipp genutzt) — <strong>${target()}</strong>`
+    :`✅ Perfekt! — <strong>${target()}</strong>`;
+
+  burstConfetti();
+
+  const version=sessionVersion;
+  advanceTimer=window.setTimeout(()=>{
+    if(version===sessionVersion)advance();
+  },2300);
+}
+
+function markNeedsWork(typedRaw){
+  streak=0;
+  updateStats();
+
+  setStatusIcon("✍️",false);
+
+  els.feedback.className="feedback show wrong";
+  els.feedback.innerHTML=
+    `Noch nicht ganz — richtig wäre: ${buildWordDiff(target(),typedRaw)}`;
+}
+
+function runCheck(){
+  if(answered)return;
+
+  const typedRaw=els.input.value.trim();
+
+  setStatusIcon("",false);
+
+  if(!typedRaw)return;
+
+  const isExact=normalize(typedRaw)===normalize(target());
+
+  if(isExact){
+    markCorrect();
+    return;
+  }
+
+  const closeEnough=typedRaw.length>=target().length-1;
+
+  if(closeEnough){
+    markNeedsWork(typedRaw);
+  }
+}
+
+function scheduleCheck(){
+  clearTimeout(debounceTimer);
+  setStatusIcon("⏳",true);
+  debounceTimer=window.setTimeout(runCheck,650);
+}
+
+function advance(){
+  clearQuestionTimers();
+  stopPlayback();
+  sessionVersion++;
+  index++;
+
+  if(index>=order.length){
+    showFinal();
+  }else{
+    loadQuestion();
+  }
+}
+
+function showFinal(){
+  clearQuestionTimers();
+  stopPlayback();
+  els.statProgress.textContent=`${sentences.length}/${sentences.length}`;
+  els.statProgress.textContent=`${sentences.length}/${sentences.length}`;
+
+  els.stage.style.display="none";
+  els.final.classList.add("show");
+
+  const total=sentences.length;
+  const percent=Math.round((score/total)*100);
+
+  let emoji,title,subtitle;
+
+  if(percent===100){
+    emoji="🏆";title="Perfekt!";
+    subtitle="Alle 5 Sätze richtig — du bist bereit für die nächste Lektion!";
+  }else if(percent>=70){
+    emoji="🎉";title="Sehr gut!";
+    subtitle="Fast alles richtig. Weiter so!";
+  }else if(percent>=40){
+    emoji="💪";title="Guter Anfang!";
+    subtitle="Übung macht den Meister — versuch es noch einmal.";
+  }else{
+    emoji="📖";title="Weiter üben!";
+    subtitle="Hör dir die Sätze noch einmal an und probiere es erneut.";
+  }
+
+  els.finalEmoji.textContent=emoji;
+  els.finalTitle.textContent=title;
+  els.finalSub.textContent=`${subtitle} (${score}/${total} Punkte, beste Serie: ${bestStreak}🔥)`;
+  els.finalStars.textContent=renderStars(score,total);
+
+  if(percent>=70)burstConfetti();
+}
+
+function init(){
+  clearQuestionTimers();
+  stopPlayback();
+  sessionVersion++;
+  order=shuffle([...Array(sentences.length).keys()]);
+  index=0;
+  score=0;
+  streak=0;
+  bestStreak=0;
+  hintUsedFor=new Array(sentences.length).fill(false);
+
+  els.stage.style.display="";
+  els.final.classList.remove("show");
+
+  updateStats();
+  loadQuestion();
+}
+
+/* ---------------- Events ---------------- */
+
+els.playBtn.addEventListener("click",playCurrent);
+
+els.showAnswerBtn.addEventListener("click",()=>{
+  if(answered)return;
+  clearTimeout(debounceTimer);
+  answered=true;
+  streak=0;
+  updateStats();
+  setStatusIcon("👁",false);
+  els.input.disabled=true;
+  els.showAnswerBtn.disabled=true;
+  els.feedback.className="feedback show correct";
+  els.feedback.textContent=target();
+  els.skipBtn.textContent="▶ Weiter üben – nächster Satz";
+  els.skipBtn.classList.add("continue-btn");
+});
+
+els.hintBtn.addEventListener("click",()=>{
+  hintUsedFor[order[index]]=true;
+  els.hintText.classList.add("show");
+  els.hintText.textContent=buildHint(target());
+});
+
+els.skipBtn.addEventListener("click",()=>{
+  if(answered && !els.skipBtn.classList.contains("continue-btn"))return;
+  streak=0;
+  updateStats();
+  advance();
+});
+
+els.restartBtn.addEventListener("click",init);
+
+els.input.addEventListener("input",scheduleCheck);
+
+els.input.addEventListener("keydown",event=>{
+  if(event.key==="Enter"){
+    event.preventDefault();
+    clearTimeout(debounceTimer);
+    runCheck();
+  }
+});
+
+const heroTranslation=document.getElementById("hero-translation");
+const translationToggle=document.getElementById("translation-toggle");
+const translationText=document.getElementById("translation-text");
+const translationButtons=[...document.querySelectorAll(".translation-language")];
+const startTranslations={en:"Write what you hear; correct answers advance automatically.",pl:"Napisz to, co słyszysz. Po poprawnej odpowiedzi ćwiczenie przechodzi dalej.",it:"Scrivi ciò che senti. Dopo una risposta corretta si passa avanti."};
+
+translationToggle.addEventListener("click",event=>{
+  event.stopPropagation();
+  heroTranslation.classList.toggle("open");
+});
+
+translationButtons.forEach(button=>button.addEventListener("click",event=>{
+  event.stopPropagation();
+  const lang=button.dataset.lang;
+  translationButtons.forEach(item=>item.classList.toggle("active",item===button));
+  translationText.textContent=startTranslations[lang];
+  translationText.classList.add("show");
+  heroTranslation.classList.add("open");
+}));
+
+document.addEventListener("click",event=>{
+  if(!event.target.closest("#hero-translation"))heroTranslation.classList.remove("open");
+});
+
+const lessonCompleteBtn=document.getElementById("lesson-complete-btn");
+const lessonCompletePaper=document.getElementById("lesson-complete-paper");
+const lessonCompleteTranslation=document.getElementById("lesson-complete-translation");
+const lessonCompleteTranslationToggle=document.getElementById("lesson-complete-translation-toggle");
+const lessonCompleteTranslationText=document.getElementById("lesson-complete-translation-text");
+const lessonCompleteTranslationButtons=[...document.querySelectorAll(".lesson-complete-translation-language")];
+
+const lessonCompleteTranslations={en:"You have finished the dictation for lesson A1.17.",pl:"Ukończyłeś dyktando lekcji A1.17.",it:"Hai completato il dettato della lezione A1.17."};
+
+const lessonCompleteSpeech="Geschafft! Du hast das Diktat aus Lektion 17 abgeschlossen. Sehr gut gemacht!";
+
+lessonCompleteTranslationToggle.addEventListener("click",event=>{
+  event.stopPropagation();
+  lessonCompleteTranslation.classList.toggle("open");
+});
+
+lessonCompleteTranslationButtons.forEach(button=>button.addEventListener("click",event=>{
+  event.stopPropagation();
+  const lang=button.dataset.lang;
+  lessonCompleteTranslationButtons.forEach(item=>item.classList.toggle("active",item===button));
+  lessonCompleteTranslationText.textContent=lessonCompleteTranslations[lang];
+  lessonCompleteTranslationText.classList.add("show");
+  lessonCompleteTranslation.classList.add("open");
+}));
+
+lessonCompleteBtn.addEventListener("click",()=>{
+  const isOpen=lessonCompletePaper.classList.toggle("show");
+
+  lessonCompleteBtn.setAttribute("aria-expanded",String(isOpen));
+  lessonCompletePaper.setAttribute("aria-hidden",String(!isOpen));
+
+  if(isOpen){
+    const completedA1Part=Math.max(1,Number(localStorage.getItem("a1CompletedPart")||0));
+    localStorage.setItem("a1CompletedPart",String(completedA1Part));
+
+    burstConfetti();
+    setTimeout(burstConfetti,260);
+    setTimeout(burstConfetti,520);
+    speakGerman(lessonCompleteSpeech,{rate:.94,pitch:1.14,volume:1});
+  }else{
+    if("speechSynthesis" in window)speechSynthesis.cancel();
+    lessonCompleteTranslation.classList.remove("open");
+  }
+});
+
+document.addEventListener("click",event=>{
+  if(!event.target.closest("#lesson-complete-translation")){
+    lessonCompleteTranslation.classList.remove("open");
+  }
+});
+
+const continueTranslation=document.getElementById("continue-translation");
+const continueTranslationToggle=document.getElementById("continue-translation-toggle");
+const continueTranslationText=document.getElementById("continue-translation-text");
+const continueTranslationButtons=[...document.querySelectorAll(".continue-translation-language")];
+
+const continueTranslations={en:"Continue with lesson A1.18.",pl:"Przejdź do lekcji A1.18.",it:"Continua con la lezione A1.18."};
+
+if(continueTranslationToggle && continueTranslation && continueTranslationText){
+continueTranslationToggle.addEventListener("click",event=>{
+  event.stopPropagation();
+  continueTranslation.classList.toggle("open");
+});
+
+continueTranslationButtons.forEach(button=>button.addEventListener("click",event=>{
+  event.stopPropagation();
+  const lang=button.dataset.lang;
+  continueTranslationButtons.forEach(item=>item.classList.toggle("active",item===button));
+  continueTranslationText.textContent=continueTranslations[lang];
+  continueTranslationText.classList.add("show");
+  continueTranslation.classList.add("open");
+}));
+
+document.addEventListener("click",event=>{
+  if(!event.target.closest("#continue-translation")){
+    continueTranslation.classList.remove("open");
+  }
+});
+
+}
+
+const startTranslationPanel=document.getElementById("diktat-start-translation-panel");
+const startTranslationToggle=document.getElementById("diktat-start-translation-toggle");
+const startTranslationText=document.getElementById("diktat-start-translation-text");
+const startScreenTranslations={pl:"Usłyszysz 5 zdań z lekcji 17. Zapisz to, co słyszysz.",en:"You will hear 5 sentences from Lesson 17. Write what you hear.",it:"Sentirai 5 frasi della lezione 17. Scrivi ciò che senti."};
+startTranslationToggle.addEventListener("click",()=>{
+  const opened=startTranslationPanel.classList.toggle("show");
+  startTranslationToggle.setAttribute("aria-expanded",String(opened));
+});
+document.querySelectorAll("[data-start-lang]").forEach(button=>button.addEventListener("click",()=>{
+  startTranslationText.textContent=startScreenTranslations[button.dataset.startLang];
+}));
+document.getElementById("diktat-start-button").addEventListener("click",()=>{
+  document.body.classList.add("diktat-started");
+  init();
+});
+</script>
+
+<script src="../../js/page-progress.js" defer></script>
+</body>
+</html>
