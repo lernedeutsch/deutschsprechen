@@ -750,8 +750,82 @@ button,textarea{font:inherit}
 </style>
 <link rel="stylesheet" href="../../css/translation-globe.css">
 <link rel="stylesheet" href="../../css/page-progress.css">
+<style id="diktat-start-screen-style">
+body:not(.diktat-started) .top-back,
+body:not(.diktat-started) .shell{display:none !important}
+.diktat-start-screen{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:35px 20px;
+  color:#fff;
+  text-align:center;
+}
+body.diktat-started .diktat-start-screen{display:none}
+.diktat-start-screen h1{
+  font:700 clamp(2.1rem,5vw,3.5rem)/1.2 "Kalam",cursive;
+  margin:0 0 20px;
+  color:#fff;
+}
+.diktat-start-panel{
+  width:min(850px,100%);
+  border:2px solid rgba(255,255,255,.65);
+  border-radius:34px;
+  padding:clamp(28px,6vw,65px) 22px;
+  background:linear-gradient(145deg,#dfcfb0,#f0e8d6 48%,#cdbb9d);
+  box-shadow:0 22px 50px rgba(0,0,0,.2),inset 0 2px 4px rgba(255,255,255,.6);
+}
+.diktat-start-glass{
+  max-width:640px;
+  margin:auto;
+  padding:40px 24px;
+  border:2px solid rgba(255,255,255,.75);
+  border-radius:30px;
+  background:linear-gradient(130deg,rgba(255,255,255,.2),rgba(95,160,186,.1) 54%,rgba(255,244,211,.15));
+  box-shadow:0 15px 30px rgba(38,46,53,.18),inset 0 2px 3px rgba(255,255,255,.5);
+  color:#36516b;
+}
+.diktat-start-icon{
+  display:grid;
+  place-items:center;
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  margin:0 auto 26px;
+  background:#1b334c;
+  box-shadow:0 8px 22px rgba(0,0,0,.2);
+  font-size:2.6rem;
+}
+.diktat-start-glass p{font:600 clamp(1.05rem,2.5vw,1.25rem)/1.6 "Nunito Sans",sans-serif;margin:0 auto 28px;max-width:500px}
+.diktat-start-button{
+  border:0;
+  border-radius:999px;
+  padding:14px 42px;
+  background:linear-gradient(180deg,#67c6ff,#37a8ee);
+  color:#fff;
+  font:800 1.2rem "Nunito Sans",sans-serif;
+  cursor:pointer;
+  box-shadow:0 10px 24px rgba(37,149,223,.28);
+}
+.diktat-start-button:hover{filter:brightness(1.06)}
+.diktat-start-button:focus-visible{outline:3px solid #1b334c;outline-offset:4px}
+</style>
 </head>
 <body>
+<section class="diktat-start-screen" id="diktat-start-screen" aria-label="Diktat starten">
+  <h1>Hör zu. Schreib. Weiter geht's.</h1>
+  <div class="diktat-start-panel">
+    <div class="diktat-start-glass">
+      <div class="diktat-start-icon" aria-hidden="true">✍️</div>
+      <p>Du hörst zehn deutsche Sätze aus Lektion 1. Schreib auf, was du hörst. Bei einer richtigen Antwort geht es automatisch weiter.</p>
+      <button type="button" class="diktat-start-button" id="diktat-start-button">▶ Start</button>
+    </div>
+  </div>
+</section>
+
+
 
 <div class="top-back">
   <a href="../a1/lektion-1.html" class="back-btn" aria-label="Zurück zu Lektion 1" title="Zurück zu Lektion 1">←</a>
@@ -1466,7 +1540,10 @@ document.addEventListener("click",event=>{
   }
 });
 
-init();
+document.getElementById("diktat-start-button").addEventListener("click",()=>{
+  document.body.classList.add("diktat-started");
+  init();
+});
 </script>
 
 <script src="../../js/page-progress.js" defer></script>
