@@ -1178,6 +1178,23 @@ let bestStreak=0;
 let hintUsedFor=[];
 let answered=false;
 let debounceTimer=null;
+let playbackTimer=null;
+let advanceTimer=null;
+let sessionVersion=0;
+let playbackVersion=0;
+function clearQuestionTimers(){
+  clearTimeout(debounceTimer);
+  clearTimeout(playbackTimer);
+  clearTimeout(advanceTimer);
+  debounceTimer=playbackTimer=advanceTimer=null;
+}
+function stopPlayback(){
+  playbackVersion++;
+  if("speechSynthesis" in window)speechSynthesis.cancel();
+  els.waveform.classList.remove("playing");
+  els.playBtn.disabled=false;
+}
+
 
 function shuffle(array){
   const copy=[...array];
@@ -1270,10 +1287,13 @@ function setStatusIcon(symbol,spinning){
 }
 
 function playCurrent(){
+  if(index>=order.length || els.stage.style.display==="none")return;
+  const version=++playbackVersion;
   els.waveform.classList.add("playing");
   els.playBtn.disabled=true;
 
   speakGerman(target(),{rate:.85}).finally(()=>{
+    if(version!==playbackVersion)return;
     els.waveform.classList.remove("playing");
     els.playBtn.disabled=false;
   });
@@ -1302,6 +1322,9 @@ function burstConfetti(){
 /* ---------------- Ablauf ---------------- */
 
 function loadQuestion(){
+  clearQuestionTimers();
+  stopPlayback();
+  const version=++sessionVersion;
   answered=false;
   els.showAnswerBtn.disabled=false;
   els.skipBtn.textContent="Satz überspringen →";
@@ -1319,7 +1342,9 @@ function loadQuestion(){
   setStatusIcon("",false);
   renderProgress();
 
-  window.setTimeout(playCurrent,450);
+  playbackTimer=window.setTimeout(()=>{
+    if(version===sessionVersion)playCurrent();
+  },450);
   els.input.focus();
 }
 
@@ -1341,7 +1366,10 @@ function markCorrect(){
 
   burstConfetti();
 
-  window.setTimeout(advance,2300);
+  const version=sessionVersion;
+  advanceTimer=window.setTimeout(()=>{
+    if(version===sessionVersion)advance();
+  },2300);
 }
 
 function markNeedsWork(typedRaw){
@@ -1385,6 +1413,9 @@ function scheduleCheck(){
 }
 
 function advance(){
+  clearQuestionTimers();
+  stopPlayback();
+  sessionVersion++;
   index++;
 
   if(index>=order.length){
@@ -1395,7 +1426,10 @@ function advance(){
 }
 
 function showFinal(){
-  renderProgress();
+  clearQuestionTimers();
+  stopPlayback();
+  els.statProgress.textContent=`${sentences.length}/${sentences.length}`;
+  els.statProgress.textContent=`${sentences.length}/${sentences.length}`;
 
   els.stage.style.display="none";
   els.final.classList.add("show");
@@ -1428,6 +1462,9 @@ function showFinal(){
 }
 
 function init(){
+  clearQuestionTimers();
+  stopPlayback();
+  sessionVersion++;
   order=shuffle([...Array(sentences.length).keys()]);
   index=0;
   score=0;
