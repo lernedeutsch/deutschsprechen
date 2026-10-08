@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<!-- LEKTION-TEMPLATE-V1 | WZÓR NIE JEST LEKCJĄ PRODUKCYJNĄ.
+Przed zastosowaniem do kolejnej lekcji dostosuj: numer i tytuł,
+identyfikatory sekcji i kotwice, treści ćwiczeń, alfabet (jeśli dotyczy),
+przyciski przejścia do ćwiczeń, tłumaczenia i podsumowanie Ich kann.
+Zachowaj oryginalne pliki lekcji i sprawdź skrypty oraz nawigację.
+-->
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Deutschkurs A1 — Lektion 1</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Nunito+Sans:opsz,wght@6..12,400,600,700,800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#173047;
+  --bg2:#203a57;
+  --surface:#f8fbff;
+  --surface-2:#eef4fb;
+  --card:#ffffff;
+  --text:#101820;
+  --muted:#41556b;
+  --line:#d9e4f0;
+  --accent:#f4c95d;
+  --accent-2:#6ac6ff;
+  --accent-3:#84df42;
+  --accent-4:#a88af5;
+  --shadow:0 14px 35px rgba(10,18,32,.12);
+  --shadow-2:0 10px 22px rgba(10,18,32,.10);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+body{
+  margin:0;
+  color:var(--text);
+  font:400 1rem/1.65 "Nunito Sans",sans-serif;
+  background:
+    radial-gradient(circle at top left,rgba(255,255,255,.08),transparent 30%),
+    radial-gradient(circle at bottom right,rgba(255,255,255,.06),transparent 34%),
+    linear-gradient(180deg,var(--bg),var(--bg2));
+  min-height:100vh;
+}
+
+a{color:inherit}
+button,input,textarea,select{font:inherit}
+img{max-width:100%;display:block}
+
+.course-shell{
+  max-width:1180px;
+  margin:0 auto;
+  padding:28px 18px 60px;
+}
+
+.course-nav{
+  margin:0 auto 22px;
+  padding:18px 18px 14px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:22px;
+  backdrop-filter:blur(8px);
+  box-shadow:var(--shadow-2);
+}
+
+.course-nav-title{
+  margin:0 0 14px;
+  text-align:center;
+  color:#fff;
+  font:700 2rem/1.1 "Kalam",cursive;
+  letter-spacing:.02em;
+}
+
+.course-section{
+  padding:14px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:18px;
+}
+
+.section-title{
+  margin:0 0 10px;
+  color:#dcecff;
+  font:700 .82rem "JetBrains Mono",monospace;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+
+.lesson-list{
+  display:grid;
+  gap:10px;
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+
+.lesson-list a{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:13px 14px;
+  background:rgba(255,255,255,.94);
+  border:1px solid var(--line);
+  border-radius:14px;
+  text-decoration:none;
+  color:var(--text);
+  transition:transform .18s,background .18s,border-color .18s,box-shadow .18s;
+}
+
+.lesson-list a:hover{
+  transform:translateY(-2px);
+  background:#fff;
+  border-color:#f2d06f;
+  box-shadow:0 10px 18px rgba(0,0,0,.08);
+}
+
+section[id^="lektion"]{scroll-margin-top:28px}
+
+.lesson{
+  background:linear-gradient(180deg,#fff8eb 0%,#fff 20%,#fff 100%);
+  border-radius:28px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+
+.wrap{
+  max-width:1080px;
+  margin:0 auto;
+  padding:34px 20px 24px;
+}
+
+header.hero{
+  display:grid;
+  grid-template-columns:1.35fr .95fr;
+  gap:26px;
+  align-items:center;
+  padding:28px;
+  margin-bottom:28px;
+  background:
+    linear-gradient(135deg,rgba(244,201,93,.16),rgba(106,198,255,.12)),
+    linear-gradient(180deg,#fff,#fff);
+  border:1px solid #e7edf5;
+  border-radius:28px;
+  box-shadow:var(--shadow-2);
+}
+
+.eyebrow{
+  margin:0 0 10px;
+  color:#8c6700;
+  font:700 .78rem "JetBrains Mono",monospace;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+
+.lesson-title{
+  margin:0 0 14px;
+  font:700 clamp(2rem,4vw,3.3rem)/1.08 "Kalam",cursive;
+  color:var(--text);
+}
+
+.hero-text p{
+  margin:0;
+  max-width:58ch;
+  color:var(--muted);
+  font-size:1.04rem;
+}
+
+.topics{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:18px;
+}
+
+.topics a{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  background:#f3f7fc;
+  border:1px solid var(--line);
+  border-radius:999px;
+  font-size:.94rem;
+  color:var(--text);
+  text-decoration:none;
+  cursor:pointer;
+  transition:transform .16s,background .16s,border-color .16s,box-shadow .16s;
+}
+
+.topics a:hover{
+  transform:translateY(-2px);
+  background:#eef7ff;
+  border-color:#81bfff;
+  box-shadow:0 8px 16px rgba(0,0,0,.06);
+}
+
+.hero-art{
+  display:grid;
+  place-items:center;
+  min-height:280px;
+  padding:14px;
+  background:
+    radial-gradient(circle at center,rgba(132,223,66,.10),transparent 62%),
+    linear-gradient(180deg,#fdfefe,#f4f8fc);
+  border:1px solid var(--line);
+  border-radius:24px;
+}
+
+.hero-art svg{
+  width:min(100%,340px);
+  height:auto;
+  filter:drop-shadow(0 16px 26px rgba(0,0,0,.14));
+}
+
+.month-label,
+.center-label,
+.center-sub{
+  fill:var(--text);
+  font-family:"JetBrains Mono",monospace;
+  text-anchor:middle;
+}
+
+.month-label{font-size:14px}
+.center-label{font-size:18px;font-weight:700}
+.center-sub{font-size:13px;opacity:.9}
+
+.part{
+  margin:26px 0 34px;
+  padding:0 4px;
+}
+
+.part-head{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:baseline;
+  gap:10px;
+  margin:0 0 14px;
+}
+
+.part-num{
+  color:#ffd86c;
+  font:700 .78rem "JetBrains Mono",monospace;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+
+.part-title{
+  margin:0;
+  color:var(--text);
+  font:700 clamp(1.55rem,2.4vw,2.15rem)/1.15 "Kalam",cursive;
+}
+
+.card{
+  padding:22px;
+  background:rgba(255,255,255,.97);
+  border:1px solid #e3ebf4;
+  border-radius:24px;
+  box-shadow:var(--shadow-2);
+}
+
+.lead{
+  margin-top:0;
+  color:var(--text);
+  font-size:1.05rem;
+}
+
+.grid-2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.grammar-box{
+  padding:16px 16px 14px;
+  background:linear-gradient(180deg,#fbfdff,#f4f8fc);
+  border:1px solid var(--line);
+  border-left:5px solid var(--accent);
+  border-radius:18px;
+}
+,
+.grammar-box strong{
+  color:#8c6700;
+}
+
+/* Delikatne rozróżnienie: prawa karta „Formell” */
+.grid-2 .grammar-box:nth-child(2){
+  background:linear-gradient(180deg,#f4f9ff,#edf6ff);
+  border-color:#cfe2f5;
+}
+
+.learn-steps{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:0 0 18px;
+}
+
+.learn-step{
+  padding:8px 12px;
+  background:#f3f7fc;
+  border:1px solid var(--line);
+  border-radius:999px;
+  color:var(--text);
+  font-weight:800;
+}
+
+.greeting-cards{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin:16px 0 18px;
+}
+
+.greeting-card{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  padding:16px;
+  background:linear-gradient(180deg,#fff,#f7fbff);
+  border:1px solid var(--line);
+  border-radius:18px;
+  box-shadow:0 8px 16px rgba(0,0,0,.05);
+}
+
+.greeting-card-main{
+  min-width:0;
+}
+
+.greeting-phrase{
+  display:block;
+  margin-bottom:4px;
+  color:var(--text);
+  font-size:1.18rem;
+  font-weight:800;
+}
+
+.greeting-when{
+  display:block;
+  color:var(--muted);
+  font-size:.94rem;
+}
+
+.greeting-audio{
+  flex:0 0 auto;
+  min-width:84px;
+  padding:9px 12px;
+  color:#0d5f91;
+  background:#eaf5ff;
+  border:1px solid #b9dcfb;
+  border-radius:999px;
+  cursor:pointer;
+  font-weight:800;
+}
+
+.greeting-audio:hover{
+  background:#dff0ff;
+  border-color:#81bfff;
+}
+
+.quick-note{
+  margin-top:14px;
+  padding:15px 16px;
+  background:#fff9e8;
+  border:1px solid #f1dda5;
+  border-left:5px solid var(--accent);
+  border-radius:16px;
+}
+
+.quick-note p{
+  margin:6px 0;
+}
+
+@media(max-width:720px){
+  .greeting-cards{grid-template-columns:1fr}
+  .greeting-card{align-items:flex-start}
+}
+
+
+
+.dialog-title,
+.section-subtitle{
+  margin:24px 0 12px;
+  color:var(--text);
+  font:700 1.25rem/1.2 "Kalam",cursive;
+}
+
+.dialog{
+  display:grid;
+  gap:10px;
+}
+
+.bubble{
+  position:relative;
+  max-width:84%;
+  padding:11px 14px;
+  border-radius:16px;
+  box-shadow:0 8px 18px rgba(0,0,0,.06);
+  font-size:.98rem;
+  line-height:1.45;
+}
+
+/* Pytanie — wyraźnie po lewej, chłodny niebieski akcent */
+.dialog-a{
+  background:#eaf5ff;
+  border:1px solid #b9dcfb;
+  border-left:5px solid #2a8fdb;
+}
+
+.dialog-a .speaker{color:#0d6ba3}
+
+/* Odpowiedź — wyraźnie po prawej, ciepły akcent */
+.dialog-b{
+  margin-left:auto;
+  background:#fff6e3;
+  border:1px solid #ffdf9e;
+  border-right:5px solid #e29a1a;
+}
+
+.dialog-b .speaker{color:#a3690a}
+
+.speaker{
+  display:block;
+  margin-bottom:4px;
+  font:800 .74rem "JetBrains Mono",monospace;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+.intro-card{
+  margin:14px 0 16px;
+  display:grid;
+  gap:8px;
+  justify-items:start;
+  min-height:unset;
+}
+
+.intro-icon{
+  font-size:56px;
+  line-height:1;
+}
+
+.intro-title{
+  margin:2px 0 4px;
+  font:700 1.35rem "Kalam",cursive;
+}
+
+.intro-text{
+  margin:0;
+  color:var(--text);
+  font-size:1.05rem;
+}
+
+.alphabet-info{
+  margin:14px 0 10px;
+  color:var(--muted);
+  font-size:1.02rem;
+}
+
+.alphabet{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:14px 0 4px;
+}
+
+.alphabet-letter{
+  padding:12px 15px;
+  background:#f5f8fc;
+  border:1px solid var(--line);
+  border-radius:14px;
+  cursor:pointer;
+  color:var(--text);
+  font:700 1.02rem/1 "Nunito Sans",sans-serif;
+  transition:transform .16s,background .16s,border-color .16s,box-shadow .16s;
+}
+
+.alphabet-letter:hover{
+  transform:translateY(-2px);
+  background:#eef7ff;
+  border-color:#81bfff;
+  box-shadow:0 10px 18px rgba(0,0,0,.06);
+}
+
+
+.training-btn{
+  display:inline-flex;
+  flex:1 1 220px;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  min-height:58px;
+  padding:12px 16px;
+  color:#fff;
+  text-decoration:none;
+  text-align:center;
+  border-radius:18px;
+  font:800 1rem/1.2 "Nunito Sans",sans-serif;
+  box-shadow:0 10px 20px rgba(0,0,0,.18);
+  transition:transform .18s,filter .18s,box-shadow .18s;
+}
+
+.training-btn:hover{
+  transform:translateY(-3px);
+  filter:brightness(1.05);
+  box-shadow:0 14px 24px rgba(0,0,0,.22);
+}
+
+.sprich-nach-btn{
+  background:linear-gradient(180deg,#3da8f0,#237fc2);
+}
+
+.aktiv-trainieren-btn{
+  background:linear-gradient(180deg,#6fcf32,#3f9820);
+}
+
+.übung-training-btn{
+  background:linear-gradient(180deg,#b08df7,#825fe0);
+}
+
+.dialoge-btn{
+  background:linear-gradient(180deg,#ff9d76,#e8623a);
+}
+
+.diktat-btn{
+  background:linear-gradient(180deg,#35b8af,#177f78);
+}
+
+/* Kolumna z przyciskami po lewej stronie strony */
+
+.side-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:12px;
+  max-width:1180px;
+  margin:0 auto 26px;
+  padding:0 18px;
+}
+
+.side-buttons .training-btn{
+  flex:1 1 200px;
+}
+
+.learning-guide{
+  margin:0 auto 22px;
+  padding:16px 18px;
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:18px;
+  color:#fff;
+  box-shadow:var(--shadow-2);
+}
+
+.learning-guide strong{
+  display:block;
+  margin-bottom:4px;
+  color:#fff;
+  font:800 1.02rem/1.35 "Nunito Sans",sans-serif;
+}
+
+.learning-guide span{
+  color:#dcecff;
+  font:600 .96rem/1.5 "Nunito Sans",sans-serif;
+}
+
+.step-number{
+  color:#000;
+  font-weight:900;
+}
+
+.learning-translation{
+  margin-top:10px;
+}
+
+.learning-translation summary{
+  width:max-content;
+  cursor:pointer;
+  color:#dcecff;
+  font:700 .88rem/1.35 "Nunito Sans",sans-serif;
+}
+
+.learning-translation p{
+  margin:8px 0 0;
+  color:#dcecff;
+  font:600 .88rem/1.45 "Nunito Sans",sans-serif;
+}
+
+.next-step-box .learning-translation{
+  margin:10px auto 0;
+  width:max-content;
+  max-width:100%;
+  text-align:left;
+}
+
+.next-step-box .learning-translation summary,
+.next-step-box .learning-translation p{
+  color:#dcecff;
+}
+
+.next-step-box{
+  margin:22px 0 0;
+  text-align:center;
+}
+
+.next-step-box a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:12px 18px;
+  border-radius:999px;
+  background:linear-gradient(180deg,#6fcf32,#3f9820);
+  color:#fff;
+  text-decoration:none;
+  font:800 1rem/1.3 "Nunito Sans",sans-serif;
+  box-shadow:0 10px 20px rgba(0,0,0,.16);
+}
+
+.next-step-box a:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.05);
+}
+
+@media(min-width:1400px){
+  .side-buttons{
+    position:fixed;
+    top:50%;
+    left:18px;
+    transform:translateY(-50%);
+    flex-direction:column;
+    flex-wrap:nowrap;
+    max-width:none;
+    margin:0;
+    padding:0;
+    gap:12px;
+    z-index:30;
+  }
+
+  .side-buttons .training-btn{
+    flex:none;
+    width:150px;
+    min-height:44px;
+    padding:9px 10px;
+    font-size:.9rem;
+    line-height:1.15;
+    white-space:normal;
+  }
+}
+
+/* Przycisk Ich kann i rozwijany papierek */
+
+.ich-kann-button{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  min-width:180px;
+  min-height:52px;
+  margin:0 auto;
+  padding:11px 22px;
+  color:#fff;
+  background:linear-gradient(180deg,#f0bd3a,#b98200);
+  border:2px solid #ffe59a;
+  border-radius:18px;
+  cursor:pointer;
+  font:800 1.05rem "Nunito Sans",sans-serif;
+  box-shadow:0 10px 20px rgba(0,0,0,.18);
+  transition:transform .18s,filter .18s,box-shadow .18s;
+}
+
+.ich-kann-button:hover{
+  transform:translateY(-3px);
+  filter:brightness(1.05);
+  box-shadow:0 14px 24px rgba(0,0,0,.22);
+}
+
+.ich-kann-button::after{
+  content:"▼";
+  font-size:.72rem;
+  transition:transform .25s;
+}
+
+.ich-kann-button.open::after{
+  transform:rotate(180deg);
+}
+
+.ich-kann-paper{
+  display:none;
+  position:relative;
+  margin:22px auto 0;
+  padding:30px 26px 26px;
+  background:
+    repeating-linear-gradient(
+      transparent 0,
+      transparent 31px,
+      rgba(80,111,145,.10) 32px
+    ),
+    linear-gradient(145deg,#fffdf6,#fff7df);
+  border:1px solid #e8d9b0;
+  border-radius:4px 18px 18px 4px;
+  box-shadow:
+    0 18px 35px rgba(0,0,0,.14),
+    inset 34px 0 0 rgba(189,68,51,.06);
+  animation:paperOpen .3s ease-out;
+}
+
+.ich-kann-paper::before{
+  content:"";
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:34px;
+  width:2px;
+  background:rgba(189,68,51,.25);
+}
+
+.ich-kann-paper.show{
+  display:block;
+}
+
+@keyframes paperOpen{
+  from{opacity:0;transform:translateY(-10px) scale(.98)}
+  to{opacity:1;transform:none}
+}
+
+.summary-grid{
+  position:relative;
+  z-index:1;
+  display:grid;
+  gap:12px;
+}
+
+.row{
+  display:grid;
+  grid-template-columns:230px 1fr;
+  gap:14px;
+  align-items:start;
+  padding:16px 18px;
+  background:rgba(255,255,255,.88);
+  border:1px solid var(--line);
+  border-radius:16px;
+}
+
+.key{
+  color:#8c6700;
+  font:800 1rem/1.4 "Nunito Sans",sans-serif;
+}
+
+.summary-text{
+  color:var(--text);
+  font-size:1.02rem;
+}
+
+.back-to-top{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width:max-content;
+  padding:11px 18px;
+  color:var(--text);
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:999px;
+  text-decoration:none;
+  font:700 .98rem "Nunito Sans",sans-serif;
+  transition:background .15s,border-color .15s,transform .15s;
+}
+
+.back-to-top:hover{
+  background:#f3f7fc;
+  border-color:#f2d06f;
+  transform:translateY(-2px);
+}
+
+.lesson-nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:20px;
+  padding-top:20px;
+  border-top:2px dashed rgba(255,255,255,.2);
+}
+
+.lesson-nav .back-to-top{
+  margin:0;
+}
+
+.lesson-nav a{
+  padding:10px 16px;
+  color:var(--text);
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:999px;
+  text-decoration:none;
+  transition:background .15s,border-color .15s,transform .15s;
+}
+
+.lesson-nav a:hover{
+  background:#f3f7fc;
+  border-color:#f2d06f;
+  transform:translateY(-2px);
+}
+
+a:focus-visible,
+button:focus-visible,
+.alphabet-letter:focus-visible{
+  outline:3px solid #f4c95d;
+  outline-offset:3px;
+}
+
+@media(max-width:900px){
+  header.hero{grid-template-columns:1fr}
+  .hero-art{min-height:220px}
+  .row{grid-template-columns:1fr}
+}
+
+@media(max-width:720px){
+  .course-shell{padding:18px 12px 42px}
+  .course-nav-title{font-size:1.7rem}
+  .wrap{padding:18px 12px}
+  .lesson-title{font-size:2.05rem}
+  .card{padding:16px}
+  .bubble{max-width:100%}
+  .training-btn{flex:1 1 100%;min-height:54px}
+  .ich-kann-paper{padding:25px 14px 20px}
+  .ich-kann-paper::before{left:18px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+
+  *,
+  *::before,
+  *::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+  }
+}
+</style>
+
+<style>
+.translation-globe{
+  display:inline-block!important;
+  font-size:1.30em;
+  line-height:1;
+  vertical-align:-.10em;
+  filter:none;
+  animation:lektion1GlobeAxisSpin 2.4s linear infinite!important;
+  transform-origin:50% 50%;
+  transform-style:preserve-3d;
+}
+@keyframes lektion1GlobeAxisSpin{
+  0%{transform:perspective(120px) rotateY(0deg)}
+  25%{transform:perspective(120px) rotateY(90deg)}
+  50%{transform:perspective(120px) rotateY(180deg)}
+  75%{transform:perspective(120px) rotateY(270deg)}
+  100%{transform:perspective(120px) rotateY(360deg)}
+}
+</style>
+<link rel="stylesheet" href="../../css/translation-globe.css">
+<link rel="stylesheet" href="../../css/page-progress.css">
+</head>
+
+<body id="seitenanfang">
+
+<div class="course-shell">
+
+  <a
+    href="index.html"
+    class="back-to-top"
+    aria-label="Zurück zur A1-Übersicht"
+    title="Zurück zur A1-Übersicht"
+  >
+    ←
+  </a>
+
+  <div class="learning-guide">
+    <strong><span class="step-number">①</span> Zuerst: Lies die ganze Lektion.</strong>
+    <span>Danach übst du Schritt für Schritt mit den Aufgaben in dieser Reihenfolge.</span>
+
+    <details class="learning-translation">
+      <summary><span class="translation-globe">🌐</span>A/文</summary>
+      <p><strong>English:</strong> First, read the whole lesson. Then practise step by step with the tasks in this order.</p>
+      <p><strong>Polski:</strong> Najpierw przeczytaj całą lekcję. Następnie ćwicz krok po kroku, wykonując zadania w tej kolejności.</p>
+      <p><strong>Italiano:</strong> Per prima cosa, leggi tutta la lezione. Poi esercitati passo dopo passo con gli esercizi in quest’ordine.</p>
+    </details>
+  </div>
+
+  <div class="side-buttons">
+
+    <a href="../aktivt-trenieren.a1/aktiv-trenieren1.html" class="training-btn aktiv-trainieren-btn">
+      <span class="step-number">②</span> 🏋️ Aktiv trainieren
+    </a>
+
+    <a href="../sprich-nach.a1/sprich-nach1.html" class="training-btn sprich-nach-btn">
+      <span class="step-number">③</span> 🎤 Sprich nach
+    </a>
+
+    <a href="../ubungen.a1/ubungen1.html" class="training-btn übung-training-btn">
+      <span class="step-number">④</span> ✏️ Übungen
+    </a>
+
+    <a href="../dialoge.a1/dialoge1.html" class="training-btn dialoge-btn">
+      <span class="step-number">⑤</span> 💬 Dialoge
+    </a>
+
+    <a href="../dikatat.a1/diktat1.html" class="training-btn diktat-btn">
+      <span class="step-number">⑥</span> ✍️ Ich schreibe ein Diktat
+    </a>
+
+  </div>
+
+  <nav class="course-nav" aria-label="Inhaltsverzeichnis des A1-Kurses">
+
+    <h2 class="course-nav-title">A1 — 1</h2>
+
+    <div class="course-section">
+      <h3 class="section-title">Erste Schritte</h3>
+
+      <ul class="lesson-list">
+        <li>
+          <a href="#lektion1">
+            Begrüßung, ich heiße …, das Alphabet
+          </a>
+        </li>
+      </ul>
+    </div>
+
+  </nav>
+
+  <section id="lektion1" class="lesson">
+
+    <div class="wrap">
+
+      <header class="hero">
+
+        <div class="hero-text">
+
+          <p class="eyebrow">Deutschkurs A1 · 1 von 30</p>
+
+          <h1 class="lesson-title">
+            Guten Tag! — Begrüßung und Vorstellung
+          </h1>
+
+          <p>
+            Heute: Hallo sagen, deinen Namen sagen und das Alphabet hören.
+          </p>
+
+          <div class="topics" aria-label="Themen der Lektion">
+            <a href="#lektion1-teil1">1 · Hallo sagen</a>
+            <a href="#lektion1-teil2">2 · Mein Name</a>
+            <a href="#lektion1-teil3">3 · Alphabet</a>
+          </div>
+
+        </div>
+
+        <div class="hero-art" aria-hidden="true">
+
+          <svg viewBox="0 0 320 320" role="img" aria-label="Begrüßungssymbol">
+
+            <circle
+              cx="160"
+              cy="160"
+              r="132"
+              fill="rgba(255,255,255,.7)"
+              stroke="rgba(35,51,46,.14)"
+            />
+
+            <circle
+              cx="160"
+              cy="160"
+              r="70"
+              fill="#20324a"
+              stroke="rgba(35,51,46,.12)"
+            />
+
+            <text class="center-label" x="160" y="152">Hallo!</text>
+            <text class="center-sub" x="160" y="175">Guten Tag</text>
+
+            <text x="160" y="40" class="month-label" font-size="20">👋</text>
+            <text x="252" y="82" class="month-label" font-size="20">😊</text>
+            <text x="282" y="164" class="month-label" font-size="20">🗣️</text>
+            <text x="250" y="246" class="month-label" font-size="20">👤</text>
+            <text x="160" y="292" class="month-label" font-size="20">📖</text>
+            <text x="70" y="246" class="month-label" font-size="20">🎯</text>
+            <text x="38" y="164" class="month-label" font-size="20">✨</text>
+            <text x="70" y="82" class="month-label" font-size="20">🌟</text>
+
+          </svg>
+
+        </div>
+
+      </header>
+
+      <section class="part" id="lektion1-teil1">
+
+        <div class="part-head">
+          <span class="part-num">Teil 1</span>
+          <h2 class="part-title">Hallo sagen</h2>
+        </div>
+
+        <div class="card">
+
+          <p class="lead">
+            Schau. Hör zu. Sprich nach.
+          </p>
+
+          <div class="learn-steps" aria-label="Lernschritte">
+            <span class="learn-step">👀 1 · Schau</span>
+            <span class="learn-step">🔊 2 · Hör zu</span>
+            <span class="learn-step">🗣️ 3 · Sprich nach</span>
+          </div>
+
+          <div class="greeting-cards" aria-label="Begrüßungen">
+
+            <div class="greeting-card">
+              <div class="greeting-card-main">
+                <span class="greeting-phrase">👋 Guten Morgen!</span>
+                <span class="greeting-when">🌅 morgens</span>
+              </div>
+              <button type="button" class="greeting-audio" data-speech="Guten Morgen!">🔊 Hören</button>
+            </div>
+
+            <div class="greeting-card">
+              <div class="greeting-card-main">
+                <span class="greeting-phrase">👋 Hallo!</span>
+                <span class="greeting-when">🙂 informell</span>
+              </div>
+              <button type="button" class="greeting-audio" data-speech="Hallo!">🔊 Hören</button>
+            </div>
+
+            <div class="greeting-card">
+              <div class="greeting-card-main">
+                <span class="greeting-phrase">👋 Guten Tag!</span>
+                <span class="greeting-when">☀️ tagsüber</span>
+              </div>
+              <button type="button" class="greeting-audio" data-speech="Guten Tag!">🔊 Hören</button>
+            </div>
+
+            <div class="greeting-card">
+              <div class="greeting-card-main">
+                <span class="greeting-phrase">👋 Tschüss!</span>
+                <span class="greeting-when">🙂 informell · beim Gehen</span>
+              </div>
+              <button type="button" class="greeting-audio" data-speech="Tschüss!">🔊 Hören</button>
+            </div>
+
+            <div class="greeting-card">
+              <div class="greeting-card-main">
+                <span class="greeting-phrase">👋 Guten Abend!</span>
+                <span class="greeting-when">🌙 abends</span>
+              </div>
+              <button type="button" class="greeting-audio" data-speech="Guten Abend!">🔊 Hören</button>
+            </div>
+
+            <div class="greeting-card">
+              <div class="greeting-card-main">
+                <span class="greeting-phrase">👋 Auf Wiedersehen!</span>
+                <span class="greeting-when">👔 formell · beim Gehen</span>
+              </div>
+              <button type="button" class="greeting-audio" data-speech="Auf Wiedersehen!">🔊 Hören</button>
+            </div>
+
+          </div>
+
+          <div class="quick-note">
+            <strong>Kurz merken:</strong>
+            <p>🌅 morgens → <strong>Guten Morgen!</strong></p>
+            <p>☀️ tagsüber → <strong>Guten Tag!</strong></p>
+            <p>🌙 abends → <strong>Guten Abend!</strong></p>
+            <p>👋 zur Begrüßung · informell → <strong>Hallo!</strong></p>
+            <p>🚪 beim Gehen · informell → <strong>Tschüss!</strong></p>
+            <p>🚪 beim Gehen · formell → <strong>Auf Wiedersehen!</strong></p>
+          </div>
+
+        </div>
+
+      </section>
+
+      <section class="part" id="lektion1-teil2">
+
+        <div class="part-head">
+          <span class="part-num">Teil 2</span>
+          <h2 class="part-title">Ich stelle mich vor</h2>
+        </div>
+
+        <div class="card">
+
+          <p class="lead">
+            Wie stellen wir uns vor? Hier sind wichtige Sätze.
+          </p>
+
+          <div class="card intro-card">
+
+            <div class="intro-icon" aria-hidden="true">👋</div>
+
+            <div class="intro-title">Hallo!</div>
+
+            <p class="intro-text">Ich heiße Anna.</p>
+            <p class="intro-text">Mein Name ist Anna Müller.</p>
+            <p class="intro-text">Ich bin Anna.</p>
+
+          </div>
+
+          <div class="grid-2">
+
+            <div class="grammar-box">
+              <strong>Informell:</strong><br><br>
+              Hallo!<br><br>
+              Wie heißt du?<br><br>
+              Ich heiße …
+            </div>
+
+            <div class="grammar-box">
+              <strong>Formell:</strong><br><br>
+              Guten Tag.<br><br>
+              Wie heißen Sie?<br><br>
+              Ich heiße …<br><br>
+              oder:<br><br>
+              Mein Name ist …
+            </div>
+
+          </div>
+
+          <h3 class="dialog-title">Informell — Dialog 1</h3>
+
+          <div class="dialog">
+
+            <div class="bubble dialog-a">
+              <span class="speaker">A</span>
+              Hallo!
+            </div>
+
+            <div class="bubble dialog-b">
+              <span class="speaker">B</span>
+              Hallo!
+            </div>
+
+            <div class="bubble dialog-a">
+              <span class="speaker">A</span>
+              Wie heißt du?
+            </div>
+
+            <div class="bubble dialog-b">
+              <span class="speaker">B</span>
+              Ich heiße Lena. Und du?
+            </div>
+
+            <div class="bubble dialog-a">
+              <span class="speaker">A</span>
+              Ich heiße Max.
+            </div>
+
+          </div>
+
+          <h3 class="dialog-title">Formell — Dialog 2</h3>
+
+          <div class="dialog">
+
+            <div class="bubble dialog-a">
+              <span class="speaker">A</span>
+              Guten Tag.
+            </div>
+
+            <div class="bubble dialog-b">
+              <span class="speaker">B</span>
+              Guten Tag.
+            </div>
+
+            <div class="bubble dialog-a">
+              <span class="speaker">A</span>
+              Wie heißen Sie?
+            </div>
+
+            <div class="bubble dialog-b">
+              <span class="speaker">B</span>
+              Ich heiße Thomas. Und Sie?
+            </div>
+
+            <div class="bubble dialog-a">
+              <span class="speaker">A</span>
+              Ich heiße Julia.
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <section class="part" id="lektion1-teil3">
+
+        <div class="part-head">
+          <span class="part-num">Teil 3</span>
+          <h2 class="part-title">Das deutsche Alphabet</h2>
+        </div>
+
+        <div class="card">
+
+          <p class="lead">
+            Hör zu. Sprich nach.
+            Das ist das deutsche Alphabet.
+          </p>
+
+          <p class="alphabet-info">
+            Klicke auf einen Buchstaben. Hör zu.
+          </p>
+
+          <div class="alphabet" id="alphabet"></div>
+
+          <h3 class="section-subtitle">Umlaute und ß</h3>
+
+          <div class="alphabet" id="umlaute"></div>
+
+        </div>
+
+      </section>
+
+      <section class="part" id="lektion1-zusammenfassung">
+
+        <button
+          type="button"
+          class="ich-kann-button"
+          id="ich-kann-button"
+          aria-expanded="false"
+          aria-controls="ich-kann-paper"
+        >
+          Ich kann
+        </button>
+
+        <div
+          class="ich-kann-paper"
+          id="ich-kann-paper"
+          aria-hidden="true"
+        >
+
+          <div class="summary-grid">
+
+            <div class="row">
+              <span class="key">✅ Ich kann grüßen.</span>
+
+              <span class="summary-text">
+                Guten Morgen! · Guten Tag! · Guten Abend! · Hallo! · Tschüss! · Auf Wiedersehen!
+              </span>
+            </div>
+
+            <div class="row">
+              <span class="key">✅ Ich kann mich vorstellen.</span>
+
+              <span class="summary-text">
+                Ich heiße … · Mein Name ist … · Ich bin …
+              </span>
+            </div>
+
+            <div class="row">
+              <span class="key">✅ Ich kann nach dem Namen fragen.</span>
+
+              <span class="summary-text">
+                Wie heißen Sie? · Wie heißt du?
+              </span>
+            </div>
+
+            <div class="row">
+              <span class="key">
+                ✅ Ich kann Buchstaben sagen und meinen Namen buchstabieren.
+              </span>
+
+              <span class="summary-text">
+                A, B, C, D …
+              </span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <div class="next-step-box">
+        <a href="../aktivt-trenieren.a1/aktiv-trenieren1.html">
+          Fertig gelesen? Weiter mit <span class="step-number">②</span> Aktiv trainieren
+        </a>
+
+        <details class="learning-translation">
+          <summary><span class="translation-globe">🌐</span>A/文</summary>
+          <p style="color:#000;"><strong>English:</strong> Finished reading? Continue with ② Aktiv trainieren.</p>
+          <p style="color:#000;"><strong>Polski:</strong> Czytanie skończone? Przejdź dalej do ② Aktiv trainieren.</p>
+          <p style="color:#000;"><strong>Italiano:</strong> Hai finito di leggere? Continua con ② Aktiv trainieren.</p>
+        </details>
+      </div>
+
+      <nav
+        class="lesson-nav"
+        aria-label="Navigation zwischen den Lektionen"
+      >
+        <a href="#seitenanfang" class="back-to-top">
+          ↑ Zurück nach oben
+        </a>
+
+      </nav>
+
+    </div>
+
+  </section>
+
+</div>
+
+<script>
+const alphabet=[
+  ["A","a"],["B","be"],["C","ce"],["D","de"],
+  ["E","e"],["F","ef"],["G","ge"],["H","ha"],
+  ["I","i"],["J","jot"],["K","ka"],["L","el"],
+  ["M","em"],["N","en"],["O","o"],["P","pe"],
+  ["Q","ku"],["R","er"],["S","es"],["T","te"],
+  ["U","u"],["V","vau"],["W","we"],["X","ix"],
+  ["Y","Ypsilon"],["Z","zett"]
+];
+
+const umlauts=[
+  ["Ä","ä"],
+  ["Ö","ö"],
+  ["Ü","ü"],
+  ["ß","Eszett"]
+];
+
+function createAlphabet(target,letters){
+  target.innerHTML=letters.map(letter=>{
+    const speech=letter[0]==="ß"?"Eszett":letter[0];
+
+    return `
+      <button
+        type="button"
+        class="alphabet-letter"
+        data-speech="${speech}"
+      >
+        ${letter[0]} – ${letter[1]}
+      </button>
+    `;
+  }).join("");
+}
+
+createAlphabet(
+  document.getElementById("alphabet"),
+  alphabet
+);
+
+createAlphabet(
+  document.getElementById("umlaute"),
+  umlauts
+);
+
+let germanVoice=null;
+
+function loadGermanVoice(){
+  if(!("speechSynthesis" in window))return;
+
+  const voices=speechSynthesis.getVoices();
+
+  germanVoice=
+    voices.find(voice=>
+      voice.lang?.toLowerCase()==="de-de"&&
+      voice.name.toLowerCase().includes("google")
+    )||
+    voices.find(voice=>
+      voice.lang?.toLowerCase()==="de-de"
+    )||
+    voices.find(voice=>
+      voice.lang?.toLowerCase().startsWith("de")
+    )||
+    null;
+}
+
+loadGermanVoice();
+
+if("speechSynthesis" in window){
+  speechSynthesis.addEventListener(
+    "voiceschanged",
+    loadGermanVoice
+  );
+}
+
+function speakGerman(text,options={}){
+  return new Promise(resolve=>{
+    if(!text||!("speechSynthesis" in window)){
+      resolve();
+      return;
+    }
+
+    speechSynthesis.cancel();
+
+    const utterance=
+      new SpeechSynthesisUtterance(text);
+
+    Object.assign(utterance,{
+      lang:"de-DE",
+      rate:options.rate??.92,
+      pitch:options.pitch??1,
+      volume:1
+    });
+
+    if(germanVoice){
+      utterance.voice=germanVoice;
+    }
+
+    utterance.onend=resolve;
+    utterance.onerror=resolve;
+
+    speechSynthesis.speak(utterance);
+  });
+}
+
+document
+  .querySelectorAll("[data-speech]")
+  .forEach(button=>{
+    button.addEventListener("click",()=>{
+      speakGerman(
+        button.dataset.speech,
+        {rate:.8}
+      );
+    });
+  });
+
+const ichKannButton=
+  document.getElementById("ich-kann-button");
+
+const ichKannPaper=
+  document.getElementById("ich-kann-paper");
+
+ichKannButton.addEventListener("click",()=>{
+  const open=
+    ichKannPaper.classList.toggle("show");
+
+  ichKannButton.classList.toggle("open",open);
+
+  ichKannButton.setAttribute(
+    "aria-expanded",
+    String(open)
+  );
+
+  ichKannPaper.setAttribute(
+    "aria-hidden",
+    String(!open)
+  );
+});
+</script>
+
+<script src="../../js/page-progress.js" defer></script>
+</body>
+</html>
