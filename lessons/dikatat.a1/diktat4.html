@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Diktat A1.4 based on DIKTAT-TEMPLATE-V1. -->
+<!-- Diktat A1.4 uses DIKTAT-TEMPLATE-V1 layout and interactions. -->
 <html lang="de">
 <head>
 <meta charset="UTF-8">
@@ -873,7 +873,7 @@ body.diktat-started .diktat-start-screen{display:none}
   <div class="diktat-start-panel">
     <div class="diktat-start-glass">
       <div class="diktat-start-icon" aria-hidden="true">✍️</div>
-      <p>Du hörst 10 deutsche Sätze aus Lektion 4. Schreib auf, was du hörst. Bei einer richtigen Antwort geht es automatisch weiter.</p>
+      <p>Du hörst zehn deutsche Sätze aus Lektion 4. Schreib auf, was du hörst. Bei einer richtigen Antwort geht es automatisch weiter.</p>
       <div class="diktat-start-translation">
         <button type="button" class="diktat-start-translation-toggle" id="diktat-start-translation-toggle" aria-expanded="false">🌐 A/文</button>
         <div class="diktat-start-translation-panel" id="diktat-start-translation-panel">
@@ -902,7 +902,7 @@ body.diktat-started .diktat-start-screen{display:none}
 
     <h1>Hör zu. Schreib. Weiter geht's.</h1>
     <p>
-      10 Sätze aus „Beruf &amp; Arbeit“. Schreib, was du hörst —
+      Zehn Sätze aus „Beruf &amp; Arbeit“.  Schreib, was du hörst —
       bei einem richtigen Satz geht es automatisch weiter.
     </p>
 
@@ -1443,7 +1443,7 @@ function showFinal(){
 
   if(percent===100){
     emoji="🏆";title="Perfekt!";
-    subtitle="Alle 10 Sätze richtig — du bist bereit für die nächste Lektion!";
+    subtitle="Alle zehn Sätze richtig — du bist bereit für die nächste Lektion!";
   }else if(percent>=70){
     emoji="🎉";title="Sehr gut!";
     subtitle="Fast alles richtig. Weiter so!";
@@ -1617,7 +1617,11 @@ const continueTranslationToggle=document.getElementById("continue-translation-to
 const continueTranslationText=document.getElementById("continue-translation-text");
 const continueTranslationButtons=[...document.querySelectorAll(".continue-translation-language")];
 
-const continueTranslations={en:"Continue with lesson A1.5.",pl:"Przejdź do lekcji A1.5.",it:"Continua con la lezione A1.5."};
+const continueTranslations={
+  en:"How would you like to continue learning? Have a short conversation with Nele or continue with part A1.5.",
+  pl:"Jak chcesz kontynuować naukę? Porozmawiaj krótko z Nele albo przejdź do części A1.5.",
+  it:"Come vuoi continuare a imparare? Parla brevemente con Nele oppure continua con la parte A1.5."
+};
 
 if(continueTranslationToggle && continueTranslation && continueTranslationText){
 continueTranslationToggle.addEventListener("click",event=>{
@@ -1646,9 +1650,9 @@ const startTranslationPanel=document.getElementById("diktat-start-translation-pa
 const startTranslationToggle=document.getElementById("diktat-start-translation-toggle");
 const startTranslationText=document.getElementById("diktat-start-translation-text");
 const startScreenTranslations={
-  pl:"Słuchaj. Pisz. Idziemy dalej! Usłyszysz 10 zdań z lekcji 4. Zapisz to, co słyszysz. Po poprawnej odpowiedzi przejdziesz automatycznie dalej.",
-  en:"Listen and write! You will hear 10 sentences from Lesson 4. Write what you hear; correct answers advance automatically.",
-  it:"Ascolta e scrivi! Sentirai 10 frasi della lezione 4. Dopo una risposta corretta si passa automaticamente avanti."
+  pl:"Słuchaj. Pisz. Idziemy dalej! Usłyszysz dziesięć niemieckich zdań z lekcji 4. Zapisz to, co słyszysz. Po poprawnej odpowiedzi ćwiczenie automatycznie przejdzie do następnego zdania.",
+  en:"Listen. Write. Keep going! You will hear ten German sentences from Lesson 4. Write down what you hear. After a correct answer, the exercise automatically moves to the next sentence.",
+  it:"Ascolta. Scrivi. Si continua! Ascolterai dieci frasi tedesche della lezione 4. Scrivi ciò che senti. Dopo una risposta corretta, l'esercizio passa automaticamente alla frase successiva."
 };
 startTranslationToggle.addEventListener("click",()=>{
   const opened=startTranslationPanel.classList.toggle("show");
