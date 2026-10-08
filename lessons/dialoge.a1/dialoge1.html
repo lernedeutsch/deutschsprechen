@@ -3063,6 +3063,16 @@ html body .main-history-panel .history-entry.user.pending-user-answer .user-answ
   width:28px;
 }
 </style>
+<style id="conversation-translucent-glass">
+/* Transparent smoky glass: preserve the existing frame, bubbles and layout. */
+html body .layout.show > .card .main-history-panel{
+  background:
+    linear-gradient(135deg,rgba(221,255,246,.11),rgba(54,143,131,.07) 38%,rgba(5,35,33,.16)),
+    rgba(19,75,69,.28) !important;
+  backdrop-filter:blur(12px) saturate(1.18) brightness(1.06) !important;
+  -webkit-backdrop-filter:blur(12px) saturate(1.18) brightness(1.06) !important;
+}
+</style>
 </head>
 
 <body>
