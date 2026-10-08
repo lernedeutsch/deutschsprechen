@@ -1520,6 +1520,7 @@ const continueTranslations={
   it:"Come vuoi continuare a imparare? Parla brevemente con Nele oppure continua con la parte A1.2."
 };
 
+if(continueTranslationToggle && continueTranslation && continueTranslationText){
 continueTranslationToggle.addEventListener("click",event=>{
   event.stopPropagation();
   continueTranslation.classList.toggle("open");
@@ -1539,6 +1540,8 @@ document.addEventListener("click",event=>{
     continueTranslation.classList.remove("open");
   }
 });
+
+}
 
 document.getElementById("diktat-start-button").addEventListener("click",()=>{
   document.body.classList.add("diktat-started");
