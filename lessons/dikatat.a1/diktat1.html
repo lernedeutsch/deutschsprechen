@@ -809,6 +809,13 @@ body.diktat-started .diktat-start-screen{display:none}
   cursor:pointer;
   box-shadow:0 10px 24px rgba(37,149,223,.28);
 }
+.diktat-start-translation{position:relative;margin:0 auto 18px;max-width:520px}
+.diktat-start-translation-toggle{border:1px solid rgba(54,81,107,.3);border-radius:999px;padding:7px 14px;background:rgba(255,255,255,.55);color:#36516b;font:700 .85rem "Nunito Sans",sans-serif;cursor:pointer}
+.diktat-start-translation-panel{display:none;margin:10px auto 0;padding:13px;border:1px solid rgba(54,81,107,.15);border-radius:16px;background:rgba(255,255,255,.65);color:#36516b}
+.diktat-start-translation-panel.show{display:block}
+.diktat-start-languages{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+.diktat-start-languages button{border:1px solid rgba(54,81,107,.25);border-radius:12px;padding:6px 10px;background:#fff;color:#36516b;cursor:pointer}
+.diktat-start-glass .diktat-start-translation-text{margin:12px auto 0;font-size:1rem;line-height:1.5}
 .diktat-start-button:hover{filter:brightness(1.06)}
 .diktat-start-button:focus-visible{outline:3px solid #1b334c;outline-offset:4px}
 </style>
@@ -820,6 +827,17 @@ body.diktat-started .diktat-start-screen{display:none}
     <div class="diktat-start-glass">
       <div class="diktat-start-icon" aria-hidden="true">✍️</div>
       <p>Du hörst zehn deutsche Sätze aus Lektion 1. Schreib auf, was du hörst. Bei einer richtigen Antwort geht es automatisch weiter.</p>
+      <div class="diktat-start-translation">
+        <button type="button" class="diktat-start-translation-toggle" id="diktat-start-translation-toggle" aria-expanded="false">🌐 A/文</button>
+        <div class="diktat-start-translation-panel" id="diktat-start-translation-panel">
+          <div class="diktat-start-languages">
+            <button type="button" data-start-lang="pl">Polski</button>
+            <button type="button" data-start-lang="en">English</button>
+            <button type="button" data-start-lang="it">Italiano</button>
+          </div>
+          <p class="diktat-start-translation-text" id="diktat-start-translation-text"></p>
+        </div>
+      </div>
       <button type="button" class="diktat-start-button" id="diktat-start-button">▶ Start</button>
     </div>
   </div>
@@ -1543,6 +1561,21 @@ document.addEventListener("click",event=>{
 
 }
 
+const startTranslationPanel=document.getElementById("diktat-start-translation-panel");
+const startTranslationToggle=document.getElementById("diktat-start-translation-toggle");
+const startTranslationText=document.getElementById("diktat-start-translation-text");
+const startScreenTranslations={
+  pl:"Słuchaj. Pisz. Idziemy dalej! Usłyszysz dziesięć niemieckich zdań z lekcji 1. Zapisz to, co słyszysz. Po poprawnej odpowiedzi ćwiczenie automatycznie przejdzie do następnego zdania.",
+  en:"Listen. Write. Keep going! You will hear ten German sentences from Lesson 1. Write down what you hear. After a correct answer, the exercise automatically moves to the next sentence.",
+  it:"Ascolta. Scrivi. Si continua! Ascolterai dieci frasi tedesche della lezione 1. Scrivi ciò che senti. Dopo una risposta corretta, l'esercizio passa automaticamente alla frase successiva."
+};
+startTranslationToggle.addEventListener("click",()=>{
+  const opened=startTranslationPanel.classList.toggle("show");
+  startTranslationToggle.setAttribute("aria-expanded",String(opened));
+});
+document.querySelectorAll("[data-start-lang]").forEach(button=>button.addEventListener("click",()=>{
+  startTranslationText.textContent=startScreenTranslations[button.dataset.startLang];
+}));
 document.getElementById("diktat-start-button").addEventListener("click",()=>{
   document.body.classList.add("diktat-started");
   init();
