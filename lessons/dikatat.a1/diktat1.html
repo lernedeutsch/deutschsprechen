@@ -1272,7 +1272,7 @@ function renderProgress(){
     })
     .join("");
 
-  els.statProgress.textContent=`${index+1}/${sentences.length}`;
+  els.statProgress.textContent=`${Math.min(index+1,sentences.length)}/${sentences.length}`;
 }
 
 function updateStats(){
