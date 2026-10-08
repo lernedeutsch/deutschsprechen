@@ -1093,7 +1093,7 @@ body.sprich-started .lesson-only-next{
 body.sprich-started .lesson-only-next a{display:inline-flex!important}
 </style>
 <style id="start-inner-glass-3d-panel">
-/* Glass and light effects apply only before starting */
+/* Light texture UNDER the transparent start glass, never over controls */
 body:not(.sprich-started) .layout .panel {
   position: relative !important;
   isolation: isolate;
@@ -1102,13 +1102,14 @@ body:not(.sprich-started) .layout .panel::before {
   content: "" !important;
   position: absolute;
   inset: 0;
-  pointer-events: none;
   z-index: 0;
+  pointer-events: none;
   background:
-    linear-gradient(128deg, transparent 8%, rgba(255,251,231,.54) 20%, rgba(255,255,255,.08) 28%, transparent 41%),
-    linear-gradient(151deg, transparent 40%, rgba(255,227,165,.40) 56%, transparent 72%),
-    radial-gradient(ellipse at 80% 43%, rgba(59,146,197,.45), transparent 45%),
-    radial-gradient(ellipse at 25% 76%, rgba(49,125,175,.39), transparent 44%);
+    linear-gradient(133deg, transparent 8%, rgba(255,255,245,.54) 17%, rgba(255,244,216,.10) 29%, transparent 42%),
+    linear-gradient(147deg, transparent 38%, rgba(255,234,185,.44) 52%, rgba(255,250,233,.14) 61%, transparent 74%),
+    radial-gradient(ellipse at 72% 39%, rgba(55,144,200,.56) 0%, rgba(71,151,194,.21) 29%, transparent 58%),
+    radial-gradient(ellipse at 19% 72%, rgba(49,118,166,.47), transparent 52%);
+  filter: blur(8px);
 }
 body:not(.sprich-started) #start-wrap {
   width: min(600px,82%) !important;
@@ -1120,14 +1121,14 @@ body:not(.sprich-started) #start-wrap {
   isolation: isolate;
   z-index: 1;
   border-radius: 34px !important;
-  background: rgba(240,247,250,.008) !important;
+  background: rgba(242,248,251,.012) !important;
   border: 2px solid rgba(255,255,255,.78) !important;
-  backdrop-filter: blur(2px) saturate(1.05) !important;
-  -webkit-backdrop-filter: blur(2px) saturate(1.05) !important;
+  backdrop-filter: blur(1.5px) saturate(1.12) !important;
+  -webkit-backdrop-filter: blur(1.5px) saturate(1.12) !important;
   box-shadow:
     inset 0 3px 3px rgba(255,255,255,.55),
-    inset 0 -9px 22px rgba(55,65,75,.07),
-    0 17px 35px rgba(22,32,42,.19) !important;
+    inset 0 -9px 22px rgba(55,65,75,.055),
+    0 17px 35px rgba(22,32,42,.18) !important;
   opacity: 1 !important;
   transform: none !important;
 }
@@ -1135,14 +1136,14 @@ body:not(.sprich-started) #start-wrap::before {
   content: "" !important;
   position: absolute;
   inset: 0;
+  z-index: 0;
   border-radius: inherit;
   pointer-events: none;
-  z-index: 0;
   background:
-    radial-gradient(ellipse at 14% 13%, rgba(255,255,255,.29), transparent 37%),
-    linear-gradient(114deg, transparent 15%, rgba(255,255,255,.10) 23%, transparent 38%),
+    radial-gradient(ellipse at 14% 12%, rgba(255,255,255,.29), transparent 35%),
+    linear-gradient(114deg, transparent 13%, rgba(255,255,255,.12) 23%, transparent 37%),
     repeating-linear-gradient(112deg, transparent 0px, rgba(255,255,255,.022) 2px, transparent 5px, transparent 47px);
-  opacity: .68;
+  opacity: .72;
 }
 body:not(.sprich-started) #start-wrap > * {
   position: relative;
