@@ -798,6 +798,10 @@ button,textarea{font:inherit}
           💡 Tipp
         </button>
 
+        <button type="button" class="hint-btn" id="show-answer-btn">
+          👁 Antwort zeigen
+        </button>
+
       </div>
 
       <p class="hint-text" id="hint-text"></p>
@@ -984,6 +988,7 @@ const els={
   stage:document.getElementById("stage"),
   playBtn:document.getElementById("play-btn"),
   hintBtn:document.getElementById("hint-btn"),
+  showAnswerBtn:document.getElementById("show-answer-btn"),
   hintText:document.getElementById("hint-text"),
   input:document.getElementById("dict-input"),
   statusIcon:document.getElementById("status-icon"),
@@ -1135,6 +1140,8 @@ function burstConfetti(){
 
 function loadQuestion(){
   answered=false;
+  els.showAnswerBtn.disabled=false;
+  els.skipBtn.textContent="Satz überspringen →";
 
   els.input.value="";
   els.input.disabled=false;
@@ -1275,6 +1282,20 @@ function init(){
 
 els.playBtn.addEventListener("click",playCurrent);
 
+els.showAnswerBtn.addEventListener("click",()=>{
+  if(answered)return;
+  clearTimeout(debounceTimer);
+  answered=true;
+  streak=0;
+  updateStats();
+  setStatusIcon("👁",false);
+  els.input.disabled=true;
+  els.showAnswerBtn.disabled=true;
+  els.feedback.className="feedback show correct";
+  els.feedback.textContent="Die richtige Antwort: "+target()+" — Lies sie und gehe dann weiter.";
+  els.skipBtn.textContent="Nächster Satz →";
+});
+
 els.hintBtn.addEventListener("click",()=>{
   hintUsedFor[order[index]]=true;
   els.hintText.classList.add("show");
@@ -1282,7 +1303,7 @@ els.hintBtn.addEventListener("click",()=>{
 });
 
 els.skipBtn.addEventListener("click",()=>{
-  if(answered)return;
+  if(answered && els.skipBtn.textContent!=="Nächster Satz →")return;
   streak=0;
   updateStats();
   advance();
