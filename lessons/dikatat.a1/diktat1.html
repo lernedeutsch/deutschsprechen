@@ -328,6 +328,17 @@ button,textarea{font:inherit}
   padding:14px 23px;
   box-shadow:0 7px 20px rgba(39,148,221,.25);
 }
+@keyframes diktat-continue-pulse{
+  0%,100%{transform:scale(1);box-shadow:0 7px 20px rgba(39,148,221,.25)}
+  50%{transform:scale(1.045);box-shadow:0 9px 28px rgba(39,148,221,.48)}
+}
+.skip-btn.continue-btn{
+  animation:diktat-continue-pulse 1.7s ease-in-out infinite;
+}
+@media (prefers-reduced-motion:reduce){
+  .skip-btn.continue-btn{animation:none}
+}
+
 .skip-btn.continue-btn:hover{
   background:#228fd6;
   border-color:#228fd6;
