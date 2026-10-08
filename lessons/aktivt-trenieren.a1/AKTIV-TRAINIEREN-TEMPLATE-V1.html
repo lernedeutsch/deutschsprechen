@@ -1,0 +1,880 @@
+<!DOCTYPE html>      
+
+<!--
+AKTIV-TRAINIEREN-TEMPLATE-V1 — WZÓR, NIE LEKCJA PRODUKCYJNA.
+Źródło: aktualna Aktiv trainieren A1.1.
+Przy przenoszeniu do innej lekcji zmień:
+1. Tytuł, numer lekcji, nagłówki, polecenia i tłumaczenia.
+2. Materiał dydaktyczny, zadania, odpowiedzi, dane audio i logikę zależną od treści.
+3. Linki do lekcji, Sprich nach i innych części kursu.
+4. Klucze postępu / localStorage, jeżeli używane, aby wyniki lekcji nie mieszały się.
+5. ID, selektory, zależności skryptów i nawigację; sprawdź każdy element interaktywny.
+Nie kopiuj A1.1 do innej lekcji bez dostosowania i przetestowania.
+Kontrola statyczna źródła: składnia JavaScript poprawna, brak duplikatów HTML id.
+-->
+<html lang="de">      
+<head>      
+<meta charset="UTF-8">      
+<meta name="viewport" content="width=device-width,initial-scale=1">      
+<title>Lektion 1 – Begrüßung und Vorstellung</title>      
+<link rel="preconnect" href="https://fonts.googleapis.com">      
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>      
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Fraunces:wght@500;700&family=Nunito+Sans:opsz,wght@6..12,400,600,700,800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">      
+<style>      
+:root{--ink:#16233a;--line:#e3d6b8;--red:#bd4433;--gold:#cf9f3f;--green:#4f7a63;--text:#1c2430;--informell:#58755f;--formell:#a65e4f;--a:#eee9dc;--b:#e8c989;--ok:#16864b;--okbg:#e8f8ef;--err:#c53d3d;--errbg:#fff0f0;--box:#fbf6e8}      
+*{box-sizing:border-box}html{scroll-behavior:smooth}      
+body{margin:0;min-height:100vh;padding:45px 20px 60px;color:var(--text);font:400 1rem/1.6 "Nunito Sans",sans-serif;background:radial-gradient(circle at 10% 8%,#cf9f3f12,transparent 35%),radial-gradient(circle at 90% 92%,#4f7a631a,transparent 40%),var(--ink)}      
+button,input{font:inherit}button{cursor:pointer}      
+.page-progress-container{position:fixed;z-index:1000;top:0;left:0;width:100%;height:7px;background:#ffffff29}.page-progress-bar{width:0;height:100%;background:linear-gradient(90deg,#f4c95d,#ffb54a);transition:.2s}      
+.course-start,.lesson-introduction,.page{width:100%;margin:0 auto 38px;background:linear-gradient(160deg,#fff8ea,#f3e2bd);border-radius:24px;box-shadow:0 24px 55px #0004}      
+.course-start{max-width:980px;margin-bottom:60px;padding:22px 24px;border:1px solid var(--line);box-shadow:0 18px 42px #00000047}      
+.course-start-title{margin:0 0 15px;color:#161616;font:600 .95rem "JetBrains Mono",monospace;letter-spacing:.2em;text-transform:uppercase}.course-start-text{margin:0;padding:13px 16px;background:#fff;border:1px solid var(--line);border-radius:14px;font-size:1.05rem}      
+.lesson-introduction{max-width:980px;padding:34px}.lesson-hero{display:flex;align-items:center;gap:28px;padding:10px 4px 28px;border-bottom:2px dashed #1c24302e}.lesson-hero-text{flex:1 1 530px}      
+.lesson-main-title{margin:0 0 14px;color:#161616;font:700 2.7rem/1.12 "Fraunces",serif}.lesson-description{max-width:590px;margin:0;color:#334155;font-size:1.04rem}      
+.lesson-topics{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}.lesson-topic{display:inline-flex;align-items:center;justify-content:center;padding:8px 14px;background:#fff;border:1px solid var(--line);border-radius:999px;font-size:.92rem}      
+.lesson-wheel{flex:0 0 285px;display:grid;place-items:center}.lesson-wheel svg{width:100%;height:auto;filter:drop-shadow(0 14px 24px #0000002b)}      
+.wheel-center-title,.wheel-center-subtitle{fill:#f7efdd;text-anchor:middle;font-family:"JetBrains Mono",monospace}.wheel-center-title{font-size:17px;font-weight:700}.wheel-center-subtitle{font-size:12px}      
+.sprachpass{display:flex;align-items:center;gap:18px;margin-top:26px;padding:16px 20px;color:#f7efdd;background:linear-gradient(145deg,#16233a,#20324a);border:1px solid #ffffff17;border-radius:18px;box-shadow:0 10px 24px #0000003d}      
+.sprachpass-information{flex:none}.sprachpass-title{font:700 1.08rem "Fraunces",serif}.sprachpass-counter{margin:2px 0 0;color:#f7efddad;font:.78rem "JetBrains Mono",monospace}      
+.stamps{display:flex;justify-content:flex-end;gap:12px;flex:1}.stamp-slot{display:grid;place-items:center;width:72px;height:72px;padding:5px;color:#f7efdd8f;text-align:center;border:2px dashed #f7efdd4d;border-radius:50%;font:.61rem/1.08 "JetBrains Mono",monospace;transition:.3s}.stamp-icon{display:block;margin-bottom:3px;font-size:1.25rem;opacity:.55}      
+.stamp-slot.stamped{color:#f3c2b8;background:#bd443329;border-color:#e57763;border-style:solid;transform:rotate(-7deg) scale(1.05);animation:stamp .48s}.stamp-slot.stamped .stamp-icon{opacity:1}      
+@keyframes stamp{0%{opacity:0;transform:rotate(-7deg) scale(.3)}65%{opacity:1;transform:rotate(-10deg) scale(1.16)}100%{transform:rotate(-7deg) scale(1.05)}}      
+.greeting-page{max-width:980px;padding:34px}.intro-page{max-width:860px;padding:24px 28px 30px;border:1px solid #e3d6b8cc;border-radius:20px;box-shadow:0 18px 42px #00000047}.exercise-page,.alphabet-page,.farewell-page{max-width:900px;padding:22px}      
+.part-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px;margin-bottom:18px}.part-num{color:var(--red);font:600 .82rem "JetBrains Mono",monospace;letter-spacing:.16em;text-transform:uppercase}.part-title{margin:0;color:#161616;font:700 2.5rem/1.15 "Kalam",cursive}      
+.intro-page .part-head{margin-bottom:17px;padding-bottom:9px;border-bottom:1px solid #1c24301f}.intro-page .part-num{font-size:.72rem}.intro-page .part-title{font-size:2.15rem}      
+.card{background:#fffdf6;border:1px solid var(--line);box-shadow:0 12px 30px #00000012}.click-icon{font-size:1.05em;line-height:1}
+.action-help{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 12px;padding:8px 10px;color:#26364b;background:#fff7d8;border:2px solid #e4bd57;border-radius:12px;font-weight:700;font-size:.92rem;box-shadow:0 4px 10px #0000000d}
+.action-help-step{display:inline-flex;align-items:center;gap:4px;padding:4px 8px;background:#fff;border:1px solid #ead9a9;border-radius:999px}
+.action-help-arrow{color:#9d7622;font-weight:800;font-size:.95rem}
+.action-help{position:relative;padding-right:132px}
+.translation-control{position:absolute;top:7px;right:8px;z-index:12}
+.translation-toggle{display:inline-flex;align-items:center;gap:5px;min-height:30px;padding:4px 9px;color:#4c4028;background:#fffdf6;border:1px solid #d8c28c;border-radius:999px;font-size:.78rem;font-weight:800;cursor:pointer;box-shadow:0 3px 8px #0000000d}
+.translation-toggle:hover,.translation-toggle:focus-visible{background:#fff3c8;border-color:#cf9f3f}
+.translation-panel{display:none;position:absolute;right:0;top:36px;width:230px;padding:9px;background:#fffdf7;border:1px solid #d9c28e;border-radius:12px;box-shadow:0 10px 24px #00000026}
+.translation-control:hover .translation-panel,.translation-control:focus-within .translation-panel,.translation-control.open .translation-panel,.translation-inline-control:hover .translation-panel,.translation-inline-control:focus-within .translation-panel,.translation-inline-control.open .translation-panel{display:block}
+.translation-inline-control{position:relative;display:inline-flex;margin-left:8px;vertical-align:middle;z-index:15}
+.translation-languages{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.translation-language{padding:5px 8px;color:#26364b;background:#f7f1e3;border:1px solid #ddcfaa;border-radius:999px;font-size:.75rem;font-weight:800;cursor:pointer}
+.translation-language:hover,.translation-language.active{background:#e4f3e8;border-color:#78bf95;color:#28502f}
+.translation-text{display:none;margin:0;padding:8px 9px;color:#26364b;background:#fff7d8;border-radius:9px;font-size:.8rem;line-height:1.35;font-weight:700}
+.translation-text.show{display:block}
+.register-key{display:flex;flex-wrap:wrap;gap:9px;margin:0 0 14px}.register-key-item{display:inline-flex;align-items:center;gap:6px;padding:7px 11px;color:#344054;background:#fffdf6;border:1px solid #dbc68e;border-radius:999px;font-weight:800}.register-key-item strong{color:#161616}.exercise-guide-row{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:nowrap;margin:0 0 18px}.exercise-guide-row .action-help{flex:0 0 auto;margin:0;padding:0 42px 0 0;background:transparent;border:0;box-shadow:none;white-space:nowrap}.exercise-guide-row .register-key{flex:0 0 auto;flex-wrap:nowrap;margin:0}.exercise-guide-row .action-help-step,.exercise-guide-row .register-key-item{white-space:nowrap}.exercise-guide-row .action-help .translation-control{top:50%;right:0;transform:translateY(-50%)}
+.exercise-guide-row .action-help[data-help-key="register"]{padding-right:0}.exercise-guide-row .action-help[data-help-key="register"] .translation-control{position:absolute;top:calc(100% + 20px);right:-438px;transform:none}
+.section-done{display:none;align-items:center;padding:5px 10px;color:#28502f;background:#e4f3e8;border:1px solid #78bf95;border-radius:999px;font:700 .78rem "JetBrains Mono",monospace}.section-done.show{display:inline-flex}
+.farewell-context{display:grid;gap:2px}.farewell-hint{color:#5a5140;font-size:.93rem;font-weight:800}      
+.answer-button,.tab-button,.category-button,.farewell-button{display:inline-flex;align-items:center;justify-content:center;gap:7px;color:#17342a;background:#edf7f1;border:2px solid #7fa493;font-weight:800;box-shadow:0 4px 10px #315b4720;transition:.15s}      
+.answer-button:hover:not(:disabled),.tab-button:hover:not(:disabled),.category-button:hover:not(:disabled),.farewell-button:hover:not(:disabled){background:#dff1e7;transform:translateY(-2px);border-color:#4f7a63;box-shadow:0 6px 14px #315b4730}      
+.restart-button,.exercise-read-button,.stamp-reset-button{display:inline-flex;align-items:center;justify-content:center;gap:7px;color:#fff;border:0;border-radius:999px;font-weight:800;transition:.16s}      
+.greeting-card{
+  padding:28px;
+  border-radius:22px;
+  background:#fffdf6;
+  border:1px solid var(--line);
+  box-shadow:0 12px 30px #00000012;
+}
+.greeting-card .lead{margin:0 0 22px;font-size:1.08rem}
+.greeting-card .grammar-toggle{margin:0 0 22px}
+.greeting-card .grammar-toggle summary{
+  background:transparent;
+  border:0;
+  border-radius:0;
+  padding:10px 0;
+}
+.greeting-card .grammar-toggle[open] summary{border-radius:0}
+.greeting-card .grammar-box{
+  background:transparent;
+  border:0;
+  border-left:3px solid var(--gold);
+  border-radius:0;
+  padding:10px 0 10px 16px;
+}
+.greeting-card .greeting-game{
+  padding:0;
+  background:transparent;
+  border:0;
+  border-radius:0;
+}
+.greeting-card .action-help{
+  margin-top:8px;
+  background:transparent;
+  border:0;
+  box-shadow:none;
+  padding-left:0;
+}
+
+.grammar-toggle summary{padding:15px 18px;cursor:pointer;list-style:none;background:#f0ede0;border:1px solid var(--line);border-radius:15px;font-weight:800}.grammar-toggle summary::-webkit-details-marker{display:none}.grammar-toggle summary:before{content:"📖 "}.grammar-toggle[open] summary{border-radius:15px 15px 0 0}      
+.grammar-box{padding:18px;background:var(--box);border:1px solid var(--line);border-top:0;border-left:4px solid var(--gold);border-radius:0 0 15px 15px}      
+.greeting-game,.farewell-game{padding:26px;background:var(--box);border:1px solid var(--line);border-radius:20px}.clock-display{display:flex;align-items:center;gap:20px;margin-bottom:26px}      
+.day-picture{position:relative;display:grid;place-items:center;flex:0 0 92px;width:92px;height:72px;overflow:hidden;border:2px solid #1c24301f;border-radius:16px;box-shadow:0 8px 18px #00000029,inset 0 1px #ffffff59;transition:.35s}.day-picture:after{content:"";position:absolute;right:-10px;bottom:-16px;width:115px;height:38px;background:#ffffff38;border-radius:50%}      
+.day-picture.morgen{background:linear-gradient(#e95f42,#ff9b42 50%,#3971b8 51%,#204d8c)}.day-picture.tag{background:linear-gradient(#74c9ff,#bce9ff 62%,#6ebf61 63%,#3d914d)}.day-picture.abend{background:linear-gradient(#111b4a,#303b78 58%,#65416f 59%,#2b284e)}      
+.day-symbol{position:relative;z-index:1;font-size:2.6rem;line-height:1;filter:drop-shadow(0 3px 3px #0003);transition:.35s}.clock-time{font:700 1.8rem "JetBrains Mono",monospace}.question{margin:0 0 10px;font-size:1.08rem}      
+.answer-buttons,.farewell-buttons{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:14px}.answer-button,.farewell-button{padding:11px 19px;border-radius:999px;font-size:.98rem}.answer-button:disabled,.category-button:disabled,.farewell-button:disabled{cursor:default}      
+.answer-button.richtig,.farewell-button.richtig{color:#28502f;background:#e4f3e8;border-color:var(--green)}.answer-button.falsch,.farewell-button.falsch{color:var(--red);background:#f9e4e1;border-color:var(--red)}      
+.feedback{min-height:30px;margin:10px 0 0;font-weight:800}.counter{margin:12px 0 0;color:#5a5140;font:.88rem "JetBrains Mono",monospace}.progress-area{margin-top:18px}.progress-track{height:12px;overflow:hidden;background:#e8dfca;border:1px solid var(--line);border-radius:999px}.progress-fill{width:0;height:100%;background:linear-gradient(90deg,#5f9e6e,#79bd84);border-radius:999px;transition:.5s}      
+.finish{display:none;margin-top:20px;padding:18px;color:#28502f;text-align:center;background:#e4f3e8;border:2px solid var(--green);border-radius:16px}.finish.zeigen{display:block;animation:fade .45s}.finish-title{display:block;margin-bottom:5px;font-size:1.18rem;font-weight:800}.restart-button{margin-top:14px;padding:10px 20px;background:var(--green)}.restart-button:hover{filter:brightness(1.08)}      
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}      
+.intro-card{background:linear-gradient(160deg,#fff8ea,#f3e2bd);border:0;box-shadow:none}.intro-setup-card{margin-bottom:38px;padding:12px 14px 11px;background:#fffdf6;border:1px solid var(--line);border-radius:14px;box-shadow:0 8px 20px #0000000d}.intro-setup-card .action-help{margin:0 0 9px;background:transparent;border:0;box-shadow:none;padding:0;font-size:.70rem;gap:3px}.intro-setup-card .action-help-step{padding:2px 5px}.intro-setup-card .translation-toggle{min-height:26px;padding:3px 7px;font-size:.68rem}.intro-setup-card .translation-globe{font-size:1.12em}.intro-setup-card .description{margin:0 0 9px;font-size:.74rem}.intro-setup-card .name-row{margin-bottom:0}.intro-setup-card .name-row label{font-size:1.12rem}.description{margin:0 0 14px;line-height:1.45}.name-row{display:flex;align-items:center;gap:12px;margin-bottom:17px}.name-row label{display:inline-flex;align-items:center;gap:7px;flex:none;font-weight:800}.name-pencil{display:inline-block;font-size:1.28em;line-height:1;transform-origin:center;animation:namePencilPulse 1.15s ease-in-out infinite}@keyframes namePencilPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}.name-row input{flex:1;min-width:0;padding:10px 14px;color:var(--text);background:#fff;border:2px solid var(--line);border-radius:11px;transition:.18s}.name-row input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 4px #cf9f3f29}      
+.tab-buttons{display:flex;align-items:center;justify-content:center;gap:156px;margin:0 0 42px;padding:8px 0 4px;background:linear-gradient(160deg,#fff8ea,#f3e2bd)}.tab-button{min-width:122px;padding:9px 20px;color:#3b3026;background:#f5efe1;border-radius:999px;font-size:.92rem}#tab-informell{color:#61430c;background:#f7d98e;border-color:#d7aa52}#tab-informell.active{color:#fff;background:#d99a43;border-color:#b87925}#tab-formell.active{color:#fff;background:var(--formell);border-color:#8f4c40}      
+.dialog-box{display:grid;gap:14px;min-height:330px;padding:19px 18px;background:#ffffff57;border:2px solid var(--line);border-radius:16px}.dialog-box[hidden]{display:none}      
+.bubble{position:relative;padding:11px 16px;color:#171717;border-radius:15px;line-height:1.45;box-shadow:0 4px 10px #0000000b;transition:.18s}.bubble-a{width:72%;max-width:580px;margin-right:auto;background:var(--a);border:1px solid #e2dccd;border-bottom-left-radius:7px}.bubble-b{width:40%;min-width:220px;max-width:330px;margin-left:auto;background:linear-gradient(145deg,#f0d89f,var(--b));border:1px solid #d2a94f;border-bottom-right-radius:7px;box-shadow:0 6px 13px #996d1926}      
+.speaker{display:block;margin-bottom:3px;color:var(--red);font:600 .65rem "JetBrains Mono",monospace;letter-spacing:.12em;text-transform:uppercase}.person-icon{position:absolute;top:50%;display:grid;place-items:center;width:34px;height:34px;background:#fffaf0;border-radius:10px;font-size:1.25rem;opacity:0;pointer-events:none;transform:translateY(-50%) scale(.55);transition:.2s;box-shadow:0 4px 10px #0000001a}.bubble-a .person-icon{right:13px;border:1px solid #4f7a6352}.bubble-b .person-icon{left:13px;border:1px solid #bd443347}      
+.bubble-a.speaking{padding-right:60px;border-color:#7a9b83;transform:translateY(-1px);box-shadow:0 7px 16px #315f4c26}.bubble-b.speaking{padding-left:60px;border-color:#c59036;transform:translateY(-1px);box-shadow:0 8px 18px #996d193b}.bubble.speaking .person-icon{opacity:1;transform:translateY(-50%) scale(1)}      
+.exercise-card{padding:22px;background:linear-gradient(145deg,#fff8e9,#f5e6c7);border:1px solid #ffffff66;border-radius:22px;box-shadow:0 18px 45px #00000029}.exercise-read-button{min-height:42px;margin:0 0 20px;padding:8px 18px;background:linear-gradient(#6f9f87,#527a67);border:1px solid #466c59;box-shadow:0 7px 15px #315b472b}.exercise-read-button:hover{transform:translateY(-2px);filter:brightness(1.06)}.exercise-read-button.speaking{background:#315f4c}      
+.exercise-title{margin:0 0 15px;font:700 1.7rem/1.2 "Fraunces",serif}.category-buttons{display:flex;justify-content:center;align-items:center;gap:72px;margin:12px auto 17px}.category-button{min-width:180px;min-height:48px;padding:9px 19px;border-radius:999px;font-size:1rem}.category-button:hover:not(:disabled){background:#dff1e7;border-color:#4f7a63;transform:translateY(-2px)}.category-button.correct-choice{color:#fff;background:var(--ok);border-color:var(--ok)}.category-button.wrong-choice{color:#fff;background:var(--err);border-color:var(--err)}.category-button:disabled{opacity:.55}
+@keyframes handBlink{
+  0%,100%{opacity:.5;transform:scale(1);filter:drop-shadow(0 0 0 rgba(255,183,0,0))}
+  50%{opacity:1;transform:scale(1.28);filter:drop-shadow(0 0 7px rgba(255,183,0,.95))}
+}
+button:not(:disabled) .click-icon{
+  display:inline-block;
+  transform-origin:center;
+  animation:handBlink 1.15s ease-in-out infinite;
+}
+.category-button:not(:disabled) .click-icon:nth-child(1){animation-delay:0s}
+.category-button:not(:disabled):nth-child(2) .click-icon{animation-delay:.55s}      
+.exercise-list{display:grid;gap:9px}.exercise-row{position:relative;display:grid;gap:5px;min-height:58px;padding:10px 14px;overflow-x:auto;background:#fffffff0;border:2px solid var(--line);border-radius:16px;opacity:.58;transition:.2s}.exercise-row.active{opacity:1;padding-left:112px;background:#fffdf5;border:3px solid var(--gold);box-shadow:0 0 0 5px #cf9f3f33,0 10px 22px #4d3c1e26;transform:scale(1.012)}.exercise-row.active::before{content:"👉 JETZT";position:absolute;left:13px;top:50%;transform:translateY(-50%);padding:5px 8px;color:#4b3914;background:#ffe9a7;border:1px solid #d8aa37;border-radius:999px;font:.8rem "JetBrains Mono",monospace;font-weight:800}.exercise-row.solved{opacity:1;background:var(--okbg);border-color:#78bf95;box-shadow:none;transform:none}.exercise-row.solved::before{content:none}.exercise-row.wrong{opacity:1;background:var(--errbg);border-color:#e79a9a;animation:shake .28s}      
+.exercise-sentence{white-space:nowrap;font-size:1.08rem;font-weight:800}.exercise-feedback{min-height:0;margin:0;font-size:.84rem;font-weight:800}.exercise-feedback.good{color:var(--ok)}.exercise-feedback.bad{color:var(--err)}      
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}      
+.exercise-result{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:16px;padding:12px 15px;background:#ffffffb3;border:1px solid var(--line);border-radius:14px}.exercise-score{margin:0;font:600 .9rem "JetBrains Mono",monospace}.exercise-score strong{font-size:1.05rem}.exercise-result-actions{display:flex;align-items:center;justify-content:center;gap:10px}.exercise-result .exercise-read-button{width:auto;min-height:38px;margin:0;padding:7px 15px}.exercise-reset{min-height:38px;padding:7px 15px;color:#fff;background:#20324a;border:0;border-radius:999px;font-weight:800;transition:.15s}.exercise-reset:hover{transform:translateY(-2px);filter:brightness(1.1)}.exercise-complete{min-height:24px;margin:12px 0 0;color:var(--ok);text-align:center;font-weight:800}      
+.alphabet-card{padding:20px;background:#fffdf7;border:1px solid var(--line);border-radius:20px;box-shadow:0 10px 25px #0000000f}.alphabet-lead{margin:0 0 16px;font-size:1rem}.alphabet-grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:9px;margin:0 0 22px}      
+.alphabet-letter{min-width:0;padding:10px 5px;white-space:nowrap;color:var(--text);background:var(--box);border:1px solid var(--line);border-radius:11px;font-weight:800;transition:.15s}.alphabet-letter:hover{background:#eaf3ff;border-color:#72b8ff;transform:translateY(-2px)}.alphabet-letter.alphabet-active{color:#fff;background:var(--red);border-color:var(--red)}      
+.alphabet-subtitle{margin:20px 0 13px;font:700 1.28rem "Fraunces",serif}.umlaute-grid{grid-template-columns:repeat(4,minmax(90px,130px));margin-bottom:24px}      
+.spelling-box{padding:17px;background:var(--box);border:1px solid var(--line);border-radius:17px}.spelling-title{margin:0 0 9px;font:700 1.25rem "Fraunces",serif}.spelling-pencil{display:inline-block;font-size:1.3em;line-height:1;transform-origin:center;animation:spellingPencilPulse 1.15s ease-in-out infinite}@keyframes spellingPencilPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}.spelling-text{margin:0 0 13px}.spelling-form{display:flex;gap:9px}      
+.spelling-input{position:relative;z-index:2;flex:1;min-width:0;padding:14px 17px;font-size:1.08rem;color:var(--text);background:#fff;border:2px solid var(--line);border-radius:11px;outline:none;pointer-events:auto;user-select:text;-webkit-user-select:text;touch-action:manipulation}.spelling-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px #cf9f3f2e}      
+.spelling-button{padding:14px 22px;font-size:1.08rem;color:#fff;white-space:nowrap;background:var(--red);border:0;border-radius:999px;font-weight:800}.spelling-button:hover{filter:brightness(1.08)}.spelling-button:disabled{cursor:default;opacity:.6}      
+.spelling-output{display:flex;flex-wrap:wrap;gap:7px;min-height:38px;margin-top:14px}.letter-chip{min-width:38px;padding:6px 10px;text-align:center;background:#fff;border:2px solid var(--line);border-radius:9px;font:700 1rem "JetBrains Mono",monospace;transition:.18s}.letter-chip.letter-speaking{color:#fff;background:var(--gold);border-color:var(--gold);transform:scale(1.08)}.spelling-message{min-height:22px;margin:10px 0 0;color:var(--red);font-weight:700}      
+.farewell-card{padding:22px;background:#fffdf6;border:1px solid var(--line);border-radius:22px;box-shadow:0 12px 30px #00000012}.farewell-display{display:flex;align-items:center;gap:20px;margin-bottom:26px}.farewell-picture{display:grid;place-items:center;flex:0 0 92px;width:92px;height:72px;background:linear-gradient(#8ec5ff,#d9efff 56%,#75b965 57%,#4d8e49);border:2px solid #1c24301f;border-radius:16px;box-shadow:0 8px 18px #00000029,inset 0 1px #ffffff59}.farewell-symbol{font-size:2.6rem;filter:drop-shadow(0 3px 3px #0003)}.farewell-type{font:700 1.35rem "JetBrains Mono",monospace}      
+.farewell-reset-area{margin-top:22px;padding-top:18px;text-align:center;border-top:2px dashed #1c24302e}.stamp-reset-button{min-height:44px;padding:9px 20px;background:#20324a}.stamp-reset-button:hover{transform:translateY(-2px);filter:brightness(1.1)}.stamp-reset-message{min-height:24px;margin:10px 0 0;color:var(--green);font-weight:800}      
+.end-navigation{width:100%;max-width:900px;margin:0 auto;padding-bottom:10px}.end-buttons{display:flex;align-items:stretch;justify-content:center;gap:12px;margin:0 auto 20px}.end-button{display:inline-flex;align-items:center;justify-content:center;gap:7px;flex:1;max-width:270px;min-height:58px;padding:12px 18px;color:#fff;text-align:center;text-decoration:none;white-space:nowrap;border-radius:19px;font-weight:800;box-shadow:0 8px 18px #0000003d,inset 0 1px #ffffff61;transition:.18s}.end-button:hover{transform:translateY(-3px);filter:brightness(1.07);box-shadow:0 12px 23px #0000004a,inset 0 1px #ffffff6b}      
+.sprich-button{flex:0 1 auto;max-width:none;padding-left:24px;padding-right:24px;background:linear-gradient(#68c7ff,#43aef4);border:2px solid #d7f1ff}.uebung-button{background:linear-gradient(#a88af5,#7958d8);border:2px solid #e5ddff}.next-button{background:linear-gradient(#84df42,#5fbd28);border:2px solid #e4ffd2}      
+.bottom-arrows{display:flex;justify-content:center;align-items:center;gap:12px;margin:auto}.bottom-arrow{display:grid;place-items:center;width:52px;height:52px;color:var(--text);background:#fff;border:1px solid var(--line);border-radius:50%;text-decoration:none;font-size:1.55rem;line-height:1;font-weight:800;box-shadow:0 7px 16px #0003;transition:.18s}.bottom-arrow:hover{transform:translateY(-3px);background:#f6edda;border-color:var(--gold)}      
+button:focus-visible,summary:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:3px}      
+@media(max-width:760px){      
+body{padding:20px 12px 35px}.course-start{margin-bottom:38px;padding:18px 15px;border-radius:18px}.lesson-introduction{padding:22px 15px;border-radius:18px}.lesson-hero{align-items:flex-start;flex-direction:column}.lesson-main-title{font-size:2.12rem}.lesson-wheel{width:100%;max-width:270px;margin:auto}.sprachpass{align-items:flex-start;flex-direction:column}.stamps{justify-content:space-between;width:100%}.stamp-slot{width:61px;height:61px;font-size:.54rem}.action-help{gap:5px;padding:7px 9px;padding-right:44px;font-size:.86rem}.action-help-step{padding:4px 7px}.translation-toggle{width:32px;padding:4px 6px;font-size:0}.translation-toggle .globe{font-size:1rem}.translation-panel{width:min(230px,76vw)}      
+.greeting-page{padding:20px 14px;border-radius:18px}.greeting-page .part-title{font-size:2rem}.greeting-card{padding:18px 14px}.greeting-game,.farewell-game{padding:20px 14px}.clock-display,.farewell-display{gap:14px;margin-bottom:22px}.day-picture,.farewell-picture{flex-basis:76px;width:76px;height:62px}.day-symbol,.farewell-symbol{font-size:2.2rem}.clock-time{font-size:1.45rem}.answer-buttons,.farewell-buttons{flex-direction:column}.answer-button,.farewell-button{width:100%}      
+.intro-page{padding:20px 13px 24px;border-radius:15px}.intro-page .part-head{gap:9px}.intro-page .part-title{font-size:1.78rem}.intro-card{padding:18px 13px}.name-row{align-items:stretch;flex-direction:column;gap:7px}.tab-buttons{gap:78px}.tab-button{min-width:115px;padding:9px 12px}.dialog-box{min-height:0;padding:16px 11px;gap:13px}.bubble-a{width:82%}.bubble-b{width:58%;min-width:0}      
+.exercise-page,.alphabet-page,.farewell-page{padding:17px 12px;border-radius:18px}.exercise-read-button{width:100%}.exercise-title{font-size:1.45rem}.exercise-guide-row{gap:6px;overflow-x:auto;justify-content:flex-start}.exercise-guide-row .action-help-step,.exercise-guide-row .register-key-item{font-size:.78rem;padding:5px 7px}.category-buttons{display:grid;grid-template-columns:1fr 1fr;gap:18px}.category-button{min-width:0}.exercise-row{padding:10px 12px}.exercise-row.active{padding:43px 12px 10px}.exercise-row.active::before{top:10px;left:12px;transform:none}.exercise-sentence{font-size:1rem}.exercise-result{align-items:stretch;flex-direction:column}.exercise-result-actions{display:grid;grid-template-columns:1fr 1fr}.exercise-result .exercise-read-button,.exercise-reset{width:100%}      
+.alphabet-page .part-title{font-size:1.8rem}.alphabet-card{padding:15px 11px}.alphabet-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.umlaute-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.alphabet-letter{padding:9px 4px;font-size:.9rem}      
+.end-buttons{gap:7px}.end-button{min-width:0;min-height:52px;padding:9px 7px;white-space:normal;border-radius:15px;font-size:.84rem}}      
+@media(max-width:430px){      
+.course-start-title{font-size:.82rem}.course-start-text{font-size:.95rem}.lesson-main-title{font-size:1.82rem}.lesson-description{font-size:.95rem}.lesson-topic{font-size:.8rem;padding:7px 10px}.stamp-slot{width:54px;height:54px;font-size:.48rem}.stamp-icon{font-size:1rem}      
+.intro-page .part-head{display:block}.intro-page .part-num{display:block;margin-bottom:5px}.intro-page .part-title{font-size:1.6rem}.description{font-size:.95rem}.tab-buttons{gap:40px}.tab-button{flex:1;min-width:0;padding:9px 8px}.bubble{padding:10px 13px}.bubble-a{width:90%}.bubble-b{width:72%}.bubble-a.speaking{padding-right:54px}.bubble-b.speaking{padding-left:54px}.person-icon{width:31px;height:31px;font-size:1.1rem}.bubble-a .person-icon{right:10px}.bubble-b .person-icon{left:10px}      
+.spelling-form{flex-direction:column}.spelling-button{width:100%}.farewell-type{font-size:1.05rem}.end-buttons{flex-wrap:wrap}.end-button{flex:1 1 100%;max-width:100%;font-size:1rem}}      
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}      
+/* Quality gate: keep interactive rows inside narrow tablet/phone viewports. */
+@media(max-width:840px){
+  .exercise-guide-row{flex-wrap:wrap;gap:8px}
+  .exercise-guide-row .action-help{white-space:normal}
+  .exercise-guide-row .register-key{flex-wrap:wrap;justify-content:center}
+  .tab-buttons{gap:clamp(12px,8vw,64px)}
+  .category-buttons{gap:clamp(12px,8vw,48px)}
+}
+@media(max-width:480px){
+  body{padding-left:12px;padding-right:12px}
+  .exercise-sentence{white-space:normal;overflow-wrap:anywhere}
+  .bubble-a,.bubble-b{width:100%;min-width:0}
+}
+
+@media(max-width:840px){
+  .exercise-guide-row .action-help[data-help-key="register"] .translation-control{
+    position:relative;top:auto;right:auto;transform:none;flex:0 0 auto;
+  }
+  .exercise-guide-row .action-help[data-help-key="register"]{
+    display:flex;flex-wrap:wrap;align-items:center;gap:6px;
+  }
+}
+      
+.intro-three-forms{margin:18px 0 6px;padding:16px 18px;background:#fffaf0;border:1px solid var(--line);border-radius:16px}
+.intro-three-title{margin:0 0 10px}
+.intro-form-list{display:grid;gap:8px}
+.intro-form-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:9px 12px;background:#fff;border:1px solid #eadfc7;border-radius:12px}
+.intro-form-text{font-size:1rem}
+.intro-audio-button{flex:0 0 38px;width:38px;height:38px;padding:0;border:1px solid var(--line);border-radius:50%;background:#f7edda;color:var(--ink);font-size:1rem;line-height:1}
+.intro-audio-button:hover,.intro-audio-button:focus-visible{background:#efe0bf;border-color:var(--gold)}
+.intro-repeat-hint{margin:10px 0 0;color:#5a5140;font-size:.92rem}
+
+.lesson-flow{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.lesson-flow-step{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--ink);font-size:.88rem;font-weight:700;text-decoration:none}
+.lesson-flow-step.active{background:var(--ink);border-color:var(--ink);color:#fff;box-shadow:0 5px 14px #16233a24}
+a.lesson-flow-step:hover,a.lesson-flow-step:focus-visible{border-color:var(--gold);background:#fff8e7}
+@media(max-width:620px){.lesson-flow{display:grid;grid-template-columns:1fr 1fr}.lesson-flow-step{padding:7px 8px;font-size:.82rem}}
+
+/* Aktiv 1 — visual system polish */
+.course-start{margin-bottom:34px;padding:18px 20px;box-shadow:0 14px 32px #00000035}.course-start-title{margin-bottom:10px}.course-start-text{padding:10px 14px}
+.lesson-flow{gap:7px;margin-top:12px}.lesson-flow-step{min-height:34px;padding:6px 11px;background:#fffdf8;color:#526071;border-color:#dfd3b8;font-size:.82rem;font-weight:700}.lesson-flow-step.active{background:var(--ink);border-color:var(--ink);color:#fff;box-shadow:none}
+.lesson-introduction{padding:30px 34px}.lesson-hero{gap:24px;padding-bottom:24px}.lesson-wheel{flex-basis:235px}.lesson-wheel svg{max-width:235px;filter:drop-shadow(0 10px 18px #0000001f)}
+.sprachpass{margin-top:22px;padding:18px 20px;box-shadow:0 8px 20px #00000030}.sprachpass-information{min-width:150px}.stamps{justify-content:space-between;gap:10px}.stamp-slot{width:76px;height:76px;background:#ffffff08}
+.page{margin-bottom:32px}.greeting-page,.intro-page,.exercise-page,.alphabet-page,.farewell-page{max-width:900px;padding:28px}
+.part-head{align-items:center;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid #1c24301f}.part-num{font-size:.76rem}.part-title{font-size:2.2rem}.action-help{box-shadow:none}
+.intro-three-forms{border-radius:14px;box-shadow:none}.intro-form-row{min-height:54px}.intro-audio-button{flex-basis:38px}
+.end-navigation{max-width:900px;margin:0 auto 24px}.end-buttons{padding:20px 24px;text-align:center;background:linear-gradient(160deg,#fff8ea,#f3e2bd);border:1px solid var(--line);border-radius:20px;box-shadow:0 14px 32px #00000035}
+.end-button.sprich-button{display:inline-flex;align-items:center;justify-content:center;padding:10px 18px;color:#fff;background:var(--ink);border-radius:999px;font-weight:800;text-decoration:none}
+.end-button.sprich-button:hover,.end-button.sprich-button:focus-visible{background:#263b5b}
+@media(max-width:720px){.lesson-introduction{padding:24px}.lesson-hero{display:block}.lesson-wheel{max-width:190px;margin:22px auto 0}.sprachpass{display:block}.sprachpass-information{text-align:center;margin-bottom:14px}.stamps{display:grid;grid-template-columns:repeat(4,1fr)}.stamp-slot{width:68px;height:68px;margin:auto}.greeting-page,.intro-page,.exercise-page,.alphabet-page,.farewell-page{padding:22px 18px}.part-title{font-size:1.9rem}}
+@media(max-width:520px){.stamps{grid-template-columns:repeat(2,1fr);gap:12px}.lesson-flow{grid-template-columns:1fr 1fr}}
+
+/* More visible pulsing audio controls for the three name forms */
+.intro-audio-button{
+  color:#fff;
+  background:#1769e8;
+  border-color:#0f57c7;
+  box-shadow:0 0 0 0 rgba(23,105,232,.38),0 5px 12px rgba(23,105,232,.22);
+  animation:introAudioPulse 1.8s ease-out infinite;
+}
+.intro-audio-button:hover,.intro-audio-button:focus-visible{
+  color:#fff;
+  background:#0f5fd8;
+  border-color:#0b4fae;
+  box-shadow:0 0 0 7px rgba(23,105,232,.14),0 6px 14px rgba(23,105,232,.28);
+}
+.intro-audio-button:active{transform:scale(.94)}
+@keyframes introAudioPulse{
+  0%{box-shadow:0 0 0 0 rgba(23,105,232,.38),0 5px 12px rgba(23,105,232,.22)}
+  65%{box-shadow:0 0 0 9px rgba(23,105,232,0),0 5px 12px rgba(23,105,232,.22)}
+  100%{box-shadow:0 0 0 0 rgba(23,105,232,0),0 5px 12px rgba(23,105,232,.22)}
+}
+@media(prefers-reduced-motion:reduce){.intro-audio-button{animation:none}}
+
+/* Slightly larger pencil beside the name field */
+.intro-setup-card .name-pencil{font-size:1.5em}
+
+/* Translation control aligned with Lektion 2 */
+.translation-toggle{color:#16233a;background:#fff;border:1px solid #d9e2ec;box-shadow:none}
+.translation-toggle:hover,.translation-toggle:focus-visible{color:#16233a;background:#f7fbff;border-color:#b9cde0}
+.translation-globe{display:inline-block!important;filter:none;animation:aktiv1GlobeAxisSpin 2.4s linear infinite!important;transform-origin:50% 50%;transform-style:preserve-3d}
+@keyframes aktiv1GlobeAxisSpin{0%{transform:perspective(120px) rotateY(0deg)}25%{transform:perspective(120px) rotateY(90deg)}50%{transform:perspective(120px) rotateY(180deg)}75%{transform:perspective(120px) rotateY(270deg)}100%{transform:perspective(120px) rotateY(360deg)}}
+.translation-panel{width:310px}
+.translation-languages{display:none!important}
+.translation-text{margin:0}
+.translation-text.show{display:grid;gap:7px}
+.translation-line{margin:0;padding:7px 9px;background:#fff;border:1px solid #e3d6b8;border-radius:8px;color:#101820;font-weight:700}
+@media(prefers-reduced-motion:reduce){.translation-globe{animation:none!important}}
+</style>      
+
+<style>
+.translation-globe{
+  display:inline-block;
+  font-size:1.30em;
+  line-height:1;
+  vertical-align:-.10em;
+  filter:hue-rotate(115deg) saturate(2.8) brightness(1.28) contrast(1.18) drop-shadow(0 0 4px rgba(255,74,190,.72));
+}
+</style>
+
+<style id="greeting-two-cards">
+.greeting-page .greeting-card{
+  display:grid;
+  gap:18px;
+  padding:0;
+  background:transparent;
+  border:0;
+  box-shadow:none;
+}
+
+.greeting-info-card,
+.greeting-page .greeting-game{
+  background:#fffdf6;
+  border:1px solid var(--line);
+  border-radius:20px;
+  box-shadow:0 12px 30px #00000012;
+}
+
+.greeting-info-card{
+  padding:0 7px;
+}
+
+.greeting-page .greeting-game{
+  padding:84px 60px;
+}
+
+.greeting-info-card .lead{
+  margin:0 0 6px;
+}
+
+.greeting-info-card .grammar-toggle{
+  margin:0 0 5px;
+}
+
+.greeting-info-card .action-help{
+  margin:0;
+  padding-left:0;
+  background:transparent;
+  border:0;
+  box-shadow:none;
+}
+
+@media(max-width:560px){
+  .greeting-page .greeting-card{
+    padding:0;
+  }
+
+  .greeting-info-card{
+    padding:6px 10px;
+    border-radius:18px;
+  }
+
+  .greeting-page .greeting-game{
+    padding:30px 18px;
+    border-radius:18px;
+  }
+}
+</style>
+
+<link rel="stylesheet" href="../../css/click-hints.css">
+<link rel="stylesheet" href="../../css/translation-globe.css">
+<link rel="stylesheet" href="../../css/page-progress.css">
+<style id="aktiv-a11-top-arrow-match-lesson">
+/* Top arrow: same pill shape and placement as Lektion A1.1. */
+body > .bottom-arrow{
+  display:flex!important;
+  justify-content:center!important;
+  align-items:center!important;
+  width:max-content!important;
+  height:auto!important;
+  margin:0 auto 0!important;
+  position:relative!important;
+  left:calc(-590px + 18px)!important;
+  top:42px!important;
+  z-index:5!important;
+  padding:11px 18px!important;
+  color:var(--text)!important;
+  background:#fff!important;
+  border:1px solid var(--line)!important;
+  border-radius:999px!important;
+  text-decoration:none!important;
+  font:700 .98rem "Nunito Sans",sans-serif!important;
+  line-height:1!important;
+  box-shadow:none!important;
+  transition:background .15s,border-color .15s,transform .15s!important;
+}
+body > .bottom-arrow:hover{
+  background:#f3f7fc!important;
+  border-color:#f2d06f!important;
+  transform:translateY(-2px)!important;
+}
+@media(max-width:1216px){
+  body > .bottom-arrow{margin-left:0!important;left:0!important}
+}
+</style>
+<style id="dialog-tab-click-hand">
+.tab-click-hand{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  align-self:center;
+  font-size:2rem;
+  line-height:1;
+  transform-origin:50% 100%;
+  animation:dialogTabHandPulse 1.15s ease-in-out infinite;
+  filter:drop-shadow(0 3px 5px rgba(0,0,0,.22));
+}
+@keyframes dialogTabHandPulse{
+  0%,100%{transform:translateY(2px) scale(1)}
+  50%{transform:translateY(-7px) scale(1.18)}
+}
+@media(prefers-reduced-motion:reduce){
+  .tab-click-hand{animation:none}
+}
+</style>
+<style id="register-translation-blue-spinning-globe">
+.register-title-translation{display:inline-block;vertical-align:middle;margin-left:10px;font-family:"Nunito Sans",sans-serif;font-size:1rem}
+.register-title-translation .translation-globe{
+  display:inline-block;
+  color:#1689e8;
+  filter:saturate(1.35) drop-shadow(0 0 3px rgba(22,137,232,.35));
+  transform-origin:50% 50%;
+  transform-style:preserve-3d;
+  animation:registerGlobeAxisSpin 2.4s linear infinite!important;
+}
+@keyframes registerGlobeAxisSpin{
+  0%{transform:perspective(120px) rotateY(0deg)}
+  25%{transform:perspective(120px) rotateY(90deg)}
+  50%{transform:perspective(120px) rotateY(180deg)}
+  75%{transform:perspective(120px) rotateY(270deg)}
+  100%{transform:perspective(120px) rotateY(360deg)}
+}
+@media(prefers-reduced-motion:reduce){.register-title-translation .translation-globe{animation:none!important}}
+</style>
+<style id="dialog-tabs-closer-to-center">
+@media(min-width:841px){
+  .tab-buttons{gap:42px!important}
+}
+</style>
+<style id="course-start-arrow-exact-position">
+.course-start{position:relative!important}
+.course-start > .course-start-back{
+  position:absolute!important;
+  left:18px!important;
+  top:-58px!important;
+  margin:0!important;
+  z-index:5!important;
+}
+@media(max-width:760px){
+  .course-start > .course-start-back{left:15px!important;top:-54px!important}
+}
+</style>
+<style id="course-start-arrow-flatter-lower">
+body{padding-top:58px!important}
+.course-start > .course-start-back{
+  top:-48px!important;
+  padding:8px 20px!important;
+  min-width:0!important;
+  width:auto!important;
+  height:auto!important;
+  border-radius:999px!important;
+  line-height:1!important;
+}
+@media(max-width:760px){
+  body{padding-top:52px!important}
+  .course-start > .course-start-back{top:-44px!important;padding:8px 18px!important}
+}
+</style>
+<style id="category-choice-click-cues">
+.choice-pulse-hand{
+  display:inline-block;
+  transform-origin:50% 100%;
+  animation:choiceHandPulse 1.1s ease-in-out infinite;
+  filter:drop-shadow(0 2px 3px rgba(0,0,0,.18));
+}
+.category-or{
+  align-self:center;
+  justify-self:center;
+  font-weight:800;
+  font-size:1.05rem;
+  color:#6a5130;
+}
+@keyframes choiceHandPulse{
+  0%,100%{transform:translateY(1px) scale(1)}
+  50%{transform:translateY(-5px) scale(1.18)}
+}
+@media(min-width:761px){
+  .category-buttons{grid-template-columns:1fr auto 1fr!important;align-items:center!important}
+}
+@media(max-width:760px){
+  .category-buttons{grid-template-columns:1fr auto 1fr!important;align-items:center!important}
+  .category-or{font-size:.95rem}
+}
+@media(prefers-reduced-motion:reduce){.choice-pulse-hand{animation:none}}
+</style>
+<style id="choice-hand-pulse-fix">
+.category-button .choice-pulse-hand{
+  display:inline-block!important;
+  animation:choiceHandPulseFix .85s ease-in-out infinite!important;
+  transform-origin:50% 80%!important;
+  will-change:transform;
+}
+@keyframes choiceHandPulseFix{
+  0%,100%{transform:scale(1) translateY(0)}
+  50%{transform:scale(1.32) translateY(-4px)}
+}
+</style>
+<style id="choice-hands-alternating-pulse">
+.category-button:nth-of-type(1) .choice-pulse-hand{
+  animation:choiceHandPulseAlt 1.4s ease-in-out infinite!important;
+}
+.category-button:nth-of-type(2) .choice-pulse-hand{
+  animation:choiceHandPulseAlt 1.4s ease-in-out .7s infinite!important;
+}
+@keyframes choiceHandPulseAlt{
+  0%,45%,100%{transform:translateY(0) scale(1)}
+  20%{transform:translateY(-5px) scale(1.32)}
+}
+</style>
+<style id="farewell-button-hand-pulse">
+.farewell-button .click-icon{
+  display:inline-block;
+  transform-origin:50% 80%;
+  animation:farewellHandPulse 1s ease-in-out infinite!important;
+}
+@keyframes farewellHandPulse{
+  0%,100%{transform:translateY(0) scale(1)}
+  50%{transform:translateY(-4px) scale(1.28)}
+}
+@media(prefers-reduced-motion:reduce){
+  .farewell-button .click-icon{animation:none!important}
+}
+</style>
+<style id="intro-exercise-blue-spinning-globe">
+.intro-exercise-translation{display:inline-block;vertical-align:middle;margin-left:10px;font-family:"Nunito Sans",sans-serif;font-size:1rem}
+.intro-exercise-translation .translation-globe{
+  display:inline-block;
+  color:#1689e8;
+  filter:saturate(1.35) drop-shadow(0 0 3px rgba(22,137,232,.35));
+  transform-origin:50% 50%;
+  transform-style:preserve-3d;
+  animation:introExerciseGlobeAxisSpin 2.4s linear infinite!important;
+}
+@keyframes introExerciseGlobeAxisSpin{
+  0%{transform:perspective(120px) rotateY(0deg)}
+  25%{transform:perspective(120px) rotateY(90deg)}
+  50%{transform:perspective(120px) rotateY(180deg)}
+  75%{transform:perspective(120px) rotateY(270deg)}
+  100%{transform:perspective(120px) rotateY(360deg)}
+}
+@media(prefers-reduced-motion:reduce){.intro-exercise-translation .translation-globe{animation:none!important}}
+</style>
+</head>      
+<body id="seitenanfang">      
+
+<div class="page-progress-container" aria-hidden="true"><div class="page-progress-bar" id="page-progress-bar"></div></div>      
+      
+<section class="course-start">
+<a href="../a1/lektion-1.html#seitenanfang" class="bottom-arrow course-start-back" aria-label="Zurück zur Lektion" title="Zurück zur Lektion">←</a>
+<h2 class="course-start-title">Erste Schritte</h2>
+<p class="course-start-text">Begrüßung, ich heiße …, das Alphabet</p>
+<nav class="lesson-flow" aria-label="Ablauf der Lektion">
+<a href="../a1/lektion-1.html#seitenanfang" class="lesson-flow-step">① Lektion</a>
+<span class="lesson-flow-step active" aria-current="step">② Aktiv trainieren</span>
+<a href="../sprich-nach.a1/sprich-nach1.html" class="lesson-flow-step">③ Sprich nach</a>
+<span class="lesson-flow-step">④ Übungen</span>
+<span class="lesson-flow-step">⑤ Dialoge</span>
+<span class="lesson-flow-step">⑥ Diktat</span>
+</nav>
+</section>      
+      
+<header class="lesson-introduction">      
+<div class="lesson-hero">      
+<div class="lesson-hero-text">      
+<h1 class="lesson-main-title">Guten Tag! — Begrüßung und Vorstellung</h1>      
+<p class="lesson-description">Heute schauen wir uns an: Wie begrüßen wir uns? Wie stellen wir uns vor? Und wie sprechen wir die Buchstaben des deutschen Alphabets aus? Diesmal übst du aktiv mit — sammle Stempel für deinen Sprachpass!
+<span class="translation-inline-control" data-inline-translation="intro">
+<button type="button" class="translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung"><span class="globe translation-globe">🌐</span><span>A/文</span></button>
+<span class="translation-panel"><span class="translation-languages"><button type="button" class="translation-language" data-lang="en">English</button><button type="button" class="translation-language" data-lang="pl">Polski</button><button type="button" class="translation-language" data-lang="it">Italiano</button></span><span class="translation-text" aria-live="polite"></span></span>
+</span></p>      
+<div class="lesson-topics"><span class="lesson-topic">1 · Begrüßung</span><span class="lesson-topic">2 · Vorstellung</span><span class="lesson-topic">3 · Alphabet</span><span class="lesson-topic">4 · Abschied</span></div>      
+</div>      
+<div class="lesson-wheel">      
+<svg viewBox="0 0 320 320" role="img" aria-label="Begrüßungssymbol mit verschiedenen Zeichen">      
+<circle cx="160" cy="160" r="132" fill="#ffffff14" stroke="#1c24302b"/><circle cx="160" cy="160" r="70" fill="#16233a" stroke="#1c24301f"/>      
+<text class="wheel-center-title" x="160" y="153">Hallo!</text><text class="wheel-center-subtitle" x="160" y="176">Guten Tag</text>      
+<text x="160" y="40" text-anchor="middle" font-size="20">👋</text><text x="282" y="164" text-anchor="middle" font-size="20">🗣️</text><text x="160" y="292" text-anchor="middle" font-size="20">🔤</text><text x="38" y="164" text-anchor="middle" font-size="20">👤</text>      
+</svg>      
+</div>      
+</div>      
+<div class="sprachpass">      
+<div class="sprachpass-information"><div class="sprachpass-title">🛂 Dein Sprachpass</div><p class="sprachpass-counter" id="stamp-counter">0 / 4 Stempel gesammelt</p></div>      
+<div class="stamps">      
+<div class="stamp-slot" data-stamp="greetings"><span><span class="stamp-icon">👋</span>Begrüßung</span></div>      
+<div class="stamp-slot" data-stamp="introduction"><span><span class="stamp-icon">🧑‍🤝‍🧑</span>Vorstellung</span></div>      
+<div class="stamp-slot" data-stamp="alphabet"><span><span class="stamp-icon">🔤</span>Alphabet</span></div>      
+<div class="stamp-slot" data-stamp="farewell"><span><span class="stamp-icon">👋</span>Abschied</span></div>      
+</div>      
+</div>      
+</header>      
+      
+<main class="page greeting-page">      
+<section aria-labelledby="greeting-title">      
+<div class="part-head"><span class="part-num">Teil 1</span><h1 class="part-title" id="greeting-title">Wir begrüßen uns</h1></div>      
+<div class="card greeting-card">      
+<div class="greeting-info-card">
+<p class="lead">Wir begrüßen uns in verschiedenen Situationen. Finde den richtigen Gruß!</p>      
+<details class="grammar-toggle"><summary>Merke! — Grüße und Situationen</summary><div class="grammar-box">morgens: <strong>Guten Morgen!</strong><br><br>tagsüber: <strong>Guten Tag!</strong><br><br>abends: <strong>Guten Abend!</strong><br><br>informell: <strong>Hallo!</strong><br><br>beim Abschied: <strong>Tschüss!</strong></div></details>      
+<div class="action-help" data-help-key="greeting" aria-label="So funktioniert die Übung"><span class="action-help-step">👀 Situation ansehen</span><span class="action-help-arrow">→</span><span class="action-help-step">👆 richtigen Gruß anklicken</span></div>
+</div>
+<div class="greeting-game">      
+<div class="clock-display"><div class="day-picture morgen" id="day-picture" role="img" aria-label="Sonnenaufgang am Morgen"><span class="day-symbol" id="day-symbol">🌅</span></div><span class="clock-time" id="clock-time">08:00 Uhr</span></div>      
+<p class="question">Welcher Gruß passt zu dieser Situation?</p>      
+<div class="answer-buttons">      
+<button class="answer-button" data-gruss="morgen">Guten Morgen! <span class="click-icon">👆</span></button>      
+<button class="answer-button" data-gruss="tag">Guten Tag! <span class="click-icon">👆</span></button>      
+<button class="answer-button" data-gruss="abend">Guten Abend! <span class="click-icon">👆</span></button>      
+<button class="answer-button" data-gruss="hallo">Hallo! <span class="click-icon">👆</span></button>      
+</div>      
+<p class="feedback" id="greeting-feedback"></p><p class="counter" id="greeting-counter">Richtige Antworten: 0 / 4</p>      
+<div class="progress-area"><div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div></div>      
+<div class="finish" id="greeting-finish"><span class="finish-title">🎉 Sehr gut! Übung geschafft!</span>Du hast alle vier Grüße richtig erkannt.<br><button class="restart-button" id="restart-button">↻ Noch einmal</button></div>      
+</div>      
+</div>      
+</section>      
+</main>      
+      
+<main class="page intro-page">      
+<header class="part-head"><span class="part-num">Teil 2</span><h1 class="part-title">Ich stelle mich vor
+<span class="translation-inline-control intro-exercise-translation" data-inline-translation="introExercise">
+<button type="button" class="translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung"><span class="globe translation-globe">🌐</span><span>A/文</span></button>
+<span class="translation-panel"><span class="translation-languages"><button type="button" class="translation-language" data-lang="en">English</button><button type="button" class="translation-language" data-lang="pl">Polski</button><button type="button" class="translation-language" data-lang="it">Italiano</button></span><span class="translation-text" aria-live="polite"></span></span>
+</span></h1></header>      
+<section class="card intro-card">      
+<div class="intro-setup-card">
+<div class="action-help" data-help-key="dialog" aria-label="So funktioniert der Dialog"><span class="action-help-step">✏️ Name eingeben</span><span class="action-help-arrow">→</span><span class="action-help-step">👆 „Informell“ oder „Formell“ anklicken</span><span class="action-help-arrow">→</span><span class="action-help-step">🔊 zuhören</span></div>
+<p class="description">Trag deinen Namen ein — die Dialoge passen sich an!</p>      
+<div class="name-row"><label for="name-input"><span class="name-pencil">✏️</span> <span>Dein Name:</span></label><input id="name-input" type="text" placeholder="Dein Name" autocomplete="given-name"></div>      
+<div class="intro-three-forms">
+<p class="description intro-three-title"><strong>Sag deinen Namen auf drei Arten:</strong></p>
+<div class="intro-form-list">
+<div class="intro-form-row"><span class="intro-form-text">Ich heiße <strong class="dynamic-name">…</strong>.</span><button type="button" class="intro-audio-button intro-form-button" data-intro-form="Ich heiße" aria-label="Ich heiße anhören">🔊</button></div>
+<div class="intro-form-row"><span class="intro-form-text">Mein Name ist <strong class="dynamic-name">…</strong>.</span><button type="button" class="intro-audio-button intro-form-button" data-intro-form="Mein Name ist" aria-label="Mein Name ist anhören">🔊</button></div>
+<div class="intro-form-row"><span class="intro-form-text">Ich bin <strong class="dynamic-name">…</strong>.</span><button type="button" class="intro-audio-button intro-form-button" data-intro-form="Ich bin" aria-label="Ich bin anhören">🔊</button></div>
+</div>
+<p class="description intro-repeat-hint">🔊 Hör zu und sprich nach.</p>
+</div>
+</div>
+<div class="tab-buttons" role="tablist"><button class="tab-button active" id="tab-informell" data-dialog="informell" role="tab" aria-selected="true">Informell <span class="click-icon">🔊</span></button><span class="tab-click-hand" aria-hidden="true">👆</span><button class="tab-button" id="tab-formell" data-dialog="formell" role="tab" aria-selected="false">Formell <span class="click-icon">🔊</span></button></div>      
+<div class="dialog-box" id="dialog-informell">      
+<div class="bubble bubble-a"><span class="speaker">A</span>Hallo!<span class="person-icon">👩🏻</span></div>      
+<div class="bubble bubble-b"><span class="speaker">B</span>Hallo!<span class="person-icon">🧑🏻</span></div>      
+<div class="bubble bubble-a"><span class="speaker">A</span>Wie heißt du?<span class="person-icon">👩🏻</span></div>      
+<div class="bubble bubble-b"><span class="speaker">B</span>Ich heiße Tom. Und du?<span class="person-icon">🧑🏻</span></div>      
+<div class="bubble bubble-a"><span class="speaker">A</span>Ich heiße <span class="dynamic-name">…</span>.<span class="person-icon">👩🏻</span></div>      
+</div>      
+<div class="dialog-box" id="dialog-formell" hidden>      
+<div class="bubble bubble-a"><span class="speaker">A</span>Guten Tag.<span class="person-icon">👩🏻</span></div>      
+<div class="bubble bubble-b"><span class="speaker">B</span>Guten Tag.<span class="person-icon">🧑🏻</span></div>      
+<div class="bubble bubble-a"><span class="speaker">A</span>Wie heißen Sie?<span class="person-icon">👩🏻</span></div>      
+<div class="bubble bubble-b"><span class="speaker">B</span>Ich heiße Felix. Und Sie?<span class="person-icon">🧑🏻</span></div>      
+<div class="bubble bubble-a"><span class="speaker">A</span>Ich heiße <span class="dynamic-name">…</span>.<span class="person-icon">👩🏻</span></div>      
+</div>      
+</section>      
+</main>      
+      
+<main class="page exercise-page">      
+<section class="exercise-card">      
+<h1 class="exercise-title">Informell oder formell?
+<span class="translation-inline-control register-title-translation" data-inline-translation="registerExercise">
+<button type="button" class="translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung"><span class="globe translation-globe">🌐</span><span>A/文</span></button>
+<span class="translation-panel"><span class="translation-languages"><button type="button" class="translation-language" data-lang="en">English</button><button type="button" class="translation-language" data-lang="pl">Polski</button><button type="button" class="translation-language" data-lang="it">Italiano</button></span><span class="translation-text" aria-live="polite"></span></span>
+</span></h1>      
+<div class="exercise-guide-row">
+<div class="action-help" data-help-key="register" aria-label="So funktioniert die Übung"><span class="action-help-step">👀 Satz lesen</span><span class="action-help-arrow">→</span><span class="action-help-step">👆 Antwort anklicken</span></div>
+<div class="register-key" aria-label="Informell und formell"><span class="register-key-item">🙂 <strong>du</strong> = informell</span><span class="register-key-item">👔 <strong>Sie</strong> = formell</span></div>
+</div>
+<div class="category-buttons"><button class="category-button" data-category="informell"><span class="click-icon choice-pulse-hand">👆</span> Informell wählen</button><span class="category-or">oder</span><button class="category-button" data-category="formell"><span class="click-icon choice-pulse-hand">👆</span> Formell wählen</button></div>      
+<div class="exercise-list">      
+<div class="exercise-row active" data-answer="informell" data-text="Wie heißt du?"><span class="exercise-sentence">Wie heißt du?</span><p class="exercise-feedback"></p></div>      
+<div class="exercise-row" data-answer="formell" data-text="Wie heißen Sie?"><span class="exercise-sentence">Wie heißen Sie?</span><p class="exercise-feedback"></p></div>      
+<div class="exercise-row" data-answer="informell" data-text="Und du?"><span class="exercise-sentence">Und du?</span><p class="exercise-feedback"></p></div>      
+<div class="exercise-row" data-answer="formell" data-text="Und Sie?"><span class="exercise-sentence">Und Sie?</span><p class="exercise-feedback"></p></div>      
+<div class="exercise-row" data-answer="informell" data-text="Hallo! Wie heißt du?"><span class="exercise-sentence">Hallo! Wie heißt du?</span><p class="exercise-feedback"></p></div>      
+<div class="exercise-row" data-answer="formell" data-text="Guten Tag. Wie heißen Sie?"><span class="exercise-sentence">Guten Tag. Wie heißen Sie?</span><p class="exercise-feedback"></p></div>      
+<div class="exercise-row" data-answer="formell" data-text="Mein Name ist Anna. Und Sie?"><span class="exercise-sentence">Mein Name ist Anna. Und Sie?</span><p class="exercise-feedback"></p></div>      
+</div>      
+<div class="exercise-result"><p class="exercise-score">Richtig zugeordnet: <strong><span id="exercise-score">0</span> / 7</strong></p><div class="exercise-result-actions"><button class="exercise-read-button" id="exercise-read-button">🔊 Sätze anhören</button><button class="exercise-reset" id="exercise-reset">Übung wiederholen</button></div></div>      
+<p class="exercise-complete" id="exercise-complete"></p>      
+</section>      
+</main>      
+      
+<main class="page alphabet-page">      
+<div class="part-head"><span class="part-num">Teil 3</span><h1 class="part-title">Das deutsche Alphabet</h1><span class="section-done" id="alphabet-done">✅ geschafft</span></div>      
+<section class="alphabet-card">      
+<div class="action-help" data-help-key="alphabet" aria-label="So funktioniert das Alphabet"><span class="action-help-step">👆 Buchstaben anklicken</span><span class="action-help-arrow">→</span><span class="action-help-step">🔊 zuhören</span><span class="action-help-arrow">→</span><span class="action-help-step">🗣️ nachsprechen</span></div>
+<p class="alphabet-lead">Klick auf einen Buchstaben. Hör zu.</p>      
+<div class="alphabet-grid" id="alphabet"></div>      
+<h2 class="alphabet-subtitle">Umlaute und ß</h2>      
+<div class="alphabet-grid umlaute-grid" id="umlaute"></div>      
+<div class="spelling-box">      
+<h2 class="spelling-title"><span class="spelling-pencil">✏️</span> Buchstabiere deinen Namen
+<span class="translation-inline-control" data-inline-translation="spelling">
+<button type="button" class="translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung"><span class="globe translation-globe">🌐</span><span>A/文</span></button>
+<div class="translation-panel"><div class="translation-languages"><button type="button" class="translation-language" data-lang="en">English</button><button type="button" class="translation-language" data-lang="pl">Polski</button><button type="button" class="translation-language" data-lang="it">Italiano</button></div><p class="translation-text" aria-live="polite"></p></div>
+</span></h2>      
+<p class="spelling-text">Gib deinen Namen ein. Hör dir die Buchstaben auf Deutsch an. Dann buchstabiere deinen Namen selbst laut.</p>      
+<div class="spelling-form"><input id="spelling-input" class="spelling-input" type="text" placeholder="z. B. Anna" autocomplete="name" autocapitalize="words" spellcheck="false"><button id="spelling-button" class="spelling-button">🔊 Buchstabieren</button></div>      
+<div id="spelling-output" class="spelling-output"></div><p id="spelling-message" class="spelling-message"></p>      
+</div>      
+</section>      
+</main>      
+      
+<main class="page farewell-page">      
+<div class="part-head"><span class="part-num">Teil 4</span><h1 class="part-title">Wir verabschieden uns</h1><span class="section-done" id="farewell-done">✅ geschafft</span></div>      
+<section class="farewell-card">      
+<p class="lead">Finde den richtigen Abschied!</p>      
+<div class="farewell-game">      
+<div class="action-help" data-help-key="farewell" aria-label="So funktioniert die Übung"><span class="action-help-step">👀 Situation ansehen</span><span class="action-help-arrow">→</span><span class="action-help-step">👆 Abschied anklicken</span></div>
+<div class="farewell-display"><div class="farewell-picture"><span class="farewell-symbol" id="farewell-symbol">👋</span></div><div class="farewell-context"><span class="farewell-type" id="farewell-type">informell</span><span class="farewell-hint" id="farewell-hint">🙂 Freunde / Familie</span></div></div>      
+<p class="question">Welcher Abschied passt zu dieser Situation?</p>      
+<div class="farewell-buttons">      
+<button class="farewell-button" data-farewell="informell">Tschüss! <span class="click-icon">👆</span></button>      
+<button class="farewell-button" data-farewell="formell">Auf Wiedersehen! <span class="click-icon">👆</span></button>      
+</div>      
+<p class="feedback" id="farewell-feedback"></p><p class="counter" id="farewell-counter">Richtige Antworten: 0 / 2</p>      
+<div class="progress-area"><div class="progress-track"><div class="progress-fill" id="farewell-progress"></div></div></div>      
+<div class="finish" id="farewell-finish"><span class="finish-title">🎉 Sehr gut!</span>Du hast beide Abschiede richtig erkannt.<br><button class="restart-button" id="farewell-restart">↻ Noch einmal</button></div>      
+</div>      
+<div class="farewell-reset-area"><button class="stamp-reset-button" id="stamp-reset-button">↻ Stempel neu sammeln</button><p class="stamp-reset-message" id="stamp-reset-message"></p></div>      
+</section>      
+</main>      
+      
+<nav class="end-navigation">      
+
+<div class="end-buttons">
+<a href="../sprich-nach.a1/sprich-nach1.html" class="end-button sprich-button">Fertig? Weiter mit Sprich nach</a>
+</div>
+
+<div class="bottom-arrows">      
+<a href="../a1/lektion-1.html" class="bottom-arrow" aria-label="Zurück zur Lektion" title="Zurück zur Lektion">←</a>      
+<a href="#seitenanfang" class="bottom-arrow" aria-label="Nach oben" title="Nach oben">↑</a>      
+</div>      
+</nav>      
+      
+<script>      
+"use strict";      
+const $=x=>document.getElementById(x),$$=x=>[...document.querySelectorAll(x)],S=speechSynthesis,W=x=>new Promise(r=>setTimeout(r,x));      
+let V,VM,n=0,reading=false,active="informell";      
+const stampKey="lektion1-sprachpass",visibleStampKeys=["greetings","introduction","alphabet","farewell"],P=Object.fromEntries(visibleStampKeys.map(k=>[k,false]));      
+      
+function updateStamps(){$$("[data-stamp]").forEach(x=>x.classList.toggle("stamped",!!P[x.dataset.stamp]));$("stamp-counter").textContent=`${visibleStampKeys.filter(k=>P[k]).length} / 4 Stempel gesammelt`;$("alphabet-done")?.classList.toggle("show",!!P.alphabet);$("farewell-done")?.classList.toggle("show",!!P.farewell)}      
+function loadStamps(){try{const saved=JSON.parse(localStorage.getItem(stampKey))||{};visibleStampKeys.forEach(k=>P[k]=!!saved[k])}catch{}updateStamps()}      
+function stamp(x){if(!visibleStampKeys.includes(x)||P[x])return;P[x]=true;try{localStorage.setItem(stampKey,JSON.stringify(P))}catch{}updateStamps()}      
+function loadVoice(){let v=S?.getVoices()||[],g=v.filter(x=>x.lang?.toLowerCase().startsWith("de"));V=v.find(x=>x.lang?.toLowerCase()==="de-de"&&x.name?.toLowerCase().includes("google"))||v.find(x=>x.lang?.toLowerCase()==="de-de")||g[0]||null;const maleHints=["conrad","stefan","hans","markus","klaus","male","mann","standard-b","standard-d","wavenet-b","wavenet-d"];VM=g.find(x=>maleHints.some(h=>x.name?.toLowerCase().includes(h)))||g.find(x=>x!==V)||V||null}      
+function stop(){n++;S?.cancel();$$(".speaking,.alphabet-active,.letter-speaking").forEach(x=>x.classList.remove("speaking","alphabet-active","letter-speaking"))}      
+function speak(text,rate=.92,voice=V,pitch=1){return new Promise(done=>{if(!S||!text)return done();let u=new SpeechSynthesisUtterance(text);Object.assign(u,{lang:"de-DE",rate,pitch,volume:1});if(voice)u.voice=voice;u.onend=done;u.onerror=e=>{if(!["canceled","interrupted"].includes(e.error))console.error(e.error);done()};S.speak(u)})}      
+      
+loadStamps();loadVoice();S?.addEventListener("voiceschanged",loadVoice);      
+      
+function pageProgress(){let m=document.documentElement.scrollHeight-innerHeight,t=scrollY||document.documentElement.scrollTop;$("page-progress-bar").style.width=`${m<=0?100:Math.min(100,Math.max(0,t/m*100))}%`}      
+addEventListener("scroll",pageProgress,{passive:true});addEventListener("resize",pageProgress);pageProgress();      
+      
+const GB=$$(".answer-button"),GT=[[8,"morgen","🌅","Sonnenaufgang am Morgen","Guten Morgen!"],[13,"tag","☀️","Sonniger Tag","Guten Tag!"],[19,"abend","🌙","Mond am Abend","Guten Abend!"],[15,"hallo","🙂","Treffen mit Freunden","Hallo!"]];      
+let gi=0,gs=0,gl=false;      
+function lockGreeting(x){GB.forEach(b=>{b.disabled=x;if(!x)b.classList.remove("richtig","falsch")})}      
+function greetingProgress(){$("greeting-counter").textContent=`Richtige Antworten: ${gs} / 4`;$("progress-fill").style.width=`${gs/4*100}%`}      
+function showGreeting(){let[h,k,i,l]=GT[gi];gl=false;lockGreeting(false);$("greeting-feedback").textContent="";$("greeting-feedback").style.color="";$("clock-time").textContent=k==="hallo"?"Freunde treffen":`${String(h).padStart(2,"0")}:00 Uhr`;$("day-picture").className=`day-picture ${k}`;$("day-picture").setAttribute("aria-label",l);$("day-symbol").textContent=i;$("day-symbol").style.transform="scale(.75)";setTimeout(()=>$("day-symbol").style.transform="scale(1)",60)}      
+function nextGreeting(){if(++gi<GT.length)return showGreeting();gl=true;lockGreeting(true);$("greeting-feedback").style.color="#28502f";$("greeting-feedback").textContent="Alle Antworten sind richtig!";$("greeting-finish").classList.add("zeigen");stamp("greetings");stop();speak("Sehr gut! Du hast alle vier Antworten richtig.",.9)}      
+GB.forEach(b=>b.onclick=()=>{if(gl)return;let[,k,,,a]=GT[gi];GB.forEach(x=>x.classList.remove("richtig","falsch"));if(b.dataset.gruss!==k){b.classList.add("falsch");$("greeting-feedback").style.color="var(--red)";$("greeting-feedback").textContent="Versuch es noch einmal!";stop();return speak("Nicht ganz. Versuch es noch einmal.",.9)}gl=true;gs++;b.classList.add("richtig");lockGreeting(true);$("greeting-feedback").style.color="#28502f";$("greeting-feedback").textContent=`Richtig! ${a}`;greetingProgress();stop();speak(a,.9);setTimeout(nextGreeting,1200)});      
+$("restart-button").onclick=()=>{gi=gs=0;gl=false;$("greeting-finish").classList.remove("zeigen");greetingProgress();showGreeting()};      
+      
+const NI=$("name-input"),T=$$(".tab-button"),D={informell:$("dialog-informell"),formell:$("dialog-formell")};      
+function updateName(){let name=NI.value.trim()||"…";$$(".dynamic-name").forEach(x=>x.textContent=name)}      
+function bubbleText(b){let c=b.cloneNode(true);c.querySelector(".speaker")?.remove();c.querySelector(".person-icon")?.remove();return c.textContent.replace(/\s+/g," ").trim()}      
+function activate(x){active=x;T.forEach(t=>{let a=t.dataset.dialog===x;t.classList.toggle("active",a);t.setAttribute("aria-selected",a)});Object.entries(D).forEach(([k,d])=>d.hidden=k!==x)}      
+async function readDialog(x){if(!S)return alert("Dein Browser unterstützt die Sprachausgabe nicht.");reading=false;stop();activate(x);reading=true;let version=n;for(let b of $$(`#dialog-${x} .bubble`)){if(!reading||version!==n||active!==x)break;b.classList.add("speaking");const personB=b.classList.contains("bubble-b");await speak(bubbleText(b),.92,personB?VM:V,personB?.9:1);b.classList.remove("speaking")}if(version===n){reading=false}}      
+NI.oninput=updateName;updateName();T.forEach(t=>t.onclick=()=>readDialog(t.dataset.dialog));$$(".intro-form-button").forEach(b=>b.onclick=async()=>{const name=NI.value.trim();if(!name){NI.focus();return alert("Bitte gib zuerst deinen Namen ein.")}await speak(`${b.dataset.introForm} ${name}.`,.9);stamp("introduction")});      
+      
+const R=$$(".exercise-row"),C=$$(".category-button"),READ=$("exercise-read-button"),CHOICE=document.querySelector(".category-buttons"),EXERCISE=document.querySelector(".exercise-page");      
+let ei=0,es=0,el=false;      
+function current(scroll=true){R.forEach((r,i)=>r.classList.toggle("active",i===ei));if(scroll)R[ei]?.scrollIntoView({behavior:"smooth",block:"nearest"})}      
+function categories(x){el=!x;C.forEach(b=>{b.disabled=!x;b.classList.remove("correct-choice","wrong-choice")})}      
+C.forEach(b=>b.onclick=async()=>{if(el||ei>=R.length)return;el=true;stop();let r=R[ei],f=r.querySelector(".exercise-feedback"),ok=b.dataset.category===r.dataset.answer;C.forEach(x=>x.classList.remove("correct-choice","wrong-choice"));f.textContent="";f.className="exercise-feedback";r.classList.remove("wrong");if(ok){C.forEach(x=>x.disabled=true);b.classList.add("correct-choice");r.classList.remove("active");r.classList.add("solved");f.textContent="Richtig! Sehr gut.";f.classList.add("good");$("exercise-score").textContent=++es;await speak("Richtig! Sehr gut.",.9);await W(250);ei++;if(ei<R.length){categories(true);current()}else{categories(false);$("exercise-complete").textContent="Sehr gut! Alle Sätze sind richtig zugeordnet.";await speak("Sehr gut! Alle Sätze sind richtig zugeordnet.",.88)}return}b.classList.add("wrong-choice");r.classList.add("wrong");f.textContent="Nicht ganz. Versuch es noch einmal.";f.classList.add("bad");await speak("Nicht ganz. Versuch es noch einmal.",.88);await W(250);r.classList.remove("wrong");b.classList.remove("wrong-choice");el=false});      
+READ.onclick=async()=>{stop();let version=n;READ.classList.add("speaking");for(let r of R){if(version!==n)break;let border=r.style.borderColor,transform=r.style.transform;r.style.borderColor="var(--gold)";r.style.transform="scale(1.01)";await speak(r.dataset.text,.86);r.style.borderColor=border;r.style.transform=transform;if(version!==n)break;await W(180)}READ.classList.remove("speaking")};      
+$("exercise-reset").onclick=()=>{stop();ei=es=0;el=false;$("exercise-score").textContent="0";$("exercise-complete").textContent="";C.forEach(b=>{b.disabled=false;b.classList.remove("correct-choice","wrong-choice")});R.forEach((r,i)=>{r.classList.remove("active","solved","wrong");r.style.cssText="";if(!i)r.classList.add("active");let f=r.querySelector(".exercise-feedback");f.textContent="";f.className="exercise-feedback"});current()};      
+      
+const A=[["A","a"],["B","be"],["C","ce"],["D","de"],["E","e"],["F","ef"],["G","ge"],["H","ha"],["I","i"],["J","jot"],["K","ka"],["L","el"],["M","em"],["N","en"],["O","o"],["P","pe"],["Q","ku"],["R","er"],["S","es"],["T","te"],["U","u"],["V","vau"],["W","we"],["X","ix"],["Y","Ypsilon"],["Z","zett"]],U=[["Ä","ä"],["Ö","ö"],["Ü","ü"],["ß","Eszett"]],N=Object.fromEntries([...A,...U].map(([x])=>[x,x==="ß"?"Eszett":x]));      
+function createAlphabet(target,data){target.innerHTML=data.map(([x,l])=>`<button class="alphabet-letter" data-letter="${x==="ß"?"Eszett":x}" aria-label="${x} ${l}">${x} – ${l}</button>`).join("")}      
+createAlphabet($("alphabet"),A);createAlphabet($("umlaute"),U);      
+$$(".alphabet-letter").forEach(b=>b.onclick=async()=>{stop();let version=n;b.classList.add("alphabet-active");await speak(b.dataset.letter,.82);if(version===n)b.classList.remove("alphabet-active")});      
+      
+const SI=$("spelling-input"),SB=$("spelling-button"),SO=$("spelling-output"),SM=$("spelling-message");      
+SI.disabled=SI.readOnly=false;SI.addEventListener("pointerdown",()=>SI.focus());SI.addEventListener("input",()=>SM.textContent="");      
+async function spellName(){stop();SM.textContent="";let name=SI.value.trim();if(!name){SM.textContent="Bitte gib deinen Namen ein.";return SI.focus()}let letters=[...name.toLocaleUpperCase("de-DE")].filter(x=>N[x]);if(!letters.length){SM.textContent="Der Name enthält keine unterstützten Buchstaben.";return}SO.innerHTML=letters.map((x,i)=>`<span class="letter-chip" id="letter-${i}">${x}</span>`).join("");SB.disabled=true;let version=n;for(let i=0;i<letters.length&&version===n;i++){let chip=$(`letter-${i}`);chip.classList.add("letter-speaking");await speak(N[letters[i]],.82);chip.classList.remove("letter-speaking");if(version!==n)break;await W(120)}if(version===n){SM.textContent="Jetzt du: Buchstabiere deinen Namen selbst laut.";stamp("alphabet")}SB.disabled=false}      
+SB.onclick=spellName;SI.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();spellName()}};      
+      
+const FB=$$(".farewell-button"),FT=[["informell","👋","Tschüss!","🙂 Freunde / Familie"],["formell","👔","Auf Wiedersehen!","👔 fremde Person / höflich"]];      
+let fi=0,fs=0,fl=false;      
+function lockFarewell(x){FB.forEach(b=>{b.disabled=x;if(!x)b.classList.remove("richtig","falsch")})}      
+function farewellProgress(){$("farewell-counter").textContent=`Richtige Antworten: ${fs} / 2`;$("farewell-progress").style.width=`${fs/2*100}%`}      
+function showFarewell(){let[type,icon,,hint]=FT[fi];fl=false;lockFarewell(false);$("farewell-feedback").textContent="";$("farewell-feedback").style.color="";$("farewell-type").textContent=type;$("farewell-hint").textContent=hint;$("farewell-symbol").textContent=icon}      
+function nextFarewell(){if(++fi<FT.length)return showFarewell();fl=true;lockFarewell(true);$("farewell-feedback").style.color="#28502f";$("farewell-feedback").textContent="Alle Antworten sind richtig!";$("farewell-finish").classList.add("zeigen");stamp("farewell");stop();speak("Sehr gut! Du hast beide Abschiede richtig erkannt.",.9)}      
+FB.forEach(b=>b.onclick=()=>{if(fl)return;let[type,,text]=FT[fi];FB.forEach(x=>x.classList.remove("richtig","falsch"));if(b.dataset.farewell!==type){b.classList.add("falsch");$("farewell-feedback").style.color="var(--red)";$("farewell-feedback").textContent="Versuch es noch einmal!";stop();return speak("Nicht ganz. Versuch es noch einmal.",.9)}fl=true;fs++;b.classList.add("richtig");lockFarewell(true);$("farewell-feedback").style.color="#28502f";$("farewell-feedback").textContent=`Richtig! ${text}`;farewellProgress();stop();speak(text,.9);setTimeout(nextFarewell,1200)});      
+$("farewell-restart").onclick=()=>{fi=fs=0;fl=false;$("farewell-finish").classList.remove("zeigen");farewellProgress();showFarewell()};      
+      
+$("stamp-reset-button").onclick=()=>{stop();Object.keys(P).forEach(x=>P[x]=false);try{localStorage.removeItem(stampKey)}catch{}updateStamps();$("stamp-reset-message").textContent="Die Stempel wurden zurückgesetzt. Du kannst sie jetzt neu sammeln.";setTimeout(()=>$("stamp-reset-message").textContent="",4000)};
+
+const HELP_TRANSLATIONS={
+  greeting:{
+    en:"Look at the situation → click the correct greeting",
+    pl:"Spójrz na sytuację → kliknij właściwe powitanie",
+    it:"Guarda la situazione → clicca sul saluto corretto"
+  },
+  dialog:{
+    en:"Enter your name → click “Informell” or “Formell” → listen",
+    pl:"Wpisz swoje imię → kliknij „Informell” lub „Formell” → posłuchaj",
+    it:"Inserisci il tuo nome → clicca su “Informell” o “Formell” → ascolta"
+  },
+  register:{
+    en:"Read the sentence → click the answer → 👆 Informell wählen 👆 or 👆 Formell wählen 👆",
+    pl:"Przeczytaj zdanie → kliknij odpowiedź → 👆 Informell wählen 👆 albo 👆 Formell wählen 👆",
+    it:"Leggi la frase → clicca sulla risposta → 👆 Informell wählen 👆 oppure 👆 Formell wählen 👆"
+  },
+  alphabet:{
+    en:"Click a letter → listen → repeat",
+    pl:"Kliknij literę → posłuchaj → powtórz",
+    it:"Clicca su una lettera → ascolta → ripeti"
+  },
+  farewell:{
+    en:"Look at the situation → click the correct farewell",
+    pl:"Spójrz na sytuację → kliknij właściwe pożegnanie",
+    it:"Guarda la situazione → clicca sul saluto di commiato corretto"
+  }
+};
+
+const INLINE_TRANSLATIONS={
+  introExercise:{
+    en:"I introduce myself. Enter your name, listen to the three ways to say your name, then choose an informal or formal dialogue and listen.",
+    pl:"Przedstawiam się. Wpisz swoje imię, posłuchaj trzech sposobów podawania imienia, a następnie wybierz dialog nieformalny lub formalny i posłuchaj.",
+    it:"Mi presento. Inserisci il tuo nome, ascolta i tre modi per dire il tuo nome, poi scegli un dialogo informale o formale e ascolta."
+  },
+  registerExercise:{
+    en:"Informal or formal? Read the sentence and choose the correct form. “du” is informal; “Sie” is formal.",
+    pl:"Nieformalnie czy formalnie? Przeczytaj zdanie i wybierz właściwą formę. „du” jest nieformalne, a „Sie” formalne.",
+    it:"Informale o formale? Leggi la frase e scegli la forma corretta. “du” è informale; “Sie” è formale."
+  },
+  intro:{
+    en:"Today we’ll look at: How do we greet each other? How do we introduce ourselves? And how do we pronounce the letters of the German alphabet? This time you practise actively — collect stamps for your language pass!",
+    pl:"Dzisiaj zobaczymy: Jak się witamy? Jak się przedstawiamy? I jak wymawiamy litery niemieckiego alfabetu? Tym razem ćwiczysz aktywnie — zbieraj stemple do swojego paszportu językowego!",
+    it:"Oggi vediamo: Come ci salutiamo? Come ci presentiamo? E come si pronunciano le lettere dell’alfabeto tedesco? Questa volta ti eserciti attivamente — raccogli i timbri per il tuo passaporto linguistico!"
+  },
+  spelling:{
+    en:"Spell your name. Enter your name. Listen to the letters in German.",
+    pl:"Przeliteruj swoje imię. Wpisz swoje imię. Posłuchaj liter po niemiecku.",
+    it:"Fai lo spelling del tuo nome. Inserisci il tuo nome. Ascolta le lettere in tedesco."
+  }
+};
+
+function renderAllTranslations(out,data){
+  out.innerHTML=`<p class="translation-line"><b>English:</b> ${data.en}</p><p class="translation-line"><b>Polski:</b> ${data.pl}</p><p class="translation-line"><b>Italiano:</b> ${data.it}</p>`;
+  out.classList.add("show");
+}
+
+function addInlineTranslations(){
+  $$(".translation-inline-control[data-inline-translation]").forEach(control=>{
+    const key=control.dataset.inlineTranslation,data=INLINE_TRANSLATIONS[key];
+    if(!data)return;
+    const toggle=control.querySelector(".translation-toggle");
+    const out=control.querySelector(".translation-text");
+    const langs=[...control.querySelectorAll(".translation-language")];
+    toggle.onclick=e=>{
+      e.preventDefault();
+      e.stopPropagation();
+      const opening=!control.classList.contains("open");
+      control.classList.toggle("open",opening);
+      toggle.setAttribute("aria-expanded",String(opening));
+      if(opening)renderAllTranslations(out,data);
+      else out.classList.remove("show");
+    };
+  });
+}
+
+addInlineTranslations();
+
+function addHelpTranslations(){
+  $(".action-help[data-help-key]").forEach(box=>{
+    const key=box.dataset.helpKey,data=HELP_TRANSLATIONS[key];
+    if(!data)return;
+    const control=document.createElement("div");
+    control.className="translation-control";
+    control.innerHTML=`<button type="button" class="translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung"><span class="globe translation-globe">🌐</span><span>A/文</span></button><div class="translation-panel"><div class="translation-languages"><button type="button" class="translation-language" data-lang="en">English</button><button type="button" class="translation-language" data-lang="pl">Polski</button><button type="button" class="translation-language" data-lang="it">Italiano</button></div><p class="translation-text" aria-live="polite"></p></div>`;
+    box.appendChild(control);
+    const toggle=control.querySelector(".translation-toggle"),out=control.querySelector(".translation-text"),langs=[...control.querySelectorAll(".translation-language")];
+    toggle.onclick=e=>{
+      e.stopPropagation();
+      const opening=!control.classList.contains("open");
+      control.classList.toggle("open",opening);
+      if(opening)renderAllTranslations(out,data);
+    };
+  });
+  document.addEventListener("click",e=>{
+    if(!e.target.closest(".translation-control")&&!e.target.closest(".translation-inline-control")){
+      $$(".translation-control.open").forEach(x=>x.classList.remove("open"));
+      $$(".translation-inline-control.open").forEach(x=>x.classList.remove("open"));
+    }
+  });
+}
+addHelpTranslations();      
+      
+addEventListener("beforeunload",()=>{reading=false;stop()});      
+greetingProgress();showGreeting();current(false);farewellProgress();showFarewell();      
+</script>      
+<script src="../../js/click-hints.js"></script>
+<script src="../../js/page-progress.js" defer></script>
+</body>      
+  </html>
