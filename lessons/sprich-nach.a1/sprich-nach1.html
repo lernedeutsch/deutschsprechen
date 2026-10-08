@@ -1093,29 +1093,56 @@ body.sprich-started .lesson-only-next{
 body.sprich-started .lesson-only-next a{display:inline-flex!important}
 </style>
 <style id="start-inner-glass-3d-panel">
-/* ONLY the small start card — true clear glass, no white/beige fill */
-body:not(.sprich-started) #start-wrap{
-  width:min(600px,82%)!important;
-  min-height:390px!important;
-  margin:38px auto!important;
-  padding:34px 42px 32px!important;
-  box-sizing:border-box!important;
-  position:relative!important;
-  border-radius:34px!important;
-  background:transparent!important;
-  background-color:transparent!important;
-  background-image:none!important;
-  border:2px solid rgba(255,255,255,.42)!important;
+body:not(.sprich-started) #start-wrap {
+  width: min(600px, 82%) !important;
+  min-height: 390px !important;
+  margin: 38px auto !important;
+  padding: 34px 42px 32px !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+  isolation: isolate;
+  border-radius: 34px !important;
+
+  background: rgba(225, 232, 235, 0.045) !important;
+  border: 2px solid rgba(255,255,255,0.48) !important;
+
+  backdrop-filter: blur(9px) saturate(0.72) !important;
+  -webkit-backdrop-filter: blur(9px) saturate(0.72) !important;
+
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.22),
-    0 10px 28px rgba(24,31,38,.12)!important;
-  backdrop-filter:blur(2px) contrast(1.02)!important;
-  -webkit-backdrop-filter:blur(2px) contrast(1.02)!important;
-  opacity:1!important;
-  transform:none!important;
+    inset 0 2px 2px rgba(255,255,255,0.34),
+    inset 0 -12px 28px rgba(55,60,65,0.07),
+    0 14px 32px rgba(20,30,40,0.12) !important;
+
+  opacity: 1 !important;
+  transform: none !important;
 }
-body:not(.sprich-started) #start-wrap::before{
-  content:none!important;
+
+body:not(.sprich-started) #start-wrap::before {
+  content: "" !important;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+
+  background:
+    radial-gradient(ellipse at 18% 22%,
+      rgba(255,255,255,0.13), transparent 48%),
+    radial-gradient(ellipse at 82% 78%,
+      rgba(75,68,60,0.065), transparent 55%),
+    repeating-linear-gradient(112deg,
+      transparent 0px,
+      rgba(255,255,255,0.018) 2px,
+      transparent 5px,
+      transparent 47px);
+
+  opacity: 0.65;
+}
+
+body:not(.sprich-started) #start-wrap > * {
+  position: relative;
+  z-index: 1;
 }
 </style>
 </head>
