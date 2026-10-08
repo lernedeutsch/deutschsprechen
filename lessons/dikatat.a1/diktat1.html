@@ -320,6 +320,20 @@ button,textarea{font:inherit}
 .hint-btn:hover,
 .skip-btn:hover{border-color:#81bfff;color:var(--ink)}
 
+.skip-btn.continue-btn{
+  background:#43adf3;
+  border:2px solid #43adf3;
+  color:#fff;
+  font:800 1rem "JetBrains Mono",monospace;
+  padding:14px 23px;
+  box-shadow:0 7px 20px rgba(39,148,221,.25);
+}
+.skip-btn.continue-btn:hover{
+  background:#228fd6;
+  border-color:#228fd6;
+  color:#fff;
+}
+
 .hint-text{
   display:none;
   margin:10px 0 0;
@@ -1142,6 +1156,7 @@ function loadQuestion(){
   answered=false;
   els.showAnswerBtn.disabled=false;
   els.skipBtn.textContent="Satz überspringen →";
+  els.skipBtn.classList.remove("continue-btn");
 
   els.input.value="";
   els.input.disabled=false;
@@ -1293,7 +1308,8 @@ els.showAnswerBtn.addEventListener("click",()=>{
   els.showAnswerBtn.disabled=true;
   els.feedback.className="feedback show correct";
   els.feedback.textContent=target();
-  els.skipBtn.textContent="Nächster Satz →";
+  els.skipBtn.textContent="▶ Weiter üben – nächster Satz";
+  els.skipBtn.classList.add("continue-btn");
 });
 
 els.hintBtn.addEventListener("click",()=>{
@@ -1303,7 +1319,7 @@ els.hintBtn.addEventListener("click",()=>{
 });
 
 els.skipBtn.addEventListener("click",()=>{
-  if(answered && els.skipBtn.textContent!=="Nächster Satz →")return;
+  if(answered && !els.skipBtn.classList.contains("continue-btn"))return;
   streak=0;
   updateStats();
   advance();
