@@ -1093,6 +1093,21 @@ body.sprich-started .lesson-only-next{
 body.sprich-started .lesson-only-next a{display:inline-flex!important}
 </style>
 <style id="start-inner-glass-3d-panel">
+body:not(.sprich-started) .layout .panel {
+  position: relative !important;
+  isolation: isolate;
+}
+body:not(.sprich-started) .layout .panel::before {
+  content: "" !important;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    linear-gradient(128deg, transparent 15%, rgba(255,250,233,.27) 26%, transparent 39%, transparent 57%, rgba(255,252,240,.19) 69%, transparent 82%),
+    radial-gradient(ellipse at 76% 48%, rgba(75,155,193,.19), transparent 53%),
+    radial-gradient(ellipse at 23% 72%, rgba(60,122,162,.14), transparent 47%);
+}
 body:not(.sprich-started) #start-wrap {
   width: min(600px, 82%) !important;
   min-height: 390px !important;
