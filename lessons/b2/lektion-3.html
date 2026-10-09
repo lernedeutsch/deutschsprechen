@@ -621,7 +621,7 @@ header.hero{
   filter:brightness(1.05);
 }
 
-@media(min-width:1900px){
+@media(min-width:1400px){
   .side-buttons{
     position:fixed;
     top:50%;
@@ -838,12 +838,6 @@ button:focus-visible,
     animation-iteration-count:1!important;
     transition-duration:.01ms!important;
   }
-}
-
-/* Przycisków nie wolno ucinać przy typowej szerokości monitora. */
-@media (min-width:1400px) and (max-width:1899px){
-  .side-buttons{position:static;transform:none;display:flex;flex-direction:row;flex-wrap:wrap;max-width:1180px;margin:0 auto 26px;padding:0 18px;}
-  .side-buttons .training-btn{flex:1 1 200px;width:auto;min-height:58px;}
 }
 </style>
 
