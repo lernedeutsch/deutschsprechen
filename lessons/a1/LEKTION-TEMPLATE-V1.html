@@ -1,9 +1,19 @@
 <!DOCTYPE html>
-<!-- LEKTION-TEMPLATE-V1 | WZÓR NIE JEST LEKCJĄ PRODUKCYJNĄ.
-Przed zastosowaniem do kolejnej lekcji dostosuj: numer i tytuł,
-identyfikatory sekcji i kotwice, treści ćwiczeń, alfabet (jeśli dotyczy),
-przyciski przejścia do ćwiczeń, tłumaczenia i podsumowanie Ich kann.
-Zachowaj oryginalne pliki lekcji i sprawdź skrypty oraz nawigację.
+<!-- LEKTION-TEMPLATE-V1 | WZÓR WYGLĄDU, NIE LEKCJA PRODUKCYJNA.
+ZASADA: Nigdy nie edytuj lessons/a1/lektion-1.html podczas pracy z szablonem.
+KOPIOWANIE: Zapisz kopię tego pliku pod docelową ścieżką nowej lekcji.
+ZACHOWAJ: układ HTML, nazwy klas, style CSS, responsywność, wygląd kart,
+paneli, przycisków i nawigacji. Nie przebudowuj ich od zera.
+DOSTOSUJ DLA NOWEJ LEKCJI:
+1) <title>, poziom, numer lekcji, tytuł i treści wszystkich części;
+2) identyfikatory sekcji (np. lektion1-teil1) oraz wszystkie odpowiadające im href="#...";
+3) odnośniki do indeksu poziomu, Aktiv trainieren, Sprich nach, Übungen,
+   Dialoge, Diktat oraz przyciski przejścia dalej;
+4) dialogi, tłumaczenia, przykłady, Ich kann i dane postępów ucznia;
+5) usuń część alfabetu, jeśli nie dotyczy lekcji (skrypt obsługuje jej brak).
+KONTROLA PRZED PUBLIKACJĄ: sprawdź wszystkie href/src, kotwice i unikalność
+id, składnię JS, działanie przycisków i głosu, telefon/desktop i nawigację.
+Nie publikuj tej kopii jako gotowej lekcji, dopóki zawiera dane A1.1.
 -->
 <html lang="de">
 <head>
@@ -1333,6 +1343,7 @@ const umlauts=[
 ];
 
 function createAlphabet(target,letters){
+  if(!target)return; // alfabet jest opcjonalny w przyszłych lekcjach
   target.innerHTML=letters.map(letter=>{
     const speech=letter[0]==="ß"?"Eszett":letter[0];
 
@@ -1435,7 +1446,7 @@ const ichKannButton=
 const ichKannPaper=
   document.getElementById("ich-kann-paper");
 
-ichKannButton.addEventListener("click",()=>{
+if(ichKannButton&&ichKannPaper)ichKannButton.addEventListener("click",()=>{
   const open=
     ichKannPaper.classList.toggle("show");
 
