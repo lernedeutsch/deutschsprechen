@@ -400,23 +400,16 @@ body > .bottom-arrow:hover{
   .tab-buttons{gap:42px!important}
 }
 </style>
-<style id="course-start-arrow-exact-position">
+<style id="course-start-arrow-layout">
+/* Jeden zestaw końcowych wartości zamiast dwóch nadpisujących się bloków. */
 .course-start{position:relative!important}
+body{padding-top:58px!important}
 .course-start > .course-start-back{
   position:absolute!important;
   left:18px!important;
-  top:-58px!important;
+  top:-48px!important;
   margin:0!important;
   z-index:5!important;
-}
-@media(max-width:760px){
-  .course-start > .course-start-back{left:15px!important;top:-54px!important}
-}
-</style>
-<style id="course-start-arrow-flatter-lower">
-body{padding-top:58px!important}
-.course-start > .course-start-back{
-  top:-48px!important;
   padding:8px 20px!important;
   min-width:0!important;
   width:auto!important;
@@ -426,7 +419,11 @@ body{padding-top:58px!important}
 }
 @media(max-width:760px){
   body{padding-top:52px!important}
-  .course-start > .course-start-back{top:-44px!important;padding:8px 18px!important}
+  .course-start > .course-start-back{
+    left:15px!important;
+    top:-44px!important;
+    padding:8px 18px!important;
+  }
 }
 </style>
 <style id="category-choice-click-cues">
