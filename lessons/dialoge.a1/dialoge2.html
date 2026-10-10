@@ -79,7 +79,7 @@ button{font:inherit}
 /* ---------- HERO ---------- */
 
 .hero{
-  text-align:left;
+  text-align:center;
   padding:8px 0 10px;
   margin-bottom:8px;
 }
@@ -889,9 +889,36 @@ button{font:inherit}
   display:none;
 }
 .current-dialog-panel .partner-left{
-  padding-top:12px;
+  padding-top:8px;
   border-top:1px solid #314b41;
 }
+
+/* Kompaktowy nagłówek i lista dialogów — bez zmniejszania tekstu. */
+.current-dialog-panel .dialog-menu-title{margin-bottom:5px}
+.current-dialog-panel .dialog-menu-list{gap:1px;margin-bottom:7px}
+.current-dialog-panel .dialog-menu-item{
+  padding:3px 10px;
+  min-height:0;
+  line-height:1.25;
+}
+.current-dialog-panel .dialog-menu-list{row-gap:0}
+.current-dialog-panel .dialog-menu-item + .dialog-menu-item{margin-top:0}
+
+/* Jeszcze ciaśniejsza lista 01–04: rozmiar tekstu bez zmian. */
+.current-dialog-panel .dialog-menu-list{
+  gap:0 !important;
+  margin-bottom:5px !important;
+}
+.current-dialog-panel .dialog-menu-item{
+  padding-top:1px !important;
+  padding-bottom:1px !important;
+  margin:0 !important;
+  min-height:0 !important;
+  height:auto !important;
+  line-height:1.15 !important;
+}
+.current-dialog-panel .partner-left{gap:7px}
+.current-dialog-panel .partner-meta{gap:0}
 .current-dialog-panel .partner-title{
   font-size:1rem;
   font-weight:900;
@@ -922,6 +949,49 @@ button{font:inherit}
 }
 .sidebar-mic .mic-column{
   margin-top:0;
+}
+
+/* Lektor mówi: zamiast mikrofonu pokazuje się animowana fala głosu. */
+.speaker-wave{
+  display:none;
+  width:150px;
+  height:102px;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+}
+.speaker-wave span{
+  width:7px;
+  height:18px;
+  border-radius:999px;
+  background:#7770d9;
+  box-shadow:0 0 8px rgba(119,112,217,.22);
+  transform-origin:center bottom;
+  animation:speakerWave 1s ease-in-out infinite alternate;
+  animation-fill-mode:both;
+}
+.speaker-wave span:nth-child(2){animation-delay:-.88s;height:34px}
+.speaker-wave span:nth-child(3){animation-delay:-.76s;height:58px}
+.speaker-wave span:nth-child(4){animation-delay:-.64s;height:28px}
+.speaker-wave span:nth-child(5){animation-delay:-.52s;height:50px}
+.speaker-wave span:nth-child(6){animation-delay:-.40s;height:36px}
+.speaker-wave span:nth-child(7){animation-delay:-.52s;height:48px}
+.speaker-wave span:nth-child(8){animation-delay:-.64s;height:24px}
+.speaker-wave span:nth-child(9){animation-delay:-.76s;height:54px}
+.speaker-wave span:nth-child(10){animation-delay:-.88s;height:38px}
+.speaker-wave span:nth-child(11){height:22px}
+.sidebar-mic.lecturer-speaking .speaker-wave{display:flex}
+/* Podczas głosu lektora ukryj bezwarunkowo cały mikrofon ucznia. */
+.sidebar-mic.lecturer-speaking .mic-column,
+.sidebar-mic.lecturer-speaking .mic-btn-wrap,
+.sidebar-mic.lecturer-speaking .mic-btn,
+.sidebar-mic.lecturer-speaking .mic-status{display:none!important}
+@keyframes speakerWave{
+  from{transform:scaleY(.45);opacity:.72}
+  to{transform:scaleY(1.18);opacity:1}
+}
+@media(prefers-reduced-motion:reduce){
+  .speaker-wave span{animation:none}
 }
 .dialog-controls{
   align-items:stretch;
@@ -971,6 +1041,17 @@ button{font:inherit}
 .text-answer-row:focus-within{
   opacity:1;
 }
+/* Equal-height desktop columns: both outer panels always end on the same line. */
+@media(min-width:861px){
+  .layout.show{align-items:stretch}
+  .current-dialog-panel,
+  .card{
+    height:auto;
+    min-height:100%;
+    align-self:stretch;
+  }
+}
+
 @media(max-width:860px){.current-dialog-panel,.card{grid-column:1;grid-row:auto}.current-dialog-panel{position:static;width:100%}}
 
 /* ---------- FINAL ---------- */
@@ -1036,14 +1117,18 @@ button{font:inherit}
 }
 
 .footnote{
-  margin-top:22px;
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:8px;
+  margin:0;
   text-align:center;
   color:#8fa4bd;
   font-size:.86rem;
 }
 
 .next-training{
-  display:flex;
+  display:none;
   justify-content:center;
   margin-top:18px;
 }
@@ -1126,9 +1211,392 @@ button{font:inherit}
     transition-duration:.01ms!important;
   }
 }
-@keyframes gentleHint{0%,100%{box-shadow:0 0 0 0 rgba(116,174,147,0)}50%{box-shadow:0 0 0 4px rgba(116,174,147,.18)}}
-.text-answer-input{animation:gentleHint 2.4s ease-in-out infinite}
-.text-answer-input:focus{animation:none}
+
+.sidebar-speaking-panel{
+  margin-top:14px;
+  padding-top:14px;
+  border-top:1px solid #314b41;
+}
+.sidebar-turn-cue{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  margin-bottom:8px;
+  color:#f5f1e8;
+  text-align:center;
+  font-size:.78rem;
+}
+.sidebar-turn-cue strong{color:#bce7d2;font-size:.9rem}
+.sidebar-speaking-panel .sidebar-mic{margin-top:0}
+.sidebar-speaking-panel .mic-btn-wrap{width:78px;height:78px}
+.sidebar-speaking-panel .mic-btn{width:62px;height:62px;font-size:1.45rem}
+.sidebar-speaking-panel .mic-status{font-size:.62rem;max-width:180px}
+.sidebar-utility-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+  margin-top:8px;
+}
+.sidebar-utility-row .utility-btn{
+  padding:7px 5px;
+  font-size:.62rem;
+  white-space:normal;
+  line-height:1.2;
+}
+.sidebar-write-toggle{
+  display:block !important;
+  margin:6px auto 2px !important;
+  padding:4px 10px !important;
+}
+.sidebar-text-answer-row{
+  width:100% !important;
+  margin:6px 0 8px !important;
+}
+.sidebar-text-answer-row{
+  display:flex !important;
+}
+.sidebar-text-answer-row.open{display:flex !important}
+.sidebar-write-toggle{display:none !important}
+.sidebar-text-answer-row .text-answer-input{min-width:0}
+.sidebar-text-answer-row .text-answer-send{flex:0 0 auto}
+
+/* Sidebar controls correction */
+.layout{grid-template-columns:320px minmax(0,1fr) !important;}
+.sidebar-speaking-panel .sidebar-mic{
+  display:block !important;
+  margin:8px auto 4px !important;
+}
+.sidebar-speaking-panel .mic-column{
+  display:flex !important;
+  flex-direction:column;
+  align-items:center;
+  margin:0 !important;
+}
+.sidebar-speaking-panel .mic-btn-wrap{
+  display:grid !important;
+  width:92px !important;
+  height:92px !important;
+}
+.sidebar-speaking-panel .mic-btn{
+  display:block !important;
+  width:72px !important;
+  height:72px !important;
+  font-size:1.7rem !important;
+}
+.sidebar-speaking-panel .mic-status{
+  display:block !important;
+  margin:4px auto 0 !important;
+  max-width:240px !important;
+  text-align:center;
+}
+#stage{display:none !important;}
+
+/* State override must come AFTER Sidebar controls correction.
+   Lecturer: waveform only. Student: microphone only. */
+.sidebar-speaking-panel .sidebar-mic.lecturer-speaking .speaker-wave{
+  display:flex !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+.sidebar-speaking-panel .sidebar-mic.lecturer-speaking .mic-column,
+.sidebar-speaking-panel .sidebar-mic.lecturer-speaking .mic-btn-wrap,
+.sidebar-speaking-panel .sidebar-mic.lecturer-speaking .mic-btn,
+.sidebar-speaking-panel .sidebar-mic.lecturer-speaking .mic-status{
+  display:none !important;
+}
+@media(max-width:900px){
+  .layout{grid-template-columns:280px minmax(0,1fr) !important;}
+}
+@media(max-width:760px){
+  .layout{grid-template-columns:1fr !important;}
+}
+
+/* Hide score / streak / step counters */
+.hero-stats{display:none !important;}
+
+/* Compact, usable left control panel */
+.layout{grid-template-columns:350px minmax(0,1fr) !important;gap:18px !important;}
+.current-dialog-panel{padding:16px 18px !important;}
+.current-dialog-panel .dialog-menu-list{gap:3px !important;}
+.current-dialog-panel .dialog-menu-item{min-height:38px !important;padding:8px 10px !important;}
+.current-dialog-panel .partner-left{margin-top:10px !important;padding-top:11px !important;}
+.current-dialog-panel .partner-title{margin-bottom:3px !important;}
+.current-dialog-panel .partner-sub{margin-bottom:6px !important;}
+.current-dialog-panel .turn-instruction{margin:6px 0 8px !important;}
+.current-dialog-panel .translation-btn{margin-top:0 !important;}
+.sidebar-speaking-panel{
+  margin-top:11px !important;
+  padding-top:11px !important;
+}
+.sidebar-turn-cue{margin-bottom:5px !important;gap:1px !important;}
+.sidebar-turn-cue strong{font-size:.88rem !important;}
+.sidebar-turn-cue span{font-size:.75rem !important;}
+.sidebar-speaking-panel .sidebar-mic{
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  height:auto !important;
+  overflow:visible !important;
+  margin:4px auto 5px !important;
+}
+.sidebar-speaking-panel .mic-column{
+  display:flex !important;
+  visibility:visible !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  margin:0 !important;
+}
+.sidebar-speaking-panel .mic-btn-wrap{
+  display:grid !important;
+  visibility:visible !important;
+  place-items:center !important;
+  width:84px !important;
+  height:84px !important;
+  margin:0 auto !important;
+}
+.sidebar-speaking-panel .mic-btn{
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  position:relative !important;
+  width:66px !important;
+  height:66px !important;
+  min-width:66px !important;
+  min-height:66px !important;
+  padding:0 !important;
+  font-size:1.55rem !important;
+  z-index:3 !important;
+}
+.sidebar-speaking-panel .mic-ring{display:block !important;}
+.sidebar-speaking-panel .mic-status{
+  display:block !important;
+  visibility:visible !important;
+  margin:2px 0 0 !important;
+  font-size:.58rem !important;
+  line-height:1.15 !important;
+}
+.sidebar-utility-row{
+  grid-template-columns:1fr 1fr !important;
+  gap:5px !important;
+  margin-top:5px !important;
+}
+.sidebar-utility-row .utility-btn{
+  min-height:34px !important;
+  padding:6px 6px !important;
+  font-size:.60rem !important;
+}
+.sidebar-utility-row #skip-btn{grid-column:1 / -1 !important;}
+@media(max-width:1050px){
+ .layout{grid-template-columns:320px minmax(0,1fr) !important;}
+}
+@media(max-width:760px){
+ .layout{grid-template-columns:1fr !important;}
+}
+
+/* definitive sidebar microphone placement */
+.current-dialog-panel .sidebar-speaking-panel .sidebar-mic{
+  display:block !important;
+  position:static !important;
+  left:auto !important;
+  top:auto !important;
+  width:auto !important;
+  height:auto !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  overflow:visible !important;
+  margin:6px auto !important;
+}
+.current-dialog-panel .sidebar-speaking-panel .mic-column{
+  display:flex !important;
+  position:static !important;
+  flex-direction:column !important;
+  align-items:center !important;
+}
+.current-dialog-panel .sidebar-speaking-panel #mic-btn-wrap{
+  display:grid !important;
+  place-items:center !important;
+  position:relative !important;
+  width:90px !important;
+  height:90px !important;
+}
+.current-dialog-panel .sidebar-speaking-panel #mic-btn{
+  display:block !important;
+  position:relative !important;
+  width:70px !important;
+  height:70px !important;
+  min-width:70px !important;
+  min-height:70px !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  z-index:10 !important;
+}
+
+/* Two-column conversation history + smaller bubbles */
+.main-history-panel .history-list{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+  column-gap:26px !important;
+  row-gap:9px !important;
+  align-content:start !important;
+  position:relative !important;
+}
+.main-history-panel .history-list::after{
+  content:"";
+  position:absolute;
+  top:8px;
+  bottom:8px;
+  left:50%;
+  width:1px;
+  background:rgba(155,190,175,.18);
+  pointer-events:none;
+}
+.main-history-panel .history-divider{
+  grid-column:1 / -1 !important;
+  width:100% !important;
+  margin:5px 0 2px !important;
+}
+.main-history-panel .history-entry{
+  width:max-content !important;
+  max-width:82% !important;
+  padding:8px 12px !important;
+  font-size:.88rem !important;
+  line-height:1.3 !important;
+  border-radius:14px 14px 14px 5px !important;
+  justify-self:start !important;
+  align-self:start !important;
+}
+.main-history-panel .history-entry.user{
+  justify-self:end !important;
+  border-radius:14px 14px 5px 14px !important;
+}
+.main-history-panel .history-entry .speaker{
+  font-size:.68rem !important;
+  margin-bottom:1px !important;
+}
+.main-history-panel .history-entry.dialog-0,
+.main-history-panel .history-entry.dialog-2{
+  grid-column:1 !important;
+}
+.main-history-panel .history-entry.dialog-1,
+.main-history-panel .history-entry.dialog-3{
+  grid-column:2 !important;
+}
+.main-history-panel .history-divider:nth-of-type(4n+1){grid-column:1 / -1 !important;}
+@media(max-width:760px){
+ .main-history-panel .history-list{grid-template-columns:1fr !important;}
+ .main-history-panel .history-list::after{display:none !important;}
+ .main-history-panel .history-entry{grid-column:1 !important;}
+}
+
+/* Stable two-compartment conversation: current dialogue never pushes the other side */
+.main-history-panel .history-list{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+  grid-auto-flow:row !important;
+  column-gap:30px !important;
+  row-gap:8px !important;
+  align-content:start !important;
+}
+.main-history-panel .history-divider{
+  display:none !important;
+}
+.main-history-panel .history-entry{
+  width:max-content !important;
+  max-width:88% !important;
+  padding:5px 9px !important;
+  margin:0 !important;
+  font-size:1rem !important;
+  line-height:1.3 !important;
+  min-height:0 !important;
+  justify-self:start !important;
+  align-self:start !important;
+}
+.main-history-panel .history-entry .speaker{
+  display:block !important;
+  margin:0 0 1px !important;
+  font-size:.78rem !important;
+  line-height:1.15 !important;
+}
+.main-history-panel .history-entry.user{
+  justify-self:end !important;
+}
+/* Dialogues 1 and 3 live only in the left compartment; 2 and 4 only in the right. */
+.main-history-panel .history-entry.dialog-0,
+.main-history-panel .history-entry.dialog-2{
+  grid-column:1 !important;
+}
+.main-history-panel .history-entry.dialog-1,
+.main-history-panel .history-entry.dialog-3{
+  grid-column:2 !important;
+}
+/* Independent vertical stacks: rows are assigned per dialogue by JS below. */
+@media(max-width:760px){
+ .main-history-panel .history-entry{max-width:92% !important;}
+}
+
+/* Tighter vertical spacing between speech bubbles — keep text size unchanged */
+.main-history-panel .history-list{
+  row-gap:3px !important;
+}
+.main-history-panel .history-entry{
+  margin-top:0 !important;
+  margin-bottom:0 !important;
+}
+
+/* Use the full height of the large right panel for dialogue history */
+.card{
+  display:flex !important;
+  flex-direction:column !important;
+  min-height:740px !important;
+}
+.main-history-panel{
+  flex:1 1 auto !important;
+  height:auto !important;
+  min-height:650px !important;
+  max-height:none !important;
+}
+.main-history-panel .history-list{
+  height:100% !important;
+  min-height:650px !important;
+  max-height:none !important;
+  overflow-y:auto !important;
+  align-content:start !important;
+  padding-bottom:22px !important;
+}
+@media(max-width:900px){
+  .card{min-height:680px !important;}
+  .main-history-panel,
+  .main-history-panel .history-list{min-height:590px !important;}
+}
+
+/* Separator after each completed dialogue, inside its own compartment */
+.main-history-panel .history-divider{
+  display:block !important;
+  width:calc(100% - 20px) !important;
+  height:1px !important;
+  padding:0 !important;
+  margin:7px 10px 9px !important;
+  background:rgba(151,190,173,.28) !important;
+  color:transparent !important;
+  overflow:hidden !important;
+  align-self:center !important;
+  justify-self:stretch !important;
+}
+.main-history-panel .history-divider.left-column{grid-column:1 !important;}
+.main-history-panel .history-divider.right-column{grid-column:2 !important;}
+
+.card{min-height:0 !important;height:auto !important;}
+.main-history-panel{min-height:610px !important;height:610px !important;flex:none !important;}
+.main-history-panel .history-list{min-height:610px !important;height:610px !important;max-height:610px !important;}
+
+/* Equal visual length for both dialogue compartments */
+.main-history-panel .history-list{
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+}
+.main-history-panel .history-list::after{
+  top:0 !important;
+  bottom:0 !important;
+}
 </style>
 
 <style>
@@ -1198,10 +1666,10 @@ body{
 }
 .gate p{color:var(--probe-text-dim)}
 .gate-btn{
-  color:#1b1208;
-  background:var(--probe-accent);
+  color:#071f1b;
+  background:#3FAF9F;
   border-radius:10px;
-  box-shadow:0 10px 22px rgba(217,138,61,.22);
+  box-shadow:0 10px 22px rgba(63,175,159,.24);
 }
 .gate-warning{
   color:#f0c892;
@@ -1372,6 +1840,248 @@ body{
     position:static;
   }
 }
+
+/* UX clarity: current action, controls and translation */
+.main-turn-cue{display:flex;align-items:center;gap:10px;margin:-4px 0 14px;padding:10px 14px;color:var(--probe-text);background:rgba(116,174,147,.12);border:1px solid rgba(116,174,147,.36);border-radius:10px;font-size:.82rem}
+.main-turn-cue strong{color:#a8d9c1;white-space:nowrap}
+.main-turn-cue span{color:#d9e5de}
+.dialog-controls .utility-btn{opacity:1;color:#e7eee9;border-width:1px;font-weight:800}
+.dialog-controls .repeat-btn{color:#b9e4cf;background:rgba(116,174,147,.20);border-color:rgba(116,174,147,.68)}
+.dialog-controls .answer-btn{color:#ffd69a;background:rgba(217,138,61,.23);border-color:rgba(217,138,61,.72)}
+.dialog-controls .stop-btn{color:#f0b4aa;background:rgba(201,106,90,.18);border-color:rgba(201,106,90,.62)}
+.dialog-controls #skip-btn{color:#d8e4dd;background:rgba(255,255,255,.055);border-color:rgba(238,232,210,.28)}
+.dialog-controls #skip-btn:hover{color:#fff;border-color:rgba(238,232,210,.55);background:rgba(255,255,255,.09)}
+.translation-toggle{gap:6px;padding:4px 9px}
+.translation-label{font-size:.68rem;letter-spacing:.01em}
+.sidebar-mic .mic-status{max-width:150px;font-family:"Nunito Sans",sans-serif;font-size:.72rem;font-weight:800}
+@media(max-width:520px){.main-turn-cue{align-items:flex-start;flex-direction:column;gap:2px}.translation-label{display:none}}
+
+
+/* Conversation-first redesign */
+.layout{grid-template-columns:250px minmax(0,1fr);gap:18px}
+.card{padding:18px;background:#20332b}
+.main-history-panel{background:#10251f;border:1px solid rgba(255,255,255,.08);padding:18px;min-height:330px}
+.main-history-panel .history-screen-bar{margin-bottom:16px}
+.main-history-panel .history-list{min-height:245px;max-height:390px;gap:12px}
+.history-entry{max-width:72%;width:max-content;padding:12px 16px;border-radius:18px 18px 18px 5px;background:#edf4f0!important;color:#203128;font-size:1rem;box-shadow:0 7px 18px rgba(0,0,0,.12)}
+.history-entry .speaker{display:block;color:#39745c;font-size:.76rem;margin-bottom:2px}
+.history-entry.user{align-self:flex-end;border-radius:18px 18px 5px 18px;background:#d9f1e5!important;color:#183327}
+.history-entry.user .speaker{color:#287154}
+.history-entry:last-child{font-size:1rem;padding:12px 16px}
+.history-divider{width:100%;margin:4px 0;color:#8ca99d}
+.main-turn-cue{margin:0 0 14px;padding:13px 16px;border-radius:14px;background:rgba(116,174,147,.15);border-color:rgba(116,174,147,.42)}
+.main-turn-cue strong{font-size:.96rem;color:#bce7d2}
+.dialog-controls{display:flex;flex-direction:column;align-items:center;gap:10px}
+.main-mic-column{display:flex!important;position:static!important;left:auto!important;margin:0!important;align-items:center}
+.main-mic-column .mic-btn-wrap{width:108px;height:108px}
+.main-mic-column .mic-btn{width:88px;height:88px;font-size:2rem}
+.dialog-controls .utility-row{order:2;display:flex;justify-content:center;width:100%;gap:8px;margin-top:4px}
+.dialog-controls .utility-btn{flex:0 1 auto;min-width:135px;padding:9px 13px;font-family:"Nunito Sans",sans-serif;font-size:.76rem;border-radius:12px}
+#stop-btn{display:none}
+body.is-listening #stop-btn{display:inline-flex}
+.sidebar-mic{position:static;left:auto}
+.card #stage{margin-top:0;border-top:0;padding-top:0}
+.mic-column{margin-top:0}
+.text-answer-row{max-width:500px;margin:12px auto 0;border-top:0;padding-top:0;opacity:.72}
+.text-answer-row:before{content:"⌨️";font-size:.9rem}
+.text-answer-input{background:#172a23}
+.current-dialog-panel{height:auto;min-height:0;padding:17px}
+.current-dialog-panel .partner-left{padding-top:10px}
+.current-dialog-panel .hero-stats{margin-top:12px;padding-top:10px}
+.current-dialog-panel .hero-stats .stat{padding:5px 4px}
+.current-dialog-panel .stat-value{font-size:.86rem}
+.current-dialog-panel .stat-label{font-size:.55rem}
+.dialog-menu-item{padding:8px 9px}
+@media(max-width:860px){
+ .layout{grid-template-columns:1fr}
+ .current-dialog-panel{grid-column:1;grid-row:2}
+ .card{grid-column:1;grid-row:1}
+ .history-entry{max-width:88%}
+}
+
+
+/* Compact conversation v2 */
+.shell{max-width:1240px;padding-top:12px}
+.hero{padding:4px 0 8px;margin-bottom:4px}
+.hero h1{font-size:clamp(1.35rem,2.5vw,1.75rem)}
+.layout{grid-template-columns:220px minmax(0,1fr);gap:14px;align-items:start}
+.current-dialog-panel{padding:14px;border-radius:16px}
+.dialog-menu-title{margin-bottom:7px}
+.dialog-menu-list{gap:2px;margin-bottom:10px}
+.dialog-menu-item{padding:7px 8px;font-size:.8rem}
+.current-dialog-panel .partner-left{padding-top:8px}
+.current-dialog-panel .partner-title{font-size:.9rem}
+.current-dialog-panel .turn-instruction{font-size:.7rem}
+.current-dialog-panel .hero-stats{margin-top:8px;padding-top:8px}
+.current-dialog-panel .hero-stats .stat{padding:4px 3px}
+.card{padding:14px;border-radius:16px}
+.progress-track{margin-bottom:10px}
+.main-history-panel{min-height:0;height:330px;margin-bottom:10px;padding:12px 16px;border-radius:18px}
+.main-history-panel .history-screen-bar{margin-bottom:8px}
+.main-history-panel .history-list{min-height:0;max-height:270px;height:270px;gap:8px;padding:2px 6px 4px}
+.history-entry{max-width:62%;padding:9px 13px;font-size:.94rem}
+.history-entry:last-child{font-size:.94rem;padding:9px 13px}
+.history-entry .speaker{font-size:.7rem}
+.history-divider{margin:2px 0;font-size:.6rem}
+.main-turn-cue{margin:0 auto 8px;max-width:760px;padding:9px 13px}
+.main-turn-cue strong{font-size:.86rem}
+.main-turn-cue span{font-size:.8rem}
+.card #stage{display:flex;flex-direction:column;align-items:center}
+.dialog-controls{gap:4px;width:100%}
+.main-mic-column{gap:2px}
+.main-mic-column .mic-btn-wrap{width:82px;height:82px}
+.main-mic-column .mic-btn{width:66px;height:66px;font-size:1.55rem}
+.main-mic-column strong{font-size:.74rem!important}
+.dialog-controls .utility-row{gap:6px;margin-top:4px}
+.dialog-controls .utility-btn{min-width:0;padding:7px 11px;font-size:.7rem}
+.text-answer-row{display:none;width:min(520px,100%);margin:6px auto 0}
+.text-answer-row.open{display:flex}
+.write-toggle{display:block;margin:5px auto 0;padding:3px 9px;border:0;background:transparent;color:#9fb8ad;cursor:pointer;font:700 .7rem "Nunito Sans",sans-serif}
+.write-toggle:hover{color:#d9e8e1}
+.mic-status-row{min-height:0;padding:0}
+.example-text{margin-top:5px;font-size:.8rem}
+.footnote{margin-top:10px;font-size:.72rem}
+.next-training{margin-top:10px}
+.next-training a{min-height:42px;padding:8px 17px;font-size:.86rem}
+@media(min-width:861px){
+ .layout.show{min-height:0}
+ .current-dialog-panel{position:sticky;top:12px}
+}
+@media(max-width:860px){
+ .layout{grid-template-columns:1fr}
+ .main-history-panel{height:310px}
+ .main-history-panel .history-list{height:250px}
+}
+/* FINAL dialogue menu compaction: keep font sizes, remove forced row height/padding. */
+.current-dialog-panel .dialog-menu-list{
+  gap:0 !important;
+  row-gap:0 !important;
+  margin-bottom:5px !important;
+}
+.current-dialog-panel .dialog-menu-item{
+  min-height:0 !important;
+  height:auto !important;
+  padding:2px 8px !important;
+  margin:0 !important;
+  line-height:1.15 !important;
+}
+.current-dialog-panel .dialog-menu-item + .dialog-menu-item{
+  margin-top:0 !important;
+}
+
+/* Stronger contrast for sidebar action labels. */
+.sidebar-speaking-panel .sidebar-utility-row .utility-btn{
+  color:#e8f4ef !important;
+  font-weight:800 !important;
+  opacity:1 !important;
+}
+.sidebar-speaking-panel .sidebar-utility-row .repeat-btn{
+  color:#bfe9d7 !important;
+}
+.sidebar-speaking-panel .sidebar-utility-row .answer-btn{
+  color:#ffe3a0 !important;
+}
+.sidebar-speaking-panel #skip-btn{
+  color:#d6e3de !important;
+}
+
+/* FINAL contrast override for all controls visible in the left panel. */
+.current-dialog-panel .sidebar-utility-row .utility-btn,
+.current-dialog-panel .sidebar-utility-row button{
+  color:#f2faf6 !important;
+  -webkit-text-fill-color:#f2faf6 !important;
+  font-weight:900 !important;
+  opacity:1 !important;
+  filter:none !important;
+}
+.current-dialog-panel .sidebar-utility-row .repeat-btn{
+  color:#d7fff0 !important;
+  -webkit-text-fill-color:#d7fff0 !important;
+}
+.current-dialog-panel .sidebar-utility-row .answer-btn{
+  color:#ffe7a6 !important;
+  -webkit-text-fill-color:#ffe7a6 !important;
+}
+.current-dialog-panel .sidebar-utility-row #skip-btn{
+  color:#f2faf6 !important;
+  -webkit-text-fill-color:#f2faf6 !important;
+}
+.current-dialog-panel .text-answer-input{
+  color:#f2faf6 !important;
+  -webkit-text-fill-color:#f2faf6 !important;
+  opacity:1 !important;
+}
+.current-dialog-panel .text-answer-input::placeholder{
+  color:#c4d8d0 !important;
+  opacity:1 !important;
+}
+.current-dialog-panel .text-answer-send{
+  color:#f2faf6 !important;
+  -webkit-text-fill-color:#f2faf6 !important;
+  font-weight:900 !important;
+}
+
+/* FINAL readability: larger, brighter labels on the two primary utility buttons. */
+.current-dialog-panel .sidebar-utility-row .repeat-btn,
+.current-dialog-panel .sidebar-utility-row .answer-btn{
+  font-size:.74rem !important;
+  font-weight:900 !important;
+  letter-spacing:0 !important;
+  text-shadow:0 1px 2px rgba(0,0,0,.55) !important;
+}
+.current-dialog-panel .sidebar-utility-row .repeat-btn{
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+}
+.current-dialog-panel .sidebar-utility-row .answer-btn{
+  color:#fff1b8 !important;
+  -webkit-text-fill-color:#fff1b8 !important;
+}
+
+/* Larger labels in the left-panel answer controls. */
+.current-dialog-panel .text-answer-input,
+.current-dialog-panel .text-answer-send{
+  font-size:.92rem !important;
+}
+.current-dialog-panel .sidebar-utility-row .repeat-btn,
+.current-dialog-panel .sidebar-utility-row .answer-btn{
+  font-size:.86rem !important;
+}
+.current-dialog-panel .sidebar-utility-row #skip-btn{
+  font-size:.80rem !important;
+}
+
+/* FINAL: visibly larger answer controls in sidebar. */
+.current-dialog-panel .sidebar-text-answer-row .text-answer-input{
+  font-size:1.05rem !important;
+  font-weight:800 !important;
+  min-height:46px !important;
+}
+.current-dialog-panel .sidebar-text-answer-row .text-answer-send{
+  font-size:1.05rem !important;
+  font-weight:900 !important;
+  min-height:46px !important;
+  padding-left:18px !important;
+  padding-right:18px !important;
+}
+.current-dialog-panel .sidebar-utility-row .repeat-btn,
+.current-dialog-panel .sidebar-utility-row .answer-btn{
+  font-size:.98rem !important;
+  font-weight:900 !important;
+  min-height:46px !important;
+  padding:10px 8px !important;
+}
+.current-dialog-panel .sidebar-utility-row #skip-btn{
+  font-size:.92rem !important;
+  font-weight:900 !important;
+  min-height:42px !important;
+}
+
+/* Move the lower action buttons slightly down. */
+.current-dialog-panel .sidebar-utility-row{
+  margin-top:12px !important;
+}
+
 </style>
 
 <link rel="stylesheet" href="../../css/translation-globe.css">
