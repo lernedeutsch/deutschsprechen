@@ -1377,6 +1377,970 @@ body{
 <link rel="stylesheet" href="../../css/translation-globe.css">
 <link rel="stylesheet" href="../../css/page-progress.css">
 <script src="../../js/answer-corrector.js"></script>
+<style id="dark-forest-mint-contrast-v2">
+/* Stronger separation visible on ordinary monitors. */
+body{background:#0c1c17 !important;}
+.current-dialog-panel{
+  background:#284239 !important;
+  border-color:#587568 !important;
+}
+.card{
+  background:#1e372e !important;
+  border-color:#49675a !important;
+}
+.main-history-panel{
+  background:#071f19 !important;
+  border-color:#315548 !important;
+}
+.current-dialog-panel .dialog-menu-item.active{
+  background:#39705b !important;
+}
+.current-dialog-panel .partner-left,
+.current-dialog-panel .sidebar-speaking-panel{
+  border-color:#547165 !important;
+}
+.current-dialog-panel .sidebar-text-answer-row .text-answer-input,
+.current-dialog-panel .sidebar-text-answer-row .text-answer-send{
+  background:#1b352c !important;
+  border-color:#78b49a !important;
+}
+</style>
+<style id="dark-forest-mint-hierarchy-final">
+/* Stronger visual hierarchy: page -> control panel -> conversation surface. */
+body{
+  background:#10211b !important;
+}
+.current-dialog-panel{
+  background:#20392f !important;
+  border-color:#426153 !important;
+}
+.card{
+  background:#193229 !important;
+  border-color:#38574a !important;
+}
+.main-history-panel{
+  background:#08271f !important;
+  border-color:#23483b !important;
+}
+.current-dialog-panel .dialog-menu-item.active{
+  background:#2d5b49 !important;
+}
+.current-dialog-panel .mic-btn{
+  background:#75c7a7 !important;
+  border-color:#a2e0c7 !important;
+}
+.current-dialog-panel .sidebar-text-answer-row .text-answer-input,
+.current-dialog-panel .sidebar-text-answer-row .text-answer-send{
+  background:#173129 !important;
+  border:1px solid #5d9c83 !important;
+}
+.current-dialog-panel .sidebar-text-answer-row .text-answer-input:focus{
+  border-color:#83d4b3 !important;
+  box-shadow:0 0 0 3px rgba(131,212,179,.14) !important;
+}
+.main-history-panel .history-entry:not(.user){
+  background:#edf2e5 !important;
+  color:#1c3027 !important;
+}
+.main-history-panel .history-entry.user{
+  background:#d8eee2 !important;
+  color:#173428 !important;
+}
+.main-history-panel .history-divider{
+  color:#9fd9c0 !important;
+  font-family:inherit !important;
+  font-size:.80rem !important;
+  font-weight:800 !important;
+  letter-spacing:0 !important;
+}
+</style>
+<style id="dialog-title-in-history-final">
+/* Definitive dialogue heading: override the old separator rule that hid its text. */
+.main-history-panel .history-divider{
+  display:block !important;
+  height:auto !important;
+  min-height:28px !important;
+  width:calc(100% - 12px) !important;
+  padding:5px 8px 6px !important;
+  margin:4px 6px 6px !important;
+  background:transparent !important;
+  color:#b7e8d3 !important;
+  overflow:visible !important;
+  text-align:left !important;
+  font-size:.78rem !important;
+  line-height:1.2 !important;
+  font-weight:900 !important;
+  letter-spacing:.01em !important;
+  text-transform:none !important;
+  border-bottom:1px solid rgba(183,232,211,.25) !important;
+  align-self:start !important;
+  justify-self:stretch !important;
+}
+.main-history-panel .history-divider.left-column{grid-column:1 !important;}
+.main-history-panel .history-divider.right-column{grid-column:2 !important;}
+</style>
+<style id="dialog-title-in-history">
+/* Show each dialogue title above its first bubble in the large history panel. */
+.main-history-panel .history-divider{
+  display:block !important;
+  text-align:left !important;
+  color:#b7e8d3 !important;
+  font-size:.78rem !important;
+  font-weight:900 !important;
+  letter-spacing:.02em !important;
+  text-transform:none !important;
+  padding:6px 10px 5px !important;
+  margin:5px 0 4px !important;
+  border-bottom:1px solid rgba(183,232,211,.22) !important;
+}
+</style>
+<style id="dark-forest-mint-theme">
+/* Dark Forest + Mint — color-only refinement. */
+body{
+  background:#10231d !important;
+  color:#f4efe3 !important;
+}
+.current-dialog-panel{
+  background:#1b342b !important;
+  border-color:#355247 !important;
+}
+.card{
+  background:#1a3028 !important;
+  border-color:#355247 !important;
+}
+.main-history-panel,
+.history-shell,
+.history-panel{
+  background:#09251e !important;
+}
+.current-dialog-panel .dialog-menu-item.active{
+  background:#285444 !important;
+}
+.current-dialog-panel .dialog-menu-item.active,
+.current-dialog-panel .dialog-menu-item.active *{
+  color:#f7f3e8 !important;
+}
+.current-dialog-panel .partner-left,
+.current-dialog-panel .sidebar-speaking-panel{
+  border-color:#35584b !important;
+}
+.current-dialog-panel .turn-title,
+.current-dialog-panel .sidebar-turn-title,
+.current-dialog-panel .sidebar-mic-title{
+  color:#a9e4ca !important;
+}
+.current-dialog-panel .mic-btn{
+  background:#72bea0 !important;
+  border-color:#9ad9bf !important;
+  box-shadow:0 0 0 7px rgba(114,190,160,.10),0 0 0 14px rgba(114,190,160,.07) !important;
+}
+.current-dialog-panel .text-answer-input,
+.current-dialog-panel .text-answer-send{
+  background:#132b24 !important;
+  border-color:#365c4e !important;
+}
+.current-dialog-panel .text-answer-input:focus{
+  border-color:#72bea0 !important;
+  box-shadow:0 0 0 3px rgba(114,190,160,.12) !important;
+}
+.current-dialog-panel .sidebar-utility-row .repeat-btn{
+  background:#25463b !important;
+  border-color:#4d806d !important;
+}
+.current-dialog-panel .sidebar-utility-row .answer-btn{
+  background:#4a3d21 !important;
+  border-color:#9a762a !important;
+}
+.current-dialog-panel .sidebar-utility-row #skip-btn{
+  background:#19332b !important;
+  border-color:#355247 !important;
+}
+.history-bubble,
+.history-message,
+.bubble{
+  background:#eef4e8 !important;
+}
+</style>
+<style id="final-text-sharpness">
+/* Sharper sidebar typography: remove glow/blur and use native font rendering. */
+.current-dialog-panel,
+.current-dialog-panel button,
+.current-dialog-panel input{
+  text-shadow:none !important;
+  filter:none !important;
+  -webkit-font-smoothing:auto !important;
+  text-rendering:optimizeLegibility !important;
+}
+.current-dialog-panel .sidebar-utility-row .repeat-btn,
+.current-dialog-panel .sidebar-utility-row .answer-btn,
+.current-dialog-panel .sidebar-utility-row #skip-btn,
+.current-dialog-panel .text-answer-send,
+.current-dialog-panel .text-answer-input{
+  text-shadow:none !important;
+  filter:none !important;
+  opacity:1 !important;
+}
+</style>
+<style id="final-write-controls-size">
+.current-dialog-panel .sidebar-text-answer-row .text-answer-input{
+  font-size:1.18rem !important;
+  font-weight:900 !important;
+  min-height:54px !important;
+  padding:11px 14px !important;
+}
+.current-dialog-panel .sidebar-text-answer-row .text-answer-send{
+  font-size:1.18rem !important;
+  font-weight:900 !important;
+  min-height:54px !important;
+  padding:11px 22px !important;
+}
+</style>
+<style id="final-sidebar-action-position">
+/* Definitive placement: create a clearly visible gap below the writing row. */
+.current-dialog-panel .sidebar-text-answer-row{
+  margin-bottom:24px !important;
+}
+.current-dialog-panel .sidebar-utility-row{
+  margin-top:0 !important;
+}
+</style>
+<style id="final-dialog-spacing-fix">
+/* FINAL override: compact bubbles and genuinely tighter vertical rhythm */
+.main-history-panel .history-list{
+  gap:0 !important;
+  row-gap:0 !important;
+  column-gap:24px !important;
+}
+.main-history-panel .history-entry{
+  padding:4px 9px !important;
+  margin:0 !important;
+  font-size:1rem !important;
+  line-height:1.22 !important;
+  align-self:start !important;
+}
+.main-history-panel .history-entry .speaker{
+  margin-bottom:0 !important;
+  line-height:1.05 !important;
+}
+/* each next bubble in a dialogue sits directly below the previous one */
+.main-history-panel .history-entry + .history-entry{
+  margin-top:0 !important;
+}
+/* tighten the visual rows themselves; text size stays unchanged */
+.main-history-panel .history-entry{
+  padding-top:2px !important;
+  padding-bottom:2px !important;
+  line-height:1.16 !important;
+}
+.main-history-panel .history-entry .speaker{
+  line-height:1 !important;
+}
+</style>
+<style id="final-layer-separation-override">
+/* Final paint layer: intentionally strong separation between the three surfaces. */
+html body{
+  background:#0b1b16 !important;
+}
+html body .layout.show > .current-dialog-panel{
+  background:#29483d !important;
+  border:1px solid #587a6c !important;
+  box-shadow:0 12px 28px rgba(0,0,0,.18) !important;
+}
+html body .layout.show > .card{
+  background:#213a31 !important;
+  border:1px solid #4b6a5d !important;
+}
+html body .layout.show > .card .main-history-panel{
+  background:#06241c !important;
+  border:1px solid #315548 !important;
+}
+html body .current-dialog-panel .dialog-menu-item.active{
+  background:#3d725f !important;
+}
+html body .current-dialog-panel .text-answer-input,
+html body .current-dialog-panel .text-answer-send{
+  background:#17352b !important;
+  border-color:#7fc0a4 !important;
+}
+</style>
+<style id="final-layer-brighter-v2">
+/* Brighter Dark Forest surfaces while keeping the conversation area darkest. */
+html body{background:#10271f !important;}
+html body .layout.show > .current-dialog-panel{
+  background:#35594b !important;
+  border-color:#6f9484 !important;
+}
+html body .layout.show > .card{
+  background:#2b4b3f !important;
+  border-color:#628274 !important;
+}
+html body .layout.show > .card .main-history-panel{
+  background:#0b3026 !important;
+  border-color:#426b5a !important;
+}
+html body .current-dialog-panel .dialog-menu-item.active{
+  background:#4b806b !important;
+}
+html body .current-dialog-panel .text-answer-input,
+html body .current-dialog-panel .text-answer-send{
+  background:#21483a !important;
+  border-color:#91cdb3 !important;
+}
+</style>
+<style id="final-crisp-sidebar-type">
+/* Crisp, high-contrast sidebar typography. */
+html body .current-dialog-panel,
+html body .current-dialog-panel *{
+  text-shadow:none !important;
+  filter:none !important;
+  -webkit-font-smoothing:subpixel-antialiased !important;
+  text-rendering:geometricPrecision !important;
+}
+html body .current-dialog-panel .dialog-menu-title,
+html body .current-dialog-panel .dialog-menu-item,
+html body .current-dialog-panel .partner-title,
+html body .current-dialog-panel .partner-name,
+html body .current-dialog-panel .partner-register,
+html body .current-dialog-panel .instruction,
+html body .current-dialog-panel .sidebar-turn-title,
+html body .current-dialog-panel .sidebar-turn-instruction,
+html body .current-dialog-panel .mic-hint,
+html body .current-dialog-panel button{
+  font-weight:800 !important;
+}
+html body .current-dialog-panel{
+  color:#fffaf0 !important;
+}
+html body .current-dialog-panel .dialog-menu-item,
+html body .current-dialog-panel .partner-title,
+html body .current-dialog-panel .partner-name,
+html body .current-dialog-panel .instruction,
+html body .current-dialog-panel .sidebar-turn-instruction,
+html body .current-dialog-panel .mic-hint{
+  color:#f7f3e9 !important;
+  opacity:1 !important;
+}
+html body .current-dialog-panel .sidebar-turn-title{
+  color:#c7f2df !important;
+  opacity:1 !important;
+}
+html body .current-dialog-panel .partner-register{
+  color:#a9ddc7 !important;
+  opacity:1 !important;
+}
+</style>
+<style id="write-row-width-balance">
+/* Give the writing field more room; keep Send compact. */
+html body .current-dialog-panel .sidebar-text-answer-row{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) auto !important;
+  gap:10px !important;
+}
+html body .current-dialog-panel .sidebar-text-answer-row .text-answer-input{
+  width:100% !important;
+  min-width:0 !important;
+}
+html body .current-dialog-panel .sidebar-text-answer-row .text-answer-send{
+  width:auto !important;
+  min-width:96px !important;
+  max-width:110px !important;
+  padding-left:14px !important;
+  padding-right:14px !important;
+}
+</style>
+<style id="send-button-height-tweak">
+html body .current-dialog-panel .sidebar-text-answer-row .text-answer-send{
+  min-height:46px !important;
+  height:46px !important;
+  padding-top:6px !important;
+  padding-bottom:6px !important;
+  align-self:center !important;
+}
+</style>
+<style id="friendly-forest-palette-final">
+/* Friendly Forest palette: softer sage controls, mint actions, honey help, warm cream dialogue. */
+html body{
+  background:#10261f !important;
+}
+html body .layout.show > .current-dialog-panel{
+  background:#3f6657 !important;
+  border-color:#7fa793 !important;
+}
+html body .layout.show > .card{
+  background:#25473a !important;
+  border-color:#5f8875 !important;
+}
+html body .layout.show > .card .main-history-panel{
+  background:#07382b !important;
+  border-color:#426b5a !important;
+}
+
+/* Active / learner = mint. */
+html body .current-dialog-panel .dialog-menu-item.active{
+  background:#72a58f !important;
+}
+html body .current-dialog-panel .mic-btn{
+  background:#8bd8b8 !important;
+  border-color:#a6dfc8 !important;
+  box-shadow:
+    0 0 0 6px rgba(121,201,170,.10),
+    0 0 0 12px rgba(121,201,170,.055) !important;
+}
+html body .current-dialog-panel .sidebar-turn-title{
+  color:#d1f4e5 !important;
+}
+html body .current-dialog-panel .sidebar-text-answer-row .text-answer-input,
+html body .current-dialog-panel .sidebar-text-answer-row .text-answer-send{
+  background:#25483c !important;
+  border-color:#92cbb3 !important;
+}
+
+/* Help = warm honey rather than brown. */
+html body .current-dialog-panel .sidebar-utility-row .answer-btn{
+  background:#9a7426 !important;
+  border-color:#ddb653 !important;
+  color:#fff5d2 !important;
+  -webkit-text-fill-color:#fff5d2 !important;
+}
+
+/* Neutral controls = soft eucalyptus. */
+html body .current-dialog-panel .sidebar-utility-row .repeat-btn{
+  background:#365e50 !important;
+  border-color:#77a18f !important;
+}
+html body .current-dialog-panel .sidebar-utility-row #skip-btn{
+  background:#284c40 !important;
+  border-color:#66877a !important;
+}
+
+/* Warm cream for Lena / teacher bubbles. */
+html body .main-history-panel .history-entry:not(.user){
+  background:#f3efdf !important;
+  color:#20352c !important;
+}
+html body .main-history-panel .history-entry.user{
+  background:#d9efe4 !important;
+  color:#18372b !important;
+}
+
+/* Secondary copy gets sage/mint instead of grey-white. */
+html body .current-dialog-panel .partner-register,
+html body .current-dialog-panel .mic-hint,
+html body .current-dialog-panel .sidebar-turn-instruction,
+html body .current-dialog-panel .dialog-menu-item .dialog-number{
+  color:#c0dfd1 !important;
+  -webkit-text-fill-color:#c0dfd1 !important;
+}
+html body .main-history-panel .history-divider{
+  color:#b4e7d0 !important;
+}
+</style>
+<style id="main-panel-petrol-forest">
+/* Softer petrol-forest conversation canvas; keep the rest of Friendly Forest unchanged. */
+html body .layout.show > .card .main-history-panel{
+  background:#18514f !important;
+}
+</style>
+<style id="strong-3d-conversation-frame">
+/* Strong 3D depth around the large conversation area. */
+html body .layout.show > .card{
+  border:1px solid #6c9a87 !important;
+  box-shadow:
+    0 18px 34px rgba(0,0,0,.42),
+    0 7px 12px rgba(0,0,0,.28),
+    inset 0 2px 0 rgba(190,238,218,.16),
+    inset 0 -4px 10px rgba(0,0,0,.20) !important;
+}
+html body .layout.show > .card .main-history-panel{
+  border:2px solid #2f8178 !important;
+  box-shadow:
+    0 12px 22px rgba(0,0,0,.46),
+    0 4px 7px rgba(0,0,0,.34),
+    inset 0 3px 4px rgba(151,238,220,.15),
+    inset 0 -7px 12px rgba(0,0,0,.27),
+    0 0 0 5px rgba(55,151,137,.11) !important;
+}
+</style>
+<style id="strong-highlighted-panel-shadow">
+/* Strong illuminated 3D frame around the large conversation panel. */
+html body .layout.show > .card{
+  box-shadow:
+    0 24px 46px rgba(0,0,0,.55),
+    0 10px 20px rgba(0,0,0,.38),
+    0 0 24px rgba(100,220,190,.20),
+    inset 0 2px 0 rgba(207,255,238,.24),
+    inset 0 -5px 12px rgba(0,0,0,.24) !important;
+}
+html body .layout.show > .card .main-history-panel{
+  border:2px solid #53b8a8 !important;
+  box-shadow:
+    0 16px 30px rgba(0,0,0,.58),
+    0 7px 14px rgba(0,0,0,.42),
+    0 0 12px rgba(98,238,211,.58),
+    0 0 28px rgba(65,214,188,.30),
+    inset 0 3px 4px rgba(207,255,242,.22),
+    inset 0 -8px 15px rgba(0,0,0,.30),
+    inset 4px 0 8px rgba(115,238,214,.10) !important;
+}
+</style>
+<style id="strong-highlighted-sidebar-3d">
+/* Matching illuminated 3D treatment for the smaller left panel. */
+html body .layout.show > .current-dialog-panel{
+  border:2px solid #6fb8a2 !important;
+  box-shadow:
+    0 20px 38px rgba(0,0,0,.52),
+    0 8px 16px rgba(0,0,0,.38),
+    0 0 12px rgba(117,232,199,.42),
+    0 0 26px rgba(75,203,169,.22),
+    inset 0 3px 4px rgba(220,255,242,.18),
+    inset 0 -8px 14px rgba(0,0,0,.25),
+    inset 4px 0 8px rgba(140,239,211,.08) !important;
+}
+</style>
+<style id="desktop-panel-gap-tighten">
+@media(min-width:861px){
+  html body .layout.show{
+    column-gap:20px !important;
+    gap:20px !important;
+  }
+}
+</style>
+<style id="history-bubbles-3d">
+/* Give dialogue bubbles in the large history panel a clear raised 3D feel. */
+html body .main-history-panel .history-entry{
+  border:1px solid rgba(255,255,255,.58) !important;
+  box-shadow:
+    0 8px 14px rgba(0,0,0,.38),
+    0 3px 5px rgba(0,0,0,.28),
+    inset 0 2px 0 rgba(255,255,255,.72),
+    inset 0 -3px 5px rgba(0,0,0,.12) !important;
+  transform:translateY(-1px);
+}
+html body .main-history-panel .history-entry:not(.user){
+  background:linear-gradient(180deg,#fffaf0 0%,#eee8d6 100%) !important;
+}
+html body .main-history-panel .history-entry.user{
+  background:linear-gradient(180deg,#e6f7ee 0%,#c9e7d8 100%) !important;
+  border-color:rgba(201,255,232,.65) !important;
+  box-shadow:
+    0 8px 14px rgba(0,0,0,.40),
+    0 3px 5px rgba(0,0,0,.28),
+    0 0 10px rgba(105,225,190,.18),
+    inset 0 2px 0 rgba(255,255,255,.62),
+    inset 0 -3px 5px rgba(0,0,0,.11) !important;
+}
+</style>
+<style id="mic-wave-strong-3d">
+/* Strong 3D treatment for the student microphone and lecturer waveform. */
+html body .current-dialog-panel .mic-btn{
+  border:2px solid rgba(220,255,244,.72) !important;
+  background:linear-gradient(145deg,#a2ead0 0%,#78cdb0 48%,#58aa90 100%) !important;
+  box-shadow:
+    0 13px 20px rgba(0,0,0,.42),
+    0 5px 8px rgba(0,0,0,.30),
+    0 0 14px rgba(125,235,199,.38),
+    inset 0 5px 6px rgba(255,255,255,.42),
+    inset 0 -7px 9px rgba(20,79,61,.32),
+    inset 5px 0 8px rgba(255,255,255,.12) !important;
+}
+html body .current-dialog-panel .mic-btn-wrap{
+  filter:drop-shadow(0 8px 8px rgba(0,0,0,.28));
+}
+html body .current-dialog-panel .speaker-wave{
+  filter:
+    drop-shadow(0 8px 6px rgba(0,0,0,.38))
+    drop-shadow(0 0 8px rgba(137,126,255,.28));
+}
+html body .current-dialog-panel .speaker-wave span{
+  border:1px solid rgba(218,214,255,.48) !important;
+  background:linear-gradient(90deg,#5b50b9 0%,#8279eb 45%,#9b94f4 100%) !important;
+  box-shadow:
+    3px 5px 5px rgba(0,0,0,.32),
+    0 0 8px rgba(135,123,245,.42),
+    inset 2px 0 2px rgba(255,255,255,.34),
+    inset -2px 0 3px rgba(45,35,130,.30) !important;
+}
+html body .current-dialog-panel .mic-btn.listening{
+  box-shadow:
+    0 13px 20px rgba(0,0,0,.42),
+    0 5px 8px rgba(0,0,0,.30),
+    0 0 18px rgba(125,235,199,.55),
+    inset 0 5px 6px rgba(255,255,255,.42),
+    inset 0 -7px 9px rgba(20,79,61,.32) !important;
+}
+</style>
+<style id="extra-strong-main-panel-3d">
+/* Stronger 3D depth on the large conversation screen. */
+html body .layout.show > .card .main-history-panel{
+  border:3px solid #62cbbb !important;
+  box-shadow:
+    0 24px 38px rgba(0,0,0,.68),
+    0 12px 18px rgba(0,0,0,.48),
+    0 5px 7px rgba(0,0,0,.38),
+    0 0 14px rgba(111,247,218,.72),
+    0 0 34px rgba(68,224,195,.42),
+    0 0 58px rgba(50,190,166,.20),
+    inset 0 5px 6px rgba(224,255,247,.30),
+    inset 0 -12px 18px rgba(0,0,0,.38),
+    inset 7px 0 12px rgba(141,255,230,.12),
+    inset -7px 0 12px rgba(0,0,0,.18) !important;
+}
+</style>
+<style id="answer-button-friendly-petrol">
+/* Replace the mustard/gold answer button with a calmer petrol-mint accent. */
+html body .current-dialog-panel .sidebar-utility-row .answer-btn{
+  background:linear-gradient(180deg,#3f7f70 0%,#32685d 100%) !important;
+  border-color:#7fc5ae !important;
+  color:#f5fff9 !important;
+  -webkit-text-fill-color:#f5fff9 !important;
+  box-shadow:
+    0 7px 12px rgba(0,0,0,.28),
+    inset 0 2px 0 rgba(220,255,242,.18),
+    inset 0 -3px 5px rgba(0,0,0,.16) !important;
+}
+</style>
+<style id="extra-strong-history-bubbles-3d">
+/* Stronger raised 3D speech bubbles in the conversation history. */
+html body .main-history-panel .history-entry{
+  border:1px solid rgba(255,255,255,.82) !important;
+  box-shadow:
+    0 12px 16px rgba(0,0,0,.48),
+    0 6px 7px rgba(0,0,0,.34),
+    0 2px 2px rgba(0,0,0,.26),
+    inset 0 3px 2px rgba(255,255,255,.90),
+    inset 3px 0 4px rgba(255,255,255,.34),
+    inset 0 -5px 7px rgba(75,62,38,.20) !important;
+  transform:translateY(-2px) !important;
+}
+html body .main-history-panel .history-entry:not(.user){
+  background:linear-gradient(145deg,#fffdf5 0%,#f7f0dc 52%,#ded4ba 100%) !important;
+}
+html body .main-history-panel .history-entry.user{
+  background:linear-gradient(145deg,#effff7 0%,#d7f2e5 50%,#abd8c6 100%) !important;
+  border-color:rgba(226,255,244,.90) !important;
+  box-shadow:
+    0 12px 16px rgba(0,0,0,.50),
+    0 6px 7px rgba(0,0,0,.36),
+    0 0 13px rgba(107,235,197,.24),
+    inset 0 3px 2px rgba(255,255,255,.88),
+    inset 3px 0 4px rgba(255,255,255,.30),
+    inset 0 -5px 7px rgba(38,104,82,.22) !important;
+}
+</style>
+<style id="hide-sidebar-dialog-details">
+/* Remove duplicated dialogue details from the small sidebar panel. */
+html body .current-dialog-panel .partner-title,
+html body .current-dialog-panel .partner-sub,
+html body .current-dialog-panel .turn-instruction{
+  display:none !important;
+}
+html body .current-dialog-panel .partner-left{
+  margin-top:0 !important;
+  padding-top:0 !important;
+  border-top:0 !important;
+}
+</style>
+<style id="unified-sidebar-action-buttons">
+/* Unified sidebar action buttons; Skip sits next to Send. */
+html body .current-dialog-panel .sidebar-text-answer-row{
+  grid-template-columns:minmax(0,1fr) auto auto !important;
+  align-items:center !important;
+}
+html body .current-dialog-panel .sidebar-action-btn,
+html body .current-dialog-panel .sidebar-utility-row .utility-btn{
+  box-sizing:border-box !important;
+  min-width:0 !important;
+  width:auto !important;
+  height:50px !important;
+  min-height:50px !important;
+  padding:8px 15px !important;
+  border:1px solid #76b7a3 !important;
+  border-radius:16px !important;
+  background:linear-gradient(180deg,#3b7466 0%,#2d5d53 100%) !important;
+  color:#f7fff9 !important;
+  -webkit-text-fill-color:#f7fff9 !important;
+  font-size:.92rem !important;
+  line-height:1.12 !important;
+  font-weight:900 !important;
+  box-shadow:
+    0 6px 10px rgba(0,0,0,.24),
+    inset 0 2px 0 rgba(220,255,243,.16),
+    inset 0 -3px 5px rgba(0,0,0,.14) !important;
+}
+html body .current-dialog-panel .sidebar-text-answer-row #text-answer-send,
+html body .current-dialog-panel .sidebar-text-answer-row #skip-btn{
+  min-width:118px !important;
+  max-width:none !important;
+  align-self:center !important;
+}
+html body .current-dialog-panel .sidebar-utility-row{
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:10px !important;
+}
+html body .current-dialog-panel .sidebar-utility-row .utility-btn{
+  width:100% !important;
+}
+</style>
+<style id="fix-four-action-buttons-layout">
+/* Exact requested layout: Send + Skip in one row; Repeat + Answer in the next.
+   All four controls share identical dimensions and visual treatment. */
+html body .current-dialog-panel .sidebar-text-answer-row{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+  gap:10px !important;
+}
+html body .current-dialog-panel .sidebar-text-answer-row .text-answer-input{
+  grid-column:1 / -1 !important;
+  width:100% !important;
+}
+html body .current-dialog-panel #text-answer-send,
+html body .current-dialog-panel #skip-btn,
+html body .current-dialog-panel #repeat-btn,
+html body .current-dialog-panel #answer-btn{
+  box-sizing:border-box !important;
+  width:100% !important;
+  min-width:0 !important;
+  max-width:none !important;
+  height:58px !important;
+  min-height:58px !important;
+  padding:8px 10px !important;
+  margin:0 !important;
+  border:1px solid #76b7a3 !important;
+  border-radius:18px !important;
+  background:linear-gradient(180deg,#3b7466 0%,#2d5d53 100%) !important;
+  color:#f7fff9 !important;
+  -webkit-text-fill-color:#f7fff9 !important;
+  font-size:.92rem !important;
+  line-height:1.15 !important;
+  font-weight:900 !important;
+  box-shadow:
+    0 7px 11px rgba(0,0,0,.27),
+    inset 0 2px 0 rgba(220,255,243,.18),
+    inset 0 -3px 5px rgba(0,0,0,.15) !important;
+  align-self:stretch !important;
+}
+html body .current-dialog-panel .sidebar-utility-row{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+  gap:10px !important;
+}
+</style>
+<style id="large-final-review-bubble">
+/* The end-of-session review is a key learning element, so make it prominent. */
+html body .main-history-panel .history-entry.review-summary{
+  width:calc(100% - 28px) !important;
+  max-width:none !important;
+  min-width:0 !important;
+  min-height:150px !important;
+  padding:18px 22px !important;
+  margin:14px !important;
+  border-radius:20px !important;
+  font-size:1.18rem !important;
+  line-height:1.55 !important;
+  box-sizing:border-box !important;
+  grid-column:1 / -1 !important;
+  justify-self:stretch !important;
+  background:linear-gradient(145deg,#fffdf5 0%,#f7f0dc 52%,#ded4ba 100%) !important;
+  border:2px solid rgba(255,255,255,.88) !important;
+  box-shadow:
+    0 16px 24px rgba(0,0,0,.52),
+    0 7px 10px rgba(0,0,0,.34),
+    inset 0 3px 2px rgba(255,255,255,.90),
+    inset 0 -5px 8px rgba(75,62,38,.18) !important;
+}
+html body .main-history-panel .history-entry.review-summary .speaker{
+  display:block !important;
+  margin-bottom:8px !important;
+  font-size:1.22rem !important;
+  font-weight:900 !important;
+}
+</style>
+<style id="extra-large-final-review-bubble">
+/* Make the final repetition block substantially larger and easier to study. */
+html body .main-history-panel .history-entry.review-summary{
+  width:calc(100% - 20px) !important;
+  min-height:230px !important;
+  padding:26px 30px !important;
+  margin:18px 10px 24px !important;
+  border-radius:24px !important;
+  font-size:1.42rem !important;
+  line-height:1.65 !important;
+}
+html body .main-history-panel .history-entry.review-summary .speaker{
+  margin-bottom:12px !important;
+  font-size:1.52rem !important;
+  line-height:1.25 !important;
+}
+</style>
+<style id="matte-3d-speaker-wave">
+/* Canonical matte 3D waveform appearance. This is exactly the previously winning visual rule; animation and transform remain untouched. */
+html body .current-dialog-panel .speaker-wave{
+  filter:
+    drop-shadow(0 12px 8px rgba(0,0,0,.48))
+    drop-shadow(5px 3px 4px rgba(0,0,0,.26)) !important;
+}
+html body .current-dialog-panel .speaker-wave span{
+  border:1px solid #3c3486 !important;
+  background:linear-gradient(90deg,
+    #332b7d 0%,
+    #4a419b 13%,
+    #6a60bd 34%,
+    #776dcc 50%,
+    #665bb6 68%,
+    #493f96 86%,
+    #302873 100%) !important;
+  box-shadow:
+    8px 9px 7px rgba(0,0,0,.46),
+    4px 5px 3px rgba(0,0,0,.34),
+    -2px 2px 3px rgba(0,0,0,.18),
+    inset 5px 0 4px rgba(139,130,203,.20),
+    inset -6px 0 5px rgba(25,19,76,.46),
+    inset 0 -5px 4px rgba(24,19,68,.30) !important;
+}
+</style>
+<style id="match-left-panel-border-to-main">
+/* Match the small left panel's frame/depth to the large right conversation panel. */
+html body .layout.show > .current-dialog-panel{
+  border:3px solid #62cbbb !important;
+  box-shadow:
+    0 24px 38px rgba(0,0,0,.68),
+    0 12px 18px rgba(0,0,0,.48),
+    0 5px 7px rgba(0,0,0,.38),
+    0 0 14px rgba(111,247,218,.72),
+    0 0 34px rgba(68,224,195,.42),
+    0 0 58px rgba(50,190,166,.20),
+    inset 0 5px 6px rgba(224,255,247,.30),
+    inset 0 -12px 18px rgba(0,0,0,.38),
+    inset 7px 0 12px rgba(141,255,230,.12),
+    inset -7px 0 12px rgba(0,0,0,.18) !important;
+}
+</style>
+<style id="double-frame-left-panel">
+/* Add the subtle outer frame seen on the large right card, while preserving the existing inner turquoise frame. */
+html body .layout.show > .current-dialog-panel{
+  position:relative !important;
+  margin:0 !important;
+}
+html body .layout.show > .current-dialog-panel::before{
+  content:"" !important;
+  position:absolute !important;
+  z-index:-1 !important;
+  top:-20px !important;
+  right:-20px !important;
+  bottom:-20px !important;
+  left:-20px !important;
+  border:1px solid rgba(126,188,168,.62) !important;
+  border-radius:22px !important;
+  background:linear-gradient(180deg,rgba(75,119,101,.42),rgba(28,65,54,.30)) !important;
+  box-shadow:
+    0 16px 30px rgba(0,0,0,.38),
+    inset 0 2px 4px rgba(210,255,239,.12),
+    inset 0 -6px 10px rgba(0,0,0,.20) !important;
+  pointer-events:none !important;
+}
+</style>
+<style id="deeper-main-conversation-panel-3d">
+/* Stronger depth for the large right panel only; layout and behavior stay untouched. */
+html body .layout.show > .card .main-history-panel{
+  border:3px solid #62cbbb !important;
+  box-shadow:
+    0 32px 48px rgba(0,0,0,.72),
+    0 18px 24px rgba(0,0,0,.54),
+    0 8px 10px rgba(0,0,0,.44),
+    0 3px 4px rgba(0,0,0,.34),
+    0 0 17px rgba(111,247,218,.76),
+    0 0 38px rgba(68,224,195,.44),
+    0 0 68px rgba(50,190,166,.22),
+    inset 0 7px 8px rgba(224,255,247,.34),
+    inset 0 -18px 24px rgba(0,0,0,.46),
+    inset 10px 0 15px rgba(141,255,230,.15),
+    inset -11px 0 16px rgba(0,0,0,.25) !important;
+}
+</style>
+<style id="dialog1-equal-visible-panels">
+@media (min-width:861px){
+  /* Na aktualnym renderze mały panel jest ~45px dłuższy od turkusowej ramy dużego. */
+  .layout.show > aside.current-dialog-panel{
+    height:635px!important;
+    min-height:635px!important;
+    max-height:635px!important;
+    box-sizing:border-box!important;
+    overflow:hidden!important;
+  }
+  .layout.show > aside.current-dialog-panel::before{
+    top:0!important;right:0!important;bottom:0!important;left:0!important;
+    border-radius:inherit!important;
+  }
+}
+@media (max-width:860px){
+  .layout.show > aside.current-dialog-panel{
+    height:auto!important;min-height:0!important;max-height:none!important;
+  }
+}
+</style>
+<style id="conversation-center-soft-glow">
+/* Subtle center-only lift: edges keep their existing dark teal tone. */
+html body .layout.show > .card .main-history-panel{
+  background:
+    radial-gradient(ellipse at center,
+      rgba(128,204,191,.23) 0%,
+      rgba(96,177,165,.15) 32%,
+      rgba(24,81,79,.06) 60%,
+      rgba(24,81,79,0) 80%),
+    #18514f !important;
+}
+</style>
+<style id="four-action-buttons-soft-gloss">
+/* Slightly glossier surface only for the four action buttons. */
+html body .current-dialog-panel #text-answer-send,
+html body .current-dialog-panel #skip-btn,
+html body .current-dialog-panel #repeat-btn,
+html body .current-dialog-panel #answer-btn{
+  background:linear-gradient(180deg,#477f71 0%,#3b7164 42%,#2d5d53 100%) !important;
+  box-shadow:
+    0 8px 13px rgba(0,0,0,.29),
+    inset 0 3px 2px rgba(230,255,247,.28),
+    inset 0 -3px 5px rgba(0,0,0,.15) !important;
+}
+</style>
+<style id="microphone-soft-luminous-glow">
+/* Visual-only glow: no size, state, click or microphone logic changes. */
+html body .current-dialog-panel .mic-btn{
+  box-shadow:
+    0 13px 20px rgba(0,0,0,.42),
+    0 5px 8px rgba(0,0,0,.30),
+    0 0 12px rgba(151,255,222,.72),
+    0 0 27px rgba(104,238,198,.48),
+    0 0 45px rgba(86,211,176,.25),
+    inset 0 5px 6px rgba(255,255,255,.48),
+    inset 0 -7px 9px rgba(20,79,61,.32),
+    inset 5px 0 8px rgba(255,255,255,.14) !important;
+}
+html body .current-dialog-panel .mic-btn.listening{
+  box-shadow:
+    0 13px 20px rgba(0,0,0,.42),
+    0 5px 8px rgba(0,0,0,.30),
+    0 0 15px rgba(151,255,222,.82),
+    0 0 32px rgba(104,238,198,.58),
+    0 0 50px rgba(86,211,176,.30),
+    inset 0 5px 6px rgba(255,255,255,.48),
+    inset 0 -7px 9px rgba(20,79,61,.32) !important;
+}
+</style>
+<style id="pending-user-answer-bubble">
+html body .main-history-panel .history-entry.user.pending-user-answer{
+  min-width:72px!important;
+  min-height:42px!important;
+  opacity:.72;
+  border-style:dashed!important;
+}
+html body .main-history-panel .history-entry.user.pending-user-answer .user-answer-text:empty::after{
+  content:"";
+  display:inline-block;
+  width:28px;
+}
+</style>
 </head>
 
 <body>
