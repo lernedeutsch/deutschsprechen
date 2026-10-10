@@ -2,7 +2,6 @@ const { test, expect } = require("@playwright/test");
 
 const pages = [
   { path: "/", marker: "body" },
-  { path: "/nele.html", marker: "body", allowsBackendErrors: true },
   { path: "/lessons/a1/index.html", marker: "body" },
   { path: "/lessons/a1/lektion-1.html", marker: "body" },
   { path: "/lessons/a1/lektion-2.html", marker: "body" },
@@ -55,13 +54,7 @@ for (const item of pages) {
     await expect(page.locator(item.marker)).toBeVisible();
     await page.waitForTimeout(300);
 
-    const relevantErrors = item.allowsBackendErrors
-      ? errors.filter(error =>
-          !error.includes("Failed to load resource: net::ERR_FAILED") &&
-          !error.includes("Nele Welcome Fehler: TypeError: Failed to fetch") &&
-          !error.includes("has been blocked by CORS policy")
-        )
-      : errors;
+    const relevantErrors = errors;
 
     expect(
       relevantErrors,
@@ -69,12 +62,6 @@ for (const item of pages) {
     ).toEqual([]);
   });
 }
-
-test("main Nele interface is present", async ({ page }) => {
-  await page.goto("/nele.html", { waitUntil: "domcontentloaded" });
-  await expect(page.getByText("Nele", { exact: true }).first()).toBeVisible();
-  await expect(page.getByText("Neu anfangen", { exact: false })).toBeVisible();
-});
 
 for (const module of trainingModules) {
   test(`Lektion 1 opens ${module.label}`, async ({ page }) => {

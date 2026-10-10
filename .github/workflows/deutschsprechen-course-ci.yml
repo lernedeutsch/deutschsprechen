@@ -1,0 +1,39 @@
+name: Deutschsprechen course checks
+
+on:
+  push:
+    branches: [cleanup/remove-nele-frontend-20261010]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  course-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript syntax
+        run: find . -type f -name "*.js" -not -path "./node_modules/*" -not -path "./.git/*" -print0 | xargs -0 -n1 node --check
+      - name: Course HTML and link integrity
+        run: node tests/project-integrity.js
+      - name: Sprich nach number matching
+        run: node tests/sprich-nach-numbers.js
+      - name: Install Playwright
+        run: |
+          npm install
+          npx playwright install --with-deps chromium
+      - name: Browser tests desktop tablet phone
+        run: npm run test:browser
+      - name: Upload test diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: deutschsprechen-course-test-diagnostics
+          path: |
+            playwright-report/
+            test-results/
+          if-no-files-found: ignore
+          retention-days: 14
