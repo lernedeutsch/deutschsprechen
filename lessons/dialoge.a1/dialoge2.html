@@ -4294,10 +4294,33 @@ document.addEventListener("click",event=>{
 });
 
 els.answerBtn.addEventListener("click",()=>{
-  els.exampleText.classList.add("show");
+  if(answered||promptStarting||retrying)return;
 
-  els.exampleText.textContent=
-    `Richtige Antwort: „${current().example}“`;
+  const existingHint=els.historyList.querySelector(
+    `.history-entry.answer-hint[data-turn="${index}"]`
+  );
+  if(existingHint)return;
+
+  answered=true;
+  streak=0;
+  clearTimeout(restartTimer);
+
+  if(recognizer&&listening){
+    try{recognizer.stop();}catch(error){}
+  }
+
+  addHistoryEntry("user","Du",current().example);
+  const hintEntry=els.historyList.lastElementChild;
+  if(hintEntry){
+    hintEntry.classList.add("answer-hint");
+    hintEntry.dataset.turn=String(index);
+  }
+
+  els.micStatus.textContent="💡 Antwort gezeigt";
+  els.micStatus.classList.remove("live");
+  setMicReady(false);
+
+  window.setTimeout(advance,900);
 });
 
 els.repeatBtn.addEventListener("click",()=>{
