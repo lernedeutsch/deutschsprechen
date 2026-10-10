@@ -3732,10 +3732,32 @@ function addHistoryEntry(role,speakerLabel,text){
 
   const entry=document.createElement("div");
 
-  entry.className=`history-entry ${role} dialog-${current().dialogueIndex}`;
+  /* At the final summary index is already past flatTurns.
+     Use the last dialogue as the safe history column in that case. */
+  const historyTurn=flatTurns[Math.min(index,flatTurns.length-1)];
+  const historyDialogueIndex=historyTurn ? historyTurn.dialogueIndex : 0;
 
-  entry.innerHTML=
-    `<span><span class="speaker">${speakerLabel}:</span> ${text}</span>`;
+  entry.className=`history-entry ${role} dialog-${historyDialogueIndex}`;
+
+  if(role==="user"){
+    entry.innerHTML=`<span><span class="speaker">${speakerLabel}:</span> <span class="user-answer-text"></span></span>`;
+    entry.querySelector(".user-answer-text").textContent=text;
+  }else{
+    entry.innerHTML=`<span><span class="speaker">${speakerLabel}:</span> ${text}</span>`;
+  }
+
+  /* Keep two independent vertical streams.
+     Dialogues 1 and 3 continue down the LEFT compartment.
+     Dialogues 2 and 4 continue down the RIGHT compartment.
+     The row is based on all earlier bubbles in that compartment, so a new
+     dialogue starts below the previous one instead of overlapping it. */
+  const leftColumn=(historyDialogueIndex%2===0);
+  const columnSelector=leftColumn
+    ? ".history-entry.dialog-0, .history-entry.dialog-2, .history-divider.left-column"
+    : ".history-entry.dialog-1, .history-entry.dialog-3, .history-divider.right-column";
+  const earlierItemsInColumn=
+    els.historyList.querySelectorAll(columnSelector).length;
+  entry.style.gridRow=String(earlierItemsInColumn+1);
 
   els.historyList.appendChild(entry);
   els.historyList.scrollTop=
@@ -3750,9 +3772,18 @@ function addHistoryDivider(title){
   }
 
   const divider=document.createElement("div");
+  const dialogueIndex=current().dialogueIndex;
+  const leftColumn=(dialogueIndex%2===0);
+  const columnSelector=leftColumn
+    ? ".history-entry.dialog-0, .history-entry.dialog-2, .history-divider.left-column"
+    : ".history-entry.dialog-1, .history-entry.dialog-3, .history-divider.right-column";
+  const earlierItemsInColumn=
+    els.historyList.querySelectorAll(columnSelector).length;
 
-  divider.className="history-divider";
-  divider.textContent=`— ${title} —`;
+  divider.className=`history-divider ${leftColumn?"left-column":"right-column"}`;
+  divider.setAttribute("aria-label",`Początek: ${title}`);
+  divider.textContent=title;
+  divider.style.gridRow=String(earlierItemsInColumn+1);
 
   els.historyList.appendChild(divider);
   els.historyList.scrollTop=
