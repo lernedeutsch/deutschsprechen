@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Deutsch trainieren mit Nele</title>
+<title>Deutsch trainieren</title>
 
 <style>
 :root{
@@ -381,15 +381,14 @@ body.intro-finished #intro-screen{
 }
 
 
-/* START — POZIOMY + NELE */
+/* START — POZIOMY */
 
 .start-grid{
     width:calc(100% + 120px);
     margin-left:-60px;
 
     display:grid;
-    grid-template-columns:
-        repeat(2,minmax(0,1fr));
+    grid-template-columns:1fr;
     gap:24px;
     align-items:stretch;
 
@@ -567,236 +566,6 @@ body.intro-finished #intro-screen{
         );
 }
 
-
-/* NELE */
-
-.nele-card{
-    --nele-accent:#d39a32;
-    --nele-accent-dark:#b7771e;
-
-    position:relative;
-
-    display:flex;
-    flex-direction:column;
-
-    padding:28px;
-
-    background:#0b1d33;
-
-    box-shadow:
-        18px 18px 0 var(--nele-accent-dark),
-        0 26px 46px rgba(0,0,0,.32),
-        0 22px 44px rgba(211,154,50,.42),
-        0 0 50px rgba(211,154,50,.38),
-        inset 0 2px 0 rgba(255,255,255,.07),
-        inset 0 -14px 24px rgba(0,0,0,.10);
-}
-
-.nele-top{
-    display:grid;
-    grid-template-columns:auto 1fr auto;
-    gap:16px;
-    align-items:center;
-
-    padding-bottom:18px;
-
-    border-bottom:
-        1px solid rgba(255,255,255,.11);
-}
-
-.nele-avatar{
-    width:78px;
-    height:78px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:50%;
-
-    background:var(--nele-accent);
-
-    border:
-        6px solid rgba(255,255,255,.10);
-
-    font-size:40px;
-
-    box-shadow:
-        0 0 0 5px rgba(211,154,50,.18);
-}
-
-.nele-kicker{
-    margin:0 0 3px;
-
-    color:#b7d6f2;
-
-    font-size:.92rem;
-    font-weight:700;
-}
-
-.nele-info h2{
-    margin:0;
-
-    font-size:2rem;
-    line-height:1;
-}
-
-.nele-status{
-    width:18px;
-    height:18px;
-
-    border-radius:50%;
-
-    background:#42dda0;
-
-    border:
-        5px solid #153b3d;
-}
-
-.nele-chat{
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-
-    margin:20px 0 18px;
-}
-
-.nele-bubble{
-    width:max-content;
-    max-width:82%;
-
-    padding:11px 15px;
-
-    border-radius:18px;
-
-    font-size:.98rem;
-    line-height:1.35;
-}
-
-.nele-bubble.left{
-    align-self:flex-start;
-
-    background:#1f4269;
-    color:white;
-
-    border-bottom-left-radius:7px;
-}
-
-.nele-bubble.right{
-    align-self:flex-end;
-
-    background:var(--nele-accent);
-    color:#101820;
-
-    border-bottom-right-radius:7px;
-}
-
-.nele-lead{
-    margin:0 0 6px;
-
-    color:white;
-
-    font-size:1.45rem;
-    font-weight:800;
-}
-
-.nele-copy{
-    margin:0;
-
-    color:#b8cce1;
-
-    line-height:1.55;
-}
-
-.nele-button{
-    display:flex;
-    align-items:center;
-    gap:12px;
-
-    width:100%;
-    min-height:58px;
-
-    margin-top:auto;
-    padding:9px 16px 9px 9px;
-
-    border-radius:30px;
-
-    background:
-        linear-gradient(
-            180deg,
-            #dda947,
-            var(--nele-accent)
-        );
-
-    color:#0d1b2a;
-
-    text-decoration:none;
-    font-weight:800;
-    font-size:1.02rem;
-
-    box-shadow:
-        0 7px 0 #955f16;
-
-    transition:
-        transform .18s ease,
-        box-shadow .18s ease;
-}
-
-.nele-button:hover{
-    transform:translateY(-2px);
-
-    box-shadow:
-        0 9px 0 #955f16;
-}
-
-.nele-mic{
-    position:relative;
-
-    width:45px;
-    height:45px;
-
-    flex:none;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:50%;
-
-    background:#0b4938;
-    color:white;
-
-    border:
-        3px solid #ffffff;
-
-    font-size:1.35rem;
-
-    box-shadow:
-        0 0 0 0 rgba(255,255,255,.48);
-
-    animation:
-        neleMicPulse 1.45s ease-out infinite;
-}
-
-@keyframes neleMicPulse{
-    0%{
-        transform:scale(1);
-        box-shadow:
-            0 0 0 0 rgba(255,255,255,.62);
-    }
-
-    50%{
-        transform:scale(1.11);
-        box-shadow:
-            0 0 0 11px rgba(255,255,255,.16);
-    }
-
-    100%{
-        transform:scale(1);
-        box-shadow:
-            0 0 0 17px rgba(255,255,255,0);
-    }
-}
 
 /* SEKCJE */
 
@@ -994,22 +763,6 @@ footer{
         min-height:470px;
     }
 
-    .nele-card{
-        min-height:540px;
-        padding:24px 22px;
-    }
-
-    .nele-avatar{
-        width:70px;
-        height:70px;
-
-        font-size:36px;
-    }
-
-    .nele-lead{
-        font-size:1.3rem;
-    }
-
     .tools{
         width:100%;
         margin-left:0;
@@ -1034,8 +787,7 @@ and
         gap:18px;
     }
 
-    .levels-panel,
-    .nele-card{
+    .levels-panel{
         padding:22px;
     }
 
@@ -1106,21 +858,20 @@ and
 
     <h1>
         Deutsch trainieren
-        <span>mit Nele</span>
+        
     </h1>
 
     <p>
         Entdecke Deutsch Schritt für Schritt.
         Aussprache, Dialoge, Übungen
-        und deine persönliche
-        Deutschtrainerin Nele.
+        für alle Sprachniveaus.
     </p>
 
 </header>
 
 
 
-<!-- POZIOMY + NELE -->
+<!-- POZIOMY -->
 
 <section class="start-grid">
 
@@ -1169,61 +920,7 @@ and
     </div>
 
 
-    <section class="start-panel nele-card">
-
-        <div class="nele-top">
-
-            <div class="nele-info">
-
-                <p class="nele-kicker">
-                    Deine Deutschtrainerin
-                </p>
-
-                <h2>Nele</h2>
-
-            </div>
-
-            <span
-                class="nele-status"
-                aria-label="Nele ist bereit"
-                title="Nele ist bereit"
-            ></span>
-
-        </div>
-
-
-        <div class="nele-chat" aria-hidden="true">
-
-            <div class="nele-bubble left">
-                Hallo! Wie heißt du?
-            </div>
-
-            <div class="nele-bubble right">
-                Ich heiße Anna.
-            </div>
-
-            <div class="nele-bubble left">
-                Freut mich, Anna! Wie geht's?
-            </div>
-
-        </div>
-
-
-        <p class="nele-copy">
-            Übe Dialoge, Aussprache und Grammatik – direkt und persönlich.
-        </p>
-
-        <a
-            href="nele.html"
-            class="nele-button"
-        >
-            <span class="nele-mic" aria-hidden="true">🎤</span>
-            <span>Mit Nele sprechen</span>
-        </a>
-
     </section>
-
-</section>
 
 
 <!-- NAUKA -->
@@ -1255,28 +952,7 @@ and
     </a>
 
 
-    <a
-        href="nele.html"
-        class="tool"
-    >
-
-        <div class="tool-icon">
-            🗣️
-        </div>
-
-        <div>
-
-            <strong>
-                Sprechen
-            </strong>
-
-            <small>
-                Deutsch mit Nele sprechen
-            </small>
-
-        </div>
-
-    </a>
+    
 
 
     <a
