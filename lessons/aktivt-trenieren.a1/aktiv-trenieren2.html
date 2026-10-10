@@ -133,6 +133,28 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offse
 
 /* Aktiv 2 Teil 1: Auswahl über der Situation + sanft pulsierende Buttons */
 [data-quiz="q1"] .q1-choice-top{display:flex;justify-content:center;align-items:center;gap:14px;margin:12px auto 18px}[data-quiz="q1"] .q1-choice-or{display:inline-flex;align-items:center;gap:8px;font-weight:700;color:#777;font-size:.82rem;letter-spacing:.08em}[data-quiz="q1"] .q1-choice-or::before,[data-quiz="q1"] .q1-choice-or::after{content:"";display:block;width:16px;height:1px;background:#b8b1a3}[data-quiz="q1"] .q1-choice-top .opt{flex:0 1 290px}@keyframes q1ChoicePulse{0%,100%{transform:scale(1);box-shadow:0 5px 14px #163c2c12}50%{transform:scale(1.035);box-shadow:0 7px 18px #78bf9540}}[data-quiz="q1"] .q1-pulse:not(:disabled){animation:q1ChoicePulse 1.6s ease-in-out infinite}[data-quiz="q1"] .q1-pulse:hover,[data-quiz="q1"] .q1-pulse:focus-visible{animation-play-state:paused}@media(prefers-reduced-motion:reduce){[data-quiz="q1"] .q1-pulse:not(:disabled){animation:q1ChoicePulse 1.6s ease-in-out infinite!important}}
+
+/* Górna strzałka: wyrównanie do lewej krawędzi panelu jak w lekcji A1.2. */
+.arr.top-left{
+  position:relative;
+  top:auto;
+  left:auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:max-content;
+  height:auto;
+  min-width:66px;
+  min-height:60px;
+  padding:11px 18px;
+  margin:0 0 0 max(0px, calc((100% - 940px)/2));
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:999px;
+  box-shadow:none;
+  font-size:1.5rem;
+}
+@media(max-width:760px){.arr.top-left{min-width:56px;min-height:52px}}
 </style>
 <link rel="stylesheet" href="../../css/click-hints.css">
 <link rel="stylesheet" href="../../css/translation-globe.css">
