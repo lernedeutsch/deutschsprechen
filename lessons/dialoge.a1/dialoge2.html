@@ -2427,45 +2427,6 @@ html body .main-history-panel .history-entry.user.pending-user-answer .user-answ
 
       <div id="stage">
 
-        <div class="dialog-control-divider"></div>
-
-        <div class="dialog-controls">
-
-          <div class="utility-row">
-
-            <button type="button" class="utility-btn repeat-btn" id="repeat-btn">
-              🔁 Wiederholen
-            </button>
-
-            <button type="button" class="utility-btn answer-btn" id="answer-btn">
-              ✓ Antwort anzeigen
-            </button>
-
-            <button type="button" class="utility-btn stop-btn" id="stop-btn">
-              ⏹ Stop
-            </button>
-
-            <button type="button" class="utility-btn" id="skip-btn">
-              Überspringen →
-            </button>
-
-          </div>
-
-        </div>
-
-        <div class="text-answer-row">
-          <input
-            type="text"
-            class="text-answer-input"
-            id="text-answer-input"
-            placeholder="…oder schreibe deine Antwort auf Deutsch"
-            autocomplete="off"
-          >
-          <button type="button" class="text-answer-send" id="text-answer-send">
-            Senden
-          </button>
-        </div>
-
         <div class="mic-status-row">
 
           <p class="live-transcript" id="live-transcript"></p>
@@ -2511,7 +2472,7 @@ html body .main-history-panel .history-entry.user.pending-user-answer .user-answ
         <div class="hero-translation-row">
           <span class="translation-control" id="hero-translation-control">
             <button type="button" class="translation-toggle" id="hero-translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung">
-              <span class="translation-globe">🌐</span>A/文
+              <span class="translation-globe">🌐</span><span class="translation-label">Übersetzung</span>
             </button>
             <span class="translation-panel">
               <span class="translation-languages">
@@ -2550,7 +2511,7 @@ html body .main-history-panel .history-entry.user.pending-user-answer .user-answ
 
             <span class="translation-control" id="translation-control">
               <button type="button" class="translation-toggle" id="translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung">
-                <span class="translation-globe">🌐</span>A/文
+                <span class="translation-globe">🌐</span><span class="translation-label">Übersetzung</span>
               </button>
               <span class="translation-panel">
                 <span class="translation-languages">
@@ -2567,41 +2528,48 @@ html body .main-history-panel .history-entry.user.pending-user-answer .user-answ
 
       </div>
 
-      <div class="hero-stats">
-
-        <div class="stat">
-          <span class="stat-value" id="stat-score">0/12</span>
-          <span class="stat-label">Punkte</span>
+      <div class="sidebar-speaking-panel">
+        <div class="sidebar-turn-cue">
+          <strong>Du bist dran 🎤</strong>
+          <span id="main-turn-instruction">Antworte auf die Frage nach deiner Herkunft.</span>
+        </div>
+        <div class="sidebar-mic">
+          <div class="speaker-wave" id="speaker-wave" aria-label="Lektor spricht" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div class="mic-column">
+            <div class="mic-btn-wrap" id="mic-btn-wrap">
+              <span class="mic-ring"></span><span class="mic-ring"></span><span class="mic-ring"></span>
+              <button type="button" class="mic-btn" id="mic-btn" aria-label="Sprechen">🎤</button>
+            </div>
+            <p class="mic-status" id="mic-status">🎤 Zum Sprechen klicken</p>
+          </div>
         </div>
 
-        <div class="stat">
-          <span class="stat-value" id="stat-streak">0🔥</span>
-          <span class="stat-label">Serie</span>
+        <button type="button" class="write-toggle sidebar-write-toggle" id="write-toggle">⌨️ Lieber schreiben</button>
+        <div class="text-answer-row sidebar-text-answer-row">
+          <input
+            type="text"
+            class="text-answer-input"
+            id="text-answer-input"
+            placeholder="Schreibe deine Antwort auf Deutsch"
+            autocomplete="off"
+          >
+          <button type="button" class="text-answer-send sidebar-action-btn" id="text-answer-send">Senden</button>
+          <button type="button" class="utility-btn sidebar-action-btn" id="skip-btn">Überspringen →</button>
         </div>
 
-        <div class="stat">
-          <span class="stat-value" id="stat-progress">1/12</span>
-          <span class="stat-label">Zug</span>
+        <div class="sidebar-utility-row">
+          <button type="button" class="utility-btn repeat-btn" id="repeat-btn">🔊 Noch einmal hören</button>
+          <button type="button" class="utility-btn answer-btn" id="answer-btn">💡 Antwort zeigen</button>
+          <button type="button" class="utility-btn stop-btn" id="stop-btn">⏹ Stop</button>
         </div>
-
       </div>
 
-      <div class="sidebar-mic">
-        <div class="mic-column">
-
-          <div class="mic-btn-wrap" id="mic-btn-wrap">
-            <span class="mic-ring"></span>
-            <span class="mic-ring"></span>
-            <span class="mic-ring"></span>
-
-            <button type="button" class="mic-btn" id="mic-btn">
-              🎤
-            </button>
-          </div>
-
-          <p class="mic-status" id="mic-status">Hör zu …</p>
-
-        </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-value" id="stat-score">0/12</span><span class="stat-label">Punkte</span></div>
+        <div class="stat"><span class="stat-value" id="stat-streak">0🔥</span><span class="stat-label">Serie</span></div>
+        <div class="stat"><span class="stat-value" id="stat-progress">1/12</span><span class="stat-label">Schritt</span></div>
       </div>
 
     </aside>
