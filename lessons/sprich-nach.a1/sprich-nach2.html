@@ -1087,6 +1087,77 @@ button,input{font:inherit}
 </style>
 <link rel="stylesheet" href="../../css/translation-globe.css">
 <link rel="stylesheet" href="../../css/page-progress.css">
+<style id="start-screen-hide-history-only">
+body:not(.sprich-started) .history-panel{display:none!important}
+body:not(.sprich-started) .layout{grid-template-columns:minmax(0,1fr)!important}
+body:not(.sprich-started) .layout .panel{border-radius:23px!important;border-left:0!important}
+</style>
+<style id="start-panel-slightly-smaller">
+body:not(.sprich-started) .layout{max-width:760px!important;margin-left:auto!important;margin-right:auto!important}
+body:not(.sprich-started) .layout .panel{
+  min-height:min(630px,78vh)!important;
+  height:min(630px,78vh)!important;
+  max-height:min(630px,78vh)!important;
+}
+</style>
+<style id="start-inner-glass-3d-panel">
+/* Light texture UNDER the transparent start glass, never over controls */
+body:not(.sprich-started) .layout .panel {
+  position: relative !important;
+  isolation: isolate;
+}
+body:not(.sprich-started) .layout .panel::before {
+  content: "" !important;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(133deg, transparent 8%, rgba(255,255,245,.54) 17%, rgba(255,244,216,.10) 29%, transparent 42%),
+    linear-gradient(147deg, transparent 38%, rgba(255,234,185,.44) 52%, rgba(255,250,233,.14) 61%, transparent 74%),
+    radial-gradient(ellipse at 72% 39%, rgba(55,144,200,.56) 0%, rgba(71,151,194,.21) 29%, transparent 58%),
+    radial-gradient(ellipse at 19% 72%, rgba(49,118,166,.47), transparent 52%);
+  filter: blur(8px);
+}
+body:not(.sprich-started) #start-wrap {
+  width: min(600px,82%) !important;
+  min-height: 390px !important;
+  margin: 38px auto !important;
+  padding: 34px 42px 32px !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+  isolation: isolate;
+  z-index: 1;
+  border-radius: 34px !important;
+  background: rgba(242,248,251,.012) !important;
+  border: 2px solid rgba(255,255,255,.78) !important;
+  backdrop-filter: blur(1.5px) saturate(1.12) !important;
+  -webkit-backdrop-filter: blur(1.5px) saturate(1.12) !important;
+  box-shadow:
+    inset 0 3px 3px rgba(255,255,255,.55),
+    inset 0 -9px 22px rgba(55,65,75,.055),
+    0 17px 35px rgba(22,32,42,.18) !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+body:not(.sprich-started) #start-wrap::before {
+  content: "" !important;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 14% 12%, rgba(255,255,255,.29), transparent 35%),
+    linear-gradient(114deg, transparent 13%, rgba(255,255,255,.12) 23%, transparent 37%),
+    repeating-linear-gradient(112deg, transparent 0px, rgba(255,255,255,.022) 2px, transparent 5px, transparent 47px);
+  opacity: .72;
+}
+body:not(.sprich-started) #start-wrap > * {
+  position: relative;
+  z-index: 1;
+}
+</style>
 </head>
 <body id="oben">
 
@@ -1869,6 +1940,7 @@ if(micButton){
 }
 
 document.getElementById("start-btn").addEventListener("click",()=>{
+  document.body.classList.add("sprich-started");
   startWrap.style.display="none";
   exerciseWrap.style.display="block";
   controls.classList.add("active");
