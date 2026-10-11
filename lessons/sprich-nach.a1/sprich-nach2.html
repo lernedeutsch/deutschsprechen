@@ -172,7 +172,12 @@ button,input{font:inherit}
   min-height:0;
 }
 /* Wypełnienie od dołu bez blokowania przewijania przy przepełnieniu. */
-.history-list > :first-child{margin-top:auto;}
+.history-list::before{
+  content:"";
+  flex:1 1 0px;
+  min-height:0;
+}
+/* Nie stosuj auto-margin do odpowiedzi: blokuje przewijanie przy przepełnieniu. */
 
 .history-empty{
   color:#7d93ac;
