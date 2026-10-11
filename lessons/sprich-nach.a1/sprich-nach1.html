@@ -166,11 +166,19 @@ button,input{font:inherit}
   overflow-y:auto;
   display:flex;
   flex-direction:column;
-  justify-content:flex-end;
+  justify-content:flex-start;
   gap:5px;
   padding:0 2px 2px 0;
   min-height:0;
 }
+
+/* Odpowiedzi od dolu; odstep kurczy sie po zapelnieniu panelu. */
+.history-list::before{content:"";flex:1 1 0px;min-height:0;}
+/* Pionowy suwak historii odpowiedzi. */
+.history-list{overflow-y:scroll;scrollbar-width:thin;scrollbar-color:#9fc7e0 rgba(255,255,255,.14);}
+.history-list::-webkit-scrollbar{width:9px}
+.history-list::-webkit-scrollbar-track{background:rgba(255,255,255,.10);border-radius:9px}
+.history-list::-webkit-scrollbar-thumb{background:#9fc7e0;border-radius:9px}
 
 .history-empty{
   color:#7d93ac;
@@ -1749,7 +1757,7 @@ function addToHistory(index,text){
   item.style.setProperty("--step-filter",level.toFixed(2));
   item.style.setProperty("--step-text",level>1.38?"#101820":"#fff");
   item.innerHTML=`<span class="h-num">${index+1}.</span>${text}`;
-  historyList.prepend(item);
+  historyList.appendChild(item);
   historyList.scrollTop=historyList.scrollHeight;
 }
 
