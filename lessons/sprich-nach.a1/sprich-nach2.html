@@ -911,6 +911,16 @@ button,input{font:inherit}
   box-shadow:inset -8px 0 16px -18px rgba(113,205,255,.45);
 }
 .history-list{gap:7px;padding:0 3px 2px}
+/* Przewijanie odpowiedzi: zachowaj pierwotne ułożenie od dołu. */
+.history-list{
+  overflow-y:scroll;
+  scrollbar-width:thin;
+  scrollbar-color:#9fc7e0 rgba(255,255,255,.14);
+}
+.history-list::-webkit-scrollbar{width:9px}
+.history-list::-webkit-scrollbar-track{background:rgba(255,255,255,.10);border-radius:9px}
+.history-list::-webkit-scrollbar-thumb{background:#9fc7e0;border-radius:9px}
+
 .history-item{
   padding:10px 11px;
   border-radius:11px;
