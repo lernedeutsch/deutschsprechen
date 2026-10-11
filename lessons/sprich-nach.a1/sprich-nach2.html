@@ -1970,10 +1970,24 @@ const SPRICH_TRANSLATIONS={
   it:"Ascolti una frase tedesca della Lezione 2, la ripeti e vedi subito se la tua frase è stata riconosciuta. Usa “Ripeti frase”, “Frase successiva”, “Stop” e “Continua” per controllare l’esercizio."
 };
 
+const SPRICH_DONE_TRANSLATIONS={
+  en:"🎉 Congratulations! You have finished the exercise! Choose what to do next:\n\n🔁 Schwierige Sätze wiederholen — Repeat sentences you found difficult to improve your pronunciation.\n\n🔄 Alle noch einmal üben — Practise all sentences again from the beginning.\n\n➡️ Weiter zu Übungen — Continue to the next exercises.",
+  pl:"🎉 Gratulacje! Ukończyłeś ćwiczenie! Możesz teraz wybrać, co chcesz zrobić dalej:\n\n🔁 Schwierige Sätze wiederholen — Powtórz zdania, które sprawiły Ci trudność, aby lepiej opanować ich wymowę.\n\n🔄 Alle noch einmal üben — Przećwicz ponownie wszystkie zdania od początku.\n\n➡️ Weiter zu Übungen — Przejdź do kolejnych ćwiczeń.",
+  it:"🎉 Congratulazioni! Hai completato l’esercizio! Ora puoi scegliere cosa fare:\n\n🔁 Schwierige Sätze wiederholen — Ripeti le frasi che ti sono risultate difficili per migliorare la pronuncia.\n\n🔄 Alle noch einmal üben — Esercitati di nuovo con tutte le frasi dall’inizio.\n\n➡️ Weiter zu Übungen — Passa agli esercizi successivi."
+};
+function currentTranslation(lang){
+  return document.getElementById("done-wrap")?.classList.contains("active")
+    ? SPRICH_DONE_TRANSLATIONS[lang] : SPRICH_TRANSLATIONS[lang];
+}
 const translationControl=document.getElementById("translation-control");
 const translationToggle=document.getElementById("translation-toggle");
 const translationText=document.getElementById("translation-text");
 const translationButtons=[...document.querySelectorAll(".translation-language")];
+translationText.style.whiteSpace="pre-line";
+new MutationObserver(()=>{
+  const active=translationButtons.find(btn=>btn.classList.contains("active"));
+  if(active && translationControl.classList.contains("open"))translationText.textContent=currentTranslation(active.dataset.lang);
+}).observe(document.getElementById("done-wrap"),{attributes:true,attributeFilter:["class"]});
 
 translationToggle.addEventListener("click",e=>{
   e.stopPropagation();
@@ -1982,7 +1996,7 @@ translationToggle.addEventListener("click",e=>{
   if(willOpen){
     const preferred=translationButtons.find(btn=>btn.dataset.lang==="pl") || translationButtons[0];
     translationButtons.forEach(x=>x.classList.toggle("active",x===preferred));
-    translationText.textContent=SPRICH_TRANSLATIONS[preferred.dataset.lang];
+    translationText.textContent=currentTranslation(preferred.dataset.lang);
     translationText.classList.add("show");
   }
 });
@@ -1991,7 +2005,7 @@ translationButtons.forEach(btn=>btn.addEventListener("click",e=>{
   e.stopPropagation();
   const lang=btn.dataset.lang;
   translationButtons.forEach(x=>x.classList.toggle("active",x===btn));
-  translationText.textContent=SPRICH_TRANSLATIONS[lang];
+  translationText.textContent=currentTranslation(lang);
   translationText.classList.add("show");
   translationControl.classList.add("open");
 }));
