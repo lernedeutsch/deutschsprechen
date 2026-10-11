@@ -1597,6 +1597,37 @@ button{font:inherit}
   top:0 !important;
   bottom:0 !important;
 }
+
+/* Startpanel: kompakter Glassmorphism-Look mit ausgeprägter 3D-Tiefe. */
+#gate.gate{
+  position:relative;
+  isolation:isolate;
+  width:min(100%,570px);
+  max-width:570px;
+  padding:24px 25px 25px;
+  overflow:visible;
+  color:#fff7e9;
+  background:linear-gradient(145deg,rgba(255,255,255,.20) 0%,rgba(255,255,255,.095) 35%,rgba(170,226,213,.065) 100%);
+  border:1px solid rgba(255,255,255,.32);
+  border-radius:24px;
+  -webkit-backdrop-filter:blur(22px) saturate(145%);
+  backdrop-filter:blur(22px) saturate(145%);
+  box-shadow:inset 0 2px 1px rgba(255,255,255,.45),inset 2px 0 1px rgba(255,255,255,.16),inset 0 -2px 5px rgba(0,0,0,.18),0 14px 18px rgba(0,0,0,.26),0 32px 65px rgba(0,0,0,.40),0 55px 90px rgba(0,0,0,.20);
+}
+#gate.gate::before{
+  content:"";position:absolute;inset:1px;border-radius:23px;pointer-events:none;
+  background:linear-gradient(125deg,rgba(255,255,255,.13),transparent 42%,rgba(255,255,255,.035) 85%);
+  z-index:-1;
+}
+#gate .gate-emoji{font-size:2.15rem;margin-bottom:4px;filter:drop-shadow(0 5px 5px rgba(0,0,0,.35))}
+#gate h2{color:#fff7e9;margin-bottom:7px;text-shadow:0 3px 6px rgba(0,0,0,.42)}
+#gate p{color:#d4e4df;margin-bottom:14px;line-height:1.5;text-shadow:0 2px 4px rgba(0,0,0,.35)}
+#gate .gate-translation-row{margin:0 0 13px}
+#gate .gate-btn{padding:12px 23px;border-radius:13px;box-shadow:inset 0 2px 2px rgba(255,255,255,.35),inset 0 -3px 4px rgba(0,0,0,.13),0 8px 0 rgba(13,82,77,.65),0 16px 22px rgba(0,0,0,.35)}
+#gate .gate-btn:hover{transform:translateY(-2px);box-shadow:inset 0 2px 2px rgba(255,255,255,.4),0 10px 0 rgba(13,82,77,.65),0 19px 25px rgba(0,0,0,.4)}
+#gate .gate-btn:active{transform:translateY(5px);box-shadow:inset 0 2px 4px rgba(0,0,0,.18),0 3px 0 rgba(13,82,77,.65),0 7px 12px rgba(0,0,0,.3)}
+@media(max-width:620px){#gate.gate{width:calc(100% - 18px);padding:22px 16px 24px}}
+
 </style>
 
 <style>
