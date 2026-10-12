@@ -3443,7 +3443,7 @@ const dialogues=[
 {prompt:"Woher kommst du?",instruction:"Sag, woher du kommst.",example:"Ich komme aus Polen.",check:originAnswer},
 {prompt:"Kommst du aus Polen?",instruction:"Antworte mit Ja oder Nein und nenne dein Land.",example:"Ja, ich komme aus Polen.",check:a=>(a.startsWith("ja ")||a.startsWith("nein "))&&originAnswer(a)},
 {prompt:"Ich komme aus Deutschland. Ich bin Deutsche. Und du?",instruction:"Sag deine Nationalität.",example:"Ich bin Polin.",check:nationalityAnswer},
-{prompt:"Wie alt bist du?",instruction:"Sag dein Alter.",example:"Ich bin zwanzig Jahre alt.",check:a=>a.includes("ich bin")&&(a.includes("alt")||anyNumber(a))},
+{prompt:"Wie ist deine Telefonnummer?",instruction:"Sag nur ein paar Zahlen.",example:"Eins, zwei, drei, vier.",check:a=>{const digits=a.replace(/[^0-9]/g,"");return digits.length>=3||a.split(/[^a-zäöüß]+/).filter(w=>numberWords.includes(w)).length>=3}},
 {prompt:"Tschüss!",instruction:"Verabschiede dich.",example:"Tschüss!",check:a=>fuzzyContains(a,"tschüss",.3)||fuzzyContains(a,"tschus",.3)||fuzzyContains(a,"auf wiedersehen",.3)}
 ]},
 {title:"Dialog 2 · Formell – Herr Becker",role:"formell",speaker:"Herr Becker",avatar:"👨‍💼",turns:[
@@ -3452,7 +3452,7 @@ const dialogues=[
 {prompt:"Woher kommen Sie?",instruction:"Sagen Sie, woher Sie kommen.",example:"Ich komme aus Polen.",check:originAnswer},
 {prompt:"Kommen Sie aus der Schweiz?",instruction:"Antworten Sie mit Ja oder Nein und nennen Sie Ihr Land.",example:"Nein, ich komme aus Polen.",check:a=>(a.startsWith("ja ")||a.startsWith("nein "))&&originAnswer(a)},
 {prompt:"Ich komme aus Deutschland. Ich bin Deutscher. Und Sie?",instruction:"Sagen Sie Ihre Nationalität.",example:"Ich bin Polin.",check:nationalityAnswer},
-{prompt:"Wie alt sind Sie?",instruction:"Sagen Sie Ihr Alter.",example:"Ich bin zwanzig Jahre alt.",check:a=>a.includes("ich bin")&&(a.includes("alt")||anyNumber(a))},
+{prompt:"Wie ist Ihre Telefonnummer?",instruction:"Sagen Sie nur ein paar Zahlen.",example:"Eins, zwei, drei, vier.",check:a=>{const digits=a.replace(/[^0-9]/g,"");return digits.length>=3||a.split(/[^a-zäöüß]+/).filter(w=>numberWords.includes(w)).length>=3}},
 {prompt:"Auf Wiedersehen!",instruction:"Verabschieden Sie sich.",example:"Auf Wiedersehen!",check:a=>fuzzyContains(a,"auf wiedersehen",.32)||fuzzyContains(a,"tschüss",.3)}
 ]}
 ];
