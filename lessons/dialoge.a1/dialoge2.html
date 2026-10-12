@@ -3203,10 +3203,8 @@ html body .main-history-panel .history-entry.user.pending-user-answer .user-answ
       <div class="dialog-menu-title">DIALOGE</div>
 
       <div class="dialog-menu-list">
-        <div class="dialog-menu-item active" data-dialog-index="0"><span class="dialog-menu-number">01</span><span>Woher kommst du?</span></div>
-        <div class="dialog-menu-item" data-dialog-index="1"><span class="dialog-menu-number">02</span><span>Woher kommen Sie?</span></div>
-        <div class="dialog-menu-item" data-dialog-index="2"><span class="dialog-menu-number">03</span><span>Länder & Nationalitäten</span></div>
-        <div class="dialog-menu-item" data-dialog-index="3"><span class="dialog-menu-number">04</span><span>Zahlen 1–20</span></div>
+        <div class="dialog-menu-item active" data-dialog-index="0"><span class="dialog-menu-number">01</span><span>Informell · Mia</span></div>
+        <div class="dialog-menu-item" data-dialog-index="1"><span class="dialog-menu-number">02</span><span>Formell · Herr Becker</span></div>
       </div>
 
       <div class="dialog-menu-info compact-info">
@@ -3439,44 +3437,25 @@ const numberWords=["eins","zwei","drei","vier","fünf","funf","sechs","sieben","
 function anyNumber(answer){return numberWords.some(x=>fuzzyContains(answer,x,.22))||/^(?:[1-9]|1[0-9]|20)$/.test(answer);}
 
 const dialogues=[
-  {
-    title:"Dialog 1 · Woher kommst du?",
-    role:"informell", speaker:"Mia", avatar:"👩",
-    turns:[
-      {prompt:"Hallo! Woher kommst du?",instruction:"Sag, aus welchem Land du kommst.",example:"Ich komme aus Polen.",check:originAnswer},
-      {prompt:"Kommst du aus Polen?",instruction:"Antworte mit ja oder nein. Du kannst auch einen ganzen Satz sagen.",example:"Ja, ich komme aus Polen.",check:answer=>yesNo(answer)||originAnswer(answer)},
-      {prompt:"Und woher kommt Anna? Anna kommt aus Österreich.",instruction:"Sag: Sie kommt aus Österreich.",example:"Sie kommt aus Österreich.",check:answer=>fuzzyContains(answer,"sie kommt aus österreich",.32)||fuzzyContains(answer,"sie kommt aus osterreich",.32)}
-    ]
-  },
-  {
-    title:"Dialog 2 · Woher kommen Sie?",
-    role:"formell", speaker:"Herr Becker", avatar:"👨‍💼",
-    turns:[
-      {prompt:"Guten Tag. Woher kommen Sie?",instruction:"Antworten Sie formell: Ich komme aus …",example:"Ich komme aus Deutschland.",check:originAnswer},
-      {prompt:"Kommen Sie aus der Schweiz?",instruction:"Antworten Sie mit ja oder nein.",example:"Nein, ich komme aus Deutschland.",check:answer=>yesNo(answer)||originAnswer(answer)},
-      {prompt:"Woher kommen wir? Wir kommen aus Italien.",instruction:"Wiederholen Sie den Satz mit wir.",example:"Wir kommen aus Italien.",check:answer=>fuzzyContains(answer,"wir kommen aus italien",.3)}
-    ]
-  },
-  {
-    title:"Dialog 3 · Länder & Nationalitäten",
-    role:"informell", speaker:"Lena", avatar:"👩",
-    turns:[
-      {prompt:"Ich komme aus Deutschland. Ich bin Deutsche. Und du?",instruction:"Sag deine Nationalität: Ich bin …",example:"Ich bin Polin.",check:nationalityAnswer},
-      {prompt:"Paul kommt aus Deutschland. Was ist seine Nationalität?",instruction:"Sag: Er ist Deutscher.",example:"Er ist Deutscher.",check:answer=>fuzzyContains(answer,"er ist deutscher",.3)||fuzzyContains(answer,"deutscher",.2)},
-      {prompt:"Anna kommt aus Österreich. Was ist ihre Nationalität?",instruction:"Sag: Sie ist Österreicherin.",example:"Sie ist Österreicherin.",check:answer=>fuzzyContains(answer,"sie ist österreicherin",.32)||fuzzyContains(answer,"osterreicherin",.25)}
-    ]
-  },
-  {
-    title:"Dialog 4 · Zahlen 1–20",
-    role:"informell", speaker:"Tom", avatar:"🧑",
-    turns:[
-      {prompt:"Sag eine Zahl von eins bis zwanzig.",instruction:"Sag oder schreibe eine Zahl von 1 bis 20.",example:"Zwölf.",check:anyNumber},
-      {prompt:"Welche Zahl kommt nach neun?",instruction:"Sag die nächste Zahl.",example:"Zehn.",check:answer=>fuzzyContains(answer,"zehn",.22)||answer==="10"},
-      {prompt:"Welche Zahl kommt nach neunzehn?",instruction:"Sag die nächste Zahl.",example:"Zwanzig.",check:answer=>fuzzyContains(answer,"zwanzig",.22)||answer==="20"}
-    ]
-  }
+{title:"Dialog 1 · Informell – Mia",role:"informell",speaker:"Mia",avatar:"👩",turns:[
+{prompt:"Hallo!",instruction:"Begrüße Mia.",example:"Hallo!",check:a=>fuzzyContains(a,"hallo",.25)||fuzzyContains(a,"hi",.2)},
+{prompt:"Wie heißt du?",instruction:"Sag deinen Namen.",example:"Ich heiße Anna.",check:a=>fuzzyContains(a,"ich heiße",.32)||fuzzyContains(a,"mein name ist",.32)},
+{prompt:"Woher kommst du?",instruction:"Sag, woher du kommst.",example:"Ich komme aus Polen.",check:originAnswer},
+{prompt:"Kommst du aus Polen?",instruction:"Antworte mit Ja oder Nein und nenne dein Land.",example:"Ja, ich komme aus Polen.",check:a=>(a.startsWith("ja ")||a.startsWith("nein "))&&originAnswer(a)},
+{prompt:"Ich komme aus Deutschland. Ich bin Deutsche. Und du?",instruction:"Sag deine Nationalität.",example:"Ich bin Polin.",check:nationalityAnswer},
+{prompt:"Wie alt bist du?",instruction:"Sag dein Alter.",example:"Ich bin zwanzig Jahre alt.",check:a=>a.includes("ich bin")&&(a.includes("alt")||anyNumber(a))},
+{prompt:"Tschüss!",instruction:"Verabschiede dich.",example:"Tschüss!",check:a=>fuzzyContains(a,"tschüss",.3)||fuzzyContains(a,"tschus",.3)||fuzzyContains(a,"auf wiedersehen",.3)}
+]},
+{title:"Dialog 2 · Formell – Herr Becker",role:"formell",speaker:"Herr Becker",avatar:"👨‍💼",turns:[
+{prompt:"Guten Tag!",instruction:"Begrüßen Sie Herrn Becker.",example:"Guten Tag!",check:a=>fuzzyContains(a,"guten tag",.3)},
+{prompt:"Wie heißen Sie?",instruction:"Sagen Sie Ihren Namen.",example:"Ich heiße Anna.",check:a=>fuzzyContains(a,"ich heiße",.32)||fuzzyContains(a,"mein name ist",.32)},
+{prompt:"Woher kommen Sie?",instruction:"Sagen Sie, woher Sie kommen.",example:"Ich komme aus Polen.",check:originAnswer},
+{prompt:"Kommen Sie aus der Schweiz?",instruction:"Antworten Sie mit Ja oder Nein und nennen Sie Ihr Land.",example:"Nein, ich komme aus Polen.",check:a=>(a.startsWith("ja ")||a.startsWith("nein "))&&originAnswer(a)},
+{prompt:"Ich komme aus Deutschland. Ich bin Deutscher. Und Sie?",instruction:"Sagen Sie Ihre Nationalität.",example:"Ich bin Polin.",check:nationalityAnswer},
+{prompt:"Wie alt sind Sie?",instruction:"Sagen Sie Ihr Alter.",example:"Ich bin zwanzig Jahre alt.",check:a=>a.includes("ich bin")&&(a.includes("alt")||anyNumber(a))},
+{prompt:"Auf Wiedersehen!",instruction:"Verabschieden Sie sich.",example:"Auf Wiedersehen!",check:a=>fuzzyContains(a,"auf wiedersehen",.32)||fuzzyContains(a,"tschüss",.3)}
+]}
 ];
-
 /* ---------------- Dialoge in Züge umwandeln ---------------- */
 
 const flatTurns=[];
