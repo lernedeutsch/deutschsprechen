@@ -444,6 +444,7 @@ input:focus-visible{
 </style>
 <link rel="stylesheet" href="../../css/click-hints.css">
 <link rel="stylesheet" href="../../css/page-progress.css">
+<script src="../../js/deutsch-pass.js"></script>
 </head>
 
 <body id="top">
@@ -829,6 +830,7 @@ const completedExercises=new Set();
 function markExerciseDone(key){
   if(completedExercises.has(key))return;
   completedExercises.add(key);
+  window.DeutschPass?.record("A1.1","ubungen",key);
   const badge=document.getElementById("done-"+key);
   if(badge)badge.classList.add("show");
   const progress=document.getElementById("exercise-progress-count");
