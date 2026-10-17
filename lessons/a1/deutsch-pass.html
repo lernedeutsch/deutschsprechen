@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mein Deutsch-Pass · Deutschsprechen</title>
+<style>body{font-family:system-ui,sans-serif;background:#f4f7fc;color:#1c3049;margin:0;padding:24px}main{max-width:760px;margin:auto}section{background:white;border-radius:18px;padding:22px;margin:18px 0;box-shadow:0 3px 18px #1232}h1{font-size:2rem}.items{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}.item{background:#eff5fd;border-radius:12px;padding:14px}.num{font-size:1.6rem;font-weight:750}small,p{line-height:1.5;color:#53657a}a{color:#174f98}</style>
+<script src="../../js/deutsch-pass.js"></script></head><body><main>
+<a href="lektion-1.html">← Zur Lektion A1.1</a><h1>🎓 Mein Deutsch-Pass</h1>
+<p>Deine gesammelten Aktivitäten. Stempel zeigen abgeschlossene Übungen, nicht automatisch beherrschte Fähigkeiten.</p>
+<section><h2>A1.1 · Meine Aktivitäten</h2><div class="items" id="items"></div></section>
+<section><h2>Mein Lernstand</h2><p>Die Fähigkeitenkarte, Fehlerwiederholungen und Zertifikate werden schrittweise ergänzt. Hier werden zunächst nur bestätigte Abschlüsse angezeigt.</p></section>
+<section><h2>Datenschutz und Speicherung</h2><p>Diese erste Version speichert die Ergebnisse nur in diesem Browser. Andere Geräte werden noch nicht synchronisiert. Beim Löschen der Browserdaten können Ergebnisse verloren gehen.</p></section>
+</main><script>
+(function(){const labels={"aktiv":"Aktiv trainieren","ubungen":"Übungen","dialoge":"Dialoge","sprich-nach":"Sprich nach","diktat":"Diktat","wiederholen":"Wiederholen"};const box=document.getElementById("items");function draw(){const s=window.DeutschPass?.summary("A1.1")||{};box.replaceChildren();Object.entries(labels).forEach(([key,label])=>{const e=document.createElement("div");e.className="item";const n=document.createElement("div");n.className="num";n.textContent=String(s[key]||0);const t=document.createElement("div");t.textContent=label;e.append(n,t);box.append(e)})}draw();addEventListener("storage",draw);addEventListener("deutsch-pass-updated",draw)})();
+</script></body></html>
