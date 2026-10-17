@@ -500,6 +500,7 @@ body{padding-top:58px!important}
 }
 @media(prefers-reduced-motion:reduce){.intro-exercise-translation .translation-globe{animation:none!important}}
 </style>
+<script src="../../js/deutsch-pass.js"></script>
 </head>      
 <body id="seitenanfang">      
 
@@ -701,7 +702,7 @@ const stampKey="lektion1-sprachpass",visibleStampKeys=["greetings","introduction
       
 function updateStamps(){$$("[data-stamp]").forEach(x=>x.classList.toggle("stamped",!!P[x.dataset.stamp]));$("stamp-counter").textContent=`${visibleStampKeys.filter(k=>P[k]).length} / 4 Stempel gesammelt`;$("alphabet-done")?.classList.toggle("show",!!P.alphabet);$("farewell-done")?.classList.toggle("show",!!P.farewell)}      
 function loadStamps(){try{const saved=JSON.parse(localStorage.getItem(stampKey))||{};visibleStampKeys.forEach(k=>P[k]=!!saved[k])}catch{}updateStamps()}      
-function stamp(x){if(!visibleStampKeys.includes(x)||P[x])return;P[x]=true;try{localStorage.setItem(stampKey,JSON.stringify(P))}catch{}updateStamps()}      
+function stamp(x){if(!visibleStampKeys.includes(x)||P[x])return;P[x]=true;try{localStorage.setItem(stampKey,JSON.stringify(P))}catch{}window.DeutschPass?.record("A1.1","aktiv",x);updateStamps()}      
 function loadVoice(){let v=S?.getVoices()||[],g=v.filter(x=>x.lang?.toLowerCase().startsWith("de"));V=v.find(x=>x.lang?.toLowerCase()==="de-de"&&x.name?.toLowerCase().includes("google"))||v.find(x=>x.lang?.toLowerCase()==="de-de")||g[0]||null;const maleHints=["conrad","stefan","hans","markus","klaus","male","mann","standard-b","standard-d","wavenet-b","wavenet-d"];VM=g.find(x=>maleHints.some(h=>x.name?.toLowerCase().includes(h)))||g.find(x=>x!==V)||V||null}      
 function stop(){n++;S?.cancel();$$(".speaking,.alphabet-active,.letter-speaking").forEach(x=>x.classList.remove("speaking","alphabet-active","letter-speaking"))}      
 function speak(text,rate=.92,voice=V,pitch=1){return new Promise(done=>{if(!S||!text)return done();let u=new SpeechSynthesisUtterance(text);Object.assign(u,{lang:"de-DE",rate,pitch,volume:1});if(voice)u.voice=voice;u.onend=done;u.onerror=e=>{if(!["canceled","interrupted"].includes(e.error))console.error(e.error);done()};S.speak(u)})}      
