@@ -1178,6 +1178,7 @@ body:not(.sprich-started) #start-wrap > * {
 /* Lower the sentence panel and microphone together without changing the start screen. */
 body.sprich-started #exercise-wrap .sentence-box{margin-top:24px!important}
 </style>
+<script src="../../js/deutsch-pass.js"></script>
 </head>
 <body id="oben">
 
@@ -1911,6 +1912,7 @@ function handleAnswer(said){
 }
 
 function finishCourse(){
+  if(!reviewQueue)window.DeutschPass?.record("A1.1","sprich-nach","all-sentences",{assisted:difficultIndices.size>0||firstTryCorrect<sentences.length});
   setMicReady(false);
   updateProgress();
   setStage("done","🏆");
