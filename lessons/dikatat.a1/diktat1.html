@@ -865,6 +865,7 @@ body.diktat-started .diktat-start-screen{display:none}
 .diktat-start-button:hover{filter:brightness(1.06)}
 .diktat-start-button:focus-visible{outline:3px solid #1b334c;outline-offset:4px}
 </style>
+<script src="../../js/deutsch-pass.js"></script>
 </head>
 <body>
 <section class="diktat-start-screen" id="diktat-start-screen" aria-label="Diktat starten">
@@ -1593,6 +1594,7 @@ lessonCompleteBtn.addEventListener("click",()=>{
   if(isOpen){
     const completedA1Part=Math.max(1,Number(localStorage.getItem("a1CompletedPart")||0));
     localStorage.setItem("a1CompletedPart",String(completedA1Part));
+    if(score===sentences.length)window.DeutschPass?.record("A1.1","diktat","all-sentences",{assisted:hintUsedFor.some(Boolean)});
 
     burstConfetti();
     setTimeout(burstConfetti,260);
