@@ -3120,6 +3120,7 @@ html body .current-dialog-panel .mic-btn.listening{
   html body .current-dialog-panel .mic-btn-wrap.ready .mic-btn:not(.listening){animation:none !important}
 }
 </style>
+<script src="../../js/deutsch-pass.js"></script>
 </head>
 
 <body>
@@ -4687,6 +4688,7 @@ function showFinal(){
 
   els.stage.style.display="none";
   els.final.classList.add("show");
+  window.DeutschPass?.record("A1.1","dialoge","all-dialogues",{assisted:reviewAnswers.length>0||score<total});
 
   addHistoryEntry("partner","Lena",closingText);
 
