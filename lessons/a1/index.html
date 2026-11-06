@@ -165,6 +165,23 @@ body{
     line-height:1.6;
 }
 
+.hero-intro{
+    display:flex;
+    align-items:center;
+    gap:24px;
+}
+.hero-intro .hero-badge{
+    flex:none;
+    margin-bottom:0;
+}
+.hero-intro p{
+    max-width:none;
+}
+@media(max-width:520px){
+    .hero-intro{gap:14px;align-items:flex-start}
+    .hero-intro .hero-badge{width:64px;height:64px;font-size:1.8rem}
+}
+
 /* SEKCJE */
 
 .section-title{
@@ -500,18 +517,15 @@ footer{
 
 <section class="hero">
 
-        <div class="hero-badge">
-            A1
-        </div>
-
-        
-
-        <p>
+        <div class="hero-intro">
+            <div class="hero-badge">A1</div>
+            <p>
             Deutsch Schritt für Schritt.
             Der A1-Kurs besteht aus 30 Kursabschnitten.
             Beginne mit Teil 1 und arbeite dich
             nach und nach durch den ganzen Kurs.
-        </p>
+            </p>
+        </div>
 
         <div class="progress-translation" id="hero-translation">
             <button type="button" class="translation-toggle" id="hero-translation-toggle">
