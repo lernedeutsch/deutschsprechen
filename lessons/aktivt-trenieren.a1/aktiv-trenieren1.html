@@ -501,35 +501,7 @@ body{padding-top:58px!important}
 @media(prefers-reduced-motion:reduce){.intro-exercise-translation .translation-globe{animation:none!important}}
 </style>
 <script src="../../js/deutsch-pass.js"></script>
-<style id="intro-vibrant-teal-theme">
-/* Nur die Darstellung von Teil 2; Verhalten und Übungstexte bleiben unverändert. */
-body{background:radial-gradient(circle at 90% 10%,#079eaa55,transparent 45%),linear-gradient(145deg,#073d52,#087f88 65%,#063c50)}
-.intro-page{background:linear-gradient(160deg,#005c68,#004b59);border:1px solid #24aab0;box-shadow:0 22px 55px #001b2c66}
-.intro-page .part-head{align-items:center;border-bottom-color:#ffffff30}
-.intro-page .part-title{color:#fff}
-.intro-page .part-num{color:#fff;background:#389d45;padding:5px 11px;border-radius:9px;letter-spacing:.08em}
-.intro-page .intro-card{background:#f5fffc;border-radius:22px;padding:18px;border:0}
-.intro-page .intro-setup-card{background:#fafffe;border-color:#c2eee0;border-radius:20px;box-shadow:0 12px 26px #005f5b1c}
-.intro-page .action-help-step{border-color:#c8e5dc;background:#fff}
-.intro-page .action-help-step:first-child{border-color:#63c88a;background:#e8fff0}
-.intro-page .intro-setup-card .description{color:#324a63}
-.intro-page .name-input-wrap{position:relative;display:block;flex:1;min-width:0}
-.intro-page .name-input-wrap input{width:100%;padding-right:52px;border:2px solid #28b76a;background:#fff;border-radius:12px}
-.intro-page .name-input-wrap input:focus{border-color:#078f51;box-shadow:0 0 0 4px #24bd6a29}
-.intro-page .input-pencil{position:absolute;right:15px;top:50%;margin-top:-13px;font-size:23px;pointer-events:none;animation:namePencilPulse 1.15s ease-in-out infinite}
-.intro-page .intro-three-forms{background:linear-gradient(135deg,#e3faf2,#c9efdf);border-color:#a9e8cf;border-radius:20px}
-.intro-page .intro-form-row{background:#fff;border-color:#c4e8dc;box-shadow:0 5px 12px #125e5517}
-.intro-page .intro-audio-button{color:#fff;background:linear-gradient(180deg,#51c98d,#249c69);border:1px solid #299c6c;box-shadow:0 3px 9px #1c9b6a30}
-.intro-page .intro-audio-button:hover,.intro-page .intro-audio-button:focus-visible{background:linear-gradient(180deg,#69d7a2,#35b37c);border-color:#168657}
-.intro-page .intro-repeat-hint{color:#096353}
-.intro-page .tab-buttons{background:transparent;gap:48px;flex-wrap:wrap;margin-bottom:25px}
-.intro-page #tab-informell{color:#fff;background:linear-gradient(180deg,#b15adb,#862cb9);border-color:#8e37bb}
-.intro-page #tab-informell.active{background:linear-gradient(180deg,#a748d5,#7423ac);border-color:#7022a7}
-.intro-page #tab-formell{color:#fff;background:linear-gradient(180deg,#4dc88b,#239e69);border-color:#249b68}
-.intro-page #tab-formell.active{background:linear-gradient(180deg,#36bc7b,#148953);border-color:#118251}
-@media(max-width:620px){.intro-page .tab-buttons{gap:14px}.intro-page .name-row{flex-wrap:wrap}.intro-page .name-input-wrap{flex-basis:100%}}
-@media(prefers-reduced-motion:reduce){.intro-page .input-pencil{animation:none}}
-</style>
+
 </head>      
 <body id="seitenanfang">      
 
@@ -615,7 +587,7 @@ body{background:radial-gradient(circle at 90% 10%,#079eaa55,transparent 45%),lin
 <div class="intro-setup-card">
 <div class="action-help" data-help-key="dialog" aria-label="So funktioniert der Dialog"><span class="action-help-step">✏️ Name eingeben</span><span class="action-help-arrow">→</span><span class="action-help-step">👆 „Informell“ oder „Formell“ anklicken</span><span class="action-help-arrow">→</span><span class="action-help-step">🔊 zuhören</span></div>
 <p class="description">Trag deinen Namen ein — die Dialoge passen sich an!</p>      
-<div class="name-row"><label for="name-input"><span>Dein Name:</span></label><span class="name-input-wrap"><input id="name-input" type="text" placeholder="Dein Name" autocomplete="given-name"><span class="name-pencil input-pencil" aria-hidden="true">✏️</span></span></div>      
+<div class="name-row"><label for="name-input"><span class="name-pencil">✏️</span> <span>Dein Name:</span></label><input id="name-input" type="text" placeholder="Dein Name" autocomplete="given-name"></div>      
 <div class="intro-three-forms">
 <p class="description intro-three-title"><strong>Sag deinen Namen auf drei Arten:</strong></p>
 <div class="intro-form-list">
