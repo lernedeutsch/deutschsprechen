@@ -24,7 +24,10 @@ button,input{font:inherit}button{cursor:pointer}
 .sprachpass{display:flex;align-items:center;gap:18px;margin-top:26px;padding:16px 20px;color:#f7efdd;background:linear-gradient(145deg,#16233a,#20324a);border:1px solid #ffffff17;border-radius:18px;box-shadow:0 10px 24px #0000003d}      
 .sprachpass-information{flex:none}.sprachpass-title{font:700 1.08rem "Fraunces",serif}.sprachpass-counter{margin:2px 0 0;color:#f7efddad;font:.78rem "JetBrains Mono",monospace}      
 .stamps{display:flex;justify-content:flex-end;gap:12px;flex:1}.stamp-slot{display:grid;place-items:center;width:72px;height:72px;padding:5px;color:#f7efdd8f;text-align:center;border:2px dashed #f7efdd4d;border-radius:50%;font:.61rem/1.08 "JetBrains Mono",monospace;transition:.3s}.stamp-icon{display:block;margin-bottom:3px;font-size:1.25rem;opacity:.55}      
-.stamp-slot.stamped{color:#f3c2b8;background:#bd443329;border-color:#e57763;border-style:solid;transform:rotate(-7deg) scale(1.05);animation:stamp .48s}.stamp-slot.stamped .stamp-icon{opacity:1}      
+.stamp-slot.stamped{color:#17263b;background:#e5f7eb;border-color:#70c995;border-style:solid;transform:rotate(-7deg) scale(1.05);animation:stamp .48s}
+.stamp-slot.stamped[data-stamp="introduction"]{background:#e5f5fc;border-color:#72bce5}
+.stamp-slot.stamped[data-stamp="alphabet"]{background:#f1eafb;border-color:#b79ae5}
+.stamp-slot.stamped[data-stamp="farewell"]{background:#fff1dc;border-color:#e9b66f}.stamp-slot.stamped .stamp-icon{opacity:1}      
 @keyframes stamp{0%{opacity:0;transform:rotate(-7deg) scale(.3)}65%{opacity:1;transform:rotate(-10deg) scale(1.16)}100%{transform:rotate(-7deg) scale(1.05)}}      
 .greeting-page{max-width:980px;padding:34px}.intro-page{max-width:860px;padding:24px 28px 30px;border:1px solid #e3d6b8cc;border-radius:20px;box-shadow:0 18px 42px #00000047}.exercise-page,.alphabet-page,.farewell-page{max-width:900px;padding:22px}      
 .part-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px;margin-bottom:18px}.part-num{color:var(--red);font:600 .82rem "JetBrains Mono",monospace;letter-spacing:.16em;text-transform:uppercase}.part-title{margin:0;color:#161616;font:700 2.5rem/1.15 "Kalam",cursive}      
