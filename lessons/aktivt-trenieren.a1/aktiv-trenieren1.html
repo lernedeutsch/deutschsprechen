@@ -680,22 +680,17 @@ body{padding-top:58px!important}
 .exercise-card:has(.register-simple-guide) .category-button{flex:1;max-width:460px;background:#e9f7f1;border:1px solid #8ab7a7;color:#172b25}
 @media(max-width:600px){.register-simple-guide{font-size:.92rem}.register-simple-divider{margin:0 5px}.exercise-card:has(.register-simple-guide) .category-buttons{gap:8px}.exercise-card:has(.register-simple-guide) .category-button{min-width:0;font-size:.86rem;padding:8px 5px}}
 
-/* Sequential hand pulse on the four greeting answers */
-.answer-buttons .answer-button .click-icon{display:inline-block;transform-origin:50% 85%;animation:greetingHandSequence 4s ease-in-out infinite}
-.answer-buttons .answer-button:nth-child(2) .click-icon{animation-delay:-3s}
-.answer-buttons .answer-button:nth-child(3) .click-icon{animation-delay:-2s}
-.answer-buttons .answer-button:nth-child(4) .click-icon{animation-delay:-1s}
-@keyframes greetingHandSequence{0%,5%,19%,100%{transform:scale(1) translateY(0);filter:none}10%{transform:scale(1.32) translateY(-5px);filter:drop-shadow(0 3px 4px rgba(0,0,0,.22))}}
-@media(prefers-reduced-motion:reduce){.answer-buttons .answer-button .click-icon{animation:none}}
 </style>
 
 <style id="greeting-alternating-hand-pulse">
-.answer-buttons .answer-button .click-icon{display:inline-block;transform-origin:50% 85%;animation:greetingHandAlternating 4s ease-in-out infinite;will-change:transform}
-.answer-buttons .answer-button:nth-child(2) .click-icon{animation-delay:-1s}
-.answer-buttons .answer-button:nth-child(3) .click-icon{animation-delay:-2s}
-.answer-buttons .answer-button:nth-child(4) .click-icon{animation-delay:-3s}
-@keyframes greetingHandAlternating{0%,21%,100%{transform:scale(1) translateY(0)}7%,14%{transform:scale(1.3) translateY(-4px)}}
-@media(prefers-reduced-motion:reduce){.answer-buttons .answer-button .click-icon{animation:none}}
+/* Strong, sequential pulse; override earlier generic hand animation rules. */
+.answer-buttons .answer-button .click-icon{display:inline-block!important;transform-origin:center center!important;animation:greetingHandAlternating 4s linear infinite!important;will-change:transform,filter}
+.answer-buttons .answer-button:nth-child(1) .click-icon{animation-delay:0s!important}
+.answer-buttons .answer-button:nth-child(2) .click-icon{animation-delay:-1s!important}
+.answer-buttons .answer-button:nth-child(3) .click-icon{animation-delay:-2s!important}
+.answer-buttons .answer-button:nth-child(4) .click-icon{animation-delay:-3s!important}
+@keyframes greetingHandAlternating{0%,4%,21%,100%{transform:scale(1) translateY(0);filter:none}8%,13%{transform:scale(1.55) translateY(-7px);filter:drop-shadow(0 0 5px #f2a700)}}
+@media(prefers-reduced-motion:reduce){.answer-buttons .answer-button .click-icon{animation:none!important}}
 </style>
 </head>      
 <body id="seitenanfang">
