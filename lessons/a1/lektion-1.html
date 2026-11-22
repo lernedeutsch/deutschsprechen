@@ -1495,10 +1495,9 @@ ichKannButton.addEventListener("click",()=>{
     <label for="translate-help-question">Your question / Deine Frage</label>
     <textarea id="translate-help-question" placeholder="Np. Co znaczy ergänzen?"></textarea>
     <div class="translate-help-actions">
-      <button type="button" id="translate-help-copy">Kopiuj pytanie / Copy</button>
-      <a href="https://poe.com/Deutsch-Sprachhilfe" target="_blank" rel="noopener noreferrer">Otwórz pomoc AI ↗</a>
+      <button type="button" id="translate-help-copy">Zapytaj AI ↗</button>
     </div>
-    <p id="translate-help-status" role="status" aria-live="polite">Skopiuj pytanie, a następnie wklej je w rozmowie z AI. Rozmowa otwiera się w nowej karcie.</p>
+    <p id="translate-help-status" role="status" aria-live="polite">Wpisz pytanie i kliknij „Zapytaj AI”. Pytanie zostanie skopiowane, a nauczyciel Poe otworzy się w nowej karcie. Wklej je tam (Ctrl+V) i wyślij.</p>
   </section>
 </div>
 <script>
@@ -1516,9 +1515,31 @@ ichKannButton.addEventListener("click",()=>{
   dialog.addEventListener('click',e=>{if(e.target===dialog)hide();});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!dialog.hidden)hide();});
   copy.addEventListener('click',async()=>{
-    if(!question.value.trim()){status.textContent='Najpierw wpisz pytanie.';question.focus();return;}
-    try{await navigator.clipboard.writeText(question.value.trim());status.textContent='Pytanie skopiowane. Otwórz pomoc AI i wklej pytanie.';}
-    catch(e){question.select();status.textContent='Zaznaczony tekst skopiuj klawiszami Ctrl+C, a potem wklej w Poe.';}
+    const value=question.value.trim();
+    if(!value){status.textContent='Najpierw wpisz pytanie.';question.focus();return;}
+    // Open from a user click immediately, to avoid popup blocking after an async clipboard write.
+    const poeTab=window.open('https://poe.com/Deutsch-Sprachhilfe','_blank','noopener,noreferrer');
+    let copied=false;
+    try{
+      await navigator.clipboard.writeText(value);
+      copied=true;
+    }catch(e){
+      try{
+        question.focus();
+        question.select();
+        copied=document.execCommand('copy');
+      }catch(_e){copied=false;}
+    }
+    if(copied){
+      status.textContent='Pytanie skopiowane. Wklej je w Poe (Ctrl+V) i wyślij.';
+    }else{
+      question.focus();
+      question.select();
+      status.textContent='Pytanie zostało zaznaczone. Skopiuj je (Ctrl+C), wklej w Poe (Ctrl+V) i wyślij.';
+    }
+    if(!poeTab){
+      status.textContent+=' Jeśli Poe nie otworzyło się, użyj adresu: poe.com/Deutsch-Sprachhilfe';
+    }
   });
 })();
 </script>
