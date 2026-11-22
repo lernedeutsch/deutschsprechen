@@ -895,6 +895,30 @@ button,input{font:inherit}
   border-color:#f2d06f;
 }
 
+/* Back arrow: same translucent square as Lektion 1; override generic .icon-btn */
+.module-tools a.icon-btn.module-back{
+  position:fixed;
+  top:68px;
+  left:10px;
+  width:52px;
+  height:52px;
+  padding:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  border-radius:10px;
+  background:rgba(16,39,60,.12);
+  border:1px solid rgba(255,255,255,.10);
+  color:#fff;
+  font-size:1.55rem;
+  font-weight:700;
+  box-shadow:none;
+}
+.module-tools a.icon-btn.module-back:hover{
+  background:rgba(11,31,49,.22);
+  border-color:rgba(255,255,255,.22);
+}
+
 @media(max-width:560px){
   .panel{border-radius:20px;padding-top:18px}
   .title-row{gap:7px}
