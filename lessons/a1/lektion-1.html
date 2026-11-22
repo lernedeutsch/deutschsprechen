@@ -885,6 +885,20 @@ button:focus-visible,
 }
 @media(prefers-reduced-motion:reduce){.translate-mini-pencil{animation:none}}
 .translate-mini-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.translate-mini-native-select{display:none!important}
+.translate-mini-language-label{font-weight:700;margin-top:12px;margin-bottom:7px}
+.translate-mini-language-options{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.translate-mini-language-options .translate-mini-lang-btn,
+.translate-mini-language-options #translate-mini-other{
+  border:1px solid #a8b9ce;border-radius:9px;background:#fff;color:#203a57;
+  padding:9px 10px;font:600 13px system-ui;min-height:40px;cursor:pointer;
+  width:auto;flex:0 1 auto;
+}
+.translate-mini-language-options .translate-mini-lang-btn[aria-pressed="true"]{
+  background:#203a57;color:#fff;border-color:#203a57;
+}
+.translate-mini-language-options #translate-mini-other:focus-visible,
+.translate-mini-language-options .translate-mini-lang-btn:focus-visible{outline:3px solid #ffcc66;outline-offset:2px}
 .translate-mini-actions button,.translate-mini-actions a{border:0;border-radius:10px;padding:10px 14px;background:#168c9c;color:white;font:700 15px system-ui;text-decoration:none;cursor:pointer}
 .translate-mini-actions a{background:#203a57}.translate-mini-result{margin-top:14px;background:#eef7f9;padding:12px;border-radius:10px;min-height:25px;white-space:pre-wrap;overflow-wrap:anywhere}
 .translate-mini-close{float:right;border:0;background:none;color:#203a57;font-size:28px;cursor:pointer}.translate-mini-note{font-size:12px;color:#536474;margin-top:10px}
@@ -1551,13 +1565,26 @@ ichKannButton.addEventListener("click",()=>{
       <textarea id="translate-mini-input" placeholder="Ergänze"></textarea>
       <span class="translate-mini-pencil" aria-hidden="true">✏️</span>
     </div>
-    <label for="translate-mini-language">Translate to / Zielsprache</label>
-    <select id="translate-mini-language">
+    <div class="translate-mini-language-label" id="translate-mini-language-label">Translate to / Zielsprache</div>
+    <select id="translate-mini-language" class="translate-mini-native-select" aria-label="Translate to / Zielsprache">
       <option value="pl">Polski</option><option value="en" selected>English</option><option value="it">Italiano</option>
       <option value="es">Español</option><option value="fr">Français</option><option value="uk">Українська</option>
       <option value="ru">Русский</option><option value="tr">Türkçe</option><option value="ar">العربية</option>
       <option value="pt">Português</option><option value="ro">Română</option><option value="nl">Nederlands</option>
     </select>
+    <div class="translate-mini-language-options" role="group" aria-labelledby="translate-mini-language-label">
+      <button type="button" class="translate-mini-lang-btn" data-lang="en" aria-pressed="true">English</button>
+      <button type="button" class="translate-mini-lang-btn" data-lang="tr" aria-pressed="false">Türkçe</button>
+      <button type="button" class="translate-mini-lang-btn" data-lang="pl" aria-pressed="false">Polski</button>
+      <button type="button" class="translate-mini-lang-btn" data-lang="it" aria-pressed="false">Italiano</button>
+      <select id="translate-mini-other" aria-label="Inne języki">
+        <option value="">Inne ▾</option>
+        <option value="es">Español</option><option value="fr">Français</option>
+        <option value="uk">Українська</option><option value="ru">Русский</option>
+        <option value="ar">العربية</option><option value="pt">Português</option>
+        <option value="ro">Română</option><option value="nl">Nederlands</option>
+      </select>
+    </div>
     <div class="translate-mini-actions">
       <button type="button" id="translate-mini-submit">Translate / Übersetzen</button>
       <a id="translate-mini-fallback" href="https://translate.google.com/?sl=de&amp;tl=pl&amp;op=translate" target="_blank" rel="noopener noreferrer">Google Translate ↗</a>
@@ -1586,7 +1613,23 @@ ichKannButton.addEventListener("click",()=>{
     const params=new URLSearchParams({sl:'de',tl:language.value,text:input.value,op:'translate'});
     fallback.href='https://translate.google.com/?'+params.toString();
   }
-  language.addEventListener('change',updateFallback);
+  const quickLanguages=overlay.querySelectorAll('.translate-mini-lang-btn');
+  const otherLanguages=document.getElementById('translate-mini-other');
+  function syncLanguageButtons(){
+    quickLanguages.forEach(btn=>btn.setAttribute('aria-pressed',String(btn.dataset.lang===language.value)));
+    otherLanguages.value=[...quickLanguages].some(btn=>btn.dataset.lang===language.value)?'':language.value;
+  }
+  quickLanguages.forEach(btn=>btn.addEventListener('click',()=>{
+    language.value=btn.dataset.lang;
+    language.dispatchEvent(new Event('change'));
+  }));
+  otherLanguages.addEventListener('change',()=>{
+    if(!otherLanguages.value)return;
+    language.value=otherLanguages.value;
+    language.dispatchEvent(new Event('change'));
+  });
+  language.addEventListener('change',()=>{syncLanguageButtons();updateFallback();});
+  syncLanguageButtons();
   input.addEventListener('input',updateFallback);
   submit.addEventListener('click',async()=>{
     const q=input.value.trim();
