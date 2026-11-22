@@ -671,6 +671,14 @@ body{padding-top:58px!important}
 }
 @media(max-width:1100px){.training-translate-floating{position:relative;left:auto;top:auto;margin:12px 16px 18px}}
 
+
+/* Simplified register exercise guidance */
+.register-simple-guide{background:#fff;border-radius:16px;padding:17px 12px;margin:14px 0 16px;text-align:center;display:flex;flex-direction:column;gap:10px;color:#243144;font-size:1.04rem;line-height:1.5}
+.register-simple-guide>div:first-child{font-weight:700}
+.register-simple-divider{margin:0 14px}
+.exercise-card:has(.register-simple-guide) .category-buttons{gap:14px;margin:12px auto 17px}
+.exercise-card:has(.register-simple-guide) .category-button{flex:1;max-width:460px;background:#e9f7f1;border:1px solid #8ab7a7;color:#172b25}
+@media(max-width:600px){.register-simple-guide{font-size:.92rem}.register-simple-divider{margin:0 5px}.exercise-card:has(.register-simple-guide) .category-buttons{gap:8px}.exercise-card:has(.register-simple-guide) .category-button{min-width:0;font-size:.86rem;padding:8px 5px}}
 </style>
 </head>      
 <body id="seitenanfang">
@@ -782,16 +790,9 @@ body{padding-top:58px!important}
       
 <main class="page exercise-page">      
 <section class="exercise-card">      
-<h1 class="exercise-title">Informell oder formell?
-<span class="translation-inline-control register-title-translation" data-inline-translation="registerExercise">
-<button type="button" class="translation-toggle" aria-label="Übersetzung anzeigen" title="Übersetzung"><span class="globe translation-globe">🌐</span><span>A/文</span></button>
-<span class="translation-panel"><span class="translation-languages"><button type="button" class="translation-language" data-lang="en">English</button><button type="button" class="translation-language" data-lang="pl">Polski</button><button type="button" class="translation-language" data-lang="it">Italiano</button></span><span class="translation-text" aria-live="polite"></span></span>
-</span></h1>      
-<div class="exercise-guide-row">
-<div class="action-help" data-help-key="register" aria-label="So funktioniert die Übung"><span class="action-help-step">👀 Satz lesen</span><span class="action-help-arrow">→</span><span class="action-help-step">👆 Antwort anklicken</span></div>
-<div class="register-key" aria-label="Informell und formell"><span class="register-key-item">🙂 <strong>du</strong> = informell</span><span class="register-key-item">👔 <strong>Sie</strong> = formell</span></div>
-</div>
-<div class="category-buttons"><button class="category-button" data-category="informell"><span class="click-icon choice-pulse-hand">👆</span> Informell wählen</button><span class="category-or">oder</span><button class="category-button" data-category="formell"><span class="click-icon choice-pulse-hand">👆</span> Formell wählen</button></div>      
+<h1 class="exercise-title">Informell oder formell?</h1>      
+<div class="register-simple-guide" aria-label="So funktioniert die Übung"><div>👀 Satz lesen → 👆 Antwort anklicken</div><div>🙂 du = informell <span class="register-simple-divider">·</span> 👔 Sie = formell</div></div>
+<div class="category-buttons"><button class="category-button" data-category="informell"><span class="click-icon choice-pulse-hand">👆</span> Informell wählen</button><button class="category-button" data-category="formell"><span class="click-icon choice-pulse-hand">👆</span> Formell wählen</button></div>      
 <div class="exercise-list">      
 <div class="exercise-row active" data-answer="informell" data-text="Wie heißt du?"><span class="exercise-sentence">Wie heißt du?</span><p class="exercise-feedback"></p></div>      
 <div class="exercise-row" data-answer="formell" data-text="Wie heißen Sie?"><span class="exercise-sentence">Wie heißen Sie?</span><p class="exercise-feedback"></p></div>      
