@@ -944,9 +944,9 @@ button:focus-visible,
     <a href="../dikatat.a1/diktat1.html" class="training-btn diktat-btn">
       <span class="step-number">⑥</span> ✍️ Ich schreibe ein Diktat
     </a>
-    <button type="button" id="translate-help-open" class="training-btn translate-help-btn" aria-haspopup="dialog" aria-controls="translate-help-dialog" aria-label="Translate – Sprachhilfe öffnen">
+    <a id="translate-help-open" class="training-btn translate-help-btn" href="https://translate.google.com/?hl=de&amp;sl=de&amp;tl=en&amp;op=translate" target="_blank" rel="noopener noreferrer" aria-label="Google Translate öffnen">
       <span aria-hidden="true">🌐</span> Translate <span aria-hidden="true">❔</span>
-    </button>
+    </a>
 
   </div>
 
@@ -1487,61 +1487,6 @@ ichKannButton.addEventListener("click",()=>{
 <script src="../../js/page-progress.js" defer></script>
 <a href="deutsch-pass.html" style="position:fixed;right:16px;bottom:16px;z-index:1000;background:#184e8c;color:white;border-radius:28px;padding:11px 16px;font:600 14px system-ui;text-decoration:none;box-shadow:0 4px 18px #1234">🎓 Mein Deutsch-Pass</a>
 
-<div id="translate-help-dialog" class="translate-help-backdrop" hidden>
-  <section class="translate-help-panel" role="dialog" aria-modal="true" aria-labelledby="translate-help-title">
-    <button type="button" id="translate-help-close" aria-label="Schließen">×</button>
-    <h2 id="translate-help-title">🌐 Translate ❔</h2>
-    <p>Nie rozumiesz niemieckiego słowa lub polecenia? Wpisz pytanie w swoim języku.</p>
-    <label for="translate-help-question">Your question / Deine Frage</label>
-    <textarea id="translate-help-question" placeholder="Np. Co znaczy ergänzen?"></textarea>
-    <div class="translate-help-actions">
-      <button type="button" id="translate-help-copy">Zapytaj AI ↗</button>
-    </div>
-    <p id="translate-help-status" role="status" aria-live="polite">Wpisz pytanie i kliknij „Zapytaj AI”. Pytanie zostanie skopiowane, a nauczyciel Poe otworzy się w nowej karcie. Wklej je tam (Ctrl+V) i wyślij.</p>
-  </section>
-</div>
-<script>
-(function(){
-  const trigger=document.getElementById('translate-help-open');
-  const dialog=document.getElementById('translate-help-dialog');
-  const close=document.getElementById('translate-help-close');
-  const question=document.getElementById('translate-help-question');
-  const copy=document.getElementById('translate-help-copy');
-  const status=document.getElementById('translate-help-status');
-  if(!trigger||!dialog)return;
-  trigger.addEventListener('click',()=>{dialog.hidden=false;question.focus();});
-  function hide(){dialog.hidden=true;trigger.focus();}
-  close.addEventListener('click',hide);
-  dialog.addEventListener('click',e=>{if(e.target===dialog)hide();});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!dialog.hidden)hide();});
-  copy.addEventListener('click',async()=>{
-    const value=question.value.trim();
-    if(!value){status.textContent='Najpierw wpisz pytanie.';question.focus();return;}
-    // Open from a user click immediately, to avoid popup blocking after an async clipboard write.
-    const poeTab=window.open('https://poe.com/Deutsch-Sprachhilfe','_blank','noopener,noreferrer');
-    let copied=false;
-    try{
-      await navigator.clipboard.writeText(value);
-      copied=true;
-    }catch(e){
-      try{
-        question.focus();
-        question.select();
-        copied=document.execCommand('copy');
-      }catch(_e){copied=false;}
-    }
-    if(copied){
-      status.textContent='Pytanie skopiowane. Wklej je w Poe (Ctrl+V) i wyślij.';
-    }else{
-      question.focus();
-      question.select();
-      status.textContent='Pytanie zostało zaznaczone. Skopiuj je (Ctrl+C), wklej w Poe (Ctrl+V) i wyślij.';
-    }
-    if(!poeTab){
-      status.textContent+=' Jeśli Poe nie otworzyło się, użyj adresu: poe.com/Deutsch-Sprachhilfe';
-    }
-  });
-})();
-</script>
+
 </body>
 </html>
