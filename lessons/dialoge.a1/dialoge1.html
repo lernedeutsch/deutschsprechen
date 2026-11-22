@@ -3191,6 +3191,7 @@ html body .current-dialog-panel .mic-btn.listening{
 .next-training a:hover{animation-play-state:paused;transform:scale(1.04)}
 @media(prefers-reduced-motion:reduce){.next-training a{animation:none}}
 </style>
+<style id="answer-bulb-size">#answer-btn .answer-bulb-icon{display:inline-block;font-size:1.65em;line-height:1;vertical-align:-.12em;margin-right:3px}</style>
 </head>
 
 <body>
@@ -3424,7 +3425,7 @@ html body .current-dialog-panel .mic-btn.listening{
 
         <div class="sidebar-utility-row">
           <button type="button" class="utility-btn repeat-btn" id="repeat-btn">🔊 Noch einmal hören</button>
-          <button type="button" class="utility-btn answer-btn" id="answer-btn">💡 Antwort zeigen</button>
+          <button type="button" class="utility-btn answer-btn" id="answer-btn"><span class="answer-bulb-icon" aria-hidden="true">💡</span> Antwort zeigen</button>
           <button type="button" class="utility-btn stop-btn" id="stop-btn">⏹ Stop</button>
         </div>
       </div>
