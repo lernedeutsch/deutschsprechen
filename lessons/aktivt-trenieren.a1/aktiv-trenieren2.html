@@ -216,6 +216,10 @@ body{padding-top:24px}
 #t2 .nationality-test-box{background:#f5fcf8;border-color:#a8e2c7}
 #t2 .nationality-test-box .help{background:#e4f7ed;border-color:#9dd7b9}
 #t2 .quiz.quiz-inline{border-top-color:#a8e2c7}
+
+/* Name field slightly smaller than country field; preserve both behaviors */
+#t2 #student-name{flex:0 1 78%;max-width:78%;min-height:54px;padding:10px 14px;font-size:1.08rem}
+@media(max-width:700px){#t2 #student-name{flex:1 1 100%;max-width:100%}}
 </style>
 <link rel="stylesheet" href="../../css/click-hints.css">
 <link rel="stylesheet" href="../../css/translation-globe.css">
