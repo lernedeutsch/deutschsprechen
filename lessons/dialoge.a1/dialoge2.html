@@ -1597,6 +1597,7 @@ button{font:inherit}
   top:0 !important;
   bottom:0 !important;
 }
+
 /* Startpanel: Glassmorphism-Look mit ausgeprägter 3D-Tiefe. */
 #gate.gate{
   position:relative;
@@ -3082,6 +3083,38 @@ html body .main-history-panel .history-entry.user.pending-user-answer .user-answ
   width:28px;
 }
 </style>
+<style>
+/* High-visibility cue ONLY when the student microphone is ready. */
+html body .current-dialog-panel .mic-btn.ready:not(.listening),
+html body .current-dialog-panel .mic-btn-wrap.ready .mic-btn:not(.listening){
+  background:linear-gradient(145deg,#d7ff75 0%,#55ff46 38%,#00d956 75%,#00a849 100%) !important;
+  border:2px solid #caff9c !important;
+  box-shadow:0 0 0 5px rgba(94,255,82,.38),0 0 23px 8px rgba(65,255,72,.83),0 0 46px 13px rgba(0,255,91,.48),inset 0 5px 9px rgba(255,255,255,.65),0 12px 20px rgba(0,0,0,.38) !important;
+  animation:studentMicCue .85s ease-in-out infinite !important;
+  transform-origin:center;
+}
+html body .current-dialog-panel .mic-btn.listening{
+  background:linear-gradient(145deg,#ff9990,#ed4949 60%,#a91d2b) !important;
+  box-shadow:0 0 0 5px rgba(255,90,90,.22),0 0 26px rgba(255,80,80,.65),inset 0 5px 8px rgba(255,255,255,.35),0 12px 20px rgba(0,0,0,.38) !important;
+  animation:none !important;
+}
+@keyframes studentMicCue{
+  0%,100%{filter:brightness(1);transform:scale(1);box-shadow:0 0 0 4px rgba(94,255,82,.28),0 0 20px 5px rgba(65,255,72,.62),0 0 34px 8px rgba(0,255,91,.36),inset 0 5px 9px rgba(255,255,255,.65),0 12px 20px rgba(0,0,0,.38)}
+  50%{filter:brightness(1.32);transform:scale(1.13);box-shadow:0 0 0 10px rgba(94,255,82,.3),0 0 32px 15px rgba(65,255,72,.95),0 0 65px 23px rgba(0,255,91,.65),inset 0 5px 9px rgba(255,255,255,.75),0 12px 20px rgba(0,0,0,.38)}
+}
+@media(prefers-reduced-motion:reduce){
+  html body .current-dialog-panel .mic-btn.ready:not(.listening),
+  html body .current-dialog-panel .mic-btn-wrap.ready .mic-btn:not(.listening){animation:none !important}
+}
+</style>
+<style>
+.next-training{justify-content:center!important;text-align:center;width:100%;margin:22px auto 12px!important}
+.next-training a{display:inline-flex;justify-content:center;align-items:center;min-height:64px!important;padding:16px 30px!important;font-size:1.12rem!important;line-height:1.3;text-align:center;max-width:calc(100% - 24px);box-sizing:border-box;animation:nextDiktatPulse 1.9s ease-in-out infinite}
+@keyframes nextDiktatPulse{0%,100%{transform:scale(1);box-shadow:0 7px 18px rgba(32,181,167,.25)}50%{transform:scale(1.055);box-shadow:0 9px 28px rgba(32,181,167,.60)}}
+.next-training a:hover{animation-play-state:paused;transform:scale(1.04)}
+@media(prefers-reduced-motion:reduce){.next-training a{animation:none}}
+</style>
+<style>#answer-btn .answer-bulb-icon{display:inline-block;font-size:1.65em;line-height:1;vertical-align:-.12em;margin-right:3px}</style>
 </head>
 
 <body>
