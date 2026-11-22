@@ -199,7 +199,7 @@ body{font-family:"Nunito Sans",Arial,sans-serif}
 </div></article></main>
 <script>let v=null;function voices(){if(!("speechSynthesis"in window))return;v=speechSynthesis.getVoices().find(x=>x.lang?.toLowerCase()==="de-de")||speechSynthesis.getVoices().find(x=>x.lang?.toLowerCase().startsWith("de"))||null}voices();if("speechSynthesis"in window)speechSynthesis.addEventListener("voiceschanged",voices);document.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(b.dataset.s);u.lang="de-DE";u.rate=.82;if(v)u.voice=v;speechSynthesis.speak(u)});const ik=document.getElementById("ich-kann-button"),ip=document.getElementById("ich-kann-paper");ik.addEventListener("click",()=>{const o=ip.classList.toggle("show");ik.classList.toggle("open",o);ik.setAttribute("aria-expanded",String(o));ip.setAttribute("aria-hidden",String(!o))})</script>
 <script src="../../js/page-progress.js" defer></script>
-<script src="../../js/a1-previous-review.js" defer></script><div id="translate-mini-dialog" class="translate-mini-overlay" hidden>
+<script src="../../js/a1-previous-review.js?v=20261122-2" defer></script><div id="translate-mini-dialog" class="translate-mini-overlay" hidden>
   <section class="translate-mini-panel" role="dialog" aria-modal="true" aria-labelledby="translate-mini-title">
     <button type="button" class="translate-mini-close" id="translate-mini-close" aria-label="Close / Schließen">×</button>
     <h2 id="translate-mini-title">🌐 Translate ❔</h2>
