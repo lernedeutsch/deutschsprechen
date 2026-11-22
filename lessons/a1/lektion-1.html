@@ -925,7 +925,7 @@ button:focus-visible,
 .translate-help-actions button,.translate-help-actions a{border:0;border-radius:10px;padding:10px 13px;background:#168c9c;color:#fff;font-weight:700;text-decoration:none}
 .translate-help-actions a{background:#203a57}
 /* Wyraźniejszy, łagodnie pulsujący przycisk tłumaczenia w oknie */
-.translate-help-actions button{
+.translate-mini-actions #translate-mini-submit{
   padding:14px 20px;
   min-height:50px;
   font-size:1rem;
@@ -936,7 +936,7 @@ button:focus-visible,
   0%,100%{box-shadow:0 3px 9px rgba(22,140,156,.20);filter:brightness(1)}
   50%{box-shadow:0 4px 14px rgba(22,140,156,.30),0 0 0 5px rgba(22,140,156,.14);filter:brightness(1.08)}
 }
-@media(prefers-reduced-motion:reduce){.translate-help-actions button{animation:none}}
+@media(prefers-reduced-motion:reduce){.translate-mini-actions #translate-mini-submit{animation:none}}
 
 #translate-help-close{position:absolute;right:14px;top:12px;border:0;background:transparent;font-size:1.6rem;color:#203a57}
 #translate-help-status{font-size:.88rem;margin-top:10px}
