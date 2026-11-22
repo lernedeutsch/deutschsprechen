@@ -3723,6 +3723,8 @@ let historyCounter=0;
 let promptStarting=false;
 let retrying=false;
 let micReady=false;
+let hintUsed=false;
+let reviewAnswers=[];
 
 function renderStars(count,total){
   const filled=Math.round((total?count/total:0)*5);
@@ -4021,7 +4023,7 @@ function markCorrect(spokenText){
   answered=true;
   retrying=false;
   streak++;
-  score++;
+  if(!hintUsed){score++;}
 
   bestStreak=Math.max(bestStreak,streak);
 
@@ -4051,6 +4053,11 @@ function markCorrect(spokenText){
 function markWrong(spokenText){
   streak=0;
   attempts++;
+
+  if(attempts===1&&!reviewAnswers.includes(current().example)){
+    reviewAnswers.push(current().example);
+  }
+
   micReady=false;
   els.micBtnWrap.classList.remove("ready");
   els.micBtn.classList.remove("ready");
@@ -4058,24 +4065,43 @@ function markWrong(spokenText){
 
   updateStats();
 
-  addHistoryEntry(
-    "user",
-    "Du",
-    `${spokenText} ✗`
-  );
+  addHistoryEntry("user","Du",`${spokenText} ✗`);
 
-  els.micStatus.textContent=
-    "Das war noch nicht richtig.";
-
+  els.micStatus.textContent="Das war noch nicht richtig.";
   els.micStatus.classList.remove("live");
+  clearTimeout(restartTimer);
 
   if(attempts>=2){
-    els.exampleText.classList.add("show");
-    els.exampleText.textContent=
-      `Tipp: „${current().example}“`;
-  }
+    hintUsed=true;
+    answered=true;
+    retrying=true;
+    setMicReady(false);
 
-  clearTimeout(restartTimer);
+    const modelAnswer=current().example;
+    const helpText=`Du kannst es so sagen: ${modelAnswer}`;
+
+    els.exampleText.classList.add("show");
+    els.exampleText.textContent=helpText;
+
+    window.setTimeout(async()=>{
+      await waitForMicrophoneToStop();
+      const wave=document.getElementById("speaker-wave")?.closest(".sidebar-mic");
+      wave?.classList.add("lecturer-speaking");
+      await speakGerman(helpText);
+      wave?.classList.remove("lecturer-speaking");
+
+      addHistoryEntry("user","Du",modelAnswer);
+      const addedEntry=els.historyList.lastElementChild;
+      if(addedEntry){
+        addedEntry.classList.add("answer-hint");
+        addedEntry.dataset.turn=String(index);
+      }
+
+      retrying=false;
+      window.setTimeout(advance,450);
+    },650);
+    return;
+  }
 
   restartTimer=window.setTimeout(()=>{
     repeatPromptAfterWrongAnswer();
