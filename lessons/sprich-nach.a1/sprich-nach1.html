@@ -895,15 +895,17 @@ button,input{font:inherit}
   border-color:#f2d06f;
 }
 
-/* Place the globe explanation directly beneath the back arrow. */
-.module-tools .translation-control{
-  position:fixed;
-  top:78px;
-  left:10px;
-  right:auto;
+/* Keep the explanation globe aligned with the left edge of the back arrow. */
+html body .module-row .module-tools #translation-control{
+  position:fixed !important;
+  top:70px !important;
+  left:10px !important;
+  right:auto !important;
+  margin:0 !important;
+  transform:none !important;
   z-index:39;
 }
-.module-tools .translation-control .translation-panel{
+html body #translation-control .translation-panel{
   left:0;
   right:auto;
 }
