@@ -605,6 +605,15 @@ body{padding-top:58px!important}
 }
 .translate-mini-language-options #translate-mini-other:focus-visible,
 .translate-mini-language-options .translate-mini-lang-btn:focus-visible{outline:3px solid #ffcc66;outline-offset:2px}
+.translate-mini-actions #translate-mini-submit{
+  background:#D62828;color:#fff;padding:14px 20px;min-height:50px;font-size:1rem;
+  animation:translateActionPulse 1.7s ease-in-out infinite;
+}
+@keyframes translateActionPulse{
+  0%,100%{box-shadow:0 3px 10px rgba(214,40,40,.28),0 0 0 0 rgba(214,40,40,.30);filter:brightness(1);transform:scale(1)}
+  50%{box-shadow:0 5px 20px rgba(214,40,40,.48),0 0 0 7px rgba(214,40,40,.20);filter:brightness(1.13);transform:scale(1.035)}
+}
+@media(prefers-reduced-motion:reduce){.translate-mini-actions #translate-mini-submit{animation:none}}
 .translate-mini-actions button,.translate-mini-actions a{border:0;border-radius:10px;padding:10px 14px;background:#168c9c;color:white;font:700 15px system-ui;text-decoration:none;cursor:pointer}
 .translate-mini-actions a{background:#203a57}.translate-mini-result{margin-top:14px;background:#eef7f9;padding:12px;border-radius:10px;min-height:25px;white-space:pre-wrap;overflow-wrap:anywhere}
 .translate-mini-close{float:right;border:0;background:none;color:#203a57;font-size:28px;cursor:pointer}.translate-mini-note{font-size:12px;color:#536474;margin-top:10px}
