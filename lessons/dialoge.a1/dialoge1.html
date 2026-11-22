@@ -3184,6 +3184,13 @@ html body .current-dialog-panel .mic-btn.listening{
 @media(max-width:650px){#translate-help-open{left:8px;top:auto;bottom:18px;padding:10px 12px;font-size:14px}}
 @media(prefers-reduced-motion:reduce){#translate-help-open{animation:none}}
 </style>
+<style id="next-training-emphasis">
+.next-training{justify-content:center!important;text-align:center;width:100%;margin:22px auto 12px!important}
+.next-training a{display:inline-flex;justify-content:center;align-items:center;min-height:64px!important;padding:16px 30px!important;font-size:1.12rem!important;line-height:1.3;text-align:center;max-width:calc(100% - 24px);box-sizing:border-box;animation:nextDiktatPulse 1.9s ease-in-out infinite}
+@keyframes nextDiktatPulse{0%,100%{transform:scale(1);box-shadow:0 7px 18px rgba(32,181,167,.25)}50%{transform:scale(1.055);box-shadow:0 9px 28px rgba(32,181,167,.60)}}
+.next-training a:hover{animation-play-state:paused;transform:scale(1.04)}
+@media(prefers-reduced-motion:reduce){.next-training a{animation:none}}
+</style>
 </head>
 
 <body>
