@@ -1939,9 +1939,9 @@ function handleAnswer(said){
       statusLine.textContent="Sehr gut — jetzt stimmt es! ✨";
     }
     addToHistory(currentIndex,target);
-    /* Po poprawnym zaliczeniu zdanie nie jest już „trudne”.
-       Dotyczy to także zdań wcześniej pominiętych przyciskiem Nächster Satz. */
-    difficultIndices.delete(currentIndex);
+    /* Zachowaj historię pomyłek z pierwszego przejścia, aby uczeń mógł
+       wrócić do trudnych zdań po ukończeniu całego ćwiczenia. */
+    if(reviewQueue)difficultIndices.delete(currentIndex);
     if(reviewQueue){
       if(reviewQueue.length){
         currentIndex=reviewQueue.shift();
@@ -2076,6 +2076,9 @@ if(difficultBtn){
   difficultBtn.addEventListener("click",()=>{
     const difficult=[...difficultIndices].sort((a,b)=>a-b);
     if(!difficult.length)return;
+    playbackToken++;
+    stopRecognitionCompletely();
+    stopSpeechSafely();
     reviewQueue=difficult.slice(1);
     currentIndex=difficult[0];
     doneWrap.classList.remove("active");
