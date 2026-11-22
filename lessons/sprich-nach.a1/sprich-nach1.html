@@ -895,6 +895,19 @@ button,input{font:inherit}
   border-color:#f2d06f;
 }
 
+/* Place the globe explanation directly beneath the back arrow. */
+.module-tools .translation-control{
+  position:fixed;
+  top:78px;
+  left:10px;
+  right:auto;
+  z-index:39;
+}
+.module-tools .translation-control .translation-panel{
+  left:0;
+  right:auto;
+}
+
 /* Back arrow: same translucent square as Lektion 1; override generic .icon-btn */
 .module-tools a.icon-btn.module-back{
   position:fixed;
