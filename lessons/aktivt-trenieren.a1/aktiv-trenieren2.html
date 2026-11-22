@@ -278,6 +278,11 @@ body{padding-top:24px}
 #t2>.head h2{color:#fff!important}
 #t3 .head h2,#t4>.head h2{color:#102333!important}
 @media(max-width:700px){#t2>.head h2,#t3 .head h2,#t4>.head h2{font-size:1.65rem!important}}
+
+/* Match A1–1 stamp reset button and its separator */
+.stamp-reset-area{margin-top:22px!important;padding-top:18px!important;text-align:center!important;background:none!important;border:0!important;border-top:2px dashed #1c24302e!important}
+#reset.reset{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;margin-top:0;padding:9px 20px;background:#20324a;color:#fff;border:0;border-radius:999px;font-weight:800;transition:transform .16s,filter .16s}
+#reset.reset:hover{transform:translateY(-2px);filter:brightness(1.1)}
 </style>
 <link rel="stylesheet" href="../../css/click-hints.css">
 <link rel="stylesheet" href="../../css/translation-globe.css">
@@ -365,7 +370,7 @@ body{padding-top:24px}
       <p data-k="nation">✅ <b>Ich kann Länder und Nationalitäten sagen.</b><br>Deutschland, Polen, die Schweiz … · Deutscher, Polin, Österreicherin …</p>
       <p data-k="kommen">✅ <b>Ich kann das Verb „kommen“ benutzen.</b><br>komme · kommst · kommt · kommen · kommt · kommen</p>
       <p data-k="zahlen">✅ <b>Ich kann Zahlen 1–20 sagen.</b><br>eins, zwei, drei, … zwanzig</p>
-      <p style="text-align:center;background:none;border:0"><button class="reset" id="reset">↻ Stempel neu sammeln</button><br><span id="reset-msg" style="color:var(--green);font-weight:800"></span></p>
+      <p class="stamp-reset-area"><button class="reset" id="reset">↻ Stempel neu sammeln</button><br><span id="reset-msg" style="color:var(--green);font-weight:800"></span></p>
     </div>
   </section>
 </main>
