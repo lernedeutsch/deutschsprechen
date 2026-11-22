@@ -1,6 +1,6 @@
 (()=>{const m=location.pathname.match(/lektion-(\d+)\.html$/);if(!m)return;const n=+m[1];if(n<2||n>30)return;
 const D={
-1:{w:["Hallo!","Guten Morgen!","Guten Tag!","Ich heiße …","Wie heißen Sie?","Wie geht es Ihnen?"],q:[["Wie heißen Sie?",["heiße","heisse","bin"]],["Wie geht es Ihnen?",["gut","sehr gut","danke","nicht so gut"]],["Begrüßen Sie eine Person am Morgen.",["guten morgen"]]]},
+1:{w:["Hallo!","Guten Morgen!","Guten Tag!","Guten Abend!","Tschüss!","Auf Wiedersehen!","Ich heiße …","Mein Name ist …","Ich bin …","Wie heißt du?","Wie heißen Sie?","Das Alphabet"],q:[["Wie heißen Sie?",["ich heiße","ich heisse","mein name ist","ich bin"]],["Wie heißt du?",["ich heiße","ich heisse","mein name ist","ich bin"]],["Begrüßen Sie eine Person am Morgen.",["guten morgen"]],["Verabschieden Sie sich.",["tschüss","tschues","auf wiedersehen"]]]},
 2:{w:["kommen","Deutschland","Polen","Italien","die Schweiz","Ich komme aus …","Woher kommen Sie?"],q:[["Woher kommen Sie?",["komme aus"]],["Nennen Sie ein Land und eine Nationalität.",["deutsch","poln","ital","schweiz","span","franz"]]]},
 3:{w:["Wie alt sind Sie?","Ich bin … Jahre alt.","wohnen","Wo wohnen Sie?","Ich wohne in …"],q:[["Wie alt sind Sie?",["jahre","bin"]],["Wo wohnen Sie?",["wohne"]]]},
 4:{w:["der Beruf","arbeiten","Was sind Sie von Beruf?","Ich arbeite als …","Wo arbeiten Sie?"],q:[["Was sind Sie von Beruf?",["bin","arbeite"]],["Wo arbeiten Sie?",["arbeite","bei","in"]]]},
