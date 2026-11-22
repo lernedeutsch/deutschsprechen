@@ -223,6 +223,11 @@ body{padding-top:24px}
 
 /* Slightly smaller Dein Name label only */
 #t2 label[for="student-name"]{font-size:.88em}
+
+/* Align both entry fields on the same left and right edges */
+#t2 .country-input-card .name-row{display:grid;grid-template-columns:220px minmax(0,1fr);align-items:center;gap:12px}
+#t2 #student-name,#t2 #nationality{width:100%;max-width:100%;min-width:0;box-sizing:border-box;flex:auto}
+@media(max-width:700px){#t2 .country-input-card .name-row{grid-template-columns:1fr;gap:6px}}
 </style>
 <link rel="stylesheet" href="../../css/click-hints.css">
 <link rel="stylesheet" href="../../css/translation-globe.css">
