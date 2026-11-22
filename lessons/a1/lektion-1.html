@@ -869,7 +869,22 @@ button:focus-visible,
 .translate-mini-panel{width:min(100%,480px);max-height:90vh;overflow:auto;background:#fff;color:#15283b;border-radius:20px;padding:24px;box-shadow:0 18px 50px #0004;font:16px/1.5 system-ui,sans-serif}
 .translate-mini-panel h2{font-size:1.35rem;margin:0 35px 12px 0}.translate-mini-panel label{display:block;font-weight:700;margin:12px 0 5px}
 .translate-mini-panel textarea,.translate-mini-panel select{box-sizing:border-box;width:100%;padding:11px;border:1px solid #9caec1;border-radius:10px;font:inherit;color:#15283b;background:#fff}
-.translate-mini-panel textarea{min-height:85px;resize:vertical}.translate-mini-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.translate-mini-panel textarea{min-height:85px;resize:vertical}
+.translate-mini-input-wrap{position:relative}
+.translate-mini-input-wrap textarea{padding-right:76px}
+.translate-mini-pencil{
+  position:absolute;right:22px;top:22px;
+  font-size:2.5rem;line-height:1;
+  pointer-events:none;transform-origin:center;
+  animation:translatePencilPulse 1.8s ease-in-out infinite;
+}
+.translate-mini-input-wrap textarea:not(:placeholder-shown)+.translate-mini-pencil{opacity:0;animation:none}
+@keyframes translatePencilPulse{
+  0%,100%{transform:scale(1) rotate(-8deg);opacity:.65}
+  50%{transform:scale(1.25) rotate(8deg);opacity:1}
+}
+@media(prefers-reduced-motion:reduce){.translate-mini-pencil{animation:none}}
+.translate-mini-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
 .translate-mini-actions button,.translate-mini-actions a{border:0;border-radius:10px;padding:10px 14px;background:#168c9c;color:white;font:700 15px system-ui;text-decoration:none;cursor:pointer}
 .translate-mini-actions a{background:#203a57}.translate-mini-result{margin-top:14px;background:#eef7f9;padding:12px;border-radius:10px;min-height:25px;white-space:pre-wrap;overflow-wrap:anywhere}
 .translate-mini-close{float:right;border:0;background:none;color:#203a57;font-size:28px;cursor:pointer}.translate-mini-note{font-size:12px;color:#536474;margin-top:10px}
@@ -1532,7 +1547,10 @@ ichKannButton.addEventListener("click",()=>{
     <button type="button" class="translate-mini-close" id="translate-mini-close" aria-label="Close / Schließen">×</button>
     <h2 id="translate-mini-title">🌐 Translate ❔</h2>
     <label for="translate-mini-input">Wort oder Satz / Word or sentence</label>
-    <textarea id="translate-mini-input" placeholder="Ergänze"></textarea>
+    <div class="translate-mini-input-wrap">
+      <textarea id="translate-mini-input" placeholder="Ergänze"></textarea>
+      <span class="translate-mini-pencil" aria-hidden="true">✏️</span>
+    </div>
     <label for="translate-mini-language">Translate to / Zielsprache</label>
     <select id="translate-mini-language">
       <option value="pl">Polski</option><option value="en" selected>English</option><option value="it">Italiano</option>
