@@ -3583,9 +3583,16 @@ function speakGerman(text,options={}){
       utterance.voice=germanVoice;
     }
 
+    const lecturerWave=document.getElementById("speaker-wave")?.closest(".sidebar-mic");
+    lecturerWave?.classList.remove("lecturer-speaking");
+    utterance.onstart=()=>{
+      if(token===speechToken) lecturerWave?.classList.add("lecturer-speaking");
+    };
+
     const finish=()=>{
       if(token===speechToken){
         speaking=false;
+        lecturerWave?.classList.remove("lecturer-speaking");
       }
       resolve();
     };
