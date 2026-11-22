@@ -202,7 +202,7 @@ body{padding-top:24px}
 <div class="card">
 <div class="nationality-lab"><div class="continuity-card"><strong>🔁 Aus Lektion 1</strong><span>Du kannst schon sagen, wie du heißt. Jetzt sagst du zusätzlich, woher du kommst.</span><div class="continuity-example"><b>Hallo! Ich heiße Anna.</b><span class="continuity-arrow">↓</span><b>Hallo! Ich heiße Anna. Ich komme aus Polen.</b></div></div><div class="country-input-card instruction-panel"><div class="help"><span>✏️ Land eingeben</span><em>→</em><span><b class="click-cue">👆</b> „Informell“ oder „Formell“ anklicken</span><em>→</em><span><span class="click-cue">🔊</span> zuhören</span></div>
 <div class="country-instruction-row instruction-row"><p>Trag dein Land ein — die Dialoge passen sich an!</p><details class="tr-box"><summary><span class="globe-spin">🌐</span><span class="tr-label">A/文</span></summary><div class="tr-content"><p><b>English:</b> Enter your country — the dialogues will adapt automatically.</p><p><b>Polski:</b> Wpisz swój kraj — dialogi dopasują się automatycznie.</p><p><b>Italiano:</b> Inserisci il tuo paese: i dialoghi si adatteranno automaticamente.</p></div></details></div>
-<div class="name-row"><label for="nationality" class="country-label"><b><span class="pencil-pulse">✏️</span> Dein Land:</b></label><input id="nationality" value="" placeholder="z. B. Italien"></div><p class="country-safe-note">Tipp: Probiere z. B. Polen, Deutschland, Österreich, Italien, Frankreich, Spanien, die Schweiz oder die USA.</p></div>
+<div class="name-row"><label for="student-name" class="country-label"><b><span class="pencil-pulse">✏️</span> Dein Name:</b></label><input id="student-name" value="" placeholder="z. B. Monika" autocomplete="given-name" required></div><div class="name-row"><label for="nationality" class="country-label"><b><span class="pencil-pulse">✏️</span> Dein Land:</b></label><input id="nationality" value="" placeholder="z. B. Polen" required></div><p id="nationality-input-error" role="status" aria-live="polite" style="color:#a52a23;font-weight:700;margin:6px 0 0"></p><p class="country-safe-note">Tipp: Probiere z. B. Polen, Deutschland, Österreich, Italien, Frankreich, Spanien, die Schweiz oder die USA.</p></div>
 <div class="dialog-tabs"><button class="dialog-tab" id="play-informal" type="button">Informell 🔊</button><button class="dialog-tab" id="play-formal" type="button">Formell 🔊</button></div>
 <div class="dialog-pair">
 <div><h3>Informell</h3><div class="mini-dialog" id="nationality-dialog-informal"></div></div>
@@ -369,21 +369,34 @@ function countryAfterAus(value){
  const forms={"polen":"Polen","deutschland":"Deutschland","österreich":"Österreich","oesterreich":"Österreich","italien":"Italien","frankreich":"Frankreich","spanien":"Spanien","schweiz":"der Schweiz","die schweiz":"der Schweiz","usa":"den USA","die usa":"den USA"};
  return forms[key]||null;
 }
+function studentName(){return $("student-name").value.trim().replace(/\\s+/g," ").slice(0,60)}
 function nationalityLines(formal){
- const n=countryAfterAus($("nationality").value);
+ const name=studentName(),n=countryAfterAus($("nationality").value);
+ const intro=name?("Ich heiße "+name+"."):"Ich heiße … .";
  return formal
- ?["Guten Tag!","Guten Tag!","Wie heißen Sie?","Ich heiße Felix. Und Sie?","Ich heiße Anna.","Woher kommen Sie?",n?("Ich komme aus "+n+". Und Sie?"):"Ich komme aus … . Und Sie?","Ich komme aus Deutschland."]
- :["Hallo!","Hallo!","Wie heißt du?","Ich heiße Tom. Und du?","Ich heiße Anna.","Woher kommst du?",n?("Ich komme aus "+n+". Und du?"):"Ich komme aus … . Und du?","Ich komme aus Deutschland."];
+ ?["Guten Tag!","Guten Tag!","Wie heißen Sie?","Ich heiße Felix. Und Sie?",intro,"Woher kommen Sie?",n?("Ich komme aus "+n+". Und Sie?"):"Ich komme aus … . Und Sie?","Ich komme aus Deutschland."]
+ :["Hallo!","Hallo!","Wie heißt du?","Ich heiße Tom. Und du?",intro,"Woher kommst du?",n?("Ich komme aus "+n+". Und du?"):"Ich komme aus … . Und du?","Ich komme aus Deutschland."];
 }
 function renderNatDialog(){
- const make=(lines)=>lines.map((x,i)=>'<div class="db '+(i%2?"me":"")+'"><b>'+(i%2?"B":"A")+'</b> '+x+(i%2?" 🧑🏻":" 👩🏻")+'</div>').join("");
+ const make=(lines)=>lines.map((x,i)=>'<div class="db '+(i%2?"me":"")+'"><b>'+(i%2?"B":"A")+'</b> '+escapeNatText(x)+(i%2?" 🧑🏻":" 👩🏻")+'</div>').join("");
  $("nationality-dialog-informal").innerHTML=make(nationalityLines(false));
  $("nationality-dialog-formal").innerHTML=make(nationalityLines(true));
 }
-async function playNat(formal){if(!S)return;S.cancel();const lines=nationalityLines(formal);for(let i=0;i<lines.length;i++){await speak(lines[i],.86,i%2?VM:V,i%2?.9:1)}}
+function escapeNatText(t){return t.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+async function playNat(formal){
+ const name=studentName(),country=countryAfterAus($("nationality").value);
+ const error=$("nationality-input-error");
+ if(!name){error.textContent="Bitte gib zuerst deinen Namen ein."; $("student-name").focus();return}
+ if(!country){error.textContent="Bitte gib ein Land aus der Liste ein (z. B. Polen, Deutschland, Italien).";$("nationality").focus();return}
+ error.textContent="";
+ if(!S)return;
+ S.cancel();const lines=nationalityLines(formal);
+ for(let i=0;i<lines.length;i++){await speak(lines[i],.86,i%2?VM:V,i%2?.9:1)}
+}
 $("play-informal").onclick=()=>playNat(false);
 $("play-formal").onclick=()=>playNat(true);
-$("nationality").addEventListener("input",renderNatDialog);
+$("nationality").addEventListener("input",()=>{$("nationality-input-error").textContent="";renderNatDialog()});
+$("student-name").addEventListener("input",()=>{$("nationality-input-error").textContent="";renderNatDialog()});
 renderNatDialog();
 
 /* ---------- Endungen anklicken ---------- */
