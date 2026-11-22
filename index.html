@@ -889,16 +889,17 @@ body.intro-finished #intro-screen{
 
 /* NARZĘDZIA */
 
-.tools{
+ .tools{
     width:calc(100% + 120px);
     margin-left:-60px;
 
     display:grid;
 
     grid-template-columns:
-        repeat(2,1fr);
+        repeat(2,minmax(0,1fr));
 
-    gap:14px;
+    gap:16px;
+    align-items:stretch;
 }
 
 .tool{
@@ -1043,16 +1044,18 @@ and
 
 /* KURS-SUCHE */
 .course-search{
-    width:calc(100% + 120px);
-    margin:16px 0 0 -60px;
+    grid-column:1 / -1;
+    width:100%;
+    min-width:0;
+    margin:6px 0 0;
     padding:22px;
     border:1px solid rgba(255,255,255,.12);
     border-radius:22px;
     background:linear-gradient(135deg,rgba(244,201,93,.10),rgba(91,188,244,.08));
 }
-.course-search h2{margin:0 0 6px;font-size:1.25rem}
-.course-search p{margin:0 0 15px;color:var(--muted);line-height:1.45}
-.course-search-row{display:flex;gap:10px}
+.course-search h2{margin:0 0 10px;font-size:1.25rem}
+.course-search p{margin:0 0 18px;color:var(--muted);line-height:1.55;max-width:850px}
+.course-search-row{display:flex;gap:12px;max-width:900px}
 .course-search input{
     flex:1;min-width:0;padding:14px 16px;border-radius:14px;
     border:1px solid rgba(255,255,255,.18);background:#0b2038;color:#fff;
