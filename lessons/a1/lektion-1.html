@@ -861,6 +861,17 @@ button:focus-visible,
 }
 /* A1.1: wyrównanie początku strony do układu A1.2. */
 .course-shell > .back-to-top{margin-bottom:0}
+
+/* Translator embedded in lesson */
+.translate-mini-overlay[hidden]{display:none!important}
+.translate-mini-overlay{position:fixed;inset:0;z-index:2400;background:rgba(9,25,40,.58);display:flex;align-items:center;justify-content:center;padding:16px}
+.translate-mini-panel{width:min(100%,480px);max-height:90vh;overflow:auto;background:#fff;color:#15283b;border-radius:20px;padding:24px;box-shadow:0 18px 50px #0004;font:16px/1.5 system-ui,sans-serif}
+.translate-mini-panel h2{font-size:1.35rem;margin:0 35px 12px 0}.translate-mini-panel label{display:block;font-weight:700;margin:12px 0 5px}
+.translate-mini-panel textarea,.translate-mini-panel select{box-sizing:border-box;width:100%;padding:11px;border:1px solid #9caec1;border-radius:10px;font:inherit;color:#15283b;background:#fff}
+.translate-mini-panel textarea{min-height:85px;resize:vertical}.translate-mini-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.translate-mini-actions button,.translate-mini-actions a{border:0;border-radius:10px;padding:10px 14px;background:#168c9c;color:white;font:700 15px system-ui;text-decoration:none;cursor:pointer}
+.translate-mini-actions a{background:#203a57}.translate-mini-result{margin-top:14px;background:#eef7f9;padding:12px;border-radius:10px;min-height:25px;white-space:pre-wrap;overflow-wrap:anywhere}
+.translate-mini-close{float:right;border:0;background:none;color:#203a57;font-size:28px;cursor:pointer}.translate-mini-note{font-size:12px;color:#536474;margin-top:10px}
 </style>
 
 <style>
@@ -944,9 +955,9 @@ button:focus-visible,
     <a href="../dikatat.a1/diktat1.html" class="training-btn diktat-btn">
       <span class="step-number">⑥</span> ✍️ Ich schreibe ein Diktat
     </a>
-    <a id="translate-help-open" class="training-btn translate-help-btn" href="https://translate.google.com/?hl=de&amp;sl=de&amp;tl=en&amp;op=translate" target="_blank" rel="noopener noreferrer" aria-label="Google Translate öffnen">
+    <button type="button" id="translate-help-open" class="training-btn translate-help-btn" aria-haspopup="dialog" aria-controls="translate-mini-dialog" aria-label="Translate öffnen">
       <span aria-hidden="true">🌐</span> Translate <span aria-hidden="true">❔</span>
-    </a>
+    </button>
 
   </div>
 
@@ -1487,6 +1498,71 @@ ichKannButton.addEventListener("click",()=>{
 <script src="../../js/page-progress.js" defer></script>
 <a href="deutsch-pass.html" style="position:fixed;right:16px;bottom:16px;z-index:1000;background:#184e8c;color:white;border-radius:28px;padding:11px 16px;font:600 14px system-ui;text-decoration:none;box-shadow:0 4px 18px #1234">🎓 Mein Deutsch-Pass</a>
 
+
+
+<div id="translate-mini-dialog" class="translate-mini-overlay" hidden>
+  <section class="translate-mini-panel" role="dialog" aria-modal="true" aria-labelledby="translate-mini-title">
+    <button type="button" class="translate-mini-close" id="translate-mini-close" aria-label="Close / Schließen">×</button>
+    <h2 id="translate-mini-title">🌐 Translate ❔</h2>
+    <label for="translate-mini-input">Wort oder Satz / Word or sentence</label>
+    <textarea id="translate-mini-input" placeholder="Ergänze"></textarea>
+    <label for="translate-mini-language">Translate to / Zielsprache</label>
+    <select id="translate-mini-language">
+      <option value="pl">Polski</option><option value="en">English</option><option value="it">Italiano</option>
+      <option value="es">Español</option><option value="fr">Français</option><option value="uk">Українська</option>
+      <option value="ru">Русский</option><option value="tr">Türkçe</option><option value="ar">العربية</option>
+      <option value="pt">Português</option><option value="ro">Română</option><option value="nl">Nederlands</option>
+    </select>
+    <div class="translate-mini-actions">
+      <button type="button" id="translate-mini-submit">Translate / Übersetzen</button>
+      <a id="translate-mini-fallback" href="https://translate.google.com/?sl=de&amp;tl=pl&amp;op=translate" target="_blank" rel="noopener noreferrer">Google Translate ↗</a>
+    </div>
+    <div id="translate-mini-result" class="translate-mini-result" role="status" aria-live="polite">Enter a German word or sentence.</div>
+    <p class="translate-mini-note">Translation is provided by MyMemory. Text entered here is sent to this external service. Do not enter personal information. Automatic translations may contain errors.</p>
+  </section>
+</div>
+<script>
+(function(){
+  const open=document.getElementById('translate-help-open');
+  const overlay=document.getElementById('translate-mini-dialog');
+  const close=document.getElementById('translate-mini-close');
+  const input=document.getElementById('translate-mini-input');
+  const language=document.getElementById('translate-mini-language');
+  const submit=document.getElementById('translate-mini-submit');
+  const result=document.getElementById('translate-mini-result');
+  const fallback=document.getElementById('translate-mini-fallback');
+  if(!open||!overlay)return;
+  open.addEventListener('click',()=>{overlay.hidden=false;input.focus();});
+  function hide(){overlay.hidden=true;open.focus();}
+  close.addEventListener('click',hide);
+  overlay.addEventListener('click',e=>{if(e.target===overlay)hide();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!overlay.hidden)hide();});
+  function updateFallback(){
+    const params=new URLSearchParams({sl:'de',tl:language.value,text:input.value,op:'translate'});
+    fallback.href='https://translate.google.com/?'+params.toString();
+  }
+  language.addEventListener('change',updateFallback);
+  input.addEventListener('input',updateFallback);
+  submit.addEventListener('click',async()=>{
+    const q=input.value.trim();
+    if(!q){result.textContent='Enter a word or sentence / Gib ein Wort oder einen Satz ein.';input.focus();return;}
+    updateFallback();
+    submit.disabled=true;result.textContent='Translating / Übersetze…';
+    try{
+      const url='https://api.mymemory.translated.net/get?'+new URLSearchParams({q,langpair:'de|'+language.value});
+      const response=await fetch(url);
+      if(!response.ok)throw new Error('Network error');
+      const data=await response.json();
+      if(data.responseStatus!==200||!data.responseData||!data.responseData.translatedText)throw new Error('Translation unavailable');
+      const translated=data.responseData.translatedText;
+      if(/MYMEMORY WARNING|QUERY LENGTH LIMIT|USAGE LIMIT/i.test(translated))throw new Error('Limit reached');
+      result.textContent=translated;
+    }catch(e){result.textContent='Translation temporarily unavailable. Use Google Translate ↗ / Übersetzung momentan nicht verfügbar.';}
+    finally{submit.disabled=false;}
+  });
+  updateFallback();
+})();
+</script>
 
 </body>
 </html>
