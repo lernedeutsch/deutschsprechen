@@ -884,6 +884,30 @@ button:focus-visible,
 </style>
 <link rel="stylesheet" href="../../css/translation-globe.css">
 <link rel="stylesheet" href="../../css/page-progress.css">
+
+<style>
+/* Sprachhilfe: nowy przycisk i okno, bez ingerencji w ćwiczenia */
+.side-buttons .translate-help-btn{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  border:0;cursor:pointer;color:#fff;text-align:center;
+  background:linear-gradient(180deg,#32b9bc,#168c9c);
+  font-weight:800;box-shadow:0 7px 14px rgba(0,0,0,.16);
+}
+.side-buttons .translate-help-btn:hover{filter:brightness(1.08)}
+.translate-help-backdrop[hidden]{display:none!important}
+.translate-help-backdrop{position:fixed;inset:0;z-index:2100;background:rgba(9,25,40,.58);display:flex;align-items:center;justify-content:center;padding:16px}
+.translate-help-panel{position:relative;background:#fff;color:#15283b;border-radius:20px;padding:24px;max-width:460px;width:100%;box-shadow:0 18px 50px rgba(0,0,0,.28);font-family:"Nunito Sans",sans-serif}
+.translate-help-panel h2{font-size:1.35rem;margin:0 36px 8px 0}
+.translate-help-panel p{margin:0 0 12px}
+.translate-help-panel textarea{display:block;width:100%;min-height:95px;padding:12px;border:1px solid #9caec1;border-radius:10px;resize:vertical}
+.translate-help-panel button,.translate-help-panel a{cursor:pointer}
+.translate-help-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.translate-help-actions button,.translate-help-actions a{border:0;border-radius:10px;padding:10px 13px;background:#168c9c;color:#fff;font-weight:700;text-decoration:none}
+.translate-help-actions a{background:#203a57}
+#translate-help-close{position:absolute;right:14px;top:12px;border:0;background:transparent;font-size:1.6rem;color:#203a57}
+#translate-help-status{font-size:.88rem;margin-top:10px}
+@media(min-width:1400px){.side-buttons .translate-help-btn{width:150px;min-height:44px;padding:9px 10px;font-size:.9rem;line-height:1.15}}
+</style>
 </head>
 
 <body id="seitenanfang">
@@ -920,6 +944,9 @@ button:focus-visible,
     <a href="../dikatat.a1/diktat1.html" class="training-btn diktat-btn">
       <span class="step-number">⑥</span> ✍️ Ich schreibe ein Diktat
     </a>
+    <button type="button" id="translate-help-open" class="training-btn translate-help-btn" aria-haspopup="dialog" aria-controls="translate-help-dialog" aria-label="Translate – Sprachhilfe öffnen">
+      <span aria-hidden="true">🌐</span> Translate <span aria-hidden="true">❔</span>
+    </button>
 
   </div>
 
@@ -1459,5 +1486,41 @@ ichKannButton.addEventListener("click",()=>{
 
 <script src="../../js/page-progress.js" defer></script>
 <a href="deutsch-pass.html" style="position:fixed;right:16px;bottom:16px;z-index:1000;background:#184e8c;color:white;border-radius:28px;padding:11px 16px;font:600 14px system-ui;text-decoration:none;box-shadow:0 4px 18px #1234">🎓 Mein Deutsch-Pass</a>
+
+<div id="translate-help-dialog" class="translate-help-backdrop" hidden>
+  <section class="translate-help-panel" role="dialog" aria-modal="true" aria-labelledby="translate-help-title">
+    <button type="button" id="translate-help-close" aria-label="Schließen">×</button>
+    <h2 id="translate-help-title">🌐 Translate ❔</h2>
+    <p>Nie rozumiesz niemieckiego słowa lub polecenia? Wpisz pytanie w swoim języku.</p>
+    <label for="translate-help-question">Your question / Deine Frage</label>
+    <textarea id="translate-help-question" placeholder="Np. Co znaczy ergänzen?"></textarea>
+    <div class="translate-help-actions">
+      <button type="button" id="translate-help-copy">Kopiuj pytanie / Copy</button>
+      <a href="https://poe.com/Deutsch-Sprachhilfe" target="_blank" rel="noopener noreferrer">Otwórz pomoc AI ↗</a>
+    </div>
+    <p id="translate-help-status" role="status" aria-live="polite">Skopiuj pytanie, a następnie wklej je w rozmowie z AI. Rozmowa otwiera się w nowej karcie.</p>
+  </section>
+</div>
+<script>
+(function(){
+  const trigger=document.getElementById('translate-help-open');
+  const dialog=document.getElementById('translate-help-dialog');
+  const close=document.getElementById('translate-help-close');
+  const question=document.getElementById('translate-help-question');
+  const copy=document.getElementById('translate-help-copy');
+  const status=document.getElementById('translate-help-status');
+  if(!trigger||!dialog)return;
+  trigger.addEventListener('click',()=>{dialog.hidden=false;question.focus();});
+  function hide(){dialog.hidden=true;trigger.focus();}
+  close.addEventListener('click',hide);
+  dialog.addEventListener('click',e=>{if(e.target===dialog)hide();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!dialog.hidden)hide();});
+  copy.addEventListener('click',async()=>{
+    if(!question.value.trim()){status.textContent='Najpierw wpisz pytanie.';question.focus();return;}
+    try{await navigator.clipboard.writeText(question.value.trim());status.textContent='Pytanie skopiowane. Otwórz pomoc AI i wklej pytanie.';}
+    catch(e){question.select();status.textContent='Zaznaczony tekst skopiuj klawiszami Ctrl+C, a potem wklej w Poe.';}
+  });
+})();
+</script>
 </body>
 </html>
