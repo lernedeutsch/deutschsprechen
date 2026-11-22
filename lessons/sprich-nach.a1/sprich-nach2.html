@@ -1052,6 +1052,16 @@ button,input{font:inherit}
 }
 @media (prefers-reduced-motion:reduce){.translation-globe{animation:none!important}}
 
+
+/* Completion screen: lift actions above the lower edge without changing functionality */
+#done-wrap.active{padding:0 10px 18px}
+#done-wrap .done-emoji{font-size:32px;margin-bottom:2px}
+#done-wrap .done-title{margin-bottom:2px}
+#done-wrap .done-text{margin-bottom:7px;line-height:1.25}
+#done-wrap .done-actions{gap:9px;margin-top:8px;align-items:center}
+#done-wrap .done-actions .pill-btn{min-height:46px;padding:9px 14px;font-size:.84rem}
+#done-wrap .done-actions #difficult-btn{min-height:52px;padding:10px 16px;font-size:.94rem}
+
 /* Larger completion actions */
 .done-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 .done-actions .pill-btn{
@@ -1084,6 +1094,16 @@ button,input{font:inherit}
 .done-actions #difficult-btn:hover{animation-play-state:paused;transform:scale(1.04);background:#ffedb8}
 @media(prefers-reduced-motion:reduce){.done-actions #difficult-btn{animation:none}}
 @media(max-width:820px){.done-actions .pill-btn,.done-actions #difficult-btn{width:100%;min-width:0}}
+</style>
+<style>
+/* Completion screen: lift actions above the lower edge without changing functionality */
+#done-wrap.active{padding:0 10px 18px}
+#done-wrap .done-emoji{font-size:32px;margin-bottom:2px}
+#done-wrap .done-title{margin-bottom:2px}
+#done-wrap .done-text{margin-bottom:7px;line-height:1.25}
+#done-wrap .done-actions{gap:9px;margin-top:8px;align-items:center}
+#done-wrap .done-actions .pill-btn{min-height:46px;padding:9px 14px;font-size:.84rem}
+#done-wrap .done-actions #difficult-btn{min-height:52px;padding:10px 16px;font-size:.94rem}
 </style>
 <link rel="stylesheet" href="../../css/translation-globe.css">
 <link rel="stylesheet" href="../../css/page-progress.css">
