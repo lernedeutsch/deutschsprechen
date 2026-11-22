@@ -809,6 +809,10 @@ button,input{font:inherit}
   padding:10px 0;
 }
 .done-wrap.active{display:block}
+/* Keep completion controls comfortably above the bottom of the fixed-height panel. */
+.done-wrap.active{transform:translateY(-34px)}
+.done-wrap.active .done-actions{margin-top:-8px}
+@media(max-width:820px){.done-wrap.active{transform:none}.done-wrap.active .done-actions{margin-top:0}}
 
 .done-emoji{font-size:46px;margin-bottom:8px}
 .done-title{font:700 1.4rem "Kalam",cursive;margin:0 0 6px}
