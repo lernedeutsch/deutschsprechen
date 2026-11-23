@@ -11,11 +11,71 @@ main{width:min(100% - 2rem, 42rem);margin:2rem auto}
 a{color:#e4f5eb}
 h1{font-size:clamp(1.65rem,5vw,2.6rem);margin:1rem 0}
 .stage{background:radial-gradient(ellipse at 50% 40%,#29395a 0%,#182440 76%);border-radius:24px;padding:2rem 1rem;text-align:center;min-height:270px;display:grid;align-content:center;gap:1rem}
-.wave{min-height:112px;max-width:100%;display:flex;gap:clamp(4px,1.5vw,10px);align-items:center;justify-content:center;padding-inline:10px}
-.wave span{flex:0 1 clamp(6px,2vw,10px);height:var(--h);border-radius:10px;background:linear-gradient(90deg,#c5baff,#8d7cfa 56%,#6253be);box-shadow:0 5px 12px #0e132b;transform:scaleY(1)}
-.stage[data-state="speaking"] .wave span,.stage[data-state="listening"] .wave span{animation:pulse .72s ease-in-out infinite alternate;animation-delay:calc(var(--i)*-90ms)}
-@keyframes pulse{to{transform:scaleY(1.5);filter:brightness(1.32)}}
-@media(prefers-reduced-motion:reduce){.wave span{animation:none!important}}
+.speaker-wave{
+  display:flex;
+  visibility:hidden;
+  margin-inline:auto;
+  width:150px;
+  max-width:100%;
+  height:102px;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+}
+.speaker-wave span{
+  width:7px;
+  height:18px;
+  border-radius:999px;
+  background:#7770d9;
+  box-shadow:0 0 8px rgba(119,112,217,.22);
+  transform-origin:center bottom;
+  animation:speakerWave 1s ease-in-out infinite alternate;
+  animation-fill-mode:both;
+  animation-play-state:paused;
+}
+.speaker-wave span:nth-child(2){animation-delay:-.88s;height:34px}
+.speaker-wave span:nth-child(3){animation-delay:-.76s;height:58px}
+.speaker-wave span:nth-child(4){animation-delay:-.64s;height:28px}
+.speaker-wave span:nth-child(5){animation-delay:-.52s;height:50px}
+.speaker-wave span:nth-child(6){animation-delay:-.40s;height:36px}
+.speaker-wave span:nth-child(7){animation-delay:-.52s;height:48px}
+.speaker-wave span:nth-child(8){animation-delay:-.64s;height:24px}
+.speaker-wave span:nth-child(9){animation-delay:-.76s;height:54px}
+.speaker-wave span:nth-child(10){animation-delay:-.88s;height:38px}
+.speaker-wave span:nth-child(11){height:22px}
+.speaker-wave{
+  filter:
+    drop-shadow(0 12px 8px rgba(0,0,0,.48))
+    drop-shadow(5px 3px 4px rgba(0,0,0,.26));
+}
+.speaker-wave span{
+  border:1px solid #3c3486;
+  background:linear-gradient(90deg,
+    #332b7d 0%,
+    #4a419b 13%,
+    #6a60bd 34%,
+    #776dcc 50%,
+    #665bb6 68%,
+    #493f96 86%,
+    #302873 100%);
+  box-shadow:
+    8px 9px 7px rgba(0,0,0,.46),
+    4px 5px 3px rgba(0,0,0,.34),
+    -2px 2px 3px rgba(0,0,0,.18),
+    inset 5px 0 4px rgba(139,130,203,.20),
+    inset -6px 0 5px rgba(25,19,76,.46),
+    inset 0 -5px 4px rgba(24,19,68,.30);
+}
+
+.stage[data-state="speaking"] .speaker-wave{visibility:visible}
+.stage[data-state="speaking"] .speaker-wave span{animation-play-state:running}
+@keyframes speakerWave{
+  from{transform:scaleY(.45);opacity:.72}
+  to{transform:scaleY(1.18);opacity:1}
+}
+@media(prefers-reduced-motion:reduce){
+  .speaker-wave span{animation:none}
+}
 p{margin:0;line-height:1.5}
 #question{font-size:1.35rem;font-weight:700}
 #status,#progress{color:#e2e9fa}
@@ -35,7 +95,9 @@ input{flex:1;min-width:12ch;background:#1b2944;color:white}
 <h1>Gesprächstraining A1.1–A1.5</h1>
 <section class="stage" id="stage" aria-label="Gespräch">
 <p id="progress">Lektion 1–5</p>
-<div class="wave" aria-hidden="true"></div>
+<div class="speaker-wave" aria-hidden="true">
+  <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+</div>
 <p id="question">Hallo! Möchtest du Deutsch sprechen?</p>
 <p id="status" role="status">Starte das Gespräch.</p>
 </section>
@@ -80,11 +142,6 @@ let activeRecognition = null;
 let speechRun = 0;
 let afterSpeech = "ready";
 
-[16,23,34,24,42,50,42,24,34,23,16].forEach((height,i)=>{
-  const bar = document.createElement("span");
-  bar.style.cssText = "--h:"+height+"px;--i:"+i;
-  document.querySelector(".wave").append(bar);
-});
 
 function setState(value, label) {
   state = value;
