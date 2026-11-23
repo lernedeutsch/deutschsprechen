@@ -59,8 +59,8 @@ if(n===2){const teil1=document.querySelector("#teil1");if(teil1){teil1.insertAdj
   if(oldGuide)oldGuide.remove();
   const continuation=document.querySelector("#kurs-fortsetzung"),teil1=document.querySelector("#teil1"),firstLessonSection=document.querySelector("header.lesson.hero + .section");
   const target=continuation||teil1||firstLessonSection;
-  if(target){target.insertAdjacentElement("beforebegin",box);box.insertAdjacentHTML("afterend",guideHtml)}
-  else{const page=document.querySelector("article.page");if(page){page.insertAdjacentElement("afterend",box);box.insertAdjacentHTML("afterend",guideHtml)}else{const main=document.querySelector("main");main.appendChild(box);box.insertAdjacentHTML("afterend",guideHtml)}}
+  if(target){target.insertAdjacentElement("beforebegin",box);if(n!==3)box.insertAdjacentHTML("afterend",guideHtml)}
+  else{const page=document.querySelector("article.page");if(page){page.insertAdjacentElement("afterend",box);if(n!==3)box.insertAdjacentHTML("afterend",guideHtml)}else{const main=document.querySelector("main");main.appendChild(box);if(n!==3)box.insertAdjacentHTML("afterend",guideHtml)}}
 }
 const toggle=box.querySelector(".prev-review-toggle");toggle.onclick=()=>{const o=box.classList.toggle("open");toggle.setAttribute("aria-expanded",o)};
 box.querySelectorAll(".prev-review-check").forEach(b=>b.onclick=()=>{const inp=b.parentElement.querySelector("input"),answer=d.q[Number(b.dataset.question)][1],v=inp.value.toLowerCase().trim().replace(/\s+/g," "),ok=answer instanceof RegExp?answer.test(v):v.length>1&&answer.some(k=>v.includes(k.toLowerCase()));const f=b.parentElement.querySelector(".prev-review-feedback");f.textContent=ok?"✓ Gut – du erinnerst dich.":"↻ Noch unsicher? Schau kurz in Lektion "+prev+".";f.style.color=ok?"#2e7d32":"#a45b00"});
