@@ -305,8 +305,11 @@ function renderAgeRound(){
 function finishAgeRound(){
  if(ageIndex===AGE_PEOPLE.length-1){
    stamp("alter");
-   finishBox("#alter","Du kannst nach dem Alter fragen und antworten.");
-   $("#ageFb").textContent="Alle vier Personen sind richtig!";
+   const message="Du hast bei allen vier Personen die passende Frage gewählt.";
+   finishBox("#alter",message);
+   $("#ageFill").parentElement.after($("#alter .finish-box"));
+   $("#ageFb").textContent="";
+   say("Sehr gut! Übung geschafft! "+message);
    return;
  }
  ageIndex++;
