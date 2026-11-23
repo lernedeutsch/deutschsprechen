@@ -269,7 +269,8 @@ function currentQuestion() {
 }
 
 function ask(intro = "") {
-  const question = intro + currentQuestion();
+  const prompt = currentQuestion();
+  const question = intro && !prompt.startsWith(intro) ? intro + prompt : prompt;
   retries = 0;
   $("start").hidden = true;
   $("repeat").hidden = false;
