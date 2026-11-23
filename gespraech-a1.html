@@ -128,7 +128,8 @@ body:has(#transcript:not([hidden])) main{padding-bottom:10rem}
 <script>
 "use strict";
 const turns = [
-  [1,"Guten Morgen!","Guten Morgen!",/^(?:auch )?guten morgen(?: (?:auch|anna|dir|ihnen)){0,3}$/,"Sag mir auch guten Morgen."],
+  [1,"Guten Morgen!","Guten Morgen!",/^(?:auch )?(?:guten morgen|hallo)(?: (?:auch|anna|dir|ihnen)){0,3}$/,"Sag mir auch guten Morgen."],
+  [1,"Wie geht’s dir?","Mir geht’s gut, danke.",/^(?:(?:mir geht es|mir geht s|mir gehts|es geht mir) )?(?:sehr gut|ganz gut|gut|prima|super|nicht so gut|nicht gut|schlecht|okay|ok|es geht|geht so)(?: danke)?(?: und dir)?$/,"Sag, wie es dir geht."],
   [1,"Ich heiße Anna. Wie heißt du?","Ich heiße Alex.",/^(?:ich (?:heisse|bin)|mein name ist) [a-z]+(?: [a-z]+){0,4}$/,"Beginne mit „Ich heiße …“ und sage deinen Namen."],
   [1,"Buchstabiere deinen Vornamen.","A – L – E – X.",acceptSpelling,"Sage die Buchstaben deines Vornamens einzeln."],
   [2,"Woher kommst du?","Ich komme aus Polen.",/^ich komme aus (?:(?:der|den|dem) )?[a-z]+(?: [a-z]+){0,3}$/,"Beginne mit „Ich komme aus …“."],
@@ -137,7 +138,7 @@ const turns = [
   [3,"Ich wohne in Berlin. Und du? Wo wohnst du?","Ich wohne in Heidelberg.",/^ich wohne in [a-z]+(?: [a-z]+){0,4}$/,"Beginne mit „Ich wohne in …“."],
   [4,"Ich bin Köchin. Was bist du von Beruf?","Ich bin Lehrer.",/^ich (?:bin|arbeite als) [a-z]+(?: [a-z]+){0,4}$/,"Beginne mit „Ich bin …“ oder „Ich arbeite als …“."],
   [4,"Ich arbeite in einem Restaurant. Wo arbeitest du?","Ich arbeite in einem Hotel.",/^ich arbeite (?:in|im|bei|beim|auf|zu) [a-z]+(?: [a-z]+){0,5}$/,"Sage, wo du arbeitest. Beginne mit „Ich arbeite …“."],
-  [5,"Tschüss!","Tschüss!",/^(?:tschuss|tschuess|tschus|auf wiedersehen|bis bald|bis dann)(?: anna)?$/,"Sag zum Abschied „Tschüss!“." ]
+  [5,"Danke für das nette Gespräch. Ich wünsche dir einen schönen Tag. Tschüss!","Tschüss! Oder: Auf Wiedersehen.",/^(?:tschuss|tschuess|tschus|auf ?wiedersehen)(?: anna)?$/,"Sag zum Abschied „Tschüss!“ oder „Auf Wiedersehen!“." ]
 ];
 
 const $ = id => document.getElementById(id);
@@ -236,15 +237,16 @@ function evaluate(value) {
     ? [...firstName.toUpperCase()].join(" – ") + "." : modelAnswer;
   const normalized = normalize(value);
   if (accepts instanceof RegExp ? accepts.test(normalized) : accepts(normalized)) {
-    if (index === 1) firstName = normalized.replace(/^(?:ich (?:heisse|bin)|mein name ist) /, "").split(" ")[0];
+    if (turns[index][1] === "Ich heiße Anna. Wie heißt du?") firstName = normalized.replace(/^(?:ich (?:heisse|bin)|mein name ist) /, "").split(" ")[0];
     nextTurn();
     return;
   }
   retries += 1;
   $("answer").value = "";
-  const guidance = retries === 1 ? hint+" Versuch es noch einmal." : "Lies das Beispiel laut. Dann geht es weiter.";
+  const retry = retries === 1 || index === turns.length - 1;
+  const guidance = retry ? hint+" Versuch es noch einmal." : "Lies das Beispiel laut. Dann geht es weiter.";
   $("feedback").textContent = "Deine Antwort: "+value+"\nBeispiel: "+example+"\n"+guidance;
-  announce("Hier ist ein Beispiel. "+example+" "+guidance, retries === 1 ? "ready" : "advance");
+  announce("Hier ist ein Beispiel. "+example+" "+guidance, retry ? "ready" : "advance");
 }
 
 $("start").onclick = () => {
@@ -261,12 +263,12 @@ $("next").onclick = nextTurn;
 function nextTurn() {
   index += 1;
   if (index < turns.length) { ask(); return; }
-  $("question").textContent = "Das Gespräch ist fertig. Auf Wiedersehen!";
+  $("question").textContent = "Das Gespräch ist zu Ende.";
   $("feedback").textContent = "";
   $("form").hidden = $("mic").hidden = $("repeat").hidden = true;
   $("start").textContent = "Noch einmal";
   $("start").hidden = false;
-  announce($("question").textContent, "finished");
+  setState("finished", "Gut gemacht!");
 }
 $("form").onsubmit = event => {
   event.preventDefault();
