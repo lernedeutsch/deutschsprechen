@@ -87,6 +87,10 @@ p{margin:0;line-height:1.5}
 .actions,form{display:flex;gap:.65rem;flex-wrap:wrap;margin-top:1rem}
 #form{margin-top:2rem}
 #start{margin-inline:auto}
+#next{font-size:1.08em;padding:.72rem 1.15rem}
+#next:not([hidden]){animation:nextPulse 1.3s ease-in-out infinite alternate}
+@keyframes nextPulse{from{transform:scale(1)}to{transform:scale(1.05);box-shadow:0 0 12px #aebfe770}}
+@media(prefers-reduced-motion:reduce){#next:not([hidden]){animation:none}}
 button,input{font:inherit;border-radius:12px;padding:.65rem .9rem;border:1px solid #aebfe7}
 button{background:#e6eaff;color:#1d2851;cursor:pointer;font-weight:650}
 button.secondary{background:transparent;color:#eef2ff}
