@@ -376,7 +376,19 @@ const $=s=>document.querySelector(s);
 const PASS_KEY="lektion3-sprachpass",PASS={vorstellung:0,alter:0,zahlen:0,sein:0,daten:0,lesson:0};
 try{Object.assign(PASS,JSON.parse(localStorage.getItem(PASS_KEY))||{})}catch{}
 function updatePass(){document.querySelectorAll("[data-st]").forEach(x=>x.classList.toggle("on",!!PASS[x.dataset.st]));const n=["vorstellung","alter","zahlen","sein","daten"].filter(k=>PASS[k]).length;$("#passCount").textContent=n+" / 5 Stempel gesammelt";["alter","zahlen","sein","daten"].forEach(k=>$("#done-"+k)?.classList.toggle("show",!!PASS[k]))}
-function stamp(k){if(PASS[k])return;PASS[k]=1;if(PASS.vorstellung&&PASS.alter&&PASS.zahlen&&PASS.sein&&PASS.daten)PASS.lesson=1;try{localStorage.setItem(PASS_KEY,JSON.stringify(PASS))}catch{}updatePass();if(PASS.lesson)say("Fantastisch! Du hast alle Stempel gesammelt. Lektion drei geschafft!")}
+function stamp(k,praise=""){
+  if(PASS[k]){
+    if(praise)say(praise);
+    return;
+  }
+  PASS[k]=1;
+  if(PASS.vorstellung&&PASS.alter&&PASS.zahlen&&PASS.sein&&PASS.daten)PASS.lesson=1;
+  try{localStorage.setItem(PASS_KEY,JSON.stringify(PASS))}catch{}
+  updatePass();
+  const lessonPraise=PASS.lesson?"Fantastisch! Du hast alle Stempel gesammelt. Lektion drei geschafft!":"";
+  const announcement=[praise,lessonPraise].filter(Boolean).join(" ");
+  if(announcement)say(announcement);
+}
 function finishBox(id,msg){const host=document.querySelector(id);if(!host||host.querySelector(".finish-box"))return;host.insertAdjacentHTML("beforeend",'<div class="finish-box"><b>🎉 Sehr gut! Übung geschafft!</b><span>'+msg+'</span><div class="finish-track"><span></span></div><button type="button" class="btn finish-restart">↻ Noch einmal</button></div>');const box=host.querySelector(".finish-box"),restart=box.querySelector(".finish-restart");restart.onclick=()=>location.reload()}
 updatePass();
 let voice=null,maleVoice=null,femaleVoice=null,formal=false;
@@ -520,8 +532,8 @@ $("#regBtn").onclick=()=>{
     });
     $("#idcard").append(card);
     $("#regFb").textContent="Alle Angaben sind vollständig.";
-    stamp("daten");
-    finishBox("#daten","Du hast deine persönlichen Daten vollständig angegeben.");
+    finishBox("#daten","Hier ist dein Ausweis.");
+    stamp("daten","Sehr gut! Übung geschafft! Hier ist dein Ausweis.");
   });
 };
 $("#regIn").addEventListener("keydown",event=>{
