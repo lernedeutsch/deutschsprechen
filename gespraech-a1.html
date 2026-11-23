@@ -86,6 +86,13 @@ button.secondary{background:transparent;color:#eef2ff}
 button:disabled{opacity:.55;cursor:default}
 input{flex:1;min-width:12ch;background:#1b2944;color:white}
 #feedback{margin-top:1rem;min-height:1.5em;white-space:pre-line}
+#transcript{position:fixed;inset:auto 0 0;z-index:2;background:#141e35;border-top:1px solid #455578;padding:.65rem max(1rem,env(safe-area-inset-right)) max(.75rem,env(safe-area-inset-bottom)) max(1rem,env(safe-area-inset-left))}
+body:has(#transcript:not([hidden])) main{padding-bottom:10rem}
+#transcript h2{font-size:.85rem;margin:0 0 .4rem;color:#d3def8}
+#transcript-list{display:flex;gap:.65rem;overflow-x:auto;overflow-y:hidden;list-style:none;padding:0 0 .45rem;margin:0;scrollbar-width:auto}
+#transcript-list li{flex:0 0 auto;width:max-content;max-width:min(28rem,85vw);background:#263655;border-radius:10px;padding:.4rem .65rem;max-height:5.5rem;overflow:auto;overflow-wrap:anywhere}
+#transcript-list li.student{background:#403565}
+#transcript-list strong{display:block;font-size:.78rem;color:#e1d9ff}
 [hidden]{display:none!important}
 </style>
 </head>
@@ -113,6 +120,10 @@ input{flex:1;min-width:12ch;background:#1b2944;color:white}
 </form>
 <p id="feedback" aria-live="polite"></p>
 </main>
+<section id="transcript" aria-labelledby="transcript-heading" hidden>
+<h2 id="transcript-heading">Gesprächsverlauf</h2>
+<ol id="transcript-list" role="log" aria-labelledby="transcript-heading" tabindex="0"></ol>
+</section>
 <script>
 "use strict";
 const turns = [
@@ -154,7 +165,20 @@ function setState(value, label) {
   $("next").hidden = value !== "advance";
 }
 
-function announce(line, destination = "ready") {
+function addTranscriptLine(role, line) {
+  const list = $("transcript-list");
+  const entry = document.createElement("li");
+  const label = document.createElement("strong");
+  entry.className = role;
+  label.textContent = role === "student" ? "Du" : "Lektor";
+  entry.append(label, document.createTextNode(line));
+  $("transcript").hidden = false;
+  list.append(entry);
+  list.scrollLeft = list.scrollWidth;
+}
+
+function announce(line, destination = "ready", record = true) {
+  if (record) addTranscriptLine("teacher", line);
   const run = ++speechRun;
   let finished = false;
   const finish = (readAloud = false) => {
@@ -201,6 +225,7 @@ function normalize(value) {
 
 function evaluate(value) {
   if (!value.trim()) return;
+  addTranscriptLine("student", value.trim());
   const [, , example, accepts, hint] = turns[index];
   const normalized = normalize(value);
   if (accepts.test(normalized)) {
@@ -214,10 +239,14 @@ function evaluate(value) {
   announce("Hier ist ein Beispiel. "+example+" "+guidance, retries === 1 ? "ready" : "advance");
 }
 
-$("start").onclick = () => { index = 0; ask(); };
+$("start").onclick = () => {
+  $("transcript-list").replaceChildren();
+  index = 0;
+  ask();
+};
 $("repeat").onclick = () => {
   stopListening();
-  announce(turns[index][1], state === "advance" ? "advance" : "ready");
+  announce(turns[index][1], state === "advance" ? "advance" : "ready", false);
 };
 $("next").onclick = nextTurn;
 function nextTurn() {
