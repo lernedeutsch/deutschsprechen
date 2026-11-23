@@ -51,8 +51,8 @@ h1{margin:0 0 12px;color:#161616;font:700 2.6rem/1.12 "Kalam",cursive}
 .listen.tap-cue{display:inline-block;animation:l3cue 1.15s ease-in-out infinite}
 input[type="range"].tap-cue{animation:rangePulse 1.35s ease-in-out infinite}
 @keyframes rangePulse{0%,100%{filter:none}50%{filter:drop-shadow(0 0 5px #e3a51c)}}
-#vorstellung .switch .tap-cue{animation:registerPulse 2.8s ease-in-out infinite}
-#vorstellung .switch #formal{animation-delay:1.4s}
+#vorstellung .switch .tap-cue,#ageOpts .tap-cue:not(:disabled){animation:registerPulse 2.8s ease-in-out infinite}
+#vorstellung .switch #formal,#ageOpts [data-ageq="formell"]:not(:disabled){animation-delay:1.4s}
 @keyframes registerPulse{
   0%,50%,100%{transform:scale(1);box-shadow:0 4px 10px #315b4720}
   25%{transform:scale(1.065);box-shadow:0 0 0 6px #e4bd5760,0 5px 13px #315b4730}
@@ -281,15 +281,14 @@ draw();
 const U=["null","eins","zwei","drei","vier","fünf","sechs","sieben","acht","neun","zehn","elf","zwölf","dreizehn","vierzehn","fünfzehn","sechzehn","siebzehn","achtzehn","neunzehn"],TN={2:"zwanzig",3:"dreißig",4:"vierzig",5:"fünfzig",6:"sechzig",7:"siebzig",8:"achtzig",9:"neunzig"};
 function nw(n){if(n<20)return U[n];if(n===100)return"hundert";const t=Math.floor(n/10),u=n%10;return u?(u===1?"ein":U[u])+"und"+TN[t]:TN[t]}
 const AGE_PEOPLE=[
- {name:"Lena",icon:"👧",mode:"informell",greeting:"Hallo!"},
- {name:"Herr Weber",icon:"👨‍💼",mode:"formell",greeting:"Guten Tag!"},
- {name:"Oma Erika",icon:"👵",mode:"informell",greeting:"Hallo!"},
- {name:"Frau Dr. Schmidt",icon:"👩‍⚕️",mode:"formell",greeting:"Guten Tag!"}
+ {name:"Lena",age:13,icon:"👧",mode:"informell",greeting:"Hallo!"},
+ {name:"Herr Weber",age:42,icon:"👨‍💼",mode:"formell",greeting:"Guten Tag!"},
+ {name:"Oma Erika",age:74,icon:"👵",mode:"informell",greeting:"Hallo!"},
+ {name:"Frau Dr. Schmidt",age:56,icon:"👩‍⚕️",mode:"formell",greeting:"Guten Tag!"}
 ];
-let ageIndex=0,ageNumber=25,ageLocked=false,ageTimer=null;
+let ageIndex=0,ageLocked=false,ageTimer=null;
 function renderAgeRound(){
  const p=AGE_PEOPLE[ageIndex];
- ageNumber=20+Math.floor(Math.random()*65);
  ageLocked=false;
  $("#agePersonIcon").textContent=p.icon;
  $("#agePersonName").textContent=p.name;
@@ -326,9 +325,9 @@ document.querySelectorAll("#ageOpts [data-ageq]").forEach(btn=>{
    $("#ageScore").textContent="Richtige Antworten: "+(ageIndex+1)+" / "+AGE_PEOPLE.length;
    $("#ageFill").style.width=((ageIndex+1)/AGE_PEOPLE.length*100)+"%";
    const question=p.mode==="formell"?"Wie alt sind Sie?":"Wie alt bist du?";
-   const answer="Ich bin "+ageNumber+" Jahre alt.";
+   const answer="Ich bin "+p.age+" Jahre alt.";
    $("#ageChat").innerHTML='<div class="xline">'+p.greeting+'</div><div class="xline me">'+question+'</div><div class="xline">'+answer+'</div>';
-   $("#ageFb").textContent="Richtig! Die nächste Person kommt in 6 Sekunden.";
+   $("#ageFb").textContent=ageIndex===AGE_PEOPLE.length-1?"Richtig! Das war die letzte Person.":"Richtig! Die nächste Person kommt in 6 Sekunden.";
    $("#ageFb").className="fb ok";
    say(question+" "+answer);
    clearTimeout(ageTimer);
