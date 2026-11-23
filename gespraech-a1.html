@@ -80,10 +80,9 @@ a{color:#e4f5eb}
 p{margin:0;line-height:1.5}
 #question{font-size:1.35rem;font-weight:700}
 #status{color:#edf2ff}
-#listening-mic{display:none;font-size:1em;margin-inline-start:.3em;vertical-align:baseline}
-.stage[data-state="listening"] #listening-mic{display:inline-block;animation:micPulse .8s ease-in-out infinite alternate}
+#listening-mic{display:inline-block;font-size:1em;margin-inline-start:.3em;vertical-align:baseline;animation:micPulse .8s ease-in-out infinite alternate}
 @keyframes micPulse{from{transform:scale(.9);opacity:.7}to{transform:scale(1.15);opacity:1}}
-@media(prefers-reduced-motion:reduce){.stage[data-state="listening"] #listening-mic{animation:none}}
+@media(prefers-reduced-motion:reduce){#listening-mic{animation:none}}
 .actions,form{display:flex;gap:.65rem;flex-wrap:wrap;margin-top:1rem}
 #form{margin-top:2rem}
 #start{margin-inline:auto}
@@ -124,7 +123,7 @@ body:has(#transcript:not([hidden])) main{padding-bottom:10rem}
   <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
 </div>
 <p id="question">Bereit für ein Gespräch?</p>
-<p id="status" role="status"><span id="status-text">Starte das Gespräch.</span><span id="listening-mic" aria-hidden="true">🎤</span></p>
+<p id="status" role="status"><span id="status-text">Starte das Gespräch.</span></p>
 </section>
 <form id="form" hidden>
 <input id="answer" aria-label="Deine Antwort" placeholder="Oder Antwort schreiben" autocomplete="off" required>
@@ -214,7 +213,12 @@ let speechRun = 0;
 function setState(value, label) {
   state = value;
   $("stage").dataset.state = value;
-  $("status-text").textContent = label;
+  $("status-text").textContent = value === "listening" ? "" : label;
+  if (value === "listening") {
+    addTranscriptLine("student", label, true);
+  } else {
+    $("listening-entry")?.remove();
+  }
   $("mic").disabled = value !== "ready";
   const canAnswer = value === "ready" || value === "listening";
   $("answer").disabled = !canAnswer;
@@ -223,15 +227,26 @@ function setState(value, label) {
   $("next").hidden = value !== "advance";
 }
 
-function addTranscriptLine(role, line) {
+function addTranscriptLine(role, line, listening = false) {
   const list = $("transcript-list");
-  const entry = document.createElement("li");
+  const pending = role === "student" ? $("listening-entry") : null;
+  const entry = pending || document.createElement("li");
   const label = document.createElement("strong");
   entry.className = role;
   label.textContent = role === "student" ? "Du" : "Lektor";
-  entry.append(label, document.createTextNode(line));
+  entry.replaceChildren(label, document.createTextNode(line));
+  if (listening) {
+    entry.id = "listening-entry";
+    const mic = document.createElement("span");
+    mic.id = "listening-mic";
+    mic.setAttribute("aria-hidden", "true");
+    mic.textContent = "🎤";
+    entry.append(mic);
+  } else {
+    entry.removeAttribute("id");
+  }
   $("transcript").hidden = false;
-  list.append(entry);
+  if (!pending) list.append(entry);
   list.scrollLeft = list.scrollWidth;
 }
 
