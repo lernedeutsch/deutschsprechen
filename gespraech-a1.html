@@ -227,8 +227,8 @@ function currentQuestion() {
   return "Wie geht’s dir, " + firstName.charAt(0).toLocaleUpperCase("de") + firstName.slice(1) + "?";
 }
 
-function ask() {
-  const question = currentQuestion();
+function ask(intro = "") {
+  const question = intro + currentQuestion();
   retries = 0;
   $("start").hidden = true;
   $("repeat").hidden = false;
@@ -266,7 +266,10 @@ function evaluate(value) {
     : accepts instanceof RegExp ? accepts.test(normalized) : accepts(normalized);
   if (accepted) {
     if (name) firstName = name;
-    nextTurn();
+    const intro = turns[index][1] === "Wie geht’s dir?" &&
+      /^(?:(?:mir geht es|mir geht s|mir gehts|es geht mir) )?(?:sehr gut|ganz gut|gut|prima|super)(?: |$)/.test(normalized)
+      ? "Oh, das ist schön! Das freut mich. " : "";
+    nextTurn(intro);
     return;
   }
   retries += 1;
@@ -285,12 +288,12 @@ $("start").onclick = () => {
 };
 $("repeat").onclick = () => {
   stopListening();
-  announce(currentQuestion(), state === "advance" ? "advance" : "ready", false);
+  announce($("question").textContent, state === "advance" ? "advance" : "ready", false);
 };
-$("next").onclick = nextTurn;
-function nextTurn() {
+$("next").onclick = () => nextTurn();
+function nextTurn(intro = "") {
   index += 1;
-  if (index < turns.length) { ask(); return; }
+  if (index < turns.length) { ask(intro); return; }
   $("question").textContent = "Das Gespräch ist zu Ende.";
   $("feedback").textContent = "";
   $("form").hidden = $("mic").hidden = $("repeat").hidden = true;
