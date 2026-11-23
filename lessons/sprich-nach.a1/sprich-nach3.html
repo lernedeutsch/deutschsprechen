@@ -64,7 +64,27 @@ button,input{font:inherit}
   gap:9px;
 }
 .module-back{
-  box-shadow:0 7px 16px rgba(7,18,32,.18);
+  position:fixed;
+  top:68px;
+  left:10px;
+  z-index:40;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width:52px;
+  height:52px;
+  padding:0;
+  border-radius:10px;
+  background:rgba(16,39,60,.12);
+  border:1px solid rgba(255,255,255,.10);
+  color:#fff;
+  font-size:1.55rem;
+  font-weight:700;
+  box-shadow:none;
+}
+.module-back:hover{
+  background:rgba(11,31,49,.22);
+  border-color:rgba(255,255,255,.22);
 }
 .module-tools .translation-control{
   z-index:25;
@@ -166,11 +186,19 @@ button,input{font:inherit}
   overflow-y:auto;
   display:flex;
   flex-direction:column;
-  justify-content:flex-end;
+  justify-content:flex-start;
   gap:5px;
   padding:0 2px 2px 0;
   min-height:0;
 }
+
+/* Odpowiedzi od dolu; odstep kurczy sie po zapelnieniu panelu. */
+.history-list::before{content:"";flex:1 1 0px;min-height:0;}
+/* Pionowy suwak historii odpowiedzi. */
+.history-list{overflow-y:scroll;scrollbar-width:thin;scrollbar-color:#9fc7e0 rgba(255,255,255,.14);}
+.history-list::-webkit-scrollbar{width:9px}
+.history-list::-webkit-scrollbar-track{background:rgba(255,255,255,.10);border-radius:9px}
+.history-list::-webkit-scrollbar-thumb{background:#9fc7e0;border-radius:9px}
 
 .history-empty{
   color:#7d93ac;
@@ -801,6 +829,10 @@ button,input{font:inherit}
   padding:10px 0;
 }
 .done-wrap.active{display:block}
+/* Keep completion controls comfortably above the bottom of the fixed-height panel. */
+.done-wrap.active{transform:translateY(-34px)}
+.done-wrap.active .done-actions{margin-top:-8px}
+@media(max-width:820px){.done-wrap.active{transform:none}.done-wrap.active .done-actions{margin-top:0}}
 
 .done-emoji{font-size:46px;margin-bottom:8px}
 .done-title{font:700 1.4rem "Kalam",cursive;margin:0 0 6px}
@@ -863,6 +895,45 @@ button,input{font:inherit}
   border-color:#f2d06f;
 }
 
+/* Keep the explanation globe aligned with the left edge of the back arrow. */
+html body .module-row .module-tools #translation-control{
+  position:fixed !important;
+  top:70px !important;
+  left:10px !important;
+  right:auto !important;
+  margin:0 !important;
+  transform:none !important;
+  z-index:39;
+}
+html body #translation-control .translation-panel{
+  left:0;
+  right:auto;
+}
+
+/* Back arrow: same translucent square as Lektion 3; override generic .icon-btn */
+.module-tools a.icon-btn.module-back{
+  position:fixed;
+  top:10px;
+  left:10px;
+  width:52px;
+  height:52px;
+  padding:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  border-radius:10px;
+  background:rgba(16,39,60,.12);
+  border:1px solid rgba(255,255,255,.10);
+  color:#fff;
+  font-size:1.55rem;
+  font-weight:700;
+  box-shadow:none;
+}
+.module-tools a.icon-btn.module-back:hover{
+  background:rgba(11,31,49,.22);
+  border-color:rgba(255,255,255,.22);
+}
+
 @media(max-width:560px){
   .panel{border-radius:20px;padding-top:18px}
   .title-row{gap:7px}
@@ -911,12 +982,6 @@ button,input{font:inherit}
   box-shadow:inset -8px 0 16px -18px rgba(113,205,255,.45);
 }
 .history-list{gap:7px;padding:0 3px 2px}
-.history-item{
-  padding:10px 11px;
-  border-radius:11px;
-  font-size:.78rem;
-  filter:brightness(var(--step-filter,.82));
-}
 .panel{
   height:min(610px,78vh);
   max-height:min(610px,78vh);
@@ -976,7 +1041,7 @@ button,input{font:inherit}
 .orb-wrap{width:126px;height:126px}
 .orb{width:92px;height:92px;font-size:31px}
 .you-said{margin:0 auto;min-height:18px;font-size:.84rem}
-.controls{margin-top:53px;gap:6px}
+.controls{margin-top:72px;gap:6px}
 .text-fallback{gap:9px}
 .text-fallback input{padding:9px 12px;border-radius:12px}
 .send-btn{min-width:105px;padding:8px 20px;border-radius:12px}
@@ -1049,11 +1114,197 @@ button,input{font:inherit}
   text-align:center;
   box-shadow:0 7px 16px rgba(20,39,57,.14);
 }
-.done-actions #difficult-btn{min-width:300px}
+.done-actions #difficult-btn{
+  min-width:340px;
+  min-height:66px;
+  padding:15px 25px;
+  font-size:1.08rem;
+  font-weight:900;
+  border:2px solid #e0a83c;
+  background:linear-gradient(135deg,#fff7db,#ffe29a);
+  box-shadow:0 8px 20px rgba(121,81,18,.23);
+  animation:difficultButtonPulse 1.8s ease-in-out infinite;
+}
+@keyframes difficultButtonPulse{
+  0%,100%{transform:scale(1);box-shadow:0 8px 20px rgba(121,81,18,.23)}
+  50%{transform:scale(1.045);box-shadow:0 10px 27px rgba(191,125,24,.43)}
+}
+.done-actions #difficult-btn:hover{animation-play-state:paused;transform:scale(1.04);background:#ffedb8}
+@media(prefers-reduced-motion:reduce){.done-actions #difficult-btn{animation:none}}
 @media(max-width:820px){.done-actions .pill-btn,.done-actions #difficult-btn{width:100%;min-width:0}}
 </style>
 <link rel="stylesheet" href="../../css/translation-globe.css">
 <link rel="stylesheet" href="../../css/page-progress.css">
+<style id="mic-3d-and-plain-history-bubbles">
+/* Visual-only refinements: preserve existing colors and behavior */
+#mic-btn.mic-ready{
+  transform:perspective(420px) rotateX(5deg) translateY(-2px);
+  box-shadow:
+    0 17px 0 rgba(7,55,42,.38),
+    0 24px 34px rgba(11,73,56,.34),
+    0 0 0 0 rgba(93,218,159,.46),
+    inset 0 5px 7px rgba(255,255,255,.24),
+    inset 0 -8px 12px rgba(0,0,0,.18);
+}
+#mic-btn.mic-ready .orb-icon{
+  display:inline-block;
+  transform:translateY(-2px) scale(1.08);
+  filter:drop-shadow(0 5px 3px rgba(0,0,0,.34));
+}</style>
+<style id="start-screen-hide-history-only">
+body:not(.sprich-started) .history-panel{display:none!important}
+body:not(.sprich-started) .layout{grid-template-columns:minmax(0,1fr)!important}
+body:not(.sprich-started) .layout .panel{border-radius:23px!important;border-left:0!important}
+</style>
+<style id="lesson-only-next-button">
+.lesson-only-next{display:none!important}
+body.sprich-started .lesson-only-next{display:flex!important}
+</style>
+<style id="start-panel-slightly-smaller">
+body:not(.sprich-started) .layout{max-width:760px!important;margin-left:auto!important;margin-right:auto!important}
+body:not(.sprich-started) .layout .panel{
+  min-height:min(630px,78vh)!important;
+  height:min(630px,78vh)!important;
+  max-height:min(630px,78vh)!important;
+}
+</style>
+<style id="lesson-only-next-visible-fix">
+body.sprich-started .lesson-only-next{
+  display:flex!important;
+  position:relative!important;
+  width:100%!important;
+  margin:14px auto 0!important;
+  justify-content:center!important;
+  z-index:20!important;
+}
+body.sprich-started .lesson-only-next a{display:inline-flex!important}
+</style>
+<style id="start-inner-glass-3d-panel">
+/* Light texture UNDER the transparent start glass, never over controls */
+body:not(.sprich-started) .layout .panel {
+  position: relative !important;
+  isolation: isolate;
+}
+body:not(.sprich-started) .layout .panel::before {
+  content: "" !important;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(133deg, transparent 8%, rgba(255,255,245,.54) 17%, rgba(255,244,216,.10) 29%, transparent 42%),
+    linear-gradient(147deg, transparent 38%, rgba(255,234,185,.44) 52%, rgba(255,250,233,.14) 61%, transparent 74%),
+    radial-gradient(ellipse at 72% 39%, rgba(55,144,200,.56) 0%, rgba(71,151,194,.21) 29%, transparent 58%),
+    radial-gradient(ellipse at 19% 72%, rgba(49,118,166,.47), transparent 52%);
+  filter: blur(8px);
+}
+body:not(.sprich-started) #start-wrap {
+  width: min(600px,82%) !important;
+  min-height: 390px !important;
+  margin: 38px auto !important;
+  padding: 34px 42px 32px !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+  isolation: isolate;
+  z-index: 1;
+  border-radius: 34px !important;
+  background: rgba(242,248,251,.012) !important;
+  border: 2px solid rgba(255,255,255,.78) !important;
+  backdrop-filter: blur(1.5px) saturate(1.12) !important;
+  -webkit-backdrop-filter: blur(1.5px) saturate(1.12) !important;
+  box-shadow:
+    inset 0 3px 3px rgba(255,255,255,.55),
+    inset 0 -9px 22px rgba(55,65,75,.055),
+    0 17px 35px rgba(22,32,42,.18) !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+body:not(.sprich-started) #start-wrap::before {
+  content: "" !important;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 14% 12%, rgba(255,255,255,.29), transparent 35%),
+    linear-gradient(114deg, transparent 13%, rgba(255,255,255,.12) 23%, transparent 37%),
+    repeating-linear-gradient(112deg, transparent 0px, rgba(255,255,255,.022) 2px, transparent 5px, transparent 47px);
+  opacity: .72;
+}
+body:not(.sprich-started) #start-wrap > * {
+  position: relative;
+  z-index: 1;
+}
+</style>
+<style id="a11-lower-sentence-and-microphone">
+/* Lower the sentence panel and microphone together without changing the start screen. */
+body.sprich-started #exercise-wrap .sentence-box{margin-top:24px!important}
+</style>
+<script src="../../js/deutsch-pass.js"></script>
+<style id="shared-lesson-translator-style">
+/* Translator embedded in lesson */
+.translate-mini-overlay[hidden]{display:none!important}
+.translate-mini-overlay{position:fixed;inset:0;z-index:2400;background:rgba(9,25,40,.58);display:flex;align-items:center;justify-content:center;padding:16px}
+.translate-mini-panel{width:min(100%,480px);max-height:90vh;overflow:auto;background:#fff;color:#15283b;border-radius:20px;padding:24px;box-shadow:0 18px 50px #0004;font:16px/1.5 system-ui,sans-serif}
+.translate-mini-panel h2{font-size:1.35rem;margin:0 35px 12px 0}.translate-mini-panel label{display:block;font-weight:700;margin:12px 0 5px}
+.translate-mini-panel textarea,.translate-mini-panel select{box-sizing:border-box;width:100%;padding:11px;border:1px solid #9caec1;border-radius:10px;font:inherit;color:#15283b;background:#fff}
+.translate-mini-panel textarea{min-height:85px;resize:vertical}
+.translate-mini-input-wrap{position:relative}
+.translate-mini-input-wrap textarea{padding-right:76px}
+.translate-mini-pencil{
+  position:absolute;right:22px;top:22px;
+  font-size:2.5rem;line-height:1;
+  pointer-events:none;transform-origin:center;
+  animation:translatePencilPulse 1.8s ease-in-out infinite;
+}
+.translate-mini-input-wrap textarea:not(:placeholder-shown)+.translate-mini-pencil{opacity:0;animation:none}
+@keyframes translatePencilPulse{
+  0%,100%{transform:scale(1) rotate(-8deg);opacity:.65}
+  50%{transform:scale(1.25) rotate(8deg);opacity:1}
+}
+@media(prefers-reduced-motion:reduce){.translate-mini-pencil{animation:none}}
+.translate-mini-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.translate-mini-native-select{display:none!important}
+.translate-mini-language-label{font-weight:700;margin-top:12px;margin-bottom:7px}
+.translate-mini-language-options{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.translate-mini-language-options .translate-mini-lang-btn,
+.translate-mini-language-options #translate-mini-other{
+  border:1px solid #a8b9ce;border-radius:9px;background:#fff;color:#203a57;
+  padding:9px 10px;font:600 13px system-ui;min-height:40px;cursor:pointer;
+  width:auto;flex:0 1 auto;
+}
+.translate-mini-language-options .translate-mini-lang-btn[aria-pressed="true"]{
+  background:#203a57;color:#fff;border-color:#203a57;
+}
+.translate-mini-language-options #translate-mini-other:focus-visible,
+.translate-mini-language-options .translate-mini-lang-btn:focus-visible{outline:3px solid #ffcc66;outline-offset:2px}
+.translate-mini-actions button,.translate-mini-actions a{border:0;border-radius:10px;padding:10px 14px;background:#168c9c;color:white;font:700 15px system-ui;text-decoration:none;cursor:pointer}
+.translate-mini-actions a{background:#203a57}.translate-mini-result{margin-top:14px;background:#eef7f9;padding:12px;border-radius:10px;min-height:25px;white-space:pre-wrap;overflow-wrap:anywhere}
+.translate-mini-close{float:right;border:0;background:none;color:#203a57;font-size:28px;cursor:pointer}.translate-mini-note{font-size:12px;color:#536474;margin-top:10px}
+
+/* Wyraźniejszy, łagodnie pulsujący przycisk tłumaczenia w oknie */
+.translate-mini-actions #translate-mini-submit{
+  background:#D62828;
+  color:#fff;
+  padding:14px 20px;
+  min-height:50px;
+  font-size:1rem;
+  cursor:pointer;
+  animation:translateActionPulse 1.7s ease-in-out infinite;
+}
+@keyframes translateActionPulse{
+  0%,100%{box-shadow:0 3px 10px rgba(214,40,40,.28),0 0 0 0 rgba(214,40,40,.30);filter:brightness(1);transform:scale(1)}
+  50%{box-shadow:0 5px 20px rgba(214,40,40,.48),0 0 0 7px rgba(214,40,40,.20);filter:brightness(1.13);transform:scale(1.035)}
+}
+@media(prefers-reduced-motion:reduce){.translate-mini-actions #translate-mini-submit{animation:none}}
+
+
+#translate-help-open{position:fixed;left:10px;top:122px;z-index:2050;border:0;border-radius:14px;padding:8px 10px;background:#ff8066;color:#172b43;font:800 12px system-ui;cursor:pointer;box-shadow:0 5px 12px #0003;animation:sideTranslatePulse 2s ease-in-out infinite}
+@keyframes sideTranslatePulse{0%,100%{transform:scale(1);box-shadow:0 5px 12px #0003}50%{transform:scale(1.055);box-shadow:0 5px 20px #ff806699}}
+@media(max-width:650px){#translate-help-open{left:10px;top:122px;bottom:auto;padding:8px 10px;font-size:12px}}
+@media(prefers-reduced-motion:reduce){#translate-help-open{animation:none}}
+</style>
 </head>
 <body id="oben">
 
@@ -1101,7 +1352,7 @@ button,input{font:inherit}
       </div>
       <p class="start-lead">
         Du hörst einen deutschen Satz aus Lektion 3, sprichst ihn nach
-        und siehst sofort, ob dein Satz erkannt wurde. 21 Sätze und Dialoge warten.
+        und siehst sofort, ob dein Satz erkannt wurde. 51 Sätze und Dialoge warten.
       </p>
       <button class="start-btn" id="start-btn">▶ Start</button>
     </div>
@@ -1116,7 +1367,7 @@ button,input{font:inherit}
         <span class="progress-count" id="progress-count">0 / 21</span>
       </div>
 
-      <p class="status-line" id="status-line">Bereit …</p>
+      <p class="status-line" id="status-line" style="display:none" aria-live="polite">Bereit …</p>
       <div class="sentence-box">
         <div class="difficulty-choice">
           <div class="difficulty-toggle" role="group" aria-label="Wie möchtest du üben?">
@@ -1184,10 +1435,8 @@ button,input{font:inherit}
 
   </div>
 
-  <div class="next-training">
-    <a href="../ubungen.a1/ubungen3.html">
-      Weiter mit Übungen
-    </a>
+    <div class="next-training lesson-only-next" id="lesson-only-next">
+    <a href="../ubungen.a1/ubungen3.html">Weiter mit Übungen</a>
   </div>
 
 </div>
@@ -1685,7 +1934,7 @@ function addToHistory(index,text){
   item.style.setProperty("--step-filter",level.toFixed(2));
   item.style.setProperty("--step-text",level>1.38?"#101820":"#fff");
   item.innerHTML=`<span class="h-num">${index+1}.</span>${text}`;
-  historyList.prepend(item);
+  historyList.appendChild(item);
   historyList.scrollTop=historyList.scrollHeight;
 }
 
@@ -1780,9 +2029,9 @@ function handleAnswer(said){
       statusLine.textContent="Sehr gut — jetzt stimmt es! ✨";
     }
     addToHistory(currentIndex,target);
-    /* Po poprawnym zaliczeniu zdanie nie jest już „trudne”.
-       Dotyczy to także zdań wcześniej pominiętych przyciskiem Nächster Satz. */
-    difficultIndices.delete(currentIndex);
+    /* Zachowaj historię pomyłek z pierwszego przejścia, aby uczeń mógł
+       wrócić do trudnych zdań po ukończeniu całego ćwiczenia. */
+    if(reviewQueue)difficultIndices.delete(currentIndex);
     if(reviewQueue){
       if(reviewQueue.length){
         currentIndex=reviewQueue.shift();
@@ -1819,6 +2068,7 @@ function handleAnswer(said){
 }
 
 function finishCourse(){
+  if(!reviewQueue)window.DeutschPass?.record("A1.3","sprich-nach","all-sentences",{assisted:difficultIndices.size>0||firstTryCorrect<sentences.length});
   setMicReady(false);
   updateProgress();
   setStage("done","🏆");
@@ -1851,6 +2101,7 @@ if(micButton){
 }
 
 document.getElementById("start-btn").addEventListener("click",()=>{
+  document.body.classList.add("sprich-started");
   startWrap.style.display="none";
   exerciseWrap.style.display="block";
   controls.classList.add("active");
@@ -1915,6 +2166,9 @@ if(difficultBtn){
   difficultBtn.addEventListener("click",()=>{
     const difficult=[...difficultIndices].sort((a,b)=>a-b);
     if(!difficult.length)return;
+    playbackToken++;
+    stopRecognitionCompletely();
+    stopSpeechSafely();
     reviewQueue=difficult.slice(1);
     currentIndex=difficult[0];
     doneWrap.classList.remove("active");
@@ -1948,14 +2202,28 @@ textInput.addEventListener("keydown",(e)=>{
 
 const SPRICH_TRANSLATIONS={
   en:"You hear a German sentence from Lesson 3, repeat it, and immediately see whether your sentence was recognized. Use “Repeat sentence”, “Next sentence”, “Stop” and “Continue” to control the exercise.",
-  pl:"Usłyszysz niemieckie zdanie z Lekcji 1 i powtórzysz je do mikrofonu. Możesz ćwiczyć z widocznym tekstem („Mit Text”) albo tylko ze słuchu („Nur hören”). Po odpowiedzi od razu zobaczysz, czy zdanie zostało poprawnie rozpoznane. Możesz też powtórzyć zdanie, przejść do następnego lub zmienić szybkość głosu lektora.",
+  pl:"Usłyszysz niemieckie zdanie z Lekcji 3 i powtórzysz je do mikrofonu. Możesz ćwiczyć z widocznym tekstem („Mit Text”) albo tylko ze słuchu („Nur hören”). Po odpowiedzi od razu zobaczysz, czy zdanie zostało poprawnie rozpoznane. Możesz też powtórzyć zdanie, przejść do następnego lub zmienić szybkość głosu lektora.",
   it:"Ascolti una frase tedesca della Lezione 3, la ripeti e vedi subito se la tua frase è stata riconosciuta. Usa “Ripeti frase”, “Frase successiva”, “Stop” e “Continua” per controllare l’esercizio."
 };
 
+const SPRICH_DONE_TRANSLATIONS={
+  en:"🎉 Congratulations! You have finished the exercise! Choose what to do next:\n\n🔁 Schwierige Sätze wiederholen — Repeat sentences you found difficult to improve your pronunciation.\n\n🔄 Alle noch einmal üben — Practise all sentences again from the beginning.\n\n➡️ Weiter zu Übungen — Continue to the next exercises.",
+  pl:"🎉 Gratulacje! Ukończyłeś ćwiczenie! Możesz teraz wybrać, co chcesz zrobić dalej:\n\n🔁 Schwierige Sätze wiederholen — Powtórz zdania, które sprawiły Ci trudność, aby lepiej opanować ich wymowę.\n\n🔄 Alle noch einmal üben — Przećwicz ponownie wszystkie zdania od początku.\n\n➡️ Weiter zu Übungen — Przejdź do kolejnych ćwiczeń.",
+  it:"🎉 Congratulazioni! Hai completato l’esercizio! Ora puoi scegliere cosa fare:\n\n🔁 Schwierige Sätze wiederholen — Ripeti le frasi che ti sono risultate difficili per migliorare la pronuncia.\n\n🔄 Alle noch einmal üben — Esercitati di nuovo con tutte le frasi dall’inizio.\n\n➡️ Weiter zu Übungen — Passa agli esercizi successivi."
+};
+function currentTranslation(lang){
+  return document.getElementById("done-wrap")?.classList.contains("active")
+    ? SPRICH_DONE_TRANSLATIONS[lang] : SPRICH_TRANSLATIONS[lang];
+}
 const translationControl=document.getElementById("translation-control");
 const translationToggle=document.getElementById("translation-toggle");
 const translationText=document.getElementById("translation-text");
 const translationButtons=[...document.querySelectorAll(".translation-language")];
+translationText.style.whiteSpace="pre-line";
+new MutationObserver(()=>{
+  const active=translationButtons.find(btn=>btn.classList.contains("active"));
+  if(active && translationControl.classList.contains("open"))translationText.textContent=currentTranslation(active.dataset.lang);
+}).observe(document.getElementById("done-wrap"),{attributes:true,attributeFilter:["class"]});
 
 translationToggle.addEventListener("click",e=>{
   e.stopPropagation();
@@ -1964,7 +2232,7 @@ translationToggle.addEventListener("click",e=>{
   if(willOpen){
     const preferred=translationButtons.find(btn=>btn.dataset.lang==="pl") || translationButtons[0];
     translationButtons.forEach(x=>x.classList.toggle("active",x===preferred));
-    translationText.textContent=SPRICH_TRANSLATIONS[preferred.dataset.lang];
+    translationText.textContent=currentTranslation(preferred.dataset.lang);
     translationText.classList.add("show");
   }
 });
@@ -1973,7 +2241,7 @@ translationButtons.forEach(btn=>btn.addEventListener("click",e=>{
   e.stopPropagation();
   const lang=btn.dataset.lang;
   translationButtons.forEach(x=>x.classList.toggle("active",x===btn));
-  translationText.textContent=SPRICH_TRANSLATIONS[lang];
+  translationText.textContent=currentTranslation(lang);
   translationText.classList.add("show");
   translationControl.classList.add("open");
 }));
@@ -1986,5 +2254,102 @@ updateProgress();
 </script>
 
 <script src="../../js/page-progress.js" defer></script>
+<button type="button" id="translate-help-open" aria-haspopup="dialog" aria-controls="translate-mini-dialog" aria-label="Translate öffnen">🌐 Translate ❔</button>
+<div id="translate-mini-dialog" class="translate-mini-overlay" hidden>
+  <section class="translate-mini-panel" role="dialog" aria-modal="true" aria-labelledby="translate-mini-title">
+    <button type="button" class="translate-mini-close" id="translate-mini-close" aria-label="Close / Schließen">×</button>
+    <h2 id="translate-mini-title">🌐 Translate ❔</h2>
+    <label for="translate-mini-input">Wort oder Satz / Word or sentence</label>
+    <div class="translate-mini-input-wrap">
+      <textarea id="translate-mini-input" placeholder="Ergänze"></textarea>
+      <span class="translate-mini-pencil" aria-hidden="true">✏️</span>
+    </div>
+    <div class="translate-mini-language-label" id="translate-mini-language-label">Translate to / Zielsprache</div>
+    <select id="translate-mini-language" class="translate-mini-native-select" aria-label="Translate to / Zielsprache">
+      <option value="pl">Polski</option><option value="en" selected>English</option><option value="it">Italiano</option>
+      <option value="es">Español</option><option value="fr">Français</option><option value="uk">Українська</option>
+      <option value="ru">Русский</option><option value="tr">Türkçe</option><option value="ar">العربية</option>
+      <option value="pt">Português</option><option value="ro">Română</option><option value="nl">Nederlands</option>
+    </select>
+    <div class="translate-mini-language-options" role="group" aria-labelledby="translate-mini-language-label">
+      <button type="button" class="translate-mini-lang-btn" data-lang="en" aria-pressed="true">English</button>
+      <button type="button" class="translate-mini-lang-btn" data-lang="tr" aria-pressed="false">Türkçe</button>
+      <button type="button" class="translate-mini-lang-btn" data-lang="pl" aria-pressed="false">Polski</button>
+      <button type="button" class="translate-mini-lang-btn" data-lang="it" aria-pressed="false">Italiano</button>
+      <select id="translate-mini-other" aria-label="Inne języki">
+        <option value="">Inne ▾</option>
+        <option value="es">Español</option><option value="fr">Français</option>
+        <option value="uk">Українська</option><option value="ru">Русский</option>
+        <option value="ar">العربية</option><option value="pt">Português</option>
+        <option value="ro">Română</option><option value="nl">Nederlands</option>
+      </select>
+    </div>
+    <div class="translate-mini-actions">
+      <button type="button" id="translate-mini-submit">Translate / Übersetzen</button>
+      <a id="translate-mini-fallback" href="https://translate.google.com/?sl=de&amp;tl=pl&amp;op=translate" target="_blank" rel="noopener noreferrer">Google Translate ↗</a>
+    </div>
+    <div id="translate-mini-result" class="translate-mini-result" role="status" aria-live="polite">Enter a German word or sentence.</div>
+    <p class="translate-mini-note">Translation is provided by MyMemory. Text entered here is sent to this external service. Do not enter personal information. Automatic translations may contain errors.</p>
+  </section>
+</div>
+<script>
+(function(){
+  const open=document.getElementById('translate-help-open');
+  const overlay=document.getElementById('translate-mini-dialog');
+  const close=document.getElementById('translate-mini-close');
+  const input=document.getElementById('translate-mini-input');
+  const language=document.getElementById('translate-mini-language');
+  const submit=document.getElementById('translate-mini-submit');
+  const result=document.getElementById('translate-mini-result');
+  const fallback=document.getElementById('translate-mini-fallback');
+  if(!open||!overlay)return;
+  open.addEventListener('click',()=>{overlay.hidden=false;input.focus();});
+  function hide(){overlay.hidden=true;open.focus();}
+  close.addEventListener('click',hide);
+  overlay.addEventListener('click',e=>{if(e.target===overlay)hide();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!overlay.hidden)hide();});
+  function updateFallback(){
+    const params=new URLSearchParams({sl:'de',tl:language.value,text:input.value,op:'translate'});
+    fallback.href='https://translate.google.com/?'+params.toString();
+  }
+  const quickLanguages=overlay.querySelectorAll('.translate-mini-lang-btn');
+  const otherLanguages=document.getElementById('translate-mini-other');
+  function syncLanguageButtons(){
+    quickLanguages.forEach(btn=>btn.setAttribute('aria-pressed',String(btn.dataset.lang===language.value)));
+    otherLanguages.value=[...quickLanguages].some(btn=>btn.dataset.lang===language.value)?'':language.value;
+  }
+  quickLanguages.forEach(btn=>btn.addEventListener('click',()=>{
+    language.value=btn.dataset.lang;
+    language.dispatchEvent(new Event('change'));
+  }));
+  otherLanguages.addEventListener('change',()=>{
+    if(!otherLanguages.value)return;
+    language.value=otherLanguages.value;
+    language.dispatchEvent(new Event('change'));
+  });
+  language.addEventListener('change',()=>{syncLanguageButtons();updateFallback();});
+  syncLanguageButtons();
+  input.addEventListener('input',updateFallback);
+  submit.addEventListener('click',async()=>{
+    const q=input.value.trim();
+    if(!q){result.textContent='Enter a word or sentence / Gib ein Wort oder einen Satz ein.';input.focus();return;}
+    updateFallback();
+    submit.disabled=true;result.textContent='Translating / Übersetze…';
+    try{
+      const url='https://api.mymemory.translated.net/get?'+new URLSearchParams({q,langpair:'de|'+language.value});
+      const response=await fetch(url);
+      if(!response.ok)throw new Error('Network error');
+      const data=await response.json();
+      if(data.responseStatus!==200||!data.responseData||!data.responseData.translatedText)throw new Error('Translation unavailable');
+      const translated=data.responseData.translatedText;
+      if(/MYMEMORY WARNING|QUERY LENGTH LIMIT|USAGE LIMIT/i.test(translated))throw new Error('Limit reached');
+      result.textContent=translated;
+    }catch(e){result.textContent='Translation temporarily unavailable. Use Google Translate ↗ / Übersetzung momentan nicht verfügbar.';}
+    finally{submit.disabled=false;}
+  });
+  updateFallback();
+})();
+</script>
+
 </body>
 </html>
