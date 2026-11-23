@@ -270,7 +270,7 @@ function lines(){const d=data();return formal?[
 ]:[
 ["A","Hallo!","🧑🏻"],["B","Hallo!","👩🏻"],["A","Wie heißt du?","🧑🏻"],["B",`Ich heiße ${d.first}. Und du?`,"👩🏻"],["A","Ich heiße Tom.","🧑🏻"],["A","Wie alt bist du?","🧑🏻"],["B",`Ich bin ${d.age} Jahre alt.`,"👩🏻"],["A","Welche Nationalität hast du?","🧑🏻"],["B",`Ich bin ${d.nat}.`,"👩🏻"]
 ]}
-function draw(){const box=$("#dialogue");box.innerHTML="";lines().forEach(([w,t,icon])=>{const r=document.createElement("div");r.className="line "+(w==="B"?"b":"a");r.innerHTML=`<div class="bubble"><span class="who">${w}</span>${t}<span class="person">${icon}</span></div><button class="listen tap-cue" type="button" aria-label="Anhören">🔊</button>`;r.querySelector(".listen").onclick=()=>say(t,w);box.appendChild(r)})}
+function draw(){const box=$("#dialogue");box.innerHTML="";lines().forEach(([w,t,icon])=>{const r=document.createElement("div");r.className="line "+(w==="B"?"b":"a");r.innerHTML=`<div class="bubble"><span class="who">${w}</span>${t}<span class="person">${icon}</span></div><button class="listen" type="button" aria-label="Anhören">🔊</button>`;r.querySelector(".listen").onclick=()=>say(t,w);box.appendChild(r)})}
 async function mode(f){formal=f;$("#informal").classList.toggle("active",!f);$("#formal").classList.toggle("active",f);draw();stamp("vorstellung");for(const [w,t] of lines()){say(t,w);await new Promise(r=>setTimeout(r,1350))}}
 ["#last","#first","#age","#nat"].forEach(x=>$(x).addEventListener("input",draw));
 $("#informal").onclick=()=>mode(false);$("#formal").onclick=()=>mode(true);
