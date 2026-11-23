@@ -129,10 +129,11 @@ body:has(#transcript:not([hidden])) main{padding-bottom:10rem}
 </section>
 <script>
 "use strict";
+const nameAnswer = /^(?:ich (?:heiße|heisse|bin)|mein name ist) +([\p{L}\p{M}]+(?:[-’'][\p{L}\p{M}]+)*)(?: +[\p{L}\p{M}]+(?:[-’'][\p{L}\p{M}]+)*){0,4}[.!?]*$/iu;
 const turns = [
   [1,"Guten Morgen!","Guten Morgen!",/^(?:auch )?(?:guten morgen|hallo)(?: (?:auch|anna|dir|ihnen)){0,3}$/,"Sag mir auch guten Morgen."],
+  [1,"Ich heiße Anna. Wie heißt du?","Ich heiße Alex.",nameAnswer,"Beginne mit „Ich heiße …“ und sage deinen Namen."],
   [1,"Wie geht’s dir?","Mir geht’s gut, danke.",/^(?:(?:mir geht es|mir geht s|mir gehts|es geht mir) )?(?:sehr gut|ganz gut|gut|prima|super|nicht so gut|nicht gut|schlecht|okay|ok|es geht|geht so)(?: danke)?(?: und dir)?$/,"Sag, wie es dir geht."],
-  [1,"Ich heiße Anna. Wie heißt du?","Ich heiße Alex.",/^(?:ich (?:heisse|bin)|mein name ist) [a-z]+(?: [a-z]+){0,4}$/,"Beginne mit „Ich heiße …“ und sage deinen Namen."],
   [1,"Buchstabiere deinen Vornamen.","A – L – E – X.",acceptSpelling,"Sage die Buchstaben deines Vornamens einzeln."],
   [2,"Woher kommst du?","Ich komme aus Polen.",/^ich komme aus (?:(?:der|den|dem) )?[a-z]+(?: [a-z]+){0,3}$/,"Beginne mit „Ich komme aus …“."],
   [2,"Anna kommt aus Deutschland. Sie ist Deutsche. Und du?","Ich bin Polin.",/^ich bin (?:ein |eine )?[\p{L}]+$/u,"Beginne mit „Ich bin …“ und sage deine Nationalität."],
@@ -205,8 +206,14 @@ function announce(line, destination = "ready", record = true) {
   window.setTimeout(() => finish(), Math.max(10000,line.length * 115));
 }
 
-function ask() {
+function currentQuestion() {
   const [, question] = turns[index];
+  if (question !== "Wie geht’s dir?" || !firstName) return question;
+  return "Wie geht’s dir, " + firstName.charAt(0).toLocaleUpperCase("de") + firstName.slice(1) + "?";
+}
+
+function ask() {
+  const question = currentQuestion();
   retries = 0;
   $("start").hidden = true;
   $("repeat").hidden = false;
@@ -226,9 +233,10 @@ function normalize(value) {
 function acceptSpelling(normalized) {
   const letterNames = {be:"b", ce:"c", de:"d", ef:"f", ge:"g", ha:"h", jot:"j", ka:"k", el:"l", em:"m", en:"n", pe:"p", qu:"q", er:"r", es:"s", te:"t", vau:"v", we:"w", ix:"x", ypsilon:"y", zett:"z"};
   const letters = normalized.split(" ").map(letter => letterNames[letter] || letter);
-  if (firstName && normalized.replace(/ /g, "") === firstName) return true;
+  const expected = normalize(firstName).replace(/ /g, "");
+  if (expected && normalized.replace(/ /g, "") === expected) return true;
   return letters.length > 1 && letters.every(letter => /^[a-z]$/.test(letter))
-    && (!firstName || letters.join("") === firstName);
+    && (!expected || letters.join("") === expected);
 }
 
 function evaluate(value) {
@@ -238,8 +246,11 @@ function evaluate(value) {
   const example = accepts === acceptSpelling && firstName
     ? [...firstName.toUpperCase()].join(" – ") + "." : modelAnswer;
   const normalized = normalize(value);
-  if (accepts instanceof RegExp ? accepts.test(normalized) : accepts(normalized)) {
-    if (turns[index][1] === "Ich heiße Anna. Wie heißt du?") firstName = normalized.replace(/^(?:ich (?:heisse|bin)|mein name ist) /, "").split(" ")[0];
+  const name = accepts === nameAnswer ? value.trim().match(nameAnswer)?.[1] : null;
+  const accepted = accepts === nameAnswer ? Boolean(name)
+    : accepts instanceof RegExp ? accepts.test(normalized) : accepts(normalized);
+  if (accepted) {
+    if (name) firstName = name;
     nextTurn();
     return;
   }
@@ -259,7 +270,7 @@ $("start").onclick = () => {
 };
 $("repeat").onclick = () => {
   stopListening();
-  announce(turns[index][1], state === "advance" ? "advance" : "ready", false);
+  announce(currentQuestion(), state === "advance" ? "advance" : "ready", false);
 };
 $("next").onclick = nextTurn;
 function nextTurn() {
