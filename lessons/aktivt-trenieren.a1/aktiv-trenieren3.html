@@ -300,6 +300,8 @@ body>.bottom-arrow:hover{background:#ffffff24;transform:none}
 #zahlen .number-discovery #rng{display:block;margin:6px auto 12px}
 #sein .command-panel > .action-help,#daten .command-panel > .action-help{margin:8px 0 0}
 #daten #regAsk[hidden]{display:none}
+#dTyped{margin:12px auto;max-width:760px}
+#dTyped input{max-width:100%;padding:8px;border:1px solid var(--line);border-radius:8px}
 </style><link rel="stylesheet" href="../../css/click-hints.css">
 <link rel="stylesheet" href="../../css/translation-globe.css">
 <link rel="stylesheet" href="../../css/page-progress.css">
@@ -356,7 +358,7 @@ body>.bottom-arrow:hover{background:#ffffff24;transform:none}
 <div class="hunt-box"><div class="number-step"><span>2</span><h3>🎧 Zahlen-Jagd</h3></div><p class="hunt-intro">Starte das Spiel, hör zu und wähle die richtige Zahl.</p><div class="row"><button class="btn tap-cue" id="gStart">▶ Zahlen-Jagd starten</button><button class="btn" id="gAgain" disabled>🔊 Zahl noch einmal hören</button></div><div class="opts" id="gOpts"></div><p class="fb" id="gFb"></p><p class="cnt hunt-score" id="gScore">Richtige Antworten: 0 / 5</p><div class="hunt-progress"><div class="hunt-progress-fill" id="gFill" style="width:0%"></div></div></div></div>
 <div class="card" id="sein"><div class="head"><span class="num">Teil 3</span><h2>Das Verb „sein“</h2><span class="done" id="done-sein">✅ geschafft</span></div><div class="command-panel"><div class="command-line"><p>Wähle das richtige Wort und setze es in das Feld.</p></div><div class="action-help"><span class="click-cue">👆</span> Wort wählen → <span class="click-cue">👆</span> Feld anklicken → 🔊 Satz hören</div></div><table style="width:100%"><tbody id="seinRows"></tbody></table><div class="opts" id="vbank"></div><p class="fb" id="seinFb"></p></div>
 <div class="card" id="daten"><div class="head"><span class="num">Teil 4</span><h2>Persönliche Daten</h2><span class="done" id="done-daten">✅ geschafft</span></div><div class="command-panel"><div class="command-line"><p>Höre die Frage und gib deine persönlichen Daten ein.</p></div><div class="action-help">🔊 Frage hören → ✏️ antworten → 🪪 Ausweis</div></div><div class="chat" id="reg"></div><div class="reg" id="regAsk"><span class="reg-pencil" aria-hidden="true">✏️</span><input id="regIn"><button class="btn tap-cue" id="regBtn">Antworten</button></div><p class="fb" id="regFb"></p><div id="idcard"></div><button class="btn" id="regReset">↻ Neu anmelden</button></div>
-<div class="card dialogue-card" id="dialogPractice"><h2 class="part-title">🗣️ Dialog · Lesen und sprechen</h2><div class="command-panel"><div class="command-line"><p>Du bist an der Hotelrezeption. Antworte laut als Julia Becker. Vergleiche dann deine Antwort mit dem Beispiel.</p></div></div><div class="continuity-card"><strong>Deine Rolle</strong><span>Julia Becker · 28 Jahre · Heidelberg</span></div><div class="dialog-progress"><span id="dStep">Frage 1 von 4</span><div class="dialog-track"><div id="dFill"></div></div></div><div class="chat" id="dlg"></div><div class="row dialog-actions"><button class="btn tap-cue" id="dPlay">🔊 Frage hören</button><button class="btn tap-cue" id="dRole" hidden>👀 Beispiel zeigen</button><button class="btn tap-cue dialog-next-pulse" id="dNext" hidden>Weiter →</button></div><p class="fb" id="dFb" role="status"></p></div>
+<div class="card dialogue-card" id="dialogPractice"><h2 class="part-title">🗣️ Dialog · Lesen und sprechen</h2><div class="continuity-card"><strong>👩 Du bist</strong><span>Julia Becker · 28 Jahre · Heidelberg</span></div><div class="dialog-progress"><span id="dStep">Frage 1 von 4</span><div class="dialog-track"><div id="dFill"></div></div></div><div class="chat" id="dlg"></div><div class="row dialog-actions"><button class="btn tap-cue" id="dPlay">🔊 Frage hören</button><button class="btn tap-cue" id="dRole" hidden>🎙️ du</button><button class="btn tap-cue dialog-next-pulse" id="dNext" hidden>↻ Noch einmal</button></div><form id="dTyped" hidden><label for="dInput">Antwort schreiben</label> <input id="dInput" autocomplete="off" required> <button class="btn" type="submit">Prüfen</button></form><p class="fb" id="dFb" role="status"></p></div>
 <div class="card"><h2 class="part-title">Merke · Was haben wir gelernt?</h2><div id="summary"><div class="summary-item">✅ Alter fragen und sagen</div><div class="summary-item">✅ Zahlen 11–100</div><div class="summary-item">✅ Verb „sein“</div><div class="summary-item">✅ Wohnort: Wo wohnen Sie? · Ich wohne in …</div><div class="summary-item">✅ Persönliche Daten</div><div class="summary-item">✅ Dialog lesen und sprechen</div></div></div>
 </section>
 </main>
@@ -531,54 +533,98 @@ $("#regIn").addEventListener("keydown",event=>{
 });
 $("#regReset").onclick=regStart;regStart();
 const DLG=[
-  ["Guten Tag! Wie ist Ihr Nachname?","Guten Tag! Mein Nachname ist Becker."],
-  ["Wie ist Ihr Vorname?","Mein Vorname ist Julia."],
-  ["Wie alt sind Sie?","Ich bin 28 Jahre alt."],
-  ["Wo wohnen Sie?","Ich wohne in Heidelberg."]
+  ["Guten Tag! Wie ist Ihr Nachname?","Mein Nachname ist Becker.",/^(?:(?:guten tag |hallo ))?(?:(?:mein (?:nachname|name) ist|ich heiße|ich heisse|ich bin) )?(?:julia )?becker$/],
+  ["Wie ist Ihr Vorname?","Mein Vorname ist Julia.",/^(?:(?:mein (?:vorname|name) ist|ich heiße|ich heisse|ich bin) )?julia(?: becker)?$/],
+  ["Wie alt sind Sie?","Ich bin 28 Jahre alt.",/^(?:ich bin )?(?:28|achtundzwanzig)(?: jahre(?: alt)?| alt)?$/],
+  ["Wo wohnen Sie?","Ich wohne in Heidelberg.",/^(?:(?:ich wohne in|ich lebe in|ich komme aus|in) )?heidelberg$/]
 ];
+const DialogueRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
 let dIndex=0,dState="listen";
+function normalizeDialogueAnswer(value){
+  return value.toLowerCase().replace(/[^\p{L}\p{N}]+/gu," ").trim();
+}
 function drawDlg(){
   const [question,example]=DLG[dIndex];
-  const showExample=["example","next","done"].includes(dState);
-  const turn=showExample?'<div class="xline me"><b>Beispiel:</b> '+example+'</div>':
-    dState==="speak"?'<div class="dialog-your-turn"><span class="du-badge">DU</span><b>Antworte jetzt laut.</b></div>':"";
-  $("#dlg").innerHTML='<div class="xline"><b>Rezeption:</b> '+question+'</div>'+turn;
   const done=dState==="done";
+  const correct=dState==="correct";
+  const canAnswer=dState==="speak";
+  const turn=correct?'<div class="xline me">'+example+'</div>':canAnswer?'<div class="dialog-your-turn">Antworte jetzt als Julia.</div>':"";
+  $("#dlg").innerHTML='<div class="xline"><b>Rezeption:</b> '+question+'</div>'+turn;
   $("#dStep").textContent=done?"4 von 4 geschafft":"Frage "+(dIndex+1)+" von "+DLG.length;
-  $("#dFill").style.width=((dIndex+Number(showExample))/DLG.length*100)+"%";
+  $("#dFill").style.width=((dIndex+Number(correct||done))/DLG.length*100)+"%";
   $("#dPlay").hidden=dState!=="listen";
-  $("#dRole").hidden=dState!=="speak";
-  $("#dNext").hidden=dState!=="next"&&!done;
-  $("#dNext").textContent=done?"↻ Noch einmal":dIndex===DLG.length-1?"Übung beenden":"Nächste Frage →";
-  $("#dFb").textContent=done?"Sehr gut! Du hast den Dialog geübt.":"";
+  $("#dRole").hidden=!canAnswer&&dState!=="recording";
+  $("#dRole").disabled=!canAnswer;
+  $("#dNext").hidden=!done;
+  $("#dTyped").hidden=!canAnswer;
 }
-$("#dPlay").onclick=()=>{
+function playDialogueQuestion(){
   dState="playing";
+  $("#dFb").textContent="";
   drawDlg();
   say(DLG[dIndex][0],"A",()=>{
     dState="speak";
     drawDlg();
   });
-};
-$("#dRole").onclick=()=>{
-  dState="example";
+}
+function checkDialogueAnswer(value){
+  if(!DLG[dIndex][2].test(normalizeDialogueAnswer(value))){
+    dState="speak";
+    drawDlg();
+    $("#dFb").textContent="Versuch es noch einmal. Schau auf deine Rollenkarte.";
+    return;
+  }
+  dState="correct";
+  $("#dInput").value="";
+  $("#dFb").textContent="Richtig!";
   drawDlg();
   say(DLG[dIndex][1],"B",()=>{
-    dState="next";
-    drawDlg();
+    if(dIndex===DLG.length-1){
+      dState="done";
+      drawDlg();
+      $("#dFb").textContent="Sehr gut! Du hast alle Fragen richtig beantwortet.";
+      return;
+    }
+    dIndex++;
+    playDialogueQuestion();
   });
+}
+$("#dPlay").onclick=playDialogueQuestion;
+$("#dRole").onclick=()=>{
+  if(!DialogueRecognition){
+    $("#dFb").textContent="Bitte schreibe deine Antwort.";
+    $("#dInput").focus();
+    return;
+  }
+  const mic=new DialogueRecognition();
+  mic.lang="de-DE";
+  mic.maxAlternatives=3;
+  dState="recording";
+  drawDlg();
+  $("#dFb").textContent="Das Mikrofon hört zu …";
+  const retry=()=>{
+    if(dState!=="recording")return;
+    dState="speak";
+    drawDlg();
+    $("#dFb").textContent="Sprich noch einmal oder schreibe deine Antwort.";
+  };
+  mic.onerror=retry;
+  mic.onend=retry;
+  mic.onresult=event=>{
+    if(dState!=="recording")return;
+    const alternatives=Array.from(event.results[0]);
+    const match=alternatives.find(item=>DLG[dIndex][2].test(normalizeDialogueAnswer(item.transcript)));
+    checkDialogueAnswer((match||alternatives[0]).transcript);
+  };
+  try{mic.start()}catch{retry()}
+};
+$("#dTyped").onsubmit=event=>{
+  event.preventDefault();
+  if(dState==="speak")checkDialogueAnswer($("#dInput").value);
 };
 $("#dNext").onclick=()=>{
-  if(dState==="done"){
-    dIndex=0;
-    dState="listen";
-  }else if(dIndex===DLG.length-1){
-    dState="done";
-  }else{
-    dIndex++;
-    dState="listen";
-  }
-  drawDlg();
+  dIndex=0;
+  playDialogueQuestion();
 };
 drawDlg();
 
