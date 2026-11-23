@@ -129,24 +129,21 @@ body:has(#transcript:not([hidden])) main{padding-bottom:10rem}
 const turns = [
   [1,"Guten Morgen!","Guten Morgen!",/^(?:auch )?guten morgen(?: (?:auch|anna|dir|ihnen)){0,3}$/,"Sag mir auch guten Morgen."],
   [1,"Ich heiße Anna. Wie heißt du?","Ich heiße Alex.",/^(?:ich (?:heisse|bin)|mein name ist) [a-z]+(?: [a-z]+){0,4}$/,"Beginne mit „Ich heiße …“ und sage deinen Namen."],
-  [1,"Wie buchstabierst du den Namen Tom?","T – O – M.",/^(?:t|te) ?o ?(?:m|em)$/,"Sage die drei Buchstaben einzeln."],
+  [1,"Buchstabiere deinen Vornamen.","A – L – E – X.",acceptSpelling,"Sage die Buchstaben deines Vornamens einzeln."],
   [2,"Woher kommst du?","Ich komme aus Polen.",/^ich komme aus (?:(?:der|den|dem) )?[a-z]+(?: [a-z]+){0,3}$/,"Beginne mit „Ich komme aus …“."],
-  [2,"Anna kommt aus Deutschland. Welche Nationalität hat sie?","Sie ist Deutsche.",/^(?:sie ist )?(?:eine )?(?:deutsche|deutsch)$/,"Beginne mit „Sie ist …“."],
-  [2,"Wie viel ist zehn plus fünf?","Fünfzehn.",/^(?:(?:das sind|das ist) )?(?:funfzehn|fuenfzehn|15)$/,"Sag die Zahl auf Deutsch."],
-  [3,"Du bist 32 Jahre alt. Jemand fragt dich: Wie alt sind Sie?","Ich bin zweiunddreißig Jahre alt.",/^ich bin (?:32|zweiunddreissig|zwei und dreissig)(?: jahre alt)?$/,"Beginne mit „Ich bin …“."],
+  [2,"Anna kommt aus Deutschland. Sie ist Deutsche. Und du?","Ich bin Polin.",/^ich bin (?:ein |eine )?[\p{L}]+$/u,"Beginne mit „Ich bin …“ und sage deine Nationalität."],
+  [3,"Wie alt bist du?","Ich bin 25 Jahre alt.",/^(?:ich bin )?(?:\d{1,3}|[a-z]+(?: [a-z]+){0,3}(?= jahre alt$))(?: jahre alt)?$/,"Sag dein Alter. Beginne mit „Ich bin …“."],
   [3,"Ich wohne in Berlin. Und du? Wo wohnst du?","Ich wohne in Heidelberg.",/^ich wohne in [a-z]+(?: [a-z]+){0,4}$/,"Beginne mit „Ich wohne in …“."],
-  [4,"Stell dir vor, du bist Köchin. Was bist du von Beruf?","Ich bin Köchin.",/^ich (?:bin (?:eine )?|arbeite als )(?:kochin|koechin|koch)$/,"Beginne mit „Ich bin …“ oder „Ich arbeite als …“."],
-  [4,"Du arbeitest in einem Hotel. Wo arbeiten Sie?","Ich arbeite in einem Hotel.",/^ich arbeite (?:in einem|im) hotel$/,"Beginne mit „Ich arbeite …“."],
-  [4,"Ergänze den ganzen Satz: Das ist … Ärztin.","Das ist eine Ärztin.",/^das ist eine (?:arztin|aerztin)$/,"Benutze „ein“ oder „eine“."],
-  [5,"Du sprichst mit Frau Müller. Wie fragst du höflich nach ihrem Namen?","Wie heißen Sie?",/^wie heissen sie$/,"Benutze die Höflichkeitsform „Sie“."],
-  [5,"Ich arbeite im Hotel. Jetzt sprich für uns beide. Beginne mit „Wir“.","Wir arbeiten im Hotel.",/^wir arbeiten (?:im|in einem) hotel$/,"Achte auf die Endung von „arbeiten“."],
-  [5,"Unser Gespräch ist zu Ende. Wie verabschiedest du dich höflich?","Auf Wiedersehen!",/^(?:auf wiedersehen|auf wiederhoren|auf wiederhoeren)$/,"Verabschiede dich mit der höflichen Form."]
+  [4,"Ich bin Köchin. Was bist du von Beruf?","Ich bin Lehrer.",/^ich (?:bin|arbeite als) [a-z]+(?: [a-z]+){0,4}$/,"Beginne mit „Ich bin …“ oder „Ich arbeite als …“."],
+  [4,"Ich arbeite in einem Restaurant. Wo arbeitest du?","Ich arbeite in einem Hotel.",/^ich arbeite (?:in|im|bei|beim|auf|zu) [a-z]+(?: [a-z]+){0,5}$/,"Sage, wo du arbeitest. Beginne mit „Ich arbeite …“."],
+  [5,"Tschüss!","Tschüss!",/^(?:tschuss|tschuess|tschus|auf wiedersehen|bis bald|bis dann)(?: anna)?$/,"Sag zum Abschied „Tschüss!“." ]
 ];
 
 const $ = id => document.getElementById(id);
 const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const speaker = window.speechSynthesis;
 let index = 0;
+let firstName = "";
 let retries = 0;
 let state = "idle";
 let activeRecognition = null;
@@ -223,12 +220,23 @@ function normalize(value) {
     .replace(/\p{M}/gu,"").replace(/[^a-z0-9]+/g," ").trim();
 }
 
+function acceptSpelling(normalized) {
+  const letterNames = {be:"b", ce:"c", de:"d", ef:"f", ge:"g", ha:"h", jot:"j", ka:"k", el:"l", em:"m", en:"n", pe:"p", qu:"q", er:"r", es:"s", te:"t", vau:"v", we:"w", ix:"x", ypsilon:"y", zett:"z"};
+  const letters = normalized.split(" ").map(letter => letterNames[letter] || letter);
+  if (firstName && normalized.replace(/ /g, "") === firstName) return true;
+  return letters.length > 1 && letters.every(letter => /^[a-z]$/.test(letter))
+    && (!firstName || letters.join("") === firstName);
+}
+
 function evaluate(value) {
   if (!value.trim()) return;
   addTranscriptLine("student", value.trim());
-  const [, , example, accepts, hint] = turns[index];
+  const [, , modelAnswer, accepts, hint] = turns[index];
+  const example = accepts === acceptSpelling && firstName
+    ? [...firstName.toUpperCase()].join(" – ") + "." : modelAnswer;
   const normalized = normalize(value);
-  if (accepts.test(normalized)) {
+  if (accepts instanceof RegExp ? accepts.test(normalized) : accepts(normalized)) {
+    if (index === 1) firstName = normalized.replace(/^(?:ich (?:heisse|bin)|mein name ist) /, "").split(" ")[0];
     nextTurn();
     return;
   }
@@ -241,6 +249,7 @@ function evaluate(value) {
 
 $("start").onclick = () => {
   $("transcript-list").replaceChildren();
+  firstName = "";
   index = 0;
   ask();
 };
