@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gesprächstraining A1.1–A1.5</title>
+<style>
+:root{color-scheme:dark;font:17px system-ui;color:#f6f9f7;background:#17342d}
+*{box-sizing:border-box}
+main{width:min(100% - 2rem, 42rem);margin:2rem auto}
+a{color:#e4f5eb}
+h1{font-size:clamp(1.65rem,5vw,2.6rem);margin:1rem 0}
+.stage{background:#3c6053;border-radius:24px;padding:2rem 1rem;text-align:center;min-height:270px;display:grid;align-content:center;gap:1rem}
+.wave{height:62px;display:flex;gap:9px;align-items:center;justify-content:center}
+.wave span{width:9px;height:var(--h);border-radius:10px;background:linear-gradient(90deg,#a09aff,#5650af 60%,#42387b);box-shadow:4px 6px 10px #162d28;transform:translateY(var(--y))}
+.stage[data-state="speaking"] .wave span,.stage[data-state="listening"] .wave span{animation:pulse .72s ease-in-out infinite alternate;animation-delay:calc(var(--i)*-90ms)}
+@keyframes pulse{to{transform:translateY(var(--y)) scaleY(1.65);filter:brightness(1.32)}}
+@media(prefers-reduced-motion:reduce){.wave span{animation:none!important}}
+p{margin:0;line-height:1.5}
+#question{font-size:1.35rem;font-weight:700}
+#status,#progress{color:#f2fbf6}
+.actions,form{display:flex;gap:.65rem;flex-wrap:wrap;margin-top:1rem}
+button,input{font:inherit;border-radius:12px;padding:.65rem .9rem;border:1px solid #b7d6ca}
+button{background:#e6f8ee;color:#173a2e;cursor:pointer;font-weight:650}
+button.secondary{background:transparent;color:#eef8f2}
+button:disabled{opacity:.55;cursor:default}
+input{flex:1;min-width:12ch;background:#24473d;color:white}
+#feedback{margin-top:1rem;min-height:1.5em;white-space:pre-line}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main>
+<a href="index.html">← Startseite</a>
+<h1>Gesprächstraining A1.1–A1.5</h1>
+<section class="stage" id="stage" aria-label="Gespräch">
+<p id="progress">Lektion 1–5</p>
+<div class="wave" aria-hidden="true"></div>
+<p id="question">Hallo! Möchtest du Deutsch sprechen?</p>
+<p id="status" role="status">Starte das Gespräch.</p>
+</section>
+<div class="actions">
+<button id="start" type="button">Gespräch starten</button>
+<button id="repeat" class="secondary" type="button" hidden>Frage anhören</button>
+<button id="mic" type="button" hidden>🎤 Antworten</button>
+<button id="next" type="button" hidden>Weiter</button>
+</div>
+<form id="form" hidden>
+<input id="answer" aria-label="Deine Antwort" placeholder="Oder Antwort schreiben" autocomplete="off" required>
+<button type="submit">Antwort prüfen</button>
+</form>
+<p id="feedback" aria-live="polite"></p>
+</main>
+<script>
+"use strict";
+const turns = [
+  [1,"Hallo! Es ist Morgen. Wie begrüßt du mich?","Guten Morgen!",/^guten morgen$/,"Sag die Begrüßung für den Morgen."],
+  [1,"Ich heiße Anna. Wie heißt du?","Ich heiße Alex.",/^(?:ich (?:heisse|bin)|mein name ist) [a-z]+(?: [a-z]+){0,4}$/,"Beginne mit „Ich heiße …“ und sage deinen Namen."],
+  [1,"Wie buchstabierst du den Namen Tom?","T – O – M.",/^(?:t|te) ?o ?(?:m|em)$/,"Sage die drei Buchstaben einzeln."],
+  [2,"Woher kommst du?","Ich komme aus Polen.",/^ich komme aus (?:(?:der|den|dem) )?[a-z]+(?: [a-z]+){0,3}$/,"Beginne mit „Ich komme aus …“."],
+  [2,"Anna kommt aus Deutschland. Welche Nationalität hat sie?","Sie ist Deutsche.",/^(?:sie ist )?(?:eine )?(?:deutsche|deutsch)$/,"Beginne mit „Sie ist …“."],
+  [2,"Wie viel ist zehn plus fünf?","Fünfzehn.",/^(?:(?:das sind|das ist) )?(?:funfzehn|fuenfzehn|15)$/,"Sag die Zahl auf Deutsch."],
+  [3,"Du bist 32 Jahre alt. Jemand fragt dich: Wie alt sind Sie?","Ich bin zweiunddreißig Jahre alt.",/^ich bin (?:32|zweiunddreissig|zwei und dreissig)(?: jahre alt)?$/,"Beginne mit „Ich bin …“."],
+  [3,"Ich wohne in Berlin. Und du? Wo wohnst du?","Ich wohne in Heidelberg.",/^ich wohne in [a-z]+(?: [a-z]+){0,4}$/,"Beginne mit „Ich wohne in …“."],
+  [4,"Stell dir vor, du bist Köchin. Was bist du von Beruf?","Ich bin Köchin.",/^ich (?:bin (?:eine )?|arbeite als )(?:kochin|koechin|koch)$/,"Beginne mit „Ich bin …“ oder „Ich arbeite als …“."],
+  [4,"Du arbeitest in einem Hotel. Wo arbeiten Sie?","Ich arbeite in einem Hotel.",/^ich arbeite (?:in einem|im) hotel$/,"Beginne mit „Ich arbeite …“."],
+  [4,"Ergänze den ganzen Satz: Das ist … Ärztin.","Das ist eine Ärztin.",/^das ist eine (?:arztin|aerztin)$/,"Benutze „ein“ oder „eine“."],
+  [5,"Du sprichst mit Frau Müller. Wie fragst du höflich nach ihrem Namen?","Wie heißen Sie?",/^wie heissen sie$/,"Benutze die Höflichkeitsform „Sie“."],
+  [5,"Ich arbeite im Hotel. Jetzt sprich für uns beide. Beginne mit „Wir“.","Wir arbeiten im Hotel.",/^wir arbeiten (?:im|in einem) hotel$/,"Achte auf die Endung von „arbeiten“."],
+  [5,"Unser Gespräch ist zu Ende. Wie verabschiedest du dich höflich?","Auf Wiedersehen!",/^(?:auf wiedersehen|auf wiederhoren|auf wiederhoeren)$/,"Verabschiede dich mit der höflichen Form."]
+];
+
+const $ = id => document.getElementById(id);
+const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const speaker = window.speechSynthesis;
+let index = 0;
+let retries = 0;
+let state = "idle";
+let activeRecognition = null;
+let speechRun = 0;
+let afterSpeech = "ready";
+
+[23,24,35,16,29,23,28,14,33,26,29].forEach((height,i)=>{
+  const bar = document.createElement("span");
+  bar.style.cssText = "--h:"+height+"px;--y:"+[0,8,18,8,16,10,16,8,16,10,0][i]+"px;--i:"+i;
+  document.querySelector(".wave").append(bar);
+});
+
+function setState(value, label) {
+  state = value;
+  $("stage").dataset.state = value;
+  $("status").textContent = label;
+  $("mic").disabled = value !== "ready";
+  $("answer").disabled = value !== "ready";
+  $("form").querySelector("button").disabled = value !== "ready";
+  $("repeat").disabled = value === "listening";
+  $("next").hidden = value !== "advance";
+}
+
+function announce(line, destination = "ready") {
+  afterSpeech = destination;
+  const run = ++speechRun;
+  let finished = false;
+  const finish = () => {
+    if (run !== speechRun || finished) return;
+    finished = true;
+    setState(destination, destination === "ready"
+      ? (Recognition ? "Du bist dran." : "Schreib deine Antwort.")
+      : destination === "advance" ? "Bereit für die nächste Frage?" : "Gut gemacht!");
+  };
+  if (!speaker || !window.SpeechSynthesisUtterance) { finish(); return; }
+  speaker.cancel();
+  const utterance = new SpeechSynthesisUtterance(line);
+  utterance.lang = "de-DE";
+  const voices = speaker.getVoices();
+  const voice = voices.find(item => item.lang === "de-DE" && item.localService) || voices.find(item => item.lang === "de-DE");
+  if (voice) utterance.voice = voice;
+  utterance.rate = 0.86;
+  utterance.onend = finish;
+  utterance.onerror = finish;
+  setState("speaking","Hör zu …");
+  speaker.speak(utterance);
+  window.setTimeout(finish, Math.max(10000,line.length * 115));
+}
+
+function ask() {
+  const [lesson, question] = turns[index];
+  retries = 0;
+  $("start").hidden = true;
+  $("repeat").hidden = false;
+  $("mic").hidden = !Recognition;
+  $("form").hidden = false;
+  $("progress").textContent = "A1."+lesson+" · Frage "+(index+1)+" von "+turns.length;
+  $("question").textContent = question;
+  $("feedback").textContent = "";
+  $("answer").value = "";
+  announce(question);
+}
+
+function normalize(value) {
+  return value.toLowerCase().replace(/ß/g,"ss").normalize("NFD")
+    .replace(/\p{M}/gu,"").replace(/[^a-z0-9]+/g," ").trim();
+}
+
+function evaluate(value) {
+  if (!value.trim()) return;
+  const [, , example, accepts, hint] = turns[index];
+  const normalized = normalize(value);
+  if (accepts.test(normalized)) {
+    $("feedback").textContent = "Deine Antwort: "+value+"\nGut! Das passt.";
+    announce("Gut! Das passt.", "advance");
+    return;
+  }
+  retries += 1;
+  $("answer").value = "";
+  const guidance = retries === 1 ? hint+" Versuch es noch einmal." : "Lies das Beispiel laut. Dann geht es weiter.";
+  $("feedback").textContent = "Deine Antwort: "+value+"\nBeispiel: "+example+"\n"+guidance;
+  announce("Hier ist ein Beispiel. "+example+" "+guidance, retries === 1 ? "ready" : "advance");
+}
+
+$("start").onclick = () => { index = 0; ask(); };
+$("repeat").onclick = () => announce(turns[index][1], state === "speaking" ? afterSpeech : state);
+$("next").onclick = () => {
+  index += 1;
+  if (index < turns.length) { ask(); return; }
+  $("question").textContent = "Das Gespräch ist fertig. Auf Wiedersehen!";
+  $("progress").textContent = "A1.1–A1.5 abgeschlossen";
+  $("feedback").textContent = "";
+  $("form").hidden = $("mic").hidden = $("repeat").hidden = true;
+  $("start").textContent = "Noch einmal";
+  $("start").hidden = false;
+  announce($("question").textContent, "finished");
+};
+$("form").onsubmit = event => {
+  event.preventDefault();
+  if (state === "ready") evaluate($("answer").value);
+};
+$("mic").onclick = () => {
+  if (!Recognition || state !== "ready") return;
+  const recognition = new Recognition();
+  activeRecognition = recognition;
+  recognition.lang = "de-DE";
+  recognition.interimResults = false;
+  recognition.onresult = event => {
+    activeRecognition = null;
+    const transcript = event.results[0][0].transcript;
+    $("answer").value = transcript;
+    evaluate(transcript);
+  };
+  recognition.onerror = () => {
+    activeRecognition = null;
+    setState("ready","Die Aufnahme hat nicht geklappt. Sprich noch einmal oder schreib deine Antwort.");
+  };
+  recognition.onend = () => {
+    if (activeRecognition !== recognition) return;
+    activeRecognition = null;
+    setState("ready","Ich habe nichts verstanden. Versuch es noch einmal.");
+  };
+  try {
+    recognition.start();
+    setState("listening","Ich höre zu …");
+  } catch {
+    activeRecognition = null;
+    setState("ready","Das Mikrofon ist gerade nicht verfügbar. Schreib deine Antwort.");
+  }
+};
+</script>
+</body>
+</html>
