@@ -95,7 +95,15 @@ body:has(#transcript:not([hidden])) main{padding-bottom:10rem}
 #transcript h2{font-size:.85rem;margin:0 0 .4rem;color:#d3def8}
 #transcript-list{display:flex;gap:.65rem;overflow-x:auto;overflow-y:hidden;list-style:none;padding:0 0 .45rem;margin:0;scrollbar-width:auto}
 #transcript-list li{flex:0 0 auto;width:max-content;max-width:min(28rem,85vw);background:#263655;border-radius:10px;padding:.4rem .65rem;max-height:5.5rem;overflow:auto;overflow-wrap:anywhere}
-#transcript-list li.student{background:#514477}
+#transcript-list li.teacher{background:linear-gradient(90deg,
+    #332b7d 0%,
+    #4a419b 13%,
+    #6a60bd 34%,
+    #776dcc 50%,
+    #665bb6 68%,
+    #493f96 86%,
+    #302873 100%)}
+#transcript-list li.student{background:#263655}
 #transcript-list strong{display:block;font-size:.78rem;color:#e1d9ff}
 [hidden]{display:none!important}
 .back-link{position:absolute;top:.5rem;left:.5rem;display:grid;place-items:center;width:2.75rem;height:2.75rem;font-size:1.5rem;line-height:1;text-decoration:none}
