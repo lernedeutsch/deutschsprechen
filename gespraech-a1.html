@@ -145,17 +145,54 @@ body:has(#transcript:not([hidden])) main{padding-bottom:10rem}
 <script>
 "use strict";
 const nameAnswer = /^(?:ich (?:heiße|heisse|bin)|mein name ist) +([\p{L}\p{M}]+(?:[-’'][\p{L}\p{M}]+)*)(?: +[\p{L}\p{M}]+(?:[-’'][\p{L}\p{M}]+)*){0,4}[.!?]*$/iu;
+const nationalityWords = new Set(
+  ("Polin Pole polnisch Deutsche Deutscher deutsch Schweizerin Schweizer schweizerisch Österreicherin Österreicher österreichisch " +
+   "Italienerin Italiener italienisch Französin Franzose französisch Spanierin Spanier spanisch Portugiesin Portugiese portugiesisch " +
+   "Türkin Türke türkisch Ukrainerin Ukrainer ukrainisch Russin Russe russisch Britin Brite britisch Engländerin Engländer englisch " +
+   "Amerikanerin Amerikaner amerikanisch Kanadierin Kanadier kanadisch Chinesin Chinese chinesisch Japanerin Japaner japanisch " +
+   "Inderin Inder indisch Syrerin Syrer syrisch Brasilianerin Brasilianer brasilianisch Griechin Grieche griechisch " +
+   "Rumänin Rumäne rumänisch Bulgarin Bulgare bulgarisch Kroatin Kroate kroatisch Niederländerin Niederländer niederländisch " +
+   "Ungarin Ungar ungarisch Iranerin Iraner iranisch Irakerin Iraker irakisch Afghanin Afghane afghanisch " +
+   "Marokkanerin Marokkaner marokkanisch Mexikanerin Mexikaner mexikanisch Vietnamesin Vietnamese vietnamesisch").split(" ").map(normalize)
+);
+
+function acceptNationality(answer) {
+  return nationalityWords.has(answer.replace(/^ich bin (?:ein |eine )?/, ""));
+}
+
+const smallNumbers = "null eins zwei drei vier fünf sechs sieben acht neun zehn elf zwölf dreizehn vierzehn fünfzehn sechzehn siebzehn achtzehn neunzehn".split(" ");
+const tens = "zwanzig dreißig vierzig fünfzig sechzig siebzig achtzig neunzig".split(" ");
+const spokenAges = new Set(Array.from({length: 131}, (_, age) => {
+  const rest = age % 100;
+  const unit = rest % 10;
+  const suffix = rest < 20 ? smallNumbers[rest]
+    : (unit ? (unit === 1 ? "ein" : smallNumbers[unit]) + "und" : "") + tens[Math.floor(rest / 10) - 2];
+  return normalize(age < 100 ? suffix : "einhundert" + (rest ? suffix : ""));
+}));
+
+function acceptAge(answer) {
+  const age = answer.replace(/^ich bin /, "").replace(/ jahre alt$/, "").replace(/ jahre$/, "").replace(/ /g, "");
+  if (/^\d{1,3}$/.test(age)) return Number(age) <= 130;
+  const standard = age.replace(/^hundert/, "einhundert").replace(/fuenf/g, "funf").replace(/zwoelf/g, "zwolf");
+  return spokenAges.has(standard) || standard === "ein";
+}
+
+function acceptWorkplace(answer) {
+  return /^ich arbeite (?:in|im|bei|beim|auf|zu) [a-z]+(?: [a-z]+){0,5}$/.test(answer)
+    && !/^ich arbeite (?:in|auf) (?:die|das|einen|eine|ein|ins|aufs)(?: |$)/.test(answer);
+}
+
 const turns = [
   [1,"Guten Morgen!","Guten Morgen!",/^(?:auch )?(?:guten morgen|hallo)(?: (?:auch|anna|dir|ihnen)){0,3}$/,"Sag mir auch guten Morgen."],
   [1,"Ich heiße Anna. Wie heißt du?","Ich heiße Alex.",nameAnswer,"Beginne mit „Ich heiße …“ und sage deinen Namen."],
   [1,"Wie geht’s dir?","Mir geht’s gut, danke.",/^(?:(?:mir geht es|mir geht s|mir gehts|es geht mir) )?(?:sehr gut|ganz gut|gut|prima|super|nicht so gut|nicht gut|schlecht|okay|ok|es geht|geht so)(?: danke)?(?: und dir)?$/,"Sag, wie es dir geht."],
   [1,"Buchstabiere deinen Vornamen.","A – L – E – X.",acceptSpelling,"Sage die Buchstaben deines Vornamens einzeln."],
   [2,"Woher kommst du?","Ich komme aus Polen.",/^ich komme aus (?:(?:der|den|dem) )?[a-z]+(?: [a-z]+){0,3}$/,"Beginne mit „Ich komme aus …“."],
-  [2,"Anna kommt aus Deutschland. Sie ist Deutsche. Und du?","Ich bin Polin.",/^ich bin (?:ein |eine )?[\p{L}]+$/u,"Beginne mit „Ich bin …“ und sage deine Nationalität."],
-  [3,"Wie alt bist du?","Ich bin 25 Jahre alt.",/^(?:ich bin )?(?:\d{1,3}|[a-z]+(?: [a-z]+){0,3}(?= jahre alt$))(?: jahre alt)?$/,"Sag dein Alter. Beginne mit „Ich bin …“."],
-  [3,"Ich wohne in Berlin. Und du? Wo wohnst du?","Ich wohne in Heidelberg.",/^ich wohne in [a-z]+(?: [a-z]+){0,4}$/,"Beginne mit „Ich wohne in …“."],
+  [2,"Anna kommt aus Deutschland. Sie ist Deutsche. Welche Nationalität hast du?","Ich bin Polin.",acceptNationality,"Ich frage nach deiner Nationalität. Und du?"],
+  [3,"Wie alt bist du?","Ich bin 25 Jahre alt.",acceptAge,"Sag dein Alter. Beginne mit „Ich bin …“."],
+  [3,"Ich wohne in Berlin. Und du? Wo wohnst du?","Ich wohne in Heidelberg.",/^ich wohne (?:in|im|bei|beim|auf) [a-z]+(?: [a-z]+){0,4}$/,"Beginne mit „Ich wohne in …“."],
   [4,"Ich bin Köchin. Was bist du von Beruf?","Ich bin Lehrer.",/^ich (?:bin|arbeite als) [a-z]+(?: [a-z]+){0,4}$/,"Beginne mit „Ich bin …“ oder „Ich arbeite als …“."],
-  [4,"Ich arbeite in einem Restaurant. Wo arbeitest du?","Ich arbeite in einem Hotel.",/^ich arbeite (?:in|im|bei|beim|auf|zu) [a-z]+(?: [a-z]+){0,5}$/,"Sage, wo du arbeitest. Beginne mit „Ich arbeite …“."],
+  [4,"Ich arbeite in einem Restaurant. Wo arbeitest du?","Ich arbeite in einem Hotel.",acceptWorkplace,"Sage, wo du arbeitest. Beginne mit „Ich arbeite …“."],
   [5,"Danke für das nette Gespräch. Ich wünsche dir einen schönen Tag. Tschüss!","Tschüss! Oder: Auf Wiedersehen.",/^(?:tschuss|tschuess|tschus|auf ?wiedersehen)(?: anna)?$/,"Sag zum Abschied „Tschüss!“ oder „Auf Wiedersehen!“." ]
 ];
 
@@ -258,8 +295,11 @@ function evaluate(value) {
   if (!value.trim()) return;
   addTranscriptLine("student", value.trim());
   const [, , modelAnswer, accepts, hint] = turns[index];
-  const example = accepts === acceptSpelling && firstName
+  let example = accepts === acceptSpelling && firstName
     ? [...firstName.toUpperCase()].join(" – ") + "." : modelAnswer;
+  if (accepts === acceptWorkplace && /^ich arbeite in die schule$/.test(normalize(value))) {
+    example = "Ich arbeite in der Schule.";
+  }
   const normalized = normalize(value);
   const name = accepts === nameAnswer ? value.trim().match(nameAnswer)?.[1] : null;
   const accepted = accepts === nameAnswer ? Boolean(name)
@@ -269,15 +309,20 @@ function evaluate(value) {
     const intro = turns[index][1] === "Wie geht’s dir?" &&
       /^(?:(?:mir geht es|mir geht s|mir gehts|es geht mir) )?(?:sehr gut|ganz gut|gut|prima|super)(?: |$)/.test(normalized)
       ? "Oh, das ist schön! Das freut mich. " : "";
-    nextTurn(intro);
+    const negative = turns[index][1] === "Wie geht’s dir?" &&
+      /^(?:(?:mir geht es|mir geht s|mir gehts|es geht mir) )?(?:nicht so gut|nicht gut|schlecht)(?: |$)/.test(normalized);
+    nextTurn(negative ? "Oh, das tut mir leid. " : intro);
     return;
   }
   retries += 1;
   $("answer").value = "";
   const retry = retries === 1 || index === turns.length - 1;
   const guidance = retry ? hint+" Versuch es noch einmal." : "Lies das Beispiel laut. Dann geht es weiter.";
+  const correction = accepts === acceptNationality
+    ? "Ich frage nach deiner Nationalität. Zum Beispiel: "+example+" Und du?"
+    : "Hier ist ein Beispiel. "+example+" "+guidance;
   $("feedback").textContent = "Deine Antwort: "+value+"\nBeispiel: "+example+"\n"+guidance;
-  announce("Hier ist ein Beispiel. "+example+" "+guidance, retry ? "ready" : "advance");
+  announce(correction, retry ? "ready" : "advance");
 }
 
 $("start").onclick = () => {
