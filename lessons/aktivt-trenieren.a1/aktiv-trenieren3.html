@@ -591,32 +591,56 @@ function checkDialogueAnswer(value){
 }
 $("#dPlay").onclick=playDialogueQuestion;
 $("#dRole").onclick=()=>{
+  if(dState!=="speak")return;
+  const feedback=$("#dFb");
+  const input=$("#dInput");
   if(!DialogueRecognition){
-    $("#dFb").textContent="Bitte schreibe deine Antwort.";
-    $("#dInput").focus();
+    feedback.textContent="Diese Browser-Version unterstützt keine Spracherkennung. Schreib deine Antwort.";
+    input.focus();
     return;
   }
   const mic=new DialogueRecognition();
   mic.lang="de-DE";
+  mic.interimResults=true;
   mic.maxAlternatives=3;
+  let transcript="";
+  let error="";
+  input.value="";
   dState="recording";
   drawDlg();
-  $("#dFb").textContent="Das Mikrofon hört zu …";
-  const retry=()=>{
+  feedback.textContent="Das Mikrofon startet …";
+  mic.onstart=()=>{feedback.textContent="Ich höre zu. Sprich jetzt."};
+  mic.onresult=event=>{
+    const result=event.results[event.resultIndex ?? 0];
+    if(!result?.length)return;
+    const matches=item=>DLG[dIndex][2].test(normalizeDialogueAnswer(item.transcript));
+    const heard=(Array.from(result).find(matches)??result[0]).transcript.trim();
+    feedback.textContent="Erkannt: "+heard;
+    if(result.isFinal)transcript=heard;
+  };
+  const finish=()=>{
     if(dState!=="recording")return;
+    if(transcript){
+      input.value=transcript;
+      const correct=DLG[dIndex][2].test(normalizeDialogueAnswer(transcript));
+      checkDialogueAnswer(transcript);
+      if(!correct)feedback.textContent+=" Erkannt: "+transcript;
+      return;
+    }
     dState="speak";
     drawDlg();
-    $("#dFb").textContent="Sprich noch einmal oder schreibe deine Antwort.";
+    feedback.textContent=error||"Ich habe nichts verstanden. Sprich noch einmal oder schreibe deine Antwort.";
   };
-  mic.onerror=retry;
-  mic.onend=retry;
-  mic.onresult=event=>{
-    if(dState!=="recording")return;
-    const alternatives=Array.from(event.results[0]);
-    const match=alternatives.find(item=>DLG[dIndex][2].test(normalizeDialogueAnswer(item.transcript)));
-    checkDialogueAnswer((match||alternatives[0]).transcript);
+  mic.onerror=event=>{
+    error=["not-allowed","service-not-allowed"].includes(event.error)
+      ?"Das Mikrofon ist gesperrt. Erlaube den Zugriff oder schreibe deine Antwort."
+      :event.error==="network"?"Die Spracherkennung ist gerade nicht erreichbar. Schreib deine Antwort.":"";
   };
-  try{mic.start()}catch{retry()}
+  mic.onend=finish;
+  try{mic.start()}catch{
+    error="Das Mikrofon ist gerade nicht verfügbar. Schreib deine Antwort.";
+    finish();
+  }
 };
 $("#dTyped").onsubmit=event=>{
   event.preventDefault();
