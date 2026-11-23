@@ -3556,9 +3556,7 @@ const dialogues=[
     title:"Dialog 1 · Alter",
     role:"informell", speaker:"Tom", avatar:"🧑",
     turns:[
-      {prompt:"Hallo! Wie alt bist du?",instruction:"Sag dein Alter.",example:"Ich bin 30 Jahre alt.",requireFullSentence:true,check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
-
-      {prompt:"Ah, danke! Ich bin 32 Jahre alt.",instruction:"Reagiere kurz und natürlich.",example:"Ja, genau.",check:a=>fuzzyContains(a,"ja",.35)||fuzzyContains(a,"genau",.35)||fuzzyContains(a,"stimmt",.35)}
+      {prompt:"Hallo! Wie alt bist du?",instruction:"Sag dein Alter.",example:"Ich bin 30 Jahre alt.",requireFullSentence:true,check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a)),closing:"Danke! Ich bin 32 Jahre alt. Bis später!"}
     ]
   },
   {
@@ -4240,7 +4238,12 @@ function advance(){
 
   stopListeningUI();
 
-  window.setTimeout(()=>{
+  window.setTimeout(async()=>{
+    const turn=current();
+    if(turn.closing){
+      addHistoryEntry("partner",turn.speaker,turn.closing);
+      await speakGerman(turn.closing);
+    }
     index++;
 
     if(index>=flatTurns.length){
@@ -4523,11 +4526,6 @@ const instructionTranslations={
     "en": "Say how old you are, with or without “Und du?”.",
     "pl": "Powiedz, ile masz lat. Możesz dodać „Und du?”.",
     "it": "Di’ quanti anni hai, con o senza «Und du?»."
-  },
-  "Reagiere kurz und natürlich.": {
-    "en": "Give a short, natural reply.",
-    "pl": "Odpowiedz krótko i naturalnie.",
-    "it": "Rispondi in modo breve e naturale."
   },
   "Stell dich kurz vor.": {
     "en": "Introduce yourself briefly.",
