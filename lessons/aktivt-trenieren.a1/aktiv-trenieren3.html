@@ -51,6 +51,12 @@ h1{margin:0 0 12px;color:#161616;font:700 2.6rem/1.12 "Kalam",cursive}
 .listen.tap-cue{display:inline-block;animation:l3cue 1.15s ease-in-out infinite}
 input[type="range"].tap-cue{animation:rangePulse 1.35s ease-in-out infinite}
 @keyframes rangePulse{0%,100%{filter:none}50%{filter:drop-shadow(0 0 5px #e3a51c)}}
+#vorstellung .switch .tap-cue{animation:registerPulse 2.8s ease-in-out infinite}
+#vorstellung .switch #formal{animation-delay:1.4s}
+@keyframes registerPulse{
+  0%,50%,100%{transform:scale(1);box-shadow:0 4px 10px #315b4720}
+  25%{transform:scale(1.065);box-shadow:0 0 0 6px #e4bd5760,0 5px 13px #315b4730}
+}
 @media(prefers-reduced-motion:reduce){.tap-cue,.click-cue{animation:none!important}}
 
 .head{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px;margin-bottom:18px}.num{color:var(--red);font:600 .82rem "JetBrains Mono",monospace;letter-spacing:.16em;text-transform:uppercase}.head h2{margin:0;color:#161616;font:700 2.5rem/1.15 "Kalam",cursive}.done{display:none;margin-left:auto;color:#16864b;font-weight:800}.done.show{display:inline}
