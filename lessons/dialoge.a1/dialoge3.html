@@ -3576,7 +3576,7 @@ const dialogues=[
     role:"informell", speaker:"Paul", avatar:"🧑",
     turns:[
       {prompt:"Ich bin 30 Jahre alt. Und du?",instruction:"Sag dein Alter. Mit oder ohne „Und du?“.",example:"Ich bin 20 Jahre alt. Und du?",requireFullSentence:true,check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
-      {prompt:"Wir sind hier. Seid ihr auch hier?",instruction:"Antworte positiv oder negativ.",example:"Ja, wir sind auch hier. / Nein, wir sind nicht hier.",requireFullSentence:true,check:a=>(fuzzyContains(a,"ja",.35)&&fuzzyContains(a,"wir sind",.35))||(fuzzyContains(a,"nein",.35)&&(fuzzyContains(a,"wir sind nicht",.4)||fuzzyContains(a,"nicht hier",.4)))}
+      {prompt:"Wo wohnst du?",instruction:"Sag, wo du wohnst.",example:"Ich wohne in Heidelberg.",requireFullSentence:true,check:a=>/\bich wohne in [\p{L}]+/u.test(a)}
     ]
   },
   {
@@ -4541,11 +4541,7 @@ const instructionTranslations={
     "pl": "Odpowiedz krótko.",
     "it": "Rispondi brevemente."
   },
-  "Antworte positiv oder negativ.": {
-    "en": "Answer yes or no.",
-    "pl": "Odpowiedz twierdząco lub przecząco.",
-    "it": "Rispondi in modo affermativo o negativo."
-  },
+  "Sag, wo du wohnst.": {en:"Say where you live.",pl:"Powiedz, gdzie mieszkasz.",it:"Di’ dove abiti."},
   "Begrüße Frau Becker und nenne deinen Namen.": {
     "en": "Greet Ms Becker and give your name.",
     "pl": "Przywitaj panią Becker i podaj swoje nazwisko.",
