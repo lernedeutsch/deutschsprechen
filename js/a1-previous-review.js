@@ -1,7 +1,16 @@
 (()=>{const m=location.pathname.match(/lektion-(\d+)\.html$/);if(!m)return;const n=+m[1];if(n<2||n>30)return;
 const D={
 1:{w:["Hallo!","Guten Morgen!","Guten Tag!","Guten Abend!","Tschüss!","Auf Wiedersehen!","Ich heiße …","Mein Name ist …","Ich bin …","Wie heißt du?","Wie heißen Sie?","Das Alphabet"],q:[["Guten Morgen!",["guten morgen"]],["Wie heißen Sie?",["ich heiße","ich heisse","mein name ist","ich bin"]],["Wie heißt du?",["ich heiße","ich heisse","mein name ist","ich bin"]],["Tschüss!",["tschüss","tschues","tschüs","auf wiedersehen"]]]},
-2:{w:["kommen","Deutschland","Polen","Italien","die Schweiz","Ich komme aus …","Woher kommen Sie?"],q:[["Woher kommen Sie?",["komme aus"]],["Nennen Sie ein Land und eine Nationalität.",["deutsch","poln","ital","schweiz","span","franz"]]]},
+2:{
+  w:["kommen","Deutschland","Polen","Italien","die Schweiz","Ich komme aus …","Woher kommen Sie?"],
+  q:[
+    ["Woher kommen Sie? Antworte in einem ganzen Satz.", /^ich komme aus [\p{L}]+(?:[\s’'-]+[\p{L}]+)*[.!]?$/u],
+    ["Ergänze „kommen“: Woher ___ du?", /^kommst[.!?]?$/],
+    ["Ergänze „kommen“: Woher ___ Sie?", /^kommen[.!?]?$/],
+    ["Ergänze: Ich komme ___ Schweiz.", /^aus der[.!?]?$/],
+    ["Lies laut: 12, 16, 17, 20.", null, "zwölf, sechzehn, siebzehn, zwanzig"]
+  ]
+},
 3:{w:["Wie alt sind Sie?","Ich bin … Jahre alt.","wohnen","Wo wohnen Sie?","Ich wohne in …"],q:[["Wie alt sind Sie?",["jahre","bin"]],["Wo wohnen Sie?",["wohne"]]]},
 4:{w:["der Beruf","arbeiten","Was sind Sie von Beruf?","Ich arbeite als …","Wo arbeiten Sie?"],q:[["Was sind Sie von Beruf?",["bin","arbeite"]],["Wo arbeiten Sie?",["arbeite","bei","in"]]]},
 5:{w:["ich","du","er","sie","es","wir","ihr","Sie","sein","heißen"],q:[["Sagen Sie einen Satz mit „wir“.",["wir"]],["Fragen Sie formell nach dem Namen.",["wie heißen sie","wie heissen sie"]]]},
@@ -40,7 +49,11 @@ if(n>=3){
   }
 }
 const guideHtml=`<div class="guide a1-standard-guide"><strong>① Zuerst: Lies die ganze Lektion. Danach übst du Schritt für Schritt mit den Aufgaben in dieser Reihenfolge.</strong><details class="learning-translation"><summary>▶ <span class="translation-globe">🌐</span> A/文</summary><div class="tr-content"><p><b>English:</b> First, read the whole lesson. Then practise step by step with the tasks in this order.</p><p><b>Polski:</b> Najpierw przeczytaj całą lekcję. Następnie ćwicz krok po kroku, wykonując zadania w tej kolejności.</p><p><b>Italiano:</b> Per prima cosa, leggi tutta la lezione. Poi esercitati passo dopo passo con gli esercizi in quest’ordine.</p></div></details></div>`;
-const box=document.createElement("section");box.className="prev-review";box.innerHTML='<button class="prev-review-toggle" type="button" aria-expanded="false"><span>🔄 Kurz wiederholen: Lektion '+prev+'</span><span>▼</span></button><div class="prev-review-panel"><h2>Bevor du mit Lektion '+n+' beginnst …</h2><p class="prev-review-intro">Erinnere dich kurz an das Wichtigste aus Lektion '+prev+'. So startest du ohne unnötige Wissenslücken.</p><div class="prev-review-step"><h3>📚 Wörter & Sätze aus Lektion '+prev+'</h3><div class="prev-review-chips">'+d.w.map(x=>'<span class="prev-review-chip">'+x+'</span>').join("")+'</div></div><div class="prev-review-step"><h3>🗣️ Kannst du das noch sagen?</h3>'+d.q.map((x,i)=>'<div class="prev-review-q"><label>'+x[0]+'</label><input type="text" data-k="'+x[1].join("|")+'" placeholder="Antworte selbst auf Deutsch …"><button class="prev-review-check" type="button">Antwort prüfen</button><span class="prev-review-feedback"></span></div>').join("")+'</div><div class="prev-review-step"><h3>✅ Bereit für Lektion '+n+'?</h3><p>Wenn du die Wörter verstehst und die Fragen selbst beantworten kannst, geh weiter. Wenn nicht, wiederhole Lektion '+prev+' kurz.</p><div class="prev-review-actions"><a class="prev-review-back" href="lektion-'+prev+'.html">↩ Lektion '+prev+' kurz wiederholen</a><button class="prev-review-ready" type="button">✓ Weiter mit Lektion '+n+'</button></div></div></div>';
+const box=document.createElement("section");box.className="prev-review";box.innerHTML='<button class="prev-review-toggle" type="button" aria-expanded="false"><span>🔄 Kurz wiederholen: Lektion '+prev+'</span><span>▼</span></button><div class="prev-review-panel"><h2>Bevor du mit Lektion '+n+' beginnst …</h2><p class="prev-review-intro">Erinnere dich kurz an das Wichtigste aus Lektion '+prev+'. So startest du ohne unnötige Wissenslücken.</p><div class="prev-review-step"><h3>📚 Wörter & Sätze aus Lektion '+prev+'</h3><div class="prev-review-chips">'+d.w.map(x=>'<span class="prev-review-chip">'+x+'</span>').join("")+'</div></div><div class="prev-review-step"><h3>🗣️ Kannst du das noch sagen?</h3>'+d.q.map(([prompt, answer, solution], i)=>{
+  if(answer===null)return '<div class="prev-review-q"><strong>'+prompt+'</strong><details><summary>Lösung anzeigen</summary><p>'+solution+'</p></details></div>';
+  const id='prev-review-answer-'+i;
+  return '<div class="prev-review-q"><label for="'+id+'">'+prompt+'</label><input id="'+id+'" type="text" placeholder="Antworte selbst auf Deutsch …"><button class="prev-review-check" type="button" data-question="'+i+'">Antwort prüfen</button><span class="prev-review-feedback" role="status"></span></div>';
+}).join("")+'</div><div class="prev-review-step"><h3>✅ Bereit für Lektion '+n+'?</h3><p>Wenn du die Wörter verstehst und die Fragen selbst beantworten kannst, geh weiter. Wenn nicht, wiederhole Lektion '+prev+' kurz.</p><div class="prev-review-actions"><a class="prev-review-back" href="lektion-'+prev+'.html">↩ Lektion '+prev+' kurz wiederholen</a><button class="prev-review-ready" type="button">✓ Weiter mit Lektion '+n+'</button></div></div></div>';
 if(n===2){const teil1=document.querySelector("#teil1");if(teil1){teil1.insertAdjacentElement("beforebegin",box);}else document.body.prepend(box)}else{
   const oldGuide=document.querySelector(".learning-guide,.guide");
   if(oldGuide)oldGuide.remove();
@@ -50,6 +63,6 @@ if(n===2){const teil1=document.querySelector("#teil1");if(teil1){teil1.insertAdj
   else{const page=document.querySelector("article.page");if(page){page.insertAdjacentElement("afterend",box);box.insertAdjacentHTML("afterend",guideHtml)}else{const main=document.querySelector("main");main.appendChild(box);box.insertAdjacentHTML("afterend",guideHtml)}}
 }
 const toggle=box.querySelector(".prev-review-toggle");toggle.onclick=()=>{const o=box.classList.toggle("open");toggle.setAttribute("aria-expanded",o)};
-box.querySelectorAll(".prev-review-check").forEach(b=>b.onclick=()=>{const inp=b.parentElement.querySelector("input"),keys=inp.dataset.k.split("|"),v=inp.value.toLowerCase().trim(),ok=v.length>1&&keys.some(k=>v.includes(k.toLowerCase()));const f=b.parentElement.querySelector(".prev-review-feedback");f.textContent=ok?"✓ Gut – du erinnerst dich.":"↻ Noch unsicher? Schau kurz in Lektion "+prev+".";f.style.color=ok?"#2e7d32":"#a45b00"});
+box.querySelectorAll(".prev-review-check").forEach(b=>b.onclick=()=>{const inp=b.parentElement.querySelector("input"),answer=d.q[Number(b.dataset.question)][1],v=inp.value.toLowerCase().trim().replace(/\s+/g," "),ok=answer instanceof RegExp?answer.test(v):v.length>1&&answer.some(k=>v.includes(k.toLowerCase()));const f=b.parentElement.querySelector(".prev-review-feedback");f.textContent=ok?"✓ Gut – du erinnerst dich.":"↻ Noch unsicher? Schau kurz in Lektion "+prev+".";f.style.color=ok?"#2e7d32":"#a45b00"});
 box.querySelector(".prev-review-ready").onclick=()=>{box.classList.remove("open");const target=document.querySelector(".lesson2-course-nav,.course-nav,article.page,section[id^='lektion'],header.hero");if(target)target.scrollIntoView({behavior:"smooth",block:"start"})};
 })();
