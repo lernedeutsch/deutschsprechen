@@ -134,6 +134,7 @@ body:has(#transcript:not([hidden])) main{padding-bottom:10rem}
 <button id="start" type="button">Gespräch starten</button>
 <button id="repeat" class="secondary" type="button" hidden>Frage anhören</button>
 <button id="mic" type="button" hidden>🎤 Antworten</button>
+<button id="review" type="button" hidden>Meine Sätze wiederholen</button>
 <button id="next" type="button" hidden>Weiter</button>
 </div>
 <p id="feedback" aria-live="polite"></p>
@@ -202,6 +203,9 @@ const speaker = window.speechSynthesis;
 let index = 0;
 let firstName = "";
 let retries = 0;
+const mistakes = new Set();
+let reviewQueue = null;
+let reviewPosition = 0;
 let state = "idle";
 let activeRecognition = null;
 let speechRun = 0;
@@ -291,29 +295,70 @@ function acceptSpelling(normalized) {
     && (!expected || letters.join("") === expected);
 }
 
+const studentQuestions = [
+  [/wie (?:heißt du|heißen sie|heisst du|heissen sie)/iu, "Ich heiße Anna."],
+  [/wie alt (?:bist du|sind sie)/iu, "Ich bin 28 Jahre alt."],
+  [/wo arbeit(?:est du|en sie)/iu, "Ich arbeite in einem Restaurant."],
+  [/was (?:bist du|sind sie) von beruf/iu, "Ich bin Köchin."],
+  [/woher komm(?:st du|en sie)/iu, "Ich komme aus Deutschland."],
+  [/welche nationalität ha(?:st du|ben sie)/iu, "Ich bin Deutsche."],
+  [/wo wohn(?:st du|en sie)/iu, "Ich wohne in Berlin."],
+  [/wie geht(?:[’']s|s| es) (?:dir|ihnen)/iu, "Mir geht’s auch gut, danke!"],
+  [/und (?:du|sie|dir|ihnen)/iu, null]
+];
+
+function splitStudentQuestion(value) {
+  const reciprocal = {
+    "Ich heiße Anna. Wie heißt du?": "Ich heiße Anna.",
+    "Wie geht’s dir?": "Mir geht’s auch gut, danke!",
+    "Woher kommst du?": "Ich komme aus Deutschland.",
+    "Anna kommt aus Deutschland. Sie ist Deutsche. Welche Nationalität hast du?": "Ich bin Deutsche.",
+    "Wie alt bist du?": "Ich bin 28 Jahre alt.",
+    "Ich wohne in Berlin. Und du? Wo wohnst du?": "Ich wohne in Berlin.",
+    "Ich bin Köchin. Was bist du von Beruf?": "Ich bin Köchin.",
+    "Ich arbeite in einem Restaurant. Wo arbeitest du?": "Ich arbeite in einem Restaurant."
+  };
+  for (const [pattern, reply] of studentQuestions) {
+    const match = value.match(new RegExp("(?:^|[\\s,.!?;])(" + pattern.source + ")[\\s.!?]*$", pattern.flags));
+    if (!match) continue;
+    const response = reply || reciprocal[turns[index][1]];
+    if (response) return {answer: value.slice(0, match.index).trim(), response};
+  }
+  return {answer: value, response: ""};
+}
+
 function evaluate(value) {
   if (!value.trim()) return;
   addTranscriptLine("student", value.trim());
+  const {answer, response} = splitStudentQuestion(value.trim());
+  if (!answer && response) {
+    announce(response + " " + currentQuestion());
+    return;
+  }
   const [, , modelAnswer, accepts, hint] = turns[index];
   let example = accepts === acceptSpelling && firstName
     ? [...firstName.toUpperCase()].join(" – ") + "." : modelAnswer;
   if (accepts === acceptWorkplace && /^ich arbeite in die schule$/.test(normalize(value))) {
     example = "Ich arbeite in der Schule.";
   }
-  const normalized = normalize(value);
-  const name = accepts === nameAnswer ? value.trim().match(nameAnswer)?.[1] : null;
+  const normalized = normalize(answer);
+  const name = accepts === nameAnswer ? answer.trim().match(nameAnswer)?.[1] : null;
   const accepted = accepts === nameAnswer ? Boolean(name)
     : accepts instanceof RegExp ? accepts.test(normalized) : accepts(normalized);
   if (accepted) {
     if (name) firstName = name;
+    if (reviewQueue) mistakes.delete(index);
     const intro = turns[index][1] === "Wie geht’s dir?" &&
       /^(?:(?:mir geht es|mir geht s|mir gehts|es geht mir) )?(?:sehr gut|ganz gut|gut|prima|super)(?: |$)/.test(normalized)
       ? "Oh, das ist schön! Das freut mich. " : "";
     const negative = turns[index][1] === "Wie geht’s dir?" &&
       /^(?:(?:mir geht es|mir geht s|mir gehts|es geht mir) )?(?:nicht so gut|nicht gut|schlecht)(?: |$)/.test(normalized);
-    nextTurn(negative ? "Oh, das tut mir leid. " : intro);
+    const reaction = negative ? "Oh, das tut mir leid. " : intro;
+    const reply = response ? response + " " : reaction;
+    nextTurn(reply);
     return;
   }
+  mistakes.add(index);
   retries += 1;
   $("answer").value = "";
   const retry = retries === 1 || index === turns.length - 1;
@@ -322,12 +367,15 @@ function evaluate(value) {
     ? "Ich frage nach deiner Nationalität. Zum Beispiel: "+example+" Und du?"
     : "Hier ist ein Beispiel. "+example+" "+guidance;
   $("feedback").textContent = "Deine Antwort: "+value+"\nBeispiel: "+example+"\n"+guidance;
-  announce(correction, retry ? "ready" : "advance");
+  announce((response ? response + " " : "") + correction, retry ? "ready" : "advance");
 }
 
 $("start").onclick = () => {
   $("transcript-list").replaceChildren();
   firstName = "";
+  mistakes.clear();
+  reviewQueue = null;
+  $("review").hidden = true;
   index = 0;
   ask();
 };
@@ -336,15 +384,31 @@ $("repeat").onclick = () => {
   announce($("question").textContent, state === "advance" ? "advance" : "ready", false);
 };
 $("next").onclick = () => nextTurn();
+$("review").onclick = () => {
+  reviewQueue = [...mistakes];
+  reviewPosition = 0;
+  index = reviewQueue[0];
+  $("review").hidden = true;
+  ask();
+};
 function nextTurn(intro = "") {
-  index += 1;
-  if (index < turns.length) { ask(intro); return; }
-  $("question").textContent = "Das Gespräch ist zu Ende.";
+  if (reviewQueue) {
+    index = reviewQueue[++reviewPosition];
+    if (index !== undefined) { ask(intro); return; }
+  } else {
+    index += 1;
+    if (index < turns.length) { ask(intro); return; }
+  }
+  const reviewed = Boolean(reviewQueue);
+  reviewQueue = null;
+  $("question").textContent = reviewed ? "Die Wiederholung ist zu Ende." : "Das Gespräch ist zu Ende.";
+  $("review").hidden = mistakes.size === 0;
   $("feedback").textContent = "";
   $("form").hidden = $("mic").hidden = $("repeat").hidden = true;
   $("start").textContent = "Noch einmal";
   $("start").hidden = false;
-  setState("finished", "Gut gemacht!");
+  if (intro) announce(intro.trim(), "finished");
+  else setState("finished", "Gut gemacht!");
 }
 $("form").onsubmit = event => {
   event.preventDefault();
