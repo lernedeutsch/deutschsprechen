@@ -581,7 +581,9 @@ function checkDialogueAnswer(value){
     if(dIndex===DLG.length-1){
       dState="done";
       drawDlg();
-      $("#dFb").textContent="Sehr gut! Du hast alle Fragen richtig beantwortet.";
+      const praise="Sehr gut! Übung geschafft! Du hast alle Fragen richtig beantwortet.";
+      $("#dFb").textContent="🎉 "+praise;
+      say(praise);
       return;
     }
     dIndex++;
