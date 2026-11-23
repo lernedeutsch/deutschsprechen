@@ -3370,7 +3370,7 @@ html body .current-dialog-panel .mic-btn.listening{
 
           <span class="instruction-wrap">
             <span class="turn-instruction" id="instruction-text">
-              Sag dein Alter.
+              Stell dich kurz vor.
             </span>
 
             <span class="translation-control" id="translation-control">
@@ -3395,7 +3395,7 @@ html body .current-dialog-panel .mic-btn.listening{
       <div class="sidebar-speaking-panel">
         <div class="sidebar-turn-cue">
           <strong>Du bist dran 🎤</strong>
-          <span id="main-turn-instruction">Sag dein Alter.</span>
+          <span id="main-turn-instruction">Stell dich kurz vor.</span>
         </div>
         <div class="sidebar-mic">
           <div class="speaker-wave" id="speaker-wave" aria-label="Lektor spricht" aria-hidden="true">
@@ -3556,7 +3556,10 @@ const dialogues=[
     title:"Dialog 1 · Alter",
     role:"informell", speaker:"Tom", avatar:"🧑",
     turns:[
-      {prompt:"Hallo! Wie alt bist du?",instruction:"Sag dein Alter.",example:"Ich bin 30 Jahre alt.",requireFullSentence:true,check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a)),closing:"Danke! Ich bin 32 Jahre alt. Bis später!"}
+
+      {prompt:"Hallo! Ich bin Tom. Wie heißt du?",instruction:"Stell dich kurz vor.",example:"Ich heiße Anna.",requireFullSentence:true,check:nameCheck},
+      {prompt:"Freut mich! Wie alt bist du?",instruction:"Sag dein Alter.",example:"Ich bin 30 Jahre alt.",requireFullSentence:true,check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
+      {prompt:"Danke! Ich bin 32 Jahre alt. Ich muss jetzt los. Bis später!",instruction:"Verabschiede dich.",example:"Bis später!",allowShort:true,check:a=>fuzzyContains(a,"bis später",.3)||fuzzyContains(a,"tschüss",.3)||fuzzyContains(a,"bis bald",.3)}
     ]
   },
   {
@@ -4512,6 +4515,7 @@ gateTranslationButtons.forEach(button=>button.addEventListener("click",event=>{
 }));
 
 const instructionTranslations={
+  "Verabschiede dich.": {en:"Say goodbye.",pl:"Pożegnaj się.",it:"Saluta."},
   "Sag dein Alter.": {
     "en": "Say how old you are.",
     "pl": "Powiedz, ile masz lat.",
