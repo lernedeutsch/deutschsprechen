@@ -4,7 +4,7 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Aktiv trainieren · A1 Lektion 3 · Ich stelle mich vor</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Fraunces:wght@500;700&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--ink:#16233a;--line:#e3d6b8;--red:#bd4433;--gold:#cf9f3f;--green:#4f7a63;--paper:#fffdf6;--a:#eee9dc;--b:#e8c989}
 *{box-sizing:border-box}body{margin:0;min-height:100vh;padding:32px 18px 50px;color:#1c2430;font:400 1rem/1.6 "Nunito Sans",sans-serif;background:radial-gradient(circle at 10% 8%,#cf9f3f12,transparent 35%),radial-gradient(circle at 90% 92%,#4f7a631a,transparent 40%),var(--ink)}
@@ -124,6 +124,61 @@ details.tr-mini:not([open]) > *:not(summary),details.learning-translation:not([o
 
 /* Dialog: bardzo czytelna kolejność działania */
 #dialogPractice .dialog-actions .btn[hidden]{display:none!important}#dialogPractice .dialog-hint{margin:10px 0 0 28%;padding:16px 18px;background:#f4f0e6;border-radius:16px}#dialogPractice .du-badge{display:inline-flex;align-items:center;justify-content:center;min-width:58px;padding:8px 12px;margin-right:12px;border-radius:999px;background:#d04b37;color:#fff;font-size:1.15rem;font-weight:900;letter-spacing:.08em}.pulse-turn{animation:dialogTurnPulse 1.05s ease-in-out infinite}@keyframes dialogTurnPulse{0%,100%{transform:scale(1);box-shadow:0 0 0 rgba(208,75,55,0)}50%{transform:scale(1.025);box-shadow:0 6px 18px rgba(208,75,55,.20)}}#dialogPractice .dialog-next-pulse:not([hidden]){animation:dialogNextPulse 1.05s ease-in-out infinite;font-size:1.08rem;font-weight:900}@keyframes dialogNextPulse{0%,100%{transform:scale(1);box-shadow:0 5px 14px rgba(22,60,44,.12)}50%{transform:scale(1.06);box-shadow:0 8px 22px rgba(105,173,121,.38)}}
+
+/* Layout and palette shared with the Aktiv trainieren 1 design. */
+body{padding-top:52px}
+.page{max-width:980px;padding:0;background:none;box-shadow:none}
+.course-start,.lesson-introduction{
+  background:linear-gradient(160deg,#fff8ea,#f3e2bd);
+  border-radius:24px;box-shadow:0 24px 55px #0004
+}
+.course-start{margin-bottom:34px;padding:18px 20px;border:1px solid var(--line)}
+.course-start-title{margin:0 0 10px;color:#161616;font:600 .95rem "JetBrains Mono",monospace;letter-spacing:.2em;text-transform:uppercase}
+.course-start-text{margin:0;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:14px;font-size:1.05rem}
+.lesson-introduction{padding:30px 34px;margin-bottom:38px}
+.hero{gap:24px;padding:10px 4px 24px}
+.hero-copy{min-width:0}
+.hero h1{margin-bottom:14px;font:700 clamp(1.85rem,4vw,2.7rem)/1.12 "Fraunces",serif}
+.hero p{max-width:590px;font-size:1.04rem}
+.topics{flex-wrap:wrap;margin-top:18px}
+.topics a{white-space:normal;font-size:.92rem}
+.hero-icon{
+  position:relative;flex:0 0 auto;width:clamp(144px,19vw,196px);
+  margin:0;border:1px solid #1c24302b;background:#ffffff14;font-size:2.5rem
+}
+.hero-icon::before{
+  content:"";position:absolute;inset:23%;border-radius:50%;
+  background:#16233a;box-shadow:0 10px 18px #0000001f
+}
+.hero-icon span{position:relative}
+.pass{margin:22px 0 0;padding:18px 20px;border:1px solid #ffffff17;box-shadow:0 8px 20px #00000030}
+.pass-title b,.head h2,.part-title{font-family:"Fraunces",serif}
+.pass-title small{font:.72rem/1.5 "JetBrains Mono",monospace}
+.stamps{justify-content:space-between}
+.st{width:72px;height:72px;background:#ffffff08;font:.6rem/1.1 "JetBrains Mono",monospace}
+.st.on{color:#17263b;background:#e5f7eb;border-color:#70c995;transform:rotate(-7deg)}
+.st.on[data-st="alter"]{background:#e5f5fc;border-color:#72bce5}
+.st.on[data-st="zahlen"]{background:#f1eafb;border-color:#b79ae5}
+.st.on[data-st="sein"]{background:#fff1dc;border-color:#e9b66f}
+.st.on[data-st="daten"]{background:#fbe9ed;border-color:#d99aa9}
+.st.on[data-st="lesson"]{background:#fff3cd;border-color:#d6ac59}
+#alter .head h2,#zahlen .head h2,#sein .head h2,#daten .head h2,.dialogue-card>.part-title,.summary h2{
+  font-family:"Fraunces",serif!important
+}
+body>.bottom-arrow{
+  position:fixed;top:8px;left:8px;z-index:20;
+  color:#fff;background:#16233a33;border-color:#ffffff1c;border-radius:10px;box-shadow:none
+}
+body>.bottom-arrow:hover{background:#ffffff24;transform:none}
+@media(max-width:760px){
+  body{padding-top:66px}
+  .course-start{margin-bottom:24px;padding:14px 15px}
+  .lesson-introduction{padding:20px 15px;margin-bottom:26px}
+  .hero-icon{width:144px;margin:18px auto 0}
+  .pass{padding:14px}
+  .stamps{justify-content:flex-start}
+  .st{width:58px;height:58px;font-size:.53rem}
+}
 </style><link rel="stylesheet" href="../../css/click-hints.css">
 <link rel="stylesheet" href="../../css/translation-globe.css">
 <link rel="stylesheet" href="../../css/page-progress.css">
@@ -131,15 +186,21 @@ details.tr-mini:not([open]) > *:not(summary),details.learning-translation:not([o
 <body>
 <a href="../a1/lektion-3.html#seitenanfang" class="bottom-arrow" aria-label="Zurück zur Lektion" title="Zurück zur Lektion">←</a>
 <main class="page" id="seitenanfang">
+<section class="course-start" aria-labelledby="course-start-title">
+  <h2 class="course-start-title" id="course-start-title">Erste Schritte</h2>
+  <p class="course-start-text">Lektion 3 von 30</p>
+</section>
+<header class="lesson-introduction">
 <section class="hero">
   <div class="hero-copy">
     <h1>Ich stelle mich vor</h1>
-    <p>Heute üben wir Vorstellung, Alter, Zahlen, das Verb <b>sein</b>, den Wohnort und persönliche Daten. Übe aktiv mit — Schritt für Schritt! (Lektion 3 von 30)</p>
+    <p>Heute üben wir Vorstellung, Alter, Zahlen, das Verb <b>sein</b>, den Wohnort und persönliche Daten. Übe aktiv mit — Schritt für Schritt!</p>
     <div class="topics"><a href="#vorstellung">1 · Vorstellung</a><a href="#alter">2 · Alter</a><a href="#zahlen">3 · Zahlen 11–100</a><a href="#sein">4 · sein</a><a href="#daten">5 · Persönliche Daten</a></div>
   </div>
-  <div class="hero-icon" aria-hidden="true">👋</div>
+  <div class="hero-icon" aria-hidden="true"><span>👋</span></div>
 </section>
 <div class="pass"><div class="pass-title"><b>🛂 Dein Sprachpass</b><small>Lektion 3 · Aktiv trainieren · <span id="passCount">0 / 5 Stempel gesammelt</span></small></div><div class="stamps"><span class="st" data-st="vorstellung"><i>👋</i>Vorstellung</span><span class="st" data-st="alter"><i>🎂</i>Alter</span><span class="st" data-st="zahlen"><i>🔢</i>Zahlen</span><span class="st" data-st="sein"><i>✏️</i>sein</span><span class="st" data-st="daten"><i>🪪</i>Daten</span><span class="st" data-st="lesson"><i>🏆</i>Lektion 3</span></div></div>
+</header>
 <div class="card lesson-main" id="vorstellung">
 <div class="command-panel"><div class="help">✏️ Name, Vorname, Alter und Nationalität eingeben → <span class="click-cue">👆</span> „Informell“ oder „Formell“ anklicken → 🔊 zuhören</div><div class="command-line"><p class="intro">Trag deinen Namen, Vornamen, dein Alter und deine Nationalität ein — die Dialoge passen sich an!</p><details class="tr-mini"><summary><span class="globe-spin">🌐</span> A/文</summary><div class="tr-text"><p><b>English:</b> Enter your surname, first name, age and nationality — the dialogues adapt to you.</p><p><b>Polski:</b> Wpisz nazwisko, imię, wiek i narodowość — dialogi dopasują się do Ciebie.</p><p><b>Italiano:</b> Inserisci cognome, nome, età e nazionalità — i dialoghi si adattano a te.</p></div></details></div></div>
 <div class="continuity-card"><strong>🔁 Aus Lektion 1 und 2</strong><span>Du kannst schon sagen, wie du heißt und woher du kommst. Jetzt sagst du zusätzlich, wie alt du bist.</span><div class="continuity-example"><b>Ich heiße Anna.</b><span class="continuity-arrow">↓</span><b>Ich heiße Anna. Ich komme aus Polen.</b><span class="continuity-arrow">↓</span><b>Ich heiße Anna. Ich komme aus Polen. Ich bin 30 Jahre alt.</b></div></div><div class="fields">
