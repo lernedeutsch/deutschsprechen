@@ -3557,8 +3557,8 @@ const dialogues=[
     role:"informell", speaker:"Tom", avatar:"🧑",
     turns:[
       {prompt:"Hallo! Wie alt bist du?",instruction:"Sag dein Alter.",example:"Ich bin 30 Jahre alt.",requireFullSentence:true,check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
-      {prompt:"Ich bin 32 Jahre alt. Und du?",instruction:"Sag dein Alter. Du kannst auch zurückfragen.",example:"Ich bin 30 Jahre alt. Und du?",requireFullSentence:true,check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
-      {prompt:"Ah, schön! Dann sind wir beide über zwanzig.",instruction:"Reagiere kurz und natürlich.",example:"Ja, genau.",check:a=>fuzzyContains(a,"ja",.35)||fuzzyContains(a,"genau",.35)||fuzzyContains(a,"stimmt",.35)}
+
+      {prompt:"Ah, danke! Ich bin 32 Jahre alt.",instruction:"Reagiere kurz und natürlich.",example:"Ja, genau.",check:a=>fuzzyContains(a,"ja",.35)||fuzzyContains(a,"genau",.35)||fuzzyContains(a,"stimmt",.35)}
     ]
   },
   {
@@ -4513,11 +4513,6 @@ const instructionTranslations={
     "en": "Say how old you are.",
     "pl": "Powiedz, ile masz lat.",
     "it": "Di’ quanti anni hai."
-  },
-  "Sag dein Alter. Du kannst auch zurückfragen.": {
-    "en": "Say how old you are. You can ask the same question back.",
-    "pl": "Powiedz, ile masz lat. Możesz też zadać to samo pytanie.",
-    "it": "Di’ quanti anni hai. Puoi fare la stessa domanda."
   },
   "Sag dein Alter. „Und du?“ ist auch möglich.": {
     "en": "Say how old you are. You can add “Und du?”.",
