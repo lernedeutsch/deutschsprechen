@@ -98,7 +98,7 @@ input{flex:1;min-width:12ch;background:#1b2944;color:white}
 <div class="speaker-wave" aria-hidden="true">
   <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
 </div>
-<p id="question">Hallo! Möchtest du Deutsch sprechen?</p>
+<p id="question">Bereit für ein Gespräch?</p>
 <p id="status" role="status">Starte das Gespräch.</p>
 </section>
 <div class="actions">
@@ -116,7 +116,7 @@ input{flex:1;min-width:12ch;background:#1b2944;color:white}
 <script>
 "use strict";
 const turns = [
-  [1,"Hallo! Es ist Morgen. Wie begrüßt du mich?","Guten Morgen!",/^guten morgen$/,"Sag die Begrüßung für den Morgen."],
+  [1,"Guten Morgen!","Guten Morgen!",/^(?:auch )?guten morgen(?: (?:auch|anna|dir|ihnen)){0,3}$/,"Sag mir auch guten Morgen."],
   [1,"Ich heiße Anna. Wie heißt du?","Ich heiße Alex.",/^(?:ich (?:heisse|bin)|mein name ist) [a-z]+(?: [a-z]+){0,4}$/,"Beginne mit „Ich heiße …“ und sage deinen Namen."],
   [1,"Wie buchstabierst du den Namen Tom?","T – O – M.",/^(?:t|te) ?o ?(?:m|em)$/,"Sage die drei Buchstaben einzeln."],
   [2,"Woher kommst du?","Ich komme aus Polen.",/^ich komme aus (?:(?:der|den|dem) )?[a-z]+(?: [a-z]+){0,3}$/,"Beginne mit „Ich komme aus …“."],
@@ -140,7 +140,6 @@ let retries = 0;
 let state = "idle";
 let activeRecognition = null;
 let speechRun = 0;
-let afterSpeech = "ready";
 
 
 function setState(value, label) {
@@ -148,22 +147,23 @@ function setState(value, label) {
   $("stage").dataset.state = value;
   $("status").textContent = label;
   $("mic").disabled = value !== "ready";
-  $("answer").disabled = value !== "ready";
-  $("form").querySelector("button").disabled = value !== "ready";
-  $("repeat").disabled = value === "listening";
+  const canAnswer = value === "ready" || value === "listening";
+  $("answer").disabled = !canAnswer;
+  $("form").querySelector("button").disabled = !canAnswer;
+  $("repeat").disabled = value === "speaking";
   $("next").hidden = value !== "advance";
 }
 
 function announce(line, destination = "ready") {
-  afterSpeech = destination;
   const run = ++speechRun;
   let finished = false;
-  const finish = () => {
+  const finish = (readAloud = false) => {
     if (run !== speechRun || finished) return;
     finished = true;
     setState(destination, destination === "ready"
       ? (Recognition ? "Du bist dran." : "Schreib deine Antwort.")
       : destination === "advance" ? "Bereit für die nächste Frage?" : "Gut gemacht!");
+    if (destination === "ready" && readAloud) listen();
   };
   if (!speaker || !window.SpeechSynthesisUtterance) { finish(); return; }
   speaker.cancel();
@@ -173,11 +173,11 @@ function announce(line, destination = "ready") {
   const voice = voices.find(item => item.lang === "de-DE" && item.localService) || voices.find(item => item.lang === "de-DE");
   if (voice) utterance.voice = voice;
   utterance.rate = 0.86;
-  utterance.onend = finish;
-  utterance.onerror = finish;
+  utterance.onend = () => finish(true);
+  utterance.onerror = () => finish();
   setState("speaking","Hör zu …");
   speaker.speak(utterance);
-  window.setTimeout(finish, Math.max(10000,line.length * 115));
+  window.setTimeout(() => finish(), Math.max(10000,line.length * 115));
 }
 
 function ask() {
@@ -204,8 +204,7 @@ function evaluate(value) {
   const [, , example, accepts, hint] = turns[index];
   const normalized = normalize(value);
   if (accepts.test(normalized)) {
-    $("feedback").textContent = "Deine Antwort: "+value+"\nGut! Das passt.";
-    announce("Gut! Das passt.", "advance");
+    nextTurn();
     return;
   }
   retries += 1;
@@ -216,8 +215,12 @@ function evaluate(value) {
 }
 
 $("start").onclick = () => { index = 0; ask(); };
-$("repeat").onclick = () => announce(turns[index][1], state === "speaking" ? afterSpeech : state);
-$("next").onclick = () => {
+$("repeat").onclick = () => {
+  stopListening();
+  announce(turns[index][1], state === "advance" ? "advance" : "ready");
+};
+$("next").onclick = nextTurn;
+function nextTurn() {
   index += 1;
   if (index < turns.length) { ask(); return; }
   $("question").textContent = "Das Gespräch ist fertig. Auf Wiedersehen!";
@@ -227,24 +230,36 @@ $("next").onclick = () => {
   $("start").textContent = "Noch einmal";
   $("start").hidden = false;
   announce($("question").textContent, "finished");
-};
+}
 $("form").onsubmit = event => {
   event.preventDefault();
-  if (state === "ready") evaluate($("answer").value);
+  if ((state !== "ready" && state !== "listening") || !$("answer").value.trim()) return;
+  stopListening();
+  evaluate($("answer").value);
 };
-$("mic").onclick = () => {
+function stopListening() {
+  const recognition = activeRecognition;
+  activeRecognition = null;
+  if (recognition) recognition.abort();
+}
+
+$("mic").onclick = listen;
+function listen() {
   if (!Recognition || state !== "ready") return;
   const recognition = new Recognition();
   activeRecognition = recognition;
   recognition.lang = "de-DE";
   recognition.interimResults = false;
   recognition.onresult = event => {
+    if (activeRecognition !== recognition) return;
     activeRecognition = null;
     const transcript = event.results[0][0].transcript;
+    if (!transcript.trim()) { setState("ready","Ich habe nichts verstanden. Versuch es noch einmal."); return; }
     $("answer").value = transcript;
     evaluate(transcript);
   };
   recognition.onerror = () => {
+    if (activeRecognition !== recognition) return;
     activeRecognition = null;
     setState("ready","Die Aufnahme hat nicht geklappt. Sprich noch einmal oder schreib deine Antwort.");
   };
@@ -260,7 +275,7 @@ $("mic").onclick = () => {
     activeRecognition = null;
     setState("ready","Das Mikrofon ist gerade nicht verfügbar. Schreib deine Antwort.");
   }
-};
+}
 </script>
 </body>
 </html>
