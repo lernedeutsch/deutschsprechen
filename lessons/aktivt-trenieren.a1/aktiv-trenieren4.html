@@ -230,6 +230,53 @@ body > .bottom-arrow:hover {
 #interview-guide li+li{margin-top:4px}
 @media(max-width:760px){#interview-guide{padding-bottom:50px}#interview-guide ol{padding-inline-end:0}}
 </style>
+<style id="teil-2-appearance">
+#t2 {
+  --line:#b9e8d8;
+  --box:#fbfffe;
+  background:linear-gradient(155deg,#005966,#034c58);
+  border:1px solid #147f87;
+  box-shadow:0 20px 48px #00182755;
+}
+#t2 > .part-head {padding-bottom:14px;border-bottom:1px solid #ffffff38}
+#t2 .part-title {color:#fff;font-family:"Kalam",cursive;line-height:1.15}
+#t2 .part-num {
+  padding:4px 12px;border-radius:9px;background:#328132;
+  color:#fff;letter-spacing:.07em;
+}
+#t2 > .card {background:#f4fffc;border-color:#b9e8d8;box-shadow:0 8px 24px #002d2d25}
+#t2 > .card:last-child {margin-bottom:0}
+#t2 #interview-guide {background:linear-gradient(135deg,#e3f8f1,#c8efdf)}
+#t2 #interview-guide ol,
+#t2 #ownJobCard ol {line-height:1.65}
+#t2 #ownJobCard ol > li + li {margin-top:5px}
+#t2 .people {gap:12px}
+#t2 .person {background:#fff;border-color:#b9e8d8}
+#t2 .person.fin {background:#e2f7eb;border-color:#67b88c}
+#t2 .person.sel,
+#t2 #myJob .btn.sel {
+  border-color:#28885e;background:#d2f2e2;box-shadow:0 0 0 3px #28905e35;
+}
+#t2 #chat2 {margin-top:16px;background:#e7f8f1;border-color:#b7e5d2}
+#t2 #chat2 .ba {background:#fff;border-color:#c4e5dc}
+#t2 #chat2 .bb {background:linear-gradient(145deg,#d4f5e5,#a9e5ca);border-color:#7fceb0}
+#t2 #chat2 .who {color:#07594f}
+#t2 #myJob {
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,135px),1fr));gap:10px;
+}
+#t2 #myJob .btn {width:100%;justify-content:center}
+#t2 #myJobTranscript:not(:empty) {
+  margin:8px 0 14px;padding:10px 14px;background:#fff;
+  border:1px solid #b9e8d8;border-radius:12px;overflow-wrap:anywhere;
+}
+#t2 #myJobTranscript:empty {display:none}
+#t2 #myJobModel:not(:disabled) {background:#d2f2e2;color:#104c38;border-color:#28885e}
+#t2 .bar {background:#e2f1e9;border-color:#b9e8d8}
+@media(max-width:540px) {
+  #t2 > .card {padding-inline:14px}
+  #t2 .part-title {font-size:1.85rem}
+}
+</style>
 </head>
 <body id="top">
 <a href="../a1/lektion-4.html#seitenanfang" class="bottom-arrow" aria-label="Zurück zur Lektion" title="Zurück zur Lektion">←</a>
