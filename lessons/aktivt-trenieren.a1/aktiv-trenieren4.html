@@ -277,6 +277,7 @@ body > .bottom-arrow:hover {
   #t2 .part-title {font-size:1.6rem}
 }
 </style>
+<style>#chat2 .interview-transcript{display:block;min-height:1.5em;overflow-wrap:anywhere}</style>
 </head>
 <body id="top">
 <a href="../a1/lektion-4.html#seitenanfang" class="bottom-arrow" aria-label="Zurück zur Lektion" title="Zurück zur Lektion">←</a>
@@ -509,15 +510,26 @@ function listenInterview(round){
   interviewRecognition=recognition;
   recognition.lang="de-DE";
   recognition.maxAlternatives=3;
-  let correct=false,failure="";
+  recognition.interimResults=true;
+  let correct=false,failure="",questionBubble=null,questionText=null;
   $("askBtn").disabled=true;
   recognition.onstart=()=>{
-    if(round===interviewRound)interviewFeedback("Ich höre zu … Sag: „Was sind Sie von Beruf?“ 🎤");
+    if(interviewRecognition!==recognition||round!==interviewRound)return;
+    questionBubble=bub($("chat2"),"Du","","bb");
+    questionText=document.createElement("span");
+    questionText.className="interview-transcript";
+    questionBubble.appendChild(questionText);
+    interviewFeedback("Ich höre zu … Sag: „Was sind Sie von Beruf?“ 🎤");
   };
   recognition.onresult=event=>{
-    correct=Array.from(event.results[event.resultIndex]).some(result=>
-      normalizeInterviewQuestion(result.transcript)===normalizeInterviewQuestion(interviewQuestion)
-    );
+    if(interviewRecognition!==recognition||round!==interviewRound)return;
+    const result=event.results[event.resultIndex];
+    if(questionText)questionText.textContent=result[0].transcript.trim();
+    if(result.isFinal){
+      correct=Array.from(result).some(alternative=>
+        normalizeInterviewQuestion(alternative.transcript)===normalizeInterviewQuestion(interviewQuestion)
+      );
+    }
   };
   recognition.onerror=event=>{
     failure=event.error==="not-allowed"||event.error==="service-not-allowed"
@@ -527,6 +539,7 @@ function listenInterview(round){
   recognition.onend=()=>{
     if(interviewRecognition!==recognition||round!==interviewRound)return;
     interviewRecognition=null;
+    if(!questionText?.textContent)questionBubble?.remove();
     if(correct){replyToInterview(round,curP);return;}
     $("askBtn").disabled=false;
     interviewFeedback(failure||"Noch nicht. Sag: „Was sind Sie von Beruf?“","b");
@@ -568,7 +581,6 @@ async function replyToInterview(round,personIndex){
   interviewReady=false;
   $("q2").hidden=true;
   const person=PEO[personIndex];
-  bub($("chat2"),"Du",interviewQuestion,"bb");
   const reply=bub($("chat2"),person[0],person[2],"ba");
   reply.classList.add("speaking");
   asked.add(personIndex);
