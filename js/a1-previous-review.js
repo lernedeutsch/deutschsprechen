@@ -45,7 +45,7 @@ if(n>=3){
         training=document.querySelector(".training-buttons,.training-rail");
   if(back&&training){
     training.classList.add("a1-training-with-back");
-    training.insertBefore(back,training.firstChild)
+    if(!back.hasAttribute("data-keep-back-position"))training.insertBefore(back,training.firstChild);
   }
 }
 const guideHtml=`<div class="guide a1-standard-guide"><strong>① Zuerst: Lies die ganze Lektion. Danach übst du Schritt für Schritt mit den Aufgaben in dieser Reihenfolge.</strong><details class="learning-translation"><summary>▶ <span class="translation-globe">🌐</span> A/文</summary><div class="tr-content"><p><b>English:</b> First, read the whole lesson. Then practise step by step with the tasks in this order.</p><p><b>Polski:</b> Najpierw przeczytaj całą lekcję. Następnie ćwicz krok po kroku, wykonując zadania w tej kolejności.</p><p><b>Italiano:</b> Per prima cosa, leggi tutta la lezione. Poi esercitati passo dopo passo con gli esercizi in quest’ordine.</p></div></details></div>`;
