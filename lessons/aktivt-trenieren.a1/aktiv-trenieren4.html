@@ -224,6 +224,7 @@ body > .bottom-arrow:hover {
   .sprachpass .stamps {justify-content:flex-start}
 }
 </style>
+<style>#q2[hidden],#myJobRecall[hidden]{display:none}</style>
 </head>
 <body id="top">
 <a href="../a1/lektion-4.html#seitenanfang" class="bottom-arrow" aria-label="Zurück zur Lektion" title="Zurück zur Lektion">←</a>
@@ -474,7 +475,7 @@ function listenInterview(round){
     interviewFeedback("Das Mikrofon konnte nicht starten. Versuch es noch einmal.","b");
   }
 }
-$(".person").forEach(b=>b.onclick=async()=>{
+$$(".person").forEach(b=>b.onclick=async()=>{
   cancelMyJobRecognition();
   const round=++interviewRound;
   interviewReady=false;
@@ -484,7 +485,7 @@ $(".person").forEach(b=>b.onclick=async()=>{
   stop();
   const i=+b.dataset.i;
   curP=i;
-  $(".person").forEach(x=>x.classList.toggle("sel",x===b));
+  $$(".person").forEach(x=>x.classList.toggle("sel",x===b));
   $("chat2").textContent="";
   const greeting=bub($("chat2"),PEO[i][0],"Guten Tag.","ba");
   greeting.classList.add("speaking");
@@ -508,7 +509,7 @@ async function replyToInterview(round,personIndex){
   const reply=bub($("chat2"),person[0],person[2],"ba");
   reply.classList.add("speaking");
   asked.add(personIndex);
-  $(".person")[personIndex].classList.add("fin");
+  $$(".person")[personIndex].classList.add("fin");
   $("bar2").style.width=asked.size/PEO.length*100+"%";
   if(asked.size===PEO.length)stamp("frage");
   interviewFeedback("Richtig gefragt! Hör die Antwort.","g");
