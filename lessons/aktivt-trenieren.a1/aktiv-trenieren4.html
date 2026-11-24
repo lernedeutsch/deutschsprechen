@@ -382,9 +382,9 @@ body > .bottom-arrow:hover {
 <div class="row" style="margin-top:10px"><button class="btn dark" id="workReset">↻ Noch einmal</button></div>
 </div>
 <div class="card">
-<h3 style="margin:0 0 8px;font:800 1.25rem 'Nunito Sans',sans-serif">Transfer: lernen · wohnen · studieren</h3>
-<p class="lead">Das gleiche Muster kennst du auch von anderen regelmäßigen Verben.</p>
-<div id="verbs"></div><p class="fb" id="fb4b"></p>
+<h3 style="margin:0 0 8px;font:800 1.25rem 'Nunito Sans',sans-serif">Sätze ergänzen: lernen · wohnen · studieren</h3>
+<p class="lead">Lies den Satz mit der Lücke. Klick auf das passende Verb. Hör dann den ganzen Satz.</p>
+<div id="verbs"></div><p class="fb" id="fb4b" aria-live="polite"></p>
 </div>
 </main>
 
@@ -749,9 +749,18 @@ const verbsBox=document.getElementById("verbs");
 verbsBox.innerHTML=TRANSFER.map((v,i)=>`<div class="sq-row"><span class="sq-q">${v[0]}</span><div class="opts" data-transfer="${i}">${sh(v[3]).map(o=>`<button class="btn" type="button" data-answer="${o}">${o}</button>`).join("")}</div></div>`).join("");
 verbsBox.querySelectorAll("[data-transfer]").forEach(row=>{
   const item=TRANSFER[Number(row.dataset.transfer)];
+  const sentence=row.previousElementSibling;
   row.querySelectorAll("[data-answer]").forEach(btn=>btn.addEventListener("click",()=>{
     const fb=document.getElementById("fb4b");
-    if(btn.dataset.answer===item[1]){fb.textContent="Richtig! "+item[2];fb.className="fb g";stop();speak(item[2]);}
+    if(btn.dataset.answer===item[1]){
+      const [before,after]=item[0].split("___");
+      const verb=document.createElement("strong");
+      verb.textContent=item[1];
+      sentence.replaceChildren(before,verb,after);
+      fb.textContent="Richtig! "+item[2];
+      fb.className="fb g";
+      stop();speak(item[2]);
+    }
     else{fb.textContent="Noch nicht. Versuch es noch einmal.";fb.className="fb b";}
   }));
 });
