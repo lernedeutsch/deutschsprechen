@@ -48,9 +48,9 @@ button,textarea{font:inherit}
 
 .top-back{
   position:absolute;
-  top:18px;
-  left:18px;
-  z-index:20;
+  top:8px;
+  left:8px;
+  z-index:30;
   max-width:none;
   margin:0;
   padding:0;
@@ -753,6 +753,29 @@ button,textarea{font:inherit}
     transition-duration:.01ms!important;
   }
 }
+.top-back > .back-btn{
+  display:flex;
+  box-sizing:border-box;
+  box-shadow:none;
+  font:700 1.55rem "Nunito Sans",sans-serif;
+  transition:background .15s,border-color .15s,transform .15s;
+  width:52px;
+  height:52px;
+  padding:0;
+  border-radius:10px;
+  background:rgba(16,39,60,.12);
+  border:1px solid rgba(255,255,255,.10);
+  color:#fff;
+
+}
+.top-back > .back-btn:hover{
+  background:rgba(11,31,49,.22);
+  border-color:rgba(255,255,255,.22);
+  transform:translateY(-2px);
+}
+@media(max-width:600px){
+  .shell{padding-top:68px}
+}
 </style>
 
 <style>
@@ -767,7 +790,6 @@ button,textarea{font:inherit}
 <link rel="stylesheet" href="../../css/translation-globe.css">
 <link rel="stylesheet" href="../../css/page-progress.css">
 <style id="diktat-start-screen-style">
-body:not(.diktat-started) .top-back,
 body:not(.diktat-started) .shell{display:none !important}
 .diktat-start-screen{
   min-height:100vh;
@@ -775,7 +797,7 @@ body:not(.diktat-started) .shell{display:none !important}
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  padding:35px 20px;
+  padding:68px 20px 35px;
   color:#fff;
   text-align:center;
 }
