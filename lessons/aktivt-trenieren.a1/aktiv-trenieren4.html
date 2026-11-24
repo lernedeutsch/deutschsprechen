@@ -287,8 +287,12 @@ body > .bottom-arrow:hover {
 <h3 style="margin:0 0 8px;font:800 1.25rem 'Nunito Sans',sans-serif">Und du? Was bist du von Beruf?</h3>
 <p class="lead"><strong>Beruf sagen: Ich bin Lehrer. – ohne Artikel.</strong><br>1. Wähle deinen Beruf. 2. Sag selbst: „Ich bin …“ 3. Prüfe deine Antwort.</p>
 <div class="opts" id="myJob"></div>
-<p class="fb" id="myJobOut">Wähle zuerst einen Beruf.</p>
-<div class="row" id="myJobRecall" hidden><button class="btn interview-question-pulse" id="myJobModel">👀 Antwort prüfen</button></div>
+<p class="fb" id="myJobOut" aria-live="polite">Wähle zuerst einen Beruf.</p>
+<p id="myJobTranscript" aria-live="polite"></p>
+<div class="row" id="myJobRecall" hidden>
+<button class="btn" type="button" id="myJobMic">🎤 Noch einmal sprechen</button>
+<button class="btn interview-question-pulse" type="button" id="myJobModel" disabled>👀 Antwort prüfen</button>
+</div>
 </div>
 </main>
 
@@ -471,6 +475,7 @@ function listenInterview(round){
   }
 }
 $(".person").forEach(b=>b.onclick=async()=>{
+  cancelMyJobRecognition();
   const round=++interviewRound;
   interviewReady=false;
   const previous=interviewRecognition;
@@ -519,24 +524,79 @@ async function replyToInterview(round,personIndex){
 
 /* 1: eigener Beruf */
 const MYJOBS=[["Lehrer","Ich bin Lehrer."],["Lehrerin","Ich bin Lehrerin."],["Arzt","Ich bin Arzt."],["Ärztin","Ich bin Ärztin."],["Ingenieur","Ich bin Ingenieur."],["Ingenieurin","Ich bin Ingenieurin."],["Student","Ich bin Student."],["Studentin","Ich bin Studentin."]];
-let myJobSentence="";
-const myJobBox=document.getElementById("myJob");
+let myJobSentence="",myJobTranscript="",myJobRecognition=null;
+const myJobBox=$("myJob");
 myJobBox.innerHTML=MYJOBS.map(j=>`<button class="btn" type="button" data-own-job="${esc(j[0])}">${esc(j[0])}</button>`).join("");
-myJobBox.querySelectorAll("[data-own-job]").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    const item=MYJOBS.find(j=>j[0]===btn.dataset.ownJob);
-    myJobBox.querySelectorAll("[data-own-job]").forEach(x=>x.classList.toggle("sel",x===btn));
-    myJobSentence=item[1];
-    document.getElementById("myJobOut").textContent="🗣️ Sag den ganzen Satz jetzt selbst: „Ich bin …“";
-    document.getElementById("myJobOut").className="fb";
-    document.getElementById("myJobRecall").hidden=false;
-  });
-});
-document.getElementById("myJobModel").addEventListener("click",()=>{
-  if(!myJobSentence)return;
-  document.getElementById("myJobOut").textContent=myJobSentence;
-  document.getElementById("myJobOut").className="fb g";
-  stop(); speak(myJobSentence);
+function cancelMyJobRecognition(){
+  const previous=myJobRecognition;
+  myJobRecognition=null;
+  previous?.abort();
+  $("myJobMic").disabled=false;
+}
+function listenMyJob(){
+  if(!myJobSentence||myJobRecognition)return;
+  if(!InterviewRecognition){
+    $("myJobOut").textContent="Dieser Browser unterstützt keine Spracherkennung.";
+    return;
+  }
+  if(interviewRecognition){
+    const previous=interviewRecognition;
+    interviewRecognition=null;
+    previous.abort();
+    $("askBtn").disabled=false;
+  }
+  stop();
+  myJobTranscript="";
+  $("myJobTranscript").textContent="";
+  $("myJobModel").disabled=true;
+  $("myJobMic").disabled=true;
+  const recognition=new InterviewRecognition();
+  myJobRecognition=recognition;
+  recognition.lang="de-DE";
+  let feedback="Ich habe nichts verstanden. Versuch es noch einmal.";
+  recognition.onstart=()=>{
+    if(myJobRecognition===recognition)$("myJobOut").textContent="Ich höre zu … 🎤";
+  };
+  recognition.onresult=event=>{
+    if(myJobRecognition!==recognition)return;
+    myJobTranscript=event.results[event.resultIndex][0].transcript.trim();
+    $("myJobTranscript").textContent=myJobTranscript?"Du hast gesagt: „"+myJobTranscript+"“":"";
+  };
+  recognition.onerror=event=>{
+    if(event.error==="not-allowed"||event.error==="service-not-allowed")
+      feedback="Erlaube den Mikrofonzugriff und versuch es noch einmal.";
+  };
+  recognition.onend=()=>{
+    if(myJobRecognition!==recognition)return;
+    myJobRecognition=null;
+    $("myJobMic").disabled=false;
+    $("myJobModel").disabled=!myJobTranscript;
+    $("myJobOut").textContent=myJobTranscript?"Klick auf „Antwort prüfen“.":feedback;
+  };
+  try{recognition.start();}
+  catch{
+    myJobRecognition=null;
+    $("myJobMic").disabled=false;
+    $("myJobOut").textContent="Das Mikrofon konnte nicht starten. Versuch es noch einmal.";
+  }
+}
+myJobBox.querySelectorAll("[data-own-job]").forEach(btn=>btn.addEventListener("click",()=>{
+  cancelMyJobRecognition();
+  myJobSentence=MYJOBS.find(j=>j[0]===btn.dataset.ownJob)[1];
+  myJobBox.querySelectorAll("[data-own-job]").forEach(x=>x.classList.toggle("sel",x===btn));
+  $("myJobOut").className="fb";
+  $("myJobOut").textContent="Sag den ganzen Satz: „Ich bin …“";
+  $("myJobRecall").hidden=false;
+  listenMyJob();
+}));
+$("myJobMic").addEventListener("click",listenMyJob);
+$("myJobModel").addEventListener("click",()=>{
+  if(!myJobTranscript||!myJobSentence)return;
+  const correct=normalizeInterviewQuestion(myJobTranscript)===normalizeInterviewQuestion(myJobSentence);
+  $("myJobOut").textContent=(correct?"Richtig! ":"So lautet der Satz: ")+myJobSentence;
+  $("myJobOut").className=correct?"fb g":"fb b";
+  stop();
+  speak(myJobSentence);
 });
 
 /* 2: ein / eine */
