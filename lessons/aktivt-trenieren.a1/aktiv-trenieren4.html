@@ -435,7 +435,7 @@ $("wStart").onclick=()=>{wr=0;$("bar1").style.width="0";wRound()};
 $("wAgain").onclick=()=>{stop();speak(`Ich bin ${CARDS[wCur].base}.`)};
 
 /* Teil 2: Personen interviewen */
-const PEO=[["Herr Klein","👨‍⚕️","Ich bin Arzt."],["Frau Bauer","👩‍🏫","Ich bin Lehrerin."],["Herr Fischer","👨‍💻","Ich bin Ingenieur."],["Tom","👨‍🎓","Ich bin Student."]];
+const PEO=[["Herr Klein","👨‍⚕️","Ich bin Arzt. Ich arbeite im Krankenhaus."],["Frau Bauer","👩‍🏫","Ich bin Lehrerin. Ich arbeite in einer Schule."],["Herr Fischer","👨‍💻","Ich bin Ingenieur. Ich arbeite in einem Büro."],["Tom","👨‍🎓","Ich bin Student. Ich studiere in Heidelberg."]];
 let curP=null,asked=new Set();
 $("people").innerHTML=PEO.map((p,i)=>`<button class="person" data-i="${i}"><span>${p[1]}</span>${p[0]}</button>`).join("");
 function bub(box,who,txt,cls){const d=document.createElement("div");d.className="bubble "+cls;d.innerHTML=`<span class="who">${esc(who)}</span>${esc(txt)}`;box.appendChild(d);return d}
