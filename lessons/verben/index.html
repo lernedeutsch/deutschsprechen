@@ -19,6 +19,7 @@
 <main class="wrap"><div class="verb-list">
 <button class="verb active" data-verb="sein" aria-pressed="true"><strong>sein</strong><small>sein · Präsens</small></button>
 <button class="verb" data-verb="kommen" aria-pressed="false"><strong>kommen</strong><small>kommen · Präsens</small></button>
+<button class="verb" data-verb="arbeiten" aria-pressed="false"><strong>arbeiten</strong><small>arbeiten · Präsens</small></button>
 </div><section class="panel" aria-live="off"><h2 id="selected-title">sein – Präsens</h2><p class="muted">Wähle deine Übung: Sprich alle sechs Verbformen oder schreibe sie zu den passenden Personen.</p>
 <div class="actions"><button class="mode active" id="speech-mode" aria-pressed="true">🎤 Sprechen</button><button class="mode" id="write-mode" aria-pressed="false">✏️ Schreiben</button></div>
 <section class="task" id="speech-task"><h3>🎤 Sprich die ganze Konjugation</h3><p class="speech">Sprich der Reihe nach: <strong>ich …, du …, er/sie/es …, wir …, ihr …, sie/Sie …</strong></p><div class="persons" id="speech-fields" aria-label="Gesprochene Konjugation"></div><button class="primary" id="record" type="button" aria-label="Mikrofon starten" title="Mikrofon starten"><span class="mic-symbol" aria-hidden="true">🎤</span></button><p id="speech-status" class="note" role="status">Verwende Chrome oder Edge und erlaube den Mikrofonzugriff. Die Spracherkennung kann Fehler machen.</p><div class="heard" id="heard" aria-label="Erkannte Antwort">Hier erscheint deine Antwort …</div><p class="feedback" id="speech-feedback" role="status"></p><button class="mode" id="check-speech" type="button">✓ Antwort prüfen</button><button class="mode" id="clear-speech" type="button">↻ Noch einmal</button></section>
@@ -26,7 +27,7 @@
 </section></main>
 <script>
 (()=>{'use strict';
-const forms={sein:['bin','bist','ist','sind','seid','sind'],kommen:['komme','kommst','kommt','kommen','kommt','kommen']};
+const forms={sein:['bin','bist','ist','sind','seid','sind'],kommen:['komme','kommst','kommt','kommen','kommt','kommen'],arbeiten:['arbeite','arbeitest','arbeitet','arbeiten','arbeitet','arbeiten']};
 const persons=['ich','du','er / sie / es','wir','ihr','sie / Sie'];
 let verb='sein',mode='speech',recognition=null,transcript='',listening=false,session=0;
 const el=id=>document.getElementById(id);
