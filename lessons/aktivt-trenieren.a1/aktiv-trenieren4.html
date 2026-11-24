@@ -225,6 +225,11 @@ body > .bottom-arrow:hover {
 }
 </style>
 <style>#q2[hidden],#myJobRecall[hidden]{display:none}</style>
+<style>
+#interview-guide ol{margin:0 0 14px;padding-inline-start:22px;padding-inline-end:86px}
+#interview-guide li+li{margin-top:4px}
+@media(max-width:760px){#interview-guide{padding-bottom:50px}#interview-guide ol{padding-inline-end:0}}
+</style>
 </head>
 <body id="top">
 <a href="../a1/lektion-4.html#seitenanfang" class="bottom-arrow" aria-label="Zurück zur Lektion" title="Zurück zur Lektion">←</a>
@@ -273,12 +278,19 @@ body > .bottom-arrow:hover {
 
 <main class="page" id="t2">
 <div class="part-head"><span class="part-num">Teil 2</span><h1 class="part-title">Was sind Sie von Beruf?</h1><span class="done" id="d-frage">✅ geschafft</span></div>
-<div class="card">
-<p class="lead">Wir fragen nach dem Beruf: <strong>Was sind Sie von Beruf?</strong> Antwort: <strong>Ich bin Lehrer.</strong> · <strong>Ich bin Ärztin.</strong></p>
+<div class="card tr" id="interview-guide"
+ data-en="Choose a person and listen for ‘Guten Tag.’ When you see ‘Ich höre zu’, say ‘Was sind Sie von Beruf?’ into the microphone. Listen to the answer, then choose the next person. Talk to all four people."
+ data-pl="Wybierz osobę i posłuchaj powitania „Guten Tag”. Gdy zobaczysz „Ich höre zu”, powiedz do mikrofonu „Was sind Sie von Beruf?”. Posłuchaj odpowiedzi i wybierz kolejną osobę. Porozmawiaj ze wszystkimi czterema osobami."
+ data-it="Scegli una persona e ascolta il saluto «Guten Tag». Quando vedi «Ich höre zu», di’ al microfono «Was sind Sie von Beruf?». Ascolta la risposta e scegli la persona successiva. Parla con tutte e quattro le persone.">
+<ol>
+<li>Wähle eine Person. Du hörst <strong>„Guten Tag.“</strong></li>
+<li>Warte auf <strong>„Ich höre zu …“</strong>. Frag dann laut: <strong>„Was sind Sie von Beruf?“</strong></li>
+<li>Hör die Antwort. Wähle dann die nächste Person. Frag alle vier Personen.</li>
+</ol>
+<p class="lead">Beispiele für Antworten: <strong>Ich bin Lehrer.</strong> · <strong>Ich bin Ärztin.</strong></p>
 <div class="row"><button class="btn" data-say="Was sind Sie von Beruf?">🔊 Was sind Sie von Beruf?</button><button class="btn" data-say="Ich bin Ingenieur.">🔊 Ich bin Ingenieur.</button></div>
 </div>
 <div class="card">
-<div class="action-help tr" data-en="Click a person → say “Was sind Sie von Beruf?” → hear the answer. Interview all 4 people." data-pl="Kliknij osobę → powiedz „Was sind Sie von Beruf?” → posłuchaj odpowiedzi. Przeprowadź wywiad ze wszystkimi 4 osobami." data-it="Clicca su una persona → pronuncia la domanda «Was sind Sie von Beruf?» → ascolta la risposta. Intervista tutte e 4 le persone."><span class="step">👆 Person wählen</span><span class="arr">→</span><span class="step">🎤 Frage sprechen</span><span class="arr">→</span><span class="step">🔊 Antwort hören</span></div>
 <div class="people" id="people"></div>
 <div class="chat" id="chat2"><p style="margin:0;color:#5a5140">Wähle eine Person. Frag sie, was sie von Beruf ist!</p></div>
 <div class="opts" id="q2" hidden><button class="btn interview-question-pulse" id="askBtn">🎤 Mikrofon starten</button></div>
