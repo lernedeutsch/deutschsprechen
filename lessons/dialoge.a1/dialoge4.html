@@ -4111,12 +4111,37 @@ function markWrong(spokenText){
 
   clearTimeout(restartTimer);
 
+  if(attempts>=2){
+    const turn=current();
+    const modelAnswer=turn.example;
+    const helpText=`Du kannst es so sagen: ${modelAnswer}`;
+    answered=true;
+    retrying=true;
+    setMicReady(false);
+
+    restartTimer=window.setTimeout(async()=>{
+      await waitForMicrophoneToStop();
+      if(current()!==turn||!answered||!retrying)return;
+
+      els.micStatus.textContent=helpText;
+      const narration=speakGerman(helpText);
+      const narrationToken=speechToken;
+      await narration;
+      if(speechToken!==narrationToken||current()!==turn||!answered||!retrying)return;
+
+      addHistoryEntry("user","Du",modelAnswer);
+      restartTimer=window.setTimeout(advance,450);
+    },650);
+    return;
+  }
+
   restartTimer=window.setTimeout(()=>{
     repeatPromptAfterWrongAnswer();
   },1400);
 }
 
 function evaluate(rawText){
+  if(answered)return;
   const turn=current();
   if(window.DeutschsprechenCorrector){
     const result=window.DeutschsprechenCorrector.assess(rawText,turn);
