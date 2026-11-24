@@ -277,11 +277,11 @@ body > .bottom-arrow:hover {
 <div class="row"><button class="btn" data-say="Was sind Sie von Beruf?">🔊 Was sind Sie von Beruf?</button><button class="btn" data-say="Ich bin Ingenieur.">🔊 Ich bin Ingenieur.</button></div>
 </div>
 <div class="card">
-<div class="action-help tr" data-en="Click a person → click the question “Was sind Sie von Beruf?” → hear the answer. Interview all 4 people." data-pl="Kliknij osobę → kliknij pytanie „Was sind Sie von Beruf?” → posłuchaj odpowiedzi. Przeprowadź wywiad ze wszystkimi 4 osobami." data-it="Clicca su una persona → clicca la domanda «Was sind Sie von Beruf?» → ascolta la risposta. Intervista tutte e 4 le persone."><span class="step">👆 Person wählen</span><span class="arr">→</span><span class="step">👆 Frage anklicken</span><span class="arr">→</span><span class="step">🔊 Antwort hören</span></div>
+<div class="action-help tr" data-en="Click a person → say “Was sind Sie von Beruf?” → hear the answer. Interview all 4 people." data-pl="Kliknij osobę → powiedz „Was sind Sie von Beruf?” → posłuchaj odpowiedzi. Przeprowadź wywiad ze wszystkimi 4 osobami." data-it="Clicca su una persona → pronuncia la domanda «Was sind Sie von Beruf?» → ascolta la risposta. Intervista tutte e 4 le persone."><span class="step">👆 Person wählen</span><span class="arr">→</span><span class="step">🎤 Frage sprechen</span><span class="arr">→</span><span class="step">🔊 Antwort hören</span></div>
 <div class="people" id="people"></div>
 <div class="chat" id="chat2"><p style="margin:0;color:#5a5140">Wähle eine Person. Frag sie, was sie von Beruf ist!</p></div>
-<div class="opts" id="q2" hidden><button class="btn interview-question-pulse" id="askBtn">Was sind Sie von Beruf? <span class="click">👆</span></button></div>
-<p class="fb" id="fb2"></p><div class="bar"><i id="bar2"></i></div>
+<div class="opts" id="q2" hidden><button class="btn interview-question-pulse" id="askBtn">🎤 Mikrofon starten</button></div>
+<p class="fb" id="fb2" aria-live="polite"></p><div class="bar"><i id="bar2"></i></div>
 </div>
 <div class="card" id="ownJobCard">
 <h3 style="margin:0 0 8px;font:800 1.25rem 'Nunito Sans',sans-serif">Und du? Was bist du von Beruf?</h3>
@@ -422,22 +422,98 @@ const PEO=[["Herr Klein","👨‍⚕️","Ich bin Arzt."],["Frau Bauer","👩‍
 let curP=null,asked=new Set();
 $("people").innerHTML=PEO.map((p,i)=>`<button class="person" data-i="${i}"><span>${p[1]}</span>${p[0]}</button>`).join("");
 function bub(box,who,txt,cls){const d=document.createElement("div");d.className="bubble "+cls;d.innerHTML=`<span class="who">${esc(who)}</span>${esc(txt)}`;box.appendChild(d);return d}
-$$(".person").forEach(b=>b.onclick=async()=>{
-  stop();const i=+b.dataset.i;curP=i;
-  $$(".person").forEach(x=>x.classList.toggle("sel",x===b));
-  $("chat2").innerHTML="";const d=bub($("chat2"),PEO[i][0],"Guten Tag.","ba");d.classList.add("speaking");
-  $("q2").hidden=false;$("fb2").textContent="Klick die Frage!";$("fb2").className="fb";
-  await speak("Guten Tag.");d.classList.remove("speaking");
-});
-$("askBtn").onclick=async()=>{
-  if(curP===null)return;stop();const p=PEO[curP],fb=$("fb2");
+const InterviewRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+let interviewRound=0,interviewRecognition=null,interviewReady=false;
+const interviewQuestion="Was sind Sie von Beruf?";
+const normalizeInterviewQuestion=text=>text.toLowerCase().replace(/[.,!?]/g,"").replace(/\s+/g," ").trim();
+function interviewFeedback(message,kind=""){
+  $("fb2").textContent=message;
+  $("fb2").className=kind?"fb "+kind:"fb";
+}
+function listenInterview(round){
+  if(round!==interviewRound||!interviewReady||interviewRecognition)return;
+  if(!InterviewRecognition){
+    interviewFeedback("Dieser Browser unterstützt keine Spracherkennung. Öffne die Übung in Chrome oder Edge.","b");
+    $("askBtn").disabled=true;
+    return;
+  }
+  const recognition=new InterviewRecognition();
+  interviewRecognition=recognition;
+  recognition.lang="de-DE";
+  recognition.maxAlternatives=3;
+  let correct=false,failure="";
   $("askBtn").disabled=true;
-  const d1=bub($("chat2"),"Du","Was sind Sie von Beruf?","bb");d1.classList.add("speaking");await speak("Was sind Sie von Beruf?");d1.classList.remove("speaking");
-  const d2=bub($("chat2"),p[0],p[2],"ba");d2.classList.add("speaking");await speak(p[2]);d2.classList.remove("speaking");
-  fb.textContent="Richtig gefragt!";fb.className="fb g";asked.add(curP);$$(".person")[curP].classList.add("fin");$("bar2").style.width=asked.size/4*100+"%";
+  recognition.onstart=()=>{
+    if(round===interviewRound)interviewFeedback("Ich höre zu … 🎤");
+  };
+  recognition.onresult=event=>{
+    correct=Array.from(event.results[event.resultIndex]).some(result=>
+      normalizeInterviewQuestion(result.transcript)===normalizeInterviewQuestion(interviewQuestion)
+    );
+  };
+  recognition.onerror=event=>{
+    failure=event.error==="not-allowed"||event.error==="service-not-allowed"
+      ?"Erlaube den Mikrofonzugriff und versuch es noch einmal."
+      :"Ich habe dich nicht verstanden. Versuch es noch einmal.";
+  };
+  recognition.onend=()=>{
+    if(interviewRecognition!==recognition||round!==interviewRound)return;
+    interviewRecognition=null;
+    if(correct){replyToInterview(round,curP);return;}
+    $("askBtn").disabled=false;
+    interviewFeedback(failure||"Noch nicht. Sag: „Was sind Sie von Beruf?“","b");
+  };
+  try{recognition.start();}
+  catch{
+    interviewRecognition=null;
+    $("askBtn").disabled=false;
+    interviewFeedback("Das Mikrofon konnte nicht starten. Versuch es noch einmal.","b");
+  }
+}
+$(".person").forEach(b=>b.onclick=async()=>{
+  const round=++interviewRound;
+  interviewReady=false;
+  const previous=interviewRecognition;
+  interviewRecognition=null;
+  previous?.abort();
+  stop();
+  const i=+b.dataset.i;
+  curP=i;
+  $(".person").forEach(x=>x.classList.toggle("sel",x===b));
+  $("chat2").textContent="";
+  const greeting=bub($("chat2"),PEO[i][0],"Guten Tag.","ba");
+  greeting.classList.add("speaking");
+  $("q2").hidden=false;
+  $("askBtn").disabled=true;
+  interviewFeedback("Hör zuerst zu …");
+  await speak("Guten Tag.");
+  if(round!==interviewRound)return;
+  greeting.classList.remove("speaking");
+  interviewReady=true;
   $("askBtn").disabled=false;
-  if(asked.size===4){fb.textContent="Super! Du hast alle vier Personen gefragt.";stamp("frage");speak("Sehr gut! Du hast alle vier Personen gefragt.")}
-};
+  interviewFeedback("Jetzt bist du dran. Sprich die Frage.");
+  listenInterview(round);
+});
+$("askBtn").onclick=()=>listenInterview(interviewRound);
+async function replyToInterview(round,personIndex){
+  interviewReady=false;
+  $("q2").hidden=true;
+  const person=PEO[personIndex];
+  bub($("chat2"),"Du",interviewQuestion,"bb");
+  const reply=bub($("chat2"),person[0],person[2],"ba");
+  reply.classList.add("speaking");
+  asked.add(personIndex);
+  $(".person")[personIndex].classList.add("fin");
+  $("bar2").style.width=asked.size/PEO.length*100+"%";
+  if(asked.size===PEO.length)stamp("frage");
+  interviewFeedback("Richtig gefragt! Hör die Antwort.","g");
+  await speak(person[2]);
+  if(round!==interviewRound)return;
+  reply.classList.remove("speaking");
+  interviewFeedback(asked.size===PEO.length
+    ?"Super! Du hast alle vier Personen gefragt."
+    :"Wähle die nächste Person.","g");
+}
 
 /* Vier Übungen neu aufgebaut */
 
