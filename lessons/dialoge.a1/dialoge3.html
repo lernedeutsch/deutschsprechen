@@ -3316,21 +3316,13 @@ html body .current-dialog-panel .mic-btn.listening{
       <div class="dialog-menu-list">
         <div class="dialog-menu-item active" data-dialog-index="0">
           <span class="dialog-menu-number">01</span>
-          <span>Alter</span>
+          <span>Informell</span>
         </div>
         <div class="dialog-menu-item" data-dialog-index="1">
           <span class="dialog-menu-number">02</span>
-          <span>Kennenlernen</span>
+          <span>Formell</span>
         </div>
-        <div class="dialog-menu-item" data-dialog-index="2">
-          <span class="dialog-menu-number">03</span>
-          <span>Mit Freunden</span>
         </div>
-        <div class="dialog-menu-item" data-dialog-index="3">
-          <span class="dialog-menu-number">04</span>
-          <span>Persönliche Daten</span>
-        </div>
-      </div>
 
       <div class="dialog-menu-info compact-info">
         <div class="hero-translation-row">
@@ -3355,7 +3347,7 @@ html body .current-dialog-panel .mic-btn.listening{
         <div class="partner-meta">
 
           <span class="partner-title" id="partner-title">
-            Dialog 1 · Alter
+            Dialog 1 · Informell
           </span>
 
           <span class="partner-sub">
@@ -3549,47 +3541,32 @@ function nameCheck(answer){
   return patterns.some(pattern=>fuzzyContains(answer,pattern,.3));
 }
 
-/* ---------------- Inhalt: vier Mini-Dialoge ---------------- */
+/* ---------------- Inhalt: zwei Dialoge ---------------- */
 
 const dialogues=[
   {
-    title:"Dialog 1 · Alter",
+    title:"Dialog 1 · Informell",
     role:"informell", speaker:"Tom", avatar:"🧑",
     turns:[
-
       {prompt:"Hallo! Ich bin Tom. Wie heißt du?",instruction:"Stell dich kurz vor.",example:"Ich heiße Anna.",requireFullSentence:true,check:nameCheck},
       {prompt:"Freut mich! Wie alt bist du?",instruction:"Sag dein Alter.",example:"Ich bin 30 Jahre alt.",requireFullSentence:true,check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
       {prompt:"Danke! Ich bin 32 Jahre alt. Wo wohnst du?",instruction:"Sag, wo du wohnst.",example:"Ich wohne in Heidelberg.",requireFullSentence:true,check:a=>/\bich wohne in [\p{L}]+/u.test(a)},
+      {prompt:"Wie ist deine Telefonnummer?",instruction:"Nenne eine Beispielnummer in einem ganzen Satz.",example:"Meine Telefonnummer ist 0123.",requireFullSentence:true,check:a=>fuzzyContains(a,"meine telefonnummer ist",.25)&&(/\d/.test(a)||/\b(?:null|eins|zwei|drei|vier|fünf|sechs|sieben|acht|neun)(?:[ -]+(?:null|eins|zwei|drei|vier|fünf|sechs|sieben|acht|neun)){2,}\b/.test(a))},
+      {prompt:"Schön, dich kennenzulernen!",instruction:"Reagiere kurz.",example:"Freut mich auch!",allowShort:true,check:a=>fuzzyContains(a,"dich auch",.28)||fuzzyContains(a,"freut mich auch",.28)||fuzzyContains(a,"mich auch",.28)||fuzzyContains(a,"schön dich auch kennenzulernen",.28)||fuzzyContains(a,"schön dich kennenzulernen auch",.28)||fuzzyContains(a,"dich kennenzulernen auch schön",.28)},
       {prompt:"Ich muss jetzt los. Bis später!",instruction:"Verabschiede dich.",example:"Bis später!",allowShort:true,check:a=>fuzzyContains(a,"bis später",.3)||fuzzyContains(a,"tschüss",.3)||fuzzyContains(a,"bis bald",.3)}
     ]
   },
   {
-    title:"Dialog 2 · Kennenlernen",
-    role:"informell", speaker:"Lena", avatar:"👩",
-    turns:[
-      {prompt:"Hallo! Ich bin Lena. Wie heißt du?",instruction:"Stell dich kurz vor.",example:"Ich heiße Monika.",requireFullSentence:true,check:nameCheck},
-      {prompt:"Freut mich! Ich bin 28 Jahre alt. Und du?",instruction:"Sag dein Alter. „Und du?“ ist auch möglich.",example:"Ich bin 30 Jahre alt. Und du?",requireFullSentence:true,check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
-      {prompt:"Schön, dich kennenzulernen!",instruction:"Reagiere kurz.",example:"Dich auch! / Freut mich auch! / Schön, dich auch kennenzulernen!",allowShort:true,check:a=>fuzzyContains(a,"dich auch",.28)||fuzzyContains(a,"freut mich auch",.28)||fuzzyContains(a,"mich auch",.28)||fuzzyContains(a,"schön dich auch kennenzulernen",.28)||fuzzyContains(a,"schön dich kennenzulernen auch",.28)||fuzzyContains(a,"dich kennenzulernen auch schön",.28)}
-    ]
-  },
-  {
-    title:"Dialog 3 · Mit Freunden",
-    role:"informell", speaker:"Paul", avatar:"🧑",
-    turns:[
-      {prompt:"Ich bin 30 Jahre alt. Und du?",instruction:"Sag dein Alter. Mit oder ohne „Und du?“.",example:"Ich bin 20 Jahre alt. Und du?",requireFullSentence:true,check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
-      {prompt:"Wo wohnst du?",instruction:"Sag, wo du wohnst.",example:"Ich wohne in Heidelberg.",requireFullSentence:true,check:a=>/\bich wohne in [\p{L}]+/u.test(a)}
-    ]
-  },
-  {
-    title:"Dialog 4 · Persönliche Daten",
+    title:"Dialog 2 · Formell",
     role:"formell", speaker:"Frau Becker", avatar:"👩‍💼",
     turns:[
-      {prompt:"Guten Tag. Wie ist Ihr Name?",instruction:"Begrüße Frau Becker und nenne deinen Namen.",example:"Guten Tag. Mein Name ist Monika.",requireFullSentence:true,check:a=>nameCheck(a)||fuzzyContains(a,"mein name ist",.3)},
+      {prompt:"Guten Tag. Wie ist Ihr Nachname?",instruction:"Nenne deinen Nachnamen.",example:"Mein Nachname ist Müller.",requireFullSentence:true,check:a=>/\bmein (?:nachname|name) ist [\p{L}]+/u.test(a)},
       {prompt:"Wie ist Ihr Vorname?",instruction:"Nenne deinen Vornamen.",example:"Mein Vorname ist Monika.",requireFullSentence:true,check:a=>fuzzyContains(a,"mein vorname ist",.32)||fuzzyContains(a,"ich heiße",.32)},
       {prompt:"Wie alt sind Sie?",instruction:"Sag dein Alter.",example:"Ich bin 30 Jahre alt.",requireFullSentence:true,check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
       {prompt:"Wo wohnen Sie?",instruction:"Sagen Sie Ihren Wohnort in einem ganzen Satz.",example:"Ich wohne in Heidelberg.",requireFullSentence:true,check:a=>fuzzyContains(a,"ich wohne in",.25)},
-       {prompt:"Wie ist Ihre Adresse?",instruction:"Nenne deine Adresse in einem ganzen Satz.",example:"Meine Adresse ist Bahnhofstraße 30.",requireFullSentence:true,check:a=>fuzzyContains(a,"meine adresse ist",.25)&&/straße|strasse|weg|platz|gasse|allee|\d/.test(a)},
-      {prompt:"Wie ist Ihre Telefonnummer?",instruction:"Nenne deine Telefonnummer in einem ganzen Satz.",example:"Meine Telefonnummer ist 0123.",requireFullSentence:true,check:a=>fuzzyContains(a,"meine telefonnummer ist",.25)&&/\d/.test(a)}
+      {prompt:"Wie ist Ihre Adresse?",instruction:"Nenne deine Adresse in einem ganzen Satz.",example:"Meine Adresse ist Bahnhofstraße 30.",requireFullSentence:true,check:a=>fuzzyContains(a,"meine adresse ist",.25)&&/straße|strasse|weg|platz|gasse|allee|\d/.test(a)},
+      {prompt:"Wie ist Ihre Telefonnummer?",instruction:"Nenne eine Beispielnummer in einem ganzen Satz.",example:"Meine Telefonnummer ist 0123.",requireFullSentence:true,check:a=>fuzzyContains(a,"meine telefonnummer ist",.25)&&(/\d/.test(a)||/\b(?:null|eins|zwei|drei|vier|fünf|sechs|sieben|acht|neun)(?:[ -]+(?:null|eins|zwei|drei|vier|fünf|sechs|sieben|acht|neun)){2,}\b/.test(a))},
+      {prompt:"Vielen Dank. Auf Wiedersehen!",instruction:"Verabschiede dich.",example:"Auf Wiedersehen!",allowShort:true,check:a=>fuzzyContains(a,"auf wiedersehen",.25)}
     ]
   }
 ];
@@ -3924,8 +3901,8 @@ function addHistoryEntry(role,speakerLabel,text){
      dialogue starts below the previous one instead of overlapping it. */
   const leftColumn=(historyDialogueIndex%2===0);
   const columnSelector=leftColumn
-    ? ".history-entry.dialog-0, .history-entry.dialog-2, .history-divider.left-column"
-    : ".history-entry.dialog-1, .history-entry.dialog-3, .history-divider.right-column";
+    ? ".history-entry.dialog-0, .history-divider.left-column"
+    : ".history-entry.dialog-1, .history-divider.right-column";
   const earlierItemsInColumn=
     els.historyList.querySelectorAll(columnSelector).length;
   entry.style.gridRow=String(earlierItemsInColumn+1);
@@ -3946,8 +3923,8 @@ function addHistoryDivider(title){
   const dialogueIndex=current().dialogueIndex;
   const leftColumn=(dialogueIndex%2===0);
   const columnSelector=leftColumn
-    ? ".history-entry.dialog-0, .history-entry.dialog-2, .history-divider.left-column"
-    : ".history-entry.dialog-1, .history-entry.dialog-3, .history-divider.right-column";
+    ? ".history-entry.dialog-0, .history-divider.left-column"
+    : ".history-entry.dialog-1, .history-divider.right-column";
   const earlierItemsInColumn=
     els.historyList.querySelectorAll(columnSelector).length;
 
@@ -4472,9 +4449,9 @@ const heroTranslationToggle=document.getElementById("hero-translation-toggle");
 const heroTranslationText=document.getElementById("hero-translation-text");
 const heroTranslationButtons=[...document.querySelectorAll(".hero-translation-language")];
 const heroTranslations={
-  en:"Four short dialogues — informal and formal. You hear the sentence, the microphone starts automatically, and you answer out loud.",
-  pl:"Cztery krótkie dialogi — nieformalne i formalne. Słyszysz zdanie, mikrofon uruchamia się automatycznie, a ty odpowiadasz na głos.",
-  it:"Quattro brevi dialoghi — informali e formali. Ascolti la frase, il microfono si avvia automaticamente e rispondi ad alta voce."
+  en:"Two dialogues — one informal and one formal. You hear the sentence, the microphone starts automatically, and you answer out loud.",
+  pl:"Dwa dialogi — nieformalny i formalny. Słyszysz zdanie, mikrofon uruchamia się automatycznie, a ty odpowiadasz na głos.",
+  it:"Due dialoghi — uno informale e uno formale. Ascolti la frase, il microfono si avvia automaticamente e rispondi ad alta voce."
 };
 
 heroTranslationToggle.addEventListener("click",event=>{
@@ -4542,6 +4519,8 @@ const instructionTranslations={
     "pl": "Odpowiedz krótko.",
     "it": "Rispondi brevemente."
   },
+  "Nenne deinen Nachnamen.": {en:"Say your surname.",pl:"Podaj nazwisko.",it:"Di’ il tuo cognome."},
+  "Nenne eine Beispielnummer in einem ganzen Satz.": {en:"Say an example phone number in a full sentence.",pl:"Podaj przykładowy numer telefonu pełnym zdaniem.",it:"Di’ un numero di telefono di esempio in una frase completa."},
   "Sag, wo du wohnst.": {en:"Say where you live.",pl:"Powiedz, gdzie mieszkasz.",it:"Di’ dove abiti."},
   "Begrüße Frau Becker und nenne deinen Namen.": {
     "en": "Greet Ms Becker and give your name.",
