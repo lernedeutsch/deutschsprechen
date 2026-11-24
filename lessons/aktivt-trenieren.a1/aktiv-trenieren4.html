@@ -224,6 +224,12 @@ body > .bottom-arrow:hover {
   .sprachpass .stamps {justify-content:flex-start}
 }
 </style>
+<style>
+#t2 [hidden]{display:none!important}
+.interview-level{margin:0 0 16px;padding:8px 14px;border:1px solid var(--line);border-radius:12px}
+.interview-level label{display:inline-block;margin-right:16px}
+#interview-question{max-width:100%;padding:8px 12px;margin:8px 0;border:1px solid var(--line);border-radius:10px}
+</style>
 </head>
 <body id="top">
 <a href="../a1/lektion-4.html#seitenanfang" class="bottom-arrow" aria-label="Zurück zur Lektion" title="Zurück zur Lektion">←</a>
@@ -271,17 +277,25 @@ body > .bottom-arrow:hover {
 </main>
 
 <main class="page" id="t2">
-<div class="part-head"><span class="part-num">Teil 2</span><h1 class="part-title">Was sind Sie von Beruf?</h1><span class="done" id="d-frage">✅ geschafft</span></div>
-<div class="card">
+<div class="part-head"><span class="part-num">Teil 2</span><h1 class="part-title" id="interview-title">Was sind Sie von Beruf?</h1><span class="done" id="d-frage">✅ geschafft</span></div>
+<fieldset class="interview-level"><legend>Schwierigkeit</legend>
+<label><input type="radio" name="interview-level" value="model" checked> Mit Vorlage</label>
+<label><input type="radio" name="interview-level" value="recall"> Ohne Vorlage</label>
+</fieldset>
+<div class="card" id="interview-model">
 <p class="lead">Wir fragen nach dem Beruf: <strong>Was sind Sie von Beruf?</strong> Antwort: <strong>Ich bin Lehrer.</strong> · <strong>Ich bin Ärztin.</strong></p>
 <div class="row"><button class="btn" data-say="Was sind Sie von Beruf?">🔊 Was sind Sie von Beruf?</button><button class="btn" data-say="Ich bin Ingenieur.">🔊 Ich bin Ingenieur.</button></div>
 </div>
 <div class="card">
-<div class="action-help tr" data-en="Click a person → click the question “Was sind Sie von Beruf?” → hear the answer. Interview all 4 people." data-pl="Kliknij osobę → kliknij pytanie „Was sind Sie von Beruf?” → posłuchaj odpowiedzi. Przeprowadź wywiad ze wszystkimi 4 osobami." data-it="Clicca su una persona → clicca la domanda «Was sind Sie von Beruf?» → ascolta la risposta. Intervista tutte e 4 le persone."><span class="step">👆 Person wählen</span><span class="arr">→</span><span class="step">👆 Frage anklicken</span><span class="arr">→</span><span class="step">🔊 Antwort hören</span></div>
+<div class="action-help tr" id="interview-steps" data-en="Click a person → click the question “Was sind Sie von Beruf?” → hear the answer. Interview all 4 people." data-pl="Kliknij osobę → kliknij pytanie „Was sind Sie von Beruf?” → posłuchaj odpowiedzi. Przeprowadź wywiad ze wszystkimi 4 osobami." data-it="Clicca su una persona → clicca la domanda «Was sind Sie von Beruf?» → ascolta la risposta. Intervista tutte e 4 le persone."><span class="step">👆 Person wählen</span><span class="arr">→</span><span class="step">👆 Frage anklicken</span><span class="arr">→</span><span class="step">🔊 Antwort hören</span></div>
 <div class="people" id="people"></div>
 <div class="chat" id="chat2"><p style="margin:0;color:#5a5140">Wähle eine Person. Frag sie, was sie von Beruf ist!</p></div>
 <div class="opts" id="q2" hidden><button class="btn interview-question-pulse" id="askBtn">Was sind Sie von Beruf? <span class="click">👆</span></button></div>
-<p class="fb" id="fb2"></p><div class="bar"><i id="bar2"></i></div>
+<form id="interview-recall" hidden>
+<label for="interview-question">Frag nach dem Beruf. Schreib die Frage mit „Sie“.</label>
+<div><input id="interview-question" type="text" autocomplete="off" spellcheck="false" required> <button type="submit" class="btn">Frage prüfen</button></div>
+</form>
+<p class="fb" id="fb2" aria-live="polite"></p><div class="bar"><i id="bar2"></i></div>
 </div>
 <div class="card" id="ownJobCard">
 <h3 style="margin:0 0 8px;font:800 1.25rem 'Nunito Sans',sans-serif">Und du? Was bist du von Beruf?</h3>
@@ -426,18 +440,52 @@ $$(".person").forEach(b=>b.onclick=async()=>{
   stop();const i=+b.dataset.i;curP=i;
   $$(".person").forEach(x=>x.classList.toggle("sel",x===b));
   $("chat2").innerHTML="";const d=bub($("chat2"),PEO[i][0],"Guten Tag.","ba");d.classList.add("speaking");
-  $("q2").hidden=false;$("fb2").textContent="Klick die Frage!";$("fb2").className="fb";
+  updateInterviewPrompt();
   await speak("Guten Tag.");d.classList.remove("speaking");
 });
-$("askBtn").onclick=async()=>{
-  if(curP===null)return;stop();const p=PEO[curP],fb=$("fb2");
+let interviewRecall=false;
+function updateInterviewPrompt(){
+  $("q2").hidden=interviewRecall||curP===null;
+  $("interview-recall").hidden=!interviewRecall||curP===null;
+  $("interview-question").value="";
+  $("fb2").textContent=curP===null?"":interviewRecall?"Schreib deine Frage.":"Klick die Frage!";
+  $("fb2").className="fb";
+}
+$('[name="interview-level"]').forEach(option=>option.addEventListener("change",()=>{
+  interviewRecall=option.value==="recall";
+  $("interview-model").hidden=interviewRecall;
+  $("interview-steps").hidden=interviewRecall;
+  $("interview-title").textContent=interviewRecall?"Nach dem Beruf fragen":"Was sind Sie von Beruf?";
+  $("chat2").textContent="";
+  if(curP!==null)bub($("chat2"),PEO[curP][0],"Guten Tag.","ba");
+  else $("chat2").textContent="Wähle eine Person.";
+  updateInterviewPrompt();
+}));
+const interviewQuestions=["Was sind Sie von Beruf?","Was machen Sie beruflich?"];
+const normalizeInterviewQuestion=text=>text.trim().replace(/\s*\?$/,"").replace(/\s+/g," ").toLowerCase();
+$("interview-recall").addEventListener("submit",event=>{
+  event.preventDefault();
+  if($("askBtn").disabled)return;
+  const input=$("interview-question");
+  const question=interviewQuestions.find(candidate=>normalizeInterviewQuestion(candidate)===normalizeInterviewQuestion(input.value));
+  if(!question){
+    $("fb2").textContent="Noch nicht. Frag nach dem Beruf und benutze „Sie“.";
+    $("fb2").className="fb b";
+    return;
+  }
+  input.value="";
+  askInterview(question);
+});
+$("askBtn").onclick=()=>askInterview(interviewQuestions[0]);
+async function askInterview(question){
+  if(curP===null||$("askBtn").disabled)return;stop();const personIndex=curP,p=PEO[personIndex],fb=$("fb2");
   $("askBtn").disabled=true;
-  const d1=bub($("chat2"),"Du","Was sind Sie von Beruf?","bb");d1.classList.add("speaking");await speak("Was sind Sie von Beruf?");d1.classList.remove("speaking");
+  const d1=bub($("chat2"),"Du",question,"bb");d1.classList.add("speaking");await speak(question);d1.classList.remove("speaking");
   const d2=bub($("chat2"),p[0],p[2],"ba");d2.classList.add("speaking");await speak(p[2]);d2.classList.remove("speaking");
-  fb.textContent="Richtig gefragt!";fb.className="fb g";asked.add(curP);$$(".person")[curP].classList.add("fin");$("bar2").style.width=asked.size/4*100+"%";
+  fb.textContent="Richtig gefragt!";fb.className="fb g";asked.add(personIndex);$(".person")[personIndex].classList.add("fin");$("bar2").style.width=asked.size/4*100+"%";
   $("askBtn").disabled=false;
   if(asked.size===4){fb.textContent="Super! Du hast alle vier Personen gefragt.";stamp("frage");speak("Sehr gut! Du hast alle vier Personen gefragt.")}
-};
+}
 
 /* Vier Übungen neu aufgebaut */
 
