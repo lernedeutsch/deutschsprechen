@@ -3559,7 +3559,8 @@ const dialogues=[
 
       {prompt:"Hallo! Ich bin Tom. Wie heißt du?",instruction:"Stell dich kurz vor.",example:"Ich heiße Anna.",requireFullSentence:true,check:nameCheck},
       {prompt:"Freut mich! Wie alt bist du?",instruction:"Sag dein Alter.",example:"Ich bin 30 Jahre alt.",requireFullSentence:true,check:a=>fuzzyContains(a,"ich bin",.3)&&(a.includes("jahr")||/\d/.test(a))},
-      {prompt:"Danke! Ich bin 32 Jahre alt. Ich muss jetzt los. Bis später!",instruction:"Verabschiede dich.",example:"Bis später!",allowShort:true,check:a=>fuzzyContains(a,"bis später",.3)||fuzzyContains(a,"tschüss",.3)||fuzzyContains(a,"bis bald",.3)}
+      {prompt:"Danke! Ich bin 32 Jahre alt. Wo wohnst du?",instruction:"Sag, wo du wohnst.",example:"Ich wohne in Heidelberg.",requireFullSentence:true,check:a=>/\bich wohne in [\p{L}]+/u.test(a)},
+      {prompt:"Ich muss jetzt los. Bis später!",instruction:"Verabschiede dich.",example:"Bis später!",allowShort:true,check:a=>fuzzyContains(a,"bis später",.3)||fuzzyContains(a,"tschüss",.3)||fuzzyContains(a,"bis bald",.3)}
     ]
   },
   {
