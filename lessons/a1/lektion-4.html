@@ -1083,18 +1083,97 @@ body{margin:0;min-height:100vh;color:var(--a1-text);font-family:"Nunito Sans",Ar
 .verb-ending{color:#d12b2b;font-weight:900}
 
 .course-review-title{margin:0 0 16px}.course-review-dialog{display:grid;gap:10px}.review-turn{display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:center;padding:12px 14px;border-radius:14px;border:1px solid #d9e4f0}.review-a{background:#fff}.review-b{background:#f0f6ff;margin-left:120px}.review-speaker{font-weight:900;color:#20324a}.verb-review-box{padding:24px!important}.verb-review-head{display:flex;gap:14px;align-items:flex-start;margin-bottom:20px;font-size:1.15rem}.verb-review-head>span{font-size:1.45rem;line-height:1.25}.verb-review-head b{display:block;font-size:1.28rem;line-height:1.25}.verb-review-head small{display:block;margin-top:6px;font-size:.95rem;font-weight:600;color:#536273}.verb-review-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.verb-review-item{display:flex;flex-direction:column;gap:10px;padding:18px 20px;background:#fff;border:1px solid #d9e4f0;border-radius:14px}.verb-review-item b{font-size:1.12rem;color:#20324a}.verb-review-item span{font-size:1.05rem;line-height:1.45}.verb-review-note{margin:18px 0 0;padding-top:14px;border-top:1px solid #d9e4f0;font-size:.95rem;line-height:1.45;color:#536273}@media(max-width:700px){.review-turn{grid-template-columns:58px 1fr}.review-b{margin-left:40px}.verb-review-grid{grid-template-columns:1fr}}
-</style><link rel="stylesheet" href="../../css/a1-previous-review.css"></head><body id="seitenanfang">
+</style><link rel="stylesheet" href="../../css/a1-previous-review.css"><style>
+.course-shell > .back-to-top {
+  position:absolute; top:8px; left:8px; z-index:30;
+  width:52px; height:52px; margin:0; padding:0;
+  justify-content:center; border-radius:10px;
+  background:rgba(16,39,60,.12); border:1px solid rgba(255,255,255,.10);
+  color:#fff; font-size:1.55rem;
+}
+.course-shell > .back-to-top:hover {
+  background:rgba(11,31,49,.22); border-color:rgba(255,255,255,.22);
+}
+@media(max-width:1320px) {
+  .course-shell {padding-top:68px!important}
+}
+.training-rail .aktiv {background:linear-gradient(180deg,#6fcf32,#3f9820)}
+.training-rail .sprich {background:linear-gradient(180deg,#3da8f0,#237fc2)}
+.training-rail .ueb {background:linear-gradient(180deg,#b08df7,#825fe0)}
+.training-rail .dia {background:#F5A9C5;color:#192C44}
+.training-rail .dik {background:linear-gradient(180deg,#35b8af,#177f78)}
+.training-rail .translate-help-btn {
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  width:150px;min-height:44px;padding:9px 10px;border-radius:18px;
+  border:0;cursor:pointer;text-align:center;background:#FF8066;color:#172B43;
+  font:800 .9rem/1.15 "Nunito Sans",sans-serif;
+  animation:translateGentlePulse 2.4s ease-in-out infinite;
+}
+@media(max-width:1399px) {
+  .training-rail .translate-help-btn {width:auto;flex:1 1 200px;min-height:58px;padding:12px 16px;font-size:1rem}
+}
+@media(prefers-reduced-motion:reduce) {
+  .training-rail .translate-help-btn {animation:none}
+}
+@keyframes translateGentlePulse{
+  0%,100%{box-shadow:0 7px 14px rgba(0,0,0,.16),0 0 0 0 rgba(255,128,102,.20);filter:brightness(1);transform:scale(1)}
+  50%{box-shadow:0 8px 18px rgba(0,0,0,.19),0 0 0 7px rgba(255,128,102,.34);filter:brightness(1.13);transform:scale(1.035)}
+}
+.translate-mini-overlay[hidden]{display:none!important}
+.translate-mini-overlay{position:fixed;inset:0;z-index:2400;background:rgba(9,25,40,.58);display:flex;align-items:center;justify-content:center;padding:16px}
+.translate-mini-panel{width:min(100%,480px);max-height:90vh;overflow:auto;background:#fff;color:#15283b;border-radius:20px;padding:24px;box-shadow:0 18px 50px #0004;font:16px/1.5 system-ui,sans-serif}
+.translate-mini-panel h2{font-size:1.35rem;margin:0 35px 12px 0}.translate-mini-panel label{display:block;font-weight:700;margin:12px 0 5px}
+.translate-mini-panel textarea,.translate-mini-panel select{box-sizing:border-box;width:100%;padding:11px;border:1px solid #9caec1;border-radius:10px;font:inherit;color:#15283b;background:#fff}
+.translate-mini-panel textarea{min-height:85px;resize:vertical}
+.translate-mini-input-wrap{position:relative}
+.translate-mini-input-wrap textarea{padding-right:76px}
+.translate-mini-pencil{
+  position:absolute;right:22px;top:22px;
+  font-size:2.5rem;line-height:1;
+  pointer-events:none;transform-origin:center;
+  animation:translatePencilPulse 1.8s ease-in-out infinite;
+}
+.translate-mini-input-wrap textarea:not(:placeholder-shown)+.translate-mini-pencil{opacity:0;animation:none}
+@keyframes translatePencilPulse{
+  0%,100%{transform:scale(1) rotate(-8deg);opacity:.65}
+  50%{transform:scale(1.25) rotate(8deg);opacity:1}
+}
+@media(prefers-reduced-motion:reduce){.translate-mini-pencil{animation:none}}
+.translate-mini-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.translate-mini-native-select{display:none!important}
+.translate-mini-language-label{font-weight:700;margin-top:12px;margin-bottom:7px}
+.translate-mini-language-options{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.translate-mini-language-options .translate-mini-lang-btn,
+.translate-mini-language-options #translate-mini-other{
+  border:1px solid #a8b9ce;border-radius:9px;background:#fff;color:#203a57;
+  padding:9px 10px;font:600 13px system-ui;min-height:40px;cursor:pointer;
+  width:auto;flex:0 1 auto;
+}
+.translate-mini-language-options .translate-mini-lang-btn[aria-pressed="true"]{
+  background:#203a57;color:#fff;border-color:#203a57;
+}
+.translate-mini-language-options #translate-mini-other:focus-visible,
+.translate-mini-language-options .translate-mini-lang-btn:focus-visible{outline:3px solid #ffcc66;outline-offset:2px}
+.translate-mini-actions button,.translate-mini-actions a{border:0;border-radius:10px;padding:10px 14px;background:#168c9c;color:white;font:700 15px system-ui;text-decoration:none;cursor:pointer}
+.translate-mini-actions a{background:#203a57}.translate-mini-result{margin-top:14px;background:#eef7f9;padding:12px;border-radius:10px;min-height:25px;white-space:pre-wrap;overflow-wrap:anywhere}
+.translate-mini-close{float:right;border:0;background:none;color:#203a57;font-size:28px;cursor:pointer}.translate-mini-note{font-size:12px;color:#536474;margin-top:10px}
+
+</style>
+</head><body id="seitenanfang">
 <div class="course-shell">
 <a href="index.html" class="back-to-top" aria-label="Zurück zur A1-Übersicht" title="Zurück zur A1-Übersicht">←</a>
 <div class="learning-guide"><strong><span class="step-number">①</span> Zuerst: Lies die ganze Lektion.</strong><span>Danach übst du Schritt für Schritt mit den Aufgaben in dieser Reihenfolge.</span><details class="learning-translation"><summary><span class="translation-globe">🌐</span>A/文</summary><p><strong>English:</strong> First, read the whole lesson. Then practise step by step with the tasks in this order.</p><p><strong>Polski:</strong> Najpierw przeczytaj całą lekcję. Następnie ćwicz krok po kroku, wykonując zadania w tej kolejności.</p><p><strong>Italiano:</strong> Per prima cosa, leggi tutta la lezione. Poi esercitati passo dopo passo con gli esercizi in quest’ordine.</p></details></div>
 <nav class="course-nav" aria-label="Inhaltsverzeichnis des A1-Kurses"><h2 class="course-nav-title">A1 — 4</h2><div class="course-section"><h3 class="section-title">Erste Schritte</h3><ul class="lesson-list"><li><a href="#lektion4">Berufe, Beruf fragen, ein / eine, arbeiten</a></li></ul></div></nav>
 </div>
 <nav class="training-rail" aria-label="Training Lektion 4">
-<a class="aktiv" href="../aktivt-trenieren.a1/aktiv-trenieren4.html"><span class="num">②</span>🏋️ Aktiv<br>trainieren</a>
-<a class="sprich" href="../sprich-nach.a1/sprich-nach4.html"><span class="num">③</span>🎤 Sprich<br>nach</a>
+<button type="button" id="translate-help-open" class="translate-help-btn" aria-haspopup="dialog" aria-controls="translate-mini-dialog" aria-label="Translate öffnen">
+      <span aria-hidden="true">🌐</span> Translate <span aria-hidden="true">❔</span>
+    </button>
+<a class="aktiv" href="../aktivt-trenieren.a1/aktiv-trenieren4.html"><span class="num">②</span>🏋️ Aktiv trainieren</a>
+<a class="sprich" href="../sprich-nach.a1/sprich-nach4.html"><span class="num">③</span>🎤 Sprich nach</a>
 <a class="ueb" href="../ubungen.a1/ubungen4.html"><span class="num">④</span>✏️ Übungen</a>
 <a class="dia" href="../dialoge.a1/dialoge4.html"><span class="num">⑤</span>💬 Dialoge</a>
-<a class="dik" href="../dikatat.a1/diktat4.html"><span class="num">⑥</span>✍️ Ich<br>schreibe ein<br>Diktat</a>
+<a class="dik" href="../dikatat.a1/diktat4.html"><span class="num">⑥</span>✍️ Ich schreibe ein Diktat</a>
 </nav><section class="part" id="lektion4">
 
 <div class="wrap" style="background:linear-gradient(135deg,#e3f2fd,#bbdefb);border-radius:22px;padding:32px;">
@@ -1532,4 +1611,99 @@ body{margin:0;min-height:100vh;color:var(--a1-text);font-family:"Nunito Sans",Ar
 <script src="../../js/page-progress.js" defer></script>
 <script>
 (()=>{const b=document.getElementById("ich-kann-button-4"),p=document.getElementById("ich-kann-paper-4");if(!b||!p)return;b.addEventListener("click",()=>{const open=b.getAttribute("aria-expanded")==="true";b.setAttribute("aria-expanded",String(!open));p.setAttribute("aria-hidden",String(open));b.classList.toggle("open",!open);p.classList.toggle("show",!open);});})();
-</script><script src="../../js/a1-previous-review.js" defer></script></body></html>
+</script><script src="../../js/a1-previous-review.js" defer></script><div id="translate-mini-dialog" class="translate-mini-overlay" hidden>
+  <section class="translate-mini-panel" role="dialog" aria-modal="true" aria-labelledby="translate-mini-title">
+    <button type="button" class="translate-mini-close" id="translate-mini-close" aria-label="Close / Schließen">×</button>
+    <h2 id="translate-mini-title">🌐 Translate ❔</h2>
+    <label for="translate-mini-input">Wort oder Satz / Word or sentence</label>
+    <div class="translate-mini-input-wrap">
+      <textarea id="translate-mini-input" placeholder="Ergänze"></textarea>
+      <span class="translate-mini-pencil" aria-hidden="true">✏️</span>
+    </div>
+    <div class="translate-mini-language-label" id="translate-mini-language-label">Translate to / Zielsprache</div>
+    <select id="translate-mini-language" class="translate-mini-native-select" aria-label="Translate to / Zielsprache">
+      <option value="pl">Polski</option><option value="en" selected>English</option><option value="it">Italiano</option>
+      <option value="es">Español</option><option value="fr">Français</option><option value="uk">Українська</option>
+      <option value="ru">Русский</option><option value="tr">Türkçe</option><option value="ar">العربية</option>
+      <option value="pt">Português</option><option value="ro">Română</option><option value="nl">Nederlands</option>
+    </select>
+    <div class="translate-mini-language-options" role="group" aria-labelledby="translate-mini-language-label">
+      <button type="button" class="translate-mini-lang-btn" data-lang="en" aria-pressed="true">English</button>
+      <button type="button" class="translate-mini-lang-btn" data-lang="tr" aria-pressed="false">Türkçe</button>
+      <button type="button" class="translate-mini-lang-btn" data-lang="pl" aria-pressed="false">Polski</button>
+      <button type="button" class="translate-mini-lang-btn" data-lang="it" aria-pressed="false">Italiano</button>
+      <select id="translate-mini-other" aria-label="Inne języki">
+        <option value="">Inne ▾</option>
+        <option value="es">Español</option><option value="fr">Français</option>
+        <option value="uk">Українська</option><option value="ru">Русский</option>
+        <option value="ar">العربية</option><option value="pt">Português</option>
+        <option value="ro">Română</option><option value="nl">Nederlands</option>
+      </select>
+    </div>
+    <div class="translate-mini-actions">
+      <button type="button" id="translate-mini-submit">Translate / Übersetzen</button>
+      <a id="translate-mini-fallback" href="https://translate.google.com/?sl=de&amp;tl=pl&amp;op=translate" target="_blank" rel="noopener noreferrer">Google Translate ↗</a>
+    </div>
+    <div id="translate-mini-result" class="translate-mini-result" role="status" aria-live="polite">Enter a German word or sentence.</div>
+    <p class="translate-mini-note">Translation is provided by MyMemory. Text entered here is sent to this external service. Do not enter personal information. Automatic translations may contain errors.</p>
+  </section>
+</div>
+<script>
+(function(){
+  const open=document.getElementById('translate-help-open');
+  const overlay=document.getElementById('translate-mini-dialog');
+  const close=document.getElementById('translate-mini-close');
+  const input=document.getElementById('translate-mini-input');
+  const language=document.getElementById('translate-mini-language');
+  const submit=document.getElementById('translate-mini-submit');
+  const result=document.getElementById('translate-mini-result');
+  const fallback=document.getElementById('translate-mini-fallback');
+  if(!open||!overlay)return;
+  open.addEventListener('click',()=>{overlay.hidden=false;input.focus();});
+  function hide(){overlay.hidden=true;open.focus();}
+  close.addEventListener('click',hide);
+  overlay.addEventListener('click',e=>{if(e.target===overlay)hide();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!overlay.hidden)hide();});
+  function updateFallback(){
+    const params=new URLSearchParams({sl:'de',tl:language.value,text:input.value,op:'translate'});
+    fallback.href='https://translate.google.com/?'+params.toString();
+  }
+  const quickLanguages=overlay.querySelectorAll('.translate-mini-lang-btn');
+  const otherLanguages=document.getElementById('translate-mini-other');
+  function syncLanguageButtons(){
+    quickLanguages.forEach(btn=>btn.setAttribute('aria-pressed',String(btn.dataset.lang===language.value)));
+    otherLanguages.value=[...quickLanguages].some(btn=>btn.dataset.lang===language.value)?'':language.value;
+  }
+  quickLanguages.forEach(btn=>btn.addEventListener('click',()=>{
+    language.value=btn.dataset.lang;
+    language.dispatchEvent(new Event('change'));
+  }));
+  otherLanguages.addEventListener('change',()=>{
+    if(!otherLanguages.value)return;
+    language.value=otherLanguages.value;
+    language.dispatchEvent(new Event('change'));
+  });
+  language.addEventListener('change',()=>{syncLanguageButtons();updateFallback();});
+  syncLanguageButtons();
+  input.addEventListener('input',updateFallback);
+  submit.addEventListener('click',async()=>{
+    const q=input.value.trim();
+    if(!q){result.textContent='Enter a word or sentence / Gib ein Wort oder einen Satz ein.';input.focus();return;}
+    updateFallback();
+    submit.disabled=true;result.textContent='Translating / Übersetze…';
+    try{
+      const url='https://api.mymemory.translated.net/get?'+new URLSearchParams({q,langpair:'de|'+language.value});
+      const response=await fetch(url);
+      if(!response.ok)throw new Error('Network error');
+      const data=await response.json();
+      if(data.responseStatus!==200||!data.responseData||!data.responseData.translatedText)throw new Error('Translation unavailable');
+      const translated=data.responseData.translatedText;
+      if(/MYMEMORY WARNING|QUERY LENGTH LIMIT|USAGE LIMIT/i.test(translated))throw new Error('Limit reached');
+      result.textContent=translated;
+    }catch(e){result.textContent='Translation temporarily unavailable. Use Google Translate ↗ / Übersetzung momentan nicht verfügbar.';}
+    finally{submit.disabled=false;}
+  });
+  updateFallback();
+})();
+</script>
+</body></html>
